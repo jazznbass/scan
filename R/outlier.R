@@ -32,16 +32,16 @@
 #' 
 #' ## Identify outliers using 1.5 standard deviations as criterion
 #' susanne <- rSC(level = 1.0)
-#' res.outlier <- outlierSC(susanne, criteria = c("SD", 1.5))
-#' plotSC(susanne, marks = res.outlier)
+#' res_outlier <- outlier(susanne, criteria = c("SD", 1.5))
+#' plot(susanne, marks = res_outlier)
 #' 
 #' ## Identify outliers in the original data from Grosche (2011) using Cook's Distance
 #' ## greater than 4/n as criterion
-#' res.outlier <- outlierSC(Grosche2011, criteria = c("Cook", "4/n"))
-#' plotSC(Grosche2011, marks = res.outlier)
+#' res_outlier <- outlier(Grosche2011, criteria = c("Cook", "4/n"))
+#' plot(Grosche2011, marks = res_outlier)
 #' 
 #' @export
-outlierSC <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
+outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
   
   if(!any(criteria[1] %in% c("MAD", "Cook", "SD", "CI"))) {
     stop("Unknown criteria. Please check.")
@@ -168,4 +168,10 @@ outlierSC <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
   out$case.names <- case.names
   class(out) <- c("sc","outlier")
   out
+}
+
+#' @rdname outlier
+#' @export
+outlierSC <- function(...) {
+  outlier(...)
 }

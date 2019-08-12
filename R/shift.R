@@ -14,12 +14,16 @@
 #'
 #' @examples
 #' ### Shift the measurement time for a better estimation of the intercept
-#' ex <- shiftSC(example_A24, value = -1996)
+#' ex <- shift(example_A24, value = -1996)
 #' plm(ex)
-shiftSC <- function(data, value, var) {
+shift <- function(data, value, var) {
   if (missing(var)) var <- scdf_attr(data, .opt$mt)
   for (i in 1:length(data)) {
     data[[i]][[var]] <- data[[i]][[var]] + value
   }
   data
 }
+
+#' @rdname shift
+#' @export
+shiftSC <- function(...) shift(...)

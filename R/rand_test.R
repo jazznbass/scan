@@ -83,13 +83,13 @@
 #' @examples
 #' 
 #' ## Compute a randomization test on the first case of the byHeart2011 data and include a graph
-#' randSC(byHeart2011[1], statistic = "Median B-A", graph = TRUE, seed = 123)
+#' rand_test(byHeart2011[1], statistic = "Median B-A", graph = TRUE, seed = 123)
 #' 
 #' ## Compute a randomization test on the Grosche2011 data using complete permutation
-#' randSC(Grosche2011, statistic = "Median B-A", complete = TRUE, limit = 4, seed = 123)
+#' rand_test(Grosche2011, statistic = "Median B-A", complete = TRUE, limit = 4, seed = 123)
 #' 
 #' @export
-randSC <- function (data, dvar, pvar, statistic = "Mean B-A", 
+rand_test <- function (data, dvar, pvar, statistic = "Mean B-A", 
                     number = 500, complete = FALSE, limit = 5, 
                     startpoints = NA, exclude.equal = FALSE, 
                     graph = FALSE, output = "c", phases = c("A","B"), seed = NULL) {
@@ -264,7 +264,11 @@ randSC <- function (data, dvar, pvar, statistic = "Mean B-A",
   }
 }
 
-
+#' @rdname rand_test
+#' @export
+randSC <- function(...) {
+  rand_test(...)
+}
 
 
 

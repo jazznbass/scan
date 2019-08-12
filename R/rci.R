@@ -54,7 +54,7 @@
 #' rciSC(byHeart2011[1], graph = TRUE)
 #' 
 #' @export
-rciSC <- function(data, dvar, pvar, rel = 0.80, ci = 0.95, graph = FALSE, phases = c(1, 2)) {
+rci <- function(data, dvar, pvar, rel = 0.80, ci = 0.95, graph = FALSE, phases = c(1, 2)) {
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -111,5 +111,14 @@ rciSC <- function(data, dvar, pvar, rel = 0.80, ci = 0.95, graph = FALSE, phases
   out
 }
 
+#' @rdname rci
+#' @export
+rciSC <- function(...) {
+  rci(...)
+}
 
-rCi <- function(...){rciSC(...)}
+#' @rdname rci
+#' @export
+rCi <- function(...) {
+  rci(...)
+}

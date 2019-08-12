@@ -25,7 +25,7 @@
 #' overlapSC(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 #' 
 #' @export
-overlapSC <- function(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2)) {
+overlap <- function(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2)) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -81,4 +81,10 @@ overlapSC <- function(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 
   attr(out, .opt$dv)    <- ATTRIBUTES[[.opt$dv]]
   
   out
+}
+
+#' @rdname overlap
+#' @export
+overlapSC <- function(...) {
+  overlap(...)
 }

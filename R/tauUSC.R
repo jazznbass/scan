@@ -3,7 +3,7 @@
 #' This function calculates indices of the Tau-U family as proposed by Parker
 #' et al. (2011).
 #'
-#'
+#' @aliases tau_u tauUSC
 #' @inheritParams .inheritParams
 #' @param ties.method Defines how to handle ties. \code{"omit"} (default) excludes all
 #' ties from the calculation. \code{"positive"} counts all ties as positive
@@ -24,15 +24,15 @@
 #'
 #' ## Calculate tau-U for the example from Parker et al. (2011)
 #' bob <- scdf(c(2, 3, 5, 3, 4, 5, 5, 7, 6), B.start = 5)
-#' tauUSC(bob)
+#' tau_u(bob)
 #'
 #' ## Calculate tau-U with ties counted as positive
-#' tauUSC(Grosche2011$Eva, ties.method = "positive")
+#' tau_u(Grosche2011$Eva, ties.method = "positive")
 #'
 #' ## Request tau-U for all single-cases fom the Grosche2011 data
-#' tauUSC(Grosche2011)
+#' tau_u(Grosche2011)
 #' @export
-tauUSC <- function(data, dvar, pvar, ties.method = "omit", method = "complete", phases = c(1, 2)) {
+tau_u <- function(data, dvar, pvar, ties.method = "omit", method = "complete", phases = c(1, 2)) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -215,4 +215,10 @@ tauUSC <- function(data, dvar, pvar, ties.method = "omit", method = "complete", 
   class(out) <- c("sc", "TAU-U")
 
   out
+}
+
+#' @rdname tau_u
+#' @export
+tauUSC <- function(...) {
+  tau_u(...)
 }

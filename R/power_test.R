@@ -40,7 +40,7 @@
 #' 
 #' @export
 
-power_testSC <- function(design,
+power_test <- function(design,
                          stat = c("plm_level", "rand", "tauU"),  
                          n_sim = 100, 
                          alpha = 0.05) {
@@ -100,7 +100,11 @@ power_testSC <- function(design,
   out
 }
 
-
+#' @rdname power_test
+#' @export
+power_testSC <- function(...) {
+  power_test(...)
+}
 
 
 .prop_sig <- function(rand.sample, alpha, FUN) {
