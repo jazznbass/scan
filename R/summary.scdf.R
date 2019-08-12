@@ -13,7 +13,7 @@ summary.scdf <- function(object, ...) {
   
   designs <- lapply(
     object, function(x) 
-    paste0(rle(as.character(x[, scdf_attr(object, .opt$phase)]))$values, collapse = " ")
+    paste0(rle(as.character(x[[scdf_attr(object, .opt$phase)]]))$values, collapse = " ")
   )
   
   rows <- lapply(object, nrow)
