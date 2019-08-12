@@ -18,8 +18,8 @@ tauUSC(data, dvar, pvar, ties.method = "omit", method = "complete",
 ties from the calculation. \code{"positive"} counts all ties as positive
 comparisons, while \code{"negative"} counts them as negative comparisons.}
 
-\item{method}{\code{"complete"} (default) or \code{"parker"}. The latter 
-calculates the number of possible pairs as described in Parler et al. (2011) 
+\item{method}{\code{"complete"} (default) or \code{"parker"}. The latter
+calculates the number of possible pairs as described in Parler et al. (2011)
 which might lead to tau-U values greater than 1.}
 
 \item{phases}{A vector of two characters or numbers indicating the two
@@ -50,7 +50,6 @@ tauUSC(Grosche2011$Eva, ties.method = "positive")
 
 ## Request tau-U for all single-cases fom the Grosche2011 data
 tauUSC(Grosche2011)
-
 }
 \references{
 Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B.
