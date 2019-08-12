@@ -52,10 +52,10 @@ single-case research: Nonoverlap of all pairs. \emph{Behavior Therapy, 40},
 357-367.
 }
 \seealso{
-Other overlap functions: \code{\link{corrected_tauSC}},
+Other overlap functions: \code{\link{corrected_tau}},
   \code{\link{overlapSC}}, \code{\link{pand}},
   \code{\link{pem}}, \code{\link{pet}}, \code{\link{pnd}},
-  \code{\link{tauUSC}}
+  \code{\link{tau_u}}
 }
 \author{
 Juergen Wilbert

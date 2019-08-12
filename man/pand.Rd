@@ -85,10 +85,10 @@ Parker, R. I., & Vannest, K. (2009). An Improved Effect Size for Single-Case
 Research: Nonoverlap of All Pairs. \emph{Behavior Therapy, 40}, 357-367.
 }
 \seealso{
-Other overlap functions: \code{\link{corrected_tauSC}},
+Other overlap functions: \code{\link{corrected_tau}},
   \code{\link{nap}}, \code{\link{overlapSC}},
   \code{\link{pem}}, \code{\link{pet}}, \code{\link{pnd}},
-  \code{\link{tauUSC}}
+  \code{\link{tau_u}}
 }
 \author{
 Juergen Wilbert

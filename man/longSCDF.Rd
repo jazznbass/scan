@@ -40,9 +40,9 @@ summary(Leidig2018_long)
 
 }
 \seealso{
-Other data manipulation functions: \code{\link{fillmissingSC}},
-  \code{\link{outlierSC}}, \code{\link{rankSC}},
-  \code{\link{scaleSC}}, \code{\link{shiftSC}},
+Other data manipulation functions: \code{\link{fillmissing}},
+  \code{\link{outlier}}, \code{\link{rankSC}},
+  \code{\link{scaleSC}}, \code{\link{shift}},
   \code{\link{smoothSC}}, \code{\link{truncateSC}}
 }
 \author{

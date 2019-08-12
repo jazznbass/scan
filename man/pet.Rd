@@ -53,10 +53,10 @@ pet(dat, ci = .99)
 
 }
 \seealso{
-Other overlap functions: \code{\link{corrected_tauSC}},
+Other overlap functions: \code{\link{corrected_tau}},
   \code{\link{nap}}, \code{\link{overlapSC}},
   \code{\link{pand}}, \code{\link{pem}}, \code{\link{pnd}},
-  \code{\link{tauUSC}}
+  \code{\link{tau_u}}
 }
 \author{
 Juergen Wilbert

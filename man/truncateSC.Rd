@@ -37,10 +37,10 @@ plot(study)
 
 }
 \seealso{
-Other data manipulation functions: \code{\link{fillmissingSC}},
-  \code{\link{longSCDF}}, \code{\link{outlierSC}},
+Other data manipulation functions: \code{\link{fillmissing}},
+  \code{\link{longSCDF}}, \code{\link{outlier}},
   \code{\link{rankSC}}, \code{\link{scaleSC}},
-  \code{\link{shiftSC}}, \code{\link{smoothSC}}
+  \code{\link{shift}}, \code{\link{smoothSC}}
 }
 \author{
 Juergen Wilbert

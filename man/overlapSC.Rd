@@ -50,10 +50,9 @@ overlapSC(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 
 }
 \seealso{
-Other overlap functions: \code{\link{corrected_tauSC}},
+Other overlap functions: \code{\link{corrected_tau}},
   \code{\link{nap}}, \code{\link{pand}}, \code{\link{pem}},
-  \code{\link{pet}}, \code{\link{pnd}},
-  \code{\link{tauUSC}}
+  \code{\link{pet}}, \code{\link{pnd}}, \code{\link{tau_u}}
 }
 \author{
 Juergen Wilbert
