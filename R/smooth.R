@@ -1,11 +1,11 @@
 #' Smoothing single-case data
-#' 
-#' The \code{smoothSC} function provides procedures to smooth single-case data
+#'
+#' The \code{smooth} function provides procedures to smooth single-case data
 #' (i.e., to eliminate noise). A moving average function (mean- or
 #' median-based) replaces each data point by the average of the surrounding
 #' data points step-by-step. With a local regression function, each data point
 #' is regressed by its surrounding data points.
-#' 
+#'
 #' @inheritParams .inheritParams
 #' @param FUN Function determining the smoothed scores. Default \code{FUN =
 #' "movingMedian"} is a moving Median function. Further possible values are:
@@ -22,47 +22,55 @@
 #' @family data manipulation functions
 #' @keywords manip
 #' @examples
-#' 
+#'
 #' ## Use the three different smoothing functions and compare the results
 #' study <- c(
-#'  "Original"         = Huber2014$Berta,
-#'  "Moving Median"    = smoothSC(Huber2014$Berta, FUN = "movingMedian"),
-#'  "Moving Mean"      = smoothSC(Huber2014$Berta, FUN = "movingMean"),
-#'  "Local Regression" = smoothSC(Huber2014$Berta, FUN = "localRegression")
+#'   "Original" = Huber2014$Berta,
+#'   "Moving Median" = smooth(Huber2014$Berta, FUN = "movingMedian"),
+#'   "Moving Mean" = smooth(Huber2014$Berta, FUN = "movingMean"),
+#'   "Local Regression" = smooth(Huber2014$Berta, FUN = "localRegression")
 #' )
 #' plot(study)
-#'
 #' @export
-smoothSC <- function(data, dvar, mvar, FUN = "movingMedian", intensity = NULL){
-  
+smooth <- function(data, dvar, mvar, FUN = "movingMedian", intensity = NULL) {
+
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
-  
+
   data <- .SCprepareData(data)
-  ATTRIBUTES <- attributes(data)
-  NAMES <- names(data)
+  copy_attributes <- attributes(data)
+  copy_names <- names(data)
   if (FUN == "movingMean") {
-    if(is.null(intensity)) intensity <- 1
-    out <-lapply(data, function(x) {
-      x[, dvar] <- .SCmovingAverage(x[, dvar], intensity, mean)
-      x})
+    if (is.null(intensity)) intensity <- 1
+    out <- lapply(data, function(x) {
+      x[, dvar] <- .SCmovingAverage(x[[dvar]], intensity, mean)
+      x
+    })
   }
   if (FUN == "movingMedian") {
-    if(is.null(intensity)) intensity <- 1
+    if (is.null(intensity)) intensity <- 1
     out <- lapply(data, function(x) {
-      x[, dvar] <- .SCmovingAverage(x[, dvar], intensity, median)
-      x})
+      x[, dvar] <- .SCmovingAverage(x[[dvar]], intensity, median)
+      x
+    })
   }
   if (FUN == "localRegression") {
-    if(is.null(intensity)) intensity <- 0.2
+    if (is.null(intensity)) intensity <- 0.2
     out <- lapply(data, function(x) {
-      xval <- x[!is.na(x[, dvar]), mvar]
-      yval <- x[!is.na(x[, dvar]), dvar]
+      xval <- x[[mvar]][!is.na(x[[dvar]])]
+      yval <- x[[dvar]][!is.na(x[[dvar]])]
       x[, dvar] <- lowess(yval ~ xval, f = intensity)$y
-      x})
+      x
+    })
   }
-  attributes(out) <- ATTRIBUTES
-  names(out) <- NAMES
+  attributes(out) <- copy_attributes
+  names(out) <- copy_names
   out
-}	
+}
+
+#' @rdname smooth
+#' @export
+smoothSC <- function(...) {
+  smooth(...)
+}
