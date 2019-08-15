@@ -1,6 +1,6 @@
 #' Plot single-case data
 #' 
-#' The \code{plotSC} function provides a plot of a single-case or multiple
+#' This function provides a plot of a single-case or multiple
 #' single-cases.
 #' 
 #' 
@@ -17,7 +17,7 @@
 #' of each case. \code{xlim} is not set by default, which makes \code{scan} set
 #' a proper scale based on the given data.
 #' @param xinc An integer. Increment of the x-axis. 1 :each mt value will be printed, 2 : every other value, 3 : every third values etc.
-#' @param style Either a character with the name of a pre-implemented style or a style object. See \code{\link{style.plotSC}} to learn about this format. 
+#' @param style Either a character with the name of a pre-implemented style or a style object. See \code{\link{style_plot}} to learn about this format. 
 #' @param lines A character or list defining one or more lines or curves to be
 #' plotted. The argument is either passed as a character string (e.g.,
 #' \code{lines = "median"}) or as a list (e.g., \code{list("median", "trend")}.
@@ -69,7 +69,7 @@
 #' @param ... Further arguments passed to the plot command.
 #' @return Returns a plot of one or multiple single-cases.
 #' @author Juergen Wilbert
-#' @seealso \code{\link{style.plotSC}}, \code{\link{describeSC}}, \code{\link{overlapSC}}
+#' @seealso \code{\link{style_plot}}, \code{\link{describeSC}}, \code{\link{overlapSC}}
 #' @examples
 #' 
 #' ## Request the default plot of the data from Borckhardt (2014)

@@ -58,10 +58,10 @@ plot(Grosche2011, marks = res_outlier)
 
 }
 \seealso{
-Other data manipulation functions: \code{\link{fillmissing}},
-  \code{\link{longSCDF}}, \code{\link{rankSC}},
-  \code{\link{scaleSC}}, \code{\link{shift}},
-  \code{\link{smoothSC}}, \code{\link{truncateSC}}
+Other data manipulation functions: \code{\link{fill_missing}},
+  \code{\link{longSCDF}}, \code{\link{ranks}},
+  \code{\link{shift}}, \code{\link{smooth}},
+  \code{\link{standardize}}, \code{\link{truncate_phase}}
 }
 \author{
 Juergen Wilbert

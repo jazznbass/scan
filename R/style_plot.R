@@ -1,9 +1,6 @@
 #' Create styles for single-case data plots
 #' 
-#' The \code{style_plotSC} function is used to create graphical styles for a single-case plot
-#' 
-#' 
-#' @aliases style_plotSC
+#' The \code{style_plot} function is used to create graphical styles for a single-case plot
 #' 
 #' @param style Predefined styles.
 #' @param ... Further arguments passed to the plot command.
@@ -43,23 +40,22 @@
 #' \item\code{"col"} General color setting for the plot
 #' \item\code{"col.text"} Color of all labels of the plot.
 #' }
-#' @details \code{style_plotSC("")} will return a list of predefined styles.
-#' Predefined styles can be combined \code{style_plotSC(style = c("grid2", "tiny"))} 
+#' @details \code{style_plot("")} will return a list of predefined styles.
+#' Predefined styles can be combined \code{style_plot(style = c("grid2", "tiny"))} 
 #' where settings of a latter style overwrite settings of the former.
 #' Additional style paramters are set following the style argument and can be combined with those:
-#' \code{style_plotSC(style = "grid2", fill = "grey50", pch = 18)}. 
+#' \code{style_plot(style = "grid2", fill = "grey50", pch = 18)}. 
 #' @author Juergen Wilbert
 #' @seealso \code{\link{plot.scdf}}
 #' @examples
-#' newstyle <- style_plotSC(style = "default")
+#' newstyle <- style_plot(style = "default")
 #' newstyle$text.ABlag <- c("START","END")
 #' newstyle$col.dots <- ""
 #' newstyle$annotations <- list(cex = 0.6, col = "grey10", offset = 0.4)
 #' plot(exampleABC, style = newstyle)
 #' 
 #' @export
-
-style_plotSC <- function(style = "default", ...) {
+style_plot <- function(style = "default", ...) {
   new <- list(...)
   if (identical(style, "")) {
     cat("Available styles: \n")
@@ -86,7 +82,14 @@ style_plotSC <- function(style = "default", ...) {
 }
 
 #' @rdname style_plotSC
+#' @export
+style_plotSC <- function(...) {
+  .deprecated_warning("style_plot", "style_plotSC")
+  style_plot(...)
+}
+
+#' @rdname style_plotSC
 style.plotSC <- function(...) {
-  warning(.opt$function_deprecated_warning, "\nPlease use style_plotSC instead of style.plotSC")
-  style.plotSC(...)
+  .deprecated_warning("style_plot", "style.plotSC")  
+  style_plot(...)
 }

@@ -86,7 +86,7 @@ Research: Nonoverlap of All Pairs. \emph{Behavior Therapy, 40}, 357-367.
 }
 \seealso{
 Other overlap functions: \code{\link{corrected_tau}},
-  \code{\link{nap}}, \code{\link{overlapSC}},
+  \code{\link{nap}}, \code{\link{overlap}},
   \code{\link{pem}}, \code{\link{pet}}, \code{\link{pnd}},
   \code{\link{tau_u}}
 }

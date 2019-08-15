@@ -40,10 +40,10 @@ summary(Leidig2018_long)
 
 }
 \seealso{
-Other data manipulation functions: \code{\link{fillmissing}},
-  \code{\link{outlier}}, \code{\link{rankSC}},
-  \code{\link{scaleSC}}, \code{\link{shift}},
-  \code{\link{smoothSC}}, \code{\link{truncateSC}}
+Other data manipulation functions: \code{\link{fill_missing}},
+  \code{\link{outlier}}, \code{\link{ranks}},
+  \code{\link{shift}}, \code{\link{smooth}},
+  \code{\link{standardize}}, \code{\link{truncate_phase}}
 }
 \author{
 Juergen Wilbert

@@ -267,9 +267,9 @@ rand_test <- function (data, dvar, pvar, statistic = "Mean B-A",
 #' @rdname rand_test
 #' @export
 randSC <- function(...) {
+  .deprecated_warning("rand_test", "randSC")
   rand_test(...)
 }
-
 
 
 

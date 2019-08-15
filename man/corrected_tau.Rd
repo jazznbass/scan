@@ -8,7 +8,7 @@
 corrected_tau(data, dvar, pvar, mvar, phases = c(1, 2), alpha = 0.05,
   continuity = TRUE, repeated = TRUE)
 
-corrected_tauSC(..)
+corrected_tauSC(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -59,7 +59,7 @@ Other regression functions: \code{\link{hplm}},
   \code{\link{mplm}}, \code{\link{plm}}
 
 Other overlap functions: \code{\link{nap}},
-  \code{\link{overlapSC}}, \code{\link{pand}},
+  \code{\link{overlap}}, \code{\link{pand}},
   \code{\link{pem}}, \code{\link{pet}}, \code{\link{pnd}},
   \code{\link{tau_u}}
 }

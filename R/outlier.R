@@ -173,5 +173,6 @@ outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
 #' @rdname outlier
 #' @export
 outlierSC <- function(...) {
+  .deprecated_warning("outlier", "outlierSC")
   outlier(...)
 }

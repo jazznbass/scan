@@ -58,8 +58,8 @@ overlap <- function(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2)
     d.f$NAP.rescaled[i] <- nap(data, decreasing = decreasing)$nap$Rescaled[1]
     d.f$PAND[i] <- pand(data, decreasing = decreasing)$PAND
     #d.f$TAU_U[i] <- tauUSC(data)$Overall_tau_u[2]
-    d.f$TAU_U[i] <- tauUSC(data)$table[[1]]["A vs. B + Trend B - Trend A", "Tau"]
-    d.f$Base_Tau[i] <- corrected_tauSC(data)$tau
+    d.f$TAU_U[i] <- tau_u(data)$table[[1]]["A vs. B + Trend B - Trend A", "Tau"]
+    d.f$Base_Tau[i] <- corrected_tau(data)$tau
     
     data <- data[[1]]
     A <- data[data[, pvar] == "A", dvar]
@@ -86,5 +86,6 @@ overlap <- function(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2)
 #' @rdname overlap
 #' @export
 overlapSC <- function(...) {
+  .deprecated_warning("overlap", "overlapSC")
   overlap(...)
 }

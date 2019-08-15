@@ -41,7 +41,7 @@
 #' plot(study, marks = list(positions = replace.positions), style = "grid2")
 #' 
 #' @export
-fillmissing <- function(data, dvar, mvar, interpolation = "linear", na.rm = TRUE) {
+fill_missing <- function(data, dvar, mvar, interpolation = "linear", na.rm = TRUE) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -79,6 +79,9 @@ fillmissing <- function(data, dvar, mvar, interpolation = "linear", na.rm = TRUE
   data
 }
 
-#' @rdname fillmissing
+#' @rdname fill_missing
 #' @export
-fillmissingSC <- function(...) fillmissing(...)
+fillmissingSC <- function(...) {
+  .deprecated_warning("fill_missing", "fillmissingSC")
+  fill_missing(...)
+}

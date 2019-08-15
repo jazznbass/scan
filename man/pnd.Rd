@@ -39,7 +39,7 @@ pnd(GruenkeWilbert2014)
 }
 \seealso{
 Other overlap functions: \code{\link{corrected_tau}},
-  \code{\link{nap}}, \code{\link{overlapSC}},
+  \code{\link{nap}}, \code{\link{overlap}},
   \code{\link{pand}}, \code{\link{pem}}, \code{\link{pet}},
   \code{\link{tau_u}}
 }

@@ -4,9 +4,6 @@
   if (!is.null(attri)) out <- attri
   
   out$class <- c("scdf","list")
-  #out[.opt$phase] <- "phase"
-  #out[.opt$dv]    <- "values"
-  #out[.opt$mt]    <- "mt"
   
   scdf <- list()
   scdf[[.opt$phase]]   <- "phase"
@@ -17,6 +14,16 @@
   
   out
 }  
+
+.deprecated_warning <- function(new, old) {
+  if (isTRUE(getOption("scan.deprecated.warning"))) {
+    warning(
+      .opt$function_deprecated_warning, 
+      " Please name function '", new, "' instead of '", old, "'."
+    )
+  }   
+} 
+
 
 .SCmovingAverage <- function(x, xLag, FUN = mean) {
   for(i in (xLag + 1):(length(x) - xLag))

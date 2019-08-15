@@ -54,7 +54,7 @@ pem(dat, chi.test = TRUE)
 }
 \seealso{
 Other overlap functions: \code{\link{corrected_tau}},
-  \code{\link{nap}}, \code{\link{overlapSC}},
+  \code{\link{nap}}, \code{\link{overlap}},
   \code{\link{pand}}, \code{\link{pet}}, \code{\link{pnd}},
   \code{\link{tau_u}}
 }

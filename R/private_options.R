@@ -33,8 +33,8 @@
   female.names = .female.names,
   male.names   = .male.names,
   names        = .names,
-  function_debugging_warning  = "This function is in an experimental state and only implemented for testing und debugging purposes.\n",
-  function_deprecated_warning = "This function is deprecated. It will be dropped without any further notice in a future update of scan.\n",
+  function_debugging_warning  = "This function is in an experimental state and only implemented for testing und debugging purposes.",
+  function_deprecated_warning = "This function is deprecated. It might be dropped without any further notice in a future update of scan.",
   style = list()
   )
 
@@ -126,8 +126,8 @@
     param <- (nrow(res) - 2) / 2
     res[2 + param + 1, 5]
   },
-  tauU = function(x) tauUSC(x, method = "parker")$table[[1]][5, 12],
-  base_tau = function(x) corrected_tauSC(x)$p,
+  tauU = function(x) tau_u(x, method = "parker")$table[[1]][5, 12],
+  base_tau = function(x) corrected_tau(x)$p,
   
-  rand = function(x) randSC(x, number = 100, exclude.equal = "auto", output = "p")
+  rand = function(x) rand_test(x, number = 100, exclude.equal = "auto", output = "p")
 )

@@ -25,7 +25,6 @@
 #' @examples
 #' dat <- scdf(c(A = 33,25,17,25,14,13,15, B = 15,16,16,5,7,9,6,5,3,3,8,11,7))
 #' corrected_tau(dat)
-
 corrected_tau <- function(data, dvar, pvar, mvar, phases = c(1,2), alpha = 0.05, continuity = TRUE, repeated = TRUE) {
   
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)    else scdf_attr(data, .opt$dv)    <- dvar
@@ -75,4 +74,7 @@ corrected_tau <- function(data, dvar, pvar, mvar, phases = c(1,2), alpha = 0.05,
 
 #' @rdname corrected_tau
 #' @export
-corrected_tauSC <- function(..) corrected_tauSC(...)
+corrected_tauSC <- function(...) {
+  .deprecated_warning("corrected_tau", "corrected_tauSC")
+  corrected_tau(...)
+}

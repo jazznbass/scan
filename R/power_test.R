@@ -103,6 +103,7 @@ power_test <- function(design,
 #' @rdname power_test
 #' @export
 power_testSC <- function(...) {
+  .deprecated_warning("power_test", "power_testSC")
   power_test(...)
 }
 

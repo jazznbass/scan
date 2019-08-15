@@ -1,7 +1,7 @@
-#' Scaling values of an scdf file
+#' Standardize values of an scdf file
 #'
 #' This function scales the measured values of an scdf file. It allows for mean
-#' centering and standardization based on each s?ingle-case data set or a
+#' centering and standardization based on each single-case data set or a
 #' scaling across all cases included in an scdf.
 #'
 #' @param data A single-case data frame. See \code{\link{scdf}} to learn about
@@ -20,11 +20,11 @@
 #' @examples
 #'
 #' ## Standardize a multiple case scdf and compute an hplm
-#' ex_sc <- scaleSC(exampleAB_50, var = "values", center = TRUE, scale = TRUE)
+#' ex_sc <- standardize(exampleAB_50, var = "values", center = TRUE, scale = TRUE)
 #' hplm(ex_sc)
 #' @export
 
-scaleSC <- function(data, var, center = TRUE, scale = FALSE, m = 0, sd = 1, grand = TRUE) {
+standardize <- function(data, var, center = TRUE, scale = FALSE, m = 0, sd = 1, grand = TRUE) {
   data <- .SCprepareData(data)
 
   N <- length(data)
@@ -71,4 +71,11 @@ scaleSC <- function(data, var, center = TRUE, scale = FALSE, m = 0, sd = 1, gran
   }
 
   data
+}
+
+#' @rdname standardize
+#' @export
+trendSC <- function(...) {
+  .deprecated_warning("standardize", "scaleSC")
+  standardize(...)
 }

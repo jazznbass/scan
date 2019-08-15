@@ -56,7 +56,7 @@ The \code{scdf} class is a wrapper for a list containing a dataframe for
 each case.
 
 If the dependent variable is a named vector then the names are extracted
-to create a phase design (e.g., values = c(A = 2,3,5,4,3, B = 6,5,4,3) will create 
+to create a phase design (e.g., values = c(A = 2,3,5,4,3, B = 6,5,4,3) will create
 an AB phase design with five and four measuresments).
 An scdf contains several attributes:
  \code{dvar} The name of the dependent variable.
@@ -65,9 +65,9 @@ An scdf contains several attributes:
  \code{author} Information on the author of the data.
  \code{info} Further information on the data. E.g., a publication.
  \code{dvar, phase, and mt} are the defaults most of the \code{scan} function
- use. You can change the values of the attributes with the \code{scdf_attr} function 
+ use. You can change the values of the attributes with the \code{scdf_attr} function
  (e.g., \code{scdf_attr(exampleAB_add, "dvar") <- "depression"} defines depression
- as the dependent variable. Please notice that all \code{scan} functions 
+ as the dependent variable. Please notice that all \code{scan} functions
  have arguments to define \code{dvar, phase, and mt} for a given analysis.
 }
 \examples{
@@ -75,35 +75,36 @@ An scdf contains several attributes:
 ## Scores on a letter naming task were collected on eleven days in a row. The intervention
 ## started after the fifth measurement, so the first B phase measurement was 6 (B.start = 6).
 klaas <- scdf(
-  c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19), 
+  c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
   B.start = 6, name = "Klaas"
 )
 plot(klaas)
 
-#Alternative coding 1:
+# Alternative coding 1:
 klaas <- scdf(
-  c(A = 5, 7, 8, 5, 7, B = 12, 16, 18, 15, 14, 19), 
+  c(A = 5, 7, 8, 5, 7, B = 12, 16, 18, 15, 14, 19),
   name = "Klaas"
 )
 
-#Alternative coding 2:
+# Alternative coding 2:
 klaas <- scdf(
-  c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19), 
+  c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
   phase.design = c(A = 5, B = 6), name = "Klaas"
 )
 
 ## Unfortunately in a similar SCDR there were no data collected on days 3 and 9. Use NA to
 ## pass them to the package.
-emmi <- scdf(c(5, 7, NA, 5, 7, 12, 16, 18, NA, 14, 19), 
-  phase.design = c(A = 5, B = 6), name = "Emmi")
+emmi <- scdf(c(5, 7, NA, 5, 7, 12, 16, 18, NA, 14, 19),
+  phase.design = c(A = 5, B = 6), name = "Emmi"
+)
 describeSC(emmi)
 
 ## In a MBD over three persons, data were again collected eleven days in a row. Intervention
 ## starting points differ between subjects as they were randomly assigned. The three SCDFs
 ## are then combined in a list for further conjoined analyses.
 charlotte <- scdf(c(A = 5, 7, 10, 5, 12, B = 7, 10, 18, 15, 14, 19))
-theresa   <- scdf(c(A = 3, 4, 3, 5, B = 7, 4, 7, 9, 8, 10, 12))
-antonia   <- scdf(c(A = 9, 8, 8, 7, 5, 7, B = 6, 14, 15, 12, 16))
+theresa <- scdf(c(A = 3, 4, 3, 5, B = 7, 4, 7, 9, 8, 10, 12))
+antonia <- scdf(c(A = 9, 8, 8, 7, 5, 7, B = 6, 14, 15, 12, 16))
 mbd <- c(charlotte, theresa, antonia)
 names(mbd) <- c("Charlotte", "Theresa", "Antonia")
 overlapSC(mbd)
@@ -120,12 +121,12 @@ plot(frida)
 describeSC(frida)
 
 ## example with two independent variables and four phases
-jim  <- scdf(
-  zvt = c(47, 58, 76, 63, 71, 59, 64, 69, 72, 77, 76, 73), 
-  d2 = c(131, 134, 141, 141, 140, 140, 138, 140, 141, 140, 138, 140), 
-  phase.design = c(A1 = 3, B1 = 3, A2 = 3, B2 = 3), dvar = "zvt")
+jim <- scdf(
+  zvt = c(47, 58, 76, 63, 71, 59, 64, 69, 72, 77, 76, 73),
+  d2 = c(131, 134, 141, 141, 140, 140, 138, 140, 141, 140, 138, 140),
+  phase.design = c(A1 = 3, B1 = 3, A2 = 3, B2 = 3), dvar = "zvt"
+)
 overlapSC(jim, phases = list(c("A1", "A2"), c("B1", "B2")))
-
 }
 \author{
 Juergen Wilbert

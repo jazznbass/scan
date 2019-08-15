@@ -38,10 +38,10 @@
 #' ## measurement time.
 #' design <- design_rSC(slope = 0.3)
 #' ben <- rSC(design)
-#' trendSC(ben, offset = 0, model = c("Cubic" = values ~ I(mt^3), "Log Time" = values ~ log(mt)))
+#' trend(ben, offset = 0, model = c("Cubic" = values ~ I(mt^3), "Log Time" = values ~ log(mt)))
 #' 
 #' @export
-trendSC <- function(data, dvar, pvar, mvar, offset = -1,model = NULL) {
+trend <- function(data, dvar, pvar, mvar, offset = -1,model = NULL) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)    else scdf_attr(data, .opt$dv)    <- dvar
@@ -98,3 +98,9 @@ trendSC <- function(data, dvar, pvar, mvar, offset = -1,model = NULL) {
   out
 }
 
+#' @rdname trend
+#' @export
+trendSC <- function(...) {
+  .deprecated_warning("trend", "trendSC")
+  trend(...)
+}

@@ -66,4 +66,7 @@ autocorr <- function(data, dvar, pvar, mvar, lag.max = 3, ...) {
 
 #' @rdname autocorr
 #' @export
-autocorrSC <- function(...) autocorr(...)
+autocorrSC <- function(...) {
+  .deprecated_warning("autocorr", "autocorrSC")
+  autocorr(...)
+  }
