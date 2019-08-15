@@ -1,6 +1,6 @@
 .onAttach <- function(lib, pkg, ...) {
 	out <- paste0("scan ", utils::packageVersion("scan"), 
-	              " (", utils::packageDate('scan'), ")\n",
+	              " - Experimental (", utils::packageDate('scan'), ")\n",
 	              "Single-Case Data Analysis for Single and Multiple Baseline Designs\n")
 	packageStartupMessage(out)
 }	
@@ -14,7 +14,8 @@
     scan.print.cols   = "all",
     scan.print.digits = 1,
     scan.print.long   = FALSE,
-    scan.print.scdf.name = TRUE
+    scan.print.scdf.name = TRUE,
+    scan.deprecated.warning = TRUE
   )
   
   toset <- !(names(op_scan) %in% names(op))
