@@ -127,18 +127,19 @@ export <- function(object, filename = NULL,
       .stringPhasesSC(object$design[object$phases.A],object$design[object$phases.B]),
       ".</i>"
     )
-    footnote <- c("PND = Percentage Non-Overlapping Data; ",
-                  "PEM = Percentage Exceeding the Median; ",
-                  "PET = Percentage Exceeding the Trend; ",
-                  "NAP = Nonoverlap of all pairs; ",
-                  "NAP-R = NAP rescaled; \n",
-                  "PAND = Percentage all nonoverlapping data;", 
-                  "Tau U = Parker's Tau-U; ",
-                  "Base Tau = Baseline corrected Tau; ",
-                  "Delta M = Mean difference between phases; ",
-                  "Delta Trend = Trend difference between phases; ",
-                  "SMD = Standardized Mean Difference."
-                  )
+    footnote <- c(
+      "PND = Percentage Non-Overlapping Data; ",
+      "PEM = Percentage Exceeding the Median; ",
+      "PET = Percentage Exceeding the Trend; ",
+      "NAP = Nonoverlap of all pairs; ",
+      "NAP-R = NAP rescaled; \n",
+      "PAND = Percentage all nonoverlapping data;", 
+      "Tau U = Parker's Tau-U; ",
+      "Base Tau = Baseline corrected Tau; ",
+      "Delta M = Mean difference between phases; ",
+      "Delta Trend = Trend difference between phases; ",
+      "SMD = Standardized Mean Difference."
+    )
     footnote <- paste0(footnote, collapse = "")
     caption  <- paste0(caption, collapse = "")
     n.phases <- 2
@@ -165,7 +166,7 @@ export <- function(object, filename = NULL,
 # plm ---------------------------------------------------------------------
 
   if (x == "pr") {
-    caption <- paste0("Piecewise-regression model for variable '", scdf_attr(object,.opt$dv),"'.")
+    caption <- paste0("Piecewise-regression model for variable '", attr(object,.opt$dv),"'.")
     
     if (object$ar == 0) out <- summary(object$full.model)$coefficients
     if (object$ar  > 0) out <- summary(object$full.model)$tTable
@@ -243,7 +244,7 @@ export <- function(object, filename = NULL,
 # hplm --------------------------------------------------------------------
   
   if (x == "hplm") {
-    caption <- paste0("Hierarchical Piecewise Linear Regression for variable '", scdf_attr(object,.opt$dv),"'.")
+    caption <- paste0("Hierarchical Piecewise Linear Regression for variable '", attr(object,.opt$dv),"'.")
     
     Summary <- summary(object$hplm)
     if (object$model$ICC)
