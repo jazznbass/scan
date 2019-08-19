@@ -107,7 +107,7 @@ estimate_design <- function(data, dvar, pvar, mvar, m = NULL, s = NULL, rtt = NU
     cases[[i]]$extreme.low <- -4
     cases[[i]]$extreme.high <- -3
     cases[[i]]$mt <- sum(cases[[i]]$length)
-    cases[[i]] <- cases[[i]][[VAR]]
+    cases[[i]] <- cases[[i]][VAR]
   }
 
   out <- list(
