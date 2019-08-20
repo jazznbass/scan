@@ -77,6 +77,7 @@ export <- function(object, filename = NULL,
 
   if (x == "describe") {
     caption  <- "Descriptive statistics."
+    
     footnote <- paste0(
       "n = Number of measurements; ",
       "Missing = Number of missing values; ",
@@ -89,27 +90,49 @@ export <- function(object, filename = NULL,
       "Trend = Slope of dependent variable regressed on measurement-time."
     )
  
-    n.phases <- length(object$design)
-    out <- object$descriptives
-    colnames(out) <- rep(object$design, 9)
-
-    kable_options$align <- c("c", rep("c", 9 * n.phases))
-    kable_options$x <- out
-    table <- do.call(kable, kable_options)
-    kable_styling_options$kable_input <- table
-    table <- do.call(kable_styling, kable_styling_options)
-    table <- add_header_above(table, 
-      c(" " = 1, "n" = n.phases, 
-        "Missing" = n.phases, 
-        "M" = n.phases,
-        "Median" = n.phases,
-        "SD" = n.phases,
-        "MAD" = n.phases,
-        "Min" = n.phases,
-        "Max" = n.phases,
-        "Trend" = n.phases
+   
+    if (flip) {
+      out <- t(object$descriptives)
+      rownames(out) <- gsub("mis", "Missing", rownames(out))
+      rownames(out) <- gsub("med", "Median", rownames(out))
+      rownames(out) <- gsub("min", "Min", rownames(out))
+      rownames(out) <- gsub("max", "Max", rownames(out))
+      rownames(out) <- gsub("trend", "Trend", rownames(out))
+      rownames(out) <- gsub("\\.", " ", rownames(out))
+      out <- cbind(Parameter = rownames(out), out)
+      rownames(out) <- NULL
+      kable_options$align <- c("l", rep("c", 9))
+      kable_options$x <- out
+      table <- do.call(kable, kable_options)
+      kable_styling_options$kable_input <- table
+      table <- do.call(kable_styling, kable_styling_options)
+    }
+    
+    
+    if (!flip) {
+      n.phases <- length(object$design)
+      out <- object$descriptives
+      colnames(out) <- rep(object$design, 9)
+      kable_options$align <- c("c", rep("c", 9 * n.phases))
+      kable_options$x <- out
+      table <- do.call(kable, kable_options)
+      kable_styling_options$kable_input <- table
+      table <- do.call(kable_styling, kable_styling_options)
+      table <- add_header_above(table, 
+        c(" " = 1, "n" = n.phases, 
+          "Missing" = n.phases, 
+          "M" = n.phases,
+          "Median" = n.phases,
+          "SD" = n.phases,
+          "MAD" = n.phases,
+          "Min" = n.phases,
+          "Max" = n.phases,
+          "Trend" = n.phases
+        )
       )
-    )
+    }
+    
+    
     if(!note) footnote <- ""
       #table <- footnote(table, general = footnote)
     tmp <- attributes(table)
