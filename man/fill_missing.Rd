@@ -62,7 +62,7 @@ plot(study, marks = list(positions = replace.positions), style = "grid2")
 \seealso{
 Other data manipulation functions: \code{\link{longSCDF}},
   \code{\link{outlier}}, \code{\link{ranks}},
-  \code{\link{shift}}, \code{\link{smooth}},
+  \code{\link{shift}}, \code{\link{smooth_cases}},
   \code{\link{standardize}}, \code{\link{truncate_phase}}
 }
 \author{

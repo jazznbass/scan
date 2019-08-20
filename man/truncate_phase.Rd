@@ -39,7 +39,7 @@ plot(study)
 Other data manipulation functions: \code{\link{fill_missing}},
   \code{\link{longSCDF}}, \code{\link{outlier}},
   \code{\link{ranks}}, \code{\link{shift}},
-  \code{\link{smooth}}, \code{\link{standardize}}
+  \code{\link{smooth_cases}}, \code{\link{standardize}}
 }
 \author{
 Juergen Wilbert

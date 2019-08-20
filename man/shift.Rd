@@ -32,7 +32,7 @@ plm(ex)
 \seealso{
 Other data manipulation functions: \code{\link{fill_missing}},
   \code{\link{longSCDF}}, \code{\link{outlier}},
-  \code{\link{ranks}}, \code{\link{smooth}},
+  \code{\link{ranks}}, \code{\link{smooth_cases}},
   \code{\link{standardize}}, \code{\link{truncate_phase}}
 }
 \concept{data manipulation functions}

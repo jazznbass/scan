@@ -32,7 +32,7 @@
 #' )
 #' plot(study)
 #' @export
-smooth <- function(data, dvar, mvar, FUN = "movingMedian", intensity = NULL) {
+smooth_cases <- function(data, dvar, mvar, FUN = "movingMedian", intensity = NULL) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -69,8 +69,8 @@ smooth <- function(data, dvar, mvar, FUN = "movingMedian", intensity = NULL) {
   out
 }
 
-#' @rdname smooth
+#' @rdname smooth_cases
 #' @export
 smoothSC <- function(...) {
-  smooth(...)
+  smooth_cases(...)
 }

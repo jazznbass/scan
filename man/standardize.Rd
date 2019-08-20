@@ -46,7 +46,7 @@ hplm(ex_sc)
 Other data manipulation functions: \code{\link{fill_missing}},
   \code{\link{longSCDF}}, \code{\link{outlier}},
   \code{\link{ranks}}, \code{\link{shift}},
-  \code{\link{smooth}}, \code{\link{truncate_phase}}
+  \code{\link{smooth_cases}}, \code{\link{truncate_phase}}
 }
 \author{
 Juergen Wilbert

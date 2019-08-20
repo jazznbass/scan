@@ -31,7 +31,7 @@ plot(Huber2014_rank, style = "grid2")
 \seealso{
 Other data manipulation functions: \code{\link{fill_missing}},
   \code{\link{longSCDF}}, \code{\link{outlier}},
-  \code{\link{shift}}, \code{\link{smooth}},
+  \code{\link{shift}}, \code{\link{smooth_cases}},
   \code{\link{standardize}}, \code{\link{truncate_phase}}
 }
 \author{

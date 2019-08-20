@@ -42,7 +42,7 @@ summary(Leidig2018_long)
 \seealso{
 Other data manipulation functions: \code{\link{fill_missing}},
   \code{\link{outlier}}, \code{\link{ranks}},
-  \code{\link{shift}}, \code{\link{smooth}},
+  \code{\link{shift}}, \code{\link{smooth_cases}},
   \code{\link{standardize}}, \code{\link{truncate_phase}}
 }
 \author{
