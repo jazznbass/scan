@@ -9,6 +9,7 @@
     stop("Wrong data format. Data must be a data frame or a list of data frames.")
   }
   
+  if (is.null(attr(data, .opt$scdf))) attributes(data) <- .defaultAttributesSCDF()
   if (is.null(scdf_attr(data, .opt$phase))) scdf_attr(data, .opt$phase) <- "phase"
   if (is.null(scdf_attr(data, .opt$mt))) scdf_attr(data, .opt$mt) <- "mt"
   if (is.null(scdf_attr(data, .opt$dv))) scdf_attr(data, .opt$dv) <- "values"
