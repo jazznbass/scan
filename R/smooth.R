@@ -1,6 +1,6 @@
 #' Smoothing single-case data
 #'
-#' The \code{smooth} function provides procedures to smooth single-case data
+#' The \code{smooth_cases} function provides procedures to smooth single-case data
 #' (i.e., to eliminate noise). A moving average function (mean- or
 #' median-based) replaces each data point by the average of the surrounding
 #' data points step-by-step. With a local regression function, each data point
@@ -26,9 +26,9 @@
 #' ## Use the three different smoothing functions and compare the results
 #' study <- c(
 #'   "Original" = Huber2014$Berta,
-#'   "Moving Median" = smooth(Huber2014$Berta, FUN = "movingMedian"),
-#'   "Moving Mean" = smooth(Huber2014$Berta, FUN = "movingMean"),
-#'   "Local Regression" = smooth(Huber2014$Berta, FUN = "localRegression")
+#'   "Moving Median" = smooth_cases(Huber2014$Berta, FUN = "movingMedian"),
+#'   "Moving Mean" = smooth_cases(Huber2014$Berta, FUN = "movingMean"),
+#'   "Local Regression" = smooth_cases(Huber2014$Berta, FUN = "localRegression")
 #' )
 #' plot(study)
 #' @export

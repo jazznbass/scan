@@ -1,7 +1,7 @@
 #' Select a subset of cases
 #'
 #' @param scdf 
-#' @param ... 
+#' @param ... Selection criteria. Either numeric or as characters.
 #'
 #' @return An scdf with a subset of cases
 #' @export

@@ -43,7 +43,7 @@ single-case data and you want to calculate overlap indices
 ## at different times were administered.
 
 ## Fill missing values in a single-case dataset with discontinuous measurement times
-Grosche2011filled <- fillmissing(Grosche2011)
+Grosche2011filled <- fill_missing(Grosche2011)
 study <- c(Grosche2011[2], Grosche2011filled[2])
 names(study) <- c("Original", "Filled")
 plot(study, style = "grid")
@@ -53,7 +53,7 @@ Maggie <- rSC(design_rSC(level = list(0,1)), seed = 123)
 Maggie_n <- Maggie
 replace.positions <- c(10,16,18)
 Maggie_n[[1]][replace.positions,"values"] <- NA
-Maggie_f <- fillmissing(Maggie_n)
+Maggie_f <- fill_missing(Maggie_n)
 study <- c(Maggie, Maggie_n, Maggie_f)
 names(study) <- c("original", "missing", "interpolated")
 plot(study, marks = list(positions = replace.positions), style = "grid2")
