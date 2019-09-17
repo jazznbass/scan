@@ -1,10 +1,11 @@
-#' Concatenate single-case data frames
+#' Combine single-case data frames into a multiple case study
 #'
 #' @param ... scdf objects
 #'
 #' @return A scdf
+#' 
 #' @export
-c.scdf <- function(...) {
+combine <- function(...) {
   scdfs <- list(...)
   
   ATTRIBUTES <- attributes(scdfs[[1]])
@@ -14,20 +15,19 @@ c.scdf <- function(...) {
   data <- unlist(scdfs, recursive = FALSE)
   attributes(data) <- .defaultAttributesSCDF()
 
-  #if (!is.null(ATTRIBUTES[[.opt$dv]])) 
-  #  attr(data, .opt$dv) <- ATTRIBUTES[[.opt$dv]]
-  #if (!is.null(ATTRIBUTES[[.opt$phase]]))
-  #  attr(data, .opt$phase) <- ATTRIBUTES[[.opt$phase]]
-  #if (!is.null(ATTRIBUTES[[.opt$mt]]))
-  #  attr(data, .opt$mt) <- ATTRIBUTES[[.opt$mt]]
-
-  if (!is.null(ATTRIBUTES[[.opt$scdf]]))
-    attr(data, .opt$scdf) <- ATTRIBUTES[[.opt$scdf]]
+  if (!is.null(ATTRIBUTES[[.opt$scdf]])) attr(data, .opt$scdf) <- ATTRIBUTES[[.opt$scdf]]
   
   names(data) <- case_names
-  if (!is.null(names(scdfs)))
+  if (!is.null(names(scdfs))) 
     names(data)[which(names(scdfs) != "")] <- names(scdfs)[which(names(scdfs) != "")]
-  return(data)
+  
+  data
+}
+
+##' @rdname combine
+##' @export
+c.scdf <- function(...) {
+  combine(...)
 }
 
 #' Select a scdf
@@ -114,6 +114,12 @@ checkSCDF <- function(data) {
 #' @export
 makeSCDF <- function (data, B.start = NULL, MT = NULL){
   warning("This function is deprecated. Please use the scdf function.\n\n")
-  
-  scdf(values = data, B.start = B.start, mt = MT)[[1]]
+  args <- list(
+    values = data,
+    B.start = B.start
+  )
+  if (!is.null(MT)) args$mt <- MT
+    
+  do.call(scdf, args)
+  #scdf(values = data, B.start = B.start, mt = MT)[[1]]
 }
