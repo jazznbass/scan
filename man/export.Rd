@@ -17,7 +17,7 @@ the output will be written into this file.}
 
 \item{kable_options}{list with arguments passed to the kable function.}
 
-\item{cols}{Defines which columns are included when a scdf is exported. It is either a vector 
+\item{cols}{Defines which columns are included when a scdf is exported. It is either a vector
 with variable names or the string "main" will select the central variables.}
 
 \item{flip}{If TRUE, some objects are displayed with rows and columns flipped.}
