@@ -21,6 +21,8 @@ fillmissingSC(...)
 
 \item{na.rm}{If set \code{TRUE}, \code{NA} values are also interpolated.
 Default is \code{na.rm = TRUE}.}
+
+\item{...}{Further arguments passed to the function.}
 }
 \value{
 A single-case data frame (SCDF) with missing data points
@@ -60,10 +62,14 @@ plot(study, marks = list(positions = replace.positions), style = "grid2")
 
 }
 \seealso{
-Other data manipulation functions: \code{\link{longSCDF}},
-  \code{\link{outlier}}, \code{\link{ranks}},
-  \code{\link{shift}}, \code{\link{smooth_cases}},
-  \code{\link{standardize}}, \code{\link{truncate_phase}}
+Other data manipulation functions: 
+\code{\link{longSCDF}()},
+\code{\link{outlier}()},
+\code{\link{ranks}()},
+\code{\link{shift}()},
+\code{\link{smooth_cases}()},
+\code{\link{standardize}()},
+\code{\link{truncate_phase}()}
 }
 \author{
 Juergen Wilbert

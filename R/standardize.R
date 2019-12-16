@@ -4,8 +4,7 @@
 #' centering and standardization based on each single-case data set or a
 #' scaling across all cases included in an scdf.
 #'
-#' @param data A single-case data frame. See \code{\link{scdf}} to learn about
-#'   this format.
+#' @inheritParams .inheritParams
 #' @param var A character string or a vector of character strings with variable
 #'   names that should be scaled.
 #' @param center If set TRUE, data are mean centered.
@@ -71,11 +70,4 @@ standardize <- function(data, var, center = TRUE, scale = FALSE, m = 0, sd = 1, 
   }
 
   data
-}
-
-#' @rdname standardize
-#' @export
-trendSC <- function(...) {
-  .deprecated_warning("standardize", "scaleSC")
-  standardize(...)
 }

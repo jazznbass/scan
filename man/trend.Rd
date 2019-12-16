@@ -10,14 +10,13 @@ trend(data, dvar, pvar, mvar, offset = -1, model = NULL)
 trendSC(...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn
-about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
 
-\item{dvar}{Character string with the name of the independend variable.}
+\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
 
-\item{mvar}{Character string with the name of the measurement time variable.}
+\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
 
 \item{offset}{An offset for the first measurement-time of each phase (MT). If
 set \code{offset = 0}, the phase measurement is handled as MT 1.
@@ -26,6 +25,8 @@ Default is \code{offset = -1}, setting the first value of MT to 0.}
 \item{model}{A string or a list of (named) strings each depicting one
 regression model. This is a formula expression of the standard R class. The
 parameters of the model are \code{values}, \code{mt} and \code{phase}.}
+
+\item{...}{Further arguments passed to the function.}
 }
 \value{
 \item{trend}{A matrix containing the results (Intercept, B and beta)

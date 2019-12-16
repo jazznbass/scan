@@ -4,8 +4,16 @@
 \alias{export}
 \title{Export scan objects to html or latex}
 \usage{
-export(object, filename = NULL, kable_styling_options = list(),
-  kable_options = list(), cols, flip = FALSE, note = TRUE, ...)
+export(
+  object,
+  filename = NULL,
+  kable_styling_options = list(),
+  kable_options = list(),
+  cols,
+  flip = FALSE,
+  note = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{An scdf}

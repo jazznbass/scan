@@ -8,11 +8,7 @@
 #' specific formula class.
 #' 
 #' 
-#' @param data A single-case data frame. See \code{\link{scdf}} to learn
-#' about this format.
-#' @param dvar Character string with the name of the independend variable.
-#' @param pvar Character string with the name of the phase variable.
-#' @param mvar Character string with the name of the measurement time variable.
+#' @inheritParams .inheritParams
 #' @param offset An offset for the first measurement-time of each phase (MT). If
 #' set \code{offset = 0}, the phase measurement is handled as MT 1.
 #' Default is \code{offset = -1}, setting the first value of MT to 0.

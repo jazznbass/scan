@@ -5,8 +5,16 @@
 \alias{corrected_tauSC}
 \title{Baseline corrected tau}
 \usage{
-corrected_tau(data, dvar, pvar, mvar, phases = c(1, 2), alpha = 0.05,
-  continuity = TRUE, repeated = TRUE)
+corrected_tau(
+  data,
+  dvar,
+  pvar,
+  mvar,
+  phases = c(1, 2),
+  alpha = 0.05,
+  continuity = TRUE,
+  repeated = TRUE
+)
 
 corrected_tauSC(...)
 }
@@ -31,6 +39,8 @@ and 4 (as B). Default is \code{phases = c("A","B")}.}
 \item{continuity}{If TRUE applies a continuity correction for calculating p}
 
 \item{repeated}{If TRUE applies the repeated median method for caluclating slope and intercept (\code{\link{mblm}})}
+
+\item{...}{Further arguments passed to the function.}
 }
 \description{
 Kendalls tau correlation for the dependent variable and the phase variable is calculated
@@ -55,13 +65,19 @@ Tarlow, K. R. (2016). An Improved Rank Correlation Effect
 Size Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior Modification, 41(4), 427–467. https://doi.org/10.1177/0145445516676750
 }
 \seealso{
-Other regression functions: \code{\link{hplm}},
-  \code{\link{mplm}}, \code{\link{plm}}
+Other regression functions: 
+\code{\link{hplm}()},
+\code{\link{mplm}()},
+\code{\link{plm}()}
 
-Other overlap functions: \code{\link{nap}},
-  \code{\link{overlap}}, \code{\link{pand}},
-  \code{\link{pem}}, \code{\link{pet}}, \code{\link{pnd}},
-  \code{\link{tau_u}}
+Other overlap functions: 
+\code{\link{nap}()},
+\code{\link{overlap}()},
+\code{\link{pand}()},
+\code{\link{pem}()},
+\code{\link{pet}()},
+\code{\link{pnd}()},
+\code{\link{tau_u}()}
 }
 \concept{overlap functions}
 \concept{regression functions}

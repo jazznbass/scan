@@ -4,9 +4,22 @@
 \alias{plm}
 \title{Piecewise linear model / piecewise regression}
 \usage{
-plm(data, dvar, pvar, mvar, AR = 0, model = "B&L-B",
-  family = "gaussian", trend = TRUE, level = TRUE, slope = TRUE,
-  formula = NULL, update = NULL, na.action = na.omit, ...)
+plm(
+  data,
+  dvar,
+  pvar,
+  mvar,
+  AR = 0,
+  model = "B&L-B",
+  family = "gaussian",
+  trend = TRUE,
+  level = TRUE,
+  slope = TRUE,
+  formula = NULL,
+  update = NULL,
+  na.action = na.omit,
+  ...
+)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -97,8 +110,10 @@ time-series intervention models. \emph{Educational and Psychological
 Measurement, 60}, 38-58.
 }
 \seealso{
-Other regression functions: \code{\link{corrected_tau}},
-  \code{\link{hplm}}, \code{\link{mplm}}
+Other regression functions: 
+\code{\link{corrected_tau}()},
+\code{\link{hplm}()},
+\code{\link{mplm}()}
 }
 \author{
 Juergen Wilbert

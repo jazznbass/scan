@@ -10,8 +10,18 @@
 \usage{
 makeSCDF(data, B.start = NULL, MT = NULL)
 
-scdf(values, B.start, mt, phase, phase.design, name, dvar = "values",
-  pvar = "phase", mvar = "mt", ...)
+scdf(
+  values,
+  B.start,
+  mt,
+  phase,
+  phase.design,
+  name,
+  dvar = "values",
+  pvar = "phase",
+  mvar = "mt",
+  ...
+)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}

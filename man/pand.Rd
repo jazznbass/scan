@@ -4,8 +4,14 @@
 \alias{pand}
 \title{Percentage of all non-overlapping data}
 \usage{
-pand(data, dvar, pvar, decreasing = FALSE, correction = TRUE,
-  phases = c("A", "B"))
+pand(
+  data,
+  dvar,
+  pvar,
+  decreasing = FALSE,
+  correction = TRUE,
+  phases = c("A", "B")
+)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -85,10 +91,14 @@ Parker, R. I., & Vannest, K. (2009). An Improved Effect Size for Single-Case
 Research: Nonoverlap of All Pairs. \emph{Behavior Therapy, 40}, 357-367.
 }
 \seealso{
-Other overlap functions: \code{\link{corrected_tau}},
-  \code{\link{nap}}, \code{\link{overlap}},
-  \code{\link{pem}}, \code{\link{pet}}, \code{\link{pnd}},
-  \code{\link{tau_u}}
+Other overlap functions: 
+\code{\link{corrected_tau}()},
+\code{\link{nap}()},
+\code{\link{overlap}()},
+\code{\link{pem}()},
+\code{\link{pet}()},
+\code{\link{pnd}()},
+\code{\link{tau_u}()}
 }
 \author{
 Juergen Wilbert

@@ -1,6 +1,7 @@
 #' Dummy function to inherit global descriptions of parameters
 #'
 #' @param data A single-case data frame. See \code{\link{scdf}} to learn about this format.
+#' @param scdf A single-case data frame. See \code{\link{scdf}} to learn about this format.
 #' @param dvar Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.
 #' @param pvar Character string with the name of the phase variable. Defaults to the attributes in the scdf file.
 #' @param mvar Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.
@@ -19,8 +20,8 @@
 #' @param trend A logical indicating if a trend parameters is included in the model.
 #' @param level A logical indicating if a level parameters is included in the model.
 #' @param slope A logical indicating if a slope parameters is included in the model.
-
-.inheritParams <- function(data, dvar, mvar, pvar, decreasing, 
-                           phases, model, trend, level, slope) {
+#' @param ... Further arguments passed to the function.
+.inheritParams <- function(data, scdf, dvar, mvar, pvar, decreasing, 
+                           phases, model, trend, level, slope, ...) {
   
 } 

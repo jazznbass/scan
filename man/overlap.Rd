@@ -27,6 +27,8 @@ phases that should be compared. E.g., \code{phases = c("A","C")} or
 could be combined by providing a list with two elements. E.g., \code{phases
 = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
 and 4 (as B). Default is \code{phases = c("A","B")}.}
+
+\item{...}{Further arguments passed to the function.}
 }
 \value{
 \item{overlap}{A data frame consisting of the following indices for
@@ -53,9 +55,14 @@ overlapSC(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 
 }
 \seealso{
-Other overlap functions: \code{\link{corrected_tau}},
-  \code{\link{nap}}, \code{\link{pand}}, \code{\link{pem}},
-  \code{\link{pet}}, \code{\link{pnd}}, \code{\link{tau_u}}
+Other overlap functions: 
+\code{\link{corrected_tau}()},
+\code{\link{nap}()},
+\code{\link{pand}()},
+\code{\link{pem}()},
+\code{\link{pet}()},
+\code{\link{pnd}()},
+\code{\link{tau_u}()}
 }
 \author{
 Juergen Wilbert

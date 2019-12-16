@@ -4,11 +4,25 @@
 \alias{.inheritParams}
 \title{Dummy function to inherit global descriptions of parameters}
 \usage{
-.inheritParams(data, dvar, mvar, pvar, decreasing, phases, model, trend,
-  level, slope)
+.inheritParams(
+  data,
+  scdf,
+  dvar,
+  mvar,
+  pvar,
+  decreasing,
+  phases,
+  model,
+  trend,
+  level,
+  slope,
+  ...
+)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+
+\item{scdf}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
 
 \item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
 
@@ -36,6 +50,8 @@ McKean, 2000). Default is \code{model = "B&L-B"}. Possible values are:
 \item{level}{A logical indicating if a level parameters is included in the model.}
 
 \item{slope}{A logical indicating if a slope parameters is included in the model.}
+
+\item{...}{Further arguments passed to the function.}
 }
 \description{
 Dummy function to inherit global descriptions of parameters

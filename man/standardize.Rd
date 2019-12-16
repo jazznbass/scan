@@ -2,17 +2,20 @@
 % Please edit documentation in R/standardize.R
 \name{standardize}
 \alias{standardize}
-\alias{trendSC}
 \title{Standardize values of an scdf file}
 \usage{
-standardize(data, var, center = TRUE, scale = FALSE, m = 0, sd = 1,
-  grand = TRUE)
-
-trendSC(...)
+standardize(
+  data,
+  var,
+  center = TRUE,
+  scale = FALSE,
+  m = 0,
+  sd = 1,
+  grand = TRUE
+)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
 
 \item{var}{A character string or a vector of character strings with variable
 names that should be scaled.}
@@ -43,10 +46,14 @@ ex_sc <- standardize(exampleAB_50, var = "values", center = TRUE, scale = TRUE)
 hplm(ex_sc)
 }
 \seealso{
-Other data manipulation functions: \code{\link{fill_missing}},
-  \code{\link{longSCDF}}, \code{\link{outlier}},
-  \code{\link{ranks}}, \code{\link{shift}},
-  \code{\link{smooth_cases}}, \code{\link{truncate_phase}}
+Other data manipulation functions: 
+\code{\link{fill_missing}()},
+\code{\link{longSCDF}()},
+\code{\link{outlier}()},
+\code{\link{ranks}()},
+\code{\link{shift}()},
+\code{\link{smooth_cases}()},
+\code{\link{truncate_phase}()}
 }
 \author{
 Juergen Wilbert

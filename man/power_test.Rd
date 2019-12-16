@@ -5,8 +5,12 @@
 \alias{power_testSC}
 \title{Empirical power analysis for single-case data}
 \usage{
-power_test(design, stat = c("plm_level", "rand", "tauU"), n_sim = 100,
-  alpha = 0.05)
+power_test(
+  design,
+  stat = c("plm_level", "rand", "tauU"),
+  n_sim = 100,
+  alpha = 0.05
+)
 
 power_testSC(...)
 }
@@ -24,6 +28,8 @@ Default is \code{n = 100}}
 
 \item{alpha}{Alpha level used to calculate the proportion of significant
 tests. Default is \code{alpha = 0.05}.}
+
+\item{...}{Further arguments passed to the function.}
 }
 \description{
 The \code{power_testSC} command conducts a Monte-Carlo study on the
@@ -34,7 +40,7 @@ estimated based on actual data.
 \examples{
 
 ## Assume you want to conduct a single-case study with 15 MTs, using a highly reliable test,
-## an expected level effect of \\eqn{d = 1.4}, and randomized start points between MTs 5
+## an expected level effect of \eqn{d = 1.4}, and randomized start points between MTs 5
 ## and 12 can you expect to identify the effect using plm or randomization test?
 design <- design_rSC(
   n = 1, phase.design = list(A = 6, B = 9), 

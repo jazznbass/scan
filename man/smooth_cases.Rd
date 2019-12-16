@@ -25,6 +25,8 @@ is the lag used for computing the average. Default is \code{intensity = 1}.
 In case of \code{FUN = "localRegression"} it is the proportion of
 surrounding data influencing each data point, which is \code{intensity =
 0.2} by default.}
+
+\item{...}{Further arguments passed to the function.}
 }
 \value{
 Returns a data frame (for each single-case) with smoothed data
@@ -50,10 +52,14 @@ study <- c(
 plot(study)
 }
 \seealso{
-Other data manipulation functions: \code{\link{fill_missing}},
-  \code{\link{longSCDF}}, \code{\link{outlier}},
-  \code{\link{ranks}}, \code{\link{shift}},
-  \code{\link{standardize}}, \code{\link{truncate_phase}}
+Other data manipulation functions: 
+\code{\link{fill_missing}()},
+\code{\link{longSCDF}()},
+\code{\link{outlier}()},
+\code{\link{ranks}()},
+\code{\link{shift}()},
+\code{\link{standardize}()},
+\code{\link{truncate_phase}()}
 }
 \author{
 Juergen Wilbert

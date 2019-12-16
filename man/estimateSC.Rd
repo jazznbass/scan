@@ -4,8 +4,7 @@
 \alias{estimateSC}
 \title{Estimate single-case design}
 \usage{
-estimateSC(data, dvar, pvar, mvar, s = NULL, rtt = NULL,
-  model = "JW", ...)
+estimateSC(data, dvar, pvar, mvar, s = NULL, rtt = NULL, model = "JW", ...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}

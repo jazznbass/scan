@@ -16,6 +16,8 @@ shiftSC(...)
 
 \item{var}{Character string with the name of the target variable.
 Defaults to the measurement time variable.}
+
+\item{...}{Further arguments passed to the function.}
 }
 \value{
 A scdf with shifted data
@@ -30,9 +32,13 @@ ex <- shift(example_A24, value = -1996)
 plm(ex)
 }
 \seealso{
-Other data manipulation functions: \code{\link{fill_missing}},
-  \code{\link{longSCDF}}, \code{\link{outlier}},
-  \code{\link{ranks}}, \code{\link{smooth_cases}},
-  \code{\link{standardize}}, \code{\link{truncate_phase}}
+Other data manipulation functions: 
+\code{\link{fill_missing}()},
+\code{\link{longSCDF}()},
+\code{\link{outlier}()},
+\code{\link{ranks}()},
+\code{\link{smooth_cases}()},
+\code{\link{standardize}()},
+\code{\link{truncate_phase}()}
 }
 \concept{data manipulation functions}

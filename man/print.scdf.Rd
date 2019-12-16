@@ -4,11 +4,15 @@
 \alias{print.scdf}
 \title{Print an scdf}
 \usage{
-\method{print}{scdf}(x, cases = getOption("scan.print.cases"),
+\method{print}{scdf}(
+  x,
+  cases = getOption("scan.print.cases"),
   rows = getOption("scan.print.rows"),
   cols = getOption("scan.print.cols"),
   long = getOption("scan.print.long"),
-  digits = getOption("scan.print.digits"), ...)
+  digits = getOption("scan.print.digits"),
+  ...
+)
 }
 \arguments{
 \item{x}{An scdf object}

@@ -6,32 +6,14 @@
 #' 
 #' 
 #' @aliases rciSC rCi
-#' @param data A single-case data frame. See \code{\link{scdf}} to learn about
-#' this format.
-#' @param dvar Character string with the name of the dependent variable.
-#' @param pvar Character string with the name of the phase variable.
+
+#' @inheritParams .inheritParams
 #' @param rel Reliability of the measure, used to compute the standard error.
 #' Default is \code{rel = 0.8}.
 #' @param ci Width of confidence interval as a decimal. Default is \code{ci =
 #' 0.95} applying a 95\%-confidence interval.
 #' @param graph If set \code{TRUE}, a box plot of phase A and B scores is
 #' displayed. \code{graph = FALSE} by default.
-#' @param phases A vector of two characters or numbers indicating the two
-#' phases that should be compared. E.g., \code{phases = c("A","C")} or
-#' \code{phases = c(2,4)} for comparing the second and the fourth phase. Phases
-#' could be combined by providing a list with two elements. E.g., \code{phases
-#' = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
-#' and 4 (as B). Default is \code{phases = c("A","B")}.
-#' @return \item{RCI}{A list of three RCI calculations (Jacobson et al.,
-#' Christenden et al., Hageman et al.).} \item{stand.dif}{Standardized
-#' difference between mean phase A and B scores.} \item{conf}{A matrix
-#' containing the lower and upper confidence interval boundaries of phases A
-#' and B.} \item{conf.percent}{Numeric argument from function call (see
-#' \code{ci} in \code{Arguments} section).} \item{reliability}{Numeric argument
-#' from function call (see \code{Arguments} above).} \item{descriptives}{A
-#' matrix containing descriptive statistics for phases A and B: n, mean, SD,
-#' SE.} \item{N}{Number of cases.} \item{A}{A vector of phase A scores.}
-#' \item{B}{A vector of phase B scores.}
 #' @author Juergen Wilbert
 #' @references Christensen, L., & Mendoza, J. L. (1986). A method of assessing
 #' change in a single subject: An alteration of the RC index. \emph{Behavior

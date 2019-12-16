@@ -4,8 +4,18 @@
 \alias{estimate_design}
 \title{Estimate single-case design}
 \usage{
-estimate_design(data, dvar, pvar, mvar, m = NULL, s = NULL,
-  rtt = NULL, between = TRUE, model = "JW", ...)
+estimate_design(
+  data,
+  dvar,
+  pvar,
+  mvar,
+  m = NULL,
+  s = NULL,
+  rtt = NULL,
+  between = TRUE,
+  model = "JW",
+  ...
+)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}

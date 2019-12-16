@@ -4,11 +4,26 @@
 \alias{hplm}
 \title{Hierarchical piecewise linear model / piecewise regression}
 \usage{
-hplm(data, dvar, pvar, mvar, model = "B&L-B", method = "ML",
-  control = list(opt = "optim"), random.slopes = FALSE,
-  lr.test = FALSE, ICC = TRUE, trend = TRUE, level = TRUE,
-  slope = TRUE, fixed = NULL, random = NULL, update.fixed = NULL,
-  data.l2 = NULL, ...)
+hplm(
+  data,
+  dvar,
+  pvar,
+  mvar,
+  model = "B&L-B",
+  method = "ML",
+  control = list(opt = "optim"),
+  random.slopes = FALSE,
+  lr.test = FALSE,
+  ICC = TRUE,
+  trend = TRUE,
+  level = TRUE,
+  slope = TRUE,
+  fixed = NULL,
+  random = NULL,
+  update.fixed = NULL,
+  data.l2 = NULL,
+  ...
+)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -85,8 +100,10 @@ hplm(Leidig2018, data.l2 = Leidig2018_l2,
      
 }
 \seealso{
-Other regression functions: \code{\link{corrected_tau}},
-  \code{\link{mplm}}, \code{\link{plm}}
+Other regression functions: 
+\code{\link{corrected_tau}()},
+\code{\link{mplm}()},
+\code{\link{plm}()}
 }
 \author{
 Juergen Wilbert

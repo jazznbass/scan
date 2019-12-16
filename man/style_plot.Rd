@@ -2,6 +2,8 @@
 % Please edit documentation in R/style_plot.R
 \name{style_plot}
 \alias{style_plot}
+\alias{style.plotSC}
+\alias{style_plotSC}
 \title{Create styles for single-case data plots}
 \usage{
 style_plot(style = "default", ...)

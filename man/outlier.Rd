@@ -24,6 +24,8 @@ This is also the default setting. To use the 99\% Confidence Interval use
 \code{criteria = c("CI", 0.99)}. Set \code{criteria = c("Cook", "4/n")} to
 define any data point with a Cook's Distance greater than 4/n as an outlier,
 based on the Piecewise Linear Regression Model.}
+
+\item{...}{Further arguments passed to the function.}
 }
 \value{
 \item{data}{A single-case data frame with substituted outliers.}
@@ -58,10 +60,14 @@ plot(Grosche2011, marks = res_outlier)
 
 }
 \seealso{
-Other data manipulation functions: \code{\link{fill_missing}},
-  \code{\link{longSCDF}}, \code{\link{ranks}},
-  \code{\link{shift}}, \code{\link{smooth_cases}},
-  \code{\link{standardize}}, \code{\link{truncate_phase}}
+Other data manipulation functions: 
+\code{\link{fill_missing}()},
+\code{\link{longSCDF}()},
+\code{\link{ranks}()},
+\code{\link{shift}()},
+\code{\link{smooth_cases}()},
+\code{\link{standardize}()},
+\code{\link{truncate_phase}()}
 }
 \author{
 Juergen Wilbert

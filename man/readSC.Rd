@@ -5,10 +5,20 @@
 \alias{readSC.excel}
 \title{Read single-case data from files}
 \usage{
-readSC(filename = NULL, data = NULL, sep = ",", dec = ".",
-  sort.labels = FALSE, cvar = "case", pvar = "phase",
-  dvar = "values", mvar = "mt", phase.names = NULL, type = "csv",
-  ...)
+readSC(
+  filename = NULL,
+  data = NULL,
+  sep = ",",
+  dec = ".",
+  sort.labels = FALSE,
+  cvar = "case",
+  pvar = "phase",
+  dvar = "values",
+  mvar = "mt",
+  phase.names = NULL,
+  type = "csv",
+  ...
+)
 
 readSC.excel(...)
 }

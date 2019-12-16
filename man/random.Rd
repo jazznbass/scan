@@ -6,14 +6,25 @@
 \alias{design_rSC}
 \title{Single-case data generator}
 \usage{
-rSC(design = NULL, round = NA, random.names = FALSE, seed = NULL,
-  ...)
+rSC(design = NULL, round = NA, random.names = FALSE, seed = NULL, ...)
 
-design_rSC(n = 1, phase.design = list(A = 5, B = 15),
-  trend = list(0), level = list(0), slope = list(0),
-  rtt = list(0.8), m = list(50), s = list(10), extreme.p = list(0),
-  extreme.d = c(-4, -3), missing.p = list(0),
-  distribution = "normal", prob = 0.5, MT = NULL, B.start = NULL)
+design_rSC(
+  n = 1,
+  phase.design = list(A = 5, B = 15),
+  trend = list(0),
+  level = list(0),
+  slope = list(0),
+  rtt = list(0.8),
+  m = list(50),
+  s = list(10),
+  extreme.p = list(0),
+  extreme.d = c(-4, -3),
+  missing.p = list(0),
+  distribution = "normal",
+  prob = 0.5,
+  MT = NULL,
+  B.start = NULL
+)
 }
 \arguments{
 \item{design}{A design matrix which is created by design_rSC and specifies

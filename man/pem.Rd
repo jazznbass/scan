@@ -4,8 +4,17 @@
 \alias{pem}
 \title{Percent exceeding the median}
 \usage{
-pem(data, dvar, pvar, decreasing = FALSE, binom.test = TRUE,
-  chi.test = FALSE, FUN = median, phases = c(1, 2), ...)
+pem(
+  data,
+  dvar,
+  pvar,
+  decreasing = FALSE,
+  binom.test = TRUE,
+  chi.test = FALSE,
+  FUN = median,
+  phases = c(1, 2),
+  ...
+)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -53,10 +62,14 @@ pem(dat, chi.test = TRUE)
 
 }
 \seealso{
-Other overlap functions: \code{\link{corrected_tau}},
-  \code{\link{nap}}, \code{\link{overlap}},
-  \code{\link{pand}}, \code{\link{pet}}, \code{\link{pnd}},
-  \code{\link{tau_u}}
+Other overlap functions: 
+\code{\link{corrected_tau}()},
+\code{\link{nap}()},
+\code{\link{overlap}()},
+\code{\link{pand}()},
+\code{\link{pet}()},
+\code{\link{pnd}()},
+\code{\link{tau_u}()}
 }
 \author{
 Juergen Wilbert

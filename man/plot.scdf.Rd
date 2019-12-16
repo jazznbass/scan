@@ -7,9 +7,24 @@
 \usage{
 \method{plot}{scdf}(...)
 
-plotSC(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1,
-  lines = NULL, marks = NULL, phase.names = NULL, xlab = NULL,
-  ylab = NULL, main = "", case.names = NULL, style = "grid", ...)
+plotSC(
+  data,
+  dvar,
+  pvar,
+  mvar,
+  ylim = NULL,
+  xlim = NULL,
+  xinc = 1,
+  lines = NULL,
+  marks = NULL,
+  phase.names = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  main = "",
+  case.names = NULL,
+  style = "grid",
+  ...
+)
 }
 \arguments{
 \item{...}{Further arguments passed to the plot command.}

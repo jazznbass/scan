@@ -5,10 +5,21 @@
 \alias{randSC}
 \title{Randomization Tests for single-case data}
 \usage{
-rand_test(data, dvar, pvar, statistic = "Mean B-A", number = 500,
-  complete = FALSE, limit = 5, startpoints = NA,
-  exclude.equal = FALSE, graph = FALSE, output = "c",
-  phases = c("A", "B"), seed = NULL)
+rand_test(
+  data,
+  dvar,
+  pvar,
+  statistic = "Mean B-A",
+  number = 500,
+  complete = FALSE,
+  limit = 5,
+  startpoints = NA,
+  exclude.equal = FALSE,
+  graph = FALSE,
+  output = "c",
+  phases = c("A", "B"),
+  seed = NULL
+)
 
 randSC(...)
 }
@@ -75,6 +86,8 @@ could be combined by providing a list with two elements. E.g., \code{phases
 and 4 (as B). Default is \code{phases = c("A","B")}.}
 
 \item{seed}{A seed number for the random generator.}
+
+\item{...}{Further arguments passed to the function.}
 }
 \value{
 \item{statistic}{Character string from function call (see

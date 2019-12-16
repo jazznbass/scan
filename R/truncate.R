@@ -2,6 +2,7 @@
 #'
 #' This function truncates data points at the beginning and / or end each phase.
 #'
+#' @aliases truncateSC
 #' @inheritParams .inheritParams
 #' @param truncate A list with a vector of two (beginning and end) values for each phase defining the number of data points to be deleted.
 #' For lists of single-case data frames, the truncation is adapted to the length

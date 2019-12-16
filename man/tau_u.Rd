@@ -5,8 +5,14 @@
 \alias{tauUSC}
 \title{Tau-U for single-case data}
 \usage{
-tau_u(data, dvar, pvar, ties.method = "omit", method = "complete",
-  phases = c(1, 2))
+tau_u(
+  data,
+  dvar,
+  pvar,
+  ties.method = "omit",
+  method = "complete",
+  phases = c(1, 2)
+)
 
 tauUSC(...)
 }
@@ -31,6 +37,8 @@ phases that should be compared. E.g., \code{phases = c("A","C")} or
 could be combined by providing a list with two elements. E.g., \code{phases
 = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
 and 4 (as B). Default is \code{phases = c("A","B")}.}
+
+\item{...}{Further arguments passed to the function.}
 }
 \value{
 \item{table}{A data frame containing statistics from the Tau-U
@@ -60,10 +68,14 @@ Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B.
 \emph{Behavior Therapy, 42}, 284-299.
 }
 \seealso{
-Other overlap functions: \code{\link{corrected_tau}},
-  \code{\link{nap}}, \code{\link{overlap}},
-  \code{\link{pand}}, \code{\link{pem}}, \code{\link{pet}},
-  \code{\link{pnd}}
+Other overlap functions: 
+\code{\link{corrected_tau}()},
+\code{\link{nap}()},
+\code{\link{overlap}()},
+\code{\link{pand}()},
+\code{\link{pem}()},
+\code{\link{pet}()},
+\code{\link{pnd}()}
 }
 \author{
 Juergen Wilbert
