@@ -535,15 +535,17 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
         #label <- "Mean A"
       }
       if (any(names(lines) == "plm")) {
-        pr <- plm(data)
+        #pr <- plm(data)
+        pr <- plm(data.list[case])
         y <- pr$full.model$fitted.values
-        lines(data[,mvar], y, lty = lty.line, col = col.line, lwd = lwd.line)
+        lines(data[, mvar], y, lty = lty.line, col = col.line, lwd = lwd.line)
       }
       if (any(names(lines) == "plm.ar")) {
         id <- which(names(lines) == "plm.ar")
         lines.par <- as.numeric(lines[[id]])
         if (is.na(lines.par)) lines.par <- 2
-        pr <- plm(data, AR = lines.par)
+        #pr <- plm(data, AR = lines.par)
+        pr <- plm(data.list[case], AR = lines.par)
         y <- pr$full.model$fitted
         lines(data[,mvar], y, lty = lty.line, col = col.line, lwd = lwd.line)
       }

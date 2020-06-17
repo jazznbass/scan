@@ -31,4 +31,4 @@ License: GPL
 URL: https://r-forge.r-project.org/projects/scan/, https://jazznbass.github.io/scan-Book/index.html
 LazyData: true
 Encoding: UTF-8
-RoxygenNote: 7.0.1
+RoxygenNote: 7.1.0

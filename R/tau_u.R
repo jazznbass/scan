@@ -50,13 +50,20 @@ tau_u <- function(data, dvar, pvar, ties.method = "omit", method = "complete", p
     method = method
   )
   row_names <- c(
-    "A vs. B", "Trend A", "Trend B", "Trend B - Trend A", "A vs. B - Trend A",
-    "A vs. B + Trend B", "A vs. B + Trend B - Trend A"
+    "A vs. B", "Trend A", 
+    "Trend B", 
+    "Trend B - Trend A", 
+    "A vs. B - Trend A",
+    "A vs. B + Trend B", 
+    "A vs. B + Trend B - Trend A"
   )
   col_names <- c(
-    "pairs", "pos", "neg", "ties", "S", "D", "Tau", "Tau.b", "SD",
-    "VAR", "Z", "p"
+    "pairs", "pos", "neg", "ties", "S", "D", "Tau", "Tau.b", "SD", "VAR", "Z", "p"
   )
+  
+
+# tau-U for each case -------------------------------------------
+  
   for (i in 1:N) {
     table_tau <- matrix(NA, length(row_names), length(col_names), dimnames = list(row_names, col_names))
     table_tau <- as.data.frame(table_tau)
@@ -192,23 +199,30 @@ tau_u <- function(data, dvar, pvar, ties.method = "omit", method = "complete", p
 
     out$table[[i]] <- table_tau
     out$matrix[[i]] <- tau_m
-    out$tau_u[[i]] <- c("A vs. B + Trend B - Trend A" = table_tau["A vs. B + Trend B - Trend A", "Tau"])
+    out$tau_u[[i]] <- c(
+      "A vs. B + Trend B - Trend A" = table_tau["A vs. B + Trend B - Trend A", "Tau"]
+      )
   }
-  weight.t <- c()
-  weight.v <- c()
-  for (i in 1:N) {
-    weight.v <- c(weight.v, 1 / out$table[[i]]["A vs. B + Trend B - Trend A", "VAR"])
-    weight.t <- c(weight.t, out$table[[i]]["A vs. B + Trend B - Trend A", "Tau"])
-  }
-  out$Overall_tau_u <- c("A vs. B + Trend B - Trend A" = sum(weight.v * weight.t) / sum(weight.v))
+  
+# overall A vs. B + Trend B - Trend  -----------------------------------
 
-  weight.t <- c()
-  weight.v <- c()
+  weight_t <- c()
+  weight_v <- c()
   for (i in 1:N) {
-    weight.v <- c(weight.v, 1 / out$table[[i]]["A vs. B - Trend A", "VAR"])
-    weight.t <- c(weight.t, out$table[[i]]["A vs. B - Trend A", "Tau"])
+    weight_v <- c(weight_v, 1 / out$table[[i]]["A vs. B + Trend B - Trend A", "VAR"])
+    weight_t <- c(weight_t, out$table[[i]]["A vs. B + Trend B - Trend A", "Tau"])
   }
-  out$Overall_tau_u <- c(out$Overall_tau_u, "A vs. B - Trend A" = sum(weight.v * weight.t) / sum(weight.v))
+  out$Overall_tau_u <- c("A vs. B + Trend B - Trend A" = sum(weight_v * weight_t) / sum(weight_v))
+
+# overall "A vs. B - Trend A ----------------------------------------------
+
+  weight_t <- c()
+  weight_v <- c()
+  for (i in 1:N) {
+    weight_v <- c(weight_v, 1 / out$table[[i]]["A vs. B - Trend A", "VAR"])
+    weight_t <- c(weight_t, out$table[[i]]["A vs. B - Trend A", "Tau"])
+  }
+  out$Overall_tau_u <- c(out$Overall_tau_u, "A vs. B - Trend A" = sum(weight_v * weight_t) / sum(weight_v))
   names(out$table) <- names(data)
   names(out$tau_u) <- names(data)
 

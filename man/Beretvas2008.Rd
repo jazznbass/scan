@@ -31,7 +31,9 @@
 \alias{SSDforR2017}
 \alias{Parker2011}
 \title{Single-case example data}
-\format{An object of class \code{scdf} (inherits from \code{list}) of length 1.}
+\format{
+An object of class \code{scdf} (inherits from \code{list}) of length 1.
+}
 \usage{
 Beretvas2008
 }
