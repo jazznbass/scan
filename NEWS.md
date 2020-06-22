@@ -1,3 +1,7 @@
+# 0.50.5
+
+- fixed bug in plot function
+
 # 0.50.4
 
 ## major changes
