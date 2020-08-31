@@ -72,17 +72,21 @@ if (value == "mpr") {
 
   if (value == "TAU-U") {	
     cat("Tau-U\n")
-    cat("Method: ",x$method, "\n\n")
+    cat("Method: ", x$method, "\n\n")
     cat("Overall Tau-U: \n")
-    print(x$Overall_tau_u)
+    
+    print(x$Overall_tau_u, row.names = FALSE)
+    
     cat("\n")
-    out <- lapply(x$table, function(x) round(x, 3))
+    #out <- lapply(x$table, function(x) round(x, 3))
+    out <- x$table
     arg <- list(...)
     complete <- FALSE
     if (any(names(arg) == "complete")) complete <- arg$complete
     if (!complete) {
-      VAR <- c("S", "D", "Tau", "Tau.b", "Z", "p")
-      out <- lapply(x$table, function(x) round(x[-1:-4, VAR], 3))
+      select_var <- c("S", "D", "Tau", "Tau.b", "Z", "p")
+      
+      out <- lapply(x$table, function(x) round(x[c(-4,-6), select_var], 3))
     }
     out <- lapply(
       out, 

@@ -199,8 +199,8 @@
   out$n0 <- n0
   out$ti <- ti
   out$ui <- ui
-  out$.C <- C
-  out$.D <- D
+  out$nC <- C
+  out$nD <- D
   out$S  <- S
   out$tau   <- S / n0
   out$tau.b <- S / sqrt( (n0 - ti) * (n0 - ui) )

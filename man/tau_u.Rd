@@ -9,7 +9,7 @@ tau_u(
   data,
   dvar,
   pvar,
-  ties.method = "omit",
+  ties_method = "omit",
   method = "complete",
   phases = c(1, 2)
 )
@@ -23,12 +23,12 @@ tauUSC(...)
 
 \item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
 
-\item{ties.method}{Defines how to handle ties. \code{"omit"} (default) excludes all
+\item{ties_method}{Defines how to handle ties. \code{"omit"} (default) excludes all
 ties from the calculation. \code{"positive"} counts all ties as positive
 comparisons, while \code{"negative"} counts them as negative comparisons.}
 
 \item{method}{\code{"complete"} (default) or \code{"parker"}. The latter
-calculates the number of possible pairs as described in Parler et al. (2011)
+calculates the number of possible pairs as described in Parker et al. (2011)
 which might lead to tau-U values greater than 1.}
 
 \item{phases}{A vector of two characters or numbers indicating the two
@@ -50,14 +50,17 @@ statistics.} \item{tau_u}{Tau-U value.}
 This function calculates indices of the Tau-U family as proposed by Parker
 et al. (2011).
 }
+\details{
+Tau-U is an inconsistently operationalized construct.
+}
 \examples{
 
 ## Calculate tau-U for the example from Parker et al. (2011)
-bob <- scdf(c(2, 3, 5, 3, 4, 5, 5, 7, 6), B.start = 5)
+bob <- scdf(c(A = 2, 3, 5, 3, B = 4, 5, 5, 7, 6), name = "Bob")
 tau_u(bob)
 
 ## Calculate tau-U with ties counted as positive
-tau_u(Grosche2011$Eva, ties.method = "positive")
+tau_u(Grosche2011$Eva, ties_method = "positive")
 
 ## Request tau-U for all single-cases fom the Grosche2011 data
 tau_u(Grosche2011)
