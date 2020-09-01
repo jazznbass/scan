@@ -15,7 +15,12 @@
     scan.print.digits = 1,
     scan.print.long   = FALSE,
     scan.print.scdf.name = TRUE,
-    scan.deprecated.warning = FALSE
+    scan.plot.style = "grid",
+    scan.deprecated.warning = FALSE,
+    scan.export.kable = list(digits = 2),
+    scan.export.kable_styling = list(
+      bootstrap_options = c("bordered", "condensed"), full_width = FALSE, position = "center"
+    )
   )
   
   toset <- !(names(op_scan) %in% names(op))

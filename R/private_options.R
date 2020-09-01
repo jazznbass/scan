@@ -77,26 +77,30 @@
 )
 
 
-
 .opt$style$chart <- list(
   fill.bg = TRUE, col.fill.bg = "grey98", fill = TRUE, col.fill = "grey50", 
   annotations = list(cex = 0.6, col = "black", offset = 0.4), pch = 19, 
-  frame = NA, grid = "grey75", lwd = 0.7, cex.text = 0.8, cex.lab = 0.8 )
+  frame = NA, grid = "grey75", lwd = 0.7, cex.text = 0.8, cex.lab = 0.8 
+)
 
 
 .opt$style$ridge <- list(
-  fill = "grey50", fill.bg = TRUE, col.fill.bg = "grey95", pch = 20)
+  fill = "grey50", fill.bg = TRUE, col.fill.bg = "grey95", pch = 20
+)
 
 .opt$style$annotate <- list(
-  annotations = list(cex = 0.6, col = "black", offset = 0.4), pch = 19)
+  annotations = list(cex = 0.6, col = "black", offset = 0.4), pch = 19
+)
 
 .opt$style$grid <- list(
   frame = NA, grid = TRUE, col.grid = "lightblue", fill.bg = TRUE, col.fill.bg = "grey95", lwd = 0.7, 
-  pch = 19, cex.axis = 0.8)  
+  pch = 19, cex.axis = 0.8
+)  
 
 .opt$style$grid2 <- list(
   frame = NA, fill = "white", grid = TRUE, col.grid = "lightgreen", frame = "black", 
-  fill.bg = TRUE, col.fill.bg = "grey95", lwd = 0.7, pch = 1, cex.axis = 0.8)  
+  fill.bg = TRUE, col.fill.bg = "grey95", lwd = 0.7, pch = 1, cex.axis = 0.8
+)  
 
 .opt$style$dark <- list(
   fill.bg = TRUE, col.fill.bg = "black", bty = "o", col.lines = "gold", col.bg = "grey10", 

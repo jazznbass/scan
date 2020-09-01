@@ -3,7 +3,7 @@
   
   if (!is.null(attri)) out <- attri
   
-  out$class <- c("scdf","list")
+  out$class <- c("scdf", "list")
   
   scdf <- list()
   scdf[[.opt$phase]]   <- "phase"

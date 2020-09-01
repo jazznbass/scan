@@ -96,7 +96,7 @@ plot.scdf <- function(...) {
 
 #' @rdname plot.scdf
 #' @export
-plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, lines = NULL, marks = NULL, phase.names = NULL, xlab = NULL, ylab = NULL, main = "", case.names = NULL, style = "grid", ...) {
+plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, lines = NULL, marks = NULL, phase.names = NULL, xlab = NULL, ylab = NULL, main = "", case.names = NULL, style = getOption("scan.plot.style"), ...) {
   
   dots <- list(...)
   op <- par(no.readonly = TRUE)

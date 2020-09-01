@@ -9,7 +9,6 @@
 
 #' @inheritParams .inheritParams
 #' @param rel Reliability of the measure, used to compute the standard error.
-#' Default is \code{rel = 0.8}.
 #' @param ci Width of confidence interval as a decimal. Default is \code{ci =
 #' 0.95} applying a 95\%-confidence interval.
 #' @param graph If set \code{TRUE}, a box plot of phase A and B scores is
@@ -33,10 +32,10 @@
 #' @examples
 #' 
 #' ## Report the RCIs of the first case from the byHeart data and include a graph
-#' rciSC(byHeart2011[1], graph = TRUE)
+#' rci(byHeart2011[1], graph = TRUE, rel = 0.8)
 #' 
 #' @export
-rci <- function(data, dvar, pvar, rel = 0.80, ci = 0.95, graph = FALSE, phases = c(1, 2)) {
+rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2)) {
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar

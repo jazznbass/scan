@@ -26,7 +26,7 @@
 #' pet(dat, ci = .99)
 #' 
 #' @export
-pet <- function(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = c("A","B")) {
+pet <- function(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = c(1, 2)) {
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
