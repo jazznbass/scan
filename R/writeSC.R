@@ -17,7 +17,7 @@
 #' @examples
 #' \dontrun{
 #' ## Write single-case data to a .csv-file
-#' jessica <- rSC(level = .5)
+#' jessica <- rSC(design_rSC(level = .5))
 #' writeSC(jessica, "SCdata_Jessica.csv")
 #' 
 #' ## Write multiple cases to a .csv-file with semicolon as field and comma as decimal separator

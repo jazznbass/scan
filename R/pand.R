@@ -56,7 +56,7 @@
 #' pand(cubs, decreasing = TRUE)
 #' 
 #' @export
-pand <- function(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases = c("A","B")) {
+pand <- function(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases = c(1, 2)) {
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar

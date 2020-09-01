@@ -4,15 +4,7 @@
 \alias{pet}
 \title{Percent exceeding the trend}
 \usage{
-pet(
-  data,
-  dvar,
-  pvar,
-  mvar,
-  ci = 0.95,
-  decreasing = FALSE,
-  phases = c("A", "B")
-)
+pet(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = c(1, 2))
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}

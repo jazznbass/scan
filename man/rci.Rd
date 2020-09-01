@@ -6,7 +6,7 @@
 \alias{rCi}
 \title{Reliable change index}
 \usage{
-rci(data, dvar, pvar, rel = 0.8, ci = 0.95, graph = FALSE, phases = c(1, 2))
+rci(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2))
 
 rciSC(...)
 
@@ -19,8 +19,7 @@ rCi(...)
 
 \item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
 
-\item{rel}{Reliability of the measure, used to compute the standard error.
-Default is \code{rel = 0.8}.}
+\item{rel}{Reliability of the measure, used to compute the standard error.}
 
 \item{ci}{Width of confidence interval as a decimal. Default is \code{ci =
 0.95} applying a 95\%-confidence interval.}
@@ -45,7 +44,7 @@ use!} The \code{rciSC} function computes three indices of reliable change
 \examples{
 
 ## Report the RCIs of the first case from the byHeart data and include a graph
-rciSC(byHeart2011[1], graph = TRUE)
+rci(byHeart2011[1], graph = TRUE, rel = 0.8)
 
 }
 \references{

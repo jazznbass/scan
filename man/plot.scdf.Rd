@@ -22,7 +22,7 @@ plotSC(
   ylab = NULL,
   main = "",
   case.names = NULL,
-  style = "grid",
+  style = getOption("scan.plot.style"),
   ...
 )
 }

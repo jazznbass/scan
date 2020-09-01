@@ -1,6 +1,6 @@
 #' Subset cases, rows, and variables
 #'
-#' @param x An scdf obect.
+#' @param x An scdf object.
 #' @param subset Logical expression indicating rows to keep: missing values are taken as false.
 #' @param select Expression, indicating columns to select from an scdf.
 #' @param cases Expression, indicating cases to keep from an scdf.

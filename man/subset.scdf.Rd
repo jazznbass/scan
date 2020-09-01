@@ -7,7 +7,7 @@
 \method{subset}{scdf}(x, subset, select, cases)
 }
 \arguments{
-\item{x}{An scdf obect.}
+\item{x}{An scdf object.}
 
 \item{subset}{Logical expression indicating rows to keep: missing values are taken as false.}
 

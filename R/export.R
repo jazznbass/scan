@@ -22,14 +22,8 @@ export <- function(object, filename = NULL,
                    cols, flip = FALSE, note = TRUE, ...) {
   warning(.opt$function_debugging_warning)
 
-  default_kable_styling <- list(
-    bootstrap_options = c("bordered", "condensed"),
-    full_width = FALSE,
-    position = "center"
-  )
-  default_kable <- list(
-    digits = 2
-  )
+  default_kable_styling <- getOption("scan.export.kable_styling")
+  default_kable <- getOption("scan.export.kable")
 
   tmp <- which(!(names(default_kable_styling) %in% names(kable_styling_options)))
   kable_styling_options <- c(kable_styling_options, default_kable_styling[tmp])
@@ -93,7 +87,7 @@ export <- function(object, filename = NULL,
 
 
     if (flip) {
-      out <- t(object$descriptives)
+      out <- as.data.frame(t(object$descriptives))
       rownames(out) <- gsub("mis", "Missing", rownames(out))
       rownames(out) <- gsub("med", "Median", rownames(out))
       rownames(out) <- gsub("min", "Min", rownames(out))

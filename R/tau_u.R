@@ -60,7 +60,7 @@ tau_u <- function(data, dvar, pvar, ties_method = "omit", method = "complete", p
     "A vs. B + Trend B - Trend A"
   )
   col_names <- c(
-    "kendall", "n", "pairs", "pos", "neg", "ties", "S", "D", "Tau", "Tau.b", 
+    "n", "pairs", "pos", "neg", "ties", "S", "D", "Tau", "Tau.b", 
     "SD", "VAR", "Z", "p"
   )
   
@@ -214,7 +214,6 @@ tau_u <- function(data, dvar, pvar, ties_method = "omit", method = "complete", p
 # SE, Z, and p ------------------------------------------------------------
 
     table_tau$SE.Tau.b <- table_tau$SD / table_tau$D
-
     table_tau$Z <- table_tau$S / table_tau$SD
     table_tau$p <- pnorm(abs(table_tau$Z), lower.tail = FALSE) * 2
 
@@ -229,15 +228,15 @@ tau_u <- function(data, dvar, pvar, ties_method = "omit", method = "complete", p
       AvB_B_AKen$N
     )
     
-    table_tau$kendall <- c(
-      AvBKen$tau.b,
-      AvAKen$tau.b,
-      BvBKen$tau.b,
-      BvB_AKen$tau.b,
-      AvB_AKen$tau.b,
-      AvB_BKen$tau.b,
-      AvB_B_AKen$tau.b
-    )
+    #table_tau$kendall <- c(
+    #  AvBKen$tau.b,
+    #  AvAKen$tau.b,
+    #  BvBKen$tau.b,
+    #  BvB_AKen$tau.b,
+    #  AvB_AKen$tau.b,
+    #  AvB_BKen$tau.b,
+    #  AvB_B_AKen$tau.b
+    #)
     ### end experiment
     
     out$table[[i]] <- table_tau
@@ -289,6 +288,7 @@ tau_u <- function(data, dvar, pvar, ties_method = "omit", method = "complete", p
   out$Overall_tau_u[3,] <- .ot("A vs. B + Trend B")
   out$Overall_tau_u[4,] <- .ot("A vs. B + Trend B - Trend A") 
 
+  
 # return ------------------------------------------------------------------
 
   names(out$table) <- names(data)
@@ -298,7 +298,7 @@ tau_u <- function(data, dvar, pvar, ties_method = "omit", method = "complete", p
   out
 }
 
-tau_u_new <- function(data, dvar, pvar, tau_b = TRUE, ties_method = "omit", method = "complete", phases = c(1, 2)) {
+tau_u_new <- function(data, dvar, pvar, tau_b = TRUE, ties_method = "omit", method = "complete", phases = c(1, 2), fisher = TRUE) {
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -539,12 +539,21 @@ tau_u_new <- function(data, dvar, pvar, tau_b = TRUE, ties_method = "omit", meth
     w <- sqrt(1 / (n - 3)) # weighted by standard error
     #w <- 1/v # weighted by variance
     
-    ft <- 0.5 * log((1 + t)/(1 - t)) # Fisher Z transformation
+    # Fisher Z transformation
+    if (fisher) {
+      if (any(t == 1)) {
+        warning("Correlation of 1 converted to 0.99 to allow for Fisher-Z transformation.")
+        t[t == 1] <- 0.99
+      }
+      t <- 0.5 * log((1 + t)/(1 - t)) 
+      
+    } 
+
+    ret$Tau_U <- sum(w * t) / sum(w) # equal to sum(t / w) / sum(1 / w) 
     
-    #t <- (exp(2 * t) - 1) / (exp(2 * t) + 1)
+    # invert Fisher Z transformation
+    if (fisher) ret$Tau_U <- (exp(2 * ret$Tau_U) - 1) / (exp(2 * ret$Tau_U) + 1) 
     
-    ret$Tau_U <- sum(w * ft) / sum(w) # equal to sum(ft / w) / sum(1 / w) 
-    ret$Tau_U <- (exp(2 * ret$Tau_U) - 1) / (exp(2 * ret$Tau_U) + 1) # invert Fisher Z transformation
     ret$VAR <- 1 / sum(w)
     ret$se <- sqrt(1 / sum(w)) #sqrt(1/ret$VAR) # check, probably wrong!
     ret$z <- ret$Tau_U / ret$se
