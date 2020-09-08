@@ -75,7 +75,7 @@ if (value == "mpr") {
     cat("Method: ", x$method, "\n\n")
     cat("Overall Tau-U: \n")
     
-    print(x$Overall_tau_u, row.names = FALSE)
+    print(x$Overall_tau_u, row.names = FALSE, digits = 3)
     
     cat("\n")
     #out <- lapply(x$table, function(x) round(x, 3))
@@ -84,20 +84,28 @@ if (value == "mpr") {
     complete <- FALSE
     if (any(names(arg) == "complete")) complete <- arg$complete
     if (!complete) {
-      select_var <- c("S", "D", "Tau", "Tau.b", "Z", "p")
-      
-      out <- lapply(x$table, function(x) round(x[c(-4,-6), select_var], 3))
+      select_vars <- c("Tau", "SE_Tau", "Z", "p")
+      select_rows <- match(
+        c(
+          "A vs. B", 
+          "A vs. B - Trend A",
+          "A vs. B + Trend B", 
+          "A vs. B + Trend B - Trend A"
+        ), row.names(x$table[[1]])
+      )
+        
+      out <- lapply(x$table, function(x) round(x[select_rows, select_vars], 3))
     }
-    out <- lapply(
-      out, 
-      function(x) {
-        names(x)[which(names(x) == "Tau")]   <- "\u03c4"
-        names(x)[which(names(x) == "Tau.b")] <- "\u03c4b"
-        x
-      }
-    )
+    #out <- lapply(
+    #  out, 
+    #  function(x) {
+    #    names(x)[which(names(x) == "Tau")]   <- "\u03c4"
+    #    names(x)[which(names(x) == "Tau.b")] <- "\u03c4b"
+    #    x
+    #  }
+    #)
     
-    print(out)
+    print(out, digits = 3)
   }
   
 # power -------------------------------------------------------------------

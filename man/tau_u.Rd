@@ -9,9 +9,11 @@ tau_u(
   data,
   dvar,
   pvar,
-  ties_method = "omit",
+  tau_method = "b",
   method = "complete",
-  phases = c(1, 2)
+  phases = c(1, 2),
+  fisher = TRUE,
+  continuity_correction = FALSE
 )
 
 tauUSC(...)
@@ -23,9 +25,7 @@ tauUSC(...)
 
 \item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
 
-\item{ties_method}{Defines how to handle ties. \code{"omit"} (default) excludes all
-ties from the calculation. \code{"positive"} counts all ties as positive
-comparisons, while \code{"negative"} counts them as negative comparisons.}
+\item{tau_method}{Character with values "a" or "b" (default) indicating whether Kendall Tau A or Kendall Tau B is applied.}
 
 \item{method}{\code{"complete"} (default) or \code{"parker"}. The latter
 calculates the number of possible pairs as described in Parker et al. (2011)
@@ -37,6 +37,10 @@ phases that should be compared. E.g., \code{phases = c("A","C")} or
 could be combined by providing a list with two elements. E.g., \code{phases
 = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
 and 4 (as B). Default is \code{phases = c("A","B")}.}
+
+\item{fisher}{If TRUE, meta analyses of Tau U is based on Fisher Z transformed correlations.}
+
+\item{continuity_correction}{If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.}
 
 \item{...}{Further arguments passed to the function.}
 }
@@ -59,8 +63,8 @@ Tau-U is an inconsistently operationalized construct.
 bob <- scdf(c(A = 2, 3, 5, 3, B = 4, 5, 5, 7, 6), name = "Bob")
 tau_u(bob)
 
-## Calculate tau-U with ties counted as positive
-tau_u(Grosche2011$Eva, ties_method = "positive")
+## Calculate tau-U based on Kendall Tau A
+tau_u(Grosche2011$Eva, tau_method = "a")
 
 ## Request tau-U for all single-cases fom the Grosche2011 data
 tau_u(Grosche2011)
