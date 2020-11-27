@@ -226,12 +226,18 @@
     v0 <- N * (N - 1) * (2 * N + 5)
     vt <- sum(sapply(tie.x, function(x) (x * (x - 1)) * (2 * x + 5)))
     vu <- sum(sapply(tie.y, function(x) (x * (x - 1)) * (2 * x + 5)))
-    v1 <- sum(sapply(tie.x, function(x) (x * (x - 1)))) * sum(sapply(tie.y, function(x) (x * (x - 1))))
-    v2 <- sum(sapply(tie.x, function(x) (x * (x - 1)) * (x - 2))) * sum(sapply(tie.y, function(x) (x * (x - 1)) * (x - 2)))
+    v1 <- sum(sapply(tie.x, function(x) (x * (x - 1)))) * 
+          sum(sapply(tie.y, function(x) (x * (x - 1))))
+    v2 <- sum(sapply(tie.x, function(x) (x * (x - 1)) * (x - 2))) * 
+          sum(sapply(tie.y, function(x) (x * (x - 1)) * (x - 2)))
     
-    out$varS <- (v0 - vt - vu) / 18 + (v1 / (2 * N * (N - 1))) +  (v2 / (9 * N * (N - 1) * (N - 2)))
+    out$varS <- (v0 - vt - vu) / 18 + 
+                (v1 / (2 * N * (N - 1))) +  
+                (v2 / (9 * N * (N - 1) * (N - 2)))
+    
     out$sdS <- sqrt(out$varS)
     out$se  <- out$sdS / out$D
+    
     if (!continuity_correction) out$z <- out$S / out$sdS #out$tau.b / out$se
     if (continuity_correction)  out$z <- (out$S - 1) / out$sdS 
   }

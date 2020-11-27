@@ -12,6 +12,7 @@ export(
   cols,
   flip = FALSE,
   note = TRUE,
+  round = 2,
   ...
 )
 }

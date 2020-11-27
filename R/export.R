@@ -19,7 +19,7 @@
 
 export <- function(object, filename = NULL,
                    kable_styling_options = list(), kable_options = list(),
-                   cols, flip = FALSE, note = TRUE, ...) {
+                   cols, flip = FALSE, note = TRUE, round = 2, ...) {
   warning(.opt$function_debugging_warning)
 
   default_kable_styling <- getOption("scan.export.kable_styling")
@@ -265,6 +265,7 @@ export <- function(object, filename = NULL,
   # hplm --------------------------------------------------------------------
 
   if (x == "hplm") {
+    
     caption <- paste0("Hierarchical Piecewise Linear Regression for variable '", attr(object, .opt$dv), "'.")
 
     Summary <- summary(object$hplm)
@@ -311,11 +312,11 @@ export <- function(object, filename = NULL,
     if (!is.null(md$p)) md$p <- .nice.p(md$p)
 
     out[, ] <- lapply(out[, ], function(x)
-      if (class(x) == "numeric") as.character(round(x, 2)) else x)
+      if (class(x) == "numeric") as.character(round(x, round)) else x)
     out <- cbind(Parameter = rownames(out), out, stringsAsFactors = FALSE)
     rownames(out) <- NULL
     md[, ] <- lapply(md, function(x)
-      if (class(x) == "numeric") as.character(round(x, 2)) else x)
+      if (class(x) == "numeric") as.character(round(x, round)) else x)
     md <- cbind(" " = rownames(md), md, stringsAsFactors = FALSE)
     rownames(md) <- NULL
 
