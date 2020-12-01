@@ -40,7 +40,7 @@ subset.scdf <- function(x, subset, select, cases) {
       if (is.logical(rows))
         rows <- rows & !is.na(rows)
     }
-    print(rows)
+    #print(rows)
     scdf[[i]] <- x[rows, columns, drop = FALSE]
   }
   
