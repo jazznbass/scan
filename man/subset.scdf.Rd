@@ -4,7 +4,7 @@
 \alias{subset.scdf}
 \title{Subset cases, rows, and variables}
 \usage{
-\method{subset}{scdf}(x, subset, select, cases)
+\method{subset}{scdf}(x, subset, select, cases, ...)
 }
 \arguments{
 \item{x}{An scdf object.}
@@ -14,6 +14,8 @@
 \item{select}{Expression, indicating columns to select from an scdf.}
 
 \item{cases}{Expression, indicating cases to keep from an scdf.}
+
+\item{...}{[use not implemented yet]}
 }
 \value{
 An scdf with cases filtered by the filter expression.

@@ -4,6 +4,7 @@
 #' @param subset Logical expression indicating rows to keep: missing values are taken as false.
 #' @param select Expression, indicating columns to select from an scdf.
 #' @param cases Expression, indicating cases to keep from an scdf.
+#' @param ... [use not implemented yet]
 #'
 #' @return An scdf with cases filtered by the filter expression.
 #' @export
@@ -14,7 +15,7 @@
 #' subset(exampleAB, cases = c(Karolina, Johanna))
 #' subset(exampleA1B1A2B2, phase %in% c("A1", "B2"), cases = Pawel:Moritz)
 
-subset.scdf <- function(x, subset, select, cases) {
+subset.scdf <- function(x, subset, select, cases, ...) {
   scdf <- x
   scdf_attributes <- attributes(scdf)
   if (missing(subset)) subset <- TRUE else subset <- substitute(subset)

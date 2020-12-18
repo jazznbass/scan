@@ -12,7 +12,7 @@ print.sc <- function(x, ...) {
   if (value == "base_corr_tau") {
     cat("Baseline corrected tau\n\n")
     cat("Auto correlation in baseline:\n")
-    cat("tau =", round(x$auto_tau$tau.b, 2))
+    cat("tau =", round(x$auto_tau$tau, 2))
     cat("; p =", round(x$auto_tau$p, 3), "\n\n")
     
     cat("Baseline corrected tau:\n")
