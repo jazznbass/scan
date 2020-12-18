@@ -61,7 +61,7 @@ corrected_tau <- function(data, dvar, pvar, mvar, phases = c(1,2), alpha = 0.05,
   base_corr_tau <- .kendall(x, y, continuity_correction = continuity)
   
   out <- list(
-    tau        = base_corr_tau$tau.b, 
+    tau        = base_corr_tau$tau, 
     p          = base_corr_tau$p, 
     correction = corr_applied,
     continuity = continuity,

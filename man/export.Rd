@@ -33,6 +33,8 @@ with variable names or the string "main" will select the central variables.}
 
 \item{note}{If TRUE additional information are printed below the table.}
 
+\item{round}{value for the digits argument passed to the internally used round function.}
+
 \item{...}{Further Arguments passed to internal functions.}
 }
 \value{

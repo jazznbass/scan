@@ -178,7 +178,7 @@
   
   out <- list()
   dat <- data.frame(cbind(x, y))
-  dat <- dat[order(dat$x), ]
+  dat <- dat[sort.list(dat$x), ]
   C <- 0
   D <- 0
   N <- nrow(dat)

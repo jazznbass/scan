@@ -13,6 +13,7 @@
 #' with variable names or the string "main" will select the central variables.
 #' @param flip If TRUE, some objects are displayed with rows and columns flipped.
 #' @param note If TRUE additional information are printed below the table.
+#' @param round value for the digits argument passed to the internally used round function.
 #' @param ... Further Arguments passed to internal functions.
 #' @return  Returns a specif formated html.
 #' @export

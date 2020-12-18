@@ -49,7 +49,7 @@ makesingleSC <- function(data, scale = FALSE, type = "add") {
       new.data.B <- rbind(new.data.B, B)	
     }
   }
-  new.data.A <- new.data.A[order(new.data.A[,3]),]
+  new.data.A <- new.data.A[sort.list(new.data.A[[3]]),]
   if(type == "mean") {
     tmp <- aggregate(values~mt, data = new.data.A, mean, na.rm = TRUE)
     new.data.A <- data.frame(phase = rep("A", nrow(tmp)), values = tmp$values, mt = tmp$mt)
@@ -64,7 +64,7 @@ makesingleSC <- function(data, scale = FALSE, type = "add") {
   }
   maxA <- max(new.data.A[,3], na.rm = TRUE)
   new.data.B[,3] <- new.data.B[,3] + maxA
-  new.data.B <- new.data.B[order(new.data.B[,3]),]
+  new.data.B <- new.data.B[sort.list(new.data.B[[3]]),]
   new.data <- rbind(new.data.A, new.data.B)
   
   return(list(new.data))

@@ -73,7 +73,7 @@ fill_missing <- function(data, dvar, mvar, interpolation = "linear", na.rm = TRU
         }
       }
     }
-    data[[i]] <- new.dat[order(new.dat[, mvar]), ]
+    data[[i]] <- new.dat[sort.list(new.dat[[mvar]]), ]
   }
   attributes(data) <- ATTRIBUTES
   data
