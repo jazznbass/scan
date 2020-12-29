@@ -1,6 +1,6 @@
 #' Empirical power analysis for single-case data
 #' 
-#' The \code{power_testSC} command conducts a Monte-Carlo study on the
+#' The \code{power_test} command conducts a Monte-Carlo study on the
 #' test-power and alpha-error of a set of single-cases. The distribution 
 #' values of the Monte-Carlo sample are either specified by the user or 
 #' estimated based on actual data.
@@ -11,7 +11,7 @@
 #' @param design An object created by design_rSC
 #' @param stat Defines the tests the power analysis is based on. The
 #' default \code{stat = c("plm_level", "rand", "tauU")} computes a power analysis based on
-#' \code{\link{tauUSC}}, \code{\link{randSC}} and \code{\link{plm}} analyses. Further
+#' \code{\link{tau_u}}, \code{\link{randSC}} and \code{\link{plm}} analyses. Further
 #' possibilities are: "plm_slope", "plm_poisson_level", "plm_poisson_slope", "hplm_level", 
 #' "hplm_slope", "base_tau".
 #' @param n_sim Number of sample studies created for the the Monte-Carlo study.
@@ -29,14 +29,14 @@
 #'   n = 1, phase.design = list(A = 6, B = 9), 
 #'   rtt = 0.8, level = 1.4
 #' )
-#' res <- power_testSC(design, n_sim = 10)
+#' res <- power_test(design, n_sim = 10)
 #' 
 #' ## Would you achieve higher power by setting up a MBD with three cases?
 #' design <- design_rSC(
 #'   n = 3, phase.design = list(A = 6, B = 9), 
 #'   rtt = 0.8, level = 1.4
 #' )
-#' res <- power_testSC(design, n_sim = 10, stat = c("hplm_level", "rand"))
+#' res <- power_test(design, n_sim = 10, stat = c("hplm_level", "rand"))
 #' 
 #' @export
 
@@ -88,6 +88,7 @@ power_test <- function(design,
 }
 
 .power_testSC <- function(design, alpha = NA, n_sim, mc_fun) {
+
   # Genrate radom sample ----------------------------------------------------
   rand.sample <- list()
   for(i in 1:n_sim) rand.sample[[i]] <- rSC(design = design)

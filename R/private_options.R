@@ -134,7 +134,10 @@
     param <- (nrow(res) - 2) / 2
     res[2 + param + 1, 5]
   },
-  tauU = function(x) tau_u(x, method = "parker")$table[[1]][5, 12],
+  tauU = function(x) {
+    res <- tau_u(x, method = "parker")$table[[1]]
+    res[which(row.names(res) == "A vs. B - Trend A"), which(names(res) == "p")]
+  },
   base_tau = function(x) corrected_tau(x)$p,
   
   rand = function(x) rand_test(x, number = 100, exclude.equal = "auto", output = "p")
