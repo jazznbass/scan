@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,7 +42,6 @@
 <meta property="og:title" content="Single case data frame — makeSCDF" />
 <meta property="og:description" content="The class scdf stores single-case study data with one or more
 single-cases." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +59,7 @@ single-cases." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +73,7 @@ single-cases." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.10</span>
       </span>
     </div>
 
@@ -78,7 +81,7 @@ single-cases." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -114,20 +117,20 @@ single-cases." />
 single-cases.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeSCDF</span>(<span class='no'>data</span>, <span class='kw'>B.start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>MT</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>makeSCDF</span><span class='op'>(</span><span class='va'>data</span>, B.start <span class='op'>=</span> <span class='cn'>NULL</span>, MT <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>scdf</span>(
-  <span class='no'>values</span>,
-  <span class='no'>B.start</span>,
-  <span class='no'>mt</span>,
-  <span class='no'>phase</span>,
-  <span class='no'>phase.design</span>,
-  <span class='no'>name</span>,
-  <span class='kw'>dvar</span> <span class='kw'>=</span> <span class='st'>"values"</span>,
-  <span class='kw'>pvar</span> <span class='kw'>=</span> <span class='st'>"phase"</span>,
-  <span class='kw'>mvar</span> <span class='kw'>=</span> <span class='st'>"mt"</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'>scdf</span><span class='op'>(</span>
+  <span class='va'>values</span>,
+  <span class='va'>B.start</span>,
+  <span class='va'>mt</span>,
+  <span class='va'>phase</span>,
+  <span class='va'>phase.design</span>,
+  <span class='va'>name</span>,
+  dvar <span class='op'>=</span> <span class='st'>"values"</span>,
+  pvar <span class='op'>=</span> <span class='st'>"phase"</span>,
+  mvar <span class='op'>=</span> <span class='st'>"mt"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,34 +212,39 @@ An scdf contains several attributes:
  (e.g., <code>scdf_attr(exampleAB_add, "dvar") &lt;- "depression"</code> defines depression
  as the dependent variable. Please notice that all <code>scan</code> functions
  have arguments to define <code>dvar, phase, and mt</code> for a given analysis.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Scores on a letter naming task were collected on eleven days in a row. The intervention</span>
 <span class='co'>## started after the fifth measurement, so the first B phase measurement was 6 (B.start = 6).</span>
-<span class='no'>klaas</span> <span class='kw'>&lt;-</span> <span class='fu'>scdf</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>12</span>, <span class='fl'>16</span>, <span class='fl'>18</span>, <span class='fl'>15</span>, <span class='fl'>14</span>, <span class='fl'>19</span>),
-  <span class='kw'>B.start</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Klaas"</span>
-)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>klaas</span>)</div><div class='img'><img src='scdf-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>klaas</span> <span class='op'>&lt;-</span> <span class='fu'>scdf</span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>12</span>, <span class='fl'>16</span>, <span class='fl'>18</span>, <span class='fl'>15</span>, <span class='fl'>14</span>, <span class='fl'>19</span><span class='op'>)</span>,
+  B.start <span class='op'>=</span> <span class='fl'>6</span>, name <span class='op'>=</span> <span class='st'>"Klaas"</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>klaas</span><span class='op'>)</span>
+</div><div class='img'><img src='scdf-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Alternative coding 1:</span>
-<span class='no'>klaas</span> <span class='kw'>&lt;-</span> <span class='fu'>scdf</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='fl'>16</span>, <span class='fl'>18</span>, <span class='fl'>15</span>, <span class='fl'>14</span>, <span class='fl'>19</span>),
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Klaas"</span>
-)
+<span class='va'>klaas</span> <span class='op'>&lt;-</span> <span class='fu'>scdf</span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, B <span class='op'>=</span> <span class='fl'>12</span>, <span class='fl'>16</span>, <span class='fl'>18</span>, <span class='fl'>15</span>, <span class='fl'>14</span>, <span class='fl'>19</span><span class='op'>)</span>,
+  name <span class='op'>=</span> <span class='st'>"Klaas"</span>
+<span class='op'>)</span>
 
 <span class='co'># Alternative coding 2:</span>
-<span class='no'>klaas</span> <span class='kw'>&lt;-</span> <span class='fu'>scdf</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>12</span>, <span class='fl'>16</span>, <span class='fl'>18</span>, <span class='fl'>15</span>, <span class='fl'>14</span>, <span class='fl'>19</span>),
-  <span class='kw'>phase.design</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>6</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Klaas"</span>
-)
+<span class='va'>klaas</span> <span class='op'>&lt;-</span> <span class='fu'>scdf</span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>12</span>, <span class='fl'>16</span>, <span class='fl'>18</span>, <span class='fl'>15</span>, <span class='fl'>14</span>, <span class='fl'>19</span><span class='op'>)</span>,
+  phase.design <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>5</span>, B <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>, name <span class='op'>=</span> <span class='st'>"Klaas"</span>
+<span class='op'>)</span>
 
 <span class='co'>## Unfortunately in a similar SCDR there were no data collected on days 3 and 9. Use NA to</span>
 <span class='co'>## pass them to the package.</span>
-<span class='no'>emmi</span> <span class='kw'>&lt;-</span> <span class='fu'>scdf</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>NA</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>12</span>, <span class='fl'>16</span>, <span class='fl'>18</span>, <span class='fl'>NA</span>, <span class='fl'>14</span>, <span class='fl'>19</span>),
-  <span class='kw'>phase.design</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>6</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Emmi"</span>
-)
-<span class='fu'><a href='describeSC.html'>describeSC</a></span>(<span class='no'>emmi</span>)</div><div class='output co'>#&gt; Describe Single-Case Data
+<span class='va'>emmi</span> <span class='op'>&lt;-</span> <span class='fu'>scdf</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span>, <span class='cn'>NA</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>12</span>, <span class='fl'>16</span>, <span class='fl'>18</span>, <span class='cn'>NA</span>, <span class='fl'>14</span>, <span class='fl'>19</span><span class='op'>)</span>,
+  phase.design <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>5</span>, B <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>, name <span class='op'>=</span> <span class='st'>"Emmi"</span>
+<span class='op'>)</span>
+<span class='fu'><a href='describeSC.html'>describeSC</a></span><span class='op'>(</span><span class='va'>emmi</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Describe Single-Case Data
 #&gt; 
 #&gt; Design:  A B 
 #&gt; 
@@ -264,12 +272,13 @@ An scdf contains several attributes:
 <span class='co'>## In a MBD over three persons, data were again collected eleven days in a row. Intervention</span>
 <span class='co'>## starting points differ between subjects as they were randomly assigned. The three SCDFs</span>
 <span class='co'>## are then combined in a list for further conjoined analyses.</span>
-<span class='no'>charlotte</span> <span class='kw'>&lt;-</span> <span class='fu'>scdf</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>10</span>, <span class='fl'>5</span>, <span class='fl'>12</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='fl'>10</span>, <span class='fl'>18</span>, <span class='fl'>15</span>, <span class='fl'>14</span>, <span class='fl'>19</span>))
-<span class='no'>theresa</span> <span class='kw'>&lt;-</span> <span class='fu'>scdf</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>5</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='fl'>4</span>, <span class='fl'>7</span>, <span class='fl'>9</span>, <span class='fl'>8</span>, <span class='fl'>10</span>, <span class='fl'>12</span>))
-<span class='no'>antonia</span> <span class='kw'>&lt;-</span> <span class='fu'>scdf</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>9</span>, <span class='fl'>8</span>, <span class='fl'>8</span>, <span class='fl'>7</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='fl'>14</span>, <span class='fl'>15</span>, <span class='fl'>12</span>, <span class='fl'>16</span>))
-<span class='no'>mbd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>charlotte</span>, <span class='no'>theresa</span>, <span class='no'>antonia</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mbd</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Charlotte"</span>, <span class='st'>"Theresa"</span>, <span class='st'>"Antonia"</span>)
-<span class='fu'><a href='overlap.html'>overlapSC</a></span>(<span class='no'>mbd</span>)</div><div class='output co'>#&gt; Overlap Indices
+<span class='va'>charlotte</span> <span class='op'>&lt;-</span> <span class='fu'>scdf</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>10</span>, <span class='fl'>5</span>, <span class='fl'>12</span>, B <span class='op'>=</span> <span class='fl'>7</span>, <span class='fl'>10</span>, <span class='fl'>18</span>, <span class='fl'>15</span>, <span class='fl'>14</span>, <span class='fl'>19</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>theresa</span> <span class='op'>&lt;-</span> <span class='fu'>scdf</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>5</span>, B <span class='op'>=</span> <span class='fl'>7</span>, <span class='fl'>4</span>, <span class='fl'>7</span>, <span class='fl'>9</span>, <span class='fl'>8</span>, <span class='fl'>10</span>, <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>antonia</span> <span class='op'>&lt;-</span> <span class='fu'>scdf</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>9</span>, <span class='fl'>8</span>, <span class='fl'>8</span>, <span class='fl'>7</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, B <span class='op'>=</span> <span class='fl'>6</span>, <span class='fl'>14</span>, <span class='fl'>15</span>, <span class='fl'>12</span>, <span class='fl'>16</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>mbd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>charlotte</span>, <span class='va'>theresa</span>, <span class='va'>antonia</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>mbd</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Charlotte"</span>, <span class='st'>"Theresa"</span>, <span class='st'>"Antonia"</span><span class='op'>)</span>
+<span class='fu'><a href='overlap.html'>overlapSC</a></span><span class='op'>(</span><span class='va'>mbd</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Overlap Indices
 #&gt; 
 #&gt; Design:  A B 
 #&gt; Comparing phase 1 against phase 2 
@@ -281,19 +290,20 @@ An scdf contains several attributes:
 #&gt; NAP              86.67   94.64   83.33
 #&gt; NAP.rescaled     73.33   89.29   66.67
 #&gt; PAND             72.73   81.82   81.82
-#&gt; TAU_U             0.47    0.69    0.67
-#&gt; Base_Tau          0.56    0.66    0.50
+#&gt; TAU_U             0.49    0.71    0.69
+#&gt; Base_Tau          0.56    0.66    0.69
 #&gt; Diff_mean         6.03    4.39    5.27
 #&gt; Diff_trend        0.77    0.50    2.37
 #&gt; SMD               1.94    4.59    3.85</div><div class='input'>
 <span class='co'>## In a classroom-based intervention it was not possible to measure outcomes every day, but</span>
 <span class='co'>## only on schooldays. The sequence of measurements is passed to the package by using a</span>
 <span class='co'>## vector of measurement times.</span>
-<span class='no'>frida</span> <span class='kw'>&lt;-</span> <span class='fu'>scdf</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>6</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>8</span>, <span class='fl'>10</span>, <span class='fl'>8</span>, <span class='fl'>12</span>, <span class='fl'>14</span>, <span class='fl'>13</span>, <span class='fl'>12</span>),
-  <span class='kw'>mt</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>8</span>, <span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>11</span>, <span class='fl'>12</span>, <span class='fl'>14</span>, <span class='fl'>15</span>, <span class='fl'>16</span>, <span class='fl'>17</span>, <span class='fl'>18</span>)
-)
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>frida</span>)</div><div class='output co'>#&gt; #A single-case data frame with one case
+<span class='va'>frida</span> <span class='op'>&lt;-</span> <span class='fu'>scdf</span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>6</span>, B <span class='op'>=</span> <span class='fl'>8</span>, <span class='fl'>10</span>, <span class='fl'>8</span>, <span class='fl'>12</span>, <span class='fl'>14</span>, <span class='fl'>13</span>, <span class='fl'>12</span><span class='op'>)</span>,
+  mt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>8</span>, <span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>11</span>, <span class='fl'>12</span>, <span class='fl'>14</span>, <span class='fl'>15</span>, <span class='fl'>16</span>, <span class='fl'>17</span>, <span class='fl'>18</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>frida</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; #A single-case data frame with one case
 #&gt; 
 #&gt;   Measurements Design
 #&gt; 1           15    A B
@@ -302,7 +312,9 @@ An scdf contains several attributes:
 #&gt; values &lt;dependent variable&gt;
 #&gt; mt &lt;measurement-time variable&gt;
 #&gt; phase &lt;phase variable&gt;
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>frida</span>)</div><div class='img'><img src='scdf-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='describeSC.html'>describeSC</a></span>(<span class='no'>frida</span>)</div><div class='output co'>#&gt; Describe Single-Case Data
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>frida</span><span class='op'>)</span>
+</div><div class='img'><img src='scdf-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='describeSC.html'>describeSC</a></span><span class='op'>(</span><span class='va'>frida</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Describe Single-Case Data
 #&gt; 
 #&gt; Design:  A B 
 #&gt; 
@@ -328,12 +340,13 @@ An scdf contains several attributes:
 #&gt; trend.A  0.31
 #&gt; trend.B  0.71</div><div class='input'>
 <span class='co'>## example with two independent variables and four phases</span>
-<span class='no'>jim</span> <span class='kw'>&lt;-</span> <span class='fu'>scdf</span>(
-  <span class='kw'>zvt</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>47</span>, <span class='fl'>58</span>, <span class='fl'>76</span>, <span class='fl'>63</span>, <span class='fl'>71</span>, <span class='fl'>59</span>, <span class='fl'>64</span>, <span class='fl'>69</span>, <span class='fl'>72</span>, <span class='fl'>77</span>, <span class='fl'>76</span>, <span class='fl'>73</span>),
-  <span class='kw'>d2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>131</span>, <span class='fl'>134</span>, <span class='fl'>141</span>, <span class='fl'>141</span>, <span class='fl'>140</span>, <span class='fl'>140</span>, <span class='fl'>138</span>, <span class='fl'>140</span>, <span class='fl'>141</span>, <span class='fl'>140</span>, <span class='fl'>138</span>, <span class='fl'>140</span>),
-  <span class='kw'>phase.design</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>A1</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>B1</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>A2</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>B2</span> <span class='kw'>=</span> <span class='fl'>3</span>), <span class='kw'>dvar</span> <span class='kw'>=</span> <span class='st'>"zvt"</span>
-)
-<span class='fu'><a href='overlap.html'>overlapSC</a></span>(<span class='no'>jim</span>, <span class='kw'>phases</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A1"</span>, <span class='st'>"A2"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B1"</span>, <span class='st'>"B2"</span>)))</div><div class='output co'>#&gt; Overlap Indices
+<span class='va'>jim</span> <span class='op'>&lt;-</span> <span class='fu'>scdf</span><span class='op'>(</span>
+  zvt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>47</span>, <span class='fl'>58</span>, <span class='fl'>76</span>, <span class='fl'>63</span>, <span class='fl'>71</span>, <span class='fl'>59</span>, <span class='fl'>64</span>, <span class='fl'>69</span>, <span class='fl'>72</span>, <span class='fl'>77</span>, <span class='fl'>76</span>, <span class='fl'>73</span><span class='op'>)</span>,
+  d2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>131</span>, <span class='fl'>134</span>, <span class='fl'>141</span>, <span class='fl'>141</span>, <span class='fl'>140</span>, <span class='fl'>140</span>, <span class='fl'>138</span>, <span class='fl'>140</span>, <span class='fl'>141</span>, <span class='fl'>140</span>, <span class='fl'>138</span>, <span class='fl'>140</span><span class='op'>)</span>,
+  phase.design <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A1 <span class='op'>=</span> <span class='fl'>3</span>, B1 <span class='op'>=</span> <span class='fl'>3</span>, A2 <span class='op'>=</span> <span class='fl'>3</span>, B2 <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>, dvar <span class='op'>=</span> <span class='st'>"zvt"</span>
+<span class='op'>)</span>
+<span class='fu'><a href='overlap.html'>overlapSC</a></span><span class='op'>(</span><span class='va'>jim</span>, phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A1"</span>, <span class='st'>"A2"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"B1"</span>, <span class='st'>"B2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Overlap Indices
 #&gt; 
 #&gt; Design:  A1 B1 A2 B2 
 #&gt; Comparing phases 1 + 3 against phases 2 + 4 
@@ -354,17 +367,10 @@ An scdf contains several attributes:
 #&gt; Note. The following variables were used in this analysis:
 #&gt;       'zvt' as independent variable, 'phase' as phase ,and 'mt' as measurement time.</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Juergen Wilbert</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -375,7 +381,7 @@ An scdf contains several attributes:
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

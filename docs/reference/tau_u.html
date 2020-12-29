@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,7 +42,6 @@
 <meta property="og:title" content="Tau-U for single-case data — tau_u" />
 <meta property="og:description" content="This function calculates indices of the Tau-U family as proposed by Parker
 et al. (2011)." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +59,7 @@ et al. (2011)." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +73,7 @@ et al. (2011)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.10</span>
       </span>
     </div>
 
@@ -78,7 +81,7 @@ et al. (2011)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -114,23 +117,25 @@ et al. (2011)." />
 et al. (2011).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tau_u</span>(
-  <span class='no'>data</span>,
-  <span class='no'>dvar</span>,
-  <span class='no'>pvar</span>,
-  <span class='kw'>ties.method</span> <span class='kw'>=</span> <span class='st'>"omit"</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"complete"</span>,
-  <span class='kw'>phases</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
-)
+    <pre class="usage"><span class='fu'>tau_u</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>dvar</span>,
+  <span class='va'>pvar</span>,
+  tau_method <span class='op'>=</span> <span class='st'>"b"</span>,
+  method <span class='op'>=</span> <span class='st'>"complete"</span>,
+  phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>,
+  fisher <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  continuity_correction <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 
-<span class='fu'>tauUSC</span>(<span class='no'>...</span>)</pre>
+<span class='fu'>tauUSC</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -141,15 +146,13 @@ et al. (2011).</p>
       <td><p>Character string with the name of the phase variable. Defaults to the attributes in the scdf file.</p></td>
     </tr>
     <tr>
-      <th>ties.method</th>
-      <td><p>Defines how to handle ties. <code>"omit"</code> (default) excludes all
-ties from the calculation. <code>"positive"</code> counts all ties as positive
-comparisons, while <code>"negative"</code> counts them as negative comparisons.</p></td>
+      <th>tau_method</th>
+      <td><p>Character with values "a" or "b" (default) indicating whether Kendall Tau A or Kendall Tau B is applied.</p></td>
     </tr>
     <tr>
       <th>method</th>
       <td><p><code>"complete"</code> (default) or <code>"parker"</code>. The latter
-calculates the number of possible pairs as described in Parler et al. (2011)
+calculates the number of possible pairs as described in Parker et al. (2011)
 which might lead to tau-U values greater than 1.</p></td>
     </tr>
     <tr>
@@ -160,6 +163,14 @@ phases that should be compared. E.g., <code>phases = c("A","C")</code> or
 could be combined by providing a list with two elements. E.g., <code>phases
 = list(A = c(1,3), B = c(2,4))</code> will compare phases 1 and 3 (as A) against 2
 and 4 (as B). Default is <code>phases = c("A","B")</code>.</p></td>
+    </tr>
+    <tr>
+      <th>fisher</th>
+      <td><p>If TRUE, meta analyses of Tau U is based on Fisher Z transformed correlations.</p></td>
+    </tr>
+    <tr>
+      <th>continuity_correction</th>
+      <td><p>If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -176,6 +187,9 @@ family, including: Pairs, positive and negative comparisons, S, and Tau</p></dd>
 <dt>matrix</dt><dd><p>The matrix of comparisons used for calculating the
 statistics.</p></dd> <dt>tau_u</dt><dd><p>Tau-U value.</p></dd>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Tau-U is an inconsistently operationalized construct.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Parker, R. I., Vannest, K. J., Davis, J. L., &amp; Sauber, S. B.
@@ -191,77 +205,89 @@ statistics.</p></dd> <dt>tau_u</dt><dd><p>Tau-U value.</p></dd>
 <code><a href='pem.html'>pem</a>()</code>,
 <code><a href='pet.html'>pet</a>()</code>,
 <code><a href='pnd.html'>pnd</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Calculate tau-U for the example from Parker et al. (2011)</span>
-<span class='no'>bob</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span>), <span class='kw'>B.start</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='fu'>tau_u</span>(<span class='no'>bob</span>)</div><div class='output co'>#&gt; Tau-U
+<span class='va'>bob</span> <span class='op'>&lt;-</span> <span class='fu'><a href='makeSCDF.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>3</span>, B <span class='op'>=</span> <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span><span class='op'>)</span>, name <span class='op'>=</span> <span class='st'>"Bob"</span><span class='op'>)</span>
+<span class='fu'>tau_u</span><span class='op'>(</span><span class='va'>bob</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Tau-U
 #&gt; Method:  complete 
 #&gt; 
 #&gt; Overall Tau-U: 
-#&gt; A vs. B + Trend B - Trend A           A vs. B - Trend A 
-#&gt;                   0.5555556                   0.5000000 
+#&gt;                        Model Tau_U    se    z df        p
+#&gt;                      A vs. B 0.842 0.103 8.19  0 2.63e-16
+#&gt;            A vs. B - Trend A 0.451 0.282 1.60  0 1.10e-01
+#&gt;            A vs. B + Trend B 0.742 0.159 4.68  0 2.92e-06
+#&gt;  A vs. B + Trend B - Trend A 0.589 0.231 2.55  0 1.07e-02
 #&gt; 
-#&gt; $Case1
-#&gt;                              S      D     τ    τb     Z     p
-#&gt; A vs. B - Trend A           13 28.844 0.500 0.451 1.534 0.125
-#&gt; A vs. B + Trend B           23 30.984 0.767 0.742 2.582 0.010
-#&gt; A vs. B + Trend B - Trend A 20 33.941 0.556 0.589 2.140 0.032
+#&gt; $Bob
+#&gt;                               Tau SE_Tau    Z     p
+#&gt; A vs. B                     0.842  0.430 1.96 0.050
+#&gt; A vs. B - Trend A           0.451  0.294 1.53 0.125
+#&gt; A vs. B + Trend B           0.742  0.288 2.58 0.010
+#&gt; A vs. B + Trend B - Trend A 0.589  0.275 2.14 0.032
 #&gt; </div><div class='input'>
-<span class='co'>## Calculate tau-U with ties counted as positive</span>
-<span class='fu'>tau_u</span>(<span class='no'>Grosche2011</span>$<span class='no'>Eva</span>, <span class='kw'>ties.method</span> <span class='kw'>=</span> <span class='st'>"positive"</span>)</div><div class='output co'>#&gt; Tau-U
+<span class='co'>## Calculate tau-U based on Kendall Tau A</span>
+<span class='fu'>tau_u</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>$</span><span class='va'>Eva</span>, tau_method <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Tau-U
 #&gt; Method:  complete 
 #&gt; 
 #&gt; Overall Tau-U: 
-#&gt; A vs. B + Trend B - Trend A           A vs. B - Trend A 
-#&gt;                   0.4853801                   0.3548387 
+#&gt;                        Model Tau_U    se    z df       p
+#&gt;                      A vs. B 0.385 0.201 1.92  0 0.05548
+#&gt;            A vs. B - Trend A 0.355 0.206 1.72  0 0.08501
+#&gt;            A vs. B + Trend B 0.513 0.174 2.95  0 0.00316
+#&gt;  A vs. B + Trend B - Trend A 0.485 0.180 2.69  0 0.00706
 #&gt; 
 #&gt; $Eva
-#&gt;                              S       D     τ    τb     Z     p
-#&gt; A vs. B - Trend A           33 126.107 0.355 0.262 1.409 0.159
-#&gt; A vs. B + Trend B           80 163.328 0.513 0.490 2.849 0.004
-#&gt; A vs. B + Trend B - Trend A 83 171.000 0.485 0.485 2.904 0.004
+#&gt;                               Tau SE_Tau    Z     p
+#&gt; A vs. B                     0.385  0.167 2.30 0.021
+#&gt; A vs. B - Trend A           0.355  0.167 2.12 0.034
+#&gt; A vs. B + Trend B           0.513  0.167 3.07 0.002
+#&gt; A vs. B + Trend B - Trend A 0.485  0.167 2.90 0.004
 #&gt; </div><div class='input'>
 <span class='co'>## Request tau-U for all single-cases fom the Grosche2011 data</span>
-<span class='fu'>tau_u</span>(<span class='no'>Grosche2011</span>)</div><div class='output co'>#&gt; Tau-U
+<span class='fu'>tau_u</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Tau-U
 #&gt; Method:  complete 
 #&gt; 
 #&gt; Overall Tau-U: 
-#&gt; A vs. B + Trend B - Trend A           A vs. B - Trend A 
-#&gt;                   0.2194680                   0.1666474 
+#&gt;                        Model  Tau_U    se     z df      p
+#&gt;                      A vs. B 0.0972 0.122 0.798  2 0.4251
+#&gt;            A vs. B - Trend A 0.0894 0.126 0.710  2 0.4777
+#&gt;            A vs. B + Trend B 0.2264 0.116 1.952  2 0.0509
+#&gt;  A vs. B + Trend B - Trend A 0.2447 0.116 2.117  2 0.0343
 #&gt; 
 #&gt; $Eva
-#&gt;                              S       D     τ    τb     Z     p
-#&gt; A vs. B - Trend A           33 126.107 0.355 0.262 1.409 0.159
-#&gt; A vs. B + Trend B           80 163.328 0.513 0.490 2.849 0.004
-#&gt; A vs. B + Trend B - Trend A 83 171.000 0.485 0.485 2.904 0.004
+#&gt;                               Tau SE_Tau    Z     p
+#&gt; A vs. B                     0.385  0.292 1.32 0.188
+#&gt; A vs. B - Trend A           0.262  0.186 1.41 0.159
+#&gt; A vs. B + Trend B           0.490  0.172 2.85 0.004
+#&gt; A vs. B + Trend B - Trend A 0.485  0.167 2.90 0.004
 #&gt; 
 #&gt; $Georg
-#&gt;                              S       D     τ    τb     Z     p
-#&gt; A vs. B - Trend A           11 196.214 0.079 0.056 0.342 0.732
-#&gt; A vs. B + Trend B           37 264.811 0.145 0.140 0.931 0.352
-#&gt; A vs. B + Trend B - Trend A 53 275.500 0.192 0.192 1.315 0.188
+#&gt;                                Tau SE_Tau      Z     p
+#&gt; A vs. B                     -0.042  0.265 -0.159 0.874
+#&gt; A vs. B - Trend A            0.056  0.164  0.342 0.732
+#&gt; A vs. B + Trend B            0.140  0.150  0.931 0.352
+#&gt; A vs. B + Trend B - Trend A  0.192  0.146  1.315 0.188
 #&gt; 
 #&gt; $Olaf
-#&gt;                               S       D      τ     τb      Z     p
-#&gt; A vs. B - Trend A           -10 175.442 -0.062 -0.057 -0.336 0.737
-#&gt; A vs. B + Trend B           -14 153.493 -0.113 -0.091 -0.516 0.606
-#&gt; A vs. B + Trend B - Trend A -14 190.000 -0.074 -0.074 -0.454 0.650
+#&gt;                                Tau SE_Tau      Z     p
+#&gt; A vs. B                     -0.104  0.270 -0.386 0.700
+#&gt; A vs. B - Trend A           -0.057  0.170 -0.336 0.737
+#&gt; A vs. B + Trend B           -0.091  0.177 -0.516 0.606
+#&gt; A vs. B + Trend B - Trend A -0.074  0.162 -0.454 0.650
 #&gt; </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Juergen Wilbert</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -272,7 +298,7 @@ statistics.</p></dd> <dt>tau_u</dt><dd><p>Tau-U value.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

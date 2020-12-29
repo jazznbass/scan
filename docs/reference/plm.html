@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,7 +42,6 @@
 <meta property="og:title" content="Piecewise linear model / piecewise regression — plm" />
 <meta property="og:description" content="The plm function computes a piecewise regression model (see Huitema &amp;amp;
 McKean, 2000)." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +59,7 @@ McKean, 2000)." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +73,7 @@ McKean, 2000)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.10</span>
       </span>
     </div>
 
@@ -78,7 +81,7 @@ McKean, 2000)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -114,29 +117,29 @@ McKean, 2000)." />
 McKean, 2000).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plm</span>(
-  <span class='no'>data</span>,
-  <span class='no'>dvar</span>,
-  <span class='no'>pvar</span>,
-  <span class='no'>mvar</span>,
-  <span class='kw'>AR</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"B&amp;L-B"</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>,
-  <span class='kw'>trend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>slope</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>update</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.omit</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plm</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>dvar</span>,
+  <span class='va'>pvar</span>,
+  <span class='va'>mvar</span>,
+  AR <span class='op'>=</span> <span class='fl'>0</span>,
+  model <span class='op'>=</span> <span class='st'>"B&amp;L-B"</span>,
+  family <span class='op'>=</span> <span class='st'>"gaussian"</span>,
+  trend <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  level <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  slope <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  formula <span class='op'>=</span> <span class='cn'>NULL</span>,
+  update <span class='op'>=</span> <span class='cn'>NULL</span>,
+  na.action <span class='op'>=</span> <span class='va'>na.omit</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -227,18 +230,22 @@ Measurement, 60</em>, 38-58.</p>
 <code><a href='corrected_tau.html'>corrected_tau</a>()</code>,
 <code><a href='hplm.html'>hplm</a>()</code>,
 <code><a href='mplm.html'>mplm</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Compute a piecewise regression model for a random single-case</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
-<span class='no'>AB</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span>(
-  <span class='kw'>phase.design</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>20</span>),
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>slope</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>0.05</span>),
-  <span class='kw'>trend</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>0.05</span>)
-)
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span>(<span class='kw'>design</span> <span class='kw'>=</span> <span class='no'>AB</span>)
-<span class='fu'>plm</span>(<span class='no'>dat</span>, <span class='kw'>AR</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; Piecewise Regression Analysis
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>AB</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>
+  phase.design <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>10</span>, B <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>, 
+  level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>0</span>, B <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>, slope <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>0</span>, B <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>, 
+  trend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0.05</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span>design <span class='op'>=</span> <span class='va'>AB</span><span class='op'>)</span>
+<span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, AR <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Piecewise Regression Analysis
 #&gt; 
 #&gt; Dummy model:  B&amp;L-B 
 #&gt; 
@@ -246,12 +253,11 @@ Measurement, 60</em>, 38-58.</p>
 #&gt; Correlated residuals up to autoregressions of lag 3 are modelled
 #&gt; 
 #&gt; F(3, 26) = 47.38; p = 0.000; R² = 0.845; Adjusted R² = 0.828
-#&gt; 
-#&gt;                    B   2.5%  97.5%    SE      t     p     ΔR²
-#&gt; Intercept     53.234 47.630 58.838 2.859 18.618 0.000        
-#&gt; Trend mt      -0.166 -1.032  0.701 0.442 -0.374 0.711 -0.0012
-#&gt; Level phase B 15.353  9.550 21.156 2.961  5.185 0.000  0.0735
-#&gt; Slope phase B  0.913 -0.045  1.871 0.489  1.869 0.073  0.0162
+#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: unable to translate '&lt;U+0394&gt;R²' to native encoding</span></div><div class='output co'>#&gt;                    B   2.5%  97.5%    SE      t     p &lt;U+0394&gt;R²
+#&gt; Intercept     53.234 47.630 58.838 2.859 18.618 0.000           
+#&gt; Trend mt      -0.166 -1.032  0.701 0.442 -0.374 0.711    -0.0012
+#&gt; Level phase B 15.353  9.550 21.156 2.961  5.185 0.000     0.0735
+#&gt; Slope phase B  0.913 -0.045  1.871 0.489  1.869 0.073     0.0162
 #&gt; 
 #&gt; Autocorrelations of the residuals
 #&gt;  lag    cr
@@ -262,28 +268,28 @@ Measurement, 60</em>, 38-58.</p>
 #&gt; Formula: values ~ 1 + mt + phaseB + interB
 #&gt; </div><div class='input'>
 <span class='co'>## Another example with a more complex design</span>
-<span class='no'>A1B1A2B2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span>(
-  <span class='kw'>phase.design</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>A1</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>B1</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>A2</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>B2</span> <span class='kw'>=</span> <span class='fl'>20</span>),
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>A1</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>B1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>A2</span> <span class='kw'>=</span> -<span class='fl'>1</span>, <span class='kw'>B2</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-  <span class='kw'>slope</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>A1</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>B1</span> <span class='kw'>=</span> <span class='fl'>0.0</span>, <span class='kw'>A1</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>B2</span> <span class='kw'>=</span> <span class='fl'>0.0</span>),
-  <span class='kw'>trend</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>0.0</span>))
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span>(<span class='kw'>design</span> <span class='kw'>=</span> <span class='no'>A1B1A2B2</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>123</span>)
-<span class='fu'>plm</span>(<span class='no'>dat</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"JW"</span>)</div><div class='output co'>#&gt; Piecewise Regression Analysis
+<span class='va'>A1B1A2B2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>
+  phase.design <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A1 <span class='op'>=</span> <span class='fl'>15</span>, B1 <span class='op'>=</span> <span class='fl'>20</span>, A2 <span class='op'>=</span> <span class='fl'>15</span>, B2 <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>, 
+  level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A1 <span class='op'>=</span> <span class='fl'>0</span>, B1 <span class='op'>=</span> <span class='fl'>1</span>, A2 <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, B2 <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,
+  slope <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A1 <span class='op'>=</span> <span class='fl'>0</span>, B1 <span class='op'>=</span> <span class='fl'>0.0</span>, A1 <span class='op'>=</span> <span class='fl'>0</span>, B2 <span class='op'>=</span> <span class='fl'>0.0</span><span class='op'>)</span>,
+  trend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0.0</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span>design <span class='op'>=</span> <span class='va'>A1B1A2B2</span>, seed <span class='op'>=</span> <span class='fl'>123</span><span class='op'>)</span>
+<span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, model <span class='op'>=</span> <span class='st'>"JW"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Piecewise Regression Analysis
 #&gt; 
 #&gt; Dummy model:  JW 
 #&gt; 
 #&gt; Fitted a gaussian distribution.
 #&gt; F(7, 62) = 11.05; p = 0.000; R² = 0.555; Adjusted R² = 0.505
-#&gt; 
-#&gt;                      B    2.5%  97.5%    SE      t     p    ΔR²
-#&gt; Intercept       51.439  46.427 56.451 2.557 20.115 0.000       
-#&gt; Trend mt        -0.085  -0.636  0.467 0.281 -0.301 0.764 0.0006
-#&gt; Level phase B1   7.536   1.297 13.775 3.183  2.367 0.021 0.0402
-#&gt; Level phase A2 -11.120 -17.517 -4.722 3.264 -3.407 0.001 0.0833
-#&gt; Level phase B2  10.261   4.022 16.500 3.183  3.224 0.002 0.0746
-#&gt; Slope phase B1   0.280  -0.377  0.937 0.335  0.835 0.407 0.0050
-#&gt; Slope phase A2  -0.240  -0.897  0.417 0.335 -0.716 0.477 0.0037
-#&gt; Slope phase B2   0.119  -0.538  0.776 0.335  0.354 0.724 0.0009
+#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: unable to translate '&lt;U+0394&gt;R²' to native encoding</span></div><div class='output co'>#&gt;                      B    2.5%  97.5%    SE      t     p &lt;U+0394&gt;R²
+#&gt; Intercept       51.439  46.427 56.451 2.557 20.115 0.000           
+#&gt; Trend mt        -0.085  -0.636  0.467 0.281 -0.301 0.764     0.0006
+#&gt; Level phase B1   7.536   1.297 13.775 3.183  2.367 0.021     0.0402
+#&gt; Level phase A2 -11.120 -17.517 -4.722 3.264 -3.407 0.001     0.0833
+#&gt; Level phase B2  10.261   4.022 16.500 3.183  3.224 0.002     0.0746
+#&gt; Slope phase B1   0.280  -0.377  0.937 0.335  0.835 0.407     0.0050
+#&gt; Slope phase A2  -0.240  -0.897  0.417 0.335 -0.716 0.477     0.0037
+#&gt; Slope phase B2   0.119  -0.538  0.776 0.335  0.354 0.724     0.0009
 #&gt; 
 #&gt; Autocorrelations of the residuals
 #&gt;  lag    cr
@@ -295,19 +301,19 @@ Measurement, 60</em>, 38-58.</p>
 #&gt;     interB2
 #&gt; </div><div class='input'>
 <span class='co'>## no slope effects were found. Therefore you might want to drop slope estimation:</span>
-<span class='fu'>plm</span>(<span class='no'>dat</span>, <span class='kw'>slope</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"JW"</span>)</div><div class='output co'>#&gt; Piecewise Regression Analysis
+<span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, slope <span class='op'>=</span> <span class='cn'>FALSE</span>, model <span class='op'>=</span> <span class='st'>"JW"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Piecewise Regression Analysis
 #&gt; 
 #&gt; Dummy model:  JW 
 #&gt; 
 #&gt; Fitted a gaussian distribution.
 #&gt; F(4, 65) = 19.73; p = 0.000; R² = 0.548; Adjusted R² = 0.521
-#&gt; 
-#&gt;                      B    2.5%  97.5%    SE      t     p    ΔR²
-#&gt; Intercept       50.157  47.279 53.035 1.468 34.157 0.000       
-#&gt; Trend mt         0.076  -0.133  0.284 0.107  0.710 0.480 0.0035
-#&gt; Level phase B1   7.671   2.879 12.463 2.445  3.137 0.003 0.0684
-#&gt; Level phase A2 -10.945 -15.737 -6.153 2.445 -4.477 0.000 0.1392
-#&gt; Level phase B2   9.402   4.610 14.194 2.445  3.846 0.000 0.1028
+#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: unable to translate '&lt;U+0394&gt;R²' to native encoding</span></div><div class='output co'>#&gt;                      B    2.5%  97.5%    SE      t     p &lt;U+0394&gt;R²
+#&gt; Intercept       50.157  47.279 53.035 1.468 34.157 0.000           
+#&gt; Trend mt         0.076  -0.133  0.284 0.107  0.710 0.480     0.0035
+#&gt; Level phase B1   7.671   2.879 12.463 2.445  3.137 0.003     0.0684
+#&gt; Level phase A2 -10.945 -15.737 -6.153 2.445 -4.477 0.000     0.1392
+#&gt; Level phase B2   9.402   4.610 14.194 2.445  3.846 0.000     0.1028
 #&gt; 
 #&gt; Autocorrelations of the residuals
 #&gt;  lag    cr
@@ -318,18 +324,18 @@ Measurement, 60</em>, 38-58.</p>
 #&gt; Formula: values ~ 1 + mt + phaseB1 + phaseA2 + phaseB2
 #&gt; </div><div class='input'>
 <span class='co'>## and now drop the trend estimation as well</span>
-<span class='fu'>plm</span>(<span class='no'>dat</span>, <span class='kw'>slope</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"JW"</span>)</div><div class='output co'>#&gt; Piecewise Regression Analysis
+<span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, slope <span class='op'>=</span> <span class='cn'>FALSE</span>, trend <span class='op'>=</span> <span class='cn'>FALSE</span>, model <span class='op'>=</span> <span class='st'>"JW"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Piecewise Regression Analysis
 #&gt; 
 #&gt; Dummy model:  JW 
 #&gt; 
 #&gt; Fitted a gaussian distribution.
 #&gt; F(3, 66) = 26.34; p = 0.000; R² = 0.545; Adjusted R² = 0.524
-#&gt; 
-#&gt;                     B    2.5%  97.5%    SE      t p    ΔR²
-#&gt; Intercept      50.762  48.427 53.097 1.191 42.611 0       
-#&gt; Level phase B1  8.995   5.906 12.084 1.576  5.708 0 0.2247
-#&gt; Level phase A2 -9.621 -12.710 -6.532 1.576 -6.105 0 0.2570
-#&gt; Level phase B2 10.726   7.637 13.815 1.576  6.806 0 0.3195
+#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: unable to translate '&lt;U+0394&gt;R²' to native encoding</span></div><div class='output co'>#&gt;                     B    2.5%  97.5%    SE      t p &lt;U+0394&gt;R²
+#&gt; Intercept      50.762  48.427 53.097 1.191 42.611 0           
+#&gt; Level phase B1  8.995   5.906 12.084 1.576  5.708 0     0.2247
+#&gt; Level phase A2 -9.621 -12.710 -6.532 1.576 -6.105 0     0.2570
+#&gt; Level phase B2 10.726   7.637 13.815 1.576  6.806 0     0.3195
 #&gt; 
 #&gt; Autocorrelations of the residuals
 #&gt;  lag    cr
@@ -341,18 +347,10 @@ Measurement, 60</em>, 38-58.</p>
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Juergen Wilbert</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -363,7 +361,7 @@ Measurement, 60</em>, 38-58.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

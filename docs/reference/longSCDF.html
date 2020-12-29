@@ -11,23 +11,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -41,7 +45,6 @@
 <meta property="og:description" content="The longSCDF function transposes a scdf into one long data frame.
 Additionally, a data frame can be merged that includes data of the subjects.
 This might be helpful to prepare data to be used with other packages than scan." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -59,7 +62,7 @@ This might be helpful to prepare data to be used with other packages than scan."
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -73,7 +76,7 @@ This might be helpful to prepare data to be used with other packages than scan."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.10</span>
       </span>
     </div>
 
@@ -81,7 +84,7 @@ This might be helpful to prepare data to be used with other packages than scan."
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -119,14 +122,14 @@ Additionally, a data frame can be merged that includes data of the subjects.
 This might be helpful to prepare data to be used with other packages than scan.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>longSCDF</span>(<span class='no'>data</span>, <span class='kw'>l2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"case"</span>)</pre>
+    <pre class="usage"><span class='fu'>longSCDF</span><span class='op'>(</span><span class='va'>data</span>, l2 <span class='op'>=</span> <span class='cn'>NULL</span>, id <span class='op'>=</span> <span class='st'>"case"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>l2</th>
@@ -155,11 +158,15 @@ the case variable.</p>
 <code><a href='smooth_cases.html'>smooth_cases</a>()</code>,
 <code><a href='standardize.html'>standardize</a>()</code>,
 <code><a href='truncate_phase.html'>truncate_phase</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Convert the list of three single-case data frames from Grosche (2011) into one long data frame</span>
-<span class='no'>Grosche2011</span></div><div class='output co'>#&gt; #A single-case data frame with 3 cases
+<span class='va'>Grosche2011</span>
+</div><div class='output co'>#&gt; #A single-case data frame with 3 cases
 #&gt; 
 #&gt;  Eva: values mt phase | Georg: values mt phase | Olaf: values mt phase |
 #&gt;          3.4  0     A |            13  0     A |          7.7  0     A |
@@ -177,8 +184,9 @@ the case variable.</p>
 #&gt;          3.3 63     B |           9.2 55     B |          6.9 59     B |
 #&gt;          2.7 64     B |          10.7 59     B |          4.9 63     B |
 #&gt;          4.3 70     B |           7.6 62     B |          6.7 64     B |
-#&gt; # ... up to 9 more rows</div><div class='input'><span class='no'>Grosche2011_long</span> <span class='kw'>&lt;-</span> <span class='fu'>longSCDF</span>(<span class='no'>Grosche2011</span>)
-<span class='no'>Grosche2011_long</span></div><div class='output co'>#&gt;     case values  mt phase
+#&gt; # ... up to 9 more rows</div><div class='input'><span class='va'>Grosche2011_long</span> <span class='op'>&lt;-</span> <span class='fu'>longSCDF</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span>
+<span class='va'>Grosche2011_long</span>
+</div><div class='output co'>#&gt;     case values  mt phase
 #&gt; 1    Eva   3.39   0     A
 #&gt; 2    Eva   2.09   1     A
 #&gt; 3    Eva   1.46   7     A
@@ -243,57 +251,52 @@ the case variable.</p>
 #&gt; 62  Olaf   8.14  91     B
 #&gt; 63  Olaf   4.53  97     B</div><div class='input'>
 <span class='co'>## Combine an scdf with data for l2</span>
-<span class='no'>Leidig2018_long</span> <span class='kw'>&lt;-</span> <span class='fu'>longSCDF</span>(<span class='no'>Leidig2018</span>, <span class='kw'>l2</span> <span class='kw'>=</span> <span class='no'>Leidig2018_l2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>Leidig2018_long</span>)</div><div class='output co'>#&gt;  [1] "case"                  "mt"                    "academic_engagement"  
+<span class='va'>Leidig2018_long</span> <span class='op'>&lt;-</span> <span class='fu'>longSCDF</span><span class='op'>(</span><span class='va'>Leidig2018</span>, l2 <span class='op'>=</span> <span class='va'>Leidig2018_l2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>Leidig2018_long</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "case"                  "mt"                    "academic_engagement"  
 #&gt;  [4] "classID"               "weekday"               "disruptive_behavior"  
 #&gt;  [7] "phase"                 "class"                 "gender"               
 #&gt; [10] "migration"             "first_language_german" "SDQ_TOTAL"            
 #&gt; [13] "SDQ_EXTERNALIZING"     "SDQ_INTERNALIZING"     "ITRF_TOTAL"           
-#&gt; [16] "ITRF_ACADEMIC"         "ITRF_BEHAVIOR"        </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>Leidig2018_long</span>)</div><div class='output co'>#&gt;       case            mt         academic_engagement classID     weekday     
-#&gt;  1a1    : 108   Min.   :  1.00   Min.   :0.0         1a:540   Min.   :1.000  
-#&gt;  1a2    : 108   1st Qu.: 27.75   1st Qu.:3.0         2a:540   1st Qu.:2.000  
-#&gt;  1a3    : 108   Median : 54.50   Median :4.0         2b:540   Median :3.000  
-#&gt;  1a4    : 108   Mean   : 54.50   Mean   :3.7         2c:540   Mean   :3.028  
-#&gt;  1a5    : 108   3rd Qu.: 81.25   3rd Qu.:5.0         3a:540   3rd Qu.:4.000  
-#&gt;  2a1    : 108   Max.   :108.00   Max.   :5.0         3b:540   Max.   :5.000  
-#&gt;  (Other):3132                    NA's   :1366        3c:540                  
-#&gt;  disruptive_behavior phase    class        gender         migration     
-#&gt;  Min.   :0.0000      A: 730   1a:540   Min.   :0.0000   Min.   :0.0000  
-#&gt;  1st Qu.:0.0000      B:3050   2a:540   1st Qu.:0.0000   1st Qu.:0.0000  
-#&gt;  Median :0.0000               2b:540   Median :0.0000   Median :1.0000  
-#&gt;  Mean   :0.6192               2c:540   Mean   :0.1429   Mean   :0.5429  
-#&gt;  3rd Qu.:1.0000               3a:540   3rd Qu.:0.0000   3rd Qu.:1.0000  
-#&gt;  Max.   :4.0000               3b:540   Max.   :1.0000   Max.   :1.0000  
-#&gt;  NA's   :1393                 3c:540                                    
-#&gt;  first_language_german   SDQ_TOTAL     SDQ_EXTERNALIZING SDQ_INTERNALIZING
-#&gt;  Min.   :0.0000        Min.   : 4.00   Min.   : 3.000    Min.   : 0.0     
-#&gt;  1st Qu.:0.0000        1st Qu.: 8.00   1st Qu.: 6.000    1st Qu.: 1.0     
-#&gt;  Median :1.0000        Median :11.00   Median : 9.000    Median : 2.0     
-#&gt;  Mean   :0.7429        Mean   :11.46   Mean   : 8.857    Mean   : 2.6     
-#&gt;  3rd Qu.:1.0000        3rd Qu.:14.00   3rd Qu.:11.000    3rd Qu.: 3.0     
-#&gt;  Max.   :1.0000        Max.   :22.00   Max.   :18.000    Max.   :10.0     
-#&gt;                                                                           
-#&gt;    ITRF_TOTAL   ITRF_ACADEMIC    ITRF_BEHAVIOR   
-#&gt;  Min.   : 3.0   Min.   : 0.000   Min.   : 0.000  
-#&gt;  1st Qu.:12.0   1st Qu.: 2.000   1st Qu.: 4.000  
-#&gt;  Median :16.0   Median : 9.000   Median : 7.000  
-#&gt;  Mean   :17.4   Mean   : 9.286   Mean   : 8.114  
-#&gt;  3rd Qu.:23.0   3rd Qu.:16.000   3rd Qu.:11.000  
-#&gt;  Max.   :35.0   Max.   :24.000   Max.   :20.000  
-#&gt;                                                  </div><div class='input'>
+#&gt; [16] "ITRF_ACADEMIC"         "ITRF_BEHAVIOR"        </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>Leidig2018_long</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      case                 mt         academic_engagement classID 
+#&gt;  Length:3780        Min.   :  1.00   Min.   :0.0         1a:540  
+#&gt;  Class :character   1st Qu.: 27.75   1st Qu.:3.0         2a:540  
+#&gt;  Mode  :character   Median : 54.50   Median :4.0         2b:540  
+#&gt;                     Mean   : 54.50   Mean   :3.7         2c:540  
+#&gt;                     3rd Qu.: 81.25   3rd Qu.:5.0         3a:540  
+#&gt;                     Max.   :108.00   Max.   :5.0         3b:540  
+#&gt;                                      NA's   :1366        3c:540  
+#&gt;     weekday      disruptive_behavior phase    class        gender      
+#&gt;  Min.   :1.000   Min.   :0.0000      A: 730   1a:540   Min.   :0.0000  
+#&gt;  1st Qu.:2.000   1st Qu.:0.0000      B:3050   2a:540   1st Qu.:0.0000  
+#&gt;  Median :3.000   Median :0.0000               2b:540   Median :0.0000  
+#&gt;  Mean   :3.028   Mean   :0.6192               2c:540   Mean   :0.1429  
+#&gt;  3rd Qu.:4.000   3rd Qu.:1.0000               3a:540   3rd Qu.:0.0000  
+#&gt;  Max.   :5.000   Max.   :4.0000               3b:540   Max.   :1.0000  
+#&gt;                  NA's   :1393                 3c:540                   
+#&gt;    migration      first_language_german   SDQ_TOTAL     SDQ_EXTERNALIZING
+#&gt;  Min.   :0.0000   Min.   :0.0000        Min.   : 4.00   Min.   : 3.000   
+#&gt;  1st Qu.:0.0000   1st Qu.:0.0000        1st Qu.: 8.00   1st Qu.: 6.000   
+#&gt;  Median :1.0000   Median :1.0000        Median :11.00   Median : 9.000   
+#&gt;  Mean   :0.5429   Mean   :0.7429        Mean   :11.46   Mean   : 8.857   
+#&gt;  3rd Qu.:1.0000   3rd Qu.:1.0000        3rd Qu.:14.00   3rd Qu.:11.000   
+#&gt;  Max.   :1.0000   Max.   :1.0000        Max.   :22.00   Max.   :18.000   
+#&gt;                                                                          
+#&gt;  SDQ_INTERNALIZING   ITRF_TOTAL   ITRF_ACADEMIC    ITRF_BEHAVIOR   
+#&gt;  Min.   : 0.0      Min.   : 3.0   Min.   : 0.000   Min.   : 0.000  
+#&gt;  1st Qu.: 1.0      1st Qu.:12.0   1st Qu.: 2.000   1st Qu.: 4.000  
+#&gt;  Median : 2.0      Median :16.0   Median : 9.000   Median : 7.000  
+#&gt;  Mean   : 2.6      Mean   :17.4   Mean   : 9.286   Mean   : 8.114  
+#&gt;  3rd Qu.: 3.0      3rd Qu.:23.0   3rd Qu.:16.000   3rd Qu.:11.000  
+#&gt;  Max.   :10.0      Max.   :35.0   Max.   :24.000   Max.   :20.000  
+#&gt;                                                                    </div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Juergen Wilbert</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -304,7 +307,7 @@ the case variable.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

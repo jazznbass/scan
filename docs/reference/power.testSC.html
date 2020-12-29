@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -41,7 +45,6 @@ The power.testSC command conducts a Monte-Carlo study on the
 test-power and alpha-error of a randomization-test and a
 piecewise-regression model.  The distribution values of the Monte-Carlo
 sample are either specified by the user or estimated based on actual data." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -59,7 +62,7 @@ sample are either specified by the user or estimated based on actual data." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -73,7 +76,7 @@ sample are either specified by the user or estimated based on actual data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.10</span>
       </span>
     </div>
 
@@ -81,7 +84,7 @@ sample are either specified by the user or estimated based on actual data." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -120,41 +123,41 @@ piecewise-regression model.  The distribution values of the Monte-Carlo
 sample are either specified by the user or estimated based on actual data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>power.testSC</span>(
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>dvar</span>,
-  <span class='no'>pvar</span>,
-  <span class='no'>mvar</span>,
-  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rand.test"</span>, <span class='st'>"plm"</span>),
-  <span class='kw'>test.parameter</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"level"</span>, <span class='st'>"slope"</span>),
-  <span class='kw'>rand.test.stat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Mean B-A"</span>, <span class='st'>"B"</span>),
-  <span class='kw'>cases</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>rtt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>slope</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>MT</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>B.start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>trend</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>n_sim</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>s</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>startpoints</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>extreme.p</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>extreme.d</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>4</span>, -<span class='fl'>3</span>),
-  <span class='kw'>exclude.equal</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"normal"</span>,
-  <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>power.testSC</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>dvar</span>,
+  <span class='va'>pvar</span>,
+  <span class='va'>mvar</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"rand.test"</span>, <span class='st'>"plm"</span><span class='op'>)</span>,
+  test.parameter <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"level"</span>, <span class='st'>"slope"</span><span class='op'>)</span>,
+  rand.test.stat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Mean B-A"</span>, <span class='st'>"B"</span><span class='op'>)</span>,
+  cases <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rtt <span class='op'>=</span> <span class='cn'>NULL</span>,
+  level <span class='op'>=</span> <span class='cn'>NULL</span>,
+  slope <span class='op'>=</span> <span class='cn'>NULL</span>,
+  MT <span class='op'>=</span> <span class='cn'>NULL</span>,
+  B.start <span class='op'>=</span> <span class='cn'>NULL</span>,
+  trend <span class='op'>=</span> <span class='cn'>NULL</span>,
+  n_sim <span class='op'>=</span> <span class='fl'>100</span>,
+  limit <span class='op'>=</span> <span class='fl'>5</span>,
+  m <span class='op'>=</span> <span class='cn'>NULL</span>,
+  s <span class='op'>=</span> <span class='cn'>NULL</span>,
+  startpoints <span class='op'>=</span> <span class='cn'>NA</span>,
+  extreme.p <span class='op'>=</span> <span class='fl'>0</span>,
+  extreme.d <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='op'>-</span><span class='fl'>3</span><span class='op'>)</span>,
+  exclude.equal <span class='op'>=</span> <span class='st'>"auto"</span>,
+  alpha <span class='op'>=</span> <span class='fl'>0.05</span>,
+  distribution <span class='op'>=</span> <span class='st'>"normal"</span>,
+  silent <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -303,34 +306,39 @@ computation. Default is <code>silent = FALSE</code>.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plm.html'>plm</a></code>, <code><a href='rand_test.html'>randSC</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Assume you want to conduct a single-case study with 15 MTs, using a highly reliable test,</span>
 <span class='co'>## an expected level effect of \eqn{d = 1.4}, and randomized start points between MTs 5</span>
 <span class='co'>## and 12 can you expect to identify the effect using plm or randomization test?</span>
-<span class='no'>mc_par</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='kw'>n_cases</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>mt</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>B.start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> (<span class='fl'>300</span>,<span class='fl'>5</span>,<span class='fl'>12</span>)),
-  <span class='kw'>rtt</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>1.4</span>
-)
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>power.testSC</span>(
-  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='no'>mc_par</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rand.test"</span>,<span class='st'>"hplm"</span>),
-  <span class='kw'>test.parameter</span> <span class='kw'>=</span> <span class='st'>"level"</span>,
-  <span class='kw'>startpoints</span> <span class='kw'>=</span> <span class='fl'>5</span>:<span class='fl'>12</span>,
-  <span class='kw'>n_sim</span> <span class='kw'>=</span> <span class='fl'>100</span>
-)</div><div class='output co'>#&gt; <span class='warning'>Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.Please use the power_testSC function.</span></div><div class='input'><span class='co'>## Would you achieve higher power by setting up a MBD with three cases?</span>
-<span class='no'>mc_par</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='kw'>n_cases</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>mt</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>B.start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> (<span class='fl'>300</span>,<span class='fl'>5</span>,<span class='fl'>12</span>)),
-  <span class='kw'>rtt</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>1.4</span>
-)
-<span class='fu'>power.testSC</span>(
-  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='no'>mc_par</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rand.test"</span>,<span class='st'>"hplm"</span>),
-  <span class='kw'>test.parameter</span> <span class='kw'>=</span> <span class='st'>"level"</span>,
-  <span class='kw'>startpoints</span> <span class='kw'>=</span> <span class='fl'>5</span>:<span class='fl'>12</span>,
-  <span class='kw'>n_sim</span> <span class='kw'>=</span> <span class='fl'>10</span>
-)</div><div class='output co'>#&gt; <span class='warning'>Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.Please use the power_testSC function.</span></div><div class='output co'>#&gt; Test-Power in percent:
+<span class='va'>mc_par</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  n_cases <span class='op'>=</span> <span class='fl'>1</span>, mt <span class='op'>=</span> <span class='fl'>15</span>, B.start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> <span class='op'>(</span><span class='fl'>300</span>,<span class='fl'>5</span>,<span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>, 
+  rtt <span class='op'>=</span> <span class='fl'>0.8</span>, level <span class='op'>=</span> <span class='fl'>1.4</span>
+<span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>power.testSC</span><span class='op'>(</span>
+  parameters <span class='op'>=</span> <span class='va'>mc_par</span>, 
+  stat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"rand.test"</span>,<span class='st'>"hplm"</span><span class='op'>)</span>, 
+  test.parameter <span class='op'>=</span> <span class='st'>"level"</span>,
+  startpoints <span class='op'>=</span> <span class='fl'>5</span><span class='op'>:</span><span class='fl'>12</span>,
+  n_sim <span class='op'>=</span> <span class='fl'>100</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.Please use the power_testSC function.</span></div><div class='input'><span class='co'>## Would you achieve higher power by setting up a MBD with three cases?</span>
+<span class='va'>mc_par</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  n_cases <span class='op'>=</span> <span class='fl'>3</span>, mt <span class='op'>=</span> <span class='fl'>15</span>, B.start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span> <span class='op'>(</span><span class='fl'>300</span>,<span class='fl'>5</span>,<span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>, 
+  rtt <span class='op'>=</span> <span class='fl'>0.8</span>, level <span class='op'>=</span> <span class='fl'>1.4</span>
+<span class='op'>)</span>
+<span class='fu'>power.testSC</span><span class='op'>(</span>
+  parameters <span class='op'>=</span> <span class='va'>mc_par</span>, 
+  stat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"rand.test"</span>,<span class='st'>"hplm"</span><span class='op'>)</span>, 
+  test.parameter <span class='op'>=</span> <span class='st'>"level"</span>, 
+  startpoints <span class='op'>=</span> <span class='fl'>5</span><span class='op'>:</span><span class='fl'>12</span>,
+  n_sim <span class='op'>=</span> <span class='fl'>10</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.Please use the power_testSC function.</span></div><div class='output co'>#&gt; Test-Power in percent:
 #&gt;                         Power Alpha-error
 #&gt; tauU: A vs. B - Trend A    NA          NA
 #&gt; Rand-Test: Mean B-A       100          20
@@ -342,16 +350,10 @@ computation. Default is <code>silent = FALSE</code>.</p></td>
 #&gt; HPLM: Slope                NA          NA</div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Juergen Wilbert</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -362,7 +364,7 @@ computation. Default is <code>silent = FALSE</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

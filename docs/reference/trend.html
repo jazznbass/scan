@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -42,7 +46,6 @@ linear and a squared regression of measurement-time on scores.  Models are
 computed separately for each phase and across all phases.  For a
 more advanced application, you can add regression models using the R
 specific formula class." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -60,7 +63,7 @@ specific formula class." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +77,7 @@ specific formula class." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.10</span>
       </span>
     </div>
 
@@ -82,7 +85,7 @@ specific formula class." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -122,16 +125,16 @@ more advanced application, you can add regression models using the R
 specific formula class.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>trend</span>(<span class='no'>data</span>, <span class='no'>dvar</span>, <span class='no'>pvar</span>, <span class='no'>mvar</span>, <span class='kw'>offset</span> <span class='kw'>=</span> -<span class='fl'>1</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>trend</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>dvar</span>, <span class='va'>pvar</span>, <span class='va'>mvar</span>, offset <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, model <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>trendSC</span>(<span class='no'>...</span>)</pre>
+<span class='fu'>trendSC</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -176,58 +179,56 @@ section).</p></dd>
 
     <div class='dont-index'><p><code><a href='describeSC.html'>describeSC</a></code>, <code><a href='autocorr.html'>autocorrSC</a></code>,
 <code><a href='plm.html'>plm</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Compute the linear and squared regression for a random single-case</span>
-<span class='no'>design</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span>(<span class='kw'>slope</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
-<span class='no'>matthea</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span>(<span class='no'>design</span>)
-<span class='fu'>trendSC</span>(<span class='no'>matthea</span>)</div><div class='output co'>#&gt; Trend for each phase
+<span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>slope <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+<span class='va'>matthea</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span><span class='va'>design</span><span class='op'>)</span>
+<span class='fu'>trendSC</span><span class='op'>(</span><span class='va'>matthea</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Trend for each phase
 #&gt; 
-#&gt;             Intercept      B   Beta
-#&gt; Linear.ALL     39.359  4.255  0.942
-#&gt; Linear.A       59.752 -3.489 -0.778
-#&gt; Linear.B       50.930  5.407  0.981
-#&gt; Squared.ALL    52.154  0.224  0.975
-#&gt; Squared.A      56.605 -0.638 -0.594
-#&gt; Squared.B      64.190  0.363  0.957
+#&gt;             Intercept     B  Beta
+#&gt; Linear.ALL     40.042 4.281 0.974
+#&gt; Linear.A       49.288 0.840 0.328
+#&gt; Linear.B       56.841 4.826 0.972
+#&gt; Squared.ALL    53.988 0.216 0.968
+#&gt; Squared.A      50.468 0.083 0.136
+#&gt; Squared.B      68.931 0.321 0.938
 #&gt; 
 #&gt; Note. Measurement-times of phase B start at 0 </div><div class='input'>
 <span class='co'>## Besides the linear and squared regression models compute two custom models:</span>
 <span class='co'>## a) a cubic model, and b) the values predicted by the natural logarithm of the</span>
 <span class='co'>## measurement time.</span>
-<span class='no'>design</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span>(<span class='kw'>slope</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
-<span class='no'>ben</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span>(<span class='no'>design</span>)
-<span class='fu'>trend</span>(<span class='no'>ben</span>, <span class='kw'>offset</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Cubic"</span> <span class='kw'>=</span> <span class='no'>values</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span>(<span class='no'>mt</span>^<span class='fl'>3</span>), <span class='st'>"Log Time"</span> <span class='kw'>=</span> <span class='no'>values</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>mt</span>)))</div><div class='output co'>#&gt; Trend for each phase
+<span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>slope <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span>
+<span class='va'>ben</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span><span class='va'>design</span><span class='op'>)</span>
+<span class='fu'>trend</span><span class='op'>(</span><span class='va'>ben</span>, offset <span class='op'>=</span> <span class='fl'>0</span>, model <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Cubic"</span> <span class='op'>=</span> <span class='va'>values</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='va'>mt</span><span class='op'>^</span><span class='fl'>3</span><span class='op'>)</span>, <span class='st'>"Log Time"</span> <span class='op'>=</span> <span class='va'>values</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>mt</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Trend for each phase
 #&gt; 
-#&gt;              Intercept      B   Beta
-#&gt; Linear.ALL      44.499  2.310  0.944
-#&gt; Linear.A        55.697 -0.989 -0.679
-#&gt; Linear.B        52.811  2.660  0.939
-#&gt; Squared.ALL     53.295  0.108  0.952
-#&gt; Squared.A       54.125 -0.127 -0.532
-#&gt; Squared.B       61.086  0.157  0.914
-#&gt; Cubic.ALL       57.056  0.005  0.918
-#&gt; Cubic.A         53.584 -0.019 -0.420
-#&gt; Cubic.B         64.463  0.010  0.864
-#&gt; Log Time.ALL    38.319 14.377  0.808
-#&gt; Log Time.A      55.604 -3.000 -0.829
-#&gt; Log Time.B      48.010 14.024  0.866
+#&gt;              Intercept      B  Beta
+#&gt; Linear.ALL      36.898  2.938 0.972
+#&gt; Linear.A        45.772  0.187 0.172
+#&gt; Linear.B        49.703  3.147 0.961
+#&gt; Squared.ALL     48.697  0.133 0.950
+#&gt; Squared.A       46.061  0.025 0.140
+#&gt; Squared.B       60.134  0.178 0.896
+#&gt; Cubic.ALL       53.649  0.006 0.896
+#&gt; Cubic.A         46.125  0.005 0.138
+#&gt; Cubic.B         64.234  0.011 0.826
+#&gt; Log Time.ALL    26.993 19.251 0.875
+#&gt; Log Time.A      45.696  0.666 0.246
+#&gt; Log Time.B      41.444 17.977 0.960
 #&gt; 
 #&gt; Note. Measurement-times of phase B start at 1 </div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Juergen Wilbert</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -238,7 +239,7 @@ section).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
