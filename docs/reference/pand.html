@@ -75,7 +75,7 @@ intervention." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
       </span>
     </div>
 
@@ -222,7 +222,7 @@ Research: Nonoverlap of All Pairs. <em>Behavior Therapy, 40</em>, 357-367.</p>
 </div><div class='output co'>#&gt; Percentage of all non-overlapping data
 #&gt; 
 #&gt; PAND =  70 %
-#&gt; F =  0.375  ; F² =  0.141 
+#&gt; Φ =  0.375  ; Φ² =  0.141 
 #&gt; 
 #&gt; Number of Cases: 3 
 #&gt; Total measurements: 30  (in phase A: 12; in phase B: 18)
@@ -248,11 +248,11 @@ Research: Nonoverlap of All Pairs. <em>Behavior Therapy, 40</em>, 357-367.</p>
 #&gt; 
 #&gt; Correlation based analysis:
 #&gt; 
-#&gt; z = 2.393, p = 0.017, t = 0.444 </div><div class='input'><span class='fu'>pand</span><span class='op'>(</span><span class='va'>bodo</span><span class='op'>)</span>
+#&gt; z = 2.393, p = 0.017, τ = 0.444 </div><div class='input'><span class='fu'>pand</span><span class='op'>(</span><span class='va'>bodo</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Percentage of all non-overlapping data
 #&gt; 
 #&gt; PAND =  80 %
-#&gt; F =  0.6  ; F² =  0.36 
+#&gt; Φ =  0.6  ; Φ² =  0.36 
 #&gt; 
 #&gt; Number of Cases: 1 
 #&gt; Total measurements: 10  (in phase A: 5; in phase B: 5)
@@ -278,14 +278,14 @@ Research: Nonoverlap of All Pairs. <em>Behavior Therapy, 40</em>, 357-367.</p>
 #&gt; 
 #&gt; Correlation based analysis:
 #&gt; 
-#&gt; z = 1.800, p = 0.072, t = 0.600 </div><div class='input'>
+#&gt; z = 1.800, p = 0.072, τ = 0.600 </div><div class='input'>
 <span class='co'>## Calculate the PAND with an expected decrease of phase B scores</span>
 <span class='va'>cubs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='makeSCDF.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>,<span class='fl'>22</span>,<span class='fl'>24</span>,<span class='fl'>17</span>,<span class='fl'>21</span>,<span class='fl'>13</span>,<span class='fl'>10</span>,<span class='fl'>9</span>,<span class='fl'>20</span>,<span class='fl'>9</span>,<span class='fl'>18</span><span class='op'>)</span>, B.start <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 <span class='fu'>pand</span><span class='op'>(</span><span class='va'>cubs</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Percentage of all non-overlapping data
 #&gt; 
 #&gt; PAND =  81.8 %
-#&gt; F =  0.607  ; F² =  0.369 
+#&gt; Φ =  0.607  ; Φ² =  0.369 
 #&gt; 
 #&gt; Number of Cases: 1 
 #&gt; Total measurements: 11  (in phase A: 4; in phase B: 7)
@@ -311,7 +311,7 @@ Research: Nonoverlap of All Pairs. <em>Behavior Therapy, 40</em>, 357-367.</p>
 #&gt; 
 #&gt; Correlation based analysis:
 #&gt; 
-#&gt; z = -1.807, p = 0.071, t = -0.571 </div><div class='input'>
+#&gt; z = -1.807, p = 0.071, τ = -0.571 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -29,7 +29,7 @@ phase and for all phases (for each single-case). If \code{lag.max} exceeds
 the length of a phase minus one, NA is returned for this cell.
 }
 \description{
-The autocorrSC function calculates autocorrelations within each phase and
+The autocorr function calculates autocorrelations within each phase and
 across all phases.
 }
 \examples{
@@ -37,7 +37,7 @@ across all phases.
 autocorr(Huber2014, lag.max = 2)
 }
 \seealso{
-\code{\link{trendSC}}, \code{\link{plm}}, \code{\link{acf}}
+\code{\link{trend}}, \code{\link{plm}}, \code{\link{acf}}
 }
 \author{
 Juergen Wilbert

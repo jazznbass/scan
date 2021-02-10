@@ -39,19 +39,19 @@ Trend A), Diff_mean, Diff_trend, SMD.}
 \item{design}{Phase design.}
 }
 \description{
-The \code{overlapSC} function provides the most common overlap indices for
+The \code{overlap} function provides the most common overlap indices for
 single-case data and some additional statistics.
 }
 \examples{
 
 ## Display overlap indices for one single-case
-overlapSC(Huitema2000, decreasing = TRUE)
+overlap(Huitema2000, decreasing = TRUE)
 
 ## Display overlap indices for six single-cases
-overlapSC(GruenkeWilbert2014)
+overlap(GruenkeWilbert2014)
 
 ## Combining phases for analyszing designs with more than two phases   
-overlapSC(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
+overlap(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 
 }
 \seealso{

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
       </span>
     </div>
 
@@ -154,7 +154,8 @@
 #&gt;               B     74 13 |               B     73 13 |
 #&gt;               B     82 14 |               B     77 14 |
 #&gt;               B     77 15 |               B     79 15 |
-#&gt; # ... up to 5 more rows</div><div class='input'><span class='fu'>select_cases</span><span class='op'>(</span><span class='va'>exampleAB</span>, <span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>
+#&gt; # ... up to 5 more rows</div><div class='input'><span class='co'># or: select_cases(exampleAB, c("Johanna", "Karolina"))</span>
+<span class='fu'>select_cases</span><span class='op'>(</span><span class='va'>exampleAB</span>, <span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; #A single-case data frame with 2 cases
 #&gt; 
 #&gt;  Johanna: phase values mt | Karolina: phase values mt |
@@ -173,7 +174,8 @@
 #&gt;               B     74 13 |               B     73 13 |
 #&gt;               B     82 14 |               B     77 14 |
 #&gt;               B     77 15 |               B     79 15 |
-#&gt; # ... up to 5 more rows</div><div class='input'><span class='fu'>select_cases</span><span class='op'>(</span><span class='va'>exampleAB</span>, <span class='st'>"-Johanna"</span><span class='op'>)</span>
+#&gt; # ... up to 5 more rows</div><div class='input'><span class='co'># or: select_cases(exampleAB, 1:2)</span>
+<span class='fu'>select_cases</span><span class='op'>(</span><span class='va'>exampleAB</span>, <span class='st'>"-Johanna"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; #A single-case data frame with 2 cases
 #&gt; 
 #&gt;  Karolina: phase values mt | Anja: phase values mt |
@@ -192,7 +194,8 @@
 #&gt;                B     73 13 |           B     72 13 |
 #&gt;                B     77 14 |           B     78 14 |
 #&gt;                B     79 15 |           B     81 15 |
-#&gt; # ... up to 5 more rows</div></pre>
+#&gt; # ... up to 5 more rows</div><div class='input'><span class='co'># or: select_cases(exampleAB, c("-Johanna", "-Karolina"))</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -2,7 +2,6 @@
 #' 
 #' The \code{style_plot} function is used to create graphical styles for a single-case plot
 #' 
-#' @aliases style.plotSC style_plotSC
 #' @param style Predefined styles.
 #' @param ... Further arguments passed to the plot command.
 #' 
@@ -82,14 +81,14 @@ style_plot <- function(style = "default", ...) {
   invisible(out)
 }
 
-#' @rdname style_plotSC
+#' @rdname style_plot
 #' @export
 style_plotSC <- function(...) {
   .deprecated_warning("style_plot", "style_plotSC")
   style_plot(...)
 }
 
-#' @rdname style_plotSC
+#' @rdname style_plot
 #' @export
 style.plotSC <- function(...) {
   .deprecated_warning("style_plot", "style.plotSC")  

@@ -1,6 +1,6 @@
 #' Autocorrelation for single-case data
 #'
-#' The autocorrSC function calculates autocorrelations within each phase and
+#' The autocorr function calculates autocorrelations within each phase and
 #' across all phases.
 #'
 #' @inheritParams .inheritParams
@@ -11,14 +11,13 @@
 #' phase and for all phases (for each single-case). If \code{lag.max} exceeds
 #' the length of a phase minus one, NA is returned for this cell.
 #' @author Juergen Wilbert
-#' @seealso \code{\link{trendSC}}, \code{\link{plm}}, \code{\link{acf}}
+#' @seealso \code{\link{trend}}, \code{\link{plm}}, \code{\link{acf}}
 #' @examples
 #' ## Compute autocorrelations for a list of four single-cases up to lag 2.
 #' autocorr(Huber2014, lag.max = 2)
 #' @concept Autocorrelation
 #' @concept Serial correlation
 #' @export
-
 autocorr <- function(data, dvar, pvar, mvar, lag.max = 3, ...) {
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
