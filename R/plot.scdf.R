@@ -592,8 +592,14 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
     }
 
     # Adding case name --------------------------------------------------------
-    if (length(case.names) ==  N)
-      mtext(case.names[case], side = 3, line = -1, adj = 0, at = min(xlim), cex = style$cex.text, ...)	
+    if (length(case.names) ==  N) {
+      args <- c(list(text = case.names[case]), style$names, cex = style$cex.text, at = min(xlim))
+      args <- args[!duplicated(names(args))]
+      do.call(mtext, args)
+      #mtext(case.names[case], side = style$names$side, line = style$names$line, adj = style$names$adj, at = min(xlim), cex = style$cex.text, ...)
+    }
+      
+      #mtext(case.names[case], side = 3, line = -1, adj = 0, at = min(xlim), cex = style$cex.text, ...)	
   }
   
 }
