@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated_makesingleSC.R
 \name{makesingleSC}
 \alias{makesingleSC}
-\title{Aggregate multiple single-cases into one case}
+\title{(Deprecated function) Aggregate multiple single-cases into one case}
 \usage{
 makesingleSC(data, scale = FALSE, type = "add")
 }

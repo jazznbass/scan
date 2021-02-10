@@ -1,4 +1,4 @@
-#' Estimate single-case design
+#' (Deprecated function) Estimate single-case design
 #'
 #' This functions takes an scdf an extracts design parameters. The resulting in
 #' object can be unsed to randomly create new scdf files with the same

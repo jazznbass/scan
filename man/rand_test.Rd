@@ -3,6 +3,7 @@
 \name{rand_test}
 \alias{rand_test}
 \alias{randSC}
+\alias{rand.test}
 \title{Randomization Tests for single-case data}
 \usage{
 rand_test(
@@ -22,6 +23,8 @@ rand_test(
 )
 
 randSC(...)
+
+rand.test(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}

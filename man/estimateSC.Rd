@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated_estimateSC.R
 \name{estimateSC}
 \alias{estimateSC}
-\title{Estimate single-case design}
+\title{(Deprecated function) Estimate single-case design}
 \usage{
 estimateSC(data, dvar, pvar, mvar, s = NULL, rtt = NULL, model = "JW", ...)
 }

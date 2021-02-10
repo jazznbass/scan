@@ -1,4 +1,4 @@
-#' Empirical power analysis for single-case data
+#' (Deprecated function) Empirical power analysis for single-case data
 #' 
 #' !! This function is deprecated. Please use the power_testSC fucntion !!
 #' The \code{power.testSC} command conducts a Monte-Carlo study on the

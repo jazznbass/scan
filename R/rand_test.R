@@ -6,7 +6,6 @@
 #' and extended for the use in AB designs.
 #' 
 #' 
-#' @aliases randSC
 #' @inheritParams .inheritParams
 #' @param statistic Defines the statistic on which the comparison of phases A
 #' and B is based on. Default setting is \code{statistic = "Mean B-A"}). The
@@ -271,5 +270,11 @@ randSC <- function(...) {
   rand_test(...)
 }
 
+#' @rdname rand_test
+#' @export
+rand.test <- function(...) {
+  .deprecated_warning("rand_test", "rand.test")
+  rand_test(...)
+}
 
 

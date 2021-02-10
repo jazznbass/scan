@@ -5,8 +5,6 @@
 #' values of the Monte-Carlo sample are either specified by the user or 
 #' estimated based on actual data.
 #' 
-#' @aliases power_testSC
-#' 
 #' @inheritParams .inheritParams
 #' @param design An object created by design_rSC
 #' @param stat Defines the tests the power analysis is based on. The

@@ -1,4 +1,4 @@
-#' Aggregate multiple single-cases into one case
+#' (Deprecated function) Aggregate multiple single-cases into one case
 #' 
 #' The makesingleSC function combines multiple single-case data frames into one
 #' single-case data frame.

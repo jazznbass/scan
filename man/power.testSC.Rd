@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated_power.testSC.R
 \name{power.testSC}
 \alias{power.testSC}
-\title{Empirical power analysis for single-case data}
+\title{(Deprecated function) Empirical power analysis for single-case data}
 \usage{
 power.testSC(
   data = NULL,
