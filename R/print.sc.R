@@ -505,13 +505,16 @@ if (value == "mpr") {
     cat("sd slope-effect: ", apply(sapply(x$cases, function(x) {x$slope}), 1, sd, na.rm = TRUE), "\n")
     cat("Distribution: ", x$distribution)
   }  
-  ##### Additonal notes #####
+  
+  
+  ##### Additional notes #####
   if (note) {
     if (attr(x, .opt$dv) != "values" || attr(x, .opt$phase) != "phase" || attr(x, .opt$mt) != "mt")
       cat("\nNote. The following variables were used in this analysis:\n      '", 
-          attr(x, .opt$dv), "' as independent variable, '", 
+          attr(x, .opt$dv), "' as dependent variable, '", 
           attr(x, .opt$phase), "' as phase ,and '", 
           attr(x, .opt$mt),"' as measurement time.\n", sep = "")
     
   }
-}
+
+  }
