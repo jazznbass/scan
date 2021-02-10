@@ -8,8 +8,11 @@
 #'
 #' @examples
 #' select_cases(exampleAB, "Johanna", "Karolina")
+#' # or: select_cases(exampleAB, c("Johanna", "Karolina"))
 #' select_cases(exampleAB, 1,2)
+#' # or: select_cases(exampleAB, 1:2)
 #' select_cases(exampleAB, "-Johanna")
+#' # or: select_cases(exampleAB, c("-Johanna", "-Karolina"))
 select_cases <- function(scdf, ...) {
   
   vars <- names(scdf)
