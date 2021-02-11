@@ -37,7 +37,7 @@
   function_deprecated_warning = "This function is deprecated. It might be dropped without any further notice in a future update of scan.",
   startup_message = paste0(
     "scan ", utils::packageVersion("scan"), 
-    " - Experimental (", utils::packageDate('scan'), ")\n",
+    " (", utils::packageDate('scan'), ")\n",
     "Single-Case Data Analysis for Single and Multiple Baseline Designs\n"),
   style = list()
   )
