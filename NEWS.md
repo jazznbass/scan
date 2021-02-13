@@ -18,7 +18,7 @@ plot(exampleAB_decreasing, style = new_style)
 -   `plot.scdf()`, `style_plot()`: Different background colors for different phases:
 
 ``` {.r}
-new_style <- style_plot("")
+new_style <- style_plot()
 new_style$fill.bg <- c("aliceblue", "mistyrose1", "honeydew")
 new_style$lty.seperators <- 0
 plot(exampleABC, style = new_style)
