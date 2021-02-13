@@ -22,6 +22,9 @@
 .names <- c(.male.names, .female.names)
 .names <- .names[which(!duplicated(.names))]
 
+
+# Basic options -----------------------------------------------------------
+
 .opt <- list(
   scdf         = "scdf",
   dv           = "var.values",
@@ -41,6 +44,8 @@
     "Single-Case Data Analysis for Single and Multiple Baseline Designs\n"),
   style = list()
   )
+
+# color styles ------------------------------------------------------------
 
 .opt$style$default = list(
   frame = "black", annotations = NULL, las = 1, mai = c(0.6, 0.58, 0.2, 0.2), bty = "o", #mai = c(0.6, 0.82, 0.2, 0.42)
@@ -118,6 +123,20 @@
   col = "darkolivegreen", col.seperators = "sienna4", 
   cex.text = 0.8, cex.lab = 0.8, cex.axis = 0.7, frame = "darkseagreen", 
   font = "serif")
+
+.opt$style$phase_color <- list(
+  fill.bg = TRUE,
+  col.fill.bg = c("aliceblue", "mistyrose1", "honeydew")
+)
+
+.opt$style$phase_shade <- list(
+  fill.bg = TRUE,
+  col.fill.bg = c("grey94", "grey99", "grey90")
+)
+
+
+# MC Functions ------------------------------------------------------------
+
 
 
 .opt$mc_fun <- list(
