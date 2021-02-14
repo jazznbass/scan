@@ -257,3 +257,19 @@
 
   out
 }
+
+.std_lm <- function(model) {
+  
+  coef <- coef(model)
+  if (isTRUE(class(coef) == "numeric")) coef <- as.matrix(coef, ncol = 1)
+  intercept <- attr(attr(model$model, "terms"), "intercept")
+  .sd <- function(x) sqrt(sum((x - mean(x, na.rm = TRUE) * intercept)^2, na.rm = TRUE))
+  .sd_predictors <- apply(as.matrix(model.matrix(model)), 2, .sd)
+  .sd_criteria <- apply(as.matrix(model.frame(model)[, 1]), 2, .sd)
+  coef_std <- coef
+  for(i in 1:ncol(coef)) {
+    coef_std[, i] <- coef[, i] * .sd_predictors / .sd_criteria[i]
+  }
+  
+  coef_std
+}

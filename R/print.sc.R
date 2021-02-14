@@ -29,13 +29,25 @@ if (value == "mpr") {
   cat("Multivariate piecewise linear model\n\n")
   cat("Dummy model:", x$model, "\n\n")
 
-  cof <- x$full.model$coefficients
-  rownames(cof) <- gsub("(Intercept)", "Intercept", rownames(cof))
-  rownames(cof) <- gsub("mt", "Trend", rownames(cof))
-  rownames(cof) <- gsub("phase", "Level Phase ", rownames(cof))
-  rownames(cof) <- gsub("inter", "Slope Phase ", rownames(cof))
-  cat("Coefficients:\n")
-  print(cof)
+  coef <- x$full.model$coefficients
+  rownames(coef) <- gsub("(Intercept)", "Intercept", rownames(coef))
+  rownames(coef) <- gsub("mt", "Trend", rownames(coef))
+  rownames(coef) <- gsub("phase", "Level Phase ", rownames(coef))
+  rownames(coef) <- gsub("inter", "Slope Phase ", rownames(coef))
+  
+  coef_std <- x$full.model$coef_std
+  #dimnames(coef_std)[[2]] <- paste0("std. " , dimnames(coef_std)[[2]])
+  
+  rownames(coef_std) <- gsub("(Intercept)", "Intercept", rownames(coef_std))
+  rownames(coef_std) <- gsub("mt", "Trend", rownames(coef_std))
+  rownames(coef_std) <- gsub("phase", "Level Phase ", rownames(coef_std))
+  rownames(coef_std) <- gsub("inter", "Slope Phase ", rownames(coef_std))
+
+  cat("Coefficients: \n")
+  print(coef, ...)
+  cat("\nStandardized coefficients: \n")
+  print(coef_std, ...)
+  
   cat("\n")
   cat("Formula: ")
   print(x$formula, showEnv = FALSE)
@@ -45,7 +57,7 @@ if (value == "mpr") {
   res$terms <- gsub("phase", "Level Phase ", res$terms)
   res$terms <- gsub("inter", "Slope Phase ", res$terms)
 
-  print(res)
+  print(res, ...)
 }
     
 # autocorr ----------------------------------------------------------------

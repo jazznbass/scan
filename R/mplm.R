@@ -43,7 +43,6 @@ mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE,
     stop("Procedure could not be applied to more than one case.\n")
   }
 
-
   ### model definition
   tmp_model <- .add_model_dummies(data = data, model = model)
   data <- tmp_model$data[[1]]
@@ -57,16 +56,10 @@ mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE,
 
   if (!is.null(update)) formula <- update(formula, update)
 
-  PREDICTORS <- as.character(formula[3])
-  PREDICTORS <- unlist(strsplit(PREDICTORS, "\\+"))
-  PREDICTORS <- trimws(PREDICTORS)
-  if (!is.na(match("1", PREDICTORS))) {
-    PREDICTORS <- PREDICTORS[-match("1", PREDICTORS)]
-  }
-
   y <- as.matrix(data[, dvar])
 
   full <- lm(formula, data = data, na.action = na.action, ...)
+  full$coef_std <- .std_lm(full)
   out <- list(model = model, full.model = full, formula = formula)
 
   class(out) <- c("sc", "mpr")
