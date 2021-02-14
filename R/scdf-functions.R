@@ -123,3 +123,6 @@ makeSCDF <- function (data, B.start = NULL, MT = NULL){
   do.call(scdf, args)
   #scdf(values = data, B.start = B.start, mt = MT)[[1]]
 }
+
+
+
