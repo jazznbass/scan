@@ -28,8 +28,8 @@ names that should be scaled.}
 
 \item{sd}{The target standard deviation for scaling}
 
-\item{grand}{If set TRUE, scaling is based on the mean and standarddeviation
-of all measurements across all single-cases within the scdf.}
+\item{grand}{If set TRUE, scaling is based on the mean and standard deviation
+of all values across all single-cases within the scdf.}
 }
 \value{
 An scdf with the scaled values.
