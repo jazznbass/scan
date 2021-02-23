@@ -62,6 +62,7 @@ The \code{mplm} function computes a multivariate piecewise regression model.
 \examples{
 ##
 mplm(exampleAB_add, dvar = c("wellbeing", "depression"))
+mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
 }
 \seealso{
 Other regression functions: 

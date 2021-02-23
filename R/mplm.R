@@ -20,6 +20,7 @@
 #' @examples
 #' ##
 #' mplm(exampleAB_add, dvar = c("wellbeing", "depression"))
+#' mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
 #' @export
 
 mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE, 
