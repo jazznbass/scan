@@ -38,12 +38,26 @@ plot(exampleABAB, style = c("default", "phase_shade"))
 
 -   New `subset()` function (method from base `subset()` for selecting variables, rows, and cases. It takes the arguments `subset`, `select`, and `cases`.
 
+``` {.r}
+subset(exampleAB, (values < 60 & phase == "A") | (values >= 60 & phase == "B"))
+subset(exampleAB_add, select = c(-cigarrets, -depression))
+subset(exampleA1B1A2B2, phase %in% c("A1", "B2"), cases = Pawel:Moritz)
+```
+
 # 0.50.2
 
 ## major changes
 
 -   New `select_cases()` function.
 
+``` {.r}
+select_cases(exampleAB, "Johanna", "Karolina")
+select_cases(exampleAB, 1,2)
+select_cases(exampleAB, "-Johanna")
+```
+
 # 0.50
 
--   Started dropping the `SC` extension from function names e.g. `tauUSC()` becomes `tauU()`
+-   Started dropping the `SC` extension from function names e.g. `overlapSC()` becomes `overlap()`
+
+see: <https://jazznbass.github.io/scan-Book/changes-with-version-0-50.html>
