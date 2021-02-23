@@ -11,8 +11,8 @@
 #' @param scale If set TRUE, the standard deviation is set.
 #' @param m The target mean for centering.
 #' @param sd The target standard deviation for scaling
-#' @param grand If set TRUE, scaling is based on the mean and standarddeviation
-#'   of all measurements across all single-cases within the scdf.
+#' @param grand If set TRUE, scaling is based on the mean and standard deviation
+#'   of all values across all single-cases within the scdf.
 #' @return An scdf with the scaled values.
 #' @author Juergen Wilbert
 #' @family data manipulation functions
