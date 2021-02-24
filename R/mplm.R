@@ -17,8 +17,10 @@
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @examples
-#' ##
-#' mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
+#' res <- mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
+#' print(res)
+#' ## also report standardized coefficients:
+#' print(res, std = TRUE)
 #' @export
 
 mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE, 
