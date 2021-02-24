@@ -5,8 +5,12 @@
 #' @export
 
 print.sc <- function(x, ...) {
+  
   value <- class(x)[2]
   note <- FALSE
+  
+  args <- list(...)
+  if (is.null(args)) args <- list()
 
 # baseline corrected tau --------------------------------------------------
   if (value == "base_corr_tau") {
@@ -26,6 +30,9 @@ print.sc <- function(x, ...) {
 # mpr ---------------------------------------------------------------------
 
 if (value == "mpr") {
+  
+  if ( isFALSE("std" %in% names(args)) ) args$std <- FALSE 
+  
   cat("Multivariate piecewise linear model\n\n")
   cat("Dummy model:", x$model, "\n\n")
 
@@ -35,18 +42,21 @@ if (value == "mpr") {
   rownames(coef) <- gsub("phase", "Level Phase ", rownames(coef))
   rownames(coef) <- gsub("inter", "Slope Phase ", rownames(coef))
   
-  coef_std <- x$full.model$coef_std
-  #dimnames(coef_std)[[2]] <- paste0("std. " , dimnames(coef_std)[[2]])
-  
-  rownames(coef_std) <- gsub("(Intercept)", "Intercept", rownames(coef_std))
-  rownames(coef_std) <- gsub("mt", "Trend", rownames(coef_std))
-  rownames(coef_std) <- gsub("phase", "Level Phase ", rownames(coef_std))
-  rownames(coef_std) <- gsub("inter", "Slope Phase ", rownames(coef_std))
-
   cat("Coefficients: \n")
-  print(coef, ...)
-  cat("\nStandardized coefficients: \n")
-  print(coef_std, ...)
+  print(coef)
+  
+ 
+  if (isTRUE(args$std)) { 
+    coef_std <- x$full.model$coef_std
+    rownames(coef_std) <- gsub("(Intercept)", "Intercept", rownames(coef_std))
+    rownames(coef_std) <- gsub("mt", "Trend", rownames(coef_std))
+    rownames(coef_std) <- gsub("phase", "Level Phase ", rownames(coef_std))
+    rownames(coef_std) <- gsub("inter", "Slope Phase ", rownames(coef_std))
+
+    cat("\nStandardized coefficients: \n")
+    print(coef_std)
+  }
+
   
   cat("\n")
   cat("Formula: ")
@@ -57,7 +67,7 @@ if (value == "mpr") {
   res$terms <- gsub("phase", "Level Phase ", res$terms)
   res$terms <- gsub("inter", "Slope Phase ", res$terms)
 
-  print(res, ...)
+  print(res)
 }
     
 # autocorr ----------------------------------------------------------------
@@ -76,7 +86,7 @@ if (value == "mpr") {
     cat("Design: ", x$design, "\n")
     cat(.stringPhasesSC(x$phases.A, x$phases.B),"\n\n")
     
-    print(round(t(x$overlap),2),...)
+    print(round(t(x$overlap),2))
     note = TRUE
   }
 
@@ -92,9 +102,9 @@ if (value == "mpr") {
     cat("\n")
     #out <- lapply(x$table, function(x) round(x, 3))
     out <- x$table
-    arg <- list(...)
+
     complete <- FALSE
-    if (any(names(arg) == "complete")) complete <- arg$complete
+    if (any(names(args) == "complete")) complete <- args$complete
     if (!complete) {
       select_vars <- c("Tau", "SE_Tau", "Z", "p")
       select_rows <- match(
@@ -463,9 +473,9 @@ if (value == "mpr") {
    
     rownames(out) <- format(rownames(out), justify = "right")
     
-    print(out[1:(2 * length(x$design)), , drop = FALSE], ...)
+    print(out[1:(2 * length(x$design)), , drop = FALSE])
     cat("\n")
-    print(out[-(1:(2 * length(x$design))), , drop = FALSE], ...)
+    print(out[-(1:(2 * length(x$design))), , drop = FALSE])
     note = TRUE
   }	
   
