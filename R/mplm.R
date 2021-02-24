@@ -1,6 +1,5 @@
 #' Multivariate Piecewise linear model / piecewise regression
 #'
-#' This function is in an experimental status.
 #' The \code{mplm} function computes a multivariate piecewise regression model.
 #'
 #'
@@ -19,14 +18,13 @@
 #' @family regression functions
 #' @examples
 #' ##
-#' mplm(exampleAB_add, dvar = c("wellbeing", "depression"))
 #' mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
 #' @export
 
 mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE, 
                  level = TRUE, slope = TRUE, formula = NULL, update = NULL, 
                  na.action = na.omit, ...) {
-  cat(.opt$function_debugging_warning)
+  #cat(.opt$function_debugging_warning)
   if (!requireNamespace("car", quietly = TRUE)) {
     stop("Package car needed for this function to work. Please install it.",
       call. = FALSE
