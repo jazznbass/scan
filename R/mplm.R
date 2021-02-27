@@ -49,10 +49,11 @@ mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE,
   data <- tmp_model$data[[1]]
 
   if (is.null(formula)) {
-    formula <- as.formula(.create_fixed_formula(
+    formula <- .create_fixed_formula(
       dvar = "y", mvar = mvar, slope = slope, level = level,
       trend = trend, VAR_PHASE = tmp_model$VAR_PHASE, VAR_INTER = tmp_model$VAR_INTER
-    ))
+    )
+    formula <- as.formula(formula)
   }
 
   if (!is.null(update)) formula <- update(formula, update)
