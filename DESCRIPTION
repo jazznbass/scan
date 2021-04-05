@@ -2,7 +2,7 @@ Package: scan
 Type: Package
 Title: Single-Case Data Analyses for Single and Multiple Baseline Designs
 Version: 0.53
-Date: 2021-4-3
+Date: 2021-4-5
 Author: Juergen Wilbert [aut, cre], Timo Lueke [aut]
 Maintainer: Juergen Wilbert <jwilbert@uni-potsdam.de>
 Imports: 
@@ -27,7 +27,7 @@ Description: A collection of procedures for analysing, visualising,
   html and latex tables in a publication friendly style. More details can be 
   found at <https://jazznbass.github.io/scan-Book/>.
 License: GPL (>= 3)
-URL: https://r-forge.r-project.org/projects/scan/, https://jazznbass.github.io/scan-Book/index.html
+URL: https://github.com/jazznbass/scan, https://jazznbass.github.io/scan-Book
 LazyData: true
 Encoding: UTF-8
 RoxygenNote: 7.1.1
