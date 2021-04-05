@@ -55,7 +55,7 @@
   lty = "solid", lty.seperators = "dashed", lty.grid = "dotted",
   cex = 1, cex.axis = 0.8, cex.text = 1, cex.lab = 1,
   col.lines = "black", col.dots = "black", col.seperators = "black", col.fill = "grey75", col.fill.bg = "grey95", 
-  col.bg = "white", col = "black", col.text = "black", col.fill.bg = "grey95",
+  col.bg = "white", col = "black", col.text = "black",
   names = list(side = 3, line = -1, adj = 0)
 )
 
@@ -104,7 +104,7 @@
 )  
 
 .opt$style$grid2 <- list(
-  frame = NA, fill = "white", grid = TRUE, col.grid = "lightgreen", frame = "black", 
+  fill = "white", grid = TRUE, col.grid = "lightgreen", frame = "black", 
   fill.bg = TRUE, col.fill.bg = "grey95", lwd = 0.7, pch = 1, cex.axis = 0.8
 )  
 
