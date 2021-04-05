@@ -62,8 +62,9 @@ no additional lines are plotted. Possible lines are: \itemize{
 10\%-trimmed. Other trims can be set, using a second parameter (e.g.,
 \code{lines = list(mean = 0.2)} draws a 20\%-trimmed mean line).
 \item\code{"trend"} Separate lines for phase A and B trends.
-\item\code{"trendA"} Trend line for phase A, extrapolated throughout phase
-B.  \item\code{"maxA/minA"} Line at the level of the highest or lowest phase A score.
+\item\code{"trendA"} OLS trend line for phase A, extrapolated throughout phase B.
+\item\code{"trendA_sm"} Split middle trend line for phase A, extrapolated throughout phase B.
+\item\code{"maxA/minA"} Line at the level of the highest or lowest phase A score.
 \item\code{"medianA"} Line at the phase A median score.  \item\code{"meanA"}
 Line at the phase A 10\%-trimmed mean score. Apply a different trim, by
 using the additional argument (e.g., \code{lines = list(meanA = 0.2)}).
