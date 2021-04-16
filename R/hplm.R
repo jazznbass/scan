@@ -113,7 +113,7 @@ hplm <- function(data, dvar, pvar, mvar, model = "B&L-B", method = "ML", control
       stop("LR Test not applicable with only one random effect.")
     }
     
-    random.ir <- list(formula(gsub("1", "-1", random)))
+    random.ir <- list(formula(gsub("1", "-1", paste(random, collapse = " "))))
     for(i in 2:length(PREDIC_RAND))
       random.ir[[i]] <- formula(
         paste0("~", paste0(PREDIC_RAND[!PREDIC_RAND %in% PREDIC_RAND[i]], 
