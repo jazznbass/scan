@@ -389,7 +389,7 @@ if (value == "mpr") {
     row.names(res) <- .plm.row.names(row.names(res), x)
    
     if (!is.null(x$r.squares))
-      colnames(res) <- c("B","2.5%","97.5%","SE", "t","p", "\u0394R\u00b2")		
+      colnames(res) <- c("B","2.5%","97.5%","SE", "t","p", "delta R\u00b2")		
     if (is.null(x$r.squares))
       colnames(res) <- c("B","2.5%","97.5%","SE", "t","p")		
     
