@@ -5,8 +5,8 @@ Version: 0.53
 Date: 2021-4-5
 Author: Juergen Wilbert [aut, cre], Timo Lueke [aut]
 Authors@R: c(
-    person("Wilbert", "Jürgen", email = "juergen.wilbert@uni-potsdam.de", role = c("cre", "aut")),
-    person("Lüke", "Timo", email = "timo.lueke@uni-graz.at", role = "aut"))
+    person("Jürgen", "Wilbert", email = "juergen.wilbert@uni-potsdam.de", role = c("cre", "aut")),
+    person("Timo", "Lüke", email = "timo.lueke@uni-graz.at", role = "aut"))
 Imports: 
   stats, 
   nlme, 
