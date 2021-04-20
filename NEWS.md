@@ -1,5 +1,9 @@
 # 0.53
 
+*New functions:*  
+- `is.scdf`: Tests is an object is of type "scdf" or not.
+
+
 # 0.52
 
 -   `describe()` as the new alias for `describeSC()`

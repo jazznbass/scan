@@ -121,8 +121,13 @@ makeSCDF <- function (data, B.start = NULL, MT = NULL){
   if (!is.null(MT)) args$mt <- MT
     
   do.call(scdf, args)
-  #scdf(values = data, B.start = B.start, mt = MT)[[1]]
 }
 
-
+#' scdf objects
+#' Tests for objects of type "scdf"
+#'
+#' @param x An object to be tested
+#' @return Returns TRUE or FALSE depending on whether its argument is of scdf type or not.
+#' @export
+is.scdf <- function(x) inherits(x, "scdf")
 
