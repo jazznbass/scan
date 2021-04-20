@@ -99,7 +99,17 @@ methods::setOldClass(c("scdf", "list"))
 #' )
 #' overlapSC(jim, phases = list(c("A1", "A2"), c("B1", "B2")))
 #' @export
-scdf <- function(values, B.start, mt, phase, phase.design, name, dvar = "values", pvar = "phase", mvar = "mt", ...) {
+scdf <- function(
+                  values, 
+                  B.start, 
+                  mt, 
+                  phase, 
+                  phase.design, 
+                  name, 
+                  dvar = "values", 
+                  pvar = "phase", 
+                  mvar = "mt", 
+                  ...) {
   df <- list(...)
 
   if ("var.values" %in% names(df)) {
@@ -130,12 +140,12 @@ scdf <- function(values, B.start, mt, phase, phase.design, name, dvar = "values"
 
   data <- as.data.frame(df)
 
-  ### for backward campatibility
+  ### for backward compatibility
   if (("MT" %in% names(data)) && missing(mt) && mvar == "mt") {
     warning("Please rename argument 'MT' to 'mt'.")
     mvar <- "MT"
   }
-  ### END : for backward campatibility
+  ### END : for backward compatibility
 
   # create default mt row
   if (!(mvar %in% names(data))) data[, mvar] <- 1:nrow(data)
@@ -156,7 +166,10 @@ scdf <- function(values, B.start, mt, phase, phase.design, name, dvar = "values"
     stop("Measurement-time variable not defined correctly!")
   }
 
-  data[, pvar] <- factor(rep(names(phase.design), phase.design), levels = unique(names(phase.design)))
+  data[, pvar] <- factor(
+      rep(names(phase.design), phase.design), 
+      levels = unique(names(phase.design))
+  )
 
   data <- list(data)
 
