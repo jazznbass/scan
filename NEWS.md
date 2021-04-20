@@ -1,7 +1,7 @@
 # 0.53
 
 *New functions:*  
-- `is.scdf`: Tests is an object is of type "scdf" or not.
+- `is.scdf`: Tests if an object is of type "scdf" or not.
 
 
 # 0.52
