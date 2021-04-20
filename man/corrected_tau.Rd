@@ -38,7 +38,7 @@ and 4 (as B). Default is \code{phases = c("A","B")}.}
 
 \item{continuity}{If TRUE applies a continuity correction for calculating p}
 
-\item{repeated}{If TRUE applies the repeated median method for caluclating slope and intercept (\code{\link{mblm}})}
+\item{repeated}{If TRUE applies the repeated median method for calculating slope and intercept (\code{\link{mblm}})}
 
 \item{...}{Further arguments passed to the function.}
 }
@@ -47,12 +47,12 @@ Kendalls tau correlation for the dependent variable and the phase variable is ca
 after correcting for a baseline trend.
 }
 \details{
-This method has been proposed by Tarlow (2016). The baseline data are checked for a singificant 
+This method has been proposed by Tarlow (2016). The baseline data are checked for a significant 
 autocorrelation (based on Kendalls Tau). If so, a non-parameteric Theil-Sen regression is applied
 for the baseline data where the dependent values are regressed on the measurement time. The resulting slope
 information is then used to predict data of the B-phase. The dependent variable is now corrected for this baseline trend 
-and the resudials of the Theil-Sen regression are taken for further caluculations.
-Finally, a tau is calculated for the dependent variable and the dichtomos phase variable.
+and the residuals of the Theil-Sen regression are taken for further calculations.
+Finally, a tau is calculated for the dependent variable and the dichotomous phase variable.
 The function here provides two extensions to this procedure: The more accurate Siegel repeated median regression
 is applied when \code{repeated = TRUE} and a continuity correction is applied when \code{continuity = TRUE} (both are the default settings).
 }
