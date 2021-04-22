@@ -1,5 +1,5 @@
 # 0.53
-
+-   fixed bug in plot argument `lines = "trendA_bisplit"`
 *New functions:*  
 - `is.scdf`: Tests if an object is of type "scdf" or not.
 
