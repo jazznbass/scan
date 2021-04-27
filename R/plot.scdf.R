@@ -31,6 +31,7 @@
 #' \item\code{"trend"} Separate lines for phase A and B trends.
 #' \item\code{"trendA"} OLS trend line for phase A, extrapolated throughout phase B.
 #' \item\code{"trendA_bisplit"} Split middle (bi-split) trend line for phase A, extrapolated throughout phase B.
+#' \item\code{"trendA_trisplit"} Tukey tri-split trend line for phase A, extrapolated throughout phase B.
 #' \item\code{"maxA/minA"} Line at the level of the highest or lowest phase A score.
 #' \item\code{"medianA"} Line at the phase A median score.  \item\code{"meanA"}
 #' Line at the phase A 10\%-trimmed mean score. Apply a different trim, by
@@ -525,6 +526,20 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
         md2   <- c((median(y[ceiling(length(y)/2+1):length(y)], na.rm = FALSE)),
                    median(x[ceiling(length(x)/2+1):length(x)], na.rm = FALSE))
         md    <- rbind(md1, md2)
+        reg <- lm(md[,1]~md[,2])
+        lines(c(min(x), maxMT), c(reg$coefficients[1]  + min(x) * reg$coefficients[2], reg$coefficients[1] + maxMT * reg$coefficients[2]), lty = lty.line, col = col.line, lwd = lwd.line)
+      }
+      if (any(names(lines) == "trendA_trisplit")) {
+        x     <- data[design$start[1]:design$stop[1],mvar]
+        y     <- data[design$start[1]:design$stop[1],dvar]
+        maxMT <- max(data[,mvar])
+        # na.rm = FALSE for now to prevent misuse; will draw no line if NA present
+        md1   <- c((median(y[1:floor(length(y)/3)], na.rm = FALSE)),
+                   median(x[1:floor(length(x)/3)], na.rm = FALSE))
+        md2   <- c((median(y[ceiling(length(y)/3*2+1):length(y)], na.rm = FALSE)),
+                   median(x[ceiling(length(x)/3*2+1):length(x)], na.rm = FALSE))
+        md    <- rbind(md1, md2)
+        print(md)
         reg <- lm(md[,1]~md[,2])
         lines(c(min(x), maxMT), c(reg$coefficients[1]  + min(x) * reg$coefficients[2], reg$coefficients[1] + maxMT * reg$coefficients[2]), lty = lty.line, col = col.line, lwd = lwd.line)
       }
