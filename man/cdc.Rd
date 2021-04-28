@@ -61,5 +61,5 @@ cdc(exampleAB_decreasing)
 
 }
 \author{
-Timo Lueke
+Timo Lüke
 }

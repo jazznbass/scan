@@ -51,23 +51,27 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS"
     cdc.nb[i] <- nrow(B)
     
     if(trend.method == "bisplit"){
-      x     <- data[design$start[1]:design$stop[1],mvar]
-      y     <- data[design$start[1]:design$stop[1],dvar]
-      maxMT <- max(data[,mvar])
+      x     <- A[,mvar]
+      y     <- A[,dvar]
       # na.rm = FALSE for now to prevent misuse; will draw no line if NA present
       md1   <- c((median(y[1:floor(length(y)/2)], na.rm = FALSE)),
                  median(x[1:floor(length(x)/2)], na.rm = FALSE))
       md2   <- c((median(y[ceiling(length(y)/2+1):length(y)], na.rm = FALSE)),
                  median(x[ceiling(length(x)/2+1):length(x)], na.rm = FALSE))
       md    <- rbind(md1, md2)
-      model <- lm(md[,1]~md[,2], na.action = na.omit)
-      #model     <- lm(formula, data = data[[i]][data[[i]][, pvar] == "A",], na.action = na.omit)
-    }
-    if(trend.method == "OLS"){
-      formula <- as.formula(paste0(dvar, "~", mvar))
-      model     <- lm(formula, data = data[[i]][data[[i]][, pvar] == "A",], na.action = na.omit)
+      colnames(md) <- c(dvar,mvar)
+      #print(md)
+      formula <- as.formula(paste0(dvar,"~",mvar))
+      model <- lm(formula, data = A, na.action = na.omit)
     }
     
+    if(trend.method == "OLS"){
+      formula <- as.formula(paste0(dvar, "~", mvar))
+      model     <- lm(formula, data = A, na.action = na.omit)
+    
+    }
+    
+    #print(summary(model))
     trnd      <- predict(model, B, se.fit = TRUE)
     
     if(!decreasing) {
