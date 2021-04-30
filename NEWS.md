@@ -1,6 +1,12 @@
 # 0.53
--   fixed bug in plot argument `lines = "trendA_bisplit"`
+
 *New functions:*  
+- `cdc`: Applies the Conservative Dual-Criterion Method (CDC; Swoboda,
+Kratochwill, & Levin, 2010) to scdf objects.
+``` {.r}
+cdc(Beretvas2008)
+cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
+```
 - `is.scdf`: Tests if an object is of type "scdf" or not.
 
 

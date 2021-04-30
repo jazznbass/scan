@@ -26,6 +26,9 @@ cdc(
 \item{decreasing}{If you expect data to be lower in the B phase, set
 \code{decreasing = TRUE}. Default is \code{decreasing = FALSE}.}
 
+\item{trend.method}{Method used to calculate the trend line. Default is \code{trend.method = "OLS"}.
+Possible values are: \code{"OLS"}, \code{"bisplit"}, and \code{"trisplit"}.}
+
 \item{phases}{A vector of two characters or numbers indicating the two
 phases that should be compared. E.g., \code{phases = c("A","C")} or
 \code{phases = c(2,4)} for comparing the second to the fourth phase. Phases
@@ -44,22 +47,25 @@ of single-case.} \item{phases}{-}
 \description{
 The \code{cdc} function applies the Conservative Dual-Criterion Method
 (Swoboda, Kratochwill, & Levin, 2010) to scdf objects. It compares phase B
-data points to both phase A trend and phase A mean with an additional .25 SD.
-A binomial test against a 50/50 distribution is computed and p-values below
-.05 are labeled "systematic change".
+data points to both phase A median and trend (OLS, bi-split, tri-split) and
+with an additional .25 SD. A binomial test against a 50/50 distribution is
+computed and p-values below .05 are labeled "systematic change".
 }
 \examples{
 
-## Apply the CDC method to random example data
-design <- design_rSC(n = 3, slope = 0.2)
+## Apply the CDC method (standard OLS line)
+design <- design_rSC(n = 1, slope = 0.2)
 dat <- rSC(design, seed = 42)
 cdc(dat)
 
-## Apply the CDC method to example data with an expected decrease in phase B
-cdc(exampleAB_decreasing)
+## Apply the CDC with Koenig's bi-split and an expected decrease in phase B.
+cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
+
+## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.
+cdc(exampleABAB, trend.method = "trisplit", phases = c(1,4))
 
 
 }
 \author{
-Timo Lüke
+Timo Lueke
 }
