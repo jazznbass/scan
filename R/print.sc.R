@@ -195,7 +195,7 @@ if (value == "mpr") {
     }
   }
 
-# PEM ---------------------------------------------------------------------
+# PND ---------------------------------------------------------------------
 
   if (value == "PND") {
     cat("Percent Non-Overlapping Data\n\n")
@@ -208,7 +208,30 @@ if (value == "mpr") {
     print(out, row.names = FALSE)
     cat("\nMean  :", round(mean(x$PND, na.rm = TRUE), 2),"%\n")
   }	
+
+  # CDC ---------------------------------------------------------------------
   
+  if (value == "CDC") {
+    cat("Conservative Dual Criterion\n\n")
+    cat("N cases = ", x$N, "\n\n")
+    out <- data.frame(
+      Case = x$case.names,
+      "nB improve" = x$cdc.be,
+      "nB" = x$cdc.b,
+      "binom p" = round(x$cdc.p, 3),
+      "CDC Evalution" = x$cdc
+    )
+    print(out, row.names = FALSE)
+    cat("\n")
+    if (x$decreasing) {
+      cat("Assuming an expected decrease in phase B.\n")
+      cat("Alternative hypothesis (Binomial test): true probability < 50%\n")
+    } else {
+      cat("Assuming an expected increase in phase B.\n")
+      cat("Alternative hypothesis (Binomial test): true probability > 50%\n")
+    }
+  }
+    
 # trend -------------------------------------------------------------------
 
   if (value == "trend") {
