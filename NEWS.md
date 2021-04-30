@@ -6,6 +6,12 @@ plot(example_A24, lines = "trendA_trisplit")
 ```
 
 *New functions:*  
+- `cdc`: Applies the Conservative Dual-Criterion Method (CDC; Swoboda,
+Kratochwill, & Levin, 2010) to scdf objects.
+``` {.r}
+cdc(Beretvas2008)
+cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
+```
 - `is.scdf`: Tests if an object is of type "scdf" or not.
 
 

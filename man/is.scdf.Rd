@@ -2,15 +2,18 @@
 % Please edit documentation in R/scdf-functions.R
 \name{is.scdf}
 \alias{is.scdf}
-\title{is
-Tests class of object}
+\title{scdf objects
+Tests for objects of type "scdf"}
 \usage{
 is.scdf(x)
 }
 \arguments{
-\item{x}{An object}
+\item{x}{An object to be tested}
+}
+\value{
+Returns TRUE or FALSE depending on whether its argument is of scdf type or not.
 }
 \description{
-is
-Tests class of object
+scdf objects
+Tests for objects of type "scdf"
 }
