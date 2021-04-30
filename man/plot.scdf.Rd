@@ -64,6 +64,7 @@ no additional lines are plotted. Possible lines are: \itemize{
 \item\code{"trend"} Separate lines for phase A and B trends.
 \item\code{"trendA"} OLS trend line for phase A, extrapolated throughout phase B.
 \item\code{"trendA_bisplit"} Split middle (bi-split) trend line for phase A, extrapolated throughout phase B.
+\item\code{"trendA_trisplit"} Tukey tri-split trend line for phase A, extrapolated throughout phase B.
 \item\code{"maxA/minA"} Line at the level of the highest or lowest phase A score.
 \item\code{"medianA"} Line at the phase A median score.  \item\code{"meanA"}
 Line at the phase A 10\%-trimmed mean score. Apply a different trim, by
