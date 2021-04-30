@@ -68,7 +68,6 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS"
     if(trend.method == "OLS"){
       formula <- as.formula(paste0(dvar, "~", mvar))
       model     <- lm(formula, data = A, na.action = na.omit)
-    
     }
     
     #print(summary(model))
