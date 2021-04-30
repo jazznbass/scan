@@ -539,7 +539,6 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
         md2   <- c((median(y[ceiling(length(y)/3*2+1):length(y)], na.rm = FALSE)),
                    median(x[ceiling(length(x)/3*2+1):length(x)], na.rm = FALSE))
         md    <- rbind(md1, md2)
-        print(md)
         reg <- lm(md[,1]~md[,2])
         lines(c(min(x), maxMT), c(reg$coefficients[1]  + min(x) * reg$coefficients[2], reg$coefficients[1] + maxMT * reg$coefficients[2]), lty = lty.line, col = col.line, lwd = lwd.line)
       }
