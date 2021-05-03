@@ -1,8 +1,10 @@
 # 0.53
 
 *New functions:*  
-- `is.scdf`: Tests if an object is of type "scdf" or not.
+- `is.scdf()`: Tests if an object is of type "scdf" or not.
 
+*Changes in functions:*  
+- `subset()`: Argument `subset` changed to `filter`.
 
 # 0.52
 
