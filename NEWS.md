@@ -1,7 +1,18 @@
 # 0.53
+- new trend lines added to `plot.scdf()`: Koenig's bi-split / quarter intersect (lines = "trendA_bisplit") and Tukey's tri-split / Wald's slope (lines = "trendA_trisplit").
+``` {.r}
+plot(exampleAB_50[8], lines = "trendA_bisplit")
+plot(example_A24, lines = "trendA_trisplit")
+```
 
 *New functions:*  
 - `is.scdf()`: Tests if an object is of type "scdf" or not.
+- `cdc`: Applies the Conservative Dual-Criterion Method (CDC; Swoboda,
+Kratochwill, & Levin, 2010) to scdf objects.
+``` {.r}
+cdc(Beretvas2008)
+cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
+```
 
 *Changes in functions:*  
 - `subset()`: Argument `subset` changed to `filter`.
