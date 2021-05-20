@@ -121,11 +121,6 @@
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
-<ul>
-<li>new trend lines added to <code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>: Koenig’s bi-split / quarter intersect (lines = “trendA_bisplit”) and Tukey’s tri-split / Wald’s slope (lines = “trendA_trisplit”).</li>
-</ul>
-<pre class="{.r}"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(exampleAB_50[8], lines = "trendA_bisplit")
-plot(example_A24, lines = "trendA_trisplit")</a></code></pre>
 <div id="new-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h3>
@@ -142,9 +137,11 @@ cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")</a></code
 <h3 class="hasAnchor">
 <a href="#changes-in-functions" class="anchor"></a>Changes in functions</h3>
 <ul>
-<li>
-<code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code>: Argument <code>subset</code> changed to <code>filter</code>.</li>
+<li><p><code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code>: Argument <code>subset</code> changed to <code>filter</code>.</p></li>
+<li><p>new trend lines added to <code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>: Koenig’s bi-split / quarter intersect (lines = “trendA_bisplit”) and Tukey’s tri-split / Wald’s slope (lines = “trendA_trisplit”).</p></li>
 </ul>
+<pre class="{.r}"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(exampleAB_50[8], lines = "trendA_bisplit")
+plot(example_A24, lines = "trendA_trisplit")</a></code></pre>
 </div>
 </div>
 </div>
