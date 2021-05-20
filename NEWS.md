@@ -91,4 +91,4 @@ select_cases(exampleAB, "-Johanna")
 
 -   Started dropping the `SC` extension from function names e.g. `overlapSC()` becomes `overlap()`
 
-see: <https://jazznbass.github.io/scan-Book/changes-with-version-0-50.html>
+see: <https://jazznbass.github.io/scan-Book/the-scan-package.html#changes-with-version-0.50>
