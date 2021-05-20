@@ -47,8 +47,8 @@ of single-case.} \item{phases}{-}
 \description{
 The \code{cdc} function applies the Conservative Dual-Criterion Method
 (Swoboda, Kratochwill, & Levin, 2010) to scdf objects. It compares phase B
-data points to both phase A median and trend (OLS, bi-split, tri-split) and
-with an additional .25 SD. A binomial test against a 50/50 distribution is
+data points to both phase A median and trend (OLS, bi-split, tri-split) with
+an additional .25 SD. A binomial test against a 50/50 distribution is
 computed and p-values below .05 are labeled "systematic change".
 }
 \examples{
