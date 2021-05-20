@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Standardize values of an scdf file — standardize • scan</title>
+<title>scdf objects
+Tests for objects of type "scdf" — is.scdf • scan</title>
 
 
 <!-- jquery -->
@@ -39,10 +40,10 @@
 
 
 
-<meta property="og:title" content="Standardize values of an scdf file — standardize" />
-<meta property="og:description" content="This function scales the measured values of an scdf file. It allows for mean
-centering and standardization based on each single-case data set or a
-scaling across all cases included in an scdf." />
+<meta property="og:title" content="scdf objects
+Tests for objects of type "scdf" — is.scdf" />
+<meta property="og:description" content="scdf objects
+Tests for objects of type &quot;scdf&quot;" />
 
 
 
@@ -113,105 +114,32 @@ scaling across all cases included in an scdf." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Standardize values of an scdf file</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/standardize.R'><code>R/standardize.R</code></a></small>
-    <div class="hidden name"><code>standardize.Rd</code></div>
+    <h1>scdf objects
+Tests for objects of type "scdf"</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/scdf-functions.R'><code>R/scdf-functions.R</code></a></small>
+    <div class="hidden name"><code>is.scdf.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function scales the measured values of an scdf file. It allows for mean
-centering and standardization based on each single-case data set or a
-scaling across all cases included in an scdf.</p>
+    <p>scdf objects
+Tests for objects of type "scdf"</p>
     </div>
 
-    <pre class="usage"><span class='fu'>standardize</span><span class='op'>(</span>
-  <span class='va'>data</span>,
-  <span class='va'>var</span>,
-  center <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  scale <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  m <span class='op'>=</span> <span class='fl'>0</span>,
-  sd <span class='op'>=</span> <span class='fl'>1</span>,
-  grand <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>is.scdf</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
-    </tr>
-    <tr>
-      <th>var</th>
-      <td><p>A character string or a vector of character strings with variable
-names that should be scaled.</p></td>
-    </tr>
-    <tr>
-      <th>center</th>
-      <td><p>If set TRUE, data are mean centered.</p></td>
-    </tr>
-    <tr>
-      <th>scale</th>
-      <td><p>If set TRUE, the standard deviation is set.</p></td>
-    </tr>
-    <tr>
-      <th>m</th>
-      <td><p>The target mean for centering.</p></td>
-    </tr>
-    <tr>
-      <th>sd</th>
-      <td><p>The target standard deviation for scaling</p></td>
-    </tr>
-    <tr>
-      <th>grand</th>
-      <td><p>If set TRUE, scaling is based on the mean and standard deviation
-of all values across all single-cases within the scdf.</p></td>
+      <th>x</th>
+      <td><p>An object to be tested</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An scdf with the scaled values.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>Returns TRUE or FALSE depending on whether its argument is of scdf type or not.</p>
 
-    <div class='dont-index'><p>Other data manipulation functions: 
-<code><a href='fill_missing.html'>fill_missing</a>()</code>,
-<code><a href='longSCDF.html'>longSCDF</a>()</code>,
-<code><a href='outlier.html'>outlier</a>()</code>,
-<code><a href='ranks.html'>ranks</a>()</code>,
-<code><a href='shift.html'>shift</a>()</code>,
-<code><a href='smooth_cases.html'>smooth_cases</a>()</code>,
-<code><a href='truncate_phase.html'>truncate_phase</a>()</code></p></div>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
-
-    <p>Juergen Wilbert</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Standardize a multiple case scdf and compute an hplm</span>
-<span class='va'>ex_sc</span> <span class='op'>&lt;-</span> <span class='fu'>standardize</span><span class='op'>(</span><span class='va'>exampleAB_50</span>, var <span class='op'>=</span> <span class='st'>"values"</span>, center <span class='op'>=</span> <span class='cn'>TRUE</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='fu'><a href='hplm.html'>hplm</a></span><span class='op'>(</span><span class='va'>ex_sc</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Hierarchical Piecewise Linear Regression
-#&gt; 
-#&gt; Estimation method ML 
-#&gt; Slope estimation method: B&amp;L-B 
-#&gt; 50 Cases
-#&gt; 
-#&gt; ICC = 0.195; L = 192.0; p = 0.000
-#&gt; 
-#&gt; Fixed effects (values ~ 1 + mt + phaseB + interB)
-#&gt; 
-#&gt;                    B    SE   df       t p
-#&gt; Intercept     -1.346 0.068 1281 -19.775 0
-#&gt; Trend mt       0.036 0.006 1281   5.844 0
-#&gt; Level phase B  0.687 0.031 1281  21.942 0
-#&gt; Slope phase B  0.046 0.006 1281   7.236 0
-#&gt; 
-#&gt; Random effects (~1 | case)
-#&gt; 
-#&gt;           EstimateSD
-#&gt; Intercept      0.434
-#&gt; Residual       0.283</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

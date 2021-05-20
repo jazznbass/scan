@@ -73,7 +73,7 @@ single-cases." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -93,7 +93,12 @@ single-cases." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -108,7 +113,7 @@ single-cases." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Single case data frame</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/scdf-functions.R'><code>R/scdf-functions.R</code></a>, <a href='https://github.com/jazznbass/scan/blob/master/R/scdf.R'><code>R/scdf.R</code></a></small>
     <div class="hidden name"><code>scdf.Rd</code></div>
     </div>
 
@@ -243,7 +248,7 @@ An scdf contains several attributes:
 <span class='va'>emmi</span> <span class='op'>&lt;-</span> <span class='fu'>scdf</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span>, <span class='cn'>NA</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>12</span>, <span class='fl'>16</span>, <span class='fl'>18</span>, <span class='cn'>NA</span>, <span class='fl'>14</span>, <span class='fl'>19</span><span class='op'>)</span>,
   phase.design <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>5</span>, B <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>, name <span class='op'>=</span> <span class='st'>"Emmi"</span>
 <span class='op'>)</span>
-<span class='fu'><a href='describeSC.html'>describeSC</a></span><span class='op'>(</span><span class='va'>emmi</span><span class='op'>)</span>
+<span class='fu'><a href='describe.html'>describeSC</a></span><span class='op'>(</span><span class='va'>emmi</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Describe Single-Case Data
 #&gt; 
 #&gt; Design:  A B 
@@ -313,7 +318,7 @@ An scdf contains several attributes:
 #&gt; mt &lt;measurement-time variable&gt;
 #&gt; phase &lt;phase variable&gt;
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>frida</span><span class='op'>)</span>
-</div><div class='img'><img src='scdf-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='describeSC.html'>describeSC</a></span><span class='op'>(</span><span class='va'>frida</span><span class='op'>)</span>
+</div><div class='img'><img src='scdf-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='describe.html'>describeSC</a></span><span class='op'>(</span><span class='va'>frida</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Describe Single-Case Data
 #&gt; 
 #&gt; Design:  A B 
@@ -377,7 +382,7 @@ An scdf contains several attributes:
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Jürgen Wilbert, Timo Lüke.</p>
 </div>
 
 <div class="pkgdown">

@@ -73,7 +73,7 @@ single-cases." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -93,7 +93,12 @@ single-cases." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -108,7 +113,7 @@ single-cases." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot single-case data</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/plot.scdf.R'><code>R/plot.scdf.R</code></a></small>
     <div class="hidden name"><code>plot.scdf.Rd</code></div>
     </div>
 
@@ -195,8 +200,9 @@ no additional lines are plotted. Possible lines are:</p><ul>
 10%-trimmed. Other trims can be set, using a second parameter (e.g.,
 <code>lines = list(mean = 0.2)</code> draws a 20%-trimmed mean line).</p></li>
 <li><p><code>"trend"</code> Separate lines for phase A and B trends.</p></li>
-<li><p><code>"trendA"</code> Trend line for phase A, extrapolated throughout phase
-B.</p></li>
+<li><p><code>"trendA"</code> OLS trend line for phase A, extrapolated throughout phase B.</p></li>
+<li><p><code>"trendA_bisplit"</code> Split middle (bi-split) trend line for phase A, extrapolated throughout phase B.</p></li>
+<li><p><code>"trendA_trisplit"</code> Tukey tri-split trend line for phase A, extrapolated throughout phase B.</p></li>
 <li><p><code>"maxA/minA"</code> Line at the level of the highest or lowest phase A score.</p></li>
 <li><p><code>"medianA"</code> Line at the phase A median score.</p></li>
 <li><p><code>"meanA"</code>
@@ -271,7 +277,7 @@ Set <code>case.names = ""</code> if you don't like to include case names.</p></t
     <p>Returns a plot of one or multiple single-cases.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='style_plot.html'>style_plot</a></code>, <code><a href='describeSC.html'>describeSC</a></code>, <code><a href='overlap.html'>overlapSC</a></code></p></div>
+    <div class='dont-index'><p><code><a href='style_plot.html'>style_plot</a></code>, <code><a href='describe.html'>describeSC</a></code>, <code><a href='overlap.html'>overlapSC</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Juergen Wilbert</p>
@@ -307,7 +313,7 @@ Set <code>case.names = ""</code> if you don't like to include case names.</p></t
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Jürgen Wilbert, Timo Lüke.</p>
 </div>
 
 <div class="pkgdown">

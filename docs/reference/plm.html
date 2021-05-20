@@ -73,7 +73,7 @@ McKean, 2000)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -93,7 +93,12 @@ McKean, 2000)." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -108,7 +113,7 @@ McKean, 2000)." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Piecewise linear model / piecewise regression</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/plm.R'><code>R/plm.R</code></a></small>
     <div class="hidden name"><code>plm.Rd</code></div>
     </div>
 
@@ -254,11 +259,11 @@ Measurement, 60</em>, 38-58.</p>
 #&gt; 
 #&gt; F(3, 26) = 47.38; p = 0.000; R² = 0.845; Adjusted R² = 0.828
 #&gt; 
-#&gt;                    B   2.5%  97.5%    SE      t     p     ΔR²
-#&gt; Intercept     53.234 47.630 58.838 2.859 18.618 0.000        
-#&gt; Trend mt      -0.166 -1.032  0.701 0.442 -0.374 0.711 -0.0012
-#&gt; Level phase B 15.353  9.550 21.156 2.961  5.185 0.000  0.0735
-#&gt; Slope phase B  0.913 -0.045  1.871 0.489  1.869 0.073  0.0162
+#&gt;                    B   2.5%  97.5%    SE      t     p delta R²
+#&gt; Intercept     53.234 47.630 58.838 2.859 18.618 0.000         
+#&gt; Trend mt      -0.166 -1.032  0.701 0.442 -0.374 0.711  -0.0012
+#&gt; Level phase B 15.353  9.550 21.156 2.961  5.185 0.000   0.0735
+#&gt; Slope phase B  0.913 -0.045  1.871 0.489  1.869 0.073   0.0162
 #&gt; 
 #&gt; Autocorrelations of the residuals
 #&gt;  lag    cr
@@ -283,15 +288,15 @@ Measurement, 60</em>, 38-58.</p>
 #&gt; Fitted a gaussian distribution.
 #&gt; F(7, 62) = 11.05; p = 0.000; R² = 0.555; Adjusted R² = 0.505
 #&gt; 
-#&gt;                      B    2.5%  97.5%    SE      t     p    ΔR²
-#&gt; Intercept       51.439  46.427 56.451 2.557 20.115 0.000       
-#&gt; Trend mt        -0.085  -0.636  0.467 0.281 -0.301 0.764 0.0006
-#&gt; Level phase B1   7.536   1.297 13.775 3.183  2.367 0.021 0.0402
-#&gt; Level phase A2 -11.120 -17.517 -4.722 3.264 -3.407 0.001 0.0833
-#&gt; Level phase B2  10.261   4.022 16.500 3.183  3.224 0.002 0.0746
-#&gt; Slope phase B1   0.280  -0.377  0.937 0.335  0.835 0.407 0.0050
-#&gt; Slope phase A2  -0.240  -0.897  0.417 0.335 -0.716 0.477 0.0037
-#&gt; Slope phase B2   0.119  -0.538  0.776 0.335  0.354 0.724 0.0009
+#&gt;                      B    2.5%  97.5%    SE      t     p delta R²
+#&gt; Intercept       51.439  46.427 56.451 2.557 20.115 0.000         
+#&gt; Trend mt        -0.085  -0.636  0.467 0.281 -0.301 0.764   0.0006
+#&gt; Level phase B1   7.536   1.297 13.775 3.183  2.367 0.021   0.0402
+#&gt; Level phase A2 -11.120 -17.517 -4.722 3.264 -3.407 0.001   0.0833
+#&gt; Level phase B2  10.261   4.022 16.500 3.183  3.224 0.002   0.0746
+#&gt; Slope phase B1   0.280  -0.377  0.937 0.335  0.835 0.407   0.0050
+#&gt; Slope phase A2  -0.240  -0.897  0.417 0.335 -0.716 0.477   0.0037
+#&gt; Slope phase B2   0.119  -0.538  0.776 0.335  0.354 0.724   0.0009
 #&gt; 
 #&gt; Autocorrelations of the residuals
 #&gt;  lag    cr
@@ -311,12 +316,12 @@ Measurement, 60</em>, 38-58.</p>
 #&gt; Fitted a gaussian distribution.
 #&gt; F(4, 65) = 19.73; p = 0.000; R² = 0.548; Adjusted R² = 0.521
 #&gt; 
-#&gt;                      B    2.5%  97.5%    SE      t     p    ΔR²
-#&gt; Intercept       50.157  47.279 53.035 1.468 34.157 0.000       
-#&gt; Trend mt         0.076  -0.133  0.284 0.107  0.710 0.480 0.0035
-#&gt; Level phase B1   7.671   2.879 12.463 2.445  3.137 0.003 0.0684
-#&gt; Level phase A2 -10.945 -15.737 -6.153 2.445 -4.477 0.000 0.1392
-#&gt; Level phase B2   9.402   4.610 14.194 2.445  3.846 0.000 0.1028
+#&gt;                      B    2.5%  97.5%    SE      t     p delta R²
+#&gt; Intercept       50.157  47.279 53.035 1.468 34.157 0.000         
+#&gt; Trend mt         0.076  -0.133  0.284 0.107  0.710 0.480   0.0035
+#&gt; Level phase B1   7.671   2.879 12.463 2.445  3.137 0.003   0.0684
+#&gt; Level phase A2 -10.945 -15.737 -6.153 2.445 -4.477 0.000   0.1392
+#&gt; Level phase B2   9.402   4.610 14.194 2.445  3.846 0.000   0.1028
 #&gt; 
 #&gt; Autocorrelations of the residuals
 #&gt;  lag    cr
@@ -335,11 +340,11 @@ Measurement, 60</em>, 38-58.</p>
 #&gt; Fitted a gaussian distribution.
 #&gt; F(3, 66) = 26.34; p = 0.000; R² = 0.545; Adjusted R² = 0.524
 #&gt; 
-#&gt;                     B    2.5%  97.5%    SE      t p    ΔR²
-#&gt; Intercept      50.762  48.427 53.097 1.191 42.611 0       
-#&gt; Level phase B1  8.995   5.906 12.084 1.576  5.708 0 0.2247
-#&gt; Level phase A2 -9.621 -12.710 -6.532 1.576 -6.105 0 0.2570
-#&gt; Level phase B2 10.726   7.637 13.815 1.576  6.806 0 0.3195
+#&gt;                     B    2.5%  97.5%    SE      t p delta R²
+#&gt; Intercept      50.762  48.427 53.097 1.191 42.611 0         
+#&gt; Level phase B1  8.995   5.906 12.084 1.576  5.708 0   0.2247
+#&gt; Level phase A2 -9.621 -12.710 -6.532 1.576 -6.105 0   0.2570
+#&gt; Level phase B2 10.726   7.637 13.815 1.576  6.806 0   0.3195
 #&gt; 
 #&gt; Autocorrelations of the residuals
 #&gt;  lag    cr
@@ -361,7 +366,7 @@ Measurement, 60</em>, 38-58.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Jürgen Wilbert, Timo Lüke.</p>
 </div>
 
 <div class="pkgdown">

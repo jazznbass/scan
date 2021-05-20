@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -92,7 +92,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -107,7 +112,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create styles for single-case data plots</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/style_plot.R'><code>R/style_plot.R</code></a></small>
     <div class="hidden name"><code>style_plot.Rd</code></div>
     </div>
 
@@ -126,7 +131,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>style</th>
-      <td><p>Predefined styles.</p></td>
+      <td><p>A character string or a vector of character strings with predefined styles.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -136,7 +141,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a list to be provided or the style argument of the plot function.</p>
+    <p>Returns a list to be provided for the style argument of the <code><a href='plot.scdf.html'>plot.scdf</a></code> function.</p>
 <ul>
 <li><p><code>fill</code> If set, the area under the line is
 filled with the given color (e.g., <code>fill = "tomato"</code>). Use the standard
@@ -153,13 +158,16 @@ left, 3 = above, 4 = right.</p></li>
 <li><p><code>annotations = list(pos = 3, col =
 "brown", round = 1)</code> adds scores rounded to one decimal above the data point
 in brown color to the plot.</p></li>
+<li><p><code>"names"</code> A list of parameters defining the depiction of phase names (e.g. <code>names = list(cex = 0.8, col = "red", side = 1)</code>: cex for size, col for color, and side for position). See <code><a href='https://rdrr.io/r/graphics/mtext.html'>mtext</a></code> for more details.</p></li>
 <li><p><code>"lwd"</code> Width of the plot line. Default is <code>lwd = 2</code>.</p></li>
 <li><p><code>"pch"</code> Point type. Default is <code>pch = 17</code> (triangles). Other options
 are for example: 16 (filled circles) or "A" (uses the letter A).</p></li>
 <li><p><code>"main"</code> Main title of the plot.</p></li>
 <li><p><code>"mai"</code> Sets the margins of the plot.</p></li>
 <li><p><code>"bty"</code> Shape of the frame surrounding the inner plot</p></li>
-<li><p><code>"fill.bg"</code> Backgroundcolor of the plot.</p></li>
+<li><p><code>"fill.bg"</code> Background color of the plot.
+If a vector is provided, these colors will be assigned to phases 
+(each phase name becomes a color).</p></li>
 <li><p><code>"grid"</code> Color of a grid.</p></li>
 <li><p><code>"text.ABlag"</code> Text displayed between phases.</p></li>
 <li><p><code>"cex.axis"</code> Size of the axis annotations</p></li>
@@ -191,7 +199,9 @@ Additional style paramters are set following the style argument and can be combi
 <span class='va'>newstyle</span><span class='op'>$</span><span class='va'>text.ABlag</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"START"</span>,<span class='st'>"END"</span><span class='op'>)</span>
 <span class='va'>newstyle</span><span class='op'>$</span><span class='va'>col.dots</span> <span class='op'>&lt;-</span> <span class='st'>""</span>
 <span class='va'>newstyle</span><span class='op'>$</span><span class='va'>annotations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>cex <span class='op'>=</span> <span class='fl'>0.6</span>, col <span class='op'>=</span> <span class='st'>"grey10"</span>, offset <span class='op'>=</span> <span class='fl'>0.4</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>exampleABC</span>, style <span class='op'>=</span> <span class='va'>newstyle</span><span class='op'>)</span>
+<span class='va'>newstyle</span><span class='op'>$</span><span class='va'>names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>cex <span class='op'>=</span> <span class='fl'>0.8</span>, col <span class='op'>=</span> <span class='st'>"blue"</span>, side <span class='op'>=</span> <span class='fl'>1</span>, adj <span class='op'>=</span> <span class='fl'>1</span>, line <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, at <span class='op'>=</span> <span class='fl'>31</span><span class='op'>)</span>
+<span class='va'>newstyle</span><span class='op'>$</span><span class='va'>fill.bg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"grey99"</span>, <span class='st'>"grey95"</span>, <span class='st'>"grey90"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>exampleABC</span>, style <span class='op'>=</span> <span class='va'>newstyle</span>, main <span class='op'>=</span> <span class='st'>"Example Plot"</span><span class='op'>)</span>
 </div><div class='img'><img src='style_plot-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
@@ -205,7 +215,7 @@ Additional style paramters are set following the style argument and can be combi
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Jürgen Wilbert, Timo Lüke.</p>
 </div>
 
 <div class="pkgdown">
