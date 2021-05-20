@@ -114,6 +114,130 @@
       <small>Source: <a href='https://github.com/jazznbass/scan/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="scan-053" class="section level1">
+<h1 class="page-header" data-toc-text="0.53">
+<a href="#scan-053" class="anchor"></a>scan 0.53<small> Unreleased </small>
+</h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li>new trend lines added to <code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>: Koenig’s bi-split / quarter intersect (lines = “trendA_bisplit”) and Tukey’s tri-split / Wald’s slope (lines = “trendA_trisplit”).</li>
+</ul>
+<pre class="{.r}"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(exampleAB_50[8], lines = "trendA_bisplit")
+plot(example_A24, lines = "trendA_trisplit")</a></code></pre>
+<div id="new-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h3>
+<ul>
+<li>
+<code><a href="../reference/is.scdf.html">is.scdf()</a></code>: Tests if an object is of type “scdf” or not.</li>
+<li>
+<code>cdc</code>: Applies the Conservative Dual-Criterion Method (CDC; Swoboda, Kratochwill, &amp; Levin, 2010) to scdf objects.</li>
+</ul>
+<pre class="{.r}"><code><a href="../reference/cdc.html">cdc(Beretvas2008)
+cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")</a></code></pre>
+</div>
+<div id="changes-in-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#changes-in-functions" class="anchor"></a>Changes in functions</h3>
+<ul>
+<li>
+<code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code>: Argument <code>subset</code> changed to <code>filter</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+    <div id="scan-052" class="section level1">
+<h1 class="page-header" data-toc-text="0.52">
+<a href="#scan-052" class="anchor"></a>scan 0.52<small> Unreleased </small>
+</h1>
+<div id="major-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<ul>
+<li>
+<code><a href="../reference/describe.html">describe()</a></code> as the new alias for <code><a href="../reference/describe.html">describeSC()</a></code>
+</li>
+<li>
+<code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>, <code><a href="../reference/style_plot.html">style_plot()</a></code>: New options to style casenames: <code>names</code> which takes a list with tag = value structure. Example:</li>
+</ul>
+<pre class="{.r}"><code>new_style &lt;- style_plot()
+new_style$names$side &lt;- 3
+new_style$names$line &lt;- -1.7
+new_style$names$col &lt;- "darkred"
+new_style$names$cex &lt;- 1.5
+new_style$names$at &lt;- 20
+new_style$names$adj &lt;- 1
+new_style$names$font &lt;- 3
+plot(exampleAB_decreasing, style = new_style)</code></pre>
+<ul>
+<li>
+<code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>, <code><a href="../reference/style_plot.html">style_plot()</a></code>: Different background colors for different phases:</li>
+</ul>
+<pre class="{.r}"><code>new_style &lt;- style_plot()
+new_style$fill.bg &lt;- c("aliceblue", "mistyrose1", "honeydew")
+new_style$lty.seperators &lt;- 0
+plot(exampleABC, style = new_style)</code></pre>
+<pre class="{.r}"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(exampleABAB, style = c("default", "phase_shade"))</a></code></pre>
+</div>
+</div>
+    <div id="scan-0505" class="section level1">
+<h1 class="page-header" data-toc-text="0.50.5">
+<a href="#scan-0505" class="anchor"></a>scan 0.50.5<small> Unreleased </small>
+</h1>
+<div id="major-changes-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
+<ul>
+<li>fixed bug in plot function</li>
+</ul>
+</div>
+</div>
+    <div id="scan-0504" class="section level1">
+<h1 class="page-header" data-toc-text="0.50.4">
+<a href="#scan-0504" class="anchor"></a>scan 0.50.4<small> Unreleased </small>
+</h1>
+<div id="major-changes-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
+<ul>
+<li>New <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> function (method from base <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> for selecting variables, rows, and cases. It takes the arguments <code>subset</code>, <code>select</code>, and <code>cases</code>.</li>
+</ul>
+<pre class="{.r}"><code><a href="https://rdrr.io/r/base/subset.html">subset(exampleAB, (values &lt; 60 &amp; phase == "A") | (values &gt;= 60 &amp; phase == "B"))
+subset(exampleAB_add, select = c(-cigarrets, -depression))
+subset(exampleA1B1A2B2, phase %in% c("A1", "B2"), cases = Pawel:Moritz)</a></code></pre>
+</div>
+</div>
+    <div id="scan-0502" class="section level1">
+<h1 class="page-header" data-toc-text="0.50.2">
+<a href="#scan-0502" class="anchor"></a>scan 0.50.2<small> Unreleased </small>
+</h1>
+<div id="major-changes-4" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
+<ul>
+<li>New <code><a href="../reference/select_cases.html">select_cases()</a></code> function.</li>
+</ul>
+<pre class="{.r}"><code><a href="../reference/select_cases.html">select_cases(exampleAB, "Johanna", "Karolina")
+select_cases(exampleAB, 1,2)
+select_cases(exampleAB, "-Johanna")</a></code></pre>
+</div>
+</div>
+    <div id="scan-050" class="section level1">
+<h1 class="page-header" data-toc-text="0.50">
+<a href="#scan-050" class="anchor"></a>scan 0.50<small> Unreleased </small>
+</h1>
+<div id="major-changes-5" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-5" class="anchor"></a>Major changes</h2>
+<ul>
+<li>Started dropping the <code>SC</code> extension from function names e.g. <code><a href="../reference/overlap.html">overlapSC()</a></code> becomes <code><a href="../reference/overlap.html">overlap()</a></code>
+</li>
+</ul>
+<p>see: <a href="https://jazznbass.github.io/scan-Book/changes-with-version-0-50.html" class="uri">https://jazznbass.github.io/scan-Book/changes-with-version-0-50.html</a></p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

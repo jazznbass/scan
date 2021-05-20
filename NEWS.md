@@ -1,11 +1,15 @@
-# 0.53
+# scan 0.53
+
+## Major changes
+
 - new trend lines added to `plot.scdf()`: Koenig's bi-split / quarter intersect (lines = "trendA_bisplit") and Tukey's tri-split / Wald's slope (lines = "trendA_trisplit").
 ``` {.r}
 plot(exampleAB_50[8], lines = "trendA_bisplit")
 plot(example_A24, lines = "trendA_trisplit")
 ```
 
-*New functions:*  
+### New functions
+
 - `is.scdf()`: Tests if an object is of type "scdf" or not.
 - `cdc`: Applies the Conservative Dual-Criterion Method (CDC; Swoboda,
 Kratochwill, & Levin, 2010) to scdf objects.
@@ -14,10 +18,13 @@ cdc(Beretvas2008)
 cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
 ```
 
-*Changes in functions:*  
+### Changes in functions
+
 - `subset()`: Argument `subset` changed to `filter`.
 
-# 0.52
+# scan 0.52
+
+## Major changes
 
 -   `describe()` as the new alias for `describeSC()`
 -   `plot.scdf()`, `style_plot()`: New options to style casenames: `names` which takes a list with tag = value structure. Example:
@@ -47,13 +54,15 @@ plot(exampleABC, style = new_style)
 plot(exampleABAB, style = c("default", "phase_shade"))
 ```
 
-# 0.50.5
+# scan 0.50.5
+
+## Major changes
 
 -   fixed bug in plot function
 
-# 0.50.4
+# scan 0.50.4
 
-## major changes
+## Major changes
 
 -   New `subset()` function (method from base `subset()` for selecting variables, rows, and cases. It takes the arguments `subset`, `select`, and `cases`.
 
@@ -63,9 +72,9 @@ subset(exampleAB_add, select = c(-cigarrets, -depression))
 subset(exampleA1B1A2B2, phase %in% c("A1", "B2"), cases = Pawel:Moritz)
 ```
 
-# 0.50.2
+# scan 0.50.2
 
-## major changes
+## Major changes
 
 -   New `select_cases()` function.
 
@@ -75,7 +84,9 @@ select_cases(exampleAB, 1,2)
 select_cases(exampleAB, "-Johanna")
 ```
 
-# 0.50
+# scan 0.50
+
+## Major changes
 
 -   Started dropping the `SC` extension from function names e.g. `overlapSC()` becomes `overlap()`
 
