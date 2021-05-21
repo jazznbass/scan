@@ -15,7 +15,7 @@ cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
 ### Changes in functions
 
 - `subset()`: Argument `subset` changed to `filter`.
-
+- `overlap()`: Added Hedges-g.
 - new trend lines added to `plot.scdf()`: Koenig's bi-split / quarter intersect (lines = "trendA_bisplit") and Tukey's tri-split / Wald's slope (lines = "trendA_trisplit").
 
 ``` {.r}
