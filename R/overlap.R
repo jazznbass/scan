@@ -25,7 +25,9 @@
 #' overlap(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 #' 
 #' @export
-overlap <- function(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2)) {
+overlap <- function(data, dvar, pvar, mvar, 
+                    decreasing = FALSE, 
+                    phases = c(1, 2)){
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -43,7 +45,7 @@ overlap <- function(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2)
 
   VAR <- c(
     "PND", "PEM", "PET", "NAP", "NAP.rescaled", "PAND", "TAU_U", 
-    "Base_Tau",  "Diff_mean", "Diff_trend","SMD"
+    "Base_Tau",  "Diff_mean", "Diff_trend", "SMD", "Hedges_g"
   )
   d.f <- as.data.frame(matrix(nrow = N, ncol = length(VAR)))
   colnames(d.f) <- VAR
@@ -64,17 +66,28 @@ overlap <- function(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2)
     data <- data[[1]]
     A <- data[data[, pvar] == "A", dvar]
     B <- data[data[, pvar] == "B", dvar]
+    A.MT <- data[data[, pvar] == "A", mvar]
+    B.MT <- data[data[, pvar] == "B", mvar]
+    n <- sum(!is.na(c(A, B)))
+    
     d.f$Diff_mean[i] <- mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)
     d.f$SMD[i] <- (mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)) / sd(A, na.rm = TRUE)
     
-    A.MT <- data[data[, pvar] == "A", mvar]
-    B.MT <- data[data[, pvar] == "B", mvar]
+    d.f$Hedges_g[i] <- d.f$SMD[i] * (1 - (3 / (4 * n - 9)))
+    
     d.f$Diff_trend[i] <- coef(lm(B ~ I(B.MT - B.MT[1] + 1)))[2] - coef(lm(A ~ I(A.MT - A.MT[1] + 1)))[2]
     
   }
   
-  out <- list(overlap = d.f, phases.A = keep$phases.A, phases.B = keep$phases.B, design = keep$design[[1]]$values)
+  out <- list(
+    overlap = d.f, 
+    phases.A = keep$phases.A, 
+    phases.B = keep$phases.B, 
+    design = keep$design[[1]]$values
+  )
+  
   class(out) <- c("sc", "overlap")
+  
   ATTRIBUTES <- attributes(data.list)[[.opt$scdf]]
   attr(out, .opt$phase) <- ATTRIBUTES[[.opt$phase]]
   attr(out, .opt$mt)    <- ATTRIBUTES[[.opt$mt]]
