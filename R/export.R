@@ -157,7 +157,9 @@ export <- function(object, filename = NULL,
       "Base Tau = Baseline corrected Tau; ",
       "Delta M = Mean difference between phases; ",
       "Delta Trend = Trend difference between phases; ",
-      "SMD = Standardized Mean Difference."
+      "SMD = Standardized Mean Difference; ",
+      "Hedges g = Corrected SMD",
+      "."
     )
     footnote <- paste0(footnote, collapse = "")
     caption <- paste0(caption, collapse = "")
@@ -168,6 +170,7 @@ export <- function(object, filename = NULL,
     colnames(out)[7] <- "Tau-U"
     colnames(out)[9] <- "Delta M"
     colnames(out)[10] <- "Delta Trend"
+    colnames(out)[12] <- "Hedges g"
 
     if (isTRUE(flip)) out <- t(out)
 

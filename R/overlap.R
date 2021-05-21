@@ -25,7 +25,21 @@
 #' overlap(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 #' 
 #' @export
-overlap <- function(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2)) {
+overlap <- function(data, dvar, pvar, mvar, 
+                    decreasing = FALSE, 
+                    phases = c(1, 2),
+                    pnd = TRUE,
+                    pem = TRUE,
+                    pet = TRUE,
+                    nap = TRUE,
+                    nap_r = TRUE,
+                    pand = TRUE,
+                    tau_u = TRUE,
+                    base_tau = TRUE,
+                    diff_mean = TRUE,
+                    diff_trend = TRUE,
+                    smd = TRUE,
+                    hedges_g = TRUE) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -41,40 +55,75 @@ overlap <- function(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2)
 
   case.names <- names(data.list)
 
-  VAR <- c(
-    "PND", "PEM", "PET", "NAP", "NAP.rescaled", "PAND", "TAU_U", 
-    "Base_Tau",  "Diff_mean", "Diff_trend","SMD"
-  )
+  VAR <- c()
+  
+  if (pnd) VAR <- c(VAR, "PND")
+  if (pem) VAR <- c(VAR, "PEM")
+  if (pet) VAR <- c(VAR, "PET")
+  if (nap) VAR <- c(VAR, "NAP")
+  if (nap_r) VAR <- c(VAR, "NAP_rescaled")
+  if (pand) VAR <- c(VAR, "PAND")
+  if (tau_u) VAR <- c(VAR, "Tau_U")
+  if (base_tau) VAR <- c(VAR, "Base_Tau")
+  if (diff_mean) VAR <- c(VAR, "Diff_mean")
+  if (diff_trend) VAR <- c(VAR, "Diff_trend")
+  if (smd) VAR <- c(VAR, "SMD")
+  if (hedges_g) VAR <- c(VAR, "Hedges_g")
+
   d.f <- as.data.frame(matrix(nrow = N, ncol = length(VAR)))
   colnames(d.f) <- VAR
   rownames(d.f) <- c(case.names)
   
   for(i in 1:N) {
     data <- data.list[i]
-    d.f$PND[i] <- pnd(data, decreasing = decreasing)$PND
-    d.f$PEM[i] <- pem(data, decreasing = decreasing, binom.test = FALSE, chi.test = FALSE)$PEM
-    d.f$PET[i] <- pet(data, decreasing = decreasing)$PET
-    d.f$NAP[i] <- nap(data, decreasing = decreasing)$nap$NAP[1]
-    d.f$NAP.rescaled[i] <- nap(data, decreasing = decreasing)$nap$Rescaled[1]
-    d.f$PAND[i] <- pand(data, decreasing = decreasing)$PAND
+    
+    if (pnd) 
+      d.f$PND[i] <- pnd(data, decreasing = decreasing)$PND
+    if (pem) 
+      d.f$PEM[i] <- pem(data, decreasing = decreasing, binom.test = FALSE, chi.test = FALSE)$PEM
+    if (pet)
+      d.f$PET[i] <- pet(data, decreasing = decreasing)$PET
+    if (nap)
+      d.f$NAP[i] <- nap(data, decreasing = decreasing)$nap$NAP[1]
+    if (nap_r)
+      d.f$NAP_rescaled[i] <- nap(data, decreasing = decreasing)$nap$Rescaled[1]
+    if (pand)
+      d.f$PAND[i] <- pand(data, decreasing = decreasing)$PAND
     #d.f$TAU_U[i] <- tauUSC(data)$Overall_tau_u[2]
-    d.f$TAU_U[i] <- tau_u(data)$table[[1]]["A vs. B + Trend B - Trend A", "Tau"]
-    d.f$Base_Tau[i] <- corrected_tau(data)$tau
+    if (tau_u)
+      d.f$Tau_U[i] <- tau_u(data)$table[[1]]["A vs. B + Trend B - Trend A", "Tau"]
+    if (base_tau)
+      d.f$Base_Tau[i] <- corrected_tau(data)$tau
     
     data <- data[[1]]
     A <- data[data[, pvar] == "A", dvar]
     B <- data[data[, pvar] == "B", dvar]
-    d.f$Diff_mean[i] <- mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)
-    d.f$SMD[i] <- (mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)) / sd(A, na.rm = TRUE)
-    
     A.MT <- data[data[, pvar] == "A", mvar]
     B.MT <- data[data[, pvar] == "B", mvar]
-    d.f$Diff_trend[i] <- coef(lm(B ~ I(B.MT - B.MT[1] + 1)))[2] - coef(lm(A ~ I(A.MT - A.MT[1] + 1)))[2]
+    n <- sum(!is.na(c(A, B)))
+    
+    if (diff_mean)
+      d.f$Diff_mean[i] <- mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)
+    if (smd)
+      d.f$SMD[i] <- (mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)) / sd(A, na.rm = TRUE)
+    
+    if (hedges_g)
+      d.f$Hedges_g[i] <- ((mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)) / sd(A, na.rm = TRUE)) * (1 - (3 / (4 * n - 9)))
+    
+    if (diff_trend)
+      d.f$Diff_trend[i] <- coef(lm(B ~ I(B.MT - B.MT[1] + 1)))[2] - coef(lm(A ~ I(A.MT - A.MT[1] + 1)))[2]
     
   }
   
-  out <- list(overlap = d.f, phases.A = keep$phases.A, phases.B = keep$phases.B, design = keep$design[[1]]$values)
+  out <- list(
+    overlap = d.f, 
+    phases.A = keep$phases.A, 
+    phases.B = keep$phases.B, 
+    design = keep$design[[1]]$values
+  )
+  
   class(out) <- c("sc", "overlap")
+  
   ATTRIBUTES <- attributes(data.list)[[.opt$scdf]]
   attr(out, .opt$phase) <- ATTRIBUTES[[.opt$phase]]
   attr(out, .opt$mt)    <- ATTRIBUTES[[.opt$mt]]
