@@ -349,8 +349,6 @@ tauUSC <- function(...) {
     tau <- sapply(tau_matrix, function(x) x[model, "Tau"])
     se <- sapply(tau_matrix, function(x) x[model, "SE_Tau"])
     
-    if (method == "r") return(data.frame(Model = model, .m1(tau, n)))
-    if (method == "jw")   return(data.frame(Model = model, .m2(tau, n)))
     if (method == "random") return(data.frame(Model = model, .random(tau, se)))
     if (method == "fixed") return(data.frame(Model = model, .fixed(tau, se)))
   }
