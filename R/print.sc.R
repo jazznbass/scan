@@ -94,15 +94,17 @@ if (value == "mpr") {
 
   if (value == "TAU-U") {	
     cat("Tau-U\n")
-    cat("Method: ", x$method, "\n\n")
-    cat("Overall Tau-U: \n")
+    cat("Method:", x$method, "\n")
+    cat("Applied Kendall's Tau-", x$tau_method, "\n\n", sep = "")
     
-    print(x$Overall_tau_u, row.names = FALSE, digits = 3)
-    
-    cat("\n")
-    #out <- lapply(x$table, function(x) round(x, 3))
     out <- x$table
-
+    
+    if (length(out) > 1) {
+      cat("Overall Tau-U: \n")
+      print(x$Overall_tau_u, row.names = FALSE, digits = 3)
+      cat("\n")
+    }
+    
     complete <- FALSE
     if (any(names(args) == "complete")) complete <- args$complete
     if (!complete) {
@@ -118,16 +120,12 @@ if (value == "mpr") {
         
       out <- lapply(x$table, function(x) round(x[select_rows, select_vars], 3))
     }
-    #out <- lapply(
-    #  out, 
-    #  function(x) {
-    #    names(x)[which(names(x) == "Tau")]   <- "\u03c4"
-    #    names(x)[which(names(x) == "Tau.b")] <- "\u03c4b"
-    #    x
-    #  }
-    #)
     
-    print(out, digits = 3)
+    for(i in seq_along(out)) {
+      cat("Case:", names(out)[i], "\n")
+      print(out[[i]], digits = 3)
+      cat("\n")
+    }
   }
   
 # power -------------------------------------------------------------------
