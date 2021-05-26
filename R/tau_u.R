@@ -9,26 +9,28 @@
 #' @param method \code{"complete"} (default) or \code{"parker"}. The latter
 #' calculates the number of possible pairs as described in Parker et al. (2011)
 #' which might lead to tau-U values greater than 1.
-#' @param fisher If TRUE, meta analyses of Tau U is based on Fisher Z transformed correlations.
+#' @param meta_method Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated.
 #' @param continuity_correction If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.
 #' @return \item{table}{A data frame containing statistics from the Tau-U
 #' family, including: Pairs, positive and negative comparisons, S, and Tau}
 #' \item{matrix}{The matrix of comparisons used for calculating the
 #' statistics.} \item{tau_u}{Tau-U value.}
-#' @details Tau-U is an inconsistently operationalized construct. 
+#' @details Tau-U is an inconsistently operationalized construct. Parker et al. (2011) describe a method which may result in Tau-U lager than 1. A different implementation of the method (provided at http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of tau-a as in the original formulation by Parker). Bossart et. al (2018) describe inconsistencies in the results from this implementation as well. Another problems lies in the calculation in overall Tau-U values from several single cases. This function applies a metaanalyzes to gain the overall values. Each tau value is weighted by the inverse of the variance (ie. the tau standard error). Tau values are not converted to Pearson r values. The argument \code{"meta_method"} calculates a random-effect model ("random") or a fixed effect model ("fixed").
 #' @author Juergen Wilbert
 #' @family overlap functions
-#' @references Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B.
+#' @references Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018). Interpreting Kendall’s Tau and Tau-U for single-case experimental designs. \emph{Cogent Psychology, 5(1)}, 1–26. https://doi.org/10.1080/23311908.2018.1518687.
+#' 
+#' Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B.
 #' (2011). Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
 #' \emph{Behavior Therapy, 42}, 284-299.
 #' @examples
 #'
-#' ## Calculate tau-U for the example from Parker et al. (2011)
+#' tau_u(Grosche2011$Eva)
+#' 
+#' ## Replicate  tau-U calculation from Parker et al. (2011)
 #' bob <- scdf(c(A = 2, 3, 5, 3, B = 4, 5, 5, 7, 6), name = "Bob")
-#' tau_u(bob)
-#'
-#' ## Calculate tau-U based on Kendall Tau A
-#' tau_u(Grosche2011$Eva, tau_method = "a")
+#' res <- tau_u(bob, method = "parker", tau_method = "a")
+#' print(res, complete = TRUE)
 #'
 #' ## Request tau-U for all single-cases from the Grosche2011 data set
 #' tau_u(Grosche2011)
@@ -38,9 +40,16 @@ tau_u <- function(data, dvar, pvar,
                   tau_method = "b", 
                   method = "complete", 
                   phases = c(1, 2), 
-                  meta = TRUE,
-                  fisher = TRUE, 
+                  meta_method = "random",
                   continuity_correction = FALSE) {
+  
+  # validity check
+  if (!tau_method %in% c("a", "b")) 
+    stop("tau_method muste be 'a' or 'b'.")
+  if (!method %in% c("complete", "parker")) 
+    stop("method muste be 'complete' or 'parker'.")
+  if (!meta_method %in% c("random", "fixed")) 
+    stop("meta_method muste be 'random' or 'fixed'.")
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -71,7 +80,8 @@ tau_u <- function(data, dvar, pvar,
     "A vs. B + Trend B - Trend A"
   )
   col_names <- c(
-    "kendall", "k_p", "n", "pairs", "pos", "neg", "ties", "S", "D", "Tau",
+    #"kendall", "k_p", "n", 
+    "pairs", "pos", "neg", "ties", "S", "D", "Tau",
     "SD_S", "VAR_S", "SE_Tau", "Z", "p"
   )
   
@@ -83,7 +93,7 @@ tau_u <- function(data, dvar, pvar,
     )
     table_tau <- as.data.frame(table_tau)
     
-    # Extract A and B phase vaues
+    # Extract A and B phase values
     .isA <- data[[i]][[pvar]] == "A"
     .isB <- data[[i]][[pvar]] == "B"
     A <- data[[i]][.isA, dvar]
@@ -141,33 +151,34 @@ tau_u <- function(data, dvar, pvar,
     AvB_BKen <- .kendall(AB, c(rep(0, nA), (nA + 1):nAB), tau_method = tau_method)
     
     # experimental ------------------------------------------------------------
-    table_tau$k_p <- c(
-      AvBKen$p,
-      AvAKen$p,
-      BvBKen$p,
-      #BvB_AKen$p,
-      AvB_AKen$p,
-      AvB_BKen$p,
-      AvB_B_AKen$p
-    )
-    table_tau$n <- c(
-      AvBKen$N,
-      AvAKen$N,
-      BvBKen$N,
-      #BvB_AKen$N,
-      AvB_AKen$N,
-      AvB_BKen$N,
-      AvB_B_AKen$N
-    )
-    table_tau$kendall <- c(
-      AvBKen$tau,
-      AvAKen$tau,
-      BvBKen$tau,
-      #BvB_AKen$tau,
-      AvB_AKen$tau,
-      AvB_BKen$tau,
-      AvB_B_AKen$tau
-    )
+    # table_tau$k_p <- c(
+    #   AvBKen$p,
+    #   AvAKen$p,
+    #   BvBKen$p,
+    #   #BvB_AKen$p,
+    #   AvB_AKen$p,
+    #   AvB_BKen$p,
+    #   AvB_B_AKen$p
+    # )
+    
+    # table_tau$n <- c(
+    #   AvBKen$N,
+    #   AvAKen$N,
+    #   BvBKen$N,
+    #   #BvB_AKen$N,
+    #   AvB_AKen$N,
+    #   AvB_BKen$N,
+    #   AvB_B_AKen$N
+    # )
+    # table_tau$kendall <- c(
+    #   AvBKen$tau,
+    #   AvAKen$tau,
+    #   BvBKen$tau,
+    #   #BvB_AKen$tau,
+    #   AvB_AKen$tau,
+    #   AvB_BKen$tau,
+    #   AvB_B_AKen$tau
+    # )
     # ENDE experimental ------------------------------------------------------------
     
     # pairs -------------------------------------------------------------------
@@ -181,7 +192,6 @@ tau_u <- function(data, dvar, pvar,
       AvB_pair, # A vs. B
       AvA_pair, # A vs. A
       BvB_pair, # B vs. B
-      #AvA_pair + BvB_pair, # A vs. A - B vs. B
       AvB_pair + AvA_pair, # A vs. B - A vs. A
       AvB_pair + BvB_pair, # A vs. B + B vs. B
       AvB_pair + AvA_pair + BvB_pair # A vs. B + B vs. B - A vs. A
@@ -198,7 +208,6 @@ tau_u <- function(data, dvar, pvar,
       AvBpos,
       AvApos,
       BvBpos,
-      #BvBpos + AvAneg,
       AvBpos + AvAneg,
       AvBpos + BvBpos,
       AvBpos + BvBpos + AvAneg
@@ -208,7 +217,6 @@ tau_u <- function(data, dvar, pvar,
       AvBneg,
       AvAneg,
       BvBneg,
-      #BvBneg + AvApos,
       AvBneg + AvApos,
       AvBneg + BvBneg,
       AvBneg + BvBneg + AvApos
@@ -218,7 +226,6 @@ tau_u <- function(data, dvar, pvar,
       AvBtie,
       AvAtie,
       BvBtie,
-      #BvBtie + AvAtie,
       AvBtie + AvAtie,
       AvBtie + BvBtie,
       AvBtie + BvBtie + AvAtie
@@ -228,14 +235,13 @@ tau_u <- function(data, dvar, pvar,
 
     table_tau$S <- table_tau$pos - table_tau$neg
     
-    # D -----------------------------------------------------------------------
-
+    # D ----------------------------------------------------------------------
+    
     if (tau_method == "b") {
       table_tau$D <- c(
-        table_tau$pairs[1] - table_tau$ties[1] / 2, #why not AvBKen$D ?
+        table_tau$pairs[1] - table_tau$ties[1] / 2,
         AvAKen$D,
         BvBKen$D,
-        #BvB_AKen$D, #correct? (because see comment three lines above)
         AvB_AKen$D,
         AvB_BKen$D,
         AvB_B_AKen$D
@@ -256,7 +262,6 @@ tau_u <- function(data, dvar, pvar,
       sqrt((nA * nB) * (nA + nB + 1) / 12) * 2,
       .kendall(1:nA, 1:nA, tau_method = tau_method)$sdS,
       .kendall(1:nB, 1:nB, tau_method = tau_method)$sdS,
-      #.kendall(1:nAB, c(nA:1, 1:nB), tau_method = tau_method)$sdS,
       AvB_AKen$sdS,
       AvB_BKen$sdS,
       AvB_B_AKen$sdS
@@ -265,20 +270,29 @@ tau_u <- function(data, dvar, pvar,
     
     # SE, Z, and p ------------------------------------------------------------
     
-    if (tau_method == "b") {
-      table_tau$SE_Tau <- table_tau$SD_S / table_tau$D
-       #table_tau$Z <- table_tau$S / table_tau$SD_S
-    }
-    
-    if (tau_method == "a") {
-      n <- table_tau$n
-      table_tau$SE_Tau <- sqrt( (2 * n + 5) / choose(n, 2)) / 3
-      table_tau$Z <- table_tau$Tau / table_tau$SE_Tau
-      #table_tau$Z2 <- (3 * table_tau$S) / sqrt(n * (n - 1) * (2 * n + 5) / 2)
-    }
+    # if (tau_method == "b") {
+    #   #table_tau$SE_Tau <- table_tau$SD_S / table_tau$D
+    #   #table_tau$Z <- table_tau$Tau / table_tau$SE_Tau
+    # }
+    # 
+    # if (tau_method == "a") {
+    #   #n <- table_tau$n
+    #   # n <- c(
+    #   #   AvBKen$N,
+    #   #   AvAKen$N,
+    #   #   BvBKen$N,
+    #   #   AvB_AKen$N,
+    #   #   AvB_BKen$N,
+    #   #   AvB_B_AKen$N
+    #   # )
+    #   #table_tau$SE_Tau <- sqrt( (2 * n + 5) / choose(n, 2)) / 3
+    #   #table_tau$Z <- table_tau$S / table_tau$SD_S
+    #   #table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
+    #   #table_tau$Z2 <- (3 * table_tau$S) / sqrt(n * (n - 1) * (2 * n + 5) / 2)
+    # }
 
-    table_tau$Z <- table_tau$Tau / table_tau$SE_Tau
-    
+    table_tau$Z <- table_tau$S / table_tau$SD_S
+    table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
     table_tau$p <- pnorm(abs(table_tau$Z), lower.tail = FALSE) * 2
     
     out$table[[i]] <- table_tau
@@ -290,11 +304,10 @@ tau_u <- function(data, dvar, pvar,
   
   # Overall Tau -------------------------------------------------------------
   
-  if (meta) out$Overall_tau_u <- .meta_tau_u(out, fisher = fisher)
+  out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method)
   
   # return ------------------------------------------------------------------
   
-  out$meta <- meta
   names(out$table) <- names(data)
   names(out$tau_u) <- names(data)
   
@@ -310,33 +323,44 @@ tauUSC <- function(...) {
   tau_u(...)
 }
 
-.meta_tau_u <- function(tau_matrix, fisher = fisher) {
-  # Overall Tau -------------------------------------------------------------
+.meta_tau_u <- function(tau_matrix, method = NA) {
   
-  .ot <- function(model) {
-    ret <- data.frame(Model = model)
-    tau <- sapply(tau_matrix$table, function(x) x[model, "Tau"])
-    #r <- sin(0.5 * pi * tau)# tau to pearson's r
-    n <- sapply(tau_matrix$table, function(x) x[model, "n"])
-    se <- sqrt((1 - tau^2)^2/(n - 1))
-    weight <- 1 / se^2
-    weight[is.infinite(weight)] <- 0
-    
-    ret$Tau_U <- weighted.mean(tau, weight, na.rm = TRUE)
-    ret$se <- sqrt(1 / sum(weight))
-    ret$z <- ret$Tau_U / ret$se
-    ret$df <- length(tau) - 1
-    ret$p <- pnorm(abs(ret$z), lower.tail = FALSE) * 2
+  .random <- function(tau, se) {
+    res <- metagen(tau, se)
+    ret <- list()
+    ret$Tau_U <- res$TE.random
+    ret$se <- res$seTE.random
+    ret$z <- res$zval.random
+    ret$p <- res$pval.random
     ret
   }
   
+  .fixed <- function(tau, se) {
+    res <- metagen(tau, se)
+    ret <- list()
+    ret$Tau_U <- res$TE.fixed
+    ret$se <- res$seTE.fixed
+    ret$z <- res$zval.fixed
+    ret$p <- res$pval.fixed
+    ret
+  }
+  
+  .ot <- function(model) {
+    tau <- sapply(tau_matrix, function(x) x[model, "Tau"])
+    se <- sapply(tau_matrix, function(x) x[model, "SE_Tau"])
+    
+    if (method == "r") return(data.frame(Model = model, .m1(tau, n)))
+    if (method == "jw")   return(data.frame(Model = model, .m2(tau, n)))
+    if (method == "random") return(data.frame(Model = model, .random(tau, se)))
+    if (method == "fixed") return(data.frame(Model = model, .fixed(tau, se)))
+  }
+  
   out <- data.frame(
-    Model = character(3), 
-    Tau_U = numeric(3),
-    se = numeric(3),
-    z = numeric(3),
-    df = numeric(3),
-    p = numeric(3)
+    Model = character(4), 
+    Tau_U = numeric(4),
+    se = numeric(4),
+    z = numeric(4),
+    p = numeric(4)
   )
   
   out[1,] <- .ot("A vs. B") 
