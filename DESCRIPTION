@@ -17,7 +17,8 @@ Imports:
   knitr,
   kableExtra,
   readxl,
-  mblm
+  mblm,
+  meta
 Suggests:
 Depends: R (>= 3.5.0)
 Description: A collection of procedures for analysing, visualising, 

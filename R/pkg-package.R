@@ -13,6 +13,7 @@
 #' @import knitr
 #' @import kableExtra
 #' @import mblm
+#' @import meta
 NULL
 
 
