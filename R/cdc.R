@@ -10,6 +10,8 @@
 #' @inheritParams .inheritParams
 #' @param trend.method Method used to calculate the trend line. Default is \code{trend.method = "OLS"}.
 #' Possible values are: \code{"OLS"}, \code{"bisplit"}, and \code{"trisplit"}.
+#' \code{"bisplit"}, and \code{"trisplit"} should only be used for cases with at
+#' least five data-points in both relevant phases. 
 #' @return \item{cdc}{CDC Evaluation based on a p-value below .05.}
 #' \item{cdc.exc}{Number of phase B datapoints indicating expected change.}
 #' \item{cdc.nb}{Number of phase B datapoints.} \item{cdc.p}{P value of Binomial
