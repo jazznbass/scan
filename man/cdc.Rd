@@ -11,6 +11,7 @@ cdc(
   mvar,
   decreasing = FALSE,
   trend.method = "OLS",
+  conservative = 0.25,
   phases = c(1, 2)
 )
 }
@@ -27,7 +28,15 @@ cdc(
 \code{decreasing = TRUE}. Default is \code{decreasing = FALSE}.}
 
 \item{trend.method}{Method used to calculate the trend line. Default is \code{trend.method = "OLS"}.
-Possible values are: \code{"OLS"}, \code{"bisplit"}, and \code{"trisplit"}.}
+Possible values are: \code{"OLS"}, \code{"bisplit"}, and \code{"trisplit"}.
+\code{"bisplit"}, and \code{"trisplit"} should only be used for cases with at
+least five data-points in both relevant phases.}
+
+\item{conservative}{The CDC method adjusts the original mean and trend lines
+by adding (for \code{decreasing = FALSE}) or subtracting an additional .25 SD
+before evaluating phase B data. Default is the CDC method with
+\code{conservative = .25}. To apply the Dual-Criterion (DC) method, set
+\code{conservative = 0}}
 
 \item{phases}{A vector of two characters or numbers indicating the two
 phases that should be compared. E.g., \code{phases = c("A","C")} or
@@ -41,15 +50,17 @@ and 4 (as B). Default is \code{phases = c("A","B")}.}
 \item{cdc.exc}{Number of phase B datapoints indicating expected change.}
 \item{cdc.nb}{Number of phase B datapoints.} \item{cdc.p}{P value of Binomial
 Test.} \item{N}{Number of cases.} \item{decreasing}{Logical argument from
-function call (see \code{Arguments} above).} \item{case.names}{Assigned name
+function call (see \code{Arguments} above).} \item{conservative}{Numeric
+argument from function call (see \code{Arguments} above).} \item{case.names}{Assigned name
 of single-case.} \item{phases}{-}
 }
 \description{
 The \code{cdc} function applies the Conservative Dual-Criterion Method
-(Swoboda, Kratochwill, & Levin, 2010) to scdf objects. It compares phase B
-data points to both phase A median and trend (OLS, bi-split, tri-split) with
-an additional .25 SD. A binomial test against a 50/50 distribution is
-computed and p-values below .05 are labeled "systematic change".
+(Fisher, Kelley, & Lomas, 2003) to scdf objects. It compares phase B
+data points to both phase A mean and trend (OLS, bi-split, tri-split) with
+an additional increase/decrease of .25 SD. A binomial test against a 50/50
+distribution is computed and p-values below .05 are labeled "systematic
+change".
 }
 \examples{
 
@@ -64,7 +75,16 @@ cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
 ## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.
 cdc(exampleABAB, trend.method = "trisplit", phases = c(1,4))
 
+## Apply the Dual-Criterion (DC) method (i.e., mean and trend without shifting).
+cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit", conservative = 0)
 
+
+}
+\references{
+Fisher, W. W., Kelley, M. E., & Lomas, J. E. (2003). Visual Aids
+and Structured Criteria for Improving Visual Inspection and Interpretation of
+Single-Case Designs. \emph{Journal of Applied Behavior Analysis, 36}, 387-406.
+https://doi.org/10.1901/jaba.2003.36-387
 }
 \author{
 Timo Lueke
