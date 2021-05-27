@@ -43,18 +43,21 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS"
   data  <- .keepphasesSC(data, phases = phases, pvar = pvar)$data
   
   N       <- length(data)
+  cdc.na  <- rep(NA, N)  # total data points in phase A
+  cdc.nb  <- rep(NA, N)  # total data points in phase B
+  cdc.exc <- rep(NA, N)  # exceeding data points in phase B
+  cdc     <- rep(NA, N)  # CDC rule evaluation of change
+  cdc.p   <- rep(NA, N)  # binomial p (50/50)
   #cdc.all <- NA  # CDC rule evaluation of overall change
   
-  cdc     <- rep(NA, N)  # CDC rule evaluation of change
-  cdc.exc <- rep(NA, N)  # exceeding data points in phase B
-  cdc.nb  <- rep(NA, N)  # total data points in phase B
-  cdc.p   <- rep(NA, N)  # binomial p (50/50)
-  
-  for(i in 1:N) {
+    for(i in 1:N) {
     A         <- data[[i]][data[[i]][, pvar] == "A",]
     B         <- data[[i]][data[[i]][, pvar] == "B",]
+    cdc.na[i] <- nrow(A)
     cdc.nb[i] <- nrow(B)
-    
+    if ((cdc.na < 5 | cdc.nb < 5) && trend.method != "OLS") {
+      stop("The selected method for trend estimation should not be applied with less than five data points per phase.\n")
+    }
     if(trend.method == "bisplit"){
       x     <- A[,mvar]
       y     <- A[,dvar]
