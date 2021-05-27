@@ -55,9 +55,11 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS"
     B         <- data[[i]][data[[i]][, pvar] == "B",]
     cdc.na[i] <- nrow(A)
     cdc.nb[i] <- nrow(B)
+    
     if ((cdc.na[i] < 5 | cdc.nb[i] < 5) && trend.method != "OLS") {
       stop("The selected method for trend estimation should not be applied with less than five data points per phase.\n")
     }
+    
     if(trend.method == "bisplit"){
       x     <- A[,mvar]
       y     <- A[,dvar]
