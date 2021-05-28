@@ -19,8 +19,9 @@
     scan.deprecated.warning = FALSE,
     scan.export.kable = list(digits = 2),
     scan.export.kable_styling = list(
-      bootstrap_options = c("bordered", "condensed"), full_width = FALSE, position = "center"
-    )
+      bootstrap_options = c("bordered", "condensed"), 
+      full_width = FALSE, position = "center"),
+      latex_options = c("hold_position")
   )
   
   toset <- !(names(op_scan) %in% names(op))
