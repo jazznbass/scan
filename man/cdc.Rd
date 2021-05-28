@@ -33,9 +33,9 @@ Possible values are: \code{"OLS"}, \code{"bisplit"}, and \code{"trisplit"}.
 least five data-points in both relevant phases.}
 
 \item{conservative}{The CDC method adjusts the original mean and trend lines
-by adding (for \code{decreasing = FALSE}) or subtracting an additional .25 SD
-before evaluating phase B data. Default is the CDC method with
-\code{conservative = .25}. To apply the Dual-Criterion (DC) method, set
+by adding (expected increase) or subtracting (expected decrease) an
+additional .25 SD before evaluating phase B data. Default is the CDC method
+with \code{conservative = .25}. To apply the Dual-Criterion (DC) method, set
 \code{conservative = 0}}
 
 \item{phases}{A vector of two characters or numbers indicating the two
@@ -49,10 +49,11 @@ and 4 (as B). Default is \code{phases = c("A","B")}.}
 \item{cdc}{CDC Evaluation based on a p-value below .05.}
 \item{cdc.exc}{Number of phase B datapoints indicating expected change.}
 \item{cdc.nb}{Number of phase B datapoints.} \item{cdc.p}{P value of Binomial
-Test.} \item{N}{Number of cases.} \item{decreasing}{Logical argument from
-function call (see \code{Arguments} above).} \item{conservative}{Numeric
-argument from function call (see \code{Arguments} above).} \item{case.names}{Assigned name
-of single-case.} \item{phases}{-}
+Test.} \item{cdc.all}{Overall CDC Evaluation based on all instances/cases of
+a Multiple Baseline Design.} \item{N}{Number of cases.} \item{decreasing}
+{Logical argument from function call (see \code{Arguments} above).}
+\item{conservative}{Numeric argument from function call (see \code{Arguments}
+above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
 }
 \description{
 The \code{cdc} function applies the Conservative Dual-Criterion Method

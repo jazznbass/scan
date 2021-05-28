@@ -14,17 +14,18 @@
 #' \code{"bisplit"}, and \code{"trisplit"} should only be used for cases with at
 #' least five data-points in both relevant phases.
 #' @param conservative The CDC method adjusts the original mean and trend lines
-#' by adding (for \code{decreasing = FALSE}) or subtracting an additional .25 SD
-#' before evaluating phase B data. Default is the CDC method with
-#' \code{conservative = .25}. To apply the Dual-Criterion (DC) method, set
-#' \code{conservative = 0}
+#' by adding (expected increase) or subtracting (expected decrease) an
+#' additional .25 SD before evaluating phase B data. Default is the CDC method
+#' with \code{conservative = .25}. To apply the Dual-Criterion (DC) method, set
+#' \code{conservative = 0}.
 #' @return \item{cdc}{CDC Evaluation based on a p-value below .05.}
 #' \item{cdc.exc}{Number of phase B datapoints indicating expected change.}
 #' \item{cdc.nb}{Number of phase B datapoints.} \item{cdc.p}{P value of Binomial
-#' Test.} \item{N}{Number of cases.} \item{decreasing}{Logical argument from
-#' function call (see \code{Arguments} above).} \item{conservative}{Numeric
-#' argument from function call (see \code{Arguments} above).} \item{case.names}{Assigned name
-#' of single-case.} \item{phases}{-}
+#' Test.} \item{cdc.all}{Overall CDC Evaluation based on all instances/cases of
+#' a Multiple Baseline Design.} \item{N}{Number of cases.} \item{decreasing}
+#' {Logical argument from function call (see \code{Arguments} above).}
+#' \item{conservative}{Numeric argument from function call (see \code{Arguments}
+#' above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
 #' @author Timo Lueke
 #' @references Fisher, W. W., Kelley, M. E., & Lomas, J. E. (2003). Visual Aids
 #' and Structured Criteria for Improving Visual Inspection and Interpretation of
@@ -64,7 +65,7 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS"
   cdc.exc <- rep(NA, N)  # exceeding data points in phase B
   cdc     <- rep(NA, N)  # CDC rule evaluation of change
   cdc.p   <- rep(NA, N)  # binomial p (50/50)
-  #cdc.all <- NA  # CDC rule evaluation of overall change
+  cdc.all <- NA          # CDC rule evaluation of all "cases"
   
     for(i in 1:N) {
     A         <- data[[i]][data[[i]][, pvar] == "A",]
@@ -122,15 +123,15 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS"
       cdc.p[i]  <- binom.test(cdc.exc[i], cdc.nb[i], alternative = "greater")$p.value
       cdc[i]    <- if(cdc.p[i] < .05) {"systematic change"} else {"no change"}
     }
-    #cdc.all <- if(all(cdc == "systematic change", na.rm = TRUE)) {"systematic change"} else {"no change"}
+    cdc.all <- if(all(cdc == "systematic change", na.rm = TRUE)) {"systematic change"} else {"no change"}
   }
 
   out <- list(
     cdc = cdc,
-    #cdc.all = cdc.all,
     cdc.be = cdc.exc,
     cdc.b = cdc.nb,
     cdc.p = cdc.p,
+    cdc.all = cdc.all,
     N = N,
     decreasing = decreasing,
     conservative = conservative,

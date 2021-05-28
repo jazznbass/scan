@@ -217,7 +217,7 @@ if (value == "mpr") {
       "nB improve" = x$cdc.be,
       "nB" = x$cdc.b,
       "binom p" = round(x$cdc.p, 3),
-      "CDC Evalution" = x$cdc
+      "CDC Evaluation" = x$cdc
     )
     print(out, row.names = FALSE)
     cat("\n")
@@ -227,6 +227,9 @@ if (value == "mpr") {
     } else {
       cat("Assuming an expected increase in phase B.\n")
       cat("Alternative hypothesis (Binomial test): true probability > 50%\n")
+    }
+    if (x$N > 1) {
+      cat("Overall evaluation of all MBD instances:  ",x$cdc.all,"\n")
     }
   }
     
