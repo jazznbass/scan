@@ -17,11 +17,12 @@
     scan.print.scdf.name = TRUE,
     scan.plot.style = "grid",
     scan.deprecated.warning = FALSE,
-    scan.export.kable = list(digits = 2),
+    scan.export.kable = list(digits = 2, linesep ="", booktab = TRUE),
     scan.export.kable_styling = list(
       bootstrap_options = c("bordered", "condensed"), 
-      full_width = FALSE, position = "center"),
+      full_width = FALSE, position = "center",
       latex_options = c("hold_position")
+    )
   )
   
   toset <- !(names(op_scan) %in% names(op))
