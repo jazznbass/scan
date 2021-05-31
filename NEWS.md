@@ -5,8 +5,7 @@
 ### New functions
 
 - `is.scdf()`: Tests if an object is of type "scdf" or not.
-- `cdc`: Applies the Conservative Dual-Criterion Method (CDC; Swoboda,
-Kratochwill, & Levin, 2010) to scdf objects.
+- `cdc`: Applies the Conservative Dual-Criterion Method (CDC; Fisher, Kelley, & Lomas, 2003) to scdf objects.
 
 ``` {.r}
 cdc(Beretvas2008)
