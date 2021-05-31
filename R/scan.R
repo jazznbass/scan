@@ -20,8 +20,9 @@
     scan.export.kable = list(digits = 2, linesep ="", booktab = TRUE),
     scan.export.kable_styling = list(
       bootstrap_options = c("bordered", "condensed"), 
-      full_width = FALSE, position = "center",
-      latex_options = c("hold_position")
+      full_width = FALSE, position = "left",
+      latex_options = c("hold_position"),
+      htmltable_class = "lightable-classic"
     )
   )
   
