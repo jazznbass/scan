@@ -36,7 +36,7 @@ least five data-points in both relevant phases.}
 by adding (expected increase) or subtracting (expected decrease) an
 additional .25 SD before evaluating phase B data. Default is the CDC method
 with \code{conservative = .25}. To apply the Dual-Criterion (DC) method, set
-\code{conservative = 0}}
+\code{conservative = 0}.}
 
 \item{phases}{A vector of two characters or numbers indicating the two
 phases that should be compared. E.g., \code{phases = c("A","C")} or
@@ -50,8 +50,7 @@ and 4 (as B). Default is \code{phases = c("A","B")}.}
 \item{cdc.exc}{Number of phase B datapoints indicating expected change.}
 \item{cdc.nb}{Number of phase B datapoints.} \item{cdc.p}{P value of Binomial
 Test.} \item{cdc.all}{Overall CDC Evaluation based on all instances/cases of
-a Multiple Baseline Design.} \item{N}{Number of cases.} \item{decreasing}
-{Logical argument from function call (see \code{Arguments} above).}
+a Multiple Baseline Design.} \item{N}{Number of cases.} \item{decreasing}{Logical argument from function call (see \code{Arguments} above).}
 \item{conservative}{Numeric argument from function call (see \code{Arguments}
 above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
 }

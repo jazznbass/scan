@@ -22,8 +22,7 @@
 #' \item{cdc.exc}{Number of phase B datapoints indicating expected change.}
 #' \item{cdc.nb}{Number of phase B datapoints.} \item{cdc.p}{P value of Binomial
 #' Test.} \item{cdc.all}{Overall CDC Evaluation based on all instances/cases of
-#' a Multiple Baseline Design.} \item{N}{Number of cases.} \item{decreasing}
-#' {Logical argument from function call (see \code{Arguments} above).}
+#' a Multiple Baseline Design.} \item{N}{Number of cases.} \item{decreasing}{Logical argument from function call (see \code{Arguments} above).}
 #' \item{conservative}{Numeric argument from function call (see \code{Arguments}
 #' above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
 #' @author Timo Lueke
@@ -50,7 +49,7 @@
 #' 
 #' @export
 cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS", conservative = .25, phases = c(1, 2)) {
-  
+
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
@@ -123,7 +122,7 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS"
       cdc.p[i]  <- binom.test(cdc.exc[i], cdc.nb[i], alternative = "greater")$p.value
       cdc[i]    <- if(cdc.p[i] < .05) {"systematic change"} else {"no change"}
     }
-    cdc.all <- if(all(cdc == "systematic change", na.rm = TRUE)) {"systematic change"} else {"no change"}
+    cdc.all <- if(length(cdc.p[cdc.p > .05])/length(cdc.p) <= .2) {"systematic change"} else {"no change"}
   }
 
   out <- list(
