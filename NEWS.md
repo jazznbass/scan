@@ -26,7 +26,7 @@ plot(example_A24, lines = "trendA_trisplit")
 
 - `tau_U()`: Solved bug in meta analysis #6. Reworked the complete function to be more clear and accurate. Added `method_meta` switching between fixed and random-effect meta analyses. Reworked the print function to look nicer.
 
-# `export()`: Dropped experimental warning. reworked the html output. Adde a basic output for tau_u. Arguments `caption` and `footnote` allow to specify appearance (if left NA object specific output is gernerated.). booktab = TRUE is now set as default.
+- `export()`: Dropped experimental warning. reworked the html output. Adde a basic output for tau_u. Arguments `caption` and `footnote` allow to specify appearance (if left NA object specific output is gernerated.). booktab = TRUE is now set as default.
 
 # scan 0.52
 
