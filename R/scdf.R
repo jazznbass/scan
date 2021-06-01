@@ -8,8 +8,7 @@ methods::setOldClass(c("scdf", "list"))
 #' The \code{scdf} class is a wrapper for a list containing a dataframe for
 #' each case.
 #'
-#' @aliases scdf scdf-class as.scdf checkSCDF
-#' makeSCDF
+#' @aliases scdf scdf-class as.scdf
 #' @param values A vector containing measurement values of the dependent variable.
 #' @param B.start The first measurement of phase B (simple coding if design is
 #' strictly AB).
