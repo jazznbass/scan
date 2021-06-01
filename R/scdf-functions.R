@@ -109,20 +109,6 @@ checkSCDF <- function(data) {
   return(invisible(FALSE))
 }
 
-#' @rdname scdf
-#' @param MT Deprecated: Measurement times
-#' @export
-makeSCDF <- function (data, B.start = NULL, MT = NULL){
-  warning("This function is deprecated. Please use the scdf function.\n\n")
-  args <- list(
-    values = data,
-    B.start = B.start
-  )
-  if (!is.null(MT)) args$mt <- MT
-    
-  do.call(scdf, args)
-}
-
 #' scdf objects
 #' Tests for objects of type "scdf"
 #'
