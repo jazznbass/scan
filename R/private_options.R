@@ -33,6 +33,7 @@
   case_name    = "name",
   info         = "info",
   author       = "author",
+  rigorous_class_check = TRUE, 
   female.names = .female.names,
   male.names   = .male.names,
   names        = .names,
