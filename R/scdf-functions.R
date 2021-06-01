@@ -79,36 +79,6 @@ as_scdf <- function(object) {
   
 }
 
-
-checkSCDF <- function(data) {
-  cat("Checking object ...\n\n")
-  if (!identical(class(data),c("scdf","list")))
-    cat("Object is not of class 'scdf'.\n")
-  if (!("list" %in% class(data))) {
-    cat("Object is not of class 'list'.\n")
-    return(invisible(FALSE))
-  }
-  if (!all(unlist(lapply(data, function(x) is.data.frame(x))))) {
-    cat("Not all list-elements are data frames.\n")
-    return(invisible(FALSE))
-  }
-  if (!all(unlist(lapply(data, function(x) {c("phase") %in% names(x)})))) {
-    cat("Not all dataframes have a phase column.\n")
-    return(invisible(FALSE))
-  }
-  if (!all(unlist(lapply(data, function(x) {c("values") %in% names(x)})))) {
-    cat("Not all dataframes have a values column.\n")
-    return(invisible(FALSE))
-  }
-  if (!all(unlist(lapply(data, function(x) {c("mt") %in% names(x)}))))
-    cat("Note: Not all dataframes have an 'mt' column.\n")
-  phases <- rle(as.character(data[[1]]$phase))$values
-  if (!all(unlist(lapply(data, function(x) identical(rle(as.character(x$phase))$values, phases)))))
-    cat("Warning: Phases are not identical for all cases.\n")
-  cat("Done!\n")
-  return(invisible(FALSE))
-}
-
 #' scdf objects
 #' Tests for objects of type "scdf"
 #'
