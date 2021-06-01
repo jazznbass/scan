@@ -98,43 +98,42 @@ methods::setOldClass(c("scdf", "list"))
 #' )
 #' overlapSC(jim, phases = list(c("A1", "A2"), c("B1", "B2")))
 #' @export
-scdf <- function(
-                  values, 
-                  B.start, 
-                  mt, 
-                  phase, 
-                  phase.design, 
-                  name, 
-                  dvar = "values", 
-                  pvar = "phase", 
-                  mvar = "mt", 
-                  ...) {
+scdf <- function(values, 
+                 B.start, 
+                 mt, 
+                 phase, 
+                 phase.design, 
+                 name, 
+                 dvar = "values", 
+                 pvar = "phase", 
+                 mvar = "mt", 
+                 ...) {
   df <- list(...)
 
   if ("var.values" %in% names(df)) {
-    stop("'var.values' is deprecated. Please use 'dvar' instead.")
+    stop("Argument 'var.values' is deprecated. Please use 'dvar' instead.")
   }
   if (!missing(mt)) df <- c(mt = list(mt), df)
   if (!missing(phase)) df <- c(phase = list(phase), df)
   if (!missing(values)) df <- c(values = list(values), df)
 
   if (!(dvar %in% names(df))) {
-    stop("Independent variable not defined correctly!")
+    stop("Dependent variable not defined correctly!")
   }
 
   # create phase.design from a named vector
   if (!is.null(names(df[[dvar]]))) {
-    tmp.names <- names(df[[dvar]])
-    tmp <- c(which(tmp.names != ""), length(tmp.names) + 1)
+    tmp_names <- names(df[[dvar]])
+    tmp <- c(which(tmp_names != ""), length(tmp_names) + 1)
     phase.design <- tmp[-1] - tmp[-length(tmp)]
-    names(phase.design) <- tmp.names[which(tmp.names != "")]
+    names(phase.design) <- tmp_names[which(tmp_names != "")]
   }
 
   # create phase.design from phase variable
   if (!missing(phase)) {
-    tmp.phase <- rle(phase)
-    phase.design <- tmp.phase$lengths
-    names(phase.design) <- tmp.phase$values
+    tmp_phase <- rle(phase)
+    phase.design <- tmp_phase$lengths
+    names(phase.design) <- tmp_phase$values
   }
 
   data <- as.data.frame(df)
@@ -152,7 +151,7 @@ scdf <- function(
   if (!missing(B.start)) {
     B.start <- match(B.start, data[, mvar])
     if (is.na(B.start)) {
-      stop("No values provided at the measurement.time of B.start in var '", mvar, "'.")
+      stop("No values provided at the measurement-time of B.start in var '", mvar, "'.")
     }
     phase.design <- c("A" = B.start - 1, "B" = nrow(data) - B.start + 1)
   }
