@@ -41,10 +41,11 @@
 
 <meta property="og:title" content="Conservative Dual-Criterion Method — cdc" />
 <meta property="og:description" content="The cdc function applies the Conservative Dual-Criterion Method
-(Swoboda, Kratochwill, &amp;amp; Levin, 2010) to scdf objects. It compares phase B
-data points to both phase A median and trend (OLS, bi-split, tri-split) with
-an additional .25 SD. A binomial test against a 50/50 distribution is
-computed and p-values below .05 are labeled &quot;systematic change&quot;." />
+(Fisher, Kelley, &amp;amp; Lomas, 2003) to scdf objects. It compares phase B
+data points to both phase A mean and trend (OLS, bi-split, tri-split) with
+an additional increase/decrease of .25 SD. A binomial test against a 50/50
+distribution is computed and p-values below .05 are labeled &quot;systematic
+change&quot;." />
 
 
 
@@ -122,10 +123,11 @@ computed and p-values below .05 are labeled &quot;systematic change&quot;." />
 
     <div class="ref-description">
     <p>The <code>cdc</code> function applies the Conservative Dual-Criterion Method
-(Swoboda, Kratochwill, &amp; Levin, 2010) to scdf objects. It compares phase B
-data points to both phase A median and trend (OLS, bi-split, tri-split) with
-an additional .25 SD. A binomial test against a 50/50 distribution is
-computed and p-values below .05 are labeled "systematic change".</p>
+(Fisher, Kelley, &amp; Lomas, 2003) to scdf objects. It compares phase B
+data points to both phase A mean and trend (OLS, bi-split, tri-split) with
+an additional increase/decrease of .25 SD. A binomial test against a 50/50
+distribution is computed and p-values below .05 are labeled "systematic
+change".</p>
     </div>
 
     <pre class="usage"><span class='fu'>cdc</span><span class='op'>(</span>
@@ -135,6 +137,7 @@ computed and p-values below .05 are labeled "systematic change".</p>
   <span class='va'>mvar</span>,
   decreasing <span class='op'>=</span> <span class='cn'>FALSE</span>,
   trend.method <span class='op'>=</span> <span class='st'>"OLS"</span>,
+  conservative <span class='op'>=</span> <span class='fl'>0.25</span>,
   phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
@@ -165,7 +168,17 @@ computed and p-values below .05 are labeled "systematic change".</p>
     <tr>
       <th>trend.method</th>
       <td><p>Method used to calculate the trend line. Default is <code>trend.method = "OLS"</code>.
-Possible values are: <code>"OLS"</code>, <code>"bisplit"</code>, and <code>"trisplit"</code>.</p></td>
+Possible values are: <code>"OLS"</code>, <code>"bisplit"</code>, and <code>"trisplit"</code>.
+<code>"bisplit"</code>, and <code>"trisplit"</code> should only be used for cases with at
+least five data-points in both relevant phases.</p></td>
+    </tr>
+    <tr>
+      <th>conservative</th>
+      <td><p>The CDC method adjusts the original mean and trend lines
+by adding (expected increase) or subtracting (expected decrease) an
+additional .25 SD before evaluating phase B data. Default is the CDC method
+with <code>conservative = .25</code>. To apply the Dual-Criterion (DC) method, set
+<code>conservative = 0</code>.</p></td>
     </tr>
     <tr>
       <th>phases</th>
@@ -185,10 +198,17 @@ and 4 (as B). Default is <code>phases = c("A","B")</code>.</p></td>
 <dt>cdc</dt><dd><p>CDC Evaluation based on a p-value below .05.</p></dd>
 <dt>cdc.exc</dt><dd><p>Number of phase B datapoints indicating expected change.</p></dd>
 <dt>cdc.nb</dt><dd><p>Number of phase B datapoints.</p></dd> <dt>cdc.p</dt><dd><p>P value of Binomial
-Test.</p></dd> <dt>N</dt><dd><p>Number of cases.</p></dd> <dt>decreasing</dt><dd><p>Logical argument from
-function call (see <code>Arguments</code> above).</p></dd> <dt>case.names</dt><dd><p>Assigned name
-of single-case.</p></dd> <dt>phases</dt><dd><p>-</p></dd>
+Test.</p></dd> <dt>cdc.all</dt><dd><p>Overall CDC Evaluation based on all instances/cases of
+a Multiple Baseline Design.</p></dd> <dt>N</dt><dd><p>Number of cases.</p></dd> <dt>decreasing</dt><dd><p>Logical argument from function call (see <code>Arguments</code> above).</p></dd>
+<dt>conservative</dt><dd><p>Numeric argument from function call (see <code>Arguments</code>
+above).</p></dd> <dt>case.names</dt><dd><p>Assigned name of single-case.</p></dd> <dt>phases</dt><dd><p>-</p></dd>
 
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Fisher, W. W., Kelley, M. E., &amp; Lomas, J. E. (2003). Visual Aids
+and Structured Criteria for Improving Visual Inspection and Interpretation of
+Single-Case Designs. <em>Journal of Applied Behavior Analysis, 36</em>, 387-406.
+https://doi.org/10.1901/jaba.2003.36-387</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Timo Lueke</p>
@@ -203,7 +223,7 @@ of single-case.</p></dd> <dt>phases</dt><dd><p>-</p></dd>
 #&gt; 
 #&gt; N cases =  1 
 #&gt; 
-#&gt;   Case nB.improve nB binom.p     CDC.Evalution
+#&gt;   Case nB.improve nB binom.p    CDC.Evaluation
 #&gt;  Case1         14 15       0 systematic change
 #&gt; 
 #&gt; Assuming an expected increase in phase B.
@@ -214,26 +234,42 @@ of single-case.</p></dd> <dt>phases</dt><dd><p>-</p></dd>
 #&gt; 
 #&gt; N cases =  3 
 #&gt; 
-#&gt;   Case nB.improve nB binom.p     CDC.Evalution
+#&gt;   Case nB.improve nB binom.p    CDC.Evaluation
 #&gt;  Peter          6 12   0.613         no change
 #&gt;   Tony         12 12   0.000 systematic change
 #&gt;  Bruce          7 14   0.605         no change
 #&gt; 
 #&gt; Assuming an expected decrease in phase B.
-#&gt; Alternative hypothesis (Binomial test): true probability &lt; 50%</div><div class='input'>
+#&gt; Alternative hypothesis (Binomial test): true probability &lt; 50%
+#&gt; Overall evaluation of all MBD instances:   no change </div><div class='input'>
 <span class='co'>## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.</span>
 <span class='fu'>cdc</span><span class='op'>(</span><span class='va'>exampleABAB</span>, trend.method <span class='op'>=</span> <span class='st'>"trisplit"</span>, phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Conservative Dual Criterion
 #&gt; 
 #&gt; N cases =  3 
 #&gt; 
-#&gt;     Case nB.improve nB binom.p     CDC.Evalution
+#&gt;     Case nB.improve nB binom.p    CDC.Evaluation
 #&gt;   Howard         10 10   0.001 systematic change
 #&gt;  Sheldon          4 10   0.828         no change
 #&gt;  Leonard          7  7   0.008 systematic change
 #&gt; 
 #&gt; Assuming an expected increase in phase B.
-#&gt; Alternative hypothesis (Binomial test): true probability &gt; 50%</div><div class='input'>
+#&gt; Alternative hypothesis (Binomial test): true probability &gt; 50%
+#&gt; Overall evaluation of all MBD instances:   no change </div><div class='input'>
+<span class='co'>## Apply the Dual-Criterion (DC) method (i.e., mean and trend without shifting).</span>
+<span class='fu'>cdc</span><span class='op'>(</span><span class='va'>exampleAB_decreasing</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span>, trend.method <span class='op'>=</span> <span class='st'>"bisplit"</span>, conservative <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Conservative Dual Criterion
+#&gt; 
+#&gt; N cases =  3 
+#&gt; 
+#&gt;   Case nB.improve nB binom.p    CDC.Evaluation
+#&gt;  Peter          6 12   0.613         no change
+#&gt;   Tony         12 12   0.000 systematic change
+#&gt;  Bruce         10 14   0.090         no change
+#&gt; 
+#&gt; Assuming an expected decrease in phase B.
+#&gt; Alternative hypothesis (Binomial test): true probability &lt; 50%
+#&gt; Overall evaluation of all MBD instances:   no change </div><div class='input'>
 
 </div></pre>
   </div>
@@ -247,7 +283,7 @@ of single-case.</p></dd> <dt>phases</dt><dd><p>-</p></dd>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jürgen Wilbert, Timo Lüke.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">

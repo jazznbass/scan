@@ -128,7 +128,7 @@
 <li>
 <code><a href="../reference/is.scdf.html">is.scdf()</a></code>: Tests if an object is of type “scdf” or not.</li>
 <li>
-<code>cdc</code>: Applies the Conservative Dual-Criterion Method (CDC; Swoboda, Kratochwill, &amp; Levin, 2010) to scdf objects.</li>
+<code>cdc</code>: Applies the Conservative Dual-Criterion Method (CDC; Fisher, Kelley, &amp; Lomas, 2003) to scdf objects.</li>
 </ul>
 <pre class="{.r}"><code><a href="../reference/cdc.html">cdc(Beretvas2008)
 cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")</a></code></pre>
@@ -137,11 +137,18 @@ cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")</a></code
 <h3 class="hasAnchor">
 <a href="#changes-in-functions" class="anchor"></a>Changes in functions</h3>
 <ul>
-<li><p><code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code>: Argument <code>subset</code> changed to <code>filter</code>.</p></li>
-<li><p>new trend lines added to <code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>: Koenig’s bi-split / quarter intersect (lines = “trendA_bisplit”) and Tukey’s tri-split / Wald’s slope (lines = “trendA_trisplit”).</p></li>
+<li>
+<code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code>: Argument <code>subset</code> changed to <code>filter</code>.</li>
+<li>
+<code><a href="../reference/overlap.html">overlap()</a></code>: Added Hedges-g.</li>
+<li>new trend lines added to <code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>: Koenig’s bi-split / quarter intersect (lines = “trendA_bisplit”) and Tukey’s tri-split / Wald’s slope (lines = “trendA_trisplit”).</li>
 </ul>
 <pre class="{.r}"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(exampleAB_50[8], lines = "trendA_bisplit")
 plot(example_A24, lines = "trendA_trisplit")</a></code></pre>
+<ul>
+<li><p><code>tau_U()</code>: Solved bug in meta analysis <a href='https://github.com/jazznbass/scan/issues/6'>#6</a>. Reworked the complete function to be more clear and accurate. Added <code>method_meta</code> switching between fixed and random-effect meta analyses. Reworked the print function to look nicer.</p></li>
+<li><p><code><a href="../reference/export.html">export()</a></code>: Dropped experimental warning. reworked the html output. Added a basic output for tau_u. Arguments <code>caption</code> and <code>footnote</code> allow to specify appearance (if left NA object specific output is generated.). <code>booktab = TRUE</code> is now set as a default for kable options.</p></li>
+</ul>
 </div>
 </div>
 </div>
@@ -232,7 +239,7 @@ select_cases(exampleAB, "-Johanna")</a></code></pre>
 <li>Started dropping the <code>SC</code> extension from function names e.g. <code><a href="../reference/overlap.html">overlapSC()</a></code> becomes <code><a href="../reference/overlap.html">overlap()</a></code>
 </li>
 </ul>
-<p>see: <a href="https://jazznbass.github.io/scan-Book/changes-with-version-0-50.html" class="uri">https://jazznbass.github.io/scan-Book/changes-with-version-0-50.html</a></p>
+<p>see: <a href="https://jazznbass.github.io/scan-Book/the-scan-package.html#changes-with-version-0.50" class="uri">https://jazznbass.github.io/scan-Book/the-scan-package.html#changes-with-version-0.50</a></p>
 </div>
 </div>
   </div>
@@ -248,7 +255,7 @@ select_cases(exampleAB, "-Johanna")</a></code></pre>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jürgen Wilbert, Timo Lüke.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">

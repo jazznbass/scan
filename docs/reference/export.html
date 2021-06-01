@@ -124,14 +124,31 @@ Export creates html files of tables or displayes them directly in the viewer pan
 When applied in rmarkdown, tables can also be created for pdf/latex output.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>export</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>export</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for scdf</span>
+<span class='fu'>export</span><span class='op'>(</span>
   <span class='va'>object</span>,
-  filename <span class='op'>=</span> <span class='cn'>NULL</span>,
+  caption <span class='op'>=</span> <span class='cn'>NA</span>,
+  footnote <span class='op'>=</span> <span class='cn'>NA</span>,
+  filename <span class='op'>=</span> <span class='cn'>NA</span>,
+  kable_styling_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  kable_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  <span class='va'>cols</span>,
+  round <span class='op'>=</span> <span class='fl'>2</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for sc</span>
+<span class='fu'>export</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  caption <span class='op'>=</span> <span class='cn'>NA</span>,
+  footnote <span class='op'>=</span> <span class='cn'>NA</span>,
+  filename <span class='op'>=</span> <span class='cn'>NA</span>,
   kable_styling_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   kable_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   <span class='va'>cols</span>,
   flip <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  note <span class='op'>=</span> <span class='cn'>TRUE</span>,
   round <span class='op'>=</span> <span class='fl'>2</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -141,7 +158,19 @@ When applied in rmarkdown, tables can also be created for pdf/latex output.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An scdf</p></td>
+      <td><p>An scdf or an object exported from a scan function.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Further Arguments passed to internal functions.</p></td>
+    </tr>
+    <tr>
+      <th>caption</th>
+      <td><p>Character string with table caption. If left NA (default) a caption will be created based on the exported object.</p></td>
+    </tr>
+    <tr>
+      <th>footnote</th>
+      <td><p>Character string with table footnote. If left NA (default) a footnote will be created based on the exported object.</p></td>
     </tr>
     <tr>
       <th>filename</th>
@@ -162,26 +191,18 @@ the output will be written into this file.</p></td>
 with variable names or the string "main" will select the central variables.</p></td>
     </tr>
     <tr>
-      <th>flip</th>
-      <td><p>If TRUE, some objects are displayed with rows and columns flipped.</p></td>
-    </tr>
-    <tr>
-      <th>note</th>
-      <td><p>If TRUE additional information are printed below the table.</p></td>
-    </tr>
-    <tr>
       <th>round</th>
       <td><p>value for the digits argument passed to the internally used round function.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Further Arguments passed to internal functions.</p></td>
+      <th>flip</th>
+      <td><p>If TRUE, some objects are exported with rows and columns flipped.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a specif formated html.</p>
+    <p>Returns a specif formated html (or latex).</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -194,7 +215,7 @@ with variable names or the string "main" will select the central variables.</p><
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jürgen Wilbert, Timo Lüke.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">

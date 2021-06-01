@@ -214,7 +214,12 @@ for example to include further variables into the regression model.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>mplm</span><span class='op'>(</span><span class='va'>Leidig2018</span><span class='op'>$</span><span class='va'>`1a1`</span>, dvar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"academic_engagement"</span>, <span class='st'>"disruptive_behavior"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'car':</span>
+#&gt; <span class='message'>  method                          from</span>
+#&gt; <span class='message'>  influence.merMod                lme4</span>
+#&gt; <span class='message'>  cooks.distance.influence.merMod lme4</span>
+#&gt; <span class='message'>  dfbeta.influence.merMod         lme4</span>
+#&gt; <span class='message'>  dfbetas.influence.merMod        lme4</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Multivariate piecewise linear model
 #&gt; 
 #&gt; Dummy model: B&amp;L-B 
@@ -276,7 +281,7 @@ for example to include further variables into the regression model.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jürgen Wilbert, Timo Lüke.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">
