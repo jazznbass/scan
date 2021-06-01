@@ -98,17 +98,16 @@ methods::setOldClass(c("scdf", "list"))
 #' )
 #' overlapSC(jim, phases = list(c("A1", "A2"), c("B1", "B2")))
 #' @export
-scdf <- function(
-                  values, 
-                  B.start, 
-                  mt, 
-                  phase, 
-                  phase.design, 
-                  name, 
-                  dvar = "values", 
-                  pvar = "phase", 
-                  mvar = "mt", 
-                  ...) {
+scdf <- function(values, 
+                 B.start, 
+                 mt, 
+                 phase, 
+                 phase.design, 
+                 name, 
+                 dvar = "values", 
+                 pvar = "phase", 
+                 mvar = "mt", 
+                 ...) {
   df <- list(...)
 
   if ("var.values" %in% names(df)) {
@@ -127,7 +126,7 @@ scdf <- function(
     tmp_names <- names(df[[dvar]])
     tmp <- c(which(tmp_names != ""), length(tmp_names) + 1)
     phase.design <- tmp[-1] - tmp[-length(tmp)]
-    names(phase.design) <- tmp.names[which(tmp_names != "")]
+    names(phase.design) <- tmp_names[which(tmp_names != "")]
   }
 
   # create phase.design from phase variable
