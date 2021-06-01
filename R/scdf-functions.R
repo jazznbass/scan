@@ -8,14 +8,14 @@
 combine <- function(...) {
   scdfs <- list(...)
   
-  ATTRIBUTES <- attributes(scdfs[[1]])
+  source_attr <- attributes(scdfs[[1]])
 
   case_names <- unlist(lapply(scdfs, names))
    
   data <- unlist(scdfs, recursive = FALSE)
   attributes(data) <- .defaultAttributesSCDF()
 
-  if (!is.null(ATTRIBUTES[[.opt$scdf]])) attr(data, .opt$scdf) <- ATTRIBUTES[[.opt$scdf]]
+  if (!is.null(source_attr[[.opt$scdf]])) attr(data, .opt$scdf) <- source_attr[[.opt$scdf]]
   
   names(data) <- case_names
   if (!is.null(names(scdfs))) 
