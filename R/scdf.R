@@ -119,7 +119,7 @@ scdf <- function(
   if (!missing(values)) df <- c(values = list(values), df)
 
   if (!(dvar %in% names(df))) {
-    stop("Independent variable not defined correctly!")
+    stop("Dependent variable not defined correctly!")
   }
 
   # create phase.design from a named vector
