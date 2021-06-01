@@ -5,6 +5,7 @@
 ### New functions
 
 - `is.scdf()`: Tests if an object is of type "scdf" or not.
+- `check_scdf()`: Checks for the validity of an scdf object (mainly used for internal test)
 - `cdc`: Applies the Conservative Dual-Criterion Method (CDC; Fisher, Kelley, & Lomas, 2003) to scdf objects.
 
 ``` {.r}
@@ -29,10 +30,12 @@ plot(example_A24, lines = "trendA_trisplit")
 
 ### Deleted deprecated functions
 
-The following functions were deprected since 2017 and are now removed from scan:
+The following functions were deprecated since 2017 and are now removed from scan:
 
 - `makesingleSC()`
 - `makeSCDF()`: Please use `scdf` instead.
+- `estimateSC()`: Please use `estimate_design()`
+- `power.testSC()`: Please use `power_test()`
 
 # scan 0.52
 
