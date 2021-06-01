@@ -6,6 +6,11 @@
 #' @export
 
 check_scdf <- function(object) {
+  results <- .check_scdf(object)
+  if (isTRUE(results)) TRUE else warning(results)
+}
+
+.check_scdf <- function(object) {
   
   errors <- character()
   
@@ -22,9 +27,9 @@ check_scdf <- function(object) {
     return(errors)
   } 
   
-  var_phase <- scdf_attributes$var.phase
-  var_mt <- scdf_attributes$var.mt
-  var_dv <- scdf_attributes$var.values
+  var_phase <- scdf_attributes[[.opt$phase]]
+  var_mt <- scdf_attributes[[.opt$mt]]
+  var_dv <- scdf_attributes[[.opt$dv]]
   
   if (!all(unlist(lapply(object, function(x) is.data.frame(x))))) {
     msg <- "Not all list-elements are data frames.\n"
@@ -59,12 +64,7 @@ check_scdf <- function(object) {
   }
   
   
-  if (length(errors) == 0) {
-    TRUE
-    } else {
-    warning(errors)
-    FALSE
-  }
+  if (length(errors) == 0) TRUE else c("Check of scdf object failed:", errors)
 }
 
 
