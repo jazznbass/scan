@@ -4,18 +4,24 @@
 \alias{print.sc}
 \alias{print.sc_ac}
 \alias{print.sc_cdc}
+\alias{print.sc_bctau}
 \title{Print method for scan objects}
 \usage{
 \method{print}{sc}(x, ...)
 
 \method{print}{sc_ac}(x, ...)
 
-\method{print}{sc_cdc}(x, ...)
+\method{print}{sc_cdc}(x, nice = TRUE, ...)
+
+\method{print}{sc_bctau}(x, nice = TRUE, ...)
 }
 \arguments{
 \item{x}{Object}
 
 \item{...}{Further parameters passed to the print function}
+
+\item{nice}{If set TRUE (default) output values are rounded and optimized for
+publication tables.}
 }
 \description{
 Print method for scan objects
