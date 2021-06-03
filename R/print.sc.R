@@ -70,15 +70,6 @@ if (value == "mpr") {
   print(res)
 }
     
-# autocorr ----------------------------------------------------------------
-
-  if (value == "autocorr") {
-    cat("Autocorrelations\n\n")
-    x <- x$autocorr
-    x[, -c(1, 2)] <- round(x[, -c(1, 2)], 2)
-    print(x, row.names = FALSE)
-  }
-  
 # overlap -----------------------------------------------------------------
 
   if (value == "overlap") {
@@ -538,6 +529,16 @@ if (value == "mpr") {
   }
 
   }
+
+
+#' @rdname print.sc
+#' @export
+print.sc_ac <- function(x, ...) {
+  cat("Autocorrelations\n\n")
+  x <- x$autocorr
+  x[, -c(1, 2)] <- round(x[, -c(1, 2)], 2)
+  print(x, row.names = FALSE)
+}
 
 #' @rdname print.sc
 #' @export

@@ -2,10 +2,13 @@
 % Please edit documentation in R/print.sc.R
 \name{print.sc}
 \alias{print.sc}
+\alias{print.sc_ac}
 \alias{print.sc_cdc}
 \title{Print method for scan objects}
 \usage{
 \method{print}{sc}(x, ...)
+
+\method{print}{sc_ac}(x, ...)
 
 \method{print}{sc_cdc}(x, ...)
 }

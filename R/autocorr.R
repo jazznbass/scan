@@ -26,22 +26,23 @@ autocorr <- function(data, dvar, pvar, mvar, lag.max = 3, ...) {
   data <- .SCprepareData(data)
 
   N <- length(data)
-  case.names <- names(data)
-  if (is.null(case.names)) {
-    case.names <- paste("Case", 1:N, sep = "")
-  }
-  VAR <- paste0("lag_", 1:lag.max)
-
+  case_names <- .case.names(names(data), length(data))
+  var_lag <- paste0("lag_", 1:lag.max)
   design <- rle(as.character(data[[1]][[pvar]]))$values
 
   while (any(duplicated(design))) {
-    design[anyDuplicated(design)] <- paste0(design[anyDuplicated(design)], ".phase", anyDuplicated(design))
+    design[anyDuplicated(design)] <- paste0(
+      design[anyDuplicated(design)], 
+      "_phase", 
+      anyDuplicated(design)
+    )
   }
 
-
-  ac <- data.frame(case = rep(case.names, each = length(design) + 1), phase = rep(c(design, "all"), N))
-  ac[, VAR] <- NA
-
+  ac <- data.frame(
+    case = rep(case_names, each = length(design) + 1), 
+    phase = rep(c(design, "all"), N)
+  )
+  ac[, var_lag] <- NA
 
   for (case in 1:N) {
     phases <- .phasestructure(data[[case]], pvar = pvar)
@@ -50,16 +51,22 @@ autocorr <- function(data, dvar, pvar, mvar, lag.max = 3, ...) {
       y <- data[[case]][phases$start[phase]:phases$stop[phase], dvar]
       if (length(y) - 1 < lag.max) lag <- length(y) - 1 else lag <- lag.max
 
-      ac[(case - 1) * (length(design) + 1) + phase, VAR[1:lag]] <- acf(y, lag.max = lag, plot = FALSE, ...)$acf[-1]
+      .tmp <- acf(y, lag.max = lag, plot = FALSE, ...)$acf[-1]
+      ac[(case - 1) * (length(design) + 1) + phase, var_lag[1:lag]] <- .tmp
     }
+    
     y <- data[[case]][[dvar]]
     if (length(y) - 1 < lag.max) lag <- length(y) - 1 else lag <- lag.max
 
-    ac[(case - 1) * (length(design) + 1) + (length(design) + 1), VAR[1:lag]] <- acf(y, lag.max = lag, plot = FALSE, ...)$acf[-1]
+    .tmp <- acf(y, lag.max = lag, plot = FALSE, ...)$acf[-1]
+    ac[(case - 1) * (length(design) + 1) + (length(design) + 1), var_lag[1:lag]] <- .tmp
   }
 
-  out <- list(autocorr = ac, dvar = dvar)
-  class(out) <- c("sc", "autocorr")
+  out <- list(
+    autocorr = ac, 
+    dvar = dvar
+  )
+  class(out) <- c("sc_ac")
   out
 }
 
