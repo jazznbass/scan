@@ -52,7 +52,7 @@ and 4 (as B). Default is \code{phases = c("A","B")}.}
 Test.} \item{cdc_all}{Overall CDC Evaluation based on all instances/cases of
 a Multiple Baseline Design.} \item{N}{Number of cases.} \item{decreasing}{Logical argument from function call (see \code{Arguments} above).}
 \item{conservative}{Numeric argument from function call (see \code{Arguments}
-above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
+above).} \item{case_names}{Assigned name of single-case.} \item{phases}{-}
 }
 \description{
 The \code{cdc} function applies the Conservative Dual-Criterion Method

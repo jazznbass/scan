@@ -23,7 +23,7 @@
 #' Test.} \item{cdc_all}{Overall CDC Evaluation based on all instances/cases of
 #' a Multiple Baseline Design.} \item{N}{Number of cases.} \item{decreasing}{Logical argument from function call (see \code{Arguments} above).}
 #' \item{conservative}{Numeric argument from function call (see \code{Arguments}
-#' above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
+#' above).} \item{case_names}{Assigned name of single-case.} \item{phases}{-}
 #' @author Timo Lueke
 #' @references Fisher, W. W., Kelley, M. E., & Lomas, J. E. (2003). Visual Aids
 #' and Structured Criteria for Improving Visual Inspection and Interpretation of
@@ -47,7 +47,14 @@
 #'
 #' 
 #' @export
-cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend_method = "OLS", conservative = .25, phases = c(1, 2)) {
+cdc <- function(data, 
+                dvar, 
+                pvar, 
+                mvar, 
+                decreasing = FALSE, 
+                trend_method = "OLS", 
+                conservative = .25, 
+                phases = c(1, 2)) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -76,27 +83,27 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend_method = "OLS"
     }
 
     if(trend_method == "bisplit"){
-      x     <- A[,mvar]
-      y     <- A[,dvar]
+      x     <- A[, mvar]
+      y     <- A[, dvar]
       # na.rm = FALSE for now to prevent misuse; will draw no line if NA present
-      md1   <- c((median(y[1:floor(length(y)/2)], na.rm = FALSE)),
-                 median(x[1:floor(length(x)/2)], na.rm = FALSE))
-      md2   <- c((median(y[ceiling(length(y)/2+1):length(y)], na.rm = FALSE)),
-                 median(x[ceiling(length(x)/2+1):length(x)], na.rm = FALSE))
+      md1   <- c((median(y[1:floor(length(y) / 2)], na.rm = FALSE)),
+                 median(x[1:floor(length(x) / 2)], na.rm = FALSE))
+      md2   <- c((median(y[ceiling(length(y) / 2 + 1):length(y)], na.rm = FALSE)),
+                 median(x[ceiling(length(x) / 2 + 1):length(x)], na.rm = FALSE))
       md    <- as.data.frame(rbind(md1, md2))
       names(md) <- c(dvar,mvar)
-      formula <- as.formula(paste0(dvar,"~",mvar))
+      formula <- as.formula(paste0(dvar, "~", mvar))
       model <- lm(formula, data = md, na.action = na.omit)
     }
     
     if(trend_method == "trisplit"){
-      x     <- A[,mvar]
-      y     <- A[,dvar]
+      x     <- A[, mvar]
+      y     <- A[, dvar]
       # na.rm = FALSE for now to prevent misuse; will draw no line if NA present
-      md1   <- c((median(y[1:floor(length(y)/3)], na.rm = FALSE)),
-                 median(x[1:floor(length(x)/3)], na.rm = FALSE))
-      md2   <- c((median(y[ceiling(length(y)/3*2+1):length(y)], na.rm = FALSE)),
-                 median(x[ceiling(length(x)/3*2+1):length(x)], na.rm = FALSE))
+      md1   <- c((median(y[1:floor(length(y) / 3)], na.rm = FALSE)),
+                 median(x[1:floor(length(x) / 3)], na.rm = FALSE))
+      md2   <- c((median(y[ceiling(length(y) / 3 * 2 + 1):length(y)], na.rm = FALSE)),
+                 median(x[ceiling(length(x) / 3 * 2 + 1):length(x)], na.rm = FALSE))
       md    <- as.data.frame(rbind(md1, md2))
       names(md) <- c(dvar,mvar)
       formula <- as.formula(paste0(dvar,"~",mvar))
@@ -111,17 +118,25 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend_method = "OLS"
     trnd      <- predict(model, B, se.fit = TRUE)
     
     if(!decreasing) {
-      cdc_exc[i] <- sum(B[, dvar] > trnd$fit + (conservative*sd(A[, dvar])) &
-                         B[, dvar] > (mean(A[, dvar]) + (conservative*sd(A[, dvar]))))
+      cdc_exc[i] <- sum(
+        B[, dvar] > trnd$fit + (conservative * sd(A[, dvar])) &
+        B[, dvar] > (mean(A[, dvar]) + (conservative * sd(A[, dvar])))
+      )
       cdc_p[i]  <- binom.test(cdc_exc[i], cdc_nb[i], alternative = "greater")$p.value
       cdc[i]    <- if(cdc_p[i] < .05) {"systematic change"} else {"no change"}
     } else {
-      cdc_exc[i] <- sum(B[, dvar] < trnd$fit - (conservative*sd(A[, dvar])) &
-                         B[, dvar] < (mean(A[, dvar]) - (conservative*sd(A[, dvar]))))
+      cdc_exc[i] <- sum(
+        B[, dvar] < trnd$fit - (conservative * sd(A[, dvar])) &
+        B[, dvar] < (mean(A[, dvar]) - (conservative * sd(A[, dvar])))
+      )
       cdc_p[i]  <- binom.test(cdc_exc[i], cdc_nb[i], alternative = "greater")$p.value
       cdc[i]    <- if(cdc_p[i] < .05) {"systematic change"} else {"no change"}
     }
-    cdc_all <- if(length(cdc_p[cdc_p > .05])/length(cdc_p) <= .2) {"systematic change"} else {"no change"}
+    cdc_all <- if(length(cdc_p[cdc_p > .05]) / length(cdc_p) <= .2) {
+      "systematic change"
+    } else {
+      "no change"
+    }
   }
 
   out <- list(
@@ -133,7 +148,7 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend_method = "OLS"
     N = N,
     decreasing = decreasing,
     conservative = conservative,
-    case.names = .case.names(names(data), length(data))
+    case_names = .case.names(names(data), length(data))
   )
   class(out) <- c("sc_cdc")
   out
