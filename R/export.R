@@ -484,7 +484,6 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
     out$p <- .nice.p(out$p)
     colnames(out) <- c("Model", "Tau", "SE", "z", "p")
   
-    
     kable_options$x <- out
     kable_options$align <- c("l", rep("r", ncol(out) - 1))
     table <- do.call(kable, kable_options)

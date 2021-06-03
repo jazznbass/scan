@@ -7,9 +7,8 @@
 #' distribution is computed and p-values below .05 are labeled "systematic
 #' change".
 #' 
-#' 
 #' @inheritParams .inheritParams
-#' @param trend.method Method used to calculate the trend line. Default is \code{trend.method = "OLS"}.
+#' @param trend_method Method used to calculate the trend line. Default is \code{trend_method = "OLS"}.
 #' Possible values are: \code{"OLS"}, \code{"bisplit"}, and \code{"trisplit"}.
 #' \code{"bisplit"}, and \code{"trisplit"} should only be used for cases with at
 #' least five data-points in both relevant phases.
@@ -19,9 +18,9 @@
 #' with \code{conservative = .25}. To apply the Dual-Criterion (DC) method, set
 #' \code{conservative = 0}.
 #' @return \item{cdc}{CDC Evaluation based on a p-value below .05.}
-#' \item{cdc.exc}{Number of phase B datapoints indicating expected change.}
-#' \item{cdc.nb}{Number of phase B datapoints.} \item{cdc.p}{P value of Binomial
-#' Test.} \item{cdc.all}{Overall CDC Evaluation based on all instances/cases of
+#' \item{cdc_exc}{Number of phase B datapoints indicating expected change.}
+#' \item{cdc_nb}{Number of phase B datapoints.} \item{cdc_p}{P value of Binomial
+#' Test.} \item{cdc_all}{Overall CDC Evaluation based on all instances/cases of
 #' a Multiple Baseline Design.} \item{N}{Number of cases.} \item{decreasing}{Logical argument from function call (see \code{Arguments} above).}
 #' \item{conservative}{Numeric argument from function call (see \code{Arguments}
 #' above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
@@ -38,17 +37,17 @@
 #' cdc(dat)
 #' 
 #' ## Apply the CDC with Koenig's bi-split and an expected decrease in phase B.
-#' cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
+#' cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit")
 #' 
 #' ## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.
-#' cdc(exampleABAB, trend.method = "trisplit", phases = c(1,4))
+#' cdc(exampleABAB, trend_method = "trisplit", phases = c(1,4))
 #' 
 #' ## Apply the Dual-Criterion (DC) method (i.e., mean and trend without shifting).
-#' cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit", conservative = 0)
+#' cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit", conservative = 0)
 #'
 #' 
 #' @export
-cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS", conservative = .25, phases = c(1, 2)) {
+cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend_method = "OLS", conservative = .25, phases = c(1, 2)) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -59,24 +58,24 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS"
   data  <- .keepphasesSC(data, phases = phases, pvar = pvar)$data
   
   N       <- length(data)
-  cdc.na  <- rep(NA, N)  # total data points in phase A
-  cdc.nb  <- rep(NA, N)  # total data points in phase B
-  cdc.exc <- rep(NA, N)  # exceeding data points in phase B
+  cdc_na  <- rep(NA, N)  # total data points in phase A
+  cdc_nb  <- rep(NA, N)  # total data points in phase B
+  cdc_exc <- rep(NA, N)  # exceeding data points in phase B
   cdc     <- rep(NA, N)  # CDC rule evaluation of change
-  cdc.p   <- rep(NA, N)  # binomial p (50/50)
-  cdc.all <- NA          # CDC rule evaluation of all "cases"
+  cdc_p   <- rep(NA, N)  # binomial p (50/50)
+  cdc_all <- NA          # CDC rule evaluation of all "cases"
   
     for(i in 1:N) {
     A         <- data[[i]][data[[i]][, pvar] == "A",]
     B         <- data[[i]][data[[i]][, pvar] == "B",]
-    cdc.na[i] <- nrow(A)
-    cdc.nb[i] <- nrow(B)
+    cdc_na[i] <- nrow(A)
+    cdc_nb[i] <- nrow(B)
 
-    if ((cdc.na[i] < 5 | cdc.nb[i] < 5) && trend.method != "OLS") {
+    if ((cdc_na[i] < 5 | cdc_nb[i] < 5) && trend_method != "OLS") {
       stop("The selected method for trend estimation should not be applied with less than five data points per phase.\n")
     }
 
-    if(trend.method == "bisplit"){
+    if(trend_method == "bisplit"){
       x     <- A[,mvar]
       y     <- A[,dvar]
       # na.rm = FALSE for now to prevent misuse; will draw no line if NA present
@@ -90,7 +89,7 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS"
       model <- lm(formula, data = md, na.action = na.omit)
     }
     
-    if(trend.method == "trisplit"){
+    if(trend_method == "trisplit"){
       x     <- A[,mvar]
       y     <- A[,dvar]
       # na.rm = FALSE for now to prevent misuse; will draw no line if NA present
@@ -104,7 +103,7 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS"
       model <- lm(formula, data = md, na.action = na.omit)
     }
     
-    if(trend.method == "OLS"){
+    if(trend_method == "OLS"){
       formula <- as.formula(paste0(dvar, "~", mvar))
       model     <- lm(formula, data = A, na.action = na.omit)
     }
@@ -112,30 +111,30 @@ cdc <- function(data, dvar, pvar, mvar, decreasing = FALSE, trend.method = "OLS"
     trnd      <- predict(model, B, se.fit = TRUE)
     
     if(!decreasing) {
-      cdc.exc[i] <- sum(B[, dvar] > trnd$fit + (conservative*sd(A[, dvar])) &
+      cdc_exc[i] <- sum(B[, dvar] > trnd$fit + (conservative*sd(A[, dvar])) &
                          B[, dvar] > (mean(A[, dvar]) + (conservative*sd(A[, dvar]))))
-      cdc.p[i]  <- binom.test(cdc.exc[i], cdc.nb[i], alternative = "greater")$p.value
-      cdc[i]    <- if(cdc.p[i] < .05) {"systematic change"} else {"no change"}
+      cdc_p[i]  <- binom.test(cdc_exc[i], cdc_nb[i], alternative = "greater")$p.value
+      cdc[i]    <- if(cdc_p[i] < .05) {"systematic change"} else {"no change"}
     } else {
-      cdc.exc[i] <- sum(B[, dvar] < trnd$fit - (conservative*sd(A[, dvar])) &
+      cdc_exc[i] <- sum(B[, dvar] < trnd$fit - (conservative*sd(A[, dvar])) &
                          B[, dvar] < (mean(A[, dvar]) - (conservative*sd(A[, dvar]))))
-      cdc.p[i]  <- binom.test(cdc.exc[i], cdc.nb[i], alternative = "greater")$p.value
-      cdc[i]    <- if(cdc.p[i] < .05) {"systematic change"} else {"no change"}
+      cdc_p[i]  <- binom.test(cdc_exc[i], cdc_nb[i], alternative = "greater")$p.value
+      cdc[i]    <- if(cdc_p[i] < .05) {"systematic change"} else {"no change"}
     }
-    cdc.all <- if(length(cdc.p[cdc.p > .05])/length(cdc.p) <= .2) {"systematic change"} else {"no change"}
+    cdc_all <- if(length(cdc_p[cdc_p > .05])/length(cdc_p) <= .2) {"systematic change"} else {"no change"}
   }
 
   out <- list(
     cdc = cdc,
-    cdc.be = cdc.exc,
-    cdc.b = cdc.nb,
-    cdc.p = cdc.p,
-    cdc.all = cdc.all,
+    cdc_be = cdc_exc,
+    cdc_b = cdc_nb,
+    cdc_p = cdc_p,
+    cdc_all = cdc_all,
     N = N,
     decreasing = decreasing,
     conservative = conservative,
     case.names = .case.names(names(data), length(data))
   )
-  class(out) <- c("sc","CDC")
+  class(out) <- c("sc_cdc")
   out
 }

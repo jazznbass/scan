@@ -10,7 +10,7 @@ cdc(
   pvar,
   mvar,
   decreasing = FALSE,
-  trend.method = "OLS",
+  trend_method = "OLS",
   conservative = 0.25,
   phases = c(1, 2)
 )
@@ -27,7 +27,7 @@ cdc(
 \item{decreasing}{If you expect data to be lower in the B phase, set
 \code{decreasing = TRUE}. Default is \code{decreasing = FALSE}.}
 
-\item{trend.method}{Method used to calculate the trend line. Default is \code{trend.method = "OLS"}.
+\item{trend_method}{Method used to calculate the trend line. Default is \code{trend_method = "OLS"}.
 Possible values are: \code{"OLS"}, \code{"bisplit"}, and \code{"trisplit"}.
 \code{"bisplit"}, and \code{"trisplit"} should only be used for cases with at
 least five data-points in both relevant phases.}
@@ -47,9 +47,9 @@ and 4 (as B). Default is \code{phases = c("A","B")}.}
 }
 \value{
 \item{cdc}{CDC Evaluation based on a p-value below .05.}
-\item{cdc.exc}{Number of phase B datapoints indicating expected change.}
-\item{cdc.nb}{Number of phase B datapoints.} \item{cdc.p}{P value of Binomial
-Test.} \item{cdc.all}{Overall CDC Evaluation based on all instances/cases of
+\item{cdc_exc}{Number of phase B datapoints indicating expected change.}
+\item{cdc_nb}{Number of phase B datapoints.} \item{cdc_p}{P value of Binomial
+Test.} \item{cdc_all}{Overall CDC Evaluation based on all instances/cases of
 a Multiple Baseline Design.} \item{N}{Number of cases.} \item{decreasing}{Logical argument from function call (see \code{Arguments} above).}
 \item{conservative}{Numeric argument from function call (see \code{Arguments}
 above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
@@ -70,13 +70,13 @@ dat <- rSC(design, seed = 42)
 cdc(dat)
 
 ## Apply the CDC with Koenig's bi-split and an expected decrease in phase B.
-cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
+cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit")
 
 ## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.
-cdc(exampleABAB, trend.method = "trisplit", phases = c(1,4))
+cdc(exampleABAB, trend_method = "trisplit", phases = c(1,4))
 
 ## Apply the Dual-Criterion (DC) method (i.e., mean and trend without shifting).
-cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit", conservative = 0)
+cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit", conservative = 0)
 
 
 }
