@@ -542,15 +542,17 @@ print.sc_ac <- function(x, ...) {
 
 #' @rdname print.sc
 #' @export
-print.sc_cdc <- function(x, ...) {
+print.sc_cdc <- function(x, nice = TRUE, ...) {
   
   cat("Conservative Dual Criterion\n\n")
   cat("N cases = ", x$N, "\n\n")
+  
+  if (nice) x$cdc_p <- .nice.p(x$cdc_p)
   out <- data.frame(
     Case = x$case_names,
     "nB improve" = x$cdc_be,
     "nB" = x$cdc_b,
-    "binom p" = round(x$cdc_p, 3),
+    "binom p" = x$cdc_p,
     "CDC Evaluation" = x$cdc,
     check.names = FALSE
   )
@@ -569,3 +571,32 @@ print.sc_cdc <- function(x, ...) {
 
 }
 
+#' @rdname print.sc
+#' @param nice If set TRUE (default) output values are rounded and optimized for
+#' publication tables.
+#' @export
+print.sc_bctau <- function(x, nice = TRUE, ...) {
+  
+  cat("Baseline corrected tau\n\n")
+  cat("\n")
+  
+  if (x$continuity) {
+    cat("Continuity correction applied\n")
+  } else {
+    cat("Continuity correction not applied.\n")
+  }
+  
+  if (nice) {
+    x$parameters$p <- .nice.p(x$parameters$p)
+    x$parameters$z <- sprintf("%.2f", x$parameters$z)
+    x$parameters$tau <- sprintf("%.2f", x$parameters$tau)
+  }
+  
+  rownames(x$parameters) <- x$parameters$Model
+  print(x$parameters[,-1], ...)
+
+  cat("\n")
+  if (x$correction)  cat("Baseline correction should be applied.\n\n")
+  if (!x$correction) cat("Baseline correction should not be applied.\n\n")
+
+}
