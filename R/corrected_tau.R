@@ -25,7 +25,7 @@
 #' @examples
 #' dat <- scdf(c(A = 33,25,17,25,14,13,15, B = 15,16,16,5,7,9,6,5,3,3,8,11,7))
 #' corrected_tau(dat)
-corrected_tau <- function(data, dvar, pvar, mvar, phases = c(1,2), alpha = 0.05, continuity = TRUE, repeated = TRUE) {
+corrected_tau <- function(data, dvar, pvar, mvar, phases = c(1, 2), alpha = 0.05, continuity = TRUE, repeated = TRUE) {
   
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)    else scdf_attr(data, .opt$dv)    <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
@@ -44,31 +44,47 @@ corrected_tau <- function(data, dvar, pvar, mvar, phases = c(1,2), alpha = 0.05,
   A_data <- data[rowsA, ]
   B_data <- data[rowsB, ]
   
-  auto_tau <- .kendall(A_data[[dvar]], A_data[[mvar]], continuity_correction = continuity)
-                       
-  if (isTRUE(auto_tau$p <= alpha)) {
-    formula  <- as.formula(paste0(dvar, "~", mvar))
-    fit_mblm <- mblm(formula, dataframe = A_data, repeated = repeated)
-    data$fit <- predict(fit_mblm, data, se.fit = FALSE)
-    data$res <- data[[dvar]] - data$fit
-    corr_applied <- TRUE
-  } else {
-    corr_applied <- FALSE
-    data$res <- data[[dvar]]
-  }
-  x <- data$res
+  auto_tau <- .kendall(
+    A_data[[dvar]], 
+    A_data[[mvar]], 
+    continuity_correction = continuity
+  )
+  
+  formula  <- as.formula(paste0(dvar, "~", mvar))
+  fit_mblm <- mblm(formula, dataframe = A_data, repeated = repeated)
+  data$fit <- predict(fit_mblm, data, se.fit = FALSE)
+  x <- data[[dvar]] - data$fit
   y <- as.numeric(factor(data[[pvar]]))
   base_corr_tau <- .kendall(x, y, continuity_correction = continuity)
   
+  x <- data[[dvar]]
+  uncorrected_tau <- .kendall(x, y, continuity_correction = continuity)
+  
+  if (auto_tau$p <= alpha) corr_applied <- TRUE else corr_applied <- FALSE
+  if (corr_applied) tau <- base_corr_tau else tau <- uncorrected_tau
+
+  df <- data.frame(
+    Model = c("Baseline autocorrelation", "Uncorrected tau", "Baseline correted tau"),
+    tau = c(auto_tau$tau, uncorrected_tau$tau, base_corr_tau$tau),
+    z = c(auto_tau$z, uncorrected_tau$z, base_corr_tau$z),
+    p = c(auto_tau$p, uncorrected_tau$p, base_corr_tau$p),
+    check.names = FALSE
+  )
+  
   out <- list(
-    tau        = base_corr_tau$tau, 
-    p          = base_corr_tau$p, 
+    tau = tau$tau, 
+    p = tau$p,
+    parameters = df,
+    auto_tau = auto_tau,
+    tau_corrected = base_corr_tau,
+    tau_uncorrected = uncorrected_tau,    
     correction = corr_applied,
+    alpha = alpha,
     continuity = continuity,
     repeated   = repeated,
-    auto_tau   = auto_tau
+    data = data
   )
-  class(out) <- c("sc", "base_corr_tau")
+  class(out) <- c("sc_bctau")
   out
 }
 
