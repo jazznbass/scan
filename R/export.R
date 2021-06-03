@@ -100,6 +100,8 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
                       cols, flip = FALSE, round = 2, ...) {
   #warning(.opt$function_debugging_warning)
   
+  table <- FALSE
+  
   default_kable_styling <- getOption("scan.export.kable_styling")
   default_kable <- getOption("scan.export.kable")
   
@@ -496,5 +498,6 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
   
   if (!is.na(filename)) cat(table, file = filename)
   
+  if (isFALSE(table)) warning(paste("No export function is available for object of class", x))
   table
 }
