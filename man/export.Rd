@@ -4,6 +4,7 @@
 \alias{export}
 \alias{export.scdf}
 \alias{export.sc}
+\alias{export.sc_desc}
 \title{Export scan objects to html or latex}
 \usage{
 export(object, ...)
@@ -30,6 +31,17 @@ export(object, ...)
   cols,
   flip = FALSE,
   round = 2,
+  ...
+)
+
+\method{export}{sc_desc}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  flip = FALSE,
   ...
 )
 }

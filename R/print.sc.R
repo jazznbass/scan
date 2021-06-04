@@ -600,3 +600,21 @@ print.sc_bctau <- function(x, nice = TRUE, ...) {
   if (!x$correction) cat("Baseline correction should not be applied.\n\n")
 
 }
+
+#' @rdname print.sc
+#' @param nice If set TRUE (default) output values are rounded and optimized for
+#' publication tables.
+#' @export
+print.sc_desc <- function(x, ...) {
+
+  cat("Describe Single-Case Data\n\n")
+  cat("Design: ", x$design, "\n\n")
+  out <- as.data.frame(round(t(x$descriptives), 2))
+  
+  rownames(out) <- format(rownames(out), justify = "right")
+  
+  print(out[1:(2 * length(x$design)), , drop = FALSE])
+  cat("\n")
+  print(out[-(1:(2 * length(x$design))), , drop = FALSE])
+
+}

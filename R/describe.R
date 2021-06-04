@@ -47,9 +47,9 @@ describe <- function(data, dvar, pvar, mvar) {
   VAR <- c("n", "mis", "m", "md", "sd", "mad", "min", "max", "trend")
   VAR2 <- paste0(rep(VAR, each = length(design)), ".", design)
 
-  d.f <- as.data.frame(matrix(nrow = N, ncol = length(VAR2)))
-  colnames(d.f) <- VAR2
-  rownames(d.f) <- case.names
+  desc <- as.data.frame(matrix(nrow = N, ncol = length(VAR2)))
+  colnames(desc) <- VAR2
+  rownames(desc) <- case.names
 
   for (case in 1:N) {
     data <- data.list[[case]]
@@ -60,24 +60,24 @@ describe <- function(data, dvar, pvar, mvar) {
       y <- data[[dvar]][phases$start[i]:phases$stop[i]]
       phase <- design[i]
 
-      d.f[case, paste0("n.", phase)] <- length(y)
-      d.f[case, paste0("mis.", phase)] <- sum(is.na(y), na.rm = TRUE)
-      d.f[case, paste0("m.", phase)] <- mean(y, na.rm = TRUE)
-      d.f[case, paste0("md.", phase)] <- median(y, na.rm = TRUE)
-      d.f[case, paste0("sd.", phase)] <- sd(y, na.rm = TRUE)
-      d.f[case, paste0("mad.", phase)] <- mad(y, na.rm = TRUE)
-      d.f[case, paste0("min.", phase)] <- min(y, na.rm = TRUE)
-      d.f[case, paste0("max.", phase)] <- max(y, na.rm = TRUE)
-      d.f[case, paste0("trend.", phase)] <- coef(lm(y ~ I(x - x[1] + 1)))[2]
+      desc[case, paste0("n.", phase)] <- length(y)
+      desc[case, paste0("mis.", phase)] <- sum(is.na(y), na.rm = TRUE)
+      desc[case, paste0("m.", phase)] <- mean(y, na.rm = TRUE)
+      desc[case, paste0("md.", phase)] <- median(y, na.rm = TRUE)
+      desc[case, paste0("sd.", phase)] <- sd(y, na.rm = TRUE)
+      desc[case, paste0("mad.", phase)] <- mad(y, na.rm = TRUE)
+      desc[case, paste0("min.", phase)] <- min(y, na.rm = TRUE)
+      desc[case, paste0("max.", phase)] <- max(y, na.rm = TRUE)
+      desc[case, paste0("trend.", phase)] <- coef(lm(y ~ I(x - x[1] + 1)))[2]
     }
   }
 
   out <- list(
-    descriptives = d.f,
+    descriptives = desc,
     design = design,
     N = N
   )
-  class(out) <- c("sc", "describe")
+  class(out) <- c("sc_desc")
   attr(out, .opt$phase) <- pvar
   attr(out, .opt$mt) <- mvar
   attr(out, .opt$dv) <- dvar

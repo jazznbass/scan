@@ -29,14 +29,8 @@ export.scdf <- function(object, caption = NA, footnote = NA, filename = NA,
                         kable_styling_options = list(), kable_options = list(),
                         cols, round = 2, ...) {
 
-  default_kable_styling <- getOption("scan.export.kable_styling")
-  default_kable <- getOption("scan.export.kable")
-
-  tmp <- which(!(names(default_kable_styling) %in% names(kable_styling_options)))
-  kable_styling_options <- c(kable_styling_options, default_kable_styling[tmp])
-
-  tmp <- which(!(names(default_kable) %in% names(kable_options)))
-  kable_options <- c(kable_options, default_kable[tmp])
+  kable_options <- .join_kabel(kable_options)
+  kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (!is.na(footnote)) {
     if (!is.null(scdf_attr(object, "info"))) footnote <- scdf_attr(object, "info")
@@ -98,18 +92,11 @@ export.scdf <- function(object, caption = NA, footnote = NA, filename = NA,
 export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
                       kable_styling_options = list(), kable_options = list(),
                       cols, flip = FALSE, round = 2, ...) {
-  #warning(.opt$function_debugging_warning)
-  
+ 
   table <- FALSE
   
-  default_kable_styling <- getOption("scan.export.kable_styling")
-  default_kable <- getOption("scan.export.kable")
-  
-  tmp <- which(!(names(default_kable_styling) %in% names(kable_styling_options)))
-  kable_styling_options <- c(kable_styling_options, default_kable_styling[tmp])
-  
-  tmp <- which(!(names(default_kable) %in% names(kable_options)))
-  kable_options <- c(kable_options, default_kable[tmp])
+  kable_options <- .join_kabel(kable_options)
+  kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (!any(class(object) %in% c("sc", "scdf"))) {
     stop("export can only handle objects returned by scan.\n")
@@ -151,84 +138,16 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
       table <- footnote(table, general = footnote, threeparttable = TRUE)
   }
   
-  # describe ----------------------------------------------------------------
-  
-  if (x == "describe") {
-    
-    if (is.na(caption)) caption <- "Descriptive statistics"
-    kable_options$caption <- caption
-    
-    if (is.na(footnote)) {
-      footnote <- paste0(
-        "n = Number of measurements; ",
-        "Missing = Number of missing values; ",
-        "M = Mean; ",
-        "Median = Median; ",
-        "SD = Standard deviation; ",
-        "MAD = Median average deviation; ",
-        "Min = Minimum; ",
-        "Max = Maximum; ",
-        "Trend = Slope of dependent variable regressed on measurement-time."
-      )
-    }
-    
-    if (flip) {
-      out <- as.data.frame(t(object$descriptives))
-      rownames(out) <- gsub("mis", "Missing", rownames(out))
-      rownames(out) <- gsub("med", "Median", rownames(out))
-      rownames(out) <- gsub("min", "Min", rownames(out))
-      rownames(out) <- gsub("max", "Max", rownames(out))
-      rownames(out) <- gsub("trend", "Trend", rownames(out))
-      rownames(out) <- gsub("\\.", " ", rownames(out))
-      out <- cbind(Parameter = rownames(out), out)
-      rownames(out) <- NULL
-      kable_options$align <- c("l", rep("c", 9))
-      kable_options$x <- out
-      table <- do.call(kable, kable_options)
-      kable_styling_options$kable_input <- table
-      table <- do.call(kable_styling, kable_styling_options)
-    }
-    
-    
-    if (!flip) {
-      n.phases <- length(object$design)
-      out <- object$descriptives
-      colnames(out) <- rep(object$design, 9)
-      kable_options$align <- c("c", rep("c", 9 * n.phases))
-      kable_options$x <- out
-      table <- do.call(kable, kable_options)
-      kable_styling_options$kable_input <- table
-      table <- do.call(kable_styling, kable_styling_options)
-      table <- add_header_above(
-        table,
-        c(
-          " " = 1, "n" = n.phases,
-          "Missing" = n.phases,
-          "M" = n.phases,
-          "Median" = n.phases,
-          "SD" = n.phases,
-          "MAD" = n.phases,
-          "Min" = n.phases,
-          "Max" = n.phases,
-          "Trend" = n.phases
-        )
-      )
-    }
-    
-    if (!is.na(footnote) && footnote != "") 
-      table <- footnote(table, general = footnote, threeparttable = TRUE)
-    
-    ##tmp <- attributes(table)
-    #table <- paste0(caption, table, footnote)
-    #attributes(table) <- tmp
-  }
-  
   # overlap -----------------------------------------------------------------
   
   if (x == "overlap") {
     
-    if (is.na(caption)) caption <- c("Overlap indices. ",
-                                     .stringPhasesSC(object$design[object$phases.A], object$design[object$phases.B])
+    if (is.na(caption)) caption <- c(
+      "Overlap indices. ",
+      .stringPhasesSC(
+        object$design[object$phases.A], 
+        object$design[object$phases.B]
+      )
     )
     
     footnote <- c(
@@ -268,9 +187,6 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
     table <- do.call(kable_styling, kable_styling_options)
     if (!is.na(footnote) && footnote != "") 
       table <- footnote(table, general = footnote, threeparttable = TRUE)
-    #tmp <- attributes(table)
-    #table <- paste0(caption, table, footnote)
-    #attributes(table) <- tmp
   }
   
   # plm ---------------------------------------------------------------------
@@ -500,3 +416,105 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
   if (isFALSE(table)) warning(paste("No export function is available for object of class", x))
   table
 }
+
+#' @rdname export
+#' @export
+export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
+                           kable_styling_options = list(), 
+                           kable_options = list(), 
+                           flip = FALSE, 
+                           ...) {
+ 
+  kable_options <- .join_kabel(kable_options)
+  kable_styling_options <- .join_kabel_styling(kable_styling_options)
+  
+  if (is.na(caption)) caption <- "Descriptive statistics"
+  kable_options$caption <- caption
+  
+  if (is.na(footnote)) {
+    footnote <- paste0(
+      "n = Number of measurements; ",
+      "Missing = Number of missing values; ",
+      "M = Mean; ",
+      "Median = Median; ",
+      "SD = Standard deviation; ",
+      "MAD = Median average deviation; ",
+      "Min = Minimum; ",
+      "Max = Maximum; ",
+      "Trend = Slope of dependent variable regressed on measurement-time."
+    )
+  }
+  
+  if (flip) {
+    out <- as.data.frame(t(object$descriptives))
+    rownames(out) <- gsub("mis", "Missing", rownames(out))
+    rownames(out) <- gsub("med", "Median", rownames(out))
+    rownames(out) <- gsub("min", "Min", rownames(out))
+    rownames(out) <- gsub("max", "Max", rownames(out))
+    rownames(out) <- gsub("trend", "Trend", rownames(out))
+    rownames(out) <- gsub("\\.", " ", rownames(out))
+    out <- cbind(Parameter = rownames(out), out)
+    rownames(out) <- NULL
+    kable_options$align <- c("l", rep("c", 9))
+    kable_options$x <- out
+    table <- do.call(kable, kable_options)
+    kable_styling_options$kable_input <- table
+    table <- do.call(kable_styling, kable_styling_options)
+  }
+  
+  
+  if (!flip) {
+    n.phases <- length(object$design)
+    out <- object$descriptives
+    colnames(out) <- rep(object$design, 9)
+    kable_options$align <- c("c", rep("c", 9 * n.phases))
+    kable_options$x <- out
+    table <- do.call(kable, kable_options)
+    kable_styling_options$kable_input <- table
+    table <- do.call(kable_styling, kable_styling_options)
+    table <- add_header_above(
+      table,
+      c(
+        " " = 1, "n" = n.phases,
+        "Missing" = n.phases,
+        "M" = n.phases,
+        "Median" = n.phases,
+        "SD" = n.phases,
+        "MAD" = n.phases,
+        "Min" = n.phases,
+        "Max" = n.phases,
+        "Trend" = n.phases
+      )
+    )
+  }
+  
+  if (!is.na(footnote) && footnote != "") 
+    table <- footnote(table, general = footnote, threeparttable = TRUE)
+  
+  # finish ------------------------------------------------------------------
+  
+  if (!is.na(filename)) cat(table, file = filename)
+  table
+}
+
+.join_kabel <- function(kable_options) {
+  
+  default_kable <- getOption("scan.export.kable")
+  
+  tmp <- which(!(names(default_kable) %in% names(kable_options)))
+  kable_options <- c(kable_options, default_kable[tmp])
+  
+  kable_options
+} 
+
+
+.join_kabel_styling <- function(kable_styling_options) {
+  
+  default_kable_styling <- getOption("scan.export.kable_styling")
+  
+  tmp <- which(!(names(default_kable_styling) %in% names(kable_styling_options)))
+  kable_styling_options <- c(kable_styling_options, default_kable_styling[tmp])
+  
+  kable_styling_options
+} 
+
