@@ -6,6 +6,7 @@
 \alias{print.sc_cdc}
 \alias{print.sc_bctau}
 \alias{print.sc_desc}
+\alias{print.sc_design}
 \title{Print method for scan objects}
 \usage{
 \method{print}{sc}(x, ...)
@@ -17,6 +18,8 @@
 \method{print}{sc_bctau}(x, nice = TRUE, ...)
 
 \method{print}{sc_desc}(x, ...)
+
+\method{print}{sc_design}(x, ...)
 }
 \arguments{
 \item{x}{Object}
