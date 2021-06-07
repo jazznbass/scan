@@ -27,29 +27,34 @@ export <- function (object, ...) {
 #' @export
 export.scdf <- function(object, caption = NA, footnote = NA, filename = NA,
                         kable_styling_options = list(), kable_options = list(),
-                        cols, round = 2, ...) {
+                        cols, ...) {
 
   kable_options <- .join_kabel(kable_options)
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (!is.na(footnote)) {
-    if (!is.null(scdf_attr(object, "info"))) footnote <- scdf_attr(object, "info")
+    if (!is.null(scdf_attr(object, "info"))) 
+      footnote <- scdf_attr(object, "info")
     if (!is.null(scdf_attr(object, "author"))) {
-      footnote <- paste0(footnote, "\nAuthor: ", scdf_attr(object, "author"))
+      footnote <- paste(footnote, "\nAuthor:", scdf_attr(object, "author"))
     }
   }
   
   N <- cases <- length(object)
   
   if (is.na(caption)) 
-    caption <- paste0("Single case data frame with ", N, " cases", collapse = "")
+    caption <- paste("Single case data frame with", N, "cases")
   kable_options$caption <- caption
 
   if (missing(cols)) {
     cols <- names(object[[1]])
   }
   if (identical(cols, "main")) {
-    cols <- c(scdf_attr(object, .opt$phase), scdf_attr(object, .opt$dv), scdf_attr(object, .opt$mt))
+    cols <- c(
+      scdf_attr(object, .opt$phase), 
+      scdf_attr(object, .opt$dv), 
+      scdf_attr(object, .opt$mt)
+    )
   }
 
   names(object) <- .case.names(names(object), length(object))
@@ -74,9 +79,9 @@ export.scdf <- function(object, caption = NA, footnote = NA, filename = NA,
   kable_styling_options$kable_input <- table
   table <- do.call(kable_styling, kable_styling_options)
 
-  case.names <- rep(ncol(out) / N, N)
-  names(case.names) <- names(object)
-  table <- add_header_above(table, case.names)
+  case_names <- rep(ncol(out) / N, N)
+  names(case_names) <- names(object)
+  table <- add_header_above(table, case_names)
   if (!is.na(footnote) && footnote != "") 
     table <- footnote(table, general = footnote, threeparttable = TRUE)
 
