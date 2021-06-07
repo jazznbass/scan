@@ -47,7 +47,7 @@ fill_missing <- function(data, dvar, mvar, interpolation = "linear", na.rm = TRU
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
   
-  ATTRIBUTES <- attributes(data)
+  source_attributes <- attributes(data)
   
   data <- .SCprepareData(data)
 
@@ -75,7 +75,7 @@ fill_missing <- function(data, dvar, mvar, interpolation = "linear", na.rm = TRU
     }
     data[[i]] <- new.dat[sort.list(new.dat[[mvar]]), ]
   }
-  attributes(data) <- ATTRIBUTES
+  attributes(data) <- source_attributes
   data
 }
 
