@@ -64,7 +64,7 @@ check_scdf <- function(object) {
   }
   
   
-  if (length(errors) == 0) TRUE else c("Check of scdf object failed:", errors)
+  if (length(errors) == 0) TRUE else c(errors)
 }
 
 
