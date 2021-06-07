@@ -115,9 +115,13 @@ NULL
 
 #' @rdname random
 #' @export
-rSC <- function(design = NULL, round = NA, random.names = FALSE, seed = NULL, ...) {
+rSC <- function(design = NULL, 
+                round = NA, 
+                random.names = FALSE, 
+                seed = NULL, 
+                ...) {
+  
   if (!is.null(seed)) set.seed(seed)
-
   if (is.numeric(design)) {
     warning("The first argument is expected to be a design matrix created by design_rSC. If you want to set n, please name the first argument with n = ...")
     n <- design
@@ -135,12 +139,21 @@ rSC <- function(design = NULL, round = NA, random.names = FALSE, seed = NULL, ..
   for (i in 1:n) {
     if (distribution == "normal") {
       start_values <- c(cases[[i]]$m[1], rep(0, cases[[i]]$mt[1] - 1))
-      trend_values <- c(0, rep(cases[[i]]$trend[1] * cases[[i]]$s[1], cases[[i]]$mt[1] - 1))
+      trend_values <- c(
+        0, rep(cases[[i]]$trend[1] * cases[[i]]$s[1], cases[[i]]$mt[1] - 1)
+      )
       slope_values <- c()
       level_values <- c()
       for (j in 1:nrow(cases[[i]])) {
-        slope_values <- c(slope_values, rep(cases[[i]]$slope[j] * cases[[i]]$s[j], cases[[i]]$length[j]))
-        level_values <- c(level_values, cases[[i]]$level[j] * cases[[i]]$s[j], rep(0, cases[[i]]$length[j] - 1))
+        slope_values <- c(
+          slope_values, 
+          rep(cases[[i]]$slope[j] * cases[[i]]$s[j], cases[[i]]$length[j])
+        )
+        level_values <- c(
+          level_values, 
+          cases[[i]]$level[j] * cases[[i]]$s[j], 
+          rep(0, cases[[i]]$length[j] - 1)
+        )
       }
 
       true_values <- start_values + trend_values + slope_values + level_values
@@ -295,7 +308,7 @@ design_rSC <- function(n = 1, phase.design = list(A = 5, B = 15),
   }
   attr(out, "call") <- mget(names(formals()), sys.frame(sys.nframe()))
   
-  class(out) <- c("sc", "design")
+  class(out) <- c("sc_design")
   
   out
 }
@@ -311,6 +324,6 @@ design_rSC <- function(n = 1, phase.design = list(A = 5, B = 15),
 }
 
 design.rSC <- function(...) {
-  warning(.opt$function_deprecated_warning, "Please use describe_rSC instead")
+  warning(.opt$function_deprecated_warning, "Please use design_rSC instead")
   design_rSC(...)
 }
