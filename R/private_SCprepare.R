@@ -9,7 +9,7 @@
   if (.opt$rigorous_class_check) {
     results <- .check_scdf(data)
     if (!isTRUE(results)) {
-      stop(results)
+      warning(results)
     } 
   }
 
