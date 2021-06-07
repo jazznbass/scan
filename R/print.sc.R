@@ -453,21 +453,6 @@ if (value == "mpr") {
     cat(out, "\n")
   }
 
-# describe ----------------------------------------------------------------
-
-  if (value == "describe") {
-    cat("Describe Single-Case Data\n\n")
-    cat("Design: ", x$design, "\n\n")
-    out <- as.data.frame(round(t(x$descriptives), 2))
-   
-    rownames(out) <- format(rownames(out), justify = "right")
-    
-    print(out[1:(2 * length(x$design)), , drop = FALSE])
-    cat("\n")
-    print(out[-(1:(2 * length(x$design))), , drop = FALSE])
-    note = TRUE
-  }	
-  
 # outlier -----------------------------------------------------------------
   
   if (value == "outlier") {
@@ -497,36 +482,8 @@ if (value == "mpr") {
     cat("\n")
   }
   
-
-# deisgn ------------------------------------------------------------------
-
-  if (value == "design") {
-    cat("A scdf design matrix\n\n")
-    cat("Number of cases:", length(x$cases), "\n")
-    cat("Mean: ", x$cases[[1]]$m[1], "\n")
-    cat("SD = ", x$cases[[1]]$s[1], "\n")
-    cat("rtt = ", x$cases[[1]]$rtt[1], "\n")
-    cat("Phase design: ", as.character(x$cases[[1]]$phase), "\n")
-
-    cat("mean trend-effect: ", apply(sapply(x$cases, function(x) {x$trend}), 1, mean, na.rm = TRUE)[1], "\n")
-    cat("mean level-effect: ", apply(sapply(x$cases, function(x) {x$level}), 1, mean, na.rm = TRUE), "\n")
-    cat("mean slope-effect: ", apply(sapply(x$cases, function(x) {x$slope}), 1, mean, na.rm = TRUE), "\n")
-    cat("sd trend-effect: ", apply(sapply(x$cases, function(x) {x$trend}), 1, sd, na.rm = TRUE)[1], "\n")
-    cat("sd level-effect: ", apply(sapply(x$cases, function(x) {x$level}), 1, sd, na.rm = TRUE), "\n")
-    cat("sd slope-effect: ", apply(sapply(x$cases, function(x) {x$slope}), 1, sd, na.rm = TRUE), "\n")
-    cat("Distribution: ", x$distribution)
-  }  
-  
-  
   ##### Additional notes #####
-  if (note) {
-    if (attr(x, .opt$dv) != "values" || attr(x, .opt$phase) != "phase" || attr(x, .opt$mt) != "mt")
-      cat("\nNote. The following variables were used in this analysis:\n      '", 
-          attr(x, .opt$dv), "' as dependent variable, '", 
-          attr(x, .opt$phase), "' as phase ,and '", 
-          attr(x, .opt$mt),"' as measurement time.\n", sep = "")
-    
-  }
+  if (note) .note_vars(x)
 
   }
 
@@ -610,11 +567,46 @@ print.sc_desc <- function(x, ...) {
   cat("Describe Single-Case Data\n\n")
   cat("Design: ", x$design, "\n\n")
   out <- as.data.frame(round(t(x$descriptives), 2))
-  
   rownames(out) <- format(rownames(out), justify = "right")
-  
   print(out[1:(2 * length(x$design)), , drop = FALSE])
   cat("\n")
   print(out[-(1:(2 * length(x$design))), , drop = FALSE])
+  .note_vars(x)
 
 }
+
+#' @rdname print.sc
+#' @param nice If set TRUE (default) output values are rounded and optimized for
+#' publication tables.
+#' @export
+print.sc_design <- function(x, ...) {
+  cat("A scdf design matrix\n\n")
+  cat("Number of cases:", length(x$cases), "\n")
+  cat("Mean: ", x$cases[[1]]$m[1], "\n")
+  cat("SD = ", x$cases[[1]]$s[1], "\n")
+  cat("rtt = ", x$cases[[1]]$rtt[1], "\n")
+  cat("Phase design: ", as.character(x$cases[[1]]$phase), "\n")
+  
+  cat("mean trend-effect: ", apply(sapply(x$cases, function(x) {x$trend}), 1, mean, na.rm = TRUE)[1], "\n")
+  cat("mean level-effect: ", apply(sapply(x$cases, function(x) {x$level}), 1, mean, na.rm = TRUE), "\n")
+  cat("mean slope-effect: ", apply(sapply(x$cases, function(x) {x$slope}), 1, mean, na.rm = TRUE), "\n")
+  cat("sd trend-effect: ", apply(sapply(x$cases, function(x) {x$trend}), 1, sd, na.rm = TRUE)[1], "\n")
+  cat("sd level-effect: ", apply(sapply(x$cases, function(x) {x$level}), 1, sd, na.rm = TRUE), "\n")
+  cat("sd slope-effect: ", apply(sapply(x$cases, function(x) {x$slope}), 1, sd, na.rm = TRUE), "\n")
+  cat("Distribution: ", x$distribution)
+
+}
+
+.note_vars <- function(x) {
+  v <- attr(x, .opt$dv) != "values"
+  p <- attr(x, .opt$phase) != "phase"
+  m <- attr(x, .opt$mt) != "mt"
+  if (v || p || m) { 
+    cat("\nThe following variables were used in this analysis:\n'", 
+    attr(x, .opt$dv), "' as dependent variable, '", 
+    attr(x, .opt$phase), "' as phase ,and '", 
+    attr(x, .opt$mt),"' as measurement time.\n", sep = "")
+  }
+}
+
+
