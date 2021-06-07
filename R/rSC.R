@@ -169,8 +169,16 @@ rSC <- function(design = NULL,
       level_values <- c()
 
       for (j in 1:nrow(cases[[i]])) {
-        slope_values <- c(slope_values, rep(cases[[i]]$slope[j], cases[[i]]$length[j]))
-        level_values <- c(level_values, cases[[i]]$level[j], rep(0, cases[[i]]$length[j] - 1))
+        slope_values <- c(
+          slope_values, 
+          rep(cases[[i]]$slope[j], 
+              cases[[i]]$length[j])
+        )
+        level_values <- c(
+          level_values, 
+          cases[[i]]$level[j], 
+          rep(0, cases[[i]]$length[j] - 1)
+        )
       }
 
       true_values <- start_values + trend_values + slope_values + level_values
@@ -181,10 +189,14 @@ rSC <- function(design = NULL,
         measured_values <- rpois(n = length(true_values), true_values)
       }
       if (distribution == "binomial") {
-        measured_values <- rbinom(n = length(true_values), size = round(true_values * (1 / prob)), prob = prob)
+        measured_values <- rbinom(
+          n = length(true_values), 
+          size = round(true_values * (1 / prob)), 
+          prob = prob
+        )
       }
+      
     }
-
 
     if (cases[[i]]$extreme.p[1] > 0) {
       ra <- runif(cases[[i]]$mt[1])
@@ -202,7 +214,11 @@ rSC <- function(design = NULL,
     }
 
     if (cases[[i]]$missing.p[1] > 0) {
-      measured_values[sample(1:cases[[i]]$mt[1], cases[[i]]$missing.p[1] * cases[[i]]$mt[1])] <- NA
+      .indices <- sample(
+        1:cases[[i]]$mt[1], 
+        cases[[i]]$missing.p[1] * cases[[i]]$mt[1]
+      )
+      measured_values[.indices] <- NA
     }
 
     if (!is.na(round)) {
@@ -215,7 +231,11 @@ rSC <- function(design = NULL,
 
     condition <- rep(cases[[i]]$phase, cases[[i]]$length)
 
-    dat[[i]] <- data.frame(phase = condition, values = measured_values, mt = 1:cases[[i]]$mt[1])
+    dat[[i]] <- data.frame(
+      phase = condition, 
+      values = measured_values, 
+      mt = 1:cases[[i]]$mt[1]
+    )
   }
 
   if (random.names == "male") names(dat) <- sample(.opt$male.names, n)
@@ -324,6 +344,6 @@ design_rSC <- function(n = 1, phase.design = list(A = 5, B = 15),
 }
 
 design.rSC <- function(...) {
-  warning(.opt$function_deprecated_warning, "Please use design_rSC instead")
+  .deprecated_warning("design_rSC", "design.rSC")
   design_rSC(...)
 }
