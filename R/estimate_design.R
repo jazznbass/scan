@@ -20,7 +20,13 @@
 #' standarddeviation, and reliability for each case.
 #' @export
 
-estimate_design <- function(data, dvar, pvar, mvar, m = NULL, s = NULL, rtt = NULL, between = TRUE, model = "JW", ...) {
+estimate_design <- function(data, dvar, pvar, mvar, 
+                            m = NULL, 
+                            s = NULL, 
+                            rtt = NULL, 
+                            between = TRUE, 
+                            model = "JW", 
+                            ...) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -45,20 +51,25 @@ estimate_design <- function(data, dvar, pvar, mvar, m = NULL, s = NULL, rtt = NU
   for (i in 1:N) {
     plm.model <- plm(data[i], model = model, ...)$full
     res <- coef(plm.model)
+    var_fitted <- var(plm.model$fitted.values)
+    var_residuals <- var(plm.model$residuals)
     n.phases <- nrow(cases[[i]])
     cases[[i]]$m <- res[1]
     cases[[i]]$trend <- res[2]
     cases[[i]]$level <- c(0, res[3:(1 + n.phases)])
     cases[[i]]$slope <- c(0, res[(2 + n.phases):(2 + 2 * (n.phases - 1))])
-    cases[[i]]$error <- var(plm.model$residual)
-    cases[[i]]$fitted <- var(plm.model$fitted.values)
-    cases[[i]]$rtt <- var(plm.model$fitted.values) / (var(plm.model$fitted.values) + var(plm.model$residuals))
+    cases[[i]]$error <- var_residuals
+    cases[[i]]$fitted <- var_fitted
+    cases[[i]]$rtt <- var_fitted / (var_fitted + var_residuals)
 
 
     missing.p <- c()
     for (y in 1:nrow(cases[[i]])) {
       tmp <- cases[[i]][y, ]
-      missing.p <- c(missing.p, sum(is.na(data[[i]][tmp$start:tmp$stop, dvar])) / tmp$length)
+      missing.p <- c(
+        missing.p, 
+        sum(is.na(data[[i]][tmp$start:tmp$stop, dvar])) / tmp$length
+      )
     }
     cases[[i]]$missing.p <- missing.p
     error <- c(error, plm.model$residuals)
@@ -66,15 +77,9 @@ estimate_design <- function(data, dvar, pvar, mvar, m = NULL, s = NULL, rtt = NU
   }
 
   if (!between) {
-    level <- rowMeans(sapply(cases, function(x) {
-      x$level
-    }))
-    trend <- rowMeans(sapply(cases, function(x) {
-      x$trend
-    }))
-    slope <- rowMeans(sapply(cases, function(x) {
-      x$slope
-    }))
+    level <- rowMeans(sapply(cases, function(x) x$level))
+    trend <- rowMeans(sapply(cases, function(x) x$trend))
+    slope <- rowMeans(sapply(cases, function(x) x$slope))
     for (i in 1:N) {
       cases[[i]]$trend <- trend
       cases[[i]]$level <- level
@@ -91,9 +96,10 @@ estimate_design <- function(data, dvar, pvar, mvar, m = NULL, s = NULL, rtt = NU
 
   error_sd <- sqrt(((1 - rtt) / rtt) * s^2)
 
-  VAR <- c(
-    "phase", "length", "mt", "rtt", "error", "missing.p", "extreme.p", "extreme.low",
-    "extreme.high", "trend", "level", "slope", "m", "s", "start", "stop"
+  vars <- c(
+    "phase", "length", "mt", "rtt", "error", "missing.p", "extreme.p", 
+    "extreme.low", "extreme.high", "trend", "level", "slope", "m", "s", 
+    "start", "stop"
   )
 
   for (i in 1:N) {
@@ -107,7 +113,7 @@ estimate_design <- function(data, dvar, pvar, mvar, m = NULL, s = NULL, rtt = NU
     cases[[i]]$extreme.low <- -4
     cases[[i]]$extreme.high <- -3
     cases[[i]]$mt <- sum(cases[[i]]$length)
-    cases[[i]] <- cases[[i]][VAR]
+    cases[[i]] <- cases[[i]][vars]
   }
 
   out <- list(
@@ -116,6 +122,6 @@ estimate_design <- function(data, dvar, pvar, mvar, m = NULL, s = NULL, rtt = NU
     prob = NA
   )
 
-  class(out) <- c("sc", "design")
+  class(out) <- c("sc_design")
   out
 }
