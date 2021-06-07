@@ -70,9 +70,9 @@
   if (is.data.frame(data)) data <- list(data)
   ATTRIBUTES <- attributes(data)
   
-  res <- lapply(data, function(x) rle(as.character(x[, pvar]))$values)
-  if (!all(unlist(lapply(res[-1], function(x) identical(x, res[[1]])))))
-    warning("Single-cases do have differing desings.")
+  #res <- lapply(data, function(x) rle(as.character(x[, pvar]))$values)
+  #if (!all(unlist(lapply(res[-1], function(x) identical(x, res[[1]])))))
+  #  warning("Single-cases do have differing desings.")
   
   if (class(phases) %in% c("character","numeric","integer")) {
     if (!length(phases) == 2) {
