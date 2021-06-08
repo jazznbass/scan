@@ -2,7 +2,7 @@
 #'
 #' @param object An scdf object
 #'
-#' @return TRUE or Error messages.
+#' @return TRUE or list with error and warning messages.
 #' @export
 
 check_scdf <- function(object) {
