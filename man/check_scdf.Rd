@@ -10,7 +10,7 @@ check_scdf(object)
 \item{object}{An scdf object}
 }
 \value{
-TRUE or Error messages.
+TRUE or list with error and warning messages.
 }
 \description{
 Validity check for an scdf object
