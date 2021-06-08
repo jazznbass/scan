@@ -15,3 +15,9 @@ TRUE or list with error and warning messages.
 \description{
 Validity check for an scdf object
 }
+\examples{
+check_scdf(exampleAB)
+
+check_scdf(c(exampleAB, exampleABC))
+
+}
