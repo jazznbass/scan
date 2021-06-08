@@ -5,15 +5,21 @@
 \alias{c.scdf}
 \title{Combine single-case data frames into a multiple case study}
 \usage{
-combine(...)
+combine(..., dvar = NULL, pvar = NULL, mvar = NULL)
 
 \method{c}{scdf}(...)
 }
 \arguments{
 \item{...}{scdf objects}
+
+\item{dvar}{Character string. Name of the dependent variable. Defaults to the dependent variable of the first case provided.}
+
+\item{pvar}{Character string. Name of the phase variable. Defaults to the phase variable of the first case provided.}
+
+\item{mvar}{Character string. Name of the measurement-time variable. Defaults to the measurement-time variable of the first case provided.}
 }
 \value{
-A scdf
+A scdf. If not set differently, the attributes of this scdf are copied from the first scdf provided (i.e the first argument of the function).
 }
 \description{
 Combine single-case data frames into a multiple case study
