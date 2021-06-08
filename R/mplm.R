@@ -26,12 +26,7 @@
 mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE, 
                  level = TRUE, slope = TRUE, formula = NULL, update = NULL, 
                  na.action = na.omit, ...) {
-  #cat(.opt$function_debugging_warning)
-  if (!requireNamespace("car", quietly = TRUE)) {
-    stop("Package car needed for this function to work. Please install it.",
-      call. = FALSE
-    )
-  }
+ 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar

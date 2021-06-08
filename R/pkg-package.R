@@ -14,6 +14,7 @@
 #' @import kableExtra
 #' @import mblm
 #' @import meta
+#' @importFrom car Anova
 NULL
 
 
