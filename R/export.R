@@ -178,13 +178,17 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
     n.phases <- 2
     out <- object$overlap
     
-    colnames(out)[5] <- "NAP-R"
-    colnames(out)[7] <- "Tau-U"
-    colnames(out)[9] <- "Delta M"
-    colnames(out)[10] <- "Delta Trend"
-    colnames(out)[12] <- "Hedges g"
+    colnames(out)[6] <- "NAP-R"
+    colnames(out)[8] <- "Tau-U"
+    colnames(out)[10] <- "Delta M"
+    colnames(out)[11] <- "Delta Trend"
+    colnames(out)[13] <- "Hedges g"
     
-    if (isTRUE(flip)) out <- t(out)
+    if (isTRUE(flip)) {
+      cases <- out$Case
+      out <- t(out[-1])
+      colnames(out) <- cases
+    }
     
     kable_options$x <- out
     table <- do.call(kable, kable_options)
@@ -346,7 +350,8 @@ export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
   }
   
   if (flip) {
-    out <- as.data.frame(t(object$descriptives))
+    out <- as.data.frame(t(object$descriptives[-1]))
+    colnames(out) <- object$descriptives$Case
     rownames(out) <- gsub("mis", "Missing", rownames(out))
     rownames(out) <- gsub("med", "Median", rownames(out))
     rownames(out) <- gsub("min", "Min", rownames(out))
@@ -364,10 +369,10 @@ export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
   
   
   if (!flip) {
-    n.phases <- length(object$design)
+    n_phases <- length(object$design)
     out <- object$descriptives
-    colnames(out) <- rep(object$design, 9)
-    kable_options$align <- c("c", rep("c", 9 * n.phases))
+    colnames(out) <- c("Case", rep(object$design, 9))
+    kable_options$align <- c("l", rep("c", 9 * n_phases))
     kable_options$x <- out
     table <- do.call(kable, kable_options)
     kable_styling_options$kable_input <- table
@@ -375,15 +380,15 @@ export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
     table <- add_header_above(
       table,
       c(
-        " " = 1, "n" = n.phases,
-        "Missing" = n.phases,
-        "M" = n.phases,
-        "Median" = n.phases,
-        "SD" = n.phases,
-        "MAD" = n.phases,
-        "Min" = n.phases,
-        "Max" = n.phases,
-        "Trend" = n.phases
+        " " = 1, "n" = n_phases,
+        "Missing" = n_phases,
+        "M" = n_phases,
+        "Median" = n_phases,
+        "SD" = n_phases,
+        "MAD" = n_phases,
+        "Min" = n_phases,
+        "Max" = n_phases,
+        "Trend" = n_phases
       )
     )
   }
