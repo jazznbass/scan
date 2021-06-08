@@ -18,7 +18,7 @@
 
 \method{print}{sc_bctau}(x, nice = TRUE, ...)
 
-\method{print}{sc_desc}(x, ...)
+\method{print}{sc_desc}(x, digits = 3, ...)
 
 \method{print}{sc_design}(x, ...)
 
