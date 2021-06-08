@@ -404,6 +404,8 @@ export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
 
 
 #' @rdname export
+#' @param nice If set TRUE (default) output values are rounded and optimized for
+#' publication tables.
 #' @export
 export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
                            kable_styling_options = list(), 

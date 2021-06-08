@@ -1,6 +1,7 @@
 #' Print method for scan objects
 #'
 #' @param x Object 
+#' @param digits The minimum number of significant digits to be use
 #' @param ... Further parameters passed to the print function
 #' @export
 

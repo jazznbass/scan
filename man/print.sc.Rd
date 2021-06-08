@@ -31,6 +31,8 @@
 
 \item{nice}{If set TRUE (default) output values are rounded and optimized for
 publication tables.}
+
+\item{digits}{The minimum number of significant digits to be use}
 }
 \description{
 Print method for scan objects

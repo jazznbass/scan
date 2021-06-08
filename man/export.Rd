@@ -79,6 +79,9 @@ with variable names or the string "main" will select the central variables.}
 \item{flip}{If TRUE, some objects are exported with rows and columns flipped.}
 
 \item{round}{value for the digits argument passed to the internally used round function.}
+
+\item{nice}{If set TRUE (default) output values are rounded and optimized for
+publication tables.}
 }
 \value{
 Returns a specif formated html (or latex).
