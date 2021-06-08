@@ -21,10 +21,16 @@ combine <- function(...) {
   if (!is.null(names(scdfs))) 
     names(data)[which(names(scdfs) != "")] <- names(scdfs)[which(names(scdfs) != "")]
   
+  # check class scdf validity
   if (.opt$rigorous_class_check) {
     results <- .check_scdf(data)
     if (!isTRUE(results)) {
-      warning(results)
+      if(length(results$warnings) > 0) {
+        warning(results$warnings)
+      }
+      if(length(results$errors) > 0) {
+        stop(results$errors)
+      }
     } 
   }
   
