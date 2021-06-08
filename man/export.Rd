@@ -5,6 +5,7 @@
 \alias{export.scdf}
 \alias{export.sc}
 \alias{export.sc_desc}
+\alias{export.sc_hplm}
 \title{Export scan objects to html or latex}
 \usage{
 export(object, ...)
@@ -17,7 +18,6 @@ export(object, ...)
   kable_styling_options = list(),
   kable_options = list(),
   cols,
-  round = 2,
   ...
 )
 
@@ -44,6 +44,18 @@ export(object, ...)
   flip = FALSE,
   ...
 )
+
+\method{export}{sc_hplm}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  round = 2,
+  nice = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{An scdf or an object exported from a scan function.}
@@ -64,9 +76,9 @@ the output will be written into this file.}
 \item{cols}{Defines which columns are included when a scdf is exported. It is either a vector
 with variable names or the string "main" will select the central variables.}
 
-\item{round}{value for the digits argument passed to the internally used round function.}
-
 \item{flip}{If TRUE, some objects are exported with rows and columns flipped.}
+
+\item{round}{value for the digits argument passed to the internally used round function.}
 }
 \value{
 Returns a specif formated html (or latex).

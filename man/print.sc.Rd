@@ -7,6 +7,7 @@
 \alias{print.sc_bctau}
 \alias{print.sc_desc}
 \alias{print.sc_design}
+\alias{print.sc_hplm}
 \title{Print method for scan objects}
 \usage{
 \method{print}{sc}(x, ...)
@@ -20,6 +21,8 @@
 \method{print}{sc_desc}(x, ...)
 
 \method{print}{sc_design}(x, ...)
+
+\method{print}{sc_hplm}(x, ...)
 }
 \arguments{
 \item{x}{Object}
