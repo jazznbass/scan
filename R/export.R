@@ -425,7 +425,7 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   }
   kable_options$caption <- caption
   
-  Summary <- summary(object$hplm)
+  summary_model <- summary(object$hplm)
   if (object$model$ICC) {
     ICC <- sprintf(
       "<i>ICC</i> = %.3f, <i>L</i> = %.1f, <i>p</i> = %.3f", 
@@ -448,7 +448,9 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   
   colnames(out) <- c("B", "SE", "df", "t", "p")
   
-  md <- data.frame("SD" = round(as.numeric(VarCorr(object$hplm)[, "StdDev"]), 3))
+  md <- data.frame(
+    "SD" = round(as.numeric(VarCorr(object$hplm)[, "StdDev"]), 3)
+  )
   rownames(md) <- names(VarCorr(object$hplm)[, 2])
 
   row.names(md) <- .plm.row.names(row.names(md), object)
@@ -460,11 +462,18 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
       object$LR.test[[1]]$df <- NA
     }
     
-    md$L <- c(round(unlist(lapply(object$LR.test, function(x) x$L.Ratio[2])), 2), NA)
-    md$df <- c(unlist(lapply(object$LR.test, function(x) {
-      x$df[2] - x$df[1]
-    })), NA)
-    md$p <- c(round(unlist(lapply(object$LR.test, function(x) x$"p-value"[2])), 3), NA)
+    md$L <- c(
+      round(unlist(lapply(object$LR.test, function(x) x$L.Ratio[2])), 2), 
+      NA
+    )
+    md$df <- c(
+      unlist(lapply(object$LR.test, function(x) {x$df[2] - x$df[1]})), 
+      NA
+    )
+    md$p <- c(
+      round(unlist(lapply(object$LR.test, function(x) x$"p-value"[2])), 3), 
+      NA
+    )
   }
   
   if (nice) {
@@ -490,8 +499,8 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   tmp_row <- (nrow_out + 1):(nrow_out + nrow(md) + 1)
   out[tmp_row, 1:ncol(md)] <- rbind(colnames(md), md, stringsAsFactors = FALSE)
   
-  out[nrow_out + nrow(md) + 2, 1:2] <- c("AIC", as.character(round(Summary$AIC, 1)))
-  out[nrow_out + nrow(md) + 3, 1:2] <- c("BIC", as.character(round(Summary$BIC, 1)))
+  out[nrow_out + nrow(md) + 2, 1:2] <- c("AIC", as.character(round(summary_model$AIC, 1)))
+  out[nrow_out + nrow(md) + 3, 1:2] <- c("BIC", as.character(round(summary_model$BIC, 1)))
   if (!is.null(object$ICC)) {
     out[nrow_out + nrow(md) + 4, 1:4] <-
       c(
