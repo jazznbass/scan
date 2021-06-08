@@ -32,27 +32,28 @@ describe <- function(data, dvar, pvar, mvar) {
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
 
-  data.list <- .SCprepareData(data)
+  data_list <- .SCprepareData(data)
 
-  N <- length(data.list)
-  case.names <- names(data.list)
+  N <- length(data_list)
+  
+  case_names <- .case.names(names(data_list), length(data_list))
 
-  design <- rle(as.character(data.list[[1]][[pvar]]))$values
+  design <- rle(as.character(data_list[[1]][[pvar]]))$values
 
   while (any(duplicated(design))) {
     design[anyDuplicated(design)] <-
       paste0(design[anyDuplicated(design)], ".phase", anyDuplicated(design))
   }
 
-  VAR <- c("n", "mis", "m", "md", "sd", "mad", "min", "max", "trend")
-  VAR2 <- paste0(rep(VAR, each = length(design)), ".", design)
+  vars <- c("n", "mis", "m", "md", "sd", "mad", "min", "max", "trend")
+  vars <- paste0(rep(vars, each = length(design)), ".", design)
 
-  desc <- as.data.frame(matrix(nrow = N, ncol = length(VAR2)))
-  colnames(desc) <- VAR2
-  rownames(desc) <- case.names
+  desc <- as.data.frame(matrix(nrow = N, ncol = length(vars)))
+  colnames(desc) <- vars
+  desc <- data.frame(Case = case_names, desc)
 
   for (case in 1:N) {
-    data <- data.list[[case]]
+    data <- data_list[[case]]
     for (i in 1:length(design)) {
       phases <- .phasestructure(data, pvar = pvar)
 
@@ -88,6 +89,6 @@ describe <- function(data, dvar, pvar, mvar) {
 #' @rdname describe
 #' @export
 describeSC <- function(...) {
-  #.deprecated_warning("describe", "describeSC")
+  .deprecated_warning("describe", "describeSC")
   describe(...)
 }

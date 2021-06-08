@@ -34,34 +34,34 @@ overlap <- function(data, dvar, pvar, mvar,
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
   
-  data.list <- .SCprepareData(data)
-  keep <- .keepphasesSC(data.list, phases = phases, pvar = pvar)
-  data.list <- keep$data
+  data_list <- .SCprepareData(data)
+  keep <- .keepphasesSC(data_list, phases = phases, pvar = pvar)
+  data_list <- keep$data
   
-  design <- rle(as.character(data.list[[1]][, pvar]))$values
-  N <- length(data.list)
+  design <- rle(as.character(data_list[[1]][, pvar]))$values
+  N <- length(data_list)
 
-  case.names <- names(data.list)
+  case_names <- .case.names(names(data_list), length(data_list))
 
-  VAR <- c(
-    "PND", "PEM", "PET", "NAP", "NAP.rescaled", "PAND", "TAU_U", 
+  vars <- c(
+    "PND", "PEM", "PET", "NAP", "NAP rescaled", "PAND", "Tau_U", 
     "Base_Tau",  "Diff_mean", "Diff_trend", "SMD", "Hedges_g"
   )
-  d.f <- as.data.frame(matrix(nrow = N, ncol = length(VAR)))
-  colnames(d.f) <- VAR
-  rownames(d.f) <- c(case.names)
+  df <- as.data.frame(matrix(nrow = N, ncol = length(vars)))
+  colnames(df) <- vars
+  df <- data.frame(Case = case_names, df, check.names = FALSE)
   
   for(i in 1:N) {
-    data <- data.list[i]
-    d.f$PND[i] <- pnd(data, decreasing = decreasing)$PND
-    d.f$PEM[i] <- pem(data, decreasing = decreasing, binom.test = FALSE, chi.test = FALSE)$PEM
-    d.f$PET[i] <- pet(data, decreasing = decreasing)$PET
-    d.f$NAP[i] <- nap(data, decreasing = decreasing)$nap$NAP[1]
-    d.f$NAP.rescaled[i] <- nap(data, decreasing = decreasing)$nap$Rescaled[1]
-    d.f$PAND[i] <- pand(data, decreasing = decreasing)$PAND
-    #d.f$TAU_U[i] <- tauUSC(data)$Overall_tau_u[2]
-    d.f$TAU_U[i] <- tau_u(data)$table[[1]]["A vs. B + Trend B - Trend A", "Tau"]
-    d.f$Base_Tau[i] <- corrected_tau(data)$tau
+    data <- data_list[i]
+    df$PND[i] <- pnd(data, decreasing = decreasing)$PND
+    df$PEM[i] <- pem(data, decreasing = decreasing, binom.test = FALSE, chi.test = FALSE)$PEM
+    df$PET[i] <- pet(data, decreasing = decreasing)$PET
+    df$NAP[i] <- nap(data, decreasing = decreasing)$nap$NAP[1]
+    df$"NAP rescaled"[i] <- nap(data, decreasing = decreasing)$nap$Rescaled[1]
+    df$PAND[i] <- pand(data, decreasing = decreasing)$PAND
+    #df$TAU_U[i] <- tauUSC(data)$Overall_tau_u[2]
+    df$Tau_U[i] <- tau_u(data)$table[[1]]["A vs. B + Trend B - Trend A", "Tau"]
+    df$Base_Tau[i] <- corrected_tau(data)$tau
     
     data <- data[[1]]
     A <- data[data[, pvar] == "A", dvar]
@@ -70,17 +70,17 @@ overlap <- function(data, dvar, pvar, mvar,
     B.MT <- data[data[, pvar] == "B", mvar]
     n <- sum(!is.na(c(A, B)))
     
-    d.f$Diff_mean[i] <- mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)
-    d.f$SMD[i] <- (mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)) / sd(A, na.rm = TRUE)
+    df$Diff_mean[i] <- mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)
+    df$SMD[i] <- (mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)) / sd(A, na.rm = TRUE)
     
-    d.f$Hedges_g[i] <- d.f$SMD[i] * (1 - (3 / (4 * n - 9)))
+    df$Hedges_g[i] <- df$SMD[i] * (1 - (3 / (4 * n - 9)))
     
-    d.f$Diff_trend[i] <- coef(lm(B ~ I(B.MT - B.MT[1] + 1)))[2] - coef(lm(A ~ I(A.MT - A.MT[1] + 1)))[2]
+    df$Diff_trend[i] <- coef(lm(B ~ I(B.MT - B.MT[1] + 1)))[2] - coef(lm(A ~ I(A.MT - A.MT[1] + 1)))[2]
     
   }
   
   out <- list(
-    overlap = d.f, 
+    overlap = df, 
     phases.A = keep$phases.A, 
     phases.B = keep$phases.B, 
     design = keep$design[[1]]$values
@@ -88,10 +88,10 @@ overlap <- function(data, dvar, pvar, mvar,
   
   class(out) <- c("sc", "overlap")
   
-  ATTRIBUTES <- attributes(data.list)[[.opt$scdf]]
-  attr(out, .opt$phase) <- ATTRIBUTES[[.opt$phase]]
-  attr(out, .opt$mt)    <- ATTRIBUTES[[.opt$mt]]
-  attr(out, .opt$dv)    <- ATTRIBUTES[[.opt$dv]]
+  source_attributes <- attributes(data_list)[[.opt$scdf]]
+  attr(out, .opt$phase) <- source_attributes[[.opt$phase]]
+  attr(out, .opt$mt)    <- source_attributes[[.opt$mt]]
+  attr(out, .opt$dv)    <- source_attributes[[.opt$dv]]
   
   out
 }
