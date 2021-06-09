@@ -132,7 +132,7 @@ cdc <- function(data,
       cdc_p[i]  <- binom.test(cdc_exc[i], cdc_nb[i], alternative = "greater")$p.value
       cdc[i]    <- if(cdc_p[i] < .05) {"systematic change"} else {"no change"}
     }
-    cdc_all <- if(length(cdc_p[cdc_p > .05]) / length(cdc_p) <= .2) {
+    cdc_all <- if(length(cdc_p[cdc_p > .05]) / length(cdc_p) <= .25) {
       "systematic change"
     } else {
       "no change"
