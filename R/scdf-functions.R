@@ -1,4 +1,4 @@
-#' Combine single-case data frames into a multiple case study
+#' Combine single-case data frames
 #'
 #' @param ... scdf objects
 #' @param dvar Character string. Name of the dependent variable. Defaults to the dependent variable of the first case provided.
