@@ -3,7 +3,7 @@
 \name{combine}
 \alias{combine}
 \alias{c.scdf}
-\title{Combine single-case data frames into a multiple case study}
+\title{Combine single-case data frames}
 \usage{
 combine(..., dvar = NULL, pvar = NULL, mvar = NULL)
 
@@ -22,5 +22,5 @@ combine(..., dvar = NULL, pvar = NULL, mvar = NULL)
 A scdf. If not set differently, the attributes of this scdf are copied from the first scdf provided (i.e the first argument of the function).
 }
 \description{
-Combine single-case data frames into a multiple case study
+Combine single-case data frames
 }

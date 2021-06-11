@@ -8,31 +8,35 @@
 \alias{print.sc_desc}
 \alias{print.sc_design}
 \alias{print.sc_hplm}
+\alias{print.sc_overlap}
 \title{Print method for scan objects}
 \usage{
-\method{print}{sc}(x, ...)
+\method{print}{sc}(x, digits = "auto", ...)
 
-\method{print}{sc_ac}(x, ...)
+\method{print}{sc_ac}(x, digits = "auto", ...)
 
 \method{print}{sc_cdc}(x, nice = TRUE, ...)
 
 \method{print}{sc_bctau}(x, nice = TRUE, ...)
 
-\method{print}{sc_desc}(x, digits = 3, ...)
+\method{print}{sc_desc}(x, digits = "auto", ...)
 
 \method{print}{sc_design}(x, ...)
 
 \method{print}{sc_hplm}(x, ...)
+
+\method{print}{sc_overlap}(x, digits = "auto", ...)
 }
 \arguments{
 \item{x}{Object}
+
+\item{digits}{The minimum number of significant digits to be use. 
+If set to "auto" (default), values are predefnied.}
 
 \item{...}{Further parameters passed to the print function}
 
 \item{nice}{If set TRUE (default) output values are rounded and optimized for
 publication tables.}
-
-\item{digits}{The minimum number of significant digits to be use}
 }
 \description{
 Print method for scan objects

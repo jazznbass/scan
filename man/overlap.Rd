@@ -33,7 +33,7 @@ and 4 (as B). Default is \code{phases = c("A","B")}.}
 \value{
 \item{overlap}{A data frame consisting of the following indices for
 each single-case for all cases: PND, PEM, PET, NAP, PAND, Tau-U (A vs. B -
-Trend A), Diff_mean, Diff_trend, SMD.}
+Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.}
 \item{phases.A}{Selection for A phase.}
 \item{phases.B}{Selection for B phase.}
 \item{design}{Phase design.}
