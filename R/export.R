@@ -150,8 +150,10 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
     if (is.na(caption)) caption <- c(
       "Overlap indices. ",
       .stringPhasesSC(
-        object$design[object$phases.A], 
-        object$design[object$phases.B]
+       object$phases.A, 
+       object$phases.B
+        #object$design[object$phases.A], 
+        #object$design[object$phases.B]
       )
     )
     
@@ -178,14 +180,16 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
     n.phases <- 2
     out <- object$overlap
     
-    colnames(out)[6] <- "NAP-R"
-    colnames(out)[8] <- "Tau-U"
-    colnames(out)[10] <- "Delta M"
-    colnames(out)[11] <- "Delta Trend"
-    colnames(out)[13] <- "Hedges g"
+    colnames(out)[7] <- "NAP-R"
+    colnames(out)[9] <- "Tau-U"
+    colnames(out)[10] <- "Base Tau"
+    colnames(out)[11] <- "Delta M"
+    colnames(out)[12] <- "Delta Trend"
+    colnames(out)[14] <- "Hedges g"
     
     if (isTRUE(flip)) {
       cases <- out$Case
+      out[-2:-1] <- round(out[-2:-1], kable_options$digits)
       out <- t(out[-1])
       colnames(out) <- cases
     }
@@ -350,6 +354,7 @@ export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
   }
   
   if (flip) {
+    object$descriptives[-1:-2] <- round(object$descriptives[-1:-2], kable_options$digits)
     out <- as.data.frame(t(object$descriptives[-1]))
     colnames(out) <- object$descriptives$Case
     rownames(out) <- gsub("mis", "Missing", rownames(out))
@@ -371,7 +376,8 @@ export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
   if (!flip) {
     n_phases <- length(object$design)
     out <- object$descriptives
-    colnames(out) <- c("Case", rep(object$design, 9))
+    colnames(out) <- c("Case", "Design", rep(object$design, 9))
+    rownames(out) <- NULL
     kable_options$align <- c("l", rep("c", 9 * n_phases))
     kable_options$x <- out
     table <- do.call(kable, kable_options)
@@ -380,7 +386,7 @@ export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
     table <- add_header_above(
       table,
       c(
-        " " = 1, "n" = n_phases,
+        " " = 2, "n" = n_phases,
         "Missing" = n_phases,
         "M" = n_phases,
         "Median" = n_phases,

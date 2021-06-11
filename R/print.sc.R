@@ -1,11 +1,12 @@
 #' Print method for scan objects
 #'
 #' @param x Object 
-#' @param digits The minimum number of significant digits to be use
+#' @param digits The minimum number of significant digits to be use. 
+#' If set to "auto" (default), values are predefnied.
 #' @param ... Further parameters passed to the print function
 #' @export
 
-print.sc <- function(x, ...) {
+print.sc <- function(x, digits = "auto", ...) {
   
   value <- class(x)[2]
   note <- FALSE
@@ -15,13 +16,16 @@ print.sc <- function(x, ...) {
 
 # baseline corrected tau --------------------------------------------------
   if (value == "base_corr_tau") {
+    
+    if (digits == "auto") digits <- 2
+    
     cat("Baseline corrected tau\n\n")
     cat("Auto correlation in baseline:\n")
     cat("tau =", round(x$auto_tau$tau, 2))
     cat("; p =", round(x$auto_tau$p, 3), "\n\n")
     
     cat("Baseline corrected tau:\n")
-    cat("tau =", round(x$tau, 2))
+    cat("tau =", round(x$tau, digits))
     cat("; p =", round(x$p, 3),"\n\n")
     if (x$correction)  cat("Baseline correction applied.\n\n")
     if (!x$correction) cat("Baseline correction not applied.\n\n")
@@ -76,18 +80,16 @@ if (value == "mpr") {
 # overlap -----------------------------------------------------------------
 
   if (value == "overlap") {
-    cat("Overlap Indices\n\n")
-    cat("Design: ", x$design, "\n")
-    cat(.stringPhasesSC(x$phases.A, x$phases.B),"\n\n")
-    out <- as.data.frame(round(t(x$overlap[-1]), 2))
-    colnames(out) <- x$overlap$Case
-    print(out, ...)
-    .note_vars(x)
+    class(x) <- "sc_overlap"
+    print(x, ...)
   }
 
 # TAU-U -------------------------------------------------------------------
 
   if (value == "TAU-U") {	
+    
+    if (digits == "auto") digits <- 3
+    
     cat("Tau-U\n")
     cat("Method:", x$method, "\n")
     cat("Applied Kendall's Tau-", x$tau_method, "\n\n", sep = "")
@@ -96,7 +98,7 @@ if (value == "mpr") {
     
     if (length(out) > 1) {
       cat("Overall Tau-U: \n")
-      print(x$Overall_tau_u, row.names = FALSE, digits = 3)
+      print(x$Overall_tau_u, row.names = FALSE, digits = digits)
       cat("\n")
     }
     
@@ -118,7 +120,7 @@ if (value == "mpr") {
     
     for(i in seq_along(out)) {
       cat("Case:", names(out)[i], "\n")
-      print(out[[i]], digits = 3)
+      print(out[[i]], digits = digits)
       cat("\n")
     }
   }
@@ -169,8 +171,11 @@ if (value == "mpr") {
 # NAP ---------------------------------------------------------------------
 
   if (value == "NAP") {
+    
+    if (digits == "auto") digits <- 2
+    
     cat("Nonoverlap of All Pairs\n\n")
-    print(x$nap, row.names = FALSE, digits = 2)
+    print(x$nap, row.names = FALSE, digits = digits)
   }
 
 # PEM ---------------------------------------------------------------------
@@ -440,11 +445,19 @@ if (value == "mpr") {
 
 #' @rdname print.sc
 #' @export
-print.sc_ac <- function(x, ...) {
+print.sc_ac <- function(x, digits = "auto", ...) {
+  
+  if (digits == "auto") digits <- 2
+  
   cat("Autocorrelations\n\n")
+  
   x <- x$autocorr
-  x[, -c(1, 2)] <- round(x[, -c(1, 2)], 2)
-  print(x, row.names = FALSE)
+  for (i in 1:length(x)) {
+    x[[i]][, -1] <- round(x[[i]][, -1], digits)
+    cat(names(x)[i], "\n")
+    print(x[[i]], row.names = FALSE)
+    cat("\n")
+  }
 }
 
 #' @rdname print.sc
@@ -512,16 +525,18 @@ print.sc_bctau <- function(x, nice = TRUE, ...) {
 #' @param nice If set TRUE (default) output values are rounded and optimized for
 #' publication tables.
 #' @export
-print.sc_desc <- function(x, digits = 3, ...) {
+print.sc_desc <- function(x, digits = "auto", ...) {
 
+  if (digits == "auto") digits <- 3
+  
   cat("Describe Single-Case Data\n\n")
-  cat("Design: ", x$design, "\n\n")
+  x$descriptives[-1:-2] <- round(x$descriptives[-1:-2], digits)
   out <- as.data.frame(t(x$descriptives[-1]))
   colnames(out) <- x$descriptives$Case
   
-  print(out[1:(2 * length(x$design)), , drop = FALSE], digits = digits, ...)
+  print(out[1:(2 * length(x$design) + 1), , drop = FALSE], digits = digits, ...)
   cat("\n")
-  print(out[-(1:(2 * length(x$design))),, drop = FALSE], digits = digits, ...)
+  print(out[-(1:(2 * length(x$design) + 1)),, drop = FALSE], digits = digits, ...)
   .note_vars(x)
 
 }
@@ -601,6 +616,34 @@ print.sc_hplm <- function(x, ...) {
     
     print(md, na.print = "-", ...)
 }
+
+
+#' @rdname print.sc
+#' @export
+print.sc_overlap <- function(x, digits = "auto", ...) {
+  
+  if (digits == "auto") {
+    digits_1 <- 0
+    digits_2 <- 2
+  } else {
+    digits_1 <- digits
+    digits_2 <- digits
+  }
+  
+  cat("Overlap Indices\n\n")
+  #cat("Design: ", x$design, "\n")
+  cat(.stringPhasesSC(x$phases.A, x$phases.B),"\n\n")
+  
+  x$overlap[3:8] <- round(x$overlap[3:8], digits_1)
+  x$overlap[9:14] <- round(x$overlap[9:14], digits_2)
+  
+  out <- as.data.frame(t(x$overlap[-1]))
+  colnames(out) <- x$overlap$Case
+  
+  print(out, ...)
+  .note_vars(x)
+}
+
 
 .note_vars <- function(x) {
   v <- attr(x, .opt$dv) != "values"
