@@ -6,6 +6,7 @@
 
 - `is.scdf()`: Tests if an object is of type "scdf" or not.
 - `check_scdf()`: Checks for the validity of an scdf object (mainly used for internal test)
+- `convert()`: Creates an scdf syntax file from an scdf object.
 - `cdc`: Applies the Conservative Dual-Criterion Method (CDC; Fisher, Kelley, & Lomas, 2003) to scdf objects.
 
 ``` {.r}
