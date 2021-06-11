@@ -7,7 +7,7 @@
 #' @return 
 #' \item{overlap}{A data frame consisting of the following indices for
 #' each single-case for all cases: PND, PEM, PET, NAP, PAND, Tau-U (A vs. B -
-#' Trend A), Diff_mean, Diff_trend, SMD.}
+#' Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.}
 #' \item{phases.A}{Selection for A phase.}
 #' \item{phases.B}{Selection for B phase.}
 #' \item{design}{Phase design.}
@@ -35,10 +35,13 @@ overlap <- function(data, dvar, pvar, mvar,
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
   
   data_list <- .SCprepareData(data)
+  
   keep <- .keepphasesSC(data_list, phases = phases, pvar = pvar)
   data_list <- keep$data
   
-  design <- rle(as.character(data_list[[1]][, pvar]))$values
+  designs <- lapply(keep$designs, function(x) x$values)
+  designs <- sapply(designs, function(x) paste0(x, collapse = "-"))
+  
   N <- length(data_list)
 
   case_names <- .case.names(names(data_list), length(data_list))
@@ -49,7 +52,7 @@ overlap <- function(data, dvar, pvar, mvar,
   )
   df <- as.data.frame(matrix(nrow = N, ncol = length(vars)))
   colnames(df) <- vars
-  df <- data.frame(Case = case_names, df, check.names = FALSE)
+  df <- data.frame(Case = case_names, Design = designs, df, check.names = FALSE)
   
   for(i in 1:N) {
     data <- data_list[i]
@@ -66,8 +69,8 @@ overlap <- function(data, dvar, pvar, mvar,
     data <- data[[1]]
     A <- data[data[, pvar] == "A", dvar]
     B <- data[data[, pvar] == "B", dvar]
-    A.MT <- data[data[, pvar] == "A", mvar]
-    B.MT <- data[data[, pvar] == "B", mvar]
+    mtA <- data[data[, pvar] == "A", mvar]
+    mtB <- data[data[, pvar] == "B", mvar]
     n <- sum(!is.na(c(A, B)))
     
     df$Diff_mean[i] <- mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)
@@ -75,15 +78,16 @@ overlap <- function(data, dvar, pvar, mvar,
     
     df$Hedges_g[i] <- df$SMD[i] * (1 - (3 / (4 * n - 9)))
     
-    df$Diff_trend[i] <- coef(lm(B ~ I(B.MT - B.MT[1] + 1)))[2] - coef(lm(A ~ I(A.MT - A.MT[1] + 1)))[2]
+    df$Diff_trend[i] <- coef(lm(B ~ I(mtB - mtB[1] + 1)))[2] - 
+                        coef(lm(A ~ I(mtA - mtA[1] + 1)))[2]
     
   }
   
   out <- list(
     overlap = df, 
-    phases.A = keep$phases.A, 
-    phases.B = keep$phases.B, 
-    design = keep$design[[1]]$values
+    phases.A = keep$phases_A, 
+    phases.B = keep$phases_B 
+    #design = keep$design[[1]]$values
   )
   
   class(out) <- c("sc", "overlap")

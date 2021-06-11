@@ -38,29 +38,37 @@ describe <- function(data, dvar, pvar, mvar) {
   
   case_names <- .case.names(names(data_list), length(data_list))
 
-  design <- rle(as.character(data_list[[1]][[pvar]]))$values
-
+  designs <- lapply(
+    data_list, 
+    function(x) rle(as.character(x[[pvar]]))$values
+  )
+  
+  design <- unique(unlist(designs))
+  
+  designs <- sapply(designs, function(x) paste0(x, collapse = " "))
+  
   while (any(duplicated(design))) {
     design[anyDuplicated(design)] <-
       paste0(design[anyDuplicated(design)], ".phase", anyDuplicated(design))
   }
-
+  
   vars <- c("n", "mis", "m", "md", "sd", "mad", "min", "max", "trend")
   vars <- paste0(rep(vars, each = length(design)), ".", design)
-
+  
+  
   desc <- as.data.frame(matrix(nrow = N, ncol = length(vars)))
   colnames(desc) <- vars
-  desc <- data.frame(Case = case_names, desc)
+  desc <- data.frame(Case = case_names, Design = designs, desc)
 
   for (case in 1:N) {
     data <- data_list[[case]]
-    for (i in 1:length(design)) {
-      phases <- .phasestructure(data, pvar = pvar)
+    phases <- .phasestructure(data, pvar = pvar)
+    for (i in 1:length(phases$values)) {
 
       x <- data[[mvar]][phases$start[i]:phases$stop[i]]
       y <- data[[dvar]][phases$start[i]:phases$stop[i]]
-      phase <- design[i]
 
+      phase <- phases$values[i]
       desc[case, paste0("n.", phase)] <- length(y)
       desc[case, paste0("mis.", phase)] <- sum(is.na(y), na.rm = TRUE)
       desc[case, paste0("m.", phase)] <- mean(y, na.rm = TRUE)
