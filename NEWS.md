@@ -2,6 +2,10 @@
 
 ## Major changes
 
+- scdf files now allow to combine studies with different phase designs.
+Several functions have been adapted to handle cases with differing designs in a 
+mutual analysis.
+
 ### New functions
 
 - `is.scdf()`: Tests if an object is of type "scdf" or not.

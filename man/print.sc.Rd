@@ -9,6 +9,7 @@
 \alias{print.sc_design}
 \alias{print.sc_hplm}
 \alias{print.sc_overlap}
+\alias{print.sc_mplm}
 \title{Print method for scan objects}
 \usage{
 \method{print}{sc}(x, digits = "auto", ...)
@@ -26,6 +27,8 @@
 \method{print}{sc_hplm}(x, ...)
 
 \method{print}{sc_overlap}(x, digits = "auto", ...)
+
+\method{print}{sc_mplm}(x, digits = "auto", std = FALSE, ...)
 }
 \arguments{
 \item{x}{Object}
