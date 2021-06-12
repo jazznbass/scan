@@ -98,7 +98,13 @@ plot.scdf <- function(...) {
 
 #' @rdname plot.scdf
 #' @export
-plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, lines = NULL, marks = NULL, phase.names = NULL, xlab = NULL, ylab = NULL, main = "", case.names = NULL, style = getOption("scan.plot.style"), ...) {
+plotSC <- function(data, dvar, pvar, mvar, 
+                   ylim = NULL, xlim = NULL, xinc = 1, 
+                   lines = NULL, marks = NULL, 
+                   phase.names = NULL, xlab = NULL, ylab = NULL, 
+                   main = "", case.names = NULL, 
+                   style = getOption("scan.plot.style"), 
+                   ...) {
   
   
   # prepare scdf ------------------------------------------------------------
@@ -197,7 +203,7 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
   
   # Plotting cases ----------------------------------------------------------
   
-  par(mgp = c(2,1,0))
+  par(mgp = c(2, 1, 0))
   
   for(case in 1:N) {
     data <- data_list[[case]]
@@ -224,38 +230,54 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
       xticks_pos <- seq(xlim[1], xlim[2], 1)
       axis(side = 1, at = xticks_pos, labels = FALSE)
       text(
-        seq(xlim[1], xlim[2], xinc),  par("usr")[3], cex = style$cex.axis, labels = seq(xlim[1], 
-                                                                                        xlim[2], xinc), srt = 0, pos = 1, offset = style$cex.axis, xpd = TRUE
+        x = seq(xlim[1], xlim[2], xinc),  
+        y = par("usr")[3], 
+        cex = style$cex.axis, 
+        labels = seq(xlim[1], xlim[2], xinc), 
+        srt = 0, 
+        pos = 1, 
+        offset = style$cex.axis, 
+        xpd = TRUE
       )
       
       yticks_pos <- axTicks(2, usr = c(y.lim[1], ylim[2]))
       axis(side = 2, at = yticks_pos, labels = NA)
       text(
-        par("usr")[1], yticks_pos, labels = yticks_pos, offset = style$cex.axis, srt = 0, pos = 2, 
-        cex = style$cex.axis, xpd = TRUE
+        x = par("usr")[1], 
+        y = yticks_pos, 
+        labels = yticks_pos, 
+        offset = style$cex.axis, 
+        srt = 0, 
+        pos = 2, 
+        cex = style$cex.axis, 
+        xpd = TRUE
       )
       
       if (style$ylab.orientation == 0) 
-        mtext(ylab, side = 2, line = 2, las = 0, cex = style$cex.lab)
+        mtext(text = ylab, side = 2, line = 2, las = 0, cex = style$cex.lab)
       
-      if (style$ylab.orientation == 1)
-        mtext(ylab, side = 2, line = 2, las = 1, at = max(y.lim), cex = style$cex.lab)
+      if (style$ylab.orientation == 1) {
+        mtext(
+          text = ylab, side = 2, line = 2, las = 1, at = max(y.lim), 
+          cex = style$cex.lab
+        )
+      }
       
-      mtext(xlab, side = 1, line = 2, las = 0, cex = style$cex.lab)
+      mtext(text = xlab, side = 1, line = 2, las = 0, cex = style$cex.lab)
     } 
     
     # multple plots, first to secondlast
     if (N > 1 && case != N) {
-      # first plot
-      if (case == 1) {
-        if (main != "") 
+      if (case == 1) { # first plot
+        if (main != "") {
           par(mai = c(style$mai[1] * 2 / 6, style$mai[2], style$mai[3] * 3, style$mai[4]))
-        if (main == "") 
-          par(mai = c(style$mai[1] * 2 / 6, style$mai[2], style$mai[3] * 3, style$mai[4])) #par(mai = c(0.2, 0.82, 0.6, 0.42))
+        }
+        if (main == "") { 
+          par(mai = c(style$mai[1] * 2 / 6, style$mai[2], style$mai[3] * 3, style$mai[4])) 
+        }
+      } else { # middle plot
+        par(mai = c(style$mai[1] * 4 / 6, style$mai[2], style$mai[3] * 2, style$mai[4])) 
       }
-      # middle plot
-      else  
-        par(mai = c(style$mai[1] * 4 / 6, style$mai[2], style$mai[3] * 2, style$mai[4])) #par(mai = c(0.4, 0.82, 0.4, 0.42))
       
       plot(
         data[[mvar]], data[[dvar]], xaxt = "n", yaxt = "n", type = "n", 
@@ -265,8 +287,14 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
       yticks_pos <- axTicks(2, usr = c(y.lim[1], ylim[2]))
       axis(side = 2, at = yticks_pos, labels = NA)
       text(
-        par("usr")[1], yticks_pos, labels = yticks_pos, offset = style$cex.axis, srt = 0, pos = 2, 
-        cex = style$cex.axis, xpd = TRUE
+        x = par("usr")[1], 
+        y = yticks_pos, 
+        labels = yticks_pos, 
+        offset = style$cex.axis, 
+        srt = 0, 
+        pos = 2, 
+        cex = style$cex.axis, 
+        xpd = TRUE
       )
       
       if (style$ylab.orientation == 0) 
@@ -289,14 +317,25 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
       xticks_pos <- seq(xlim[1], xlim[2], 1)
       axis(side = 1, at = xticks_pos, labels = FALSE)
       text(
-        seq(xlim[1], xlim[2], xinc),  par("usr")[3], cex = style$cex.axis, labels = seq(xlim[1], 
-                                                                                        xlim[2], xinc), srt = 0, pos = 1, offset = style$cex.axis, xpd = TRUE
+        x = seq(xlim[1], xlim[2], xinc),  
+        y = par("usr")[3], 
+        cex = style$cex.axis, 
+        labels = seq(xlim[1], xlim[2], xinc), 
+        srt = 0, 
+        pos = 1, 
+        offset = style$cex.axis, 
+        xpd = TRUE
       )
       
       yticks_pos <- axTicks(2, usr = c(y.lim[1], ylim[2]))
       axis(side = 2, at = yticks_pos, labels = NA)
       text(
-        par("usr")[1], yticks_pos, labels = yticks_pos, offset = style$cex.axis, srt = 0, pos = 2, 
+        x = par("usr")[1], 
+        y = yticks_pos, 
+        labels = yticks_pos, 
+        offset = style$cex.axis, 
+        srt = 0, 
+        pos = 2, 
         cex = style$cex.axis, xpd = TRUE
       )
       
@@ -335,7 +374,7 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
         if (i > 1) xmin <- xmin - 0.5
         if (i == 1) xmin <- usr[1]
         .col <- col[which(type_phases == design$values[i])[1]]
-        rect(xmin, usr[3], xmax, usr[4],col = .col, border = NA)
+        rect(xmin, usr[3], xmax, usr[4], col = .col, border = NA)
       }
     }
     
@@ -383,10 +422,18 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
     for(i in 1:length(design$values)) {
       x <- data[design$start[i]:design$stop[i], mvar]
       y <- data[design$start[i]:design$stop[i], dvar]
-      if (style$col.lines != "")
-        lines(x, y, type = "l", pch = style$pch, lty = style$lty, lwd = style$lwd, col = style$col.lines, ...)
-      if (style$col.dots != "")
-        lines(x, y, type = "p", pch = style$pch, lty = style$lty, lwd = style$lwd, col = style$col.dots, ...)
+      if (style$col.lines != "") {
+        lines(
+          x, y, type = "l", pch = style$pch, lty = style$lty, lwd = style$lwd, 
+          col = style$col.lines, ...
+        )
+      }
+      if (style$col.dots != "") {
+        lines(
+          x, y, type = "p", pch = style$pch, lty = style$lty, lwd = style$lwd, 
+          col = style$col.dots, ...
+        )
+      }
     }
     
     if (case == 1) title(main)
@@ -456,9 +503,17 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
       #  }
       #}
       
-      text(data[,mvar], data[,dvar], label = annotations.label, col = annotations.col, pos = annotations.pos, offset = annotations.offset, cex = annotations.cex, ...)
+      text(
+        x = data[,mvar], 
+        y = data[,dvar], 
+        label = annotations.label, 
+        col = annotations.col, 
+        pos = annotations.pos, 
+        offset = annotations.offset, 
+        cex = annotations.cex, 
+        ...
+      )
     }
-    
     
     # lines -------------------------------------------------------------------
     
@@ -486,14 +541,29 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
           x <- data[design$start[i]:design$stop[i], mvar]
           y <- data[design$start[i]:design$stop[i], dvar]
           reg <- lm(y~x)
-          lines(c(min(x), max(x)), c(reg$coefficients[1] + min(x) * reg$coefficients[2], reg$coefficients[1] + max(x) * reg$coefficients[2]), lty = lty.line, col = col.line, lwd = lwd.line)
+          lines(
+            x = c(min(x), max(x)), 
+            y = c(
+              reg$coefficients[1] + min(x) * reg$coefficients[2], 
+              reg$coefficients[1] + max(x) * reg$coefficients[2]
+            ), 
+            lty = lty.line, 
+            col = col.line, 
+            lwd = lwd.line
+          )
         }
       }
       if (any(names(lines) == "median")) {
         for(i in 1:length(design$values)) {
           x <- data[design$start[i]:design$stop[i], mvar]
           y <- data[design$start[i]:design$stop[i], dvar]
-          lines(c(min(x), max(x)), c(median(y, na.rm = TRUE), median(y, na.rm = TRUE)), lty = lty.line, col = col.line, lwd = lwd.line)
+          lines(
+            x = c(min(x), max(x)), 
+            y = c(median(y, na.rm = TRUE), median(y, na.rm = TRUE)), 
+            lty = lty.line, 
+            col = col.line, 
+            lwd = lwd.line
+          )
         }      
         #labelxy <- c(max(Bx), median(B,na.rm = TRUE))
         #label <- "Median"
@@ -506,7 +576,16 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
         for(i in 1:length(design$values)) {
           x <- data[design$start[i]:design$stop[i],mvar]
           y <- data[design$start[i]:design$stop[i],dvar]
-          lines(c(min(x), max(x)), c(mean(y, trim = lines.par, na.rm = TRUE), mean(y, trim = lines.par, na.rm = TRUE)), lty = lty.line, col = col.line, lwd = lwd.line)
+          lines(
+            x = c(min(x), max(x)), 
+            y = c(
+              mean(y, trim = lines.par, na.rm = TRUE), 
+              mean(y, trim = lines.par, na.rm = TRUE)
+            ), 
+            lty = lty.line, 
+            col = col.line, 
+            lwd = lwd.line
+          )
         }
       }
       if (any(names(lines) == "trendA")) {
@@ -514,33 +593,66 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
         y <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
         reg <- lm(y~x)
-        lines(c(min(x), maxMT), c(reg$coefficients[1]  + min(x) * reg$coefficients[2], reg$coefficients[1] + maxMT * reg$coefficients[2]), lty = lty.line, col = col.line, lwd = lwd.line)
+        lines(
+          x = c(min(x), maxMT), 
+          y = c(
+            reg$coefficients[1]  + min(x) * reg$coefficients[2], 
+            reg$coefficients[1] + maxMT * reg$coefficients[2]
+          ), 
+          lty = lty.line, 
+          col = col.line, 
+          lwd = lwd.line
+        )
       }
       if (any(names(lines) == "trendA_bisplit")) {
         x     <- data[design$start[1]:design$stop[1],mvar]
         y     <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
-        # na.rm = FALSE for now to prevent misuse; will draw no line if NA present
-        md1   <- c((median(y[1:floor(length(y)/2)], na.rm = FALSE)),
+        # na.rm = FALSE for now to prevent misuse; 
+        # will draw no line if NA present
+        md1   <- c(median(y[1:floor(length(y)/2)], na.rm = FALSE),
                    median(x[1:floor(length(x)/2)], na.rm = FALSE))
-        md2   <- c((median(y[ceiling(length(y)/2+1):length(y)], na.rm = FALSE)),
+        md2   <- c(median(y[ceiling(length(y)/2+1):length(y)], na.rm = FALSE),
                    median(x[ceiling(length(x)/2+1):length(x)], na.rm = FALSE))
         md    <- rbind(md1, md2)
         reg <- lm(md[,1]~md[,2])
-        lines(c(min(x), maxMT), c(reg$coefficients[1]  + min(x) * reg$coefficients[2], reg$coefficients[1] + maxMT * reg$coefficients[2]), lty = lty.line, col = col.line, lwd = lwd.line)
+        lines(
+          x = c(min(x), maxMT), 
+          y = c(
+            reg$coefficients[1]  + min(x) * reg$coefficients[2], 
+            reg$coefficients[1] + maxMT * reg$coefficients[2]
+          ), 
+          lty = lty.line, 
+          col = col.line, 
+          lwd = lwd.line
+        )
       }
       if (any(names(lines) == "trendA_trisplit")) {
         x     <- data[design$start[1]:design$stop[1],mvar]
         y     <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
-        # na.rm = FALSE for now to prevent misuse; will draw no line if NA present
-        md1   <- c((median(y[1:floor(length(y)/3)], na.rm = FALSE)),
-                   median(x[1:floor(length(x)/3)], na.rm = FALSE))
-        md2   <- c((median(y[ceiling(length(y)/3*2+1):length(y)], na.rm = FALSE)),
-                   median(x[ceiling(length(x)/3*2+1):length(x)], na.rm = FALSE))
+        # na.rm = FALSE for now to prevent misuse; 
+        # will draw no line if NA present
+        md1   <- c(
+          median(y[1:floor(length(y)/3)], na.rm = FALSE),
+          median(x[1:floor(length(x)/3)], na.rm = FALSE)
+        )
+        md2   <- c(
+          median(y[ceiling(length(y)/3*2+1):length(y)], na.rm = FALSE),
+          median(x[ceiling(length(x)/3*2+1):length(x)], na.rm = FALSE)
+        )
         md    <- rbind(md1, md2)
         reg <- lm(md[,1]~md[,2])
-        lines(c(min(x), maxMT), c(reg$coefficients[1]  + min(x) * reg$coefficients[2], reg$coefficients[1] + maxMT * reg$coefficients[2]), lty = lty.line, col = col.line, lwd = lwd.line)
+        lines(
+          x = c(min(x), maxMT), 
+          y = c(
+            reg$coefficients[1]  + min(x) * reg$coefficients[2], 
+            reg$coefficients[1] + maxMT * reg$coefficients[2]
+          ), 
+          lty = lty.line, 
+          col = col.line, 
+          lwd = lwd.line
+        )
       }
       if (any(names(lines) == "loreg")) {
         id <- which(names(lines) == "loreg")
@@ -554,7 +666,13 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
         x <- data[design$start[1]:design$stop[1],mvar]
         y <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
-        lines(c(min(x), maxMT), c(max(y), max(y)), lty = lty.line, col = col.line, lwd = lwd.line)		
+        lines(
+          x = c(min(x), maxMT), 
+          y = c(max(y), max(y)), 
+          lty = lty.line, 
+          col = col.line, 
+          lwd = lwd.line
+        )		
         #labelxy <- c(max(Bx), max(A))
         #label <- "Max A"
       }
@@ -563,14 +681,26 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
         x <- data[design$start[1]:design$stop[1],mvar]
         y <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
-        lines(c(min(x), maxMT), c(min(y), min(y)), lty = lty.line, col = col.line, lwd = lwd.line)		
+        lines(
+          x = c(min(x), maxMT), 
+          y = c(min(y), min(y)), 
+          lty = lty.line, 
+          col = col.line, 
+          lwd = lwd.line
+        )		
       }
       if (any(names(lines) == "medianA")) {
         x <- data[design$start[1]:design$stop[1],mvar]
         y <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
         
-        lines(c(min(x), maxMT), c(median(y, na.rm = TRUE), median(y, na.rm = TRUE)), lty = lty.line, col = col.line, lwd = lwd.line)		
+        lines(
+          x = c(min(x), maxMT), 
+          y = c(median(y, na.rm = TRUE), median(y, na.rm = TRUE)), 
+          lty = lty.line, 
+          col = col.line, 
+          lwd = lwd.line
+        )		
       }
       if (any(names(lines) == "meanA")) {
         id <- which(names(lines) == "meanA")
@@ -580,7 +710,16 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
         x <- data[design$start[1]:design$stop[1],mvar]
         y <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
-        lines(c(min(x), maxMT), c(mean(y, trim = lines.par, na.rm = TRUE), mean(y, trim = lines.par, na.rm = TRUE)), lty = lty.line, col = col.line, lwd = lwd.line)		
+        lines(
+          x = c(min(x), maxMT), 
+          y = c(
+            mean(y, trim = lines.par, na.rm = TRUE), 
+            mean(y, trim = lines.par, na.rm = TRUE)
+          ), 
+          lty = lty.line, 
+          col = col.line, 
+          lwd = lwd.line
+        )		
         #labelxy <- c(max(Bx), mean(A, trim = lines.par, na.rm = TRUE))
         #label <- "Mean A"
       }
@@ -617,11 +756,18 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
     
     
     # phase names -------------------------------------------------------------
-    if (is.null(phase.names)) phase.names <- design$values
+    if (is.null(phase.names)) {
+      case_phase_names <- design$values
+    } else {
+      case_phase_names <- phase.names
+    }
+    
     for(i in 1:length(design$values)) {
       mtext(
-        phase.names[i], side = 3, 
-        at = (data[design$stop[i], mvar] - data[design$start[i], mvar]) / 2 + data[design$start[i], mvar], 
+        text = case_phase_names[i], 
+        side = 3, 
+        at = (data[design$stop[i], mvar] - data[design$start[i], mvar]) / 2 + 
+              data[design$start[i], mvar], 
         cex = style$cex.text, ...
       )
     }
@@ -629,21 +775,35 @@ plotSC <- function(data, dvar, pvar, mvar, ylim = NULL, xlim = NULL, xinc = 1, l
     # line between phases -----------------------------------------------------
     if (is.null(style$text.ABlag)) {
       for(i in 1:(length(design$values) - 1)) {
-        abline(v = data[design$stop[i] + 1, mvar] - 0.5, lty = style$lty.seperators, lwd = style$lwd.seperators, col = style$col.seperators)
+        abline(
+          v = data[design$stop[i] + 1, mvar] - 0.5, 
+          lty = style$lty.seperators, 
+          lwd = style$lwd.seperators, 
+          col = style$col.seperators
+        )
       }
     }
     
     if (!is.null(style$text.ABlag)) {
       for(i in 1:(length(design$values) - 1)) {
         tex <- paste(unlist(strsplit(style$text.ABlag[i], "")), collapse = "\n")
-        text(data[design$stop[i] + 1, mvar] - 0.5, (y.lim[2] - y.lim[1]) / 2 + y.lim[1], labels = tex, cex = 0.8, ...)
+        text(
+          x = data[design$stop[i] + 1, mvar] - 0.5, 
+          y = (y.lim[2] - y.lim[1]) / 2 + y.lim[1], 
+          labels = tex, 
+          cex = 0.8, ...)
       }
       
     }
     
     # Adding case name --------------------------------------------------------
     if (length(case.names) ==  N) {
-      args <- c(list(text = case.names[case]), style$names, cex = style$cex.text, at = min(xlim))
+      args <- c(
+        list(text = case.names[case]), 
+        style$names, 
+        cex = style$cex.text, 
+        at = min(xlim)
+      )
       args <- args[!duplicated(names(args))]
       do.call(mtext, args)
     }
