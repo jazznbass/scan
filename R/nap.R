@@ -24,7 +24,7 @@
 #' gretchen <- scdf(c(A = 12,14,9,10, B = 10,6,4,5,3,4))
 #' nap(gretchen, decreasing = TRUE)
 #' 
-#' ## Request NAP for all cases fom the Grosche2011 data
+#' ## Request NAP for all cases from the Grosche2011 data
 #' nap(Grosche2011)
 #' 
 #' @export
@@ -41,9 +41,9 @@ nap <- function(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2)) {
   N <- length(data)
   
   NAP   <- rep(NA, N)
-  PAIRS <- rep(NA, N)
-  POS   <- rep(NA, N)
-  TIES  <- rep(NA, N)
+  pairs <- rep(NA, N)
+  pos   <- rep(NA, N)
+  ties  <- rep(NA, N)
   W     <- rep(NA, N)
   p     <- rep(NA, N)
   
@@ -52,24 +52,24 @@ nap <- function(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2)) {
     
     A     <- df[df[, pvar] == "A", dvar]
     B     <- df[df[, pvar] == "B", dvar]
-    PAIRS[case] <- length(A) * length(B)
+    pairs[case] <- length(A) * length(B)
     
     if (!decreasing)
-      POS[case] <- PAIRS[case] - sum(sapply(A, function(x) x >= B))
+      pos[case] <- pairs[case] - sum(sapply(A, function(x) x >= B))
     if (decreasing)
-      POS[case] <- PAIRS[case] - sum(sapply(A, function(x) x <= B))
+      pos[case] <- pairs[case] - sum(sapply(A, function(x) x <= B))
     
     test <- wilcox.test(A, B, alternative = ifelse(decreasing, "greater", "less"), exact = FALSE)
     
     W[case] <- test$statistic
     p[case] <- test$p.value
-    TIES[case] <- sum(sapply(A, function(x) x == B))
-    NAP[case]  <- (POS[case] + (0.5 * TIES[case])) / PAIRS[case]
+    ties[case] <- sum(sapply(A, function(x) x == B))
+    NAP[case]  <- (pos[case] + (0.5 * ties[case])) / pairs[case]
     
   }  
   nap <- data.frame(
     Case = names(data), NAP = NAP * 100, Rescaled = 2 * (NAP * 100) - 100, 
-    Pairs = PAIRS, Positives = POS, Ties = TIES, W = W, p = p
+    Pairs = pairs, Positives = pos, Ties = ties, W = W, p = p
   )
 
   out <- list(nap = nap, N = N)
