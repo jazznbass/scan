@@ -25,20 +25,18 @@ pnd <- function(data, dvar, pvar, decreasing = FALSE, phases = c("A","B")) {
   data <- .SCprepareData(data, na.rm = TRUE)
   data <- .keepphasesSC(data, phases = phases, pvar = pvar)$data
   
-  PND <- c()
+  pnd <- c()
   n.B <- c()
   
   for(i in 1:length(data)) {
     A <- data[[i]][, dvar][data[[i]][, pvar] == "A"]
     B <- data[[i]][, dvar][data[[i]][, pvar] == "B"]
     n.B[i] <- length(B)
-    if (!decreasing)
-      PND[i] <- sum(B > max(A)) /  n.B[i] * 100
-    if (decreasing)
-      PND[i] <- sum(B < min(A)) /  n.B[i] * 100
+    if (!decreasing) pnd[i] <- sum(B > max(A)) /  n.B[i] * 100
+    if (decreasing) pnd[i] <- sum(B < min(A)) /  n.B[i] * 100
   }
   
-  out <- list(PND = PND, case.names = names(data), n.B = n.B)
+  out <- list(PND = pnd, case.names = names(data), n.B = n.B)
   class(out) <- c("sc","PND")
   attr(out, .opt$phase) <- pvar
   attr(out, .opt$dv) <- dvar
