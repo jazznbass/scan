@@ -136,6 +136,8 @@ pand <- function(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases
   out <- list(PAND = PAND, phi = phi, POD = POD, OD.PP = OD.PP, OD = OD, n = n, N = N, nA = nA, nB = nB, pA = pA, pB = pB, matrix = mat, matrix.counts = mat2, correlation = results.cor, correction = correction)
   
   class(out) <- c("sc","PAND")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$dv) <- dvar
   out
 }
 

@@ -40,5 +40,7 @@ pnd <- function(data, dvar, pvar, decreasing = FALSE, phases = c("A","B")) {
   
   out <- list(PND = PND, case.names = names(data), n.B = n.B)
   class(out) <- c("sc","PND")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$dv) <- dvar
   out
 }

@@ -80,5 +80,7 @@ pem <- function(data, dvar, pvar, decreasing = FALSE, binom.test = TRUE, chi.tes
   
   out <- list(PEM = PEM, test = stats.ma, decreasing = decreasing)
   class(out) <- c("sc","PEM")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$dv) <- dvar
   out
 }

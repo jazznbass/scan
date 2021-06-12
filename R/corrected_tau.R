@@ -85,6 +85,9 @@ corrected_tau <- function(data, dvar, pvar, mvar, phases = c(1, 2), alpha = 0.05
     data = data
   )
   class(out) <- c("sc_bctau")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$mt) <- mvar
+  attr(out, .opt$dv) <- dvar
   out
 }
 

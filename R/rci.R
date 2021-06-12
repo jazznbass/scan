@@ -105,7 +105,8 @@ rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2
     descriptives = descriptives.ma
   ) 
   class(out) <- c("sc","rci")
-  
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$dv) <- dvar
   out
 }
 

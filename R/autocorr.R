@@ -66,6 +66,9 @@ autocorr <- function(data, dvar, pvar, mvar, lag.max = 3, ...) {
     dvar = dvar
   )
   class(out) <- c("sc_ac")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$mt) <- mvar
+  attr(out, .opt$dv) <- dvar
   out
 }
 

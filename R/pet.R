@@ -67,5 +67,7 @@ pet <- function(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = 
     case.names = .case.names(names(data), length(data))
   )
   class(out) <- c("sc","PET")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$dv) <- dvar
   out
 }

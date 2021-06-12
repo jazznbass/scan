@@ -60,5 +60,8 @@ mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE,
   out <- list(model = model, full.model = full, formula = formula)
 
   class(out) <- c("sc", "mpr")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$mt) <- mvar
+  attr(out, .opt$dv) <- dvar
   out
 }

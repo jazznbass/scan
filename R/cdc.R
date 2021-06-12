@@ -151,5 +151,8 @@ cdc <- function(data,
     case_names = .case.names(names(data), length(data))
   )
   class(out) <- c("sc_cdc")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$mt) <- mvar
+  attr(out, .opt$dv) <- dvar
   out
 }

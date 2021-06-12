@@ -74,5 +74,7 @@ nap <- function(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2)) {
 
   out <- list(nap = nap, N = N)
   class(out) <- c("sc","NAP")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$dv) <- dvar
   out
 }
