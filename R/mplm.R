@@ -59,7 +59,7 @@ mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE,
   full$coef_std <- .std_lm(full)
   out <- list(model = model, full.model = full, formula = formula)
 
-  class(out) <- c("sc", "mpr")
+  class(out) <- c("sc_mplm")
   attr(out, .opt$phase) <- pvar
   attr(out, .opt$mt) <- mvar
   attr(out, .opt$dv) <- dvar
