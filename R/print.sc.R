@@ -601,6 +601,7 @@ print.sc_overlap <- function(x, digits = "auto", ...) {
 }
 
 #' @rdname print.sc
+#' @param std If TRUE, a table with standardized estimates is included.
 #' @export
 print.sc_mplm <- function(x, digits = "auto", std = FALSE, ...) {
   
@@ -646,7 +647,7 @@ print.sc_mplm <- function(x, digits = "auto", std = FALSE, ...) {
 
 
 .note_vars <- function(x) {
-  v <- attr(x, .opt$dv) != "values"
+  v <- any(attr(x, .opt$dv) != "values")
   p <- attr(x, .opt$phase) != "phase"
   m <- attr(x, .opt$mt) != "mt"
   if (v || p || m) { 
