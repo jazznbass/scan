@@ -40,6 +40,8 @@ If set to "auto" (default), values are predefnied.}
 
 \item{nice}{If set TRUE (default) output values are rounded and optimized for
 publication tables.}
+
+\item{std}{If TRUE, a table with standardized estimates is included.}
 }
 \description{
 Print method for scan objects
