@@ -57,7 +57,7 @@ export.scdf <- function(object, caption = NA, footnote = NA, filename = NA,
     )
   }
 
-  names(object) <- .case.names(names(object), length(object))
+  names(object) <- .case_names(names(object), length(object))
 
   max_row <- max(unlist(lapply(object, nrow)))
   for (i in 1:cases) {
@@ -149,7 +149,7 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
     
     if (is.na(caption)) caption <- c(
       "Overlap indices. ",
-      .stringPhasesSC(
+      .phases_string(
        object$phases.A, 
        object$phases.B
         #object$design[object$phases.A], 
@@ -257,12 +257,12 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
       out$"97.5%" <- sprintf("%.2f", out$"97.5%")
       out$SE <- sprintf("%.2f", out$SE)
       out$t <- sprintf("%.2f", out$t)
-      out$p <- .nice.p((out$p))
+      out$p <- .nice_p((out$p))
       out$"Delta R\u00b2" <- gsub("^0\\.", ".", out$"Delta R\u00b2")
       F_test <- sprintf(
         "F(%d, %d) = %.2f; p %s; R\u00b2 = %0.3f; Adjusted R\u00b2 = %0.3f", 
         object$F.test["df1"], object$F.test["df2"], object$F.test["F"], 
-        .nice.p(object$F.test["p"], TRUE), object$F.test["R2"], object$F.test["R2.adj"]
+        .nice_p(object$F.test["p"], TRUE), object$F.test["R2"], object$F.test["R2.adj"]
       )
     }
     
@@ -292,7 +292,7 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
     if (is.na(caption)) {
       #A <- object$design[object$phases.A]
       #B <- object$design[object$phases.B]
-      caption <- c("Tau-U")#, .stringPhasesSC(A, B))
+      caption <- c("Tau-U")#, .phases_string(A, B))
     }
     kable_options$caption <- caption
     
@@ -305,7 +305,7 @@ export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
     }
     
     out <- object$Overall_tau_u
-    out$p <- .nice.p(out$p)
+    out$p <- .nice_p(out$p)
     colnames(out) <- c("Model", "Tau", "SE", "z", "p")
   
     kable_options$x <- out
@@ -483,8 +483,8 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   }
   
   if (nice) {
-    out$p <- .nice.p(out$p)
-    if (!is.null(md$p)) md$p <- .nice.p(md$p)
+    out$p <- .nice_p(out$p)
+    if (!is.null(md$p)) md$p <- .nice_p(md$p)
   }
   
   out[, ] <- lapply(out[, ], function(x)
@@ -512,7 +512,7 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
       c(
         "ICC", as.character(round(object$ICC$value, 2)),
         paste0("L = ", round(object$ICC$L, 1)),
-        paste0("p ", .nice.p(object$ICC$p))
+        paste0("p ", .nice_p(object$ICC$p))
       )
   }
   

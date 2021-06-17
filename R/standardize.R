@@ -31,7 +31,7 @@ standardize <- function(data,
                         sd = 1, 
                         grand = TRUE) {
   
-  data <- .SCprepareData(data)
+  data <- .prepare_scdf(data)
 
   N <- length(data)
 

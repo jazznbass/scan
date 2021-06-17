@@ -67,7 +67,7 @@ hplm <- function(data, dvar, pvar, mvar,
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
 
-  dat <- .SCprepareData(data)
+  dat <- .prepare_scdf(data)
   
   N <- length(dat)
   out <- list()

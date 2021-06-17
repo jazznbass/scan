@@ -32,7 +32,7 @@
 #' @export
 longSCDF <- function(data, l2 = NULL, id = "case") {
 
-  label <- .case.names(names(data), length(data))
+  label <- .case_names(names(data), length(data))
 
   outdat <- vector()
   

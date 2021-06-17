@@ -19,7 +19,7 @@ summary.scdf <- function(object, ...) {
   rows <- lapply(object, nrow)
 
   out <- data.frame(
-    " " = format(.case.names(names(object), length(object)), justify = "left"),
+    " " = format(.case_names(names(object), length(object)), justify = "left"),
     Measurements = unlist(rows), 
     Design = unlist(designs),
     check.names = FALSE

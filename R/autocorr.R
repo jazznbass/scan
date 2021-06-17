@@ -23,10 +23,10 @@ autocorr <- function(data, dvar, pvar, mvar, lag.max = 3, ...) {
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
 
-  data <- .SCprepareData(data)
+  data <- .prepare_scdf(data)
 
   N <- length(data)
-  case_names <- .case.names(names(data), length(data))
+  case_names <- .case_names(names(data), length(data))
   var_lag <- paste0("Lag ", 1:lag.max)
   
   ac <- list()

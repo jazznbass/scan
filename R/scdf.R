@@ -171,7 +171,7 @@ scdf <- function(values,
 
   data <- list(data)
 
-  attributes(data) <- .defaultAttributesSCDF()
+  attributes(data) <- .default_attributes()
 
   scdf_attr(data, .opt$dv) <- dvar
   scdf_attr(data, .opt$phase) <- pvar

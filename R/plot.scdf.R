@@ -118,7 +118,7 @@ plotSC <- function(data, dvar, pvar, mvar,
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
   
-  data_list <- .SCprepareData(data)
+  data_list <- .prepare_scdf(data)
   
   N <- length(data_list)
   
@@ -741,14 +741,14 @@ plotSC <- function(data, dvar, pvar, mvar,
         id <- which(names(lines) == "movingMean")
         lines.par <- lines[[id]]
         if (is.na(lines.par)) lines.par <- 1
-        y <- .SCmovingAverage(data[,dvar],lines.par, mean)
+        y <- .moving_average(data[,dvar],lines.par, mean)
         lines(data[,mvar], y, lty = lty.line, col = col.line, lwd = lwd.line)
       }
       if (any(names(lines) == "movingMedian")) {
         id <- which(names(lines) == "movingMedian")
         lines.par <- lines[[id]]
         if (is.na(lines.par)) lines.par <- 1
-        y <- .SCmovingAverage(data[,dvar],lines.par, median)
+        y <- .moving_average(data[,dvar],lines.par, median)
         lines(data[,mvar], y, lty = lty.line, col = col.line, lwd = lwd.line)
       }
       

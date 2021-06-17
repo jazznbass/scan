@@ -31,8 +31,8 @@ corrected_tau <- function(data, dvar, pvar, mvar, phases = c(1, 2), alpha = 0.05
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt)    else scdf_attr(data, .opt$mt)    <- mvar
 
-  data <- .SCprepareData(data, na.rm = TRUE)
-  data <- .keepphasesSC(data, phases = phases, pvar = pvar)$data
+  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .keep_phases(data, phases = phases, pvar = pvar)$data
   
   if (length(data) > 1) {
     stop("Baseline corrected tau is not applicable for multiple cases.")

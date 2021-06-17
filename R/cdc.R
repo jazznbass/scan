@@ -61,8 +61,8 @@ cdc <- function(data,
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
   
-  data  <- .SCprepareData(data, na.rm = TRUE)
-  data  <- .keepphasesSC(data, phases = phases, pvar = pvar)$data
+  data  <- .prepare_scdf(data, na.rm = TRUE)
+  data  <- .keep_phases(data, phases = phases, pvar = pvar)$data
   
   N       <- length(data)
   cdc_na  <- rep(NA, N)  # total data points in phase A
@@ -148,7 +148,7 @@ cdc <- function(data,
     N = N,
     decreasing = decreasing,
     conservative = conservative,
-    case_names = .case.names(names(data), length(data))
+    case_names = .case_names(names(data), length(data))
   )
   class(out) <- c("sc_cdc")
   attr(out, .opt$phase) <- pvar

@@ -38,20 +38,20 @@ smooth_cases <- function(data, dvar, mvar, FUN = "movingMedian", intensity = NUL
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
 
-  data <- .SCprepareData(data)
+  data <- .prepare_scdf(data)
   copy_attributes <- attributes(data)
   copy_names <- names(data)
   if (FUN == "movingMean") {
     if (is.null(intensity)) intensity <- 1
     out <- lapply(data, function(x) {
-      x[, dvar] <- .SCmovingAverage(x[[dvar]], intensity, mean)
+      x[, dvar] <- .moving_average(x[[dvar]], intensity, mean)
       x
     })
   }
   if (FUN == "movingMedian") {
     if (is.null(intensity)) intensity <- 1
     out <- lapply(data, function(x) {
-      x[, dvar] <- .SCmovingAverage(x[[dvar]], intensity, median)
+      x[, dvar] <- .moving_average(x[[dvar]], intensity, median)
       x
     })
   }

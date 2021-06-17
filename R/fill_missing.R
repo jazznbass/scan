@@ -49,7 +49,7 @@ fill_missing <- function(data, dvar, mvar, interpolation = "linear", na.rm = TRU
   
   source_attributes <- attributes(data)
   
-  data <- .SCprepareData(data)
+  data <- .prepare_scdf(data)
 
   N <- length(data)
   

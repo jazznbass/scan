@@ -158,7 +158,11 @@ rSC <- function(design = NULL,
 
       true_values <- start_values + trend_values + slope_values + level_values
       true_values <- cumsum(true_values)
-      error_values <- rnorm(cases[[i]]$mt[1], mean = 0, sd = cases[[i]]$error[1])
+      error_values <- rnorm(
+        cases[[i]]$mt[1], 
+        mean = 0, 
+        sd = cases[[i]]$error[1]
+      )
       measured_values <- true_values + error_values
     }
 
@@ -171,8 +175,7 @@ rSC <- function(design = NULL,
       for (j in 1:nrow(cases[[i]])) {
         slope_values <- c(
           slope_values, 
-          rep(cases[[i]]$slope[j], 
-              cases[[i]]$length[j])
+          rep(cases[[i]]$slope[j], cases[[i]]$length[j])
         )
         level_values <- c(
           level_values, 
@@ -208,7 +211,13 @@ rSC <- function(design = NULL,
       }
       for (k in 1:cases[[i]]$mt[1]) {
         if (ra[k] <= cases[[i]]$extreme.p[1]) {
-          measured_values[k] <- measured_values[k] + (runif(1, cases[[i]]$extreme.low[1], cases[[i]]$extreme.high[1]) * multiplier)
+          tmp_error <- runif(
+            n = 1, 
+            min = cases[[i]]$extreme.low[1], 
+            max = cases[[i]]$extreme.high[1] 
+          )
+          tmp_error <- tmp_error * multiplier 
+          measured_values[k] <- measured_values[k] + tmp_error
         }
       }
     }
@@ -243,18 +252,28 @@ rSC <- function(design = NULL,
 
   if (isTRUE(random.names)) names(dat) <- sample(.opt$names, n)
 
-  attributes(dat) <- .defaultAttributesSCDF(attributes(dat))
+  attributes(dat) <- .default_attributes(attributes(dat))
   dat
 }
 
 #' @rdname random
 #' @export
-design_rSC <- function(n = 1, phase.design = list(A = 5, B = 15),
-                       trend = list(0), level = list(0), slope = list(0),
-                       rtt = list(0.80), m = list(50), s = list(10),
-                       extreme.p = list(0), extreme.d = c(-4, -3),
-                       missing.p = list(0), distribution = "normal",
-                       prob = 0.5, MT = NULL, B.start = NULL) {
+design_rSC <- function(n = 1, 
+                       phase.design = list(A = 5, B = 15),
+                       trend = list(0), 
+                       level = list(0), 
+                       slope = list(0),
+                       rtt = list(0.80), 
+                       m = list(50), 
+                       s = list(10),
+                       extreme.p = list(0), 
+                       extreme.d = c(-4, -3),
+                       missing.p = list(0), 
+                       distribution = "normal",
+                       prob = 0.5, 
+                       MT = NULL, 
+                       B.start = NULL) {
+  
   if (!is.null(B.start)) {
     MT <- rep(MT, length.out = n)
     if (B.start[1] == "rand") {
@@ -281,10 +300,10 @@ design_rSC <- function(n = 1, phase.design = list(A = 5, B = 15),
   if (length(rtt) != n) rtt <- rep(rtt, length = n)
   if (is.list(trend)) trend <- unlist(trend)
 
-  trend <- .check.designSC(trend, n)
-  level <- .check.designSC(level, n)
-  slope <- .check.designSC(slope, n)
-  phase.design <- .check.designSC(phase.design, n)
+  trend <- .check_design(trend, n)
+  level <- .check_design(level, n)
+  slope <- .check_design(slope, n)
+  phase.design <- .check_design(phase.design, n)
 
   if (length(extreme.p) != n) {
     extreme.p <- lapply(numeric(n), function(y) unlist(extreme.p))
@@ -333,7 +352,7 @@ design_rSC <- function(n = 1, phase.design = list(A = 5, B = 15),
   out
 }
 
-.check.designSC <- function(data, n) {
+.check_design <- function(data, n) {
   if (is.numeric(data)) data <- list(data)
   for (phase in 1:length(data)) {
     if (length(data[[phase]]) != n) {

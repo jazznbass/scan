@@ -55,8 +55,8 @@ tau_u <- function(data, dvar, pvar,
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   
-  data <- .SCprepareData(data)
-  data <- .keepphasesSC(data, phases = phases, pvar = pvar)$data
+  data <- .prepare_scdf(data)
+  data <- .keep_phases(data, phases = phases, pvar = pvar)$data
   
   # define "out" data structure
   N <- length(data)

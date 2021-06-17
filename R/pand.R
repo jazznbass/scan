@@ -62,8 +62,8 @@ pand <- function(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
 
-  data <- .SCprepareData(data, na.rm = TRUE)
-  data <- .keepphasesSC(data, phases = phases,pvar = pvar)$data
+  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .keep_phases(data, phases = phases,pvar = pvar)$data
   
   phase.expected <- list()
   phase.real     <- list()

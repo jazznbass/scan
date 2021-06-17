@@ -202,7 +202,7 @@ print.sc <- function(x, digits = "auto", ...) {
     cat("Randomization Test\n\n")
     if (x$N > 1) cat("Test for", x$N, "cases.\n\n")
 
-    cat(.stringPhasesSC(x$phases.A, x$phases.B), "\n")
+    cat(.phases_string(x$phases.A, x$phases.B), "\n")
     
     cat("Statistic: ",x$statistic,"\n\n")
     if (is.na(x$startpoints[1])) {
@@ -423,7 +423,7 @@ print.sc_cdc <- function(x, nice = TRUE, ...) {
   cat("Conservative Dual Criterion\n\n")
   cat("N cases = ", x$N, "\n\n")
   
-  if (nice) x$cdc_p <- .nice.p(x$cdc_p)
+  if (nice) x$cdc_p <- .nice_p(x$cdc_p)
   out <- data.frame(
     Case = x$case_names,
     "nB improve" = x$cdc_be,
@@ -463,7 +463,7 @@ print.sc_bctau <- function(x, nice = TRUE, ...) {
   }
   
   if (nice) {
-    x$parameters$p <- .nice.p(x$parameters$p)
+    x$parameters$p <- .nice_p(x$parameters$p)
     x$parameters$z <- sprintf("%.2f", x$parameters$z)
     x$parameters$tau <- sprintf("%.2f", x$parameters$tau)
   }
@@ -588,7 +588,7 @@ print.sc_overlap <- function(x, digits = "auto", ...) {
   
   cat("Overlap Indices\n\n")
   #cat("Design: ", x$design, "\n")
-  cat(.stringPhasesSC(x$phases.A, x$phases.B),"\n\n")
+  cat(.phases_string(x$phases.A, x$phases.B),"\n\n")
   
   x$overlap[3:8] <- round(x$overlap[3:8], digits_1)
   x$overlap[9:14] <- round(x$overlap[9:14], digits_2)

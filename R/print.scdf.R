@@ -25,7 +25,7 @@ print.scdf <- function(x,
   row.names <- FALSE
   N <- length(x)
 
-  names(x) <- .case.names(names(x), N)
+  names(x) <- .case_names(names(x), N)
 
   if (identical(cases, "all")) cases <- N
   if (is.numeric(cases) && cases > N) cases <- N

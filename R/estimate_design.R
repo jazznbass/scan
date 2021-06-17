@@ -33,11 +33,11 @@ estimate_design <- function(data, dvar, pvar, mvar,
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
 
-  data <- .SCprepareData(data)
+  data <- .prepare_scdf(data)
   N <- length(data)
   case_names <- names(data)
 
-  if (is.null(case_names)) case_names <- .case.names(names(data), length(data))
+  if (is.null(case_names)) case_names <- .case_names(names(data), length(data))
 
   cases <- lapply(data, function(x) {
     df <- as.data.frame(.phasestructure(x, pvar))

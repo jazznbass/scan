@@ -32,11 +32,11 @@ describe <- function(data, dvar, pvar, mvar) {
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
 
-  data_list <- .SCprepareData(data)
+  data_list <- .prepare_scdf(data)
 
   N <- length(data_list)
   
-  case_names <- .case.names(names(data_list), length(data_list))
+  case_names <- .case_names(names(data_list), length(data_list))
 
   designs <- lapply(
     data_list, 

@@ -52,7 +52,7 @@ outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
   
-  data_list <- .SCprepareData(data)
+  data_list <- .prepare_scdf(data)
  
   out <- list()
   

@@ -1,4 +1,4 @@
-.keepphasesSC <- function(data, 
+.keep_phases <- function(data, 
                           phases = c(1, 2), 
                           set.phases = TRUE, 
                           pvar = "phase") {

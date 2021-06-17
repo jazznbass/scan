@@ -17,7 +17,7 @@ combine <- function(..., dvar = NULL, pvar = NULL, mvar = NULL) {
    
   data <- unlist(scdfs, recursive = FALSE)
   
-  #attributes(data) <- .defaultAttributesSCDF()
+  #attributes(data) <- .default_attributes()
 
   #if (!is.null(source_attr[[.opt$scdf]])) attr(data, .opt$scdf) <- source_attr[[.opt$scdf]]
   attributes(data) <- source_attr
@@ -105,7 +105,7 @@ as_scdf <- function(object) {
   if (!is.list(object))
     stop("Object must be a data.frame or a list of data.frames.")
   
-  attributes(object) <- .defaultAttributesSCDF(attributes(object)) 
+  attributes(object) <- .default_attributes(attributes(object)) 
   object
   
 }
