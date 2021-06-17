@@ -51,16 +51,16 @@ a proper scale based on the given data.}
 
 \item{xinc}{An integer. Increment of the x-axis. 1 :each mt value will be printed, 2 : every other value, 3 : every third values etc.}
 
-\item{lines}{A character or list defining one or more lines or curves to be
-plotted. The argument is either passed as a character string (e.g.,
-\code{lines = "median"}) or as a list (e.g., \code{list("median", "trend")}.
+\item{lines}{A list defining one or multiple lines or curves to be
+plotted. The argument is passed as a list (e.g., \code{list(type = "median")}).
 Some of the procedures can be refined with an additional argument (e.g.,
-\code{lines = list("mean" = 0.20)} adds a 20\% trimmed mean line. By default
-no additional lines are plotted. Possible lines are: \itemize{
+\code{lines = list(type = "mean", trim = 0.2)} adds a 20\% trimmed mean line.
+For multiple lines, provide a list element for each line (e.g., \code{list( list(type = "median", col = "red"), list(type = "trend", col = "blue"))}. 
+Possible lines are: \itemize{
 \item\code{"median"} Separate lines for phase A and B medians.
 \item\code{"mean"} Separate lines for phase A and B means. By default it is
-10\%-trimmed. Other trims can be set, using a second parameter (e.g.,
-\code{lines = list(mean = 0.2)} draws a 20\%-trimmed mean line).
+10\%-trimmed. Other trims can be set, using a trim parameter (e.g.,
+\code{lines = list(type = "mean", trim = 0.2)} draws a 20\%-trimmed mean line).
 \item\code{"trend"} Separate lines for phase A and B trends.
 \item\code{"trendA"} OLS trend line for phase A, extrapolated throughout phase B.
 \item\code{"trendA_bisplit"} Split middle (bi-split) trend line for phase A, extrapolated throughout phase B.
@@ -68,17 +68,17 @@ no additional lines are plotted. Possible lines are: \itemize{
 \item\code{"maxA/minA"} Line at the level of the highest or lowest phase A score.
 \item\code{"medianA"} Line at the phase A median score.  \item\code{"meanA"}
 Line at the phase A 10\%-trimmed mean score. Apply a different trim, by
-using the additional argument (e.g., \code{lines = list(meanA = 0.2)}).
+using the additional argument (e.g., \code{lines = list(type = "meanA", trim = 0.2)}).
 \item\code{"plm"} Regression lines for piecewise linear regression model.
 \item\code{"plm.ar"} Regression lines for piecewise autoregression model.
-The lag is specified like this: \code{lines = list(plm.ar = 2)}. Default lag is set to 2.
+The lag is specified like this: \code{lines = list(type = "plm.ar", ar = 2)}. Default lag is set to 2.
 \item\code{"movingMean"} Draws a moving mean curve, with a specified lag:
-\code{lines = list(movingMean = 2)}. Default is a lag 1 curve.
+\code{lines = list(type = "movingMean", lag = 2)}. Default is a lag 1 curve.
 \item\code{"movingMedian"} Draws a moving median curve, with a specified
-lag: \code{lines = list(movingMedian = 3)}. Default is a lag 1 curve.
+lag: \code{lines = list(type = "movingMedian", lag = 3)}. Default is a lag 1 curve.
 \item\code{"loreg"} Draws a non-parametric local regression line. The
 proportion of data influencing each data point can be specified using
-\code{lines = list("loreg" = 0.66)}. The default is 0.5.  \item\code{"lty"}
+\code{lines = list(type = "loreg"m f = 0.66)}. The default is 0.5.  \item\code{"lty"}
 Use this argument to define the line type. Examples are: \code{"solid"},
 \code{"dashed"}, \code{"dotted"}.  \item\code{"lwd"} Use this argument to
 define the line's thickness, e.g., \code{lwd = 4}.  \item\code{"col"} Use
@@ -128,8 +128,8 @@ plot(Grosche2011, style = "grid", lines = "trendA")
 ## Request the local regression line for Georg from that data set and customize the plot
 plot(Grosche2011$Georg, style = "sienna", ylim = c(0,NA),
        xlab = "Training session", ylab = "Words per minute",
-       phase.names = c("Baseline", "Intervention"), 
-       lines = list("loreg", lty = "solid", col = "black", lwd = 3))
+       phase.names = c("Baseline", "Intervention"), xinc = 5,
+       lines = list(type = "loreg", f = 0.2, lty = "solid", col = "black", lwd = 3))
 
 ## Plot a random MBD over three cases and mark interesting MTs
 dat <- rSC(design = design_rSC(3))
