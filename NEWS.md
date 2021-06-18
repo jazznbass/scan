@@ -3,8 +3,7 @@
 ## Major changes
 
 - scdf files now allow to combine studies with different phase designs.
-Several functions have been adapted to handle cases with differing designs in a 
-mutual analysis.
+Several functions have been adapted to handle cases with differing designs in a mutual analysis.
 
 ### New functions
 
@@ -27,6 +26,19 @@ cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
 ``` {.r}
 plot(exampleAB_50[8], lines = "trendA_bisplit")
 plot(example_A24, lines = "trendA_trisplit")
+```
+
+- `plot.scdf()`: Now allows for multiple lines with different line styles.
+
+``` {.r}
+plot(
+  exampleAB, 
+  lines = list(
+    list(type = "median", col = "red", lwd = 0.5),
+    list(type = "trend", col = "blue", lty = "dashed", lwd = 2),
+    list(type = "loreg", f = 0.2, col = "green", lty = "solid", lwd = 1)
+  )
+)
 ```
 
 - `tau_U()`: Solved bug in meta analysis #6. Reworked the complete function to be more clear and accurate. Added `method_meta` switching between fixed and random-effect meta analyses. Reworked the print function to look nicer.
