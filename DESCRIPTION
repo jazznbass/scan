@@ -20,6 +20,7 @@ Imports:
   mblm,
   meta
 Suggests:
+  magrittr
 Depends: R (>= 3.5.0)
 Description: A collection of procedures for analysing, visualising, 
   and managing single-case data. These include piecewise linear regression 
