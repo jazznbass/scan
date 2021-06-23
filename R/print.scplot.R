@@ -30,7 +30,7 @@ print.scplot <- function(object, ...) {
   
   annotations <- style$annotations
   
-  if (is.na(style$frame)) style$bty <- "n"
+  if (!is.null(style$col.frame)) style$bty <- "n"
   
   par("bg"       = style$col.bg)
   par("col"      = style$col)
@@ -42,12 +42,6 @@ print.scplot <- function(object, ...) {
   par("bty"      = style$bty)
   #par("col.lab"  = style$col.text)
   par("col.axis" = style$col.text)
-  
-  if (isTRUE(style$frame == ""))   style$frame <- NA
-  if (isTRUE(style$grid == ""))    style$grid  <- FALSE
-  if (isTRUE(style$fill.bg == "")) style$fill.bg  <- FALSE
-  
-  
   
   # prepare lines definitions
   lines <- .prepare_arg_lines(lines)
@@ -61,7 +55,34 @@ print.scplot <- function(object, ...) {
   if (is.null(xlim))
     xlim <- c(min(mt.tmp, na.rm = TRUE), max(mt.tmp, na.rm = TRUE))
   
+  # set margins
   
+  w_axis <- strwidth(
+    as.character(ylim[2]), 
+    units = "inches", 
+    cex = style$cex / par("cex") 
+  )
+  
+  # Horizontal
+  if (style$ylab.orientation == 1) {
+    w_label <- strwidth(
+      object$yaxis$label, 
+      units = "inches", 
+      cex = style$cex.ylab / par("cex")
+    )
+  }
+  
+  # Vertical
+  if (style$ylab.orientation == 0) {
+    w_label <- strheight(
+      object$yaxis$label, 
+      units = "inches", 
+      cex = style$cex.ylab / par("cex")
+    )
+  }
+  w_line <- par("csi")
+  style$mai[2] <- w_axis + w_label + w_line * 1.5
+
   # Plotting cases ----------------------------------------------------------
   
   par(mgp = c(2, 1, 0))
@@ -78,12 +99,17 @@ print.scplot <- function(object, ...) {
     
     # one plot
     if (N == 1) {
-      if (main != "") par(mai = c(style$mai[1:2], style$mai[3] + 0.4, style$mai[4]))
-      if (main == "") par(mai = style$mai)
+      if (main != "") {
+        par(mai = c(style$mai[1:2], style$mai[3] + 0.4, style$mai[4]))
+      }
+      
+      if (main == "") {
+        par(mai = style$mai)
+      }
+      
       plot(
         data[[mvar]], data[[dvar]], type = "n", 
         xlim = xlim, ylim = y.lim, ann = FALSE,
-        #xaxp = c(xlim[1], xlim[2], xlim[2] - xlim[1]), 
         yaxt = "n", 
         xaxt = "n", ...
       )
@@ -115,8 +141,10 @@ print.scplot <- function(object, ...) {
       )
       
       if (style$ylab.orientation == 0) 
-        mtext(text = ylab, side = 2, line = 2, las = 0, cex = style$cex.ylab, 
-              col = style$col.ylab)
+        mtext(
+          text = ylab, side = 2, line = 2, las = 0, cex = style$cex.ylab, 
+          col = style$col.ylab
+        )
       
       if (style$ylab.orientation == 1) {
         mtext(
@@ -220,15 +248,10 @@ print.scplot <- function(object, ...) {
     
     # styling ------------------------------------------------------------
     
-    # fill bg
-    if(class(style$fill.bg) == "character") {
-      style$col.fill.bg <- style$fill.bg
-      style$fill.bg <- TRUE
-    }
+    # add background ----------------------------------------------------------
     
     if (isTRUE(style$fill.bg)){
-      #rect(usr[1], usr[3], usr[2], usr[4], col = style$col.fill.bg, border = NA)
-      
+
       type_phases <- unique(design$values)
       col <- rep(style$col.fill.bg, length = length(type_phases))
       
@@ -246,25 +269,22 @@ print.scplot <- function(object, ...) {
       }
     }
     
-    # grid
-    if(class(style$grid) == "character") {
-      style$col.grid <- style$grid
-      style$grid <- TRUE
-    }
-    
+    # add grid --------------------------------------------
+
     if (isTRUE(style$grid)) 
-      grid(NULL, NULL, col = style$col.grid, lty = style$lty.grid, lwd = style$lwd.grid)
+      grid(
+        NULL, NULL, 
+        col = style$col.grid, 
+        lty = style$lty.grid, 
+        lwd = style$lwd.grid
+      )
     
-    if (!is.na(style$frame))
-      rect(usr[1],usr[3],usr[2],usr[4], col = NA, border = style$frame)
+    # add frame ---------------------------------
     
-    if (is.na(style$frame) && isTRUE(style$fill.bg))
-      rect(usr[1],usr[3],usr[2],usr[4], col = NA, border = style$col.fill.bg)
+    if (!is.null(style$col.frame))
+      rect(usr[1],usr[3],usr[2],usr[4], col = NA, border = style$col.frame)
     
-    if (is.na(style$frame) && !isTRUE(style$fill.bg))
-      rect(usr[1],usr[3],usr[2],usr[4], col = NA, border = par("bg"))
-    
-    # fill array below lines
+    # add fill array below lines --------------------------------
     
     if (style$fill == "" || is.na(style$fill)) style$fill <- FALSE
     
@@ -286,7 +306,7 @@ print.scplot <- function(object, ...) {
       }
     }
     
-    # draw lines
+    # draw dv lines ---------------------------------------------
     for(i in 1:length(design$values)) {
       x <- data[design$start[i]:design$stop[i], mvar]
       y <- data[design$start[i]:design$stop[i], dvar]
@@ -303,8 +323,7 @@ print.scplot <- function(object, ...) {
         )
       }
     }
-    
-
+  
     # add title ----------------------------------------------------------
     
     if (case == 1) 
@@ -335,7 +354,7 @@ print.scplot <- function(object, ...) {
       }
     }
     
-    # annotations -------------------------------------------------------------
+    # add annotations ---------------------------------------------------------
     
     if (!is.null(annotations)) {
       annotations.cex <- 1
@@ -381,7 +400,7 @@ print.scplot <- function(object, ...) {
       )
     }
     
-    # lines -------------------------------------------------------------------
+    # add lines ---------------------------------------------------------------
     
     if (!is.null(lines)) {
       for(i_lines in seq_along(lines)) {
@@ -623,7 +642,7 @@ print.scplot <- function(object, ...) {
       )
     }
     
-    # line between phases -----------------------------------------------------
+    # add line between phases -------------------------------------------
     if (is.null(style$text.ABlag)) {
       for(i in 1:(length(design$values) - 1)) {
         abline(
@@ -675,7 +694,7 @@ print.scplot <- function(object, ...) {
       }
     }
     
-    # adding arrows -------------------------------------------------------------
+    # add arrows --------------------------------------------------------
     if (length(object$arrows) > 0) {
       id <- which(sapply(object$arrows, function(x) x$case) == case)
       if (length(id) > 0) {
@@ -688,6 +707,19 @@ print.scplot <- function(object, ...) {
       }
     }
     
+  }
+  
+  par(op)
+  
+  # add box ouround figure -----------------------------------------------
+
+  if (!is.null(style$col.box)) {
+    box(
+      which = "figure", 
+      lwd = style$lwd.box, 
+      lty = style$lty.box, 
+      col = style$col.box
+    )
   }
   
 }

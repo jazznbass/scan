@@ -230,6 +230,50 @@ add_arrow <- function(object, case = 1, x0, y0, x1, y1, length = 0.1, ...) {
   object
 }
 
+#' @rdname scplot
+#' @export
+add_grid <- function(object, lty = NULL, lwd = NULL, col = NULL) {
+
+  object$style$grid <- TRUE
+  
+  if (!is.null(col)) object$style$col.grid <- col
+  if (!is.null(lwd)) object$style$lwd.grid <- lwd
+  if (!is.null(lty)) object$style$lty.grid <- lty
+
+  object
+}
+
+#' @rdname scplot
+#' @export
+set_background <- function(object, col = NULL) {
+  
+  object$style$fill.bg <- TRUE
+  
+  if (!is.null(col)) object$style$col.fill.bg <- col
+  
+  object
+}
+
+#' @rdname scplot
+#' @export
+add_frame <- function(object, col = "black") { #}, lty = NULL, lwd = NULL) {
+  
+  object$style$col.frame <- col
+  
+  object
+}
+
+#' @rdname scplot
+#' @export
+add_box <- function(object, col = "black", lty = "solid", lwd = 1) {
+  
+  object$style$col.box <- col
+  object$style$lty.box <- lty
+  object$style$lwd.box <- lwd
+  
+  object
+}
+
 .check_style <- function(style) {
   
   if (is.null(style$cex.xlab)) style$cex.xlab <- style$cex.lab

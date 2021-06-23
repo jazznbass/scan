@@ -12,6 +12,10 @@
 \alias{set_casenames}
 \alias{add_text}
 \alias{add_arrow}
+\alias{add_grid}
+\alias{set_background}
+\alias{add_frame}
+\alias{add_box}
 \title{Plot single-case data}
 \usage{
 scplot(data, dvar, pvar, mvar)
@@ -35,6 +39,14 @@ set_casenames(object, ..., col = NULL, side = NULL, cex = NULL)
 add_text(object, case = 1, x, y, label, ...)
 
 add_arrow(object, case = 1, x0, y0, x1, y1, length = 0.1, ...)
+
+add_grid(object, lty = NULL, lwd = NULL, col = NULL)
+
+set_background(object, col = NULL)
+
+add_frame(object, col = "black")
+
+add_box(object, col = "black", lty = "solid", lwd = 1)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
