@@ -4,6 +4,8 @@
 \alias{scplot}
 \alias{set_style}
 \alias{add_line}
+\alias{set_xlabel}
+\alias{set_ylabel}
 \alias{set_xaxis}
 \alias{set_yaxis}
 \alias{add_title}
@@ -24,11 +26,15 @@ set_style(object, style = NULL, ...)
 
 add_line(object, type = NA, ...)
 
-set_xaxis(object, label, lim, increase, col = NULL, cex = NULL)
+set_xlabel(object, label, col = NULL, cex = NULL)
 
-set_yaxis(object, label, lim, col = NULL, cex = NULL, orientation = NULL)
+set_ylabel(object, label, col = NULL, cex = NULL, orientation = NULL)
 
-add_title(object, label = "", col = NULL, cex = NULL, font = NULL)
+set_xaxis(object, lim, increase, col = NULL, cex = NULL)
+
+set_yaxis(object, lim, col = NULL, cex = NULL)
+
+add_title(object, label, col = NULL, cex = NULL, font = NULL)
 
 add_marks(object, case = NULL, positions = NULL, col = "red", cex = 1, pch = 1)
 
@@ -36,7 +42,7 @@ set_phasenames(object, ..., col = NULL, cex = NULL)
 
 set_casenames(object, ..., col = NULL, side = NULL, cex = NULL)
 
-add_text(object, case = 1, x, y, label, ...)
+add_text(object, case = 1, x, y, label, col = NULL, cex = NULL, angle = 0)
 
 add_arrow(object, case = 1, x0, y0, x1, y1, length = 0.1, ...)
 

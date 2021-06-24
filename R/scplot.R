@@ -27,9 +27,11 @@ scplot <- function(data, dvar, pvar, mvar) {
     pvar = pvar, 
     mvar = mvar,
     style = style_plot(getOption("scan.plot.style")),
-    title = "",
-    xaxis = list(lim = NULL, increase = 1, label = xlab),
-    yaxis = list(lim = NULL, label = ylab),
+    title = NULL,
+    xaxis = list(lim = NULL, increase = 1),
+    yaxis = list(lim = NULL),
+    xlabel = xlab,
+    ylabel = ylab,
     lines = NULL, 
     marks = NULL, 
     texts = NULL,
@@ -110,14 +112,39 @@ add_line <- function(object, type = NA, ...) {
 
 #' @rdname scplot
 #' @export
-set_xaxis <- function(object, label, lim, increase, col = NULL, cex = NULL) {
+set_xlabel <- function(object, label, col = NULL, cex = NULL) {
   
   if (!is.null(col)) object$style$col.xlab <- col
   if (!is.null(cex)) object$style$cex.xlab <- cex
   
-  if (!missing(label)) object$xaxis <- c(list(label = label), object$xaxis)
+  object$xlabel <- label
+  
+  object
+}
+
+#' @rdname scplot
+#' @export
+set_ylabel <- function(object, label, col = NULL, cex = NULL, orientation = NULL) {
+  
+  if (!is.null(orientation)) object$style$ylab.orientation <- orientation
+  if (!is.null(col)) object$style$col.ylab <- col
+  if (!is.null(cex)) object$style$cex.ylab <- cex
+
+  object$ylabel <- label
+  
+  object
+}
+
+#' @rdname scplot
+#' @export
+set_xaxis <- function(object, lim, increase, col = NULL, cex = NULL) {
+  
+  if (!is.null(col)) object$style$col.xaxis <- col
+  if (!is.null(cex)) object$style$cex.xaxis <- cex
+  
   if (!missing(lim)) object$xaxis <- c(list(lim = lim), object$xaxis)
-  if (!missing(increase)) object$xaxis <- c(list(increase = increase), object$xaxis)
+  if (!missing(increase)) 
+    object$xaxis <- c(list(increase = increase), object$xaxis)
   
   object$xaxis <- object$xaxis[unique(names(object$xaxis))]
   
@@ -126,24 +153,23 @@ set_xaxis <- function(object, label, lim, increase, col = NULL, cex = NULL) {
 
 #' @rdname scplot
 #' @export
-set_yaxis <- function(object, label, lim, col = NULL, cex = NULL, orientation = NULL) {
+set_yaxis <- function(object, lim, col = NULL, cex = NULL) {
   
-  if (!is.null(orientation)) object$style$ylab.orientation <- orientation
-  if (!is.null(col)) object$style$col.ylab <- col
-  if (!is.null(cex)) object$style$cex.ylab <- cex
+  if (!is.null(col)) object$style$col.yaxis <- col
+  if (!is.null(cex)) object$style$cex.yaxis <- cex
   
-  if (!missing(label)) object$yaxis <- c(list(label = label), object$yaxis)
   if (!missing(lim)) object$yaxis <- c(list(lim = lim), object$yaxis)
-
+  
   object$yaxis <- object$yaxis[unique(names(object$yaxis))]
   
   object
 }
 
+
 #' @rdname scplot
 #' @param label Character string.
 #' @export
-add_title <- function(object, label = "", col = NULL, cex = NULL, font = NULL) {
+add_title <- function(object, label, col = NULL, cex = NULL, font = NULL) {
   
   if (!is.null(col)) object$style$col.main <- col
   if (!is.null(cex)) object$style$cex.main <- cex
@@ -215,9 +241,9 @@ set_casenames <- function(object, ..., col = NULL, side = NULL, cex = NULL) {
 #' @param x x position
 #' @param y y position
 #' @export
-add_text <- function(object, case = 1, x, y, label, ...) {
-  dots <- list(...)
-  text <- c(list(case = case, labels = label, x = x, y = y), dots)
+add_text <- function(object, case = 1, x, y, label, col = NULL, cex = NULL, angle = 0) {
+  
+  text <- list(case = case, labels = label, x = x, y = y, col = col, cex = cex, angle = angle)
   object$texts <- c(object$texts, list(text))
   object
 }

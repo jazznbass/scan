@@ -50,15 +50,22 @@
 
 .opt$style$default = list(
   frame = "black", annotations = NULL, las = 1, mai = c(0.6, 0.58, 0.2, 0.2), 
-  bty = "o", text.ABlag = NULL, pch = 17, font = "sans", ylab.orientation = 0, 
+  bty = "o", text.ABlag = NULL, pch = 17, font = "sans", 
   fill = FALSE, fill.bg = FALSE, grid = FALSE,  
   lwd = 2, lwd.seperators = 1.5, lwd.grid = 1,
   lty = "solid", lty.seperators = "dashed", lty.grid = "dotted",
+  
+  ylab.orientation = 0,
+  
   cex = 1, cex.axis = 0.8, cex.text = 1, cex.lab = 1,
+  cex.xlab = 1, cex.ylab = 1, cex.xaxis = 0.8, cex.yaxis = 0.8,
   cex.casenames = 1, cex.phasenames = 1,
+  
   col.lines = "black", col.dots = "black", col.seperators = "black", 
   col.fill = "grey75", col.fill.bg = "grey95", col.bg = "white", col = "black", 
   col.text = "black", col.casenames = "black", col.phasenames = "black",
+  col.xlab = "black", col.ylab = "black",
+  
   names = list(side = 3, line = -1, adj = 0, col = "black", cex = 1)
 )
 
