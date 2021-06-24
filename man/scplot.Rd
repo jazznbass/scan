@@ -3,7 +3,7 @@
 \name{scplot}
 \alias{scplot}
 \alias{set_style}
-\alias{add_line}
+\alias{add_statline}
 \alias{set_xlabel}
 \alias{set_ylabel}
 \alias{set_xaxis}
@@ -18,41 +18,67 @@
 \alias{set_background}
 \alias{add_frame}
 \alias{add_box}
+\alias{add_labels}
+\alias{set_line}
+\alias{set_dots}
+\alias{add_ridge}
 \title{Plot single-case data}
 \usage{
 scplot(data, dvar, pvar, mvar)
 
 set_style(object, style = NULL, ...)
 
-add_line(object, type = NA, ...)
+add_statline(object, stat, ...)
 
-set_xlabel(object, label, col = NULL, cex = NULL)
+set_xlabel(object, label, col = NULL, size = NULL)
 
-set_ylabel(object, label, col = NULL, cex = NULL, orientation = NULL)
+set_ylabel(object, label, col = NULL, size = NULL, orientation = NULL)
 
-set_xaxis(object, lim, increase, col = NULL, cex = NULL)
+set_xaxis(object, lim, increase, col = NULL, size = NULL)
 
-set_yaxis(object, lim, col = NULL, cex = NULL)
+set_yaxis(object, lim, col = NULL, size = NULL)
 
-add_title(object, label, col = NULL, cex = NULL, font = NULL)
+add_title(object, label, col = NULL, size = NULL, font = NULL)
 
-add_marks(object, case = NULL, positions = NULL, col = "red", cex = 1, pch = 1)
+add_marks(
+  object,
+  case = NULL,
+  positions = NULL,
+  col = "red",
+  size = 1,
+  shape = 1
+)
 
-set_phasenames(object, ..., col = NULL, cex = NULL)
+set_phasenames(object, ..., col = NULL, size = NULL)
 
-set_casenames(object, ..., col = NULL, side = NULL, cex = NULL)
+set_casenames(object, ..., col = NULL, side = NULL, size = NULL)
 
-add_text(object, case = 1, x, y, label, col = NULL, cex = NULL, angle = 0)
+add_text(object, case = 1, x, y, label, col = NULL, size = NULL, angle = 0)
 
 add_arrow(object, case = 1, x0, y0, x1, y1, length = 0.1, ...)
 
-add_grid(object, lty = NULL, lwd = NULL, col = NULL)
+add_grid(object, type = NULL, width = NULL, col = NULL)
 
 set_background(object, col = NULL)
 
 add_frame(object, col = "black")
 
-add_box(object, col = "black", lty = "solid", lwd = 1)
+add_box(object, col = "black", type = "solid", width = 1)
+
+add_labels(
+  object,
+  col = "black",
+  size = 0.6,
+  offset = 0.4,
+  position = 3,
+  round = 1
+)
+
+set_line(object, col = NULL, width = NULL, type = NULL)
+
+set_dots(object, col = NULL, size = NULL, shape = NULL)
+
+add_ridge(object, col = "grey98")
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}

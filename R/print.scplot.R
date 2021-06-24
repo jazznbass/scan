@@ -6,16 +6,8 @@ print.scplot <- function(object) {
   pvar <- object$pvar
   mvar <- object$mvar
   ylim <- object$yaxis$lim
-  ylab <- object$ylabel
   xlim <- object$xaxis$lim
-  xinc <- object$xaxis$increase
-  xlab <- object$xlabel
-  main <- object$title
-  phase_names <- object$phase_names$labels
-  case_names <- object$case_names$labels
   style <- object$style
-  lines <- object$lines
-  marks <- object$marks
   
   style <- .check_style(style)
   
@@ -26,21 +18,19 @@ print.scplot <- function(object) {
   
   if (N > 1) par(mfrow = c(N, 1))
   
-  annotations <- style$annotations
-  
   if (!is.null(style$col.frame)) style$bty <- "n"
   
   par("bg"       = style$col.bg)
   par("col"      = style$col)
   par("family"   = style$font)
   par("cex"      = style$cex)
-  par("las"      = style$las)
-  par("bty"      = style$bty)
+  #par("las"      = style$las)
+  #par("bty"      = style$bty)
 
   # prepare lines definitions
-  lines <- .prepare_arg_lines(lines)
+  object$lines <- .prepare_arg_lines(object$lines)
   
-  # set xlim and ylim
+  # set xlim and ylim ---------
   values.tmp <- unlist(lapply(data_list, function(x) x[, dvar]))
   mt.tmp     <- unlist(lapply(data_list, function(x) x[, mvar]))
   
@@ -49,7 +39,7 @@ print.scplot <- function(object) {
   if (is.null(xlim))
     xlim <- c(min(mt.tmp, na.rm = TRUE), max(mt.tmp, na.rm = TRUE))
   
-  # set margins
+  # set margins --------
   
   w_line <- par("csi")
   
@@ -88,15 +78,15 @@ print.scplot <- function(object) {
     design <- .phasestructure(data, pvar)
     
     # plot ylim
-    y.lim <- ylim
-    if (is.na(ylim[2])) y.lim[2] <- max(data[, dvar])
-    if (is.na(ylim[1])) y.lim[1] <- min(data[, dvar])
+    y_lim <- ylim
+    if (is.na(ylim[2])) y_lim[2] <- max(data[, dvar])
+    if (is.na(ylim[1])) y_lim[1] <- min(data[, dvar])
     
     # one plot
     
     if (N == 1) {
       add_topmar <- 2.5 * strheight(
-        main, units = "inches", cex = style$cex.main / par("cex")
+        object$title, units = "inches", cex = style$cex.main / par("cex")
       )
       par(mai = c(style$mai[1:2], style$mai[3] + add_topmar, style$mai[4]))
     } 
@@ -132,63 +122,16 @@ print.scplot <- function(object) {
     
     plot(
       data[[mvar]], data[[dvar]], type = "n", 
-      xlim = xlim, ylim = y.lim, ann = FALSE,
+      xlim = xlim, ylim = y_lim, ann = FALSE,
       xaxp = c(xlim[1], xlim[2], xlim[2] - xlim[1]),
-      yaxt = "n", xaxt = "n"
+      yaxt = "n", xaxt = "n", bty = "n"
     )
     
-    # add xaxis --------------------------------------------------------
-    
-    if (N == 1 || case == N) { #one plot or last plot
-      xticks_pos <- seq(xlim[1], xlim[2], 1)
-      axis(
-        side = 1, 
-        at = xticks_pos, 
-        labels = FALSE, 
-        col.axis = style$col.xaxis, 
-        col.ticks = style$col.xaxis
-      )
-      text(
-        x = seq(xlim[1], xlim[2], xinc),  
-        y = par("usr")[3], 
-        cex = style$cex.xaxis, 
-        col = style$col.xaxis,
-        labels = seq(xlim[1], xlim[2], xinc), 
-        srt = 0, 
-        pos = 1, 
-        offset = style$cex.xaxis, 
-        xpd = TRUE
-      )
-    }
-
-
-    # add yaxis -------------------------------------------------------
-
-    yticks_pos <- axTicks(2, usr = c(y.lim[1], ylim[2]))
-    axis(
-      side = 2, 
-      at = yticks_pos, 
-      labels = NA, 
-      col.axis = style$col.yaxis, 
-      col.ticks = style$col.yaxis
-    )
-    text(
-      x = par("usr")[1], 
-      y = yticks_pos, 
-      labels = yticks_pos, 
-      offset = style$cex.yaxis,
-      col = style$col.yaxis,
-      srt = 0, 
-      pos = 2, 
-      cex = style$cex.yaxis, 
-      xpd = TRUE
-    )
-
     # add xlab --------------------------------------------------------
     
     if (N == 1 || case == N) {
       mtext(
-        xlab, 
+        object$xlabel, 
         side = 1, 
         line = 2, 
         las = 0, 
@@ -201,21 +144,19 @@ print.scplot <- function(object) {
 
     if (style$ylab.orientation == 0) 
       mtext(
-        text = ylab, side = 2, line = 2, las = 0, cex = style$cex.ylab, 
+        text = object$ylabel, side = 2, line = 2, las = 0, cex = style$cex.ylab, 
         col = style$col.ylab
       )
     
     if (style$ylab.orientation == 1) {
       mtext(
-        text = ylab, side = 2, line = 2, las = 1, at = max(y.lim), 
+        text = object$ylabel, side = 2, line = 2, las = 1, at = max(y_lim), 
         cex = style$cex.ylab, col = style$col.ylab
       )
     }
     
     
     usr <- par("usr")
-    
-    # styling ------------------------------------------------------------
     
     # add background ----------------------------------------------------------
     
@@ -248,46 +189,91 @@ print.scplot <- function(object) {
         lwd = style$lwd.grid
       )
     
-    # add frame ---------------------------------
-    
-    if (!is.null(style$col.frame))
-      rect(usr[1],usr[3],usr[2],usr[4], col = NA, border = style$col.frame)
-    
     # add fill array below lines --------------------------------
     
-    if (style$fill == "" || is.na(style$fill)) style$fill <- FALSE
-    
-    if(class(style$fill) == "character") {
-      style$col.fill <- style$fill
-      style$fill <- TRUE
-    }
-    
-    if (isTRUE(style$fill)) {
+    if (!is.null(style$col.ridge)) {
       for(i in 1:length(design$values)) {
         x <- data[design$start[i]:design$stop[i], mvar]
         y <- data[design$start[i]:design$stop[i], dvar]
         
         for(i in 1:length(x)) {
-          x_values <- c(x[i], x[i+1], x[i+1], x[i])
-          y_values <- c(y.lim[1], y.lim[1], y[i+1], y[i])
-          polygon(x_values, y_values, col = style$col.fill, border = NA)      
+          x_values <- c(x[i], x[i + 1], x[i + 1], x[i])
+          #y_values <- c(y_lim[1], y_lim[1], y[i + 1], y[i])
+          y_values <- c(par("usr")[3], par("usr")[3], y[i + 1], y[i])
+          polygon(x_values, y_values, col = style$col.ridge, border = NA)      
         }
       }
     }
+    
+    # add frame ---------------------------------
+    
+    if (!is.null(style$col.frame))
+      rect(usr[1],usr[3],usr[2],usr[4], col = NA, border = style$col.frame)
+    
+    # add xaxis --------------------------------------------------------
+    
+    if (N == 1 || case == N) { #one plot or last plot
+      xticks_pos <- seq(xlim[1], xlim[2], 1)
+      axis(
+        side = 1, 
+        at = xticks_pos, 
+        labels = FALSE, 
+        col.axis = style$col.xaxis, 
+        col.ticks = style$col.xaxis
+      )
+      text(
+        x = seq(xlim[1], xlim[2], object$xaxis$increase),  
+        y = par("usr")[3], 
+        cex = style$cex.xaxis, 
+        col = style$col.xaxis,
+        labels = seq(xlim[1], xlim[2], object$xaxis$increase), 
+        srt = 0, 
+        pos = 1, 
+        offset = style$cex.xaxis, 
+        xpd = TRUE
+      )
+    }
+    
+    # add yaxis -------------------------------------------------------
+    
+    yticks_pos <- axTicks(2, usr = c(y_lim[1], ylim[2]))
+    axis(
+      side = 2, 
+      at = yticks_pos, 
+      labels = NA, 
+      col.axis = style$col.yaxis, 
+      col.ticks = style$col.yaxis
+    )
+    text(
+      x = par("usr")[1], 
+      y = yticks_pos, 
+      labels = yticks_pos, 
+      offset = style$cex.yaxis,
+      col = style$col.yaxis,
+      srt = 0, 
+      pos = 2, 
+      cex = style$cex.yaxis, 
+      xpd = TRUE
+    )
     
     # draw dv lines ---------------------------------------------
     for(i in 1:length(design$values)) {
       x <- data[design$start[i]:design$stop[i], mvar]
       y <- data[design$start[i]:design$stop[i], dvar]
-      if (style$col.lines != "") {
+      if (!is.null(style$col.lines)) {
         lines(
-          x, y, type = "l", pch = style$pch, lty = style$lty, lwd = style$lwd, 
+          x, y, 
+          type = "l", 
+          lty = style$lty, 
+          lwd = style$lwd,
           col = style$col.lines
         )
       }
-      if (style$col.dots != "") {
-        lines(
-          x, y, type = "p", pch = style$pch, lty = style$lty, lwd = style$lwd, 
+      if (!is.null(style$col.dots)) {
+        points(
+          x, y,
+          pch = style$pch, 
+          cex = style$cex.dots, 
           col = style$col.dots
         )
       }
@@ -297,7 +283,7 @@ print.scplot <- function(object) {
     
     if (case == 1) 
       title(
-        main = main, 
+        main = object$title, 
         col.main = style$col.main, 
         cex.main = style$cex.main,
         font.main = style$font.main
@@ -305,11 +291,25 @@ print.scplot <- function(object) {
     
     # add marks ---------------------------------------------------------------
     
-    if (!is.null(marks)) {
+    if (!is.null(object$marks)) {
+      
       id_case <- which(sapply(object$marks, function(x) x$case) == case)
+      id_case <- c(
+        id_case, 
+        which(sapply(object$marks, function(x) x$case) == "all")
+      )
+      
       if (length(id_case) > 0) {
         for (i_marks in id_case) { 
-          marks_case <- marks[[i_marks]]
+          marks_case <- object$marks[[i_marks]]
+          
+          if (is.character(marks_case$positions)) {
+            marks_case$positions <- eval(
+              str2expression(marks_case$positions), envir = data
+            )
+            marks_case$positions <- which(marks_case$positions)
+          }
+          
           marks.x <- data[data[, mvar] %in% marks_case$positions, mvar]
           marks.y <- data[data[, mvar] %in% marks_case$positions, dvar]
           points(
@@ -325,49 +325,23 @@ print.scplot <- function(object) {
     
     # add annotations ---------------------------------------------------------
     
-    if (!is.null(annotations)) {
-      annotations.cex <- 1
-      annotations.round <- 1
-      annotations.col <- "black"
-      annotations.pos <- 3
-      annotations.offset <- 0.5
-      
-      if (any(names(annotations) == "cex")) {
-        annotations.cex <- annotations[[which(names(annotations) == "cex")]]
-      }
-      if (any(names(annotations) == "col")) {
-        annotations.col <- annotations[[which(names(annotations) == "col")]]
-      }
-      if (any(names(annotations) == "round")) {
-        annotations.round <- annotations[[which(names(annotations) == "round")]]
-      }
-      if (any(names(annotations) == "pos")) {
-        annotations.pos <- annotations[[which(names(annotations) == "pos")]]
-      }
-      if (any(names(annotations) == "offset")) {
-        annotations.offset <- annotations[[which(names(annotations) == "offset")]]
-      }
-      
-      annotations.label <- round(data[,dvar], annotations.round)
-      
+    if (!is.null(style$annotations)) {
       text(
         x = data[,mvar], 
         y = data[,dvar], 
-        label = annotations.label, 
-        col = annotations.col, 
-        pos = annotations.pos, 
-        offset = annotations.offset, 
-        cex = annotations.cex
+        label = round(data[, dvar], style$annotations$round), 
+        col = style$annotations$col, 
+        pos = style$annotations$pos, 
+        offset = style$annotations$offset, 
+        cex = style$annotations$cex
       )
     }
     
     # add lines ---------------------------------------------------------------
     
-    if (!is.null(lines)) .add_lines(data, mvar, dvar, pvar, design, lines)
-    
-
-    
-    
+    if (!is.null(object$lines)) 
+      .add_lines(data, mvar, dvar, pvar, design, object$lines)
+  
     # add phase names ---------------------------------------------------------
     if (is.null(object$phase_names$labels)) {
       case_phase_names <- design$values
@@ -404,7 +378,7 @@ print.scplot <- function(object) {
         tex <- paste(unlist(strsplit(style$text.ABlag[i], "")), collapse = "\n")
         text(
           x = data[design$stop[i] + 1, mvar] - 0.5, 
-          y = (y.lim[2] - y.lim[1]) / 2 + y.lim[1], 
+          y = (y_lim[2] - y_lim[1]) / 2 + y_lim[1], 
           labels = tex, 
           cex = 0.8)
       }
@@ -490,7 +464,7 @@ print.scplot <- function(object) {
       lwd.line <- line[["lwd"]]
       col.line <- line[["col"]]
       
-      if (line[["type"]] == "trend") {
+      if (line[["stat"]] == "trend") {
         for(i in 1:length(design$values)) {
           x <- data[design$start[i]:design$stop[i], mvar]
           y <- data[design$start[i]:design$stop[i], dvar]
@@ -507,7 +481,7 @@ print.scplot <- function(object) {
           )
         }
       }
-      if (line[["type"]] == "median") {
+      if (line[["stat"]] == "median") {
         for(i in 1:length(design$values)) {
           x <- data[design$start[i]:design$stop[i], mvar]
           y <- data[design$start[i]:design$stop[i], dvar]
@@ -520,7 +494,7 @@ print.scplot <- function(object) {
           )
         }      
       }
-      if (line[["type"]] == "mean") {
+      if (line[["stat"]] == "mean") {
         if (is.null(line[["trim"]])) line[["trim"]] <- 0.1
         lines.par <- line[["trim"]]
         
@@ -539,7 +513,7 @@ print.scplot <- function(object) {
           )
         }
       }
-      if (line[["type"]] == "trendA") {
+      if (line[["stat"]] == "trendA") {
         x <- data[design$start[1]:design$stop[1],mvar]
         y <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
@@ -555,7 +529,7 @@ print.scplot <- function(object) {
           lwd = lwd.line
         )
       }
-      if (line[["type"]] == "trendA_bisplit") {
+      if (line[["stat"]] == "trendA_bisplit") {
         x     <- data[design$start[1]:design$stop[1],mvar]
         y     <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
@@ -578,7 +552,7 @@ print.scplot <- function(object) {
           lwd = lwd.line
         )
       }
-      if (line[["type"]] == "trendA_trisplit") {
+      if (line[["stat"]] == "trendA_trisplit") {
         x     <- data[design$start[1]:design$stop[1],mvar]
         y     <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
@@ -605,14 +579,14 @@ print.scplot <- function(object) {
           lwd = lwd.line
         )
       }
-      if (line[["type"]] == "loreg") {
+      if (line[["stat"]] == "loreg") {
         if (is.null(line[["f"]])) line[["f"]] <- 0.5
         lines.par <- line[["f"]]
         reg <- lowess(data[,dvar] ~ data[,mvar], f = lines.par)
         lines(reg, lty = lty.line, col = col.line, lwd = lwd.line)
       }
       
-      if (line[["type"]] %in% c("maxA", "pnd")) {
+      if (line[["stat"]] %in% c("maxA", "pnd")) {
         x <- data[design$start[1]:design$stop[1],mvar]
         y <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
@@ -625,7 +599,7 @@ print.scplot <- function(object) {
         )		
       }
       
-      if (line[["type"]] == "minA") {
+      if (line[["stat"]] == "minA") {
         x <- data[design$start[1]:design$stop[1],mvar]
         y <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
@@ -637,7 +611,7 @@ print.scplot <- function(object) {
           lwd = lwd.line
         )		
       }
-      if (line[["type"]] == "medianA") {
+      if (line[["stat"]] == "medianA") {
         x <- data[design$start[1]:design$stop[1],mvar]
         y <- data[design$start[1]:design$stop[1],dvar]
         maxMT <- max(data[,mvar])
@@ -650,7 +624,7 @@ print.scplot <- function(object) {
           lwd = lwd.line
         )		
       }
-      if (line[["type"]] == "meanA") {
+      if (line[["stat"]] == "meanA") {
         if (is.null(line[["trim"]])) line[["trim"]] <- 0.1
         lines.par <- line[["trim"]]
         
@@ -669,12 +643,12 @@ print.scplot <- function(object) {
         )		
       }
       
-      if (line[["type"]] == "plm") {
+      if (line[["stat"]] == "plm") {
         pr <- plm(data_list[case])
         y <- fitted(pr$full.model)
         lines(data[[mvar]], y, lty = lty.line, col = col.line, lwd = lwd.line)
       }
-      if (line[["type"]] == "plm.ar") {
+      if (line[["stat"]] == "plm.ar") {
         if (is.null(line[["ar"]])) line[["ar"]] <-2
         lines.par <- line[["ar"]]
         pr <- plm(data_list[case], AR = lines.par)
@@ -682,13 +656,13 @@ print.scplot <- function(object) {
         lines(data[[mvar]], y, lty = lty.line, col = col.line, lwd = lwd.line)
       }
       
-      if (line[["type"]] == "movingMean") {
+      if (line[["stat"]] == "movingMean") {
         if (is.null(line[["lag"]])) line[["lag"]] <- 1
         lines.par <- line[["lag"]]
         y <- .moving_average(data[, dvar],lines.par, mean)
         lines(data[, mvar], y, lty = lty.line, col = col.line, lwd = lwd.line)
       }
-      if (line[["type"]] == "movingMedian") {
+      if (line[["stat"]] == "movingMedian") {
         if (is.null(line[["lag"]])) line[["lag"]] <- 1
         lines.par <- line[["lag"]]
         y <- .moving_average(data[, dvar],lines.par, median)
