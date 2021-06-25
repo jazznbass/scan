@@ -7,6 +7,7 @@ Several functions have been adapted to handle cases with differing designs in a 
 
 ### New functions
 
+- `select_phases()`: selects and recombines phases into A and B phase (equivalent to th phases arguent fo various functions, but usefull when using %>% operators).
 - `is.scdf()`: Tests if an object is of type "scdf" or not.
 - `check_scdf()`: Checks for the validity of an scdf object (mainly used for internal test)
 - `convert()`: Creates an scdf syntax file from an scdf object.
