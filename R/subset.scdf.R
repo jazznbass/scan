@@ -21,11 +21,12 @@ subset.scdf <- function(x, filter, select, cases, ...) {
   if (missing(filter)) filter <- TRUE else filter <- substitute(filter)
   if (missing(select)) select <- TRUE
   if (missing(cases)) cases <- TRUE
+  
   #if (is.numeric(eval(subset))) subset <- eval(subset)
    
   nl <- as.list(seq_along(scdf))
   names(nl) <- names(scdf)
-  scdf <- scdf[eval(substitute(cases), nl, parent.frame())]
+  scdf <- scdf[eval(substitute(cases), envir = nl, enclos = parent.frame())]
   
    
   for(i in 1:length(scdf)) {
@@ -44,8 +45,6 @@ subset.scdf <- function(x, filter, select, cases, ...) {
     #print(rows)
     scdf[[i]] <- x[rows, columns, drop = FALSE]
   }
-  
-  
   
   scdf
 }
