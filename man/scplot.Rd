@@ -24,42 +24,35 @@
 \alias{add_ridge}
 \title{Plot single-case data}
 \usage{
-scplot(data, dvar, pvar, mvar)
+scplot(scdf)
 
-set_style(object, style = NULL, ...)
+set_style(object, style, ...)
 
 add_statline(object, stat, ...)
 
-set_xlabel(object, label, col = NULL, size = NULL)
+set_xlabel(object, label, col, size)
 
-set_ylabel(object, label, col = NULL, size = NULL, orientation = NULL)
+set_ylabel(object, label, col, size, orientation)
 
-set_xaxis(object, lim, increase, col = NULL, size = NULL)
+set_xaxis(object, lim, increase, col, size)
 
-set_yaxis(object, lim, col = NULL, size = NULL)
+set_yaxis(object, lim, col, size)
 
-add_title(object, label, col = NULL, size = NULL, font = NULL)
+add_title(object, label, col, size, font)
 
-add_marks(
-  object,
-  case = NULL,
-  positions = NULL,
-  col = "red",
-  size = 1,
-  shape = 1
-)
+add_marks(object, case, positions, col = "red", size = 1, shape = 1)
 
-set_phasenames(object, ..., col = NULL, size = NULL)
+set_phasenames(object, ..., col, size)
 
-set_casenames(object, ..., col = NULL, side = NULL, size = NULL)
+set_casenames(object, ..., col, side, size)
 
 add_text(object, case = 1, x, y, label, col = NULL, size = NULL, angle = 0)
 
 add_arrow(object, case = 1, x0, y0, x1, y1, length = 0.1, ...)
 
-add_grid(object, type = NULL, width = NULL, col = NULL)
+add_grid(object, type, width, col)
 
-set_background(object, col = NULL)
+set_background(object, col)
 
 add_frame(object, col = "black")
 
@@ -74,20 +67,14 @@ add_labels(
   round = 1
 )
 
-set_line(object, col = NULL, width = NULL, type = NULL)
+set_line(object, col, width, type)
 
-set_dots(object, col = NULL, size = NULL, shape = NULL)
+set_dots(object, col, size, shape)
 
 add_ridge(object, col = "grey98")
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
-
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
-
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
-
-\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
+\item{scdf}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
 
 \item{...}{Further arguments passed to the function.}
 
@@ -141,7 +128,7 @@ the marks.  \item\code{"cex"} Size of the marks.  } Use for example
 the MTs one, eight and 18 appear big and red.}
 }
 \value{
-An scdf plot object that creates aplot when printed.
+An scdf plot object that creates a plot when printed.
 }
 \description{
 This function provides a plot of a single-case or multiple

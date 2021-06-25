@@ -4,31 +4,26 @@
 #' single-cases.
 #'
 #' @inheritParams .inheritParams
-#'
-#' @return An scdf plot object that creates aplot when printed.
+#' @scdf A single-case data frame.
+#' @return An scdf plot object that creates a plot when printed.
 #' @export
 
-scplot <- function(data, dvar, pvar, mvar) {
+scplot <- function(scdf) {
   
-  # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
+  scdf <- .prepare_scdf(scdf)
   
-  data <- .prepare_scdf(data)
-  
-  xlab <- mvar
-  ylab <- dvar
+  xlab <- scdf_attr(scdf, .opt$mt)
+  ylab <- scdf_attr(scdf, .opt$dv)
   if (xlab == "mt") xlab <- "Measurement time"
   
   out <- list(
     scdf = data,
-    dvar = dvar, 
-    pvar = pvar, 
-    mvar = mvar,
+    dvar = scdf_attr(scdf, .opt$dv), 
+    pvar = scdf_attr(scdf, .opt$phase), 
+    mvar = scdf_attr(scdf, .opt$mt),
     style = style_plot(getOption("scan.plot.style")),
     title = NULL,
-    xaxis = list(lim = NULL, increase = 1),
+    xaxis = list(lim = NULL, increment = 1),
     yaxis = list(lim = NULL),
     xlabel = xlab,
     ylabel = ylab,
@@ -47,11 +42,11 @@ scplot <- function(data, dvar, pvar, mvar) {
 
 #' @rdname scplot
 #' @export
-set_style <- function(object, style = NULL, ...) {
+set_style <- function(object, style, ...) {
   
   args <- list(...)
   
-  if (!is.null(style)) {
+  if (!missing(style)) {
       if (!(all(style %in% names(.opt$style)))) {
         stop("Unknown style template.")
       }
@@ -111,10 +106,10 @@ add_statline <- function(object, stat, ...) {
 
 #' @rdname scplot
 #' @export
-set_xlabel <- function(object, label, col = NULL, size = NULL) {
+set_xlabel <- function(object, label, col, size) {
   
-  if (!is.null(col)) object$style$col.xlab <- col
-  if (!is.null(size)) object$style$cex.xlab <- size
+  if (!missing(col)) object$style$col.xlab <- col
+  if (!missing(size)) object$style$cex.xlab <- size
   
   object$xlabel <- label
   
@@ -123,11 +118,11 @@ set_xlabel <- function(object, label, col = NULL, size = NULL) {
 
 #' @rdname scplot
 #' @export
-set_ylabel <- function(object, label, col = NULL, size = NULL, orientation = NULL) {
+set_ylabel <- function(object, label, col, size, orientation) {
   
-  if (!is.null(orientation)) object$style$ylab.orientation <- orientation
-  if (!is.null(col)) object$style$col.ylab <- col
-  if (!is.null(size)) object$style$cex.ylab <- size
+  if (!missing(orientation)) object$style$ylab.orientation <- orientation
+  if (!missing(col)) object$style$col.ylab <- col
+  if (!missing(size)) object$style$cex.ylab <- size
 
   object$ylabel <- label
   
@@ -136,10 +131,10 @@ set_ylabel <- function(object, label, col = NULL, size = NULL, orientation = NUL
 
 #' @rdname scplot
 #' @export
-set_xaxis <- function(object, lim, increase, col = NULL, size = NULL) {
+set_xaxis <- function(object, lim, increase, col, size) {
   
-  if (!is.null(col)) object$style$col.xaxis <- col
-  if (!is.null(size)) object$style$cex.xaxis <- size
+  if (!missing(col)) object$style$col.xaxis <- col
+  if (!missing(size)) object$style$cex.xaxis <- size
   
   if (!missing(lim)) object$xaxis <- c(list(lim = lim), object$xaxis)
   if (!missing(increase)) 
@@ -152,10 +147,10 @@ set_xaxis <- function(object, lim, increase, col = NULL, size = NULL) {
 
 #' @rdname scplot
 #' @export
-set_yaxis <- function(object, lim, col = NULL, size = NULL) {
+set_yaxis <- function(object, lim, col, size) {
   
-  if (!is.null(col)) object$style$col.yaxis <- col
-  if (!is.null(size)) object$style$cex.yaxis <- size
+  if (!missing(col)) object$style$col.yaxis <- col
+  if (!missing(size)) object$style$cex.yaxis <- size
   
   if (!missing(lim)) object$yaxis <- c(list(lim = lim), object$yaxis)
   
@@ -168,11 +163,11 @@ set_yaxis <- function(object, lim, col = NULL, size = NULL) {
 #' @rdname scplot
 #' @param label Character string.
 #' @export
-add_title <- function(object, label, col = NULL, size = NULL, font = NULL) {
+add_title <- function(object, label, col, size, font) {
   
-  if (!is.null(col)) object$style$col.main <- col
-  if (!is.null(size)) object$style$cex.main <- size
-  if (!is.null(font)) object$style$font.main <- font
+  if (!missing(col)) object$style$col.main <- col
+  if (!missing(size)) object$style$cex.main <- size
+  if (!missing(font)) object$style$font.main <- font
   
   object$title <- label
   object
@@ -189,7 +184,7 @@ add_title <- function(object, label, col = NULL, size = NULL, font = NULL) {
 #' \code{marks = list(positions = c(1, 8, 15), col = "red", cex = 3)} to make
 #' the MTs one, eight and 18 appear big and red.
 #' @export
-add_marks <- function(object, case = NULL, positions = NULL, col = "red", size = 1, shape = 1) {
+add_marks <- function(object, case, positions, col = "red", size = 1, shape = 1) {
   
   # Marks on the outliers from outlier()
   if (identical(class(positions), c("sc","outlier"))) {
@@ -219,21 +214,21 @@ add_marks <- function(object, case = NULL, positions = NULL, col = "red", size =
 
 #' @rdname scplot
 #' @export
-set_phasenames <- function(object, ..., col = NULL, size = NULL) {
+set_phasenames <- function(object, ..., col, size) {
   
-  if (!is.null(col)) object$style$col.phasenames <- col
-  if (!is.null(size)) object$style$cex.phasenames <- size
+  if (!missing(col)) object$style$col.phasenames <- col
+  if (!missing(size)) object$style$cex.phasenames <- size
   object$phase_names$labels <- c(...)
   object
 }
 
 #' @rdname scplot
 #' @export
-set_casenames <- function(object, ..., col = NULL, side = NULL, size = NULL) {
+set_casenames <- function(object, ..., col, side, size) {
   
-  if (!is.null(col)) object$style$col.casenames <- col
-  if (!is.null(side)) object$style$names$side <- side
-  if (!is.null(size)) object$style$cex.casenames <- size
+  if (!missing(col)) object$style$col.casenames <- col
+  if (!missing(side)) object$style$names$side <- side
+  if (!missing(size)) object$style$cex.casenames <- size
   
   
   object$case_names$labels <- c(...)
@@ -254,38 +249,40 @@ add_text <- function(object, case = 1, x, y, label, col = NULL, size = NULL, ang
 #' @rdname scplot
 #' @export
 add_arrow <- function(object, case = 1, x0, y0, x1, y1, length = 0.1, ...) {
-  arrow <- list(case = case, x0 = x0, y0 = y0, x1 = x1, y1 = y1, length = length, ...)
+  arrow <- list(
+    case = case, x0 = x0, y0 = y0, x1 = x1, y1 = y1, length = length, ...
+  )
   object$arrows <- c(object$arrows, list(arrow))
   object
 }
 
 #' @rdname scplot
 #' @export
-add_grid <- function(object, type = NULL, width = NULL, col = NULL) {
+add_grid <- function(object, type, width, col) {
 
   object$style$grid <- TRUE
   
-  if (!is.null(col)) object$style$col.grid <- col
-  if (!is.null(width)) object$style$lwd.grid <- width
-  if (!is.null(type)) object$style$lty.grid <- type
+  if (!missing(col)) object$style$col.grid <- col
+  if (!missing(width)) object$style$lwd.grid <- width
+  if (!missing(type)) object$style$lty.grid <- type
 
   object
 }
 
 #' @rdname scplot
 #' @export
-set_background <- function(object, col = NULL) {
+set_background <- function(object, col) {
   
   object$style$fill.bg <- TRUE
   
-  if (!is.null(col)) object$style$col.fill.bg <- col
+  if (!missing(col)) object$style$col.fill.bg <- col
   
   object
 }
 
 #' @rdname scplot
 #' @export
-add_frame <- function(object, col = "black") { #}, lty = NULL, lwd = NULL) {
+add_frame <- function(object, col = "black") {
   
   object$style$col.frame <- col
   
@@ -305,7 +302,12 @@ add_box <- function(object, col = "black", type = "solid", width = 1) {
 
 #' @rdname scplot
 #' @export
-add_labels <- function(object, col = "black", size = 0.6, offset = 0.4, position = 3, round = 1) {
+add_labels <- function(object, 
+                       col = "black", 
+                       size = 0.6, 
+                       offset = 0.4, 
+                       position = 3, 
+                       round = 1) {
   
   object$style$annotations <- list(
     col = col, cex = size, offset = offset, round = round, pos = position
@@ -315,22 +317,22 @@ add_labels <- function(object, col = "black", size = 0.6, offset = 0.4, position
 
 #' @rdname scplot
 #' @export
-set_line <- function(object, col = NULL, width = NULL, type = NULL) {
+set_line <- function(object, col, width, type) {
   
-  if (!is.null(col)) object$style$col.lines <- col
-  if (!is.null(width)) object$style$lwd <- width
-  if (!is.null(type)) object$style$lty <- type
+  if (!missing(col)) object$style$col.lines <- col
+  if (!missing(width)) object$style$lwd <- width
+  if (!missing(type)) object$style$lty <- type
   
   object
 }
 
 #' @rdname scplot
 #' @export
-set_dots <- function(object, col = NULL, size = NULL, shape = NULL) {
+set_dots <- function(object, col, size, shape) {
   
-  if (!is.null(shape)) object$style$pch <- shape
-  if (!is.null(col)) object$style$col.dots <- col
-  if (!is.null(size)) object$style$cex.dots <- size
+  if (!missing(shape)) object$style$pch <- shape
+  if (!missing(col)) object$style$col.dots <- col
+  if (!missing(size)) object$style$cex.dots <- size
   
   object
 }
