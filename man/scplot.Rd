@@ -29,52 +29,52 @@ scplot(scdf)
 
 set_style(object, style, ...)
 
-add_statline(object, stat, ...)
+add_statline(object, stat, colour = NULL, ...)
 
-set_xlabel(object, label, col, size)
+set_xlabel(object, label, colour, size)
 
-set_ylabel(object, label, col, size, orientation)
+set_ylabel(object, label, colour, size, orientation)
 
-set_xaxis(object, limits, increment, col, size)
+set_xaxis(object, limits, increment, colour, size)
 
-set_yaxis(object, limits, col, size)
+set_yaxis(object, limits, colour, size)
 
-add_title(object, label, col, size, font)
+add_title(object, label, colour, size, font)
 
-add_marks(object, case, positions, col = "red", size = 1, shape = 1)
+add_marks(object, case, positions, colour = "red", size = 1, shape = 1)
 
-set_phasenames(object, ..., col, size)
+set_phasenames(object, ..., colour, size)
 
-set_casenames(object, ..., col, side, size)
+set_casenames(object, ..., colour, side, size)
 
-add_text(object, case = 1, x, y, label, col = NULL, size = NULL, angle = 0)
+add_text(object, case = 1, x, y, label, colour = NULL, size = NULL, angle = 0)
 
-add_arrow(object, case = 1, x0, y0, x1, y1, length = 0.1, ...)
+add_arrow(object, case = 1, x0, y0, x1, y1, length = 0.1, colour = NULL, ...)
 
-add_grid(object, type, width, col)
+add_grid(object, type, width, colour)
 
-set_background(object, col)
+set_background(object, colour)
 
-add_frame(object, col = "black")
+add_frame(object, colour = "black")
 
-add_box(object, col = "black", type = "solid", width = 1)
+add_box(object, colour = "black", type = "solid", width = 1)
 
 add_labels(
   object,
-  col = "black",
+  colour = "black",
   size = 0.6,
   offset = 0.4,
   position = 3,
   round = 1
 )
 
-set_line(object, col, width, type)
+set_line(object, colour, width, type)
 
-set_dots(object, col, size, shape)
+set_dots(object, colour, size, shape)
 
-add_ridge(object, col = "grey98")
+add_ridge(object, colour = "grey98")
 
-set_seperator(object, col, width, type, extent)
+set_seperator(object, colour, width, type, extent)
 }
 \arguments{
 \item{scdf}{A single-case data frame.}
