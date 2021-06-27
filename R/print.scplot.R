@@ -30,14 +30,16 @@ print.scplot <- function(object) {
   # prepare lines definitions
   object$lines <- .prepare_arg_lines(object$lines)
   
-  # set xlim and ylim ---------
-  values.tmp <- unlist(lapply(data_list, function(x) x[, dvar]))
-  mt.tmp     <- unlist(lapply(data_list, function(x) x[, mvar]))
+  # set global xlim and ylim ---------
   
-  if (is.null(ylim))
-    ylim <- c(min(values.tmp, na.rm = TRUE), max(values.tmp, na.rm = TRUE))
-  if (is.null(xlim))
-    xlim <- c(min(mt.tmp, na.rm = TRUE), max(mt.tmp, na.rm = TRUE))
+  if (is.null(ylim)) {
+    .dv <- unlist(lapply(data_list, function(x) x[, dvar]))
+    ylim <- c(min(.dv, na.rm = TRUE), max(.dv, na.rm = TRUE))
+  }
+  if (is.null(xlim)) {
+    .mt     <- unlist(lapply(data_list, function(x) x[, mvar]))
+    xlim <- c(min(.mt, na.rm = TRUE), max(.mt, na.rm = TRUE))
+  }
   
   # set margins --------
   
@@ -212,7 +214,7 @@ print.scplot <- function(object) {
     
     # add xaxis --------------------------------------------------------
     
-    if (N == 1 || case == N) { #one plot or last plot
+    if (N == 1 || case == N) { #only when one plot or last plot
       xticks_pos <- seq(xlim[1], xlim[2], 1)
       axis(
         side = 1, 
@@ -222,11 +224,11 @@ print.scplot <- function(object) {
         col.ticks = style$col.xaxis
       )
       text(
-        x = seq(xlim[1], xlim[2], object$xaxis$increase),  
+        x = seq(xlim[1], xlim[2], object$xaxis$inc),  
         y = par("usr")[3], 
         cex = style$cex.xaxis, 
         col = style$col.xaxis,
-        labels = seq(xlim[1], xlim[2], object$xaxis$increase), 
+        labels = seq(xlim[1], xlim[2], object$xaxis$inc), 
         srt = 0, 
         pos = 1, 
         offset = style$cex.xaxis, 
@@ -364,12 +366,31 @@ print.scplot <- function(object) {
     # add line between phases -------------------------------------------
     if (is.null(style$text.ABlag)) {
       for(i in 1:(length(design$values) - 1)) {
-        abline(
-          v = data[design$stop[i] + 1, mvar] - 0.5, 
-          lty = style$lty.seperators, 
-          lwd = style$lwd.seperators, 
-          col = style$col.seperators
+        x <- data[design$stop[i] + 1, mvar] - 0.5
+        x <- c(x, x)
+        
+        if (style$seperators.extent == "full") y <- par("usr")[3:4]
+        if (style$seperators.extent == "scale") y <- ylim
+        if (is.numeric(style$seperators.extent)) {
+          .range <- ylim[2] - ylim[1]
+          .cut <- .range * (1 - style$seperators.extent) / 2
+          y <- c(ylim[1] + .cut, ylim[2] - .cut)
+        }
+        
+        lines(
+          x, y, 
+          lty = style$lty.seperators,
+          lwd =  style$lwd.seperators, 
+          col = style$col.seperators,
+          xpd = TRUE
         )
+        
+        #abline(
+        #  v = data[design$stop[i] + 1, mvar] - 0.5, 
+        #  lty = style$lty.seperators, 
+        #  lwd = style$lwd.seperators, 
+        #  col = style$col.seperators
+        #)
       }
     }
     
@@ -448,6 +469,7 @@ print.scplot <- function(object) {
     )
   }
   
+  
 }
 
 .add_lines <- function(data, mvar, dvar, pvar, design, lines) {
@@ -514,14 +536,14 @@ print.scplot <- function(object) {
         }
       }
       if (line[["stat"]] == "trendA") {
-        x <- data[design$start[1]:design$stop[1],mvar]
-        y <- data[design$start[1]:design$stop[1],dvar]
-        maxMT <- max(data[,mvar])
+        x <- data[design$start[1]:design$stop[1], mvar]
+        y <- data[design$start[1]:design$stop[1], dvar]
+        maxMT <- max(data[, mvar])
         reg <- lm(y~x)
         lines(
           x = c(min(x), maxMT), 
           y = c(
-            reg$coefficients[1]  + min(x) * reg$coefficients[2], 
+            reg$coefficients[1] + min(x) * reg$coefficients[2], 
             reg$coefficients[1] + maxMT * reg$coefficients[2]
           ), 
           lty = lty.line, 
@@ -544,7 +566,7 @@ print.scplot <- function(object) {
         lines(
           x = c(min(x), maxMT), 
           y = c(
-            reg$coefficients[1]  + min(x) * reg$coefficients[2], 
+            reg$coefficients[1] + min(x) * reg$coefficients[2], 
             reg$coefficients[1] + maxMT * reg$coefficients[2]
           ), 
           lty = lty.line, 

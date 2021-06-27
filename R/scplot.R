@@ -4,12 +4,13 @@
 #' single-cases.
 #'
 #' @inheritParams .inheritParams
-#' @scdf A single-case data frame.
+#' @param scdf A single-case data frame.
 #' @return An scdf plot object that creates a plot when printed.
 #' @export
 
 scplot <- function(scdf) {
   
+  warnings("This function is in an experimental stage.")
   scdf <- .prepare_scdf(scdf)
   
   xlab <- scdf_attr(scdf, .opt$mt)
@@ -17,13 +18,13 @@ scplot <- function(scdf) {
   if (xlab == "mt") xlab <- "Measurement time"
   
   out <- list(
-    scdf = data,
+    scdf = scdf,
     dvar = scdf_attr(scdf, .opt$dv), 
     pvar = scdf_attr(scdf, .opt$phase), 
     mvar = scdf_attr(scdf, .opt$mt),
     style = style_plot(getOption("scan.plot.style")),
     title = NULL,
-    xaxis = list(lim = NULL, increment = 1),
+    xaxis = list(lim = NULL, inc = 1),
     yaxis = list(lim = NULL),
     xlabel = xlab,
     ylabel = ylab,
@@ -131,14 +132,14 @@ set_ylabel <- function(object, label, col, size, orientation) {
 
 #' @rdname scplot
 #' @export
-set_xaxis <- function(object, lim, increase, col, size) {
+set_xaxis <- function(object, limits, increment, col, size) {
   
   if (!missing(col)) object$style$col.xaxis <- col
   if (!missing(size)) object$style$cex.xaxis <- size
   
-  if (!missing(lim)) object$xaxis <- c(list(lim = lim), object$xaxis)
-  if (!missing(increase)) 
-    object$xaxis <- c(list(increase = increase), object$xaxis)
+  if (!missing(limits)) object$xaxis <- c(list(lim = limits), object$xaxis)
+  if (!missing(increment)) 
+    object$xaxis <- c(list(inc = increment), object$xaxis)
   
   object$xaxis <- object$xaxis[unique(names(object$xaxis))]
   
@@ -147,12 +148,12 @@ set_xaxis <- function(object, lim, increase, col, size) {
 
 #' @rdname scplot
 #' @export
-set_yaxis <- function(object, lim, col, size) {
+set_yaxis <- function(object, limits, col, size) {
   
   if (!missing(col)) object$style$col.yaxis <- col
   if (!missing(size)) object$style$cex.yaxis <- size
   
-  if (!missing(lim)) object$yaxis <- c(list(lim = lim), object$yaxis)
+  if (!missing(limits)) object$yaxis <- c(list(lim = limits), object$yaxis)
   
   object$yaxis <- object$yaxis[unique(names(object$yaxis))]
   
@@ -345,6 +346,17 @@ add_ridge <- function(object, col = "grey98") {
   object
 }
 
+#' @rdname scplot
+#' @export
+set_seperator <- function(object, col, width, type, extent) {
+  
+  if (!missing(col)) object$style$col.seperators <- col
+  if (!missing(width)) object$style$lwd.seperators <- width
+  if (!missing(type)) object$style$lty.seperators <- type
+  if (!missing(extent)) object$style$seperators.extent <- extent
+  
+  object
+}
 
 
 .check_style <- function(style) {
