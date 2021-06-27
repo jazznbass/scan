@@ -55,6 +55,10 @@ The following functions were deprecated since 2017 and are now removed from scan
 - `estimateSC()`: Please use `estimate_design()`
 - `power.testSC()`: Please use `power_test()`
 
+### Bugs
+
+- `print.scdf()` now prints cases when all variable names are wider than the current screen with.
+
 # scan 0.52
 
 ## Major changes
