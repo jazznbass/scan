@@ -13,7 +13,7 @@ add_l2 <- function(data, data_l2, cvar = "case") {
     id <- which(data_l2[[cvar]] == names(data)[i])
     
     if (length(id) > 1) {
-      stop("Multiple matches for a casename in L1 dataset")
+      stop("Multiple matches for a casename in the L1 dataset")
     }
     
     if (length(id) == 1) {
