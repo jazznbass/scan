@@ -66,6 +66,8 @@
   col.text = "black", col.casenames = "black", col.phasenames = "black",
   col.xlab = "black", col.ylab = "black", col.ridge = NULL,
   
+  seperators.extent = "full",
+  
   annotations = NULL, 
   
   names = list(side = 3, line = -1, adj = 0, col = "black", cex = 1)
