@@ -22,6 +22,7 @@
 \alias{set_line}
 \alias{set_dots}
 \alias{add_ridge}
+\alias{set_seperator}
 \title{Plot single-case data}
 \usage{
 scplot(scdf)
@@ -34,9 +35,9 @@ set_xlabel(object, label, col, size)
 
 set_ylabel(object, label, col, size, orientation)
 
-set_xaxis(object, lim, increase, col, size)
+set_xaxis(object, limits, increment, col, size)
 
-set_yaxis(object, lim, col, size)
+set_yaxis(object, limits, col, size)
 
 add_title(object, label, col, size, font)
 
@@ -72,9 +73,11 @@ set_line(object, col, width, type)
 set_dots(object, col, size, shape)
 
 add_ridge(object, col = "grey98")
+
+set_seperator(object, col, width, type, extent)
 }
 \arguments{
-\item{scdf}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{scdf}{A single-case data frame.}
 
 \item{...}{Further arguments passed to the function.}
 
