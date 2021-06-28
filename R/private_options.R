@@ -37,7 +37,7 @@
   female.names = .female.names,
   male.names   = .male.names,
   names        = .names,
-  function_debugging_warning  = "This function is in an experimental state and only implemented for testing und debugging purposes.",
+  function_experimental_warning  = "This function is in an experimental state. The syntax and behaviour will probably change in a future version.",
   function_deprecated_warning = "This function is deprecated. It might be dropped without any further notice in a future update of scan.",
   startup_message = paste0(
     "scan ", utils::packageVersion("scan"), 
@@ -66,6 +66,9 @@
   col.text = "black", col.casenames = "black", col.phasenames = "black",
   col.xlab = "black", col.ylab = "black", col.ridge = NULL,
   
+  align.main = "center", align.caption = "left",
+  margin.main = 0, margin.caption = 0.02, wrap.caption = NULL, wrap.main = NULL,
+  parse.main = FALSE, parse.caption = FALSE,
   seperators.extent = "full",
   
   annotations = NULL, 
