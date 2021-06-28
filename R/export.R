@@ -20,6 +20,7 @@
 #' @export
 
 export <- function (object, ...) {
+  warning(.opt$function_experimental_warning)
   UseMethod("export")
 }
 
