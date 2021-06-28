@@ -9,6 +9,7 @@
 \alias{set_xaxis}
 \alias{set_yaxis}
 \alias{add_title}
+\alias{add_caption}
 \alias{add_marks}
 \alias{set_phasenames}
 \alias{set_casenames}
@@ -39,7 +40,9 @@ set_xaxis(object, limits, increment, colour, size)
 
 set_yaxis(object, limits, colour, size)
 
-add_title(object, label, colour, size, font)
+add_title(object, label, colour, size, font, align, parse)
+
+add_caption(object, label, colour, size, font, align, wrap, margin, parse)
 
 add_marks(object, case, positions, colour = "red", size = 1, shape = 1)
 

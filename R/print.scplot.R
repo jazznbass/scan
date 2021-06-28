@@ -14,6 +14,8 @@ print.scplot <- function(object) {
   op <- par(no.readonly = TRUE)
   on.exit(par(op))
   
+  par("oma" = c(4, 0, 2, 0))
+  
   N <- length(data_list)
   
   if (N > 1) par(mfrow = c(N, 1))
@@ -87,9 +89,10 @@ print.scplot <- function(object) {
     # one plot
     
     if (N == 1) {
-      add_topmar <- 2.5 * strheight(
-        object$title, units = "inches", cex = style$cex.main / par("cex")
-      )
+      add_topmar <- 0
+      #add_topmar <- 2.5 * strheight(
+      #  object$title, units = "inches", cex = style$cex.main / par("cex")
+      #)
       par(mai = c(style$mai[1:2], style$mai[3] + add_topmar, style$mai[4]))
     } 
     
@@ -283,7 +286,7 @@ print.scplot <- function(object) {
   
     # add title ----------------------------------------------------------
     
-    if (case == 1) 
+    if (FALSE) #case == 1) 
       title(
         main = object$title, 
         col.main = style$col.main, 
@@ -456,10 +459,72 @@ print.scplot <- function(object) {
     
   }
   
-  par(op)
+ 
+
+  # add title -----------------------------------------------------------
+  
+  if (!is.null(object$title)) {
+    
+    if (!is.null(style$wrap.title)) {
+      object$title <- paste(
+        strwrap(object$title, width = style$wrap.title),
+        collapse = "\n"
+      )
+    }    
+    
+    adj <- NA
+    
+    if (style$align.main == "center") adj <- NA
+    if (style$align.main == "left") adj <- 0 + style$margin.main
+    if (style$align.main == "right") adj <- 1 - style$margin.main
+    
+    if (style$parse.main) object$title <- str2expression(object$title)
+    
+    mtext(
+      object$title, 
+      side = 3, 
+      outer = TRUE, 
+      cex = style$cex.main, 
+      font = style$font.main, 
+      col = style$col.main, 
+      adj = adj 
+    )
+  }
+
+  # add caption ---------------------------------------------------
+  
+  if (!is.null(object$caption)) {
+    adj <- NA
+    
+    if (style$align.caption == "center") adj <- NA
+    if (style$align.caption == "left") adj <- 0 + style$margin.caption
+    if (style$align.caption == "right") adj <- 1 - style$margin.caption
+    
+    if (!is.null(style$wrap.caption)) {
+      object$caption <- paste(
+        strwrap(object$caption, width = style$wrap.caption),
+        collapse = "\n"
+      )
+    }    
+    
+    if (style$parse.caption) object$caption <- str2expression(object$caption)
+    
+    mtext(
+      object$caption, 
+      side = 1, 
+      line = 2, 
+      outer = TRUE, 
+      cex = style$cex.caption, 
+      font = style$font.caption, 
+      col = style$col.caption, 
+      adj = adj
+    )
+  }  
   
   # add box ouround figure -----------------------------------------------
 
+  par(op)
+  
   if (!is.null(style$col.box)) {
     box(
       which = "figure", 
@@ -469,6 +534,7 @@ print.scplot <- function(object) {
     )
   }
   
+
   
 }
 

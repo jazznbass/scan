@@ -10,7 +10,7 @@
 
 scplot <- function(scdf) {
 
-  warning("This function is in an experimental stage.")
+  warning(.opt$function_experimental_warning)
   
   scdf <- .prepare_scdf(scdf)
   
@@ -25,6 +25,7 @@ scplot <- function(scdf) {
     mvar = scdf_attr(scdf, .opt$mt),
     style = style_plot(getOption("scan.plot.style")),
     title = NULL,
+    caption = NULL,
     xaxis = list(lim = NULL, inc = 1),
     yaxis = list(lim = NULL),
     xlabel = xlab,
@@ -165,13 +166,31 @@ set_yaxis <- function(object, limits, colour, size) {
 #' @rdname scplot
 #' @param label Character string.
 #' @export
-add_title <- function(object, label, colour, size, font) {
+add_title <- function(object, label, colour, size, font, align, parse) {
   
   if (!missing(colour)) object$style$col.main <- colour
   if (!missing(size)) object$style$cex.main <- size
   if (!missing(font)) object$style$font.main <- font
+  if (!missing(align)) object$style$align.main <- align
+  if (!missing(parse)) object$style$parse.main <- parse
   
   object$title <- label
+  object
+}
+
+#' @rdname scplot
+#' @param label Character string.
+#' @export
+add_caption <- function(object, label, colour, size, font, align, wrap, margin, parse) {
+  
+  if (!missing(colour)) object$style$col.caption <- colour
+  if (!missing(size)) object$style$cex.caption <- size
+  if (!missing(font)) object$style$font.caption <- font
+  if (!missing(align)) object$style$align.caption <- align
+  if (!missing(wrap)) object$style$wrap.caption <- wrap
+  if (!missing(margin)) object$style$margin.caption <- margin
+  if (!missing(parse)) object$style$parse.caption <- parse
+  object$caption <- label
   object
 }
 
