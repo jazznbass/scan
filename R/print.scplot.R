@@ -7,27 +7,43 @@ print.scplot <- function(object) {
   mvar <- object$mvar
   ylim <- object$yaxis$lim
   xlim <- object$xaxis$lim
-  style <- object$style
+  theme <- object$theme
   
-  style <- .check_style(style)
+  theme <- .check_theme(theme)
   
   op <- par(no.readonly = TRUE)
   on.exit(par(op))
   
-  par("oma" = c(4, 0, 2, 0))
+  
+
+  # set outer margin --------------------------------------------------------
+
+  if (!is.null(object$title)) {
+    theme$oma[3] <- theme$oma[3] + 1 + sum(unlist(strsplit(object$title, "")) == "\n") 
+  }
+  if (!is.null(object$caption)) {
+    if (!is.null(theme$wrap.caption)) {
+      object$caption <- paste(
+        strwrap(object$caption, width = theme$wrap.caption),
+        collapse = "\n"
+      )
+    }    
+    if (theme$parse.caption) object$caption <- str2expression(object$caption)
+    theme$oma[1] <- theme$oma[1] + 1 + sum(unlist(strsplit(object$caption, "")) == "\n")
+  }
+  #if (!is.null(object$xlab)) theme$oma[1] <- theme$oma[1] + 1.1
+  
+  
   
   N <- length(data_list)
   
   if (N > 1) par(mfrow = c(N, 1))
   
-  if (!is.null(style$col.frame)) style$bty <- "n"
+  par("oma" = theme$oma)
   
-  par("bg"       = style$col.bg)
-  par("col"      = style$col)
-  par("family"   = style$font)
-  par("cex"      = style$cex)
-  #par("las"      = style$las)
-  #par("bty"      = style$bty)
+  if (!is.null(theme$col.bg)) par("bg" = theme$col.bg)
+  par("family"   = theme$font)
+  par("cex"      = 1) # or 1
 
   # prepare lines definitions
   object$lines <- .prepare_arg_lines(object$lines)
@@ -43,39 +59,49 @@ print.scplot <- function(object) {
     xlim <- c(min(.mt, na.rm = TRUE), max(.mt, na.rm = TRUE))
   }
   
-  # set margins --------
+  # set left margin --------
   
-  w_line <- par("csi")
+  fac_i_to_l <- 5
   
   w_axis <- strwidth(
-    as.character(ylim[2]), 
-    units = "inches", 
-    cex = style$cex / par("cex") 
+   as.character(ylim[2]), 
+   units = "inches", 
+   cex = theme$cex.yaxis
+  ) * fac_i_to_l
+ 
+  w_ticks <- strwidth(
+    "W", units = "inches", cex = theme$cex.yaxis * 0.5 * fac_i_to_l
   )
   
   # Horizontal
-  if (style$ylab.orientation == 1) {
+  if (theme$ylab.orientation == 1) {
     w_label <- strwidth(
       object$ylabel, 
       units = "inches", 
-      cex = style$cex.ylab / par("cex")
-    )
+      cex = theme$cex.ylab
+    ) * fac_i_to_l
   }
   
   # Vertical
-  if (style$ylab.orientation == 0) {
-    w_label <- strheight(
-      object$ylabel, 
-      units = "inches", 
-      cex = style$cex.ylab / par("cex")
-    )
+  if (theme$ylab.orientation == 0) {
+    w_label <- theme$cex.ylab * (sum(unlist(strsplit(object$ylabel, "")) == "\n") + 1)
+    #w_label <- theme$cex.ylab
   }
   
-  style$mai[2] <- w_axis + w_label + w_line * 2
-
-  # Plotting cases ----------------------------------------------------------
+  #cat(w_label, w_axis, w_ticks, sep = ", ")
+  theme$mar[2] <- theme$mar[2] + w_label + w_axis + w_ticks + 
+                  0.5 * theme$cex.ylab
   
-  #par(mgp = c(2, 1, 0))
+
+  # set lower margin ----------------------------------------------------
+
+  h_axis <- theme$cex.xaxis
+  h_ticks <- 0.5 * theme$cex.xaxis
+  h_label <- (sum(unlist(strsplit(object$xlabel, "")) == "\n") + 1) 
+  
+  theme$mar[1] <- theme$mar[1] + h_axis + h_ticks + h_label
+  
+  # Plotting cases ----------------------------------------------------------
   
   for(case in 1:N) {
     data <- data_list[[case]]
@@ -86,45 +112,10 @@ print.scplot <- function(object) {
     if (is.na(ylim[2])) y_lim[2] <- max(data[, dvar])
     if (is.na(ylim[1])) y_lim[1] <- min(data[, dvar])
     
-    # one plot
-    
-    if (N == 1) {
-      add_topmar <- 0
-      #add_topmar <- 2.5 * strheight(
-      #  object$title, units = "inches", cex = style$cex.main / par("cex")
-      #)
-      par(mai = c(style$mai[1:2], style$mai[3] + add_topmar, style$mai[4]))
-    } 
-    
-    # multple plots, first to secondlast
-    if (N > 1 && case != N) {
-      if (case == 1) { # first plot
-        par(
-          mai = c(
-            style$mai[1] / 3, 
-            style$mai[2], 
-            style$mai[3] * 3, 
-            style$mai[4]
-          )
-        ) 
-      } else { # middle plot
-        par(
-          mai = c(
-            style$mai[1] * 2 / 3, 
-            style$mai[2], 
-            style$mai[3] * 2, 
-            style$mai[4]
-          )
-        ) 
-      }
-      
-    }
-    
-    # multiple plots, last plot
-    if (N > 1 && case == N) {
-      par(mai = style$mai)
-    } 
-    
+    #if (case == N) par(mar = theme$mar)
+    #if (case != N) par(mar = c(0, theme$mar[2:4]))
+    par(mar = theme$mar)
+
     plot(
       data[[mvar]], data[[dvar]], type = "n", 
       xlim = xlim, ylim = y_lim, ann = FALSE,
@@ -135,40 +126,55 @@ print.scplot <- function(object) {
     # add xlab --------------------------------------------------------
     
     if (N == 1 || case == N) {
+      
       mtext(
-        object$xlabel, 
-        side = 1, 
-        line = 2, 
-        las = 0, 
-        cex = style$cex.xlab, 
-        col = style$col.xlab
+        object$xlabel,
+        side = 1,
+        line = theme$mar[1] - 1.1,
+        padj = 0, # 
+        las = 0,
+        cex = theme$cex.xlab,
+        col = theme$col.xlab
       )
     }
     
     # add ylab -------------------------------------------------------
 
-    if (style$ylab.orientation == 0) 
+    if (theme$ylab.orientation == 0) 
       mtext(
-        text = object$ylabel, side = 2, line = 2, las = 0, cex = style$cex.ylab, 
-        col = style$col.ylab
+        text = object$ylabel, 
+        side = 2, 
+        line = theme$mar[2] - 0.4,
+        las = 0, 
+        adj = 0.5,
+        padj = 1,
+        cex = theme$cex.ylab, 
+        col = theme$col.ylab
       )
     
-    if (style$ylab.orientation == 1) {
+    if (theme$ylab.orientation == 1) {
       mtext(
-        text = object$ylabel, side = 2, line = 2, las = 1, at = max(y_lim), 
-        cex = style$cex.ylab, col = style$col.ylab
+        text = object$ylabel, 
+        side = 2, # left
+        line = theme$mar[2] - 0.2, # start 0.2 right of the margin
+        las = 1, # horizontal print
+        adj = 0, # left aligned
+        padj = 1, # text below the "at" position
+        at = par("usr")[4], 
+        cex = theme$cex.ylab, 
+        col = theme$col.ylab
       )
     }
     
     
     usr <- par("usr")
     
-    # add background ----------------------------------------------------------
+    # add inner background -------------------------------------------------------
     
-    if (isTRUE(style$fill.bg)){
+    if (!is.null(theme$col.fill.bg)){
 
       type_phases <- unique(design$values)
-      col <- rep(style$col.fill.bg, length = length(type_phases))
+      col <- rep(theme$col.fill.bg, length = length(type_phases))
       
       for(i in seq_along(design$values)) {
         x <- data[design$start[i]:design$stop[i], mvar]
@@ -186,17 +192,17 @@ print.scplot <- function(object) {
     
     # add grid --------------------------------------------
 
-    if (isTRUE(style$grid)) 
+    if (!is.null(theme$col.grid)) 
       grid(
         NULL, NULL, 
-        col = style$col.grid, 
-        lty = style$lty.grid, 
-        lwd = style$lwd.grid
+        col = theme$col.grid, 
+        lty = theme$lty.grid, 
+        lwd = theme$lwd.grid
       )
     
     # add fill array below lines --------------------------------
     
-    if (!is.null(style$col.ridge)) {
+    if (!is.null(theme$col.ridge)) {
       for(i in 1:length(design$values)) {
         x <- data[design$start[i]:design$stop[i], mvar]
         y <- data[design$start[i]:design$stop[i], dvar]
@@ -205,16 +211,22 @@ print.scplot <- function(object) {
           x_values <- c(x[i], x[i + 1], x[i + 1], x[i])
           #y_values <- c(y_lim[1], y_lim[1], y[i + 1], y[i])
           y_values <- c(par("usr")[3], par("usr")[3], y[i + 1], y[i])
-          polygon(x_values, y_values, col = style$col.ridge, border = NA)      
+          polygon(x_values, y_values, col = theme$col.ridge, border = NA)      
         }
       }
     }
     
     # add frame ---------------------------------
     
-    if (!is.null(style$col.frame))
-      rect(usr[1],usr[3],usr[2],usr[4], col = NA, border = style$col.frame)
-    
+    if (!is.null(theme$col.frame)){
+      rect(
+        usr[1],usr[3],usr[2],usr[4], 
+        col = NA, 
+        border = theme$col.frame,
+        lwd = theme$lwd.frame,
+        lty = theme$lty.frame
+      )
+    }
     # add xaxis --------------------------------------------------------
     
     if (N == 1 || case == N) { #only when one plot or last plot
@@ -223,18 +235,19 @@ print.scplot <- function(object) {
         side = 1, 
         at = xticks_pos, 
         labels = FALSE, 
-        col.axis = style$col.xaxis, 
-        col.ticks = style$col.xaxis
+        col = theme$col.line.xaxis, 
+        col.ticks = theme$col.ticks.xaxis,
+        tcl = theme$length.ticks.xaxis * theme$cex.xaxis
       )
       text(
         x = seq(xlim[1], xlim[2], object$xaxis$inc),  
         y = par("usr")[3], 
-        cex = style$cex.xaxis, 
-        col = style$col.xaxis,
+        cex = theme$cex.xaxis, 
+        col = theme$col.xaxis,
         labels = seq(xlim[1], xlim[2], object$xaxis$inc), 
         srt = 0, 
         pos = 1, 
-        offset = style$cex.xaxis, 
+        offset = theme$cex.xaxis * 0.75, 
         xpd = TRUE
       )
     }
@@ -246,18 +259,19 @@ print.scplot <- function(object) {
       side = 2, 
       at = yticks_pos, 
       labels = NA, 
-      col.axis = style$col.yaxis, 
-      col.ticks = style$col.yaxis
+      col = theme$col.line.yaxis, 
+      col.ticks = theme$col.ticks.yaxis,
+      tcl = theme$length.ticks.yaxis * theme$cex.xaxis
     )
     text(
-      x = par("usr")[1], 
+      x = par("usr")[1],
       y = yticks_pos, 
       labels = yticks_pos, 
-      offset = style$cex.yaxis,
-      col = style$col.yaxis,
+      offset = theme$cex.yaxis * 0.75,
+      col = theme$col.yaxis,
       srt = 0, 
       pos = 2, 
-      cex = style$cex.yaxis, 
+      cex = theme$cex.yaxis, 
       xpd = TRUE
     )
     
@@ -265,35 +279,25 @@ print.scplot <- function(object) {
     for(i in 1:length(design$values)) {
       x <- data[design$start[i]:design$stop[i], mvar]
       y <- data[design$start[i]:design$stop[i], dvar]
-      if (!is.null(style$col.lines)) {
+      if (!is.null(theme$col.line)) {
         lines(
           x, y, 
           type = "l", 
-          lty = style$lty, 
-          lwd = style$lwd,
-          col = style$col.lines
+          lty = theme$lty.line, 
+          lwd = theme$lwd.line,
+          col = theme$col.line
         )
       }
-      if (!is.null(style$col.dots)) {
+      if (!is.null(theme$col.dots)) {
         points(
           x, y,
-          pch = style$pch, 
-          cex = style$cex.dots, 
-          col = style$col.dots
+          pch = theme$pch, 
+          cex = theme$cex.dots, 
+          col = theme$col.dots
         )
       }
     }
   
-    # add title ----------------------------------------------------------
-    
-    if (FALSE) #case == 1) 
-      title(
-        main = object$title, 
-        col.main = style$col.main, 
-        cex.main = style$cex.main,
-        font.main = style$font.main
-      )
-    
     # add marks ---------------------------------------------------------------
     
     if (!is.null(object$marks)) {
@@ -330,15 +334,15 @@ print.scplot <- function(object) {
     
     # add annotations ---------------------------------------------------------
     
-    if (!is.null(style$annotations)) {
+    if (!is.null(theme$annotations)) {
       text(
         x = data[,mvar], 
         y = data[,dvar], 
-        label = round(data[, dvar], style$annotations$round), 
-        col = style$annotations$col, 
-        pos = style$annotations$pos, 
-        offset = style$annotations$offset, 
-        cex = style$annotations$cex
+        label = round(data[, dvar], theme$annotations$round), 
+        col = theme$annotations$col, 
+        pos = theme$annotations$pos, 
+        offset = theme$annotations$offset, 
+        cex = theme$annotations$cex
       )
     }
     
@@ -361,50 +365,46 @@ print.scplot <- function(object) {
         side = 3, 
         at = (data[design$stop[i], mvar] - data[design$start[i], mvar]) / 2 + 
           data[design$start[i], mvar], 
-        cex = style$cex.phasenames,
-        col = style$col.phasenames
+        cex = theme$cex.phasenames,
+        col = theme$col.phasenames
       )
     }
     
     # add line between phases -------------------------------------------
-    if (is.null(style$text.ABlag)) {
+    if (is.null(object$label.seperators)) {
       for(i in 1:(length(design$values) - 1)) {
         x <- data[design$stop[i] + 1, mvar] - 0.5
         x <- c(x, x)
         
-        if (style$seperators.extent == "full") y <- par("usr")[3:4]
-        if (style$seperators.extent == "scale") y <- ylim
-        if (is.numeric(style$seperators.extent)) {
+        if (theme$extent.seperators == "full") y <- par("usr")[3:4]
+        if (theme$extent.seperators == "scale") y <- ylim
+        if (is.numeric(theme$extent.seperators)) {
           .range <- ylim[2] - ylim[1]
-          .cut <- .range * (1 - style$seperators.extent) / 2
+          .cut <- .range * (1 - theme$extent.seperators) / 2
           y <- c(ylim[1] + .cut, ylim[2] - .cut)
         }
         
         lines(
           x, y, 
-          lty = style$lty.seperators,
-          lwd =  style$lwd.seperators, 
-          col = style$col.seperators,
+          lty = theme$lty.seperators,
+          lwd =  theme$lwd.seperators, 
+          col = theme$col.seperators,
           xpd = TRUE
         )
         
-        #abline(
-        #  v = data[design$stop[i] + 1, mvar] - 0.5, 
-        #  lty = style$lty.seperators, 
-        #  lwd = style$lwd.seperators, 
-        #  col = style$col.seperators
-        #)
       }
     }
     
-    if (!is.null(style$text.ABlag)) {
+    if (!is.null(object$label.seperators)) {
       for(i in 1:(length(design$values) - 1)) {
-        tex <- paste(unlist(strsplit(style$text.ABlag[i], "")), collapse = "\n")
+        tex <- paste(unlist(strsplit(object$label.seperators[i], "")), collapse = "\n")
         text(
           x = data[design$stop[i] + 1, mvar] - 0.5, 
           y = (y_lim[2] - y_lim[1]) / 2 + y_lim[1], 
           labels = tex, 
-          cex = 0.8)
+          col = them$col.seperators,
+          cex = theme$size.seperators
+        )
       }
       
     }
@@ -413,9 +413,9 @@ print.scplot <- function(object) {
     if (!is.null(object$case_names$labels)) {
       args <- c(
         list(text = object$case_names$labels[case]), 
-        cex = style$cex.casenames,
-        col = style$col.casenames,
-        style$names, 
+        cex = theme$cex.casenames,
+        col = theme$col.casenames,
+        theme$names, 
         at = min(xlim)
       )
       args <- args[!duplicated(names(args))]
@@ -459,34 +459,34 @@ print.scplot <- function(object) {
     
   }
   
- 
-
   # add title -----------------------------------------------------------
   
   if (!is.null(object$title)) {
     
-    if (!is.null(style$wrap.title)) {
+    if (!is.null(theme$wrap.title)) {
       object$title <- paste(
-        strwrap(object$title, width = style$wrap.title),
+        strwrap(object$title, width = theme$wrap.title),
         collapse = "\n"
       )
     }    
     
     adj <- NA
     
-    if (style$align.main == "center") adj <- NA
-    if (style$align.main == "left") adj <- 0 + style$margin.main
-    if (style$align.main == "right") adj <- 1 - style$margin.main
+    if (theme$align.main == "center") adj <- NA
+    if (theme$align.main == "left") adj <- 0 + theme$margin.main
+    if (theme$align.main == "right") adj <- 1 - theme$margin.main
     
-    if (style$parse.main) object$title <- str2expression(object$title)
+    if (theme$parse.main) object$title <- str2expression(object$title)
     
     mtext(
       object$title, 
       side = 3, 
       outer = TRUE, 
-      cex = style$cex.main, 
-      font = style$font.main, 
-      col = style$col.main, 
+      line = 0,
+      padj = 0,
+      cex = theme$cex.main, 
+      font = theme$font.main, 
+      col = theme$col.main, 
       adj = adj 
     )
   }
@@ -496,28 +496,20 @@ print.scplot <- function(object) {
   if (!is.null(object$caption)) {
     adj <- NA
     
-    if (style$align.caption == "center") adj <- NA
-    if (style$align.caption == "left") adj <- 0 + style$margin.caption
-    if (style$align.caption == "right") adj <- 1 - style$margin.caption
-    
-    if (!is.null(style$wrap.caption)) {
-      object$caption <- paste(
-        strwrap(object$caption, width = style$wrap.caption),
-        collapse = "\n"
-      )
-    }    
-    
-    if (style$parse.caption) object$caption <- str2expression(object$caption)
+    if (theme$align.caption == "center") adj <- NA
+    if (theme$align.caption == "left") adj <- 0 + theme$margin.caption
+    if (theme$align.caption == "right") adj <- 1 - theme$margin.caption
     
     mtext(
       object$caption, 
       side = 1, 
-      line = 2, 
+      line = -1, 
       outer = TRUE, 
-      cex = style$cex.caption, 
-      font = style$font.caption, 
-      col = style$col.caption, 
-      adj = adj
+      cex = theme$cex.caption, 
+      font = theme$font.caption, 
+      col = theme$col.caption, 
+      adj = adj,
+      padj = 1
     )
   }  
   
@@ -525,12 +517,12 @@ print.scplot <- function(object) {
 
   par(op)
   
-  if (!is.null(style$col.box)) {
+  if (!is.null(theme$col.box)) {
     box(
       which = "figure", 
-      lwd = style$lwd.box, 
-      lty = style$lty.box, 
-      col = style$col.box
+      lwd = theme$lwd.box, 
+      lty = theme$lty.box, 
+      col = theme$col.box
     )
   }
   

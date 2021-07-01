@@ -4,26 +4,31 @@
 #' single-cases.
 #'
 #' @inheritParams .inheritParams
-#' @param scdf A single-case data frame.
 #' @return An scdf plot object that creates a plot when printed.
 #' @export
 
-scplot <- function(scdf) {
+scplot <- function(data) {
 
   warning(.opt$function_experimental_warning)
   
-  scdf <- .prepare_scdf(scdf)
+  data <- .prepare_scdf(data)
   
-  xlab <- scdf_attr(scdf, .opt$mt)
-  ylab <- scdf_attr(scdf, .opt$dv)
+  xlab <- scdf_attr(data, .opt$mt)
+  ylab <- scdf_attr(data, .opt$dv)
   if (xlab == "mt") xlab <- "Measurement time"
   
+  theme <- modifyList(
+    .opt$scplot_themes$default, 
+    .opt$scplot_themes[[getOption("scan.scplot.theme")]], 
+    keep.null = TRUE
+  )
+  
   out <- list(
-    scdf = scdf,
-    dvar = scdf_attr(scdf, .opt$dv), 
-    pvar = scdf_attr(scdf, .opt$phase), 
-    mvar = scdf_attr(scdf, .opt$mt),
-    style = style_plot(getOption("scan.plot.style")),
+    scdf = data,
+    dvar = scdf_attr(data, .opt$dv), 
+    pvar = scdf_attr(data, .opt$phase), 
+    mvar = scdf_attr(data, .opt$mt),
+    theme = theme,
     title = NULL,
     caption = NULL,
     xaxis = list(lim = NULL, inc = 1),
@@ -44,65 +49,44 @@ scplot <- function(scdf) {
 
 
 #' @rdname scplot
+#' @param theme A character string with a predefined graphical theme. 
+#' Possible values: default, yaxis, tiny, small, big, chart, ridge, 
+#' annotate, grid, grid2, dark, nodots, sienna, phase_color, phase_shade
+#' 
 #' @export
-set_style <- function(object, style, ...) {
+add_theme <- function(object, theme, ...) {
   
   args <- list(...)
+  new_theme <- object$theme
   
-  if (!missing(style)) {
-      if (!(all(style %in% names(.opt$style)))) {
-        stop("Unknown style template.")
-      }
-    
-    cum_style <- list()
-    for(i in rev(style)) cum_style <- c(cum_style, .opt$style[[i]])
-    style <- cum_style
+  if (!missing(theme)) {
+    if (!(all(theme %in% names(.opt$scplot_themes)))) {
+      stop("Unknown theme template.")
+    }
+  
+    for(i in rev(theme)) {
+      new_theme <- modifyList(new_theme, .opt$scplot_themes[[i]], keep.null = TRUE) 
+    }
   }  
   
-  out <- c(args, style, object$style)
+  new_theme <- modifyList(new_theme, args, keep.null = TRUE)
   
-  out <- out[unique(names(out))]
-  
-  object$style <- out
+  object$theme <- new_theme
   object
 }
 
 #' @rdname scplot
-#' @param lines A list defining one or multiple lines or curves to be
-#' plotted. The argument is passed as a list (e.g., \code{list(type = "median")}).
-#' Some of the procedures can be refined with an additional argument (e.g.,
-#' \code{lines = list(type = "mean", trim = 0.2)} adds a 20\% trimmed mean line.
-#' For multiple lines, provide a list element for each line (e.g., \code{list( list(type = "median", col = "red"), list(type = "trend", col = "blue"))}. 
-#' Possible lines are: \itemize{
-#' \item\code{"median"} Separate lines for phase A and B medians.
-#' \item\code{"mean"} Separate lines for phase A and B means. By default it is
-#' 10\%-trimmed. Other trims can be set, using a trim parameter (e.g.,
-#' \code{lines = list(type = "mean", trim = 0.2)} draws a 20\%-trimmed mean line).
-#' \item\code{"trend"} Separate lines for phase A and B trends.
-#' \item\code{"trendA"} OLS trend line for phase A, extrapolated throughout phase B.
-#' \item\code{"trendA_bisplit"} Split middle (bi-split) trend line for phase A, extrapolated throughout phase B.
-#' \item\code{"trendA_trisplit"} Tukey tri-split trend line for phase A, extrapolated throughout phase B.
-#' \item\code{"maxA/minA"} Line at the level of the highest or lowest phase A score.
-#' \item\code{"medianA"} Line at the phase A median score.  \item\code{"meanA"}
-#' Line at the phase A 10\%-trimmed mean score. Apply a different trim, by
-#' using the additional argument (e.g., \code{lines = list(type = "meanA", trim = 0.2)}).
-#' \item\code{"plm"} Regression lines for piecewise linear regression model.
-#' \item\code{"plm.ar"} Regression lines for piecewise autoregression model.
-#' The lag is specified like this: \code{lines = list(type = "plm.ar", ar = 2)}. Default lag is set to 2.
-#' \item\code{"movingMean"} Draws a moving mean curve, with a specified lag:
-#' \code{lines = list(type = "movingMean", lag = 2)}. Default is a lag 1 curve.
-#' \item\code{"movingMedian"} Draws a moving median curve, with a specified
-#' lag: \code{lines = list(type = "movingMedian", lag = 3)}. Default is a lag 1 curve.
-#' \item\code{"loreg"} Draws a non-parametric local regression line. The
-#' proportion of data influencing each data point can be specified using
-#' \code{lines = list(type = "loreg"m f = 0.66)}. The default is 0.5.  \item\code{"lty"}
-#' Use this argument to define the line type. Examples are: \code{"solid"},
-#' \code{"dashed"}, \code{"dotted"}.  \item\code{"lwd"} Use this argument to
-#' define the line's thickness, e.g., \code{lwd = 4}.  \item\code{"col"} Use
-#' this argument to define the line's color, e.g., \code{col = "red"}.  }
+#' @param stat A character string defining a line or curve to be
+#' plotted. Possible values: "median", "mean", "trend", "trendA", 
+#' "trendA_bisplit", "trendA_trisplit", "maxA", "minA", "meanA", "medianA", 
+#' "plm", "movingMean", "movingMedian", "loreg"
+#' @param width A number defining the line width
+#' @param colour A character string or a number defining the color of an element.
+#' @param size A number deifning the size of an element.
+#' @param type A character string with the line type: "solid", "dashed", "dotted"
 #' @export
-add_statline <- function(object, stat, colour = NULL, ...) {
-  lines <- list(stat = stat, col = colour, ...)
+add_statline <- function(object, stat, colour = NULL, width = NULL, type = NULL, ...) {
+  lines <- list(stat = stat, col = colour, lwd = width, lty = type, ...)
   object$lines <- c(object$lines, list(lines))
   object
 }
@@ -111,8 +95,8 @@ add_statline <- function(object, stat, colour = NULL, ...) {
 #' @export
 set_xlabel <- function(object, label, colour, size) {
   
-  if (!missing(colour)) object$style$col.xlab <- colour
-  if (!missing(size)) object$style$cex.xlab <- size
+  if (!missing(colour)) object$theme$col.xlab <- colour
+  if (!missing(size)) object$theme$cex.xlab <- size
   
   object$xlabel <- label
   
@@ -120,12 +104,15 @@ set_xlabel <- function(object, label, colour, size) {
 }
 
 #' @rdname scplot
+#' @param orientation of the label: 0 = vertical; 1 = horizontal
 #' @export
-set_ylabel <- function(object, label, colour, size, orientation) {
+set_ylabel <- function(object, label, colour, size, line, orientation) {
   
-  if (!missing(orientation)) object$style$ylab.orientation <- orientation
-  if (!missing(colour)) object$style$col.ylab <- colour
-  if (!missing(size)) object$style$cex.ylab <- size
+  if (!missing(orientation)) object$theme$ylab.orientation <- orientation
+  if (!missing(colour)) object$theme$col.ylab <- colour
+  if (!missing(size)) object$theme$cex.ylab <- size
+  if (!missing(line)) object$theme$vjust.ylab <- line
+  
 
   object$ylabel <- label
   
@@ -133,12 +120,18 @@ set_ylabel <- function(object, label, colour, size, orientation) {
 }
 
 #' @rdname scplot
+#' @param limits Lower and upper limits of the axis (e.g., \code{limits = c(0,
+#' 20)} sets the axis to a scale from 0 to 20). With multiple single-cases
+#' you can use \code{limits = c(0, NA)} to scale the axis from 0 to the maximum
+#' of each case. \code{limits} is not set by default, which makes \code{scan} set
+#' a proper scale based on the given data.
+#' @param increment An integer. Increment of the x-axis. 1 :each mt value will be printed, 2 : every other value, 3 : every third values etc.
 #' @export
-set_xaxis <- function(object, limits, increment, colour, size) {
+set_xaxis <- function(object, limits, increment, colour, size, line) {
   
-  if (!missing(colour)) object$style$col.xaxis <- colour
-  if (!missing(size)) object$style$cex.xaxis <- size
-  
+  if (!missing(colour)) object$theme$col.xaxis <- colour
+  if (!missing(size)) object$theme$cex.xaxis <- size
+  if (!missing(line)) object$theme$vjust.xlab <- line
   if (!missing(limits)) object$xaxis <- c(list(lim = limits), object$xaxis)
   if (!missing(increment)) 
     object$xaxis <- c(list(inc = increment), object$xaxis)
@@ -152,8 +145,8 @@ set_xaxis <- function(object, limits, increment, colour, size) {
 #' @export
 set_yaxis <- function(object, limits, colour, size) {
   
-  if (!missing(colour)) object$style$col.yaxis <- colour
-  if (!missing(size)) object$style$cex.yaxis <- size
+  if (!missing(colour)) object$theme$col.yaxis <- colour
+  if (!missing(size)) object$theme$cex.yaxis <- size
   
   if (!missing(limits)) object$yaxis <- c(list(lim = limits), object$yaxis)
   
@@ -165,14 +158,18 @@ set_yaxis <- function(object, limits, colour, size) {
 
 #' @rdname scplot
 #' @param label Character string.
+#' @param align Character string. One of "left", "right", "center"
+#' @param wrap Number that defines the maximum characters per line before a break. 
+#' If set to FALSE, no automatic linebreak is set.
+#' @param parse If TRUE, the label is interpreted as an expression. Default = FALSE.
 #' @export
 add_title <- function(object, label, colour, size, font, align, parse) {
   
-  if (!missing(colour)) object$style$col.main <- colour
-  if (!missing(size)) object$style$cex.main <- size
-  if (!missing(font)) object$style$font.main <- font
-  if (!missing(align)) object$style$align.main <- align
-  if (!missing(parse)) object$style$parse.main <- parse
+  if (!missing(colour)) object$theme$col.main <- colour
+  if (!missing(size)) object$theme$cex.main <- size
+  if (!missing(font)) object$theme$font.main <- font
+  if (!missing(align)) object$theme$align.main <- align
+  if (!missing(parse)) object$theme$parse.main <- parse
   
   object$title <- label
   object
@@ -181,31 +178,27 @@ add_title <- function(object, label, colour, size, font, align, parse) {
 #' @rdname scplot
 #' @param label Character string.
 #' @export
-add_caption <- function(object, label, colour, size, font, align, wrap, margin, parse) {
+add_caption <- function(object, label, colour, size, font, align, wrap, margin, 
+                        parse) {
   
-  if (!missing(colour)) object$style$col.caption <- colour
-  if (!missing(size)) object$style$cex.caption <- size
-  if (!missing(font)) object$style$font.caption <- font
-  if (!missing(align)) object$style$align.caption <- align
-  if (!missing(wrap)) object$style$wrap.caption <- wrap
-  if (!missing(margin)) object$style$margin.caption <- margin
-  if (!missing(parse)) object$style$parse.caption <- parse
+  if (!missing(colour)) object$theme$col.caption <- colour
+  if (!missing(size)) object$theme$cex.caption <- size
+  if (!missing(font)) object$theme$font.caption <- font
+  if (!missing(align)) object$theme$align.caption <- align
+  if (!missing(wrap)) object$theme$wrap.caption <- wrap
+  if (!missing(margin)) object$theme$margin.caption <- margin
+  if (!missing(parse)) object$theme$parse.caption <- parse
   object$caption <- label
   object
 }
 
 #' @rdname scplot
-#' @param marks A list of parameters defining markings of certain data points.
-#' \itemize{ \item\code{"positions"} A vector or a list of vectors indicating
-#' measurement-times to be highlighted. In case of a vector, the marked
-#' measurement-times are the same for all plotted cases. In case of a list of
-#' vectors, marks are set differently for each case. The list must have the
-#' same length as there are cases in the data file.  \item\code{"col"} Color of
-#' the marks.  \item\code{"cex"} Size of the marks.  } Use for example
-#' \code{marks = list(positions = c(1, 8, 15), col = "red", cex = 3)} to make
-#' the MTs one, eight and 18 appear big and red.
+#' @param positions Either a vector indicating the dot to be highlighted or a 
+#' character string with a logical expression (e.g. values < mean(values))
+#' @param shape Number. See pch graphical parameter on par help page.  
 #' @export
-add_marks <- function(object, case, positions, colour = "red", size = 1, shape = 1) {
+add_marks <- function(object, case, positions, 
+                      colour = "red", size = 1, shape = 1) {
   
   # Marks on the outliers from outlier()
   if (identical(class(positions), c("sc","outlier"))) {
@@ -237,8 +230,8 @@ add_marks <- function(object, case, positions, colour = "red", size = 1, shape =
 #' @export
 set_phasenames <- function(object, ..., colour, size) {
   
-  if (!missing(colour)) object$style$col.phasenames <- colour
-  if (!missing(size)) object$style$cex.phasenames <- size
+  if (!missing(colour)) object$theme$col.phasenames <- colour
+  if (!missing(size)) object$theme$cex.phasenames <- size
   object$phase_names$labels <- c(...)
   object
 }
@@ -247,9 +240,9 @@ set_phasenames <- function(object, ..., colour, size) {
 #' @export
 set_casenames <- function(object, ..., colour, side, size) {
   
-  if (!missing(colour)) object$style$col.casenames <- colour
-  if (!missing(side)) object$style$names$side <- side
-  if (!missing(size)) object$style$cex.casenames <- size
+  if (!missing(colour)) object$theme$col.casenames <- colour
+  if (!missing(side)) object$theme$names$side <- side
+  if (!missing(size)) object$theme$cex.casenames <- size
   
   
   object$case_names$labels <- c(...)
@@ -260,7 +253,8 @@ set_casenames <- function(object, ..., colour, side, size) {
 #' @param x x position
 #' @param y y position
 #' @export
-add_text <- function(object, case = 1, x, y, label, colour = NULL, size = NULL, angle = 0) {
+add_text <- function(object, case = 1, x, y, label, colour = NULL, size = NULL, 
+                     angle = 0) {
   
   text <- list(case = case, labels = label, x = x, y = y, col = colour, cex = size, angle = angle)
   object$texts <- c(object$texts, list(text))
@@ -268,8 +262,15 @@ add_text <- function(object, case = 1, x, y, label, colour = NULL, size = NULL, 
 }
 
 #' @rdname scplot
+#' @param case Numerical vector with the csae number or character string "all" for all cases.
+#' @param x0 Origin x position of the line.
+#' @param y0 Origin y position of the line.
+#' @param x1 End x position of the line.
+#' @param y1 End y position of the line.
+#' @param length Size of the aroow angels.
 #' @export
-add_arrow <- function(object, case = 1, x0, y0, x1, y1, length = 0.1, colour = NULL, ...) {
+add_arrow <- function(object, case = 1, x0, y0, x1, y1, length = 0.1, 
+                      colour = NULL, ...) {
   arrow <- list(
     case = case, 
     x0 = x0, 
@@ -288,11 +289,11 @@ add_arrow <- function(object, case = 1, x0, y0, x1, y1, length = 0.1, colour = N
 #' @export
 add_grid <- function(object, type, width, colour) {
 
-  object$style$grid <- TRUE
+  object$theme$grid <- TRUE
   
-  if (!missing(colour)) object$style$col.grid <- colour
-  if (!missing(width)) object$style$lwd.grid <- width
-  if (!missing(type)) object$style$lty.grid <- type
+  if (!missing(colour)) object$theme$col.grid <- colour
+  if (!missing(width)) object$theme$lwd.grid <- width
+  if (!missing(type)) object$theme$lty.grid <- type
 
   object
 }
@@ -301,18 +302,20 @@ add_grid <- function(object, type, width, colour) {
 #' @export
 set_background <- function(object, colour) {
   
-  object$style$fill.bg <- TRUE
+  object$theme$fill.bg <- TRUE
   
-  if (!missing(colour)) object$style$col.fill.bg <- colour
+  if (!missing(colour)) object$theme$col.fill.bg <- colour
   
   object
 }
 
 #' @rdname scplot
 #' @export
-add_frame <- function(object, colour = "black") {
+add_frame <- function(object, colour = "black", size = 1, type = "solid") {
   
-  object$style$col.frame <- colour
+  object$theme$col.frame <- colour
+  object$theme$lty.frame <- type
+  object$theme$lwd.frame <- size
   
   object
 }
@@ -321,14 +324,17 @@ add_frame <- function(object, colour = "black") {
 #' @export
 add_box <- function(object, colour = "black", type = "solid", width = 1) {
   
-  object$style$col.box <- colour
-  object$style$lty.box <- type
-  object$style$lwd.box <- width
+  object$theme$col.box <- colour
+  object$theme$lty.box <- type
+  object$theme$lwd.box <- width
   
   object
 }
 
 #' @rdname scplot
+#' @param offset Number with shift from exact position of the label.
+#' @param round Number of digits of the labels.
+#' @param position Number 1, 2, 3,or 4, indicate positions below, to the left of, above and to the right of the exact value coordinate. 
 #' @export
 add_labels <- function(object, 
                        colour = "black", 
@@ -337,7 +343,7 @@ add_labels <- function(object,
                        position = 3, 
                        round = 1) {
   
-  object$style$annotations <- list(
+  object$theme$annotations <- list(
     col = colour, cex = size, offset = offset, round = round, pos = position
   )
   object
@@ -347,9 +353,9 @@ add_labels <- function(object,
 #' @export
 set_line <- function(object, colour, width, type) {
   
-  if (!missing(colour)) object$style$col.lines <- colour
-  if (!missing(width)) object$style$lwd <- width
-  if (!missing(type)) object$style$lty <- type
+  if (!missing(colour)) object$theme$col.line <- colour
+  if (!missing(width)) object$theme$lwd.line <- width
+  if (!missing(type)) object$theme$lty.line <- type
   
   object
 }
@@ -358,9 +364,9 @@ set_line <- function(object, colour, width, type) {
 #' @export
 set_dots <- function(object, colour, size, shape) {
   
-  if (!missing(shape)) object$style$pch <- shape
-  if (!missing(colour)) object$style$col.dots <- colour
-  if (!missing(size)) object$style$cex.dots <- size
+  if (!missing(shape)) object$theme$pch <- shape
+  if (!missing(colour)) object$theme$col.dots <- colour
+  if (!missing(size)) object$theme$cex.dots <- size
   
   object
 }
@@ -369,39 +375,33 @@ set_dots <- function(object, colour, size, shape) {
 #' @export
 add_ridge <- function(object, colour = "grey98") {
   
-  object$style$col.ridge <- colour
+  object$theme$col.ridge <- colour
   object
 }
 
 #' @rdname scplot
+#' @param extent A number between 0 and 1 given the proportion of the plot that is covert by the line or character string "full" or "scale".
 #' @export
-set_seperator <- function(object, colour, width, type, extent) {
+set_seperator <- function(object, colour, width, type, extent, label, size) {
   
-  if (!missing(colour)) object$style$col.seperators <- colour
-  if (!missing(width)) object$style$lwd.seperators <- width
-  if (!missing(type)) object$style$lty.seperators <- type
-  if (!missing(extent)) object$style$seperators.extent <- extent
+  if (!missing(size)) object$theme$size.seperators <- size
+  if (!missing(label)) object$label.seperators <- label
+  if (!missing(colour)) object$theme$col.seperators <- colour
+  if (!missing(width)) object$theme$lwd.seperators <- width
+  if (!missing(type)) object$theme$lty.seperators <- type
+  if (!missing(extent)) object$theme$extent.seperators <- extent
   
   object
 }
 
 
-.check_style <- function(style) {
+.check_theme <- function(theme) {
   
-  if (is.null(style$cex.xlab)) style$cex.xlab <- style$cex.lab
-  if (is.null(style$cex.ylab)) style$cex.ylab <- style$cex.lab
-  
-  if (is.null(style$col.xlab)) style$col.xlab <- style$col.text
-  if (is.null(style$col.ylab)) style$col.ylab <- style$col.text
-  
-  if (is.null(style$cex.main)) style$cex.main <- 1
-  if (is.null(style$col.main)) style$col.main <- style$col.text
-  
-  if (!is.null(style$annotations)) {
-    if(is.null(style$annotations$round)) style$annotations$round <- 1
-    if(is.null(style$annotations$offset)) style$annotations$offset <- 0.5
+  if (!is.null(theme$annotations)) {
+    if(is.null(theme$annotations$round)) theme$annotations$round <- 1
+    if(is.null(theme$annotations$offset)) theme$annotations$offset <- 0.5
   }
   
-  style
+  theme
 }
 
