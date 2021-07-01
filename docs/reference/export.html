@@ -135,7 +135,6 @@ When applied in rmarkdown, tables can also be created for pdf/latex output.</p>
   kable_styling_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   kable_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   <span class='va'>cols</span>,
-  round <span class='op'>=</span> <span class='fl'>2</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -150,6 +149,31 @@ When applied in rmarkdown, tables can also be created for pdf/latex output.</p>
   <span class='va'>cols</span>,
   flip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   round <span class='op'>=</span> <span class='fl'>2</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for sc_desc</span>
+<span class='fu'>export</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  caption <span class='op'>=</span> <span class='cn'>NA</span>,
+  footnote <span class='op'>=</span> <span class='cn'>NA</span>,
+  filename <span class='op'>=</span> <span class='cn'>NA</span>,
+  kable_styling_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  kable_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  flip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for sc_hplm</span>
+<span class='fu'>export</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  caption <span class='op'>=</span> <span class='cn'>NA</span>,
+  footnote <span class='op'>=</span> <span class='cn'>NA</span>,
+  filename <span class='op'>=</span> <span class='cn'>NA</span>,
+  kable_styling_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  kable_options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  round <span class='op'>=</span> <span class='fl'>2</span>,
+  nice <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -191,12 +215,17 @@ the output will be written into this file.</p></td>
 with variable names or the string "main" will select the central variables.</p></td>
     </tr>
     <tr>
+      <th>flip</th>
+      <td><p>If TRUE, some objects are exported with rows and columns flipped.</p></td>
+    </tr>
+    <tr>
       <th>round</th>
       <td><p>value for the digits argument passed to the internally used round function.</p></td>
     </tr>
     <tr>
-      <th>flip</th>
-      <td><p>If TRUE, some objects are exported with rows and columns flipped.</p></td>
+      <th>nice</th>
+      <td><p>If set TRUE (default) output values are rounded and optimized for
+publication tables.</p></td>
     </tr>
     </table>
 

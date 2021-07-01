@@ -140,7 +140,7 @@ et al. (2011).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -230,7 +230,7 @@ statistics.</p></dd> <dt>tau_u</dt><dd><p>Tau-U value.</p></dd>
 #&gt; A vs. B + Trend B - Trend A 0.485  0.167 2.90 0.004
 #&gt; </div><div class='input'>
 <span class='co'>## Replicate  tau-U calculation from Parker et al. (2011)</span>
-<span class='va'>bob</span> <span class='op'>&lt;-</span> <span class='fu'><a href='makeSCDF.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>3</span>, B <span class='op'>=</span> <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span><span class='op'>)</span>, name <span class='op'>=</span> <span class='st'>"Bob"</span><span class='op'>)</span>
+<span class='va'>bob</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>3</span>, B <span class='op'>=</span> <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span><span class='op'>)</span>, name <span class='op'>=</span> <span class='st'>"Bob"</span><span class='op'>)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>tau_u</span><span class='op'>(</span><span class='va'>bob</span>, method <span class='op'>=</span> <span class='st'>"parker"</span>, tau_method <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, complete <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Tau-U

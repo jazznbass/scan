@@ -131,7 +131,7 @@ single-case data.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -170,65 +170,63 @@ tendency, variation, and trend.</p>
 <span class='fu'>describe</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Describe Single-Case Data
 #&gt; 
-#&gt; Design:  A B 
+#&gt;        Eva Georg Olaf
+#&gt; Design A B   A B  A B
+#&gt; n.A      6     7   12
+#&gt; n.B     13    17    8
+#&gt; mis.A    0     0    0
+#&gt; mis.B    0     0    0
 #&gt; 
-#&gt;         Eva Georg Olaf
-#&gt;     n.A   6     7   12
-#&gt;     n.B  13    17    8
-#&gt;   mis.A   0     0    0
-#&gt;   mis.B   0     0    0
-#&gt; 
-#&gt;          Eva Georg Olaf
-#&gt;     m.A 2.68 10.47 6.04
-#&gt;     m.B 3.43  9.80 6.00
-#&gt;    md.A 2.95  8.82 6.36
-#&gt;    md.B 3.31 10.59 5.90
-#&gt;    sd.A 0.75  4.11 1.52
-#&gt;    sd.B 1.03  2.09 1.22
-#&gt;   mad.A 0.54  4.45 1.79
-#&gt;   mad.B 1.29  2.09 1.42
-#&gt;   min.A 1.46  5.82 3.02
-#&gt;   min.B 1.86  5.60 4.53
-#&gt;   max.A 3.39 17.40 7.69
-#&gt;   max.B 4.98 12.79 8.14
-#&gt; trend.A 0.01 -0.27 0.01
-#&gt; trend.B 0.04  0.04 0.00</div><div class='input'>
+#&gt;            Eva  Georg   Olaf
+#&gt; m.A      2.677 10.469  6.036
+#&gt; m.B      3.435  9.799  5.995
+#&gt; md.A     2.945  8.820  6.355
+#&gt; md.B     3.310 10.590  5.905
+#&gt; sd.A     0.750  4.112  1.524
+#&gt; sd.B     1.029  2.089  1.225
+#&gt; mad.A    0.541  4.448  1.794
+#&gt; mad.B    1.290  2.090  1.416
+#&gt; min.A     1.46   5.82   3.02
+#&gt; min.B     1.86   5.60   4.53
+#&gt; max.A     3.39  17.40   7.69
+#&gt; max.B     4.98  12.79   8.14
+#&gt; trend.A  0.014 -0.268  0.007
+#&gt; trend.B  0.044  0.043  0.000</div><div class='input'>
 <span class='co'>## Descriptives of a three phase design</span>
 <span class='fu'>describe</span><span class='op'>(</span><span class='va'>exampleABC</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Describe Single-Case Data
 #&gt; 
-#&gt; Design:  A B C 
+#&gt;        Marie Rosalind  Lise
+#&gt; Design A B C    A B C A B C
+#&gt; n.A       10       15    20
+#&gt; n.B       10        8     7
+#&gt; n.C       10        7     3
+#&gt; mis.A      0        0     0
+#&gt; mis.B      0        0     0
+#&gt; mis.C      0        0     0
 #&gt; 
-#&gt;         Marie Rosalind Lise
-#&gt;     n.A    10       15   20
-#&gt;     n.B    10        8    7
-#&gt;     n.C    10        7    3
-#&gt;   mis.A     0        0    0
-#&gt;   mis.B     0        0    0
-#&gt;   mis.C     0        0    0
-#&gt; 
-#&gt;         Marie Rosalind   Lise
-#&gt;     m.A 52.00    52.27  52.35
-#&gt;     m.B 72.10    73.25  73.57
-#&gt;     m.C 68.00    66.43  71.33
-#&gt;    md.A 53.50    52.00  52.00
-#&gt;    md.B 72.50    72.00  73.00
-#&gt;    md.C 69.00    68.00  76.00
-#&gt;    sd.A  8.29     8.15  10.87
-#&gt;    sd.B 11.37    13.13  10.64
-#&gt;    sd.C 12.70    10.49  21.39
-#&gt;   mad.A 11.12     7.41  10.38
-#&gt;   mad.B 10.38    10.38  16.31
-#&gt;   mad.C 17.79    11.86  20.76
-#&gt;   min.A 39.00    37.00  35.00
-#&gt;   min.B 47.00    54.00  60.00
-#&gt;   min.C 51.00    52.00  48.00
-#&gt;   max.A 63.00    65.00  74.00
-#&gt;   max.B 85.00    97.00  87.00
-#&gt;   max.C 87.00    78.00  90.00
-#&gt; trend.A -1.92     0.50  -0.09
-#&gt; trend.B -0.61     0.64   1.93
-#&gt; trend.C -0.19    -2.93 -14.00</div><div class='input'>
+#&gt;           Marie Rosalind    Lise
+#&gt; m.A      52.000   52.267  52.350
+#&gt; m.B      72.100   73.250  73.571
+#&gt; m.C      68.000   66.429  71.333
+#&gt; md.A       53.5     52.0    52.0
+#&gt; md.B       72.5     72.0    73.0
+#&gt; md.C         69       68      76
+#&gt; sd.A      8.287    8.146  10.869
+#&gt; sd.B     11.367   13.134  10.644
+#&gt; sd.C     12.702   10.486  21.385
+#&gt; mad.A    11.119    7.413  10.378
+#&gt; mad.B    10.378   10.378  16.309
+#&gt; mad.C    17.791   11.861  20.756
+#&gt; min.A        39       37      35
+#&gt; min.B        47       54      60
+#&gt; min.C        51       52      48
+#&gt; max.A        63       65      74
+#&gt; max.B        85       97      87
+#&gt; max.C        87       78      90
+#&gt; trend.A  -1.915    0.500  -0.088
+#&gt; trend.B  -0.612    0.643   1.929
+#&gt; trend.C  -0.194   -2.929 -14.000</div><div class='input'>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'>## Write descriptive statistics to .csv-file</span>
 <span class='va'>study</span> <span class='op'>&lt;-</span> <span class='fu'>describe</span><span class='op'>(</span><span class='va'>Waddell2011</span><span class='op'>)</span>

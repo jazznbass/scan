@@ -2,7 +2,7 @@
 % Please edit documentation in R/scplot.R
 \name{scplot}
 \alias{scplot}
-\alias{set_style}
+\alias{add_theme}
 \alias{add_statline}
 \alias{set_xlabel}
 \alias{set_ylabel}
@@ -26,17 +26,17 @@
 \alias{set_seperator}
 \title{Plot single-case data}
 \usage{
-scplot(scdf)
+scplot(data)
 
-set_style(object, style, ...)
+add_theme(object, theme, ...)
 
-add_statline(object, stat, colour = NULL, ...)
+add_statline(object, stat, colour = NULL, width = NULL, type = NULL, ...)
 
 set_xlabel(object, label, colour, size)
 
-set_ylabel(object, label, colour, size, orientation)
+set_ylabel(object, label, colour, size, line, orientation)
 
-set_xaxis(object, limits, increment, colour, size)
+set_xaxis(object, limits, increment, colour, size, line)
 
 set_yaxis(object, limits, colour, size)
 
@@ -58,7 +58,7 @@ add_grid(object, type, width, colour)
 
 set_background(object, colour)
 
-add_frame(object, colour = "black")
+add_frame(object, colour = "black", size = 1, type = "solid")
 
 add_box(object, colour = "black", type = "solid", width = 1)
 
@@ -77,61 +77,77 @@ set_dots(object, colour, size, shape)
 
 add_ridge(object, colour = "grey98")
 
-set_seperator(object, colour, width, type, extent)
+set_seperator(object, colour, width, type, extent, label, size)
 }
 \arguments{
-\item{scdf}{A single-case data frame.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+
+\item{theme}{A character string with a predefined graphical theme. 
+Possible values: default, yaxis, tiny, small, big, chart, ridge, 
+annotate, grid, grid2, dark, nodots, sienna, phase_color, phase_shade}
 
 \item{...}{Further arguments passed to the function.}
 
+\item{stat}{A character string defining a line or curve to be
+plotted. Possible values: "median", "mean", "trend", "trendA", 
+"trendA_bisplit", "trendA_trisplit", "maxA", "minA", "meanA", "medianA", 
+"plm", "movingMean", "movingMedian", "loreg"}
+
+\item{colour}{A character string or a number defining the color of an element.}
+
+\item{width}{A number defining the line width}
+
+\item{type}{A character string with the line type: "solid", "dashed", "dotted"}
+
 \item{label}{Character string.}
+
+\item{size}{A number deifning the size of an element.}
+
+\item{orientation}{of the label: 0 = vertical; 1 = horizontal}
+
+\item{limits}{Lower and upper limits of the axis (e.g., \code{limits = c(0,
+20)} sets the axis to a scale from 0 to 20). With multiple single-cases
+you can use \code{limits = c(0, NA)} to scale the axis from 0 to the maximum
+of each case. \code{limits} is not set by default, which makes \code{scan} set
+a proper scale based on the given data.}
+
+\item{increment}{An integer. Increment of the x-axis. 1 :each mt value will be printed, 2 : every other value, 3 : every third values etc.}
+
+\item{align}{Character string. One of "left", "right", "center"}
+
+\item{parse}{If TRUE, the label is interpreted as an expression. Default = FALSE.}
+
+\item{wrap}{Number that defines the maximum characters per line before a break. 
+If set to FALSE, no automatic linebreak is set.}
+
+\item{case}{Numerical vector with the csae number or character string "all" for all cases.}
+
+\item{positions}{Either a vector indicating the dot to be highlighted or a 
+character string with a logical expression (e.g. values < mean(values))}
+
+\item{shape}{Number. See pch graphical parameter on par help page.}
 
 \item{x}{x position}
 
 \item{y}{y position}
 
-\item{lines}{A list defining one or multiple lines or curves to be
-plotted. The argument is passed as a list (e.g., \code{list(type = "median")}).
-Some of the procedures can be refined with an additional argument (e.g.,
-\code{lines = list(type = "mean", trim = 0.2)} adds a 20\% trimmed mean line.
-For multiple lines, provide a list element for each line (e.g., \code{list( list(type = "median", col = "red"), list(type = "trend", col = "blue"))}. 
-Possible lines are: \itemize{
-\item\code{"median"} Separate lines for phase A and B medians.
-\item\code{"mean"} Separate lines for phase A and B means. By default it is
-10\%-trimmed. Other trims can be set, using a trim parameter (e.g.,
-\code{lines = list(type = "mean", trim = 0.2)} draws a 20\%-trimmed mean line).
-\item\code{"trend"} Separate lines for phase A and B trends.
-\item\code{"trendA"} OLS trend line for phase A, extrapolated throughout phase B.
-\item\code{"trendA_bisplit"} Split middle (bi-split) trend line for phase A, extrapolated throughout phase B.
-\item\code{"trendA_trisplit"} Tukey tri-split trend line for phase A, extrapolated throughout phase B.
-\item\code{"maxA/minA"} Line at the level of the highest or lowest phase A score.
-\item\code{"medianA"} Line at the phase A median score.  \item\code{"meanA"}
-Line at the phase A 10\%-trimmed mean score. Apply a different trim, by
-using the additional argument (e.g., \code{lines = list(type = "meanA", trim = 0.2)}).
-\item\code{"plm"} Regression lines for piecewise linear regression model.
-\item\code{"plm.ar"} Regression lines for piecewise autoregression model.
-The lag is specified like this: \code{lines = list(type = "plm.ar", ar = 2)}. Default lag is set to 2.
-\item\code{"movingMean"} Draws a moving mean curve, with a specified lag:
-\code{lines = list(type = "movingMean", lag = 2)}. Default is a lag 1 curve.
-\item\code{"movingMedian"} Draws a moving median curve, with a specified
-lag: \code{lines = list(type = "movingMedian", lag = 3)}. Default is a lag 1 curve.
-\item\code{"loreg"} Draws a non-parametric local regression line. The
-proportion of data influencing each data point can be specified using
-\code{lines = list(type = "loreg"m f = 0.66)}. The default is 0.5.  \item\code{"lty"}
-Use this argument to define the line type. Examples are: \code{"solid"},
-\code{"dashed"}, \code{"dotted"}.  \item\code{"lwd"} Use this argument to
-define the line's thickness, e.g., \code{lwd = 4}.  \item\code{"col"} Use
-this argument to define the line's color, e.g., \code{col = "red"}.  }}
+\item{x0}{Origin x position of the line.}
 
-\item{marks}{A list of parameters defining markings of certain data points.
-\itemize{ \item\code{"positions"} A vector or a list of vectors indicating
-measurement-times to be highlighted. In case of a vector, the marked
-measurement-times are the same for all plotted cases. In case of a list of
-vectors, marks are set differently for each case. The list must have the
-same length as there are cases in the data file.  \item\code{"col"} Color of
-the marks.  \item\code{"cex"} Size of the marks.  } Use for example
-\code{marks = list(positions = c(1, 8, 15), col = "red", cex = 3)} to make
-the MTs one, eight and 18 appear big and red.}
+\item{y0}{Origin y position of the line.}
+
+\item{x1}{End x position of the line.}
+
+\item{y1}{End y position of the line.}
+
+\item{length}{Size of the aroow angels.}
+
+\item{offset}{Number with shift from exact position of the label.}
+
+\item{position}{Number 1, 2, 3,or 4, indicate positions below, to the left of, above and to the right of the exact value coordinate.}
+
+\item{round}{Number of digits of the labels.}
+
+\item{extent}{A number between 0 and 1 given the proportion of the plot that is covert by the line or character string "full" or "scale".}
 }
 \value{
 An scdf plot object that creates a plot when printed.

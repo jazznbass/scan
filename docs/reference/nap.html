@@ -139,7 +139,7 @@ intuitive NAP (0-100%) is also displayed.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -194,13 +194,13 @@ single-case research: Nonoverlap of all pairs. <em>Behavior Therapy, 40</em>,
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Calculate NAP for a study with  lower expected phase B scores (e.g. aggressive behavior)</span>
-<span class='va'>gretchen</span> <span class='op'>&lt;-</span> <span class='fu'><a href='makeSCDF.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>12</span>,<span class='fl'>14</span>,<span class='fl'>9</span>,<span class='fl'>10</span>, B <span class='op'>=</span> <span class='fl'>10</span>,<span class='fl'>6</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>gretchen</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>12</span>,<span class='fl'>14</span>,<span class='fl'>9</span>,<span class='fl'>10</span>, B <span class='op'>=</span> <span class='fl'>10</span>,<span class='fl'>6</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>nap</span><span class='op'>(</span><span class='va'>gretchen</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Nonoverlap of All Pairs
 #&gt; 
 #&gt;   Case NAP Rescaled Pairs Positives Ties  W     p
 #&gt;  Case1  94       88    24        22    1 22 0.016</div><div class='input'>
-<span class='co'>## Request NAP for all cases fom the Grosche2011 data</span>
+<span class='co'>## Request NAP for all cases from the Grosche2011 data</span>
 <span class='fu'>nap</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Nonoverlap of All Pairs
 #&gt; 

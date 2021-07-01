@@ -153,7 +153,7 @@ single-cases.</p>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -189,16 +189,16 @@ a proper scale based on the given data.</p></td>
     </tr>
     <tr>
       <th>lines</th>
-      <td><p>A character or list defining one or more lines or curves to be
-plotted. The argument is either passed as a character string (e.g.,
-<code>lines = "median"</code>) or as a list (e.g., <code><a href='https://rdrr.io/r/base/list.html'>list("median", "trend")</a></code>.
+      <td><p>A list defining one or multiple lines or curves to be
+plotted. The argument is passed as a list (e.g., <code><a href='https://rdrr.io/r/base/list.html'>list(type = "median")</a></code>).
 Some of the procedures can be refined with an additional argument (e.g.,
-<code>lines = list("mean" = 0.20)</code> adds a 20% trimmed mean line. By default
-no additional lines are plotted. Possible lines are:</p><ul>
+<code>lines = list(type = "mean", trim = 0.2)</code> adds a 20% trimmed mean line.
+For multiple lines, provide a list element for each line (e.g., <code><a href='https://rdrr.io/r/base/list.html'>list( list(type = "median", col = "red"), list(type = "trend", col = "blue"))</a></code>. 
+Possible lines are:</p><ul>
 <li><p><code>"median"</code> Separate lines for phase A and B medians.</p></li>
 <li><p><code>"mean"</code> Separate lines for phase A and B means. By default it is
-10%-trimmed. Other trims can be set, using a second parameter (e.g.,
-<code>lines = list(mean = 0.2)</code> draws a 20%-trimmed mean line).</p></li>
+10%-trimmed. Other trims can be set, using a trim parameter (e.g.,
+<code>lines = list(type = "mean", trim = 0.2)</code> draws a 20%-trimmed mean line).</p></li>
 <li><p><code>"trend"</code> Separate lines for phase A and B trends.</p></li>
 <li><p><code>"trendA"</code> OLS trend line for phase A, extrapolated throughout phase B.</p></li>
 <li><p><code>"trendA_bisplit"</code> Split middle (bi-split) trend line for phase A, extrapolated throughout phase B.</p></li>
@@ -207,17 +207,17 @@ no additional lines are plotted. Possible lines are:</p><ul>
 <li><p><code>"medianA"</code> Line at the phase A median score.</p></li>
 <li><p><code>"meanA"</code>
 Line at the phase A 10%-trimmed mean score. Apply a different trim, by
-using the additional argument (e.g., <code>lines = list(meanA = 0.2)</code>).</p></li>
+using the additional argument (e.g., <code>lines = list(type = "meanA", trim = 0.2)</code>).</p></li>
 <li><p><code>"plm"</code> Regression lines for piecewise linear regression model.</p></li>
 <li><p><code>"plm.ar"</code> Regression lines for piecewise autoregression model.
-The lag is specified like this: <code>lines = list(plm.ar = 2)</code>. Default lag is set to 2.</p></li>
+The lag is specified like this: <code>lines = list(type = "plm.ar", ar = 2)</code>. Default lag is set to 2.</p></li>
 <li><p><code>"movingMean"</code> Draws a moving mean curve, with a specified lag:
-<code>lines = list(movingMean = 2)</code>. Default is a lag 1 curve.</p></li>
+<code>lines = list(type = "movingMean", lag = 2)</code>. Default is a lag 1 curve.</p></li>
 <li><p><code>"movingMedian"</code> Draws a moving median curve, with a specified
-lag: <code>lines = list(movingMedian = 3)</code>. Default is a lag 1 curve.</p></li>
+lag: <code>lines = list(type = "movingMedian", lag = 3)</code>. Default is a lag 1 curve.</p></li>
 <li><p><code>"loreg"</code> Draws a non-parametric local regression line. The
 proportion of data influencing each data point can be specified using
-<code>lines = list("loreg" = 0.66)</code>. The default is 0.5.</p></li>
+<code>lines = list(type = "loreg"m f = 0.66)</code>. The default is 0.5.</p></li>
 <li><p><code>"lty"</code>
 Use this argument to define the line type. Examples are: <code>"solid"</code>,
 <code>"dashed"</code>, <code>"dotted"</code>.</p></li>
@@ -293,8 +293,8 @@ Set <code>case.names = ""</code> if you don't like to include case names.</p></t
 <span class='co'>## Request the local regression line for Georg from that data set and customize the plot</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>$</span><span class='va'>Georg</span>, style <span class='op'>=</span> <span class='st'>"sienna"</span>, ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='cn'>NA</span><span class='op'>)</span>,
        xlab <span class='op'>=</span> <span class='st'>"Training session"</span>, ylab <span class='op'>=</span> <span class='st'>"Words per minute"</span>,
-       phase.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Baseline"</span>, <span class='st'>"Intervention"</span><span class='op'>)</span>, 
-       lines <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"loreg"</span>, lty <span class='op'>=</span> <span class='st'>"solid"</span>, col <span class='op'>=</span> <span class='st'>"black"</span>, lwd <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+       phase.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Baseline"</span>, <span class='st'>"Intervention"</span><span class='op'>)</span>, xinc <span class='op'>=</span> <span class='fl'>5</span>,
+       lines <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"loreg"</span>, f <span class='op'>=</span> <span class='fl'>0.2</span>, lty <span class='op'>=</span> <span class='st'>"solid"</span>, col <span class='op'>=</span> <span class='st'>"black"</span>, lwd <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='plot.scdf-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## Plot a random MBD over three cases and mark interesting MTs</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span>design <span class='op'>=</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>

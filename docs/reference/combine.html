@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Combine single-case data frames into a multiple case study — combine • scan</title>
+<title>Combine single-case data frames — combine • scan</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Combine single-case data frames into a multiple case study — combine" />
-<meta property="og:description" content="Combine single-case data frames into a multiple case study" />
+<meta property="og:title" content="Combine single-case data frames — combine" />
+<meta property="og:description" content="Combine single-case data frames" />
 
 
 
@@ -111,16 +111,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Combine single-case data frames into a multiple case study</h1>
+    <h1>Combine single-case data frames</h1>
     <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/scdf-functions.R'><code>R/scdf-functions.R</code></a></small>
     <div class="hidden name"><code>combine.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Combine single-case data frames into a multiple case study</p>
+    <p>Combine single-case data frames</p>
     </div>
 
-    <pre class="usage"><span class='fu'>combine</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>combine</span><span class='op'>(</span><span class='va'>...</span>, dvar <span class='op'>=</span> <span class='cn'>NULL</span>, pvar <span class='op'>=</span> <span class='cn'>NULL</span>, mvar <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
 <span class='co'># S3 method for scdf</span>
 <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
@@ -132,11 +132,23 @@
       <th>...</th>
       <td><p>scdf objects</p></td>
     </tr>
+    <tr>
+      <th>dvar</th>
+      <td><p>Character string. Name of the dependent variable. Defaults to the dependent variable of the first case provided.</p></td>
+    </tr>
+    <tr>
+      <th>pvar</th>
+      <td><p>Character string. Name of the phase variable. Defaults to the phase variable of the first case provided.</p></td>
+    </tr>
+    <tr>
+      <th>mvar</th>
+      <td><p>Character string. Name of the measurement-time variable. Defaults to the measurement-time variable of the first case provided.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A scdf</p>
+    <p>A scdf. If not set differently, the attributes of this scdf are copied from the first scdf provided (i.e the first argument of the function).</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

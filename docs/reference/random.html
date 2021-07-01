@@ -294,7 +294,7 @@ the vector, values will be repeated.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p>
+    <p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Juergen Wibert</p>
@@ -310,29 +310,28 @@ the vector, values will be repeated.</p></td>
 <span class='fu'><a href='describe.html'>describeSC</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Describe Single-Case Data
 #&gt; 
-#&gt; Design:  A B 
+#&gt;        Vanessa Bryn Tia
+#&gt; Design     A B  A B A B
+#&gt; n.A          5    5   5
+#&gt; n.B         15   15  15
+#&gt; mis.A        0    1   0
+#&gt; mis.B        2    1   2
 #&gt; 
-#&gt;         Vanessa Bryn Tia
-#&gt;     n.A       5    5   5
-#&gt;     n.B      15   15  15
-#&gt;   mis.A       0    1   0
-#&gt;   mis.B       2    1   2
-#&gt; 
-#&gt;         Vanessa  Bryn   Tia
-#&gt;     m.A   51.12 50.00 54.36
-#&gt;     m.B   57.12 52.79 56.89
-#&gt;    md.A   50.40 49.20 52.60
-#&gt;    md.B   59.60 55.75 59.20
-#&gt;    sd.A    4.67  3.63  4.54
-#&gt;    sd.B   10.40 12.89  8.00
-#&gt;   mad.A    2.52  2.08  3.41
-#&gt;   mad.B    7.86 10.60  6.67
-#&gt;   min.A   46.80 46.50 50.30
-#&gt;   min.B   29.70 19.70 38.70
-#&gt;   max.A   59.00 55.10 61.80
-#&gt;   max.B   71.30 65.20 67.70
-#&gt; trend.A    0.95  1.36  2.27
-#&gt; trend.B    0.94  1.69  1.36</div><div class='input'><span class='fu'><a href='plot.scdf.html'>plotSC</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
+#&gt;         Vanessa   Bryn    Tia
+#&gt; m.A       51.12  50.00  54.36
+#&gt; m.B      57.115 52.793 56.892
+#&gt; md.A       50.4   49.2   52.6
+#&gt; md.B      59.60  55.75  59.20
+#&gt; sd.A      4.672  3.631  4.538
+#&gt; sd.B     10.403 12.893  8.003
+#&gt; mad.A     2.520  2.076  3.410
+#&gt; mad.B     7.858 10.601  6.672
+#&gt; min.A      46.8   46.5   50.3
+#&gt; min.B      29.7   19.7   38.7
+#&gt; max.A      59.0   55.1   61.8
+#&gt; max.B      71.3   65.2   67.7
+#&gt; trend.A    0.95   1.36   2.27
+#&gt; trend.B   0.935  1.693  1.358</div><div class='input'><span class='fu'><a href='plot.scdf.html'>plotSC</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
 </div><div class='img'><img src='random-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## And now have a look at poisson-distributed data</span>
 <span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'>design_rSC</span><span class='op'>(</span>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Single case data frame — makeSCDF • scan</title>
+<title>Single case data frame — scdf • scan</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Single case data frame — makeSCDF" />
+<meta property="og:title" content="Single case data frame — scdf" />
 <meta property="og:description" content="The class scdf stores single-case study data with one or more
 single-cases." />
 
@@ -113,7 +113,7 @@ single-cases." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Single case data frame</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/scdf-functions.R'><code>R/scdf-functions.R</code></a>, <a href='https://github.com/jazznbass/scan/blob/master/R/scdf.R'><code>R/scdf.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/scdf.R'><code>R/scdf.R</code></a></small>
     <div class="hidden name"><code>scdf.Rd</code></div>
     </div>
 
@@ -122,9 +122,7 @@ single-cases." />
 single-cases.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeSCDF</span><span class='op'>(</span><span class='va'>data</span>, B.start <span class='op'>=</span> <span class='cn'>NULL</span>, MT <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-
-<span class='fu'>scdf</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>scdf</span><span class='op'>(</span>
   <span class='va'>values</span>,
   <span class='va'>B.start</span>,
   <span class='va'>mt</span>,
@@ -141,21 +139,13 @@ single-cases.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>A single-case data frame. See <code>scdf</code> to learn about this format.</p></td>
+      <th>values</th>
+      <td><p>A vector containing measurement values of the dependent variable.</p></td>
     </tr>
     <tr>
       <th>B.start</th>
       <td><p>The first measurement of phase B (simple coding if design is
 strictly AB).</p></td>
-    </tr>
-    <tr>
-      <th>MT</th>
-      <td><p>Deprecated: Measurement times</p></td>
-    </tr>
-    <tr>
-      <th>values</th>
-      <td><p>A vector containing measurement values of the dependent variable.</p></td>
     </tr>
     <tr>
       <th>mt</th>
@@ -251,29 +241,28 @@ An scdf contains several attributes:
 <span class='fu'><a href='describe.html'>describeSC</a></span><span class='op'>(</span><span class='va'>emmi</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Describe Single-Case Data
 #&gt; 
-#&gt; Design:  A B 
-#&gt; 
-#&gt;         Emmi
-#&gt;     n.A    5
-#&gt;     n.B    6
-#&gt;   mis.A    1
-#&gt;   mis.B    1
+#&gt;        Emmi
+#&gt; Design  A B
+#&gt; n.A       5
+#&gt; n.B       6
+#&gt; mis.A     1
+#&gt; mis.B     1
 #&gt; 
 #&gt;          Emmi
-#&gt;     m.A  6.00
-#&gt;     m.B 15.80
-#&gt;    md.A  6.00
-#&gt;    md.B 16.00
-#&gt;    sd.A  1.15
-#&gt;    sd.B  2.86
-#&gt;   mad.A  1.48
-#&gt;   mad.B  2.97
-#&gt;   min.A  5.00
-#&gt;   min.B 12.00
-#&gt;   max.A  7.00
-#&gt;   max.B 19.00
-#&gt; trend.A  0.20
-#&gt; trend.B  0.78</div><div class='input'>
+#&gt; m.A         6
+#&gt; m.B      15.8
+#&gt; md.A        6
+#&gt; md.B       16
+#&gt; sd.A    1.155
+#&gt; sd.B    2.864
+#&gt; mad.A   1.483
+#&gt; mad.B   2.965
+#&gt; min.A       5
+#&gt; min.B      12
+#&gt; max.A       7
+#&gt; max.B      19
+#&gt; trend.A   0.2
+#&gt; trend.B 0.779</div><div class='input'>
 <span class='co'>## In a MBD over three persons, data were again collected eleven days in a row. Intervention</span>
 <span class='co'>## starting points differ between subjects as they were randomly assigned. The three SCDFs</span>
 <span class='co'>## are then combined in a list for further conjoined analyses.</span>
@@ -285,17 +274,17 @@ An scdf contains several attributes:
 <span class='fu'><a href='overlap.html'>overlapSC</a></span><span class='op'>(</span><span class='va'>mbd</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Overlap Indices
 #&gt; 
-#&gt; Design:  A B 
 #&gt; Comparing phase 1 against phase 2 
 #&gt; 
 #&gt;              Charlotte Theresa Antonia
-#&gt; PND              66.67   85.71   80.00
-#&gt; PEM              83.33  100.00   80.00
-#&gt; PET              50.00   85.71  100.00
-#&gt; NAP              86.67   94.64   83.33
-#&gt; NAP.rescaled     73.33   89.29   66.67
-#&gt; PAND             72.73   81.82   81.82
-#&gt; TAU_U             0.49    0.71    0.69
+#&gt; Design             A-B     A-B     A-B
+#&gt; PND                 67      86      80
+#&gt; PEM                 83     100      80
+#&gt; PET                 50      86     100
+#&gt; NAP                 87      95      83
+#&gt; NAP rescaled        73      89      67
+#&gt; PAND                73      82      82
+#&gt; Tau_U             0.49    0.71    0.69
 #&gt; Base_Tau          0.56    0.66    0.69
 #&gt; Diff_mean         6.03    4.39    5.27
 #&gt; Diff_trend        0.77    0.50    2.37
@@ -311,8 +300,8 @@ An scdf contains several attributes:
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>frida</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; #A single-case data frame with one case
 #&gt; 
-#&gt;   Measurements Design
-#&gt; 1           15    A B
+#&gt;        Measurements Design
+#&gt;  Case1           15    A B
 #&gt; 
 #&gt; Variable names:
 #&gt; values &lt;dependent variable&gt;
@@ -322,28 +311,27 @@ An scdf contains several attributes:
 </div><div class='img'><img src='scdf-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='describe.html'>describeSC</a></span><span class='op'>(</span><span class='va'>frida</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Describe Single-Case Data
 #&gt; 
-#&gt; Design:  A B 
+#&gt;        Case1
+#&gt; Design   A B
+#&gt; n.A        8
+#&gt; n.B        7
+#&gt; mis.A      0
+#&gt; mis.B      0
 #&gt; 
 #&gt;         Case1
-#&gt;     n.A     8
-#&gt;     n.B     7
-#&gt;   mis.A     0
-#&gt;   mis.B     0
-#&gt; 
-#&gt;         Case1
-#&gt;     m.A  3.38
-#&gt;     m.B 11.00
-#&gt;    md.A  3.00
-#&gt;    md.B 12.00
-#&gt;    sd.A  1.51
-#&gt;    sd.B  2.38
-#&gt;   mad.A  1.48
-#&gt;   mad.B  2.97
-#&gt;   min.A  2.00
-#&gt;   min.B  8.00
-#&gt;   max.A  6.00
-#&gt;   max.B 14.00
-#&gt; trend.A  0.31
+#&gt; m.A     3.375
+#&gt; m.B        11
+#&gt; md.A        3
+#&gt; md.B       12
+#&gt; sd.A    1.506
+#&gt; sd.B     2.38
+#&gt; mad.A   1.483
+#&gt; mad.B   2.965
+#&gt; min.A       2
+#&gt; min.B       8
+#&gt; max.A       6
+#&gt; max.B      14
+#&gt; trend.A 0.305
 #&gt; trend.B  0.71</div><div class='input'>
 <span class='co'>## example with two independent variables and four phases</span>
 <span class='va'>jim</span> <span class='op'>&lt;-</span> <span class='fu'>scdf</span><span class='op'>(</span>
@@ -354,25 +342,25 @@ An scdf contains several attributes:
 <span class='fu'><a href='overlap.html'>overlapSC</a></span><span class='op'>(</span><span class='va'>jim</span>, phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A1"</span>, <span class='st'>"A2"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"B1"</span>, <span class='st'>"B2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Overlap Indices
 #&gt; 
-#&gt; Design:  A1 B1 A2 B2 
-#&gt; Comparing phases 1 + 3 against phases 2 + 4 
+#&gt; Comparing phases A1 + A2 against phases B1 + B2 
 #&gt; 
-#&gt;              Case1
-#&gt; PND          16.67
-#&gt; PEM          66.67
-#&gt; PET          66.67
-#&gt; NAP          68.06
-#&gt; NAP.rescaled 36.11
-#&gt; PAND         66.67
-#&gt; TAU_U         0.14
-#&gt; Base_Tau      0.27
-#&gt; Diff_mean     5.50
-#&gt; Diff_trend   -0.31
-#&gt; SMD           0.52
-#&gt; Hedges_g      0.48
+#&gt;                    Case1
+#&gt; Design       A1-B1-A2-B2
+#&gt; PND                   17
+#&gt; PEM                   67
+#&gt; PET                   67
+#&gt; NAP                   68
+#&gt; NAP rescaled          36
+#&gt; PAND                  67
+#&gt; Tau_U               0.14
+#&gt; Base_Tau            0.27
+#&gt; Diff_mean            5.5
+#&gt; Diff_trend         -0.31
+#&gt; SMD                 0.52
+#&gt; Hedges_g            0.48
 #&gt; 
-#&gt; Note. The following variables were used in this analysis:
-#&gt;       'zvt' as dependent variable, 'phase' as phase ,and 'mt' as measurement time.</div></pre>
+#&gt; The following variables were used in this analysis:
+#&gt; 'zvt' as dependent variable, 'phase' as phase variable,and 'mt' as measurement-time variable.</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

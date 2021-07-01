@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dummy function to inherit global descriptions of parameters — .inheritParams • scan</title>
+<title>Set analysis variables in an scdf — set_vars • scan</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Dummy function to inherit global descriptions of parameters — .inheritParams" />
-<meta property="og:description" content="Dummy function to inherit global descriptions of parameters" />
+<meta property="og:title" content="Set analysis variables in an scdf — set_vars" />
+<meta property="og:description" content="Set analysis variables in an scdf" />
 
 
 
@@ -111,29 +111,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Dummy function to inherit global descriptions of parameters</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/inherit_roxygen_descriptions.R'><code>R/inherit_roxygen_descriptions.R</code></a></small>
-    <div class="hidden name"><code>dot-inheritParams.Rd</code></div>
+    <h1>Set analysis variables in an scdf</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/set_var.R'><code>R/set_var.R</code></a></small>
+    <div class="hidden name"><code>set_vars.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Dummy function to inherit global descriptions of parameters</p>
+    <p>Set analysis variables in an scdf</p>
     </div>
 
-    <pre class="usage"><span class='fu'>.inheritParams</span><span class='op'>(</span>
-  <span class='va'>data</span>,
-  <span class='va'>scdf</span>,
-  <span class='va'>dvar</span>,
-  <span class='va'>mvar</span>,
-  <span class='va'>pvar</span>,
-  <span class='va'>decreasing</span>,
-  <span class='va'>phases</span>,
-  <span class='va'>model</span>,
-  <span class='va'>trend</span>,
-  <span class='va'>level</span>,
-  <span class='va'>slope</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>set_vars</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>dv</span>, <span class='va'>mt</span>, <span class='va'>phase</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,57 +130,16 @@
       <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
-      <th>scdf</th>
-      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
+      <th>dv</th>
+      <td><p>Character string. Name of the dependent variable.</p></td>
     </tr>
     <tr>
-      <th>dvar</th>
-      <td><p>Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.</p></td>
+      <th>mt</th>
+      <td><p>Character string. Name of the measurement-time variable.</p></td>
     </tr>
     <tr>
-      <th>mvar</th>
-      <td><p>Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.</p></td>
-    </tr>
-    <tr>
-      <th>pvar</th>
-      <td><p>Character string with the name of the phase variable. Defaults to the attributes in the scdf file.</p></td>
-    </tr>
-    <tr>
-      <th>decreasing</th>
-      <td><p>If you expect data to be lower in the B phase, set
-<code>decreasing = TRUE</code>. Default is <code>decreasing = FALSE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>phases</th>
-      <td><p>A vector of two characters or numbers indicating the two
-phases that should be compared. E.g., <code>phases = c("A","C")</code> or
-<code>phases = c(2,4)</code> for comparing the second to the fourth phase. Phases
-could be combined by providing a list with two elements. E.g., <code>phases
-= list(A = c(1,3), B = c(2,4))</code> will compare phases 1 and 3 (as A) against 2
-and 4 (as B). Default is <code>phases = c("A","B")</code>.</p></td>
-    </tr>
-    <tr>
-      <th>model</th>
-      <td><p>Model used for calculating the slope parameter (see Huitema &amp;
-McKean, 2000). Default is <code>model = "B&amp;L-B"</code>. Possible values are:
-<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"Mohr#1"</code>, <code>"Mohr#2"</code>, <code>"JW"</code>, <code>"JW2"</code>, and
-<code>"Manly"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>trend</th>
-      <td><p>A logical indicating if a trend parameters is included in the model.</p></td>
-    </tr>
-    <tr>
-      <th>level</th>
-      <td><p>A logical indicating if a level parameters is included in the model.</p></td>
-    </tr>
-    <tr>
-      <th>slope</th>
-      <td><p>A logical indicating if a slope parameters is included in the model.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Further arguments passed to the function.</p></td>
+      <th>phase</th>
+      <td><p>Character string. Name of the phase variable.</p></td>
     </tr>
     </table>
 
