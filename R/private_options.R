@@ -1,3 +1,17 @@
+.neutral.names <- c("", "Addison", "Alex", "Alexis", "Ali", "Arden", "Asher", "Ashton", "Ashley", "Aston", "Aubrey", "Avery", "Bailey", "Billie", "Blair", 
+ "Bobby", "Brett", "Brooke", "Cameron", "Camille", "Carey", "Cary", 
+"Casey", "Kasey", "Charlie", "Charley", "Chris", "Cody", "Corrie", 
+"Corry", "Cory", "Courtney", "Cree", "Kree", "Dakota", "Dallas", 
+"Darby", "Darcy", "Darian", "Delaney", "Dell", "Devin", "Devon", 
+ "Drew", "Elis", "Ellis", "Emerson", "Emery", "Erin", "Evan", 
+ "Finley", "Frankie", "Freddie", "Gail", "Gale", "Gayle", "Gerrie", "Gwyn", "Gwynn", "Gwynne", "Hadley", "Halsey", "Harley", "Haiden", "Hayden", "Hailey", "Haley", "Halley", "Hayley", "Hilary", "Hillary", "Hollis", "Hunter", "Jacy", "Jaime", "Jamie", "Jayme", "Jean", "Jeri", "Jerry", "Jeryl", "Jeryn", "Jesse", "Jo", "Jocelyn", 
+"Joey", "Jordan", "Justice", "Kai", "Kye", "Kary", "Keegan", 
+"Kelly", "Kendall", "Kerry", "Kim", "Kirby", "Kit", "Kyrie", 
+"Lane", "Laurel", "Laurie", "Lee", "Leigh", "Leighton", "Lennox", "Leslie", "Lesley", "Lin", "Lyn", "Lynn", "Lindsay", "Lindsey", "Lindy", "Logan", "Loren", "Louie", "Mackenzie", "Madison", "Maddox", "Madox", "Marian", "Marion", "Marlee", "Marley", "Marlo", "Marlowe", "Meade", "Mel", "Meredith", "Merle", "Milo", "Montana", "Morgan", "Murphy", "Nevada", "Nicky", "Nikki", "Odell", "Peyton", "Paris", "Parris", "Pat", "Paxton", "Payton", "Peyton", "Quinn", "Randi", 
+"Randy", "Reagan", "Regan", "Rennie", "Reese", "Ricky", "Ricki", 
+"Riley", "Ridley", "Ripley", "Robin", "Robyn", "Rory", "Rorie", 
+"Rowan", "Royce", "Rudy", "Russi", "Rylan", "Rynn", "Sam", "Sandy", "Sasha", "Sawyer", "Schuyler", "Skyler", "Skylar", "Scout", "Selby", "Shane", "Shannon", "Shawn", "Shay", "Shelby", "Shelley", "Shirley", "Sidney", "Sydney", "Spencer", "Storm", "Stormy", "Taran", "Tatum", "Taylor", "Tegan", "Temple", "Tommie", "Toni", "Tony", "Tori", "Tory", "Torrey", "Torry", "Tracy", "Valentine", "Vivian", "Wallis", "Waverly", "Willie", "Winnie")
+
 .male.names <- c(
   "Jacob", "Mason", "Ethan", "Noah", "William", "Liam", "Jayden", "Michael", "Alexander", "Aiden", "Daniel", "Matthew", "Elijah", "James", "Anthony", "Benjamin", "Joshua", "Andrew", "David", "Joseph", "Logan", "Jackson", "Christopher", "Gabriel", "Samuel", "Ryan", "Lucas", "John", "Nathan", "Isaac", "Dylan", "Caleb", "Christian", "Landon", "Jonathan", "Carter", "Luke", "Owen", "Brayden", "Gavin", "Wyatt", "Isaiah", "Henry", "Eli", "Hunter", "Jack", "Evan", "Jordan", "Nicholas", "Tyler", "Aaron", "Jeremiah", 
   "Julian", "Cameron", "Levi", "Brandon", "Angel", "Austin", "Connor", "Adrian", "Robert", "Charles", "Thomas", "Sebastian", "Colton", "Jaxon", "Kevin", "Zachary", "Ayden", "Dominic", "Blake", "Jose", "Oliver", "Justin", "Bentley", "Jason", "Chase", "Ian", "Josiah", "Parker", "Xavier", "Adam", "Cooper", "Nathaniel", "Grayson", "Jace", "Carson", "Nolan", "Tristan", "Luis", "Brody", "Juan", "Hudson", "Bryson", "Carlos", "Easton", "Damian", "Alex", "Kayden", "Ryder", "Jesus", "Cole", "Micah", "Vincent", "Max", "Jaxson", "Eric", "Asher", "Hayden", "Diego", "Miles", "Steven", "Ivan", "Elias", "Aidan", "Maxwell", "Bryce", "Antonio", "Giovanni", "Timothy", "Bryan", "Santiago", "Colin", "Richard", "Braxton", "Kaleb", "Kyle", "Kaden", "Preston", "Miguel", "Jonah", "Lincoln", "Riley", "Leo", "Victor", "Brady", "Jeremy", "Mateo", "Brian", "Jaden", "Ashton", "Patrick", "Declan", "Sean", "Joel", "Gael", "Sawyer", "Alejandro", "Marcus", "Leonardo", "Jesse", "Caden", "Jake", "Kaiden", "Wesley", "Camden", "Edward", "Brantley", "Roman", "Axel", "Silas", "Jude", "Grant", "Cayden", "Emmanuel", "George", "Maddox", "Malachi", "Bradley", "Alan", "Weston", "Gage", "Devin", "Greyson", "Kenneth", "Mark", "Oscar", "Tanner", "Rylan", "Nicolas", "Harrison", "Derek", "Peyton", "Ezra", "Tucker", "Emmett", "Avery", "Cody", "Calvin", "Andres", "Jorge", "Abel", "Paul", "Abraham", "Kai", "Collin", "Theodore", "Ezekiel", "Omar", "Jayce", "Conner", "Bennett", "Trevor", "Eduardo", "Peter", "Maximus", "Jaiden", "Jameson", "Seth", "Kingston", "Javier", "Travis", "Garrett", "Everett", "Graham", "Xander", "Cristian", "Damien", "Ryker", "Griffin", "Corbin", "Myles", "Luca", "Zane", "Francisco", "Ricardo", "Alexis", "Stephen", "Zayden", "Iker", "Drake", "Lukas", "Charlie", "Spencer", "Zion", "Erick", "Josue", "Jeffrey", "Trenton", "Chance", "Paxton", "Elliot", "Fernando", "Keegan", "Landen", "Manuel", "Amir", "Shane", "Raymond", "Zander", "Andre", "Israel", "Mario", "Cesar", "Simon", "King", "Jaylen", "Johnathan", "Troy", "Dean", "Clayton", "Dominick", "Tyson", "Jasper", "Martin", "Kyler", "Hector", 
@@ -34,6 +48,7 @@
   info         = "info",
   author       = "author",
   rigorous_class_check = TRUE, 
+  neutral.names = .neutral.names,
   female.names = .female.names,
   male.names   = .male.names,
   names        = .names,
@@ -43,7 +58,8 @@
     "scan ", utils::packageVersion("scan"), 
     " (", utils::packageDate('scan'), ")\n",
     "Single-Case Data Analysis for Single and Multiple Baseline Designs\n"),
-  style = list()
+  style = list(),
+  scplot_themes = list()
   )
 
 # color styles ------------------------------------------------------------
@@ -165,6 +181,136 @@
   fill.bg = TRUE,
   col.fill.bg = c("grey94", "grey99", "grey90")
 )
+
+
+# scplot themes -----------------------------------------------------------
+
+
+.opt$scplot_themes$default = list(
+  
+  mar = c(bottom = 0, left = 0, top = 1, right = 0.5),
+  oma = c(0, 0, 0, 0),
+  
+  vjust.xlab = 0, vjust.ylab = 0,
+  
+  pch = 17, font = "sans", 
+  
+  lwd.line = 2, lwd.seperators = 1.5, lwd.grid = 1, lwd.frame = 1,
+  
+  lty.line = "solid", lty.seperators = "dashed", lty.grid = "dotted", 
+  lty.frame = "solid",
+  
+  ylab.orientation = 0,
+  
+  cex.xlab = 1, cex.ylab = 1, cex.xaxis = 0.8, cex.yaxis = 0.8,
+  cex.casenames = 1, cex.phasenames = 1, cex.dots = 0.8,
+  
+  col.line = "black", col.dots = "black", col.seperators = "black", 
+  col.fill = "grey75", col.fill.bg = "grey95", col.bg = "white", col = "black", 
+  col.text = "black", col.casenames = "black", col.phasenames = "black",
+  col.xlab = "black", col.ylab = "black", col.ridge = NULL,
+  col.xaxis = "black", col.yaxis = "black", col.frame = NULL, col.grid = NULL,
+  
+  col.line.xaxis = "black", col.ticks.xaxis = "black",
+  col.line.yaxis = "black", col.ticks.yaxis = "black",
+  
+  
+  align.main = "center", align.caption = "left",
+  margin.main = 0, margin.caption = 0.02, 
+  wrap.caption = NULL, wrap.main = NULL,
+  parse.main = FALSE, parse.caption = FALSE,
+  
+  length.ticks.xaxis = -0.3, length.ticks.yaxis = -0.3,
+  
+  extent.seperators = "full",
+  
+  annotations = NULL, 
+  
+  names = list(side = 3, line = -1, adj = 0)
+)
+
+.opt$scplot_themes$tiny <- list(
+  cex.dots = 0.5,
+  cex.xlab = 0.5, cex.ylab = 0.5, 
+  cex.xaxis = 0.5, cex.yaxis = 0.5,
+  cex.casenames = 0.5, cex.phasenames = 0.5, 
+  lwd.line = 0.7, lwd.seperators = 0.7, lwd.grid = 0.7
+)
+
+.opt$scplot_themes$small <- list(
+  cex.dots = 0.75,
+  cex.xlab = 0.75, cex.ylab = 0.75,
+  cex.xaxis = 0.75, cex.yaxis = 0.75,
+  cex.casenames = 0.75, cex.phasenames = 0.75,
+  lwd.line = 0.85, lwd.seperators = 0.85, lwd.grid = 0.85
+)
+
+.opt$scplot_themes$big <- list(
+  cex.dots = 1.25,
+  cex.xlab = 1.25, cex.ylab = 1.25,
+  cex.xaxis = 1.25, cex.yaxis = 1.25,
+  cex.casenames = 1.25, cex.phasenames = 1.25, 
+  lwd.line = 1.5, lwd.seperators = 1.5, lwd.grid = 1.5
+)
+
+
+.opt$scplot_themes$chart <- list(
+  col.ridge = "grey50",
+  col.fill.bg = "grey98", col.fill = "grey50", 
+  annotations = list(cex = 0.6, col = "black", offset = 0.4, round = 1, pos = 3),
+  pch = 19, 
+  col.grid = "grey75", lwd.line= 0.7,
+  cex.ylab = 0.8, cex.xlab = 0.8,
+  cex.casenames = 0.8, cex.phasenames = 0.8
+)
+
+.opt$scplot_themes$grid <- list(
+  col.grid = "lightblue", col.fill.bg = "grey95", 
+  lwd.line = 0.7, pch = 19, cex.xaxis = 0.8, cex.yaxis = 0.8
+)  
+
+.opt$scplot_themes$grid2 <- list(
+  col.ridge = "white", col.grid = "lightgreen", col.frame = "black", 
+  col.fill.bg = "grey95", 
+  lwd.line = 0.7, pch = 1, cex.xaxis = 0.8, cex.yaxis = 0.8
+)  
+
+.opt$scplot_themes$dark <- list(
+  col.fill.bg = "#16213E", col.line = "#DDDDDD", 
+  col.bg = "#1A1A2E", col.dots = "#E94560",
+  col.seperators = "gold",
+  col.grid = "#999999",
+  col.casenames = "white", col.phasenames = "white",
+  col.xlab = "white", col.ylab = "white",
+  col.xaxis = "white", col.yaxis = "white",
+  col.line.xaxis = "#DDDDDD", col.ticks.xaxis = "#DDDDDD",
+  col.line.yaxis = "#DDDDDD", col.ticks.yaxis = "#DDDDDD"
+)
+
+.opt$scplot_themes$nodots <- list(
+  col.ridge = "grey95",
+  type = "l", col.dots = "", fill = TRUE, col.fill = "grey95", grid = TRUE, 
+  col.grid = "grey80", fill.bg = TRUE, col.fill.bg = "grey99")
+
+.opt$scplot_themes$sienna <- list(
+  col.grid = "orange", pch = 18, col.line = "grey85", 
+  col.dots = "seagreen4", lwd.line = 2, col.bg = "seashell", col.fill.bg = "moccasin", 
+  col.line = "darkolivegreen", col.seperators = "sienna4", 
+  col.casenames = "sienna4", col.phasenames = "sienna4",
+  cex.ylab = 0.8, cex.xlab = 0.8, cex.xaxis = 0.7, cex.yaxis = 0.7,
+  cex.casenames = 0.8, cex.phasenames = 0.8,
+  col.frame = "darkseagreen", 
+  font = "serif"
+)
+
+.opt$scplot_themes$phase_color <- list(
+  col.fill.bg = c("aliceblue", "mistyrose1", "honeydew")
+)
+
+.opt$scplot_themes$phase_shade <- list(
+  col.fill.bg = c("grey94", "grey99", "grey90")
+)
+
 
 
 # MC Functions ------------------------------------------------------------
