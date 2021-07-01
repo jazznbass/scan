@@ -10,6 +10,8 @@ pipe operator, pipes seem to become the standard. For compatibility with older R
 
 ### New functions
 
+- `draw_names()`: Returns a character vector of length `n` with names by randomly drawing from a name list: type = {"neutral", "female", "male", "mixed"}. E.g. `draw_names(7)`.
+
 -`add_l2()`: Adds the variables from a second level 2 data frame to an scdf matched by an id variable (deafult is `case`).
 
 ```{.r}
@@ -24,7 +26,7 @@ Leidig2018 %>%
 ```{.r}
 exampleA1B1A2B2 %>% 
   select_cases("Pawel", "Moritz") %>%
-  select_phases(A = c(1,3), B = c(2,4)) %>%
+  select_phases(A = c(1, 3), B = c(2, 4)) %>%
   overlap()
 ```
 
@@ -76,8 +78,8 @@ plot(
 
 ### New experimental function for ploting
 
-The new `scplot()` function is here! It allows for a more tidy coding and the use of %>% operators. `scplot` is in an experimental state and code with current syntax might not work in 
-a later version due to changes in function and argument names. Still, `scplot()` works in many cases.
+The new `scplot()` function is here! It allows for a more tidy coding and the use of `%>%` (or `|>`) operators. `scplot` is in an experimental state and code with
+current syntax might not work in  a later version due to changes in function and argument names. Still, `scplot()` works in many cases.
 We plan to add new graphical features primarily to `scplot` which is already capable of doing more than `plot.scdf()`.
 
 Here is an example that implicitly also introduces several of the new graphical functions:
@@ -96,7 +98,7 @@ scplot(exampleABAB) %>%
   set_xlabel("Weeks", size = 0.7, colour = "brown") %>%
   add_title("Points by week", colour = "sienna4", size = 1.5, font = 3) %>%
   set_phasenames("Baseline", "Intervention", "Fall-Back", "Intervention", cex = 1, colour = "darkgreen") %>%
-  set_style("tiny") %>%
+  add_theme("tiny") %>%
   set_background(c("grey94", "grey99")) %>%
   add_grid(colour = "grey85", width = 0.5) %>%
   add_frame("sienna4") %>%
