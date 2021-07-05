@@ -1,25 +1,46 @@
 #' @export
 print.scplot <- function(object) {
   
-  data_list <- object$scdf
-  dvar <- object$dvar
-  pvar <- object$pvar
-  mvar <- object$mvar
-  ylim <- object$yaxis$lim
-  xlim <- object$xaxis$lim
-  theme <- object$theme
-  
-  theme <- .check_theme(theme)
-  
   op <- par(no.readonly = TRUE)
   on.exit(par(op))
   
+  data_list <- object$scdf
+  pvar <- object$pvar
+  mvar <- object$mvar
+
+  theme <- .check_theme(object$theme)
+  N <- length(data_list)
   
+  names(theme$data_line)[1] <- object$dvar[1]
+  names(theme$data_dots)[1] <- object$dvar[1]
+  
+  # set x/y label  ---------
+  
+  if (is.null(object$xlabel)) {
+    object$xlabel <- mvar
+    if (object$xlabel == "mt") object$xlabel <- "Measurement time"
+    object$xlabel <- paste0(
+      toupper(substr(object$xlabel, 1, 1)), 
+      substr(object$xlabel, 2, nchar(object$xlabel))
+    )
+  }
+  if (is.null(object$ylabel)) {
+    if (length(object$dvar) == 1) {
+      object$ylabel <- object$dvar
+      object$ylabel <- paste0(
+        toupper(substr(object$ylabel, 1, 1)), 
+        substr(object$ylabel, 2, nchar(object$ylabel))
+      )
+    } else {
+      object$ylabel <- "Values"
+    }
+  }
 
   # set outer margin --------------------------------------------------------
 
   if (!is.null(object$title)) {
-    theme$oma[3] <- theme$oma[3] + 1 + sum(unlist(strsplit(object$title, "")) == "\n") 
+    tmp_chars <- sum(unlist(strsplit(object$title, "")) == "\n") 
+    theme$oma[3] <- theme$oma[3] + 1 + tmp_chars
   }
   if (!is.null(object$caption)) {
     if (!is.null(theme$wrap.caption)) {
@@ -29,46 +50,48 @@ print.scplot <- function(object) {
       )
     }    
     if (theme$parse.caption) object$caption <- str2expression(object$caption)
-    theme$oma[1] <- theme$oma[1] + 1 + sum(unlist(strsplit(object$caption, "")) == "\n")
+    tmp_chars <- sum(unlist(strsplit(object$caption, "")) == "\n")
+    theme$oma[1] <- theme$oma[1] + 1 + tmp_chars
   }
-  #if (!is.null(object$xlab)) theme$oma[1] <- theme$oma[1] + 1.1
   
-  
-  
-  N <- length(data_list)
+  # set par --------
   
   if (N > 1) par(mfrow = c(N, 1))
   
   par("oma" = theme$oma)
   
   if (!is.null(theme$col.bg)) par("bg" = theme$col.bg)
-  par("family"   = theme$font)
-  par("cex"      = 1) # or 1
+  par("family" = theme$font)
+  par("cex"= 1) # or 1
 
-  # prepare lines definitions
-  object$lines <- .prepare_arg_lines(object$lines)
-  
   # set global xlim and ylim ---------
   
+  ylim <- object$yaxis$lim
+  xlim <- object$xaxis$lim
+  
   if (is.null(ylim)) {
-    .dv <- unlist(lapply(data_list, function(x) x[, dvar]))
+    .dv <- unlist(lapply(data_list, function(x) x[, object$dvar]))
     ylim <- c(min(.dv, na.rm = TRUE), max(.dv, na.rm = TRUE))
   }
+  
   if (is.null(xlim)) {
     .mt     <- unlist(lapply(data_list, function(x) x[, mvar]))
     xlim <- c(min(.mt, na.rm = TRUE), max(.mt, na.rm = TRUE))
   }
-  
+
   # set left margin --------
   
   fac_i_to_l <- 5
   
-  w_axis <- strwidth(
-   as.character(ylim[2]), 
-   units = "inches", 
-   cex = theme$cex.yaxis
-  ) * fac_i_to_l
- 
+  # w_axis <- strwidth(
+  #  as.character(ylim[2]), 
+  #  units = "inches", 
+  #  cex = theme$cex.yaxis
+  # ) * fac_i_to_l
+  # 
+  
+  w_axis <- 1
+  
   w_ticks <- strwidth(
     "W", units = "inches", cex = theme$cex.yaxis * 0.5 * fac_i_to_l
   )
@@ -85,7 +108,6 @@ print.scplot <- function(object) {
   # Vertical
   if (theme$ylab.orientation == 0) {
     w_label <- theme$cex.ylab * (sum(unlist(strsplit(object$ylabel, "")) == "\n") + 1)
-    #w_label <- theme$cex.ylab
   }
   
   #cat(w_label, w_axis, w_ticks, sep = ", ")
@@ -109,18 +131,21 @@ print.scplot <- function(object) {
     
     # plot ylim
     y_lim <- ylim
-    if (is.na(ylim[2])) y_lim[2] <- max(data[, dvar])
-    if (is.na(ylim[1])) y_lim[1] <- min(data[, dvar])
+    if (is.na(ylim[2])) y_lim[2] <- max(data[, object$dvar])
+    if (is.na(ylim[1])) y_lim[1] <- min(data[, object$dvar])
     
     #if (case == N) par(mar = theme$mar)
     #if (case != N) par(mar = c(0, theme$mar[2:4]))
     par(mar = theme$mar)
 
     plot(
-      data[[mvar]], data[[dvar]], type = "n", 
-      xlim = xlim, ylim = y_lim, ann = FALSE,
+      data[[mvar]], data[[object$dvar[1]]], 
+      type = "n", 
+      xlim = xlim, ylim = y_lim, 
+      ann = FALSE,
       xaxp = c(xlim[1], xlim[2], xlim[2] - xlim[1]),
-      yaxt = "n", xaxt = "n", bty = "n"
+      yaxt = "n", xaxt = "n", 
+      bty = "n"
     )
     
     # add xlab --------------------------------------------------------
@@ -178,7 +203,6 @@ print.scplot <- function(object) {
       
       for(i in seq_along(design$values)) {
         x <- data[design$start[i]:design$stop[i], mvar]
-        y <- data[design$start[i]:design$stop[i], dvar]
         
         xmin <- min(x, na.rm = TRUE)
         xmax <- max(x, na.rm = TRUE) + 0.5
@@ -205,7 +229,7 @@ print.scplot <- function(object) {
     if (!is.null(theme$col.ridge)) {
       for(i in 1:length(design$values)) {
         x <- data[design$start[i]:design$stop[i], mvar]
-        y <- data[design$start[i]:design$stop[i], dvar]
+        y <- data[design$start[i]:design$stop[i], object$dvar[1]]
         
         for(i in 1:length(x)) {
           x_values <- c(x[i], x[i + 1], x[i + 1], x[i])
@@ -229,7 +253,7 @@ print.scplot <- function(object) {
     }
     # add xaxis --------------------------------------------------------
     
-    if (N == 1 || case == N) { #only when one plot or last plot
+    if (case == N) { #only when one plot or last plot
       xticks_pos <- seq(xlim[1], xlim[2], 1)
       axis(
         side = 1, 
@@ -239,13 +263,22 @@ print.scplot <- function(object) {
         col.ticks = theme$col.ticks.xaxis,
         tcl = theme$length.ticks.xaxis * theme$cex.xaxis
       )
+      
+      if (!is.null(object$xaxis$inc_from)) {
+        x <- seq(object$xaxis$inc_from, xlim[2], object$xaxis$inc)
+        x <- x[x >= xlim[1]]
+        x <- c(1, x)
+      } else {
+        x <- seq(xlim[1], xlim[2], object$xaxis$inc)
+      }
+      
       text(
-        x = seq(xlim[1], xlim[2], object$xaxis$inc),  
+        x = x,  
         y = par("usr")[3], 
         cex = theme$cex.xaxis, 
         col = theme$col.xaxis,
-        labels = seq(xlim[1], xlim[2], object$xaxis$inc), 
-        srt = 0, 
+        labels = x, 
+        srt = theme$angle.xaxis, 
         pos = 1, 
         offset = theme$cex.xaxis * 0.75, 
         xpd = TRUE
@@ -254,8 +287,8 @@ print.scplot <- function(object) {
     
     # add yaxis -------------------------------------------------------
     
-    yticks_pos <- axTicks(2, usr = c(y_lim[1], ylim[2]))
-    axis(
+    yticks_pos <- axTicks(2, usr = c(y_lim[1], y_lim[2]))
+    y <- axis(
       side = 2, 
       at = yticks_pos, 
       labels = NA, 
@@ -263,53 +296,54 @@ print.scplot <- function(object) {
       col.ticks = theme$col.ticks.yaxis,
       tcl = theme$length.ticks.yaxis * theme$cex.xaxis
     )
+    
+    if (!is.null(object$yaxis$inc)) {
+      if (!is.null(object$yaxis$inc_from)) {
+        y <- seq(object$yaxis$inc_from, y_lim[2], object$yaxis$inc)
+        y <- y[y >= y_lim[1]]
+      } else {
+        y <- seq(y_lim[1], y_lim[2], object$yaxis$inc)
+      }
+    }
+    
     text(
       x = par("usr")[1],
-      y = yticks_pos, 
-      labels = yticks_pos, 
+      y = y, 
+      labels = y, 
       offset = theme$cex.yaxis * 0.75,
       col = theme$col.yaxis,
-      srt = 0, 
+      srt = theme$angle.yaxis, 
       pos = 2, 
       cex = theme$cex.yaxis, 
       xpd = TRUE
     )
     
     # draw dv lines ---------------------------------------------
-    for(i in 1:length(design$values)) {
-      x <- data[design$start[i]:design$stop[i], mvar]
-      y <- data[design$start[i]:design$stop[i], dvar]
-      if (!is.null(theme$col.line)) {
-        lines(
-          x, y, 
-          type = "l", 
-          lty = theme$lty.line, 
-          lwd = theme$lwd.line,
-          col = theme$col.line
-        )
+    
+    for(i in 1:length(object$dvar)) {
+      
+      id <- which(names(theme$data_line) == object$dvar[i])
+      
+      if (length(id) == 1) {
+        .draw_data(data, mvar, object$dvar[i], design, theme$data_line[[id]], theme$data_dots[[id]])
       }
-      if (!is.null(theme$col.dots)) {
-        points(
-          x, y,
-          pch = theme$pch, 
-          cex = theme$cex.dots, 
-          col = theme$col.dots
-        )
-      }
+      
     }
-  
+    
+
+    
     # add marks ---------------------------------------------------------------
     
     if (!is.null(object$marks)) {
       
-      id_case <- which(sapply(object$marks, function(x) x$case) == case)
       id_case <- c(
-        id_case, 
+        which(sapply(object$marks, function(x) x$case) == case), 
         which(sapply(object$marks, function(x) x$case) == "all")
       )
       
       if (length(id_case) > 0) {
         for (i_marks in id_case) { 
+          
           marks_case <- object$marks[[i_marks]]
           
           if (is.character(marks_case$positions)) {
@@ -318,9 +352,11 @@ print.scplot <- function(object) {
             )
             marks_case$positions <- which(marks_case$positions)
           }
+      
+          if (marks_case$variable == ".dvar") marks_case$variable <- object$dvar[1]
           
           marks.x <- data[data[, mvar] %in% marks_case$positions, mvar]
-          marks.y <- data[data[, mvar] %in% marks_case$positions, dvar]
+          marks.y <- data[data[, mvar] %in% marks_case$positions, marks_case$variable] #object$dvar[1]]
           points(
             x = marks.x, 
             y = marks.y,
@@ -335,22 +371,34 @@ print.scplot <- function(object) {
     # add annotations ---------------------------------------------------------
     
     if (!is.null(theme$annotations)) {
-      text(
-        x = data[,mvar], 
-        y = data[,dvar], 
-        label = round(data[, dvar], theme$annotations$round), 
-        col = theme$annotations$col, 
-        pos = theme$annotations$pos, 
-        offset = theme$annotations$offset, 
-        cex = theme$annotations$cex
-      )
+      for(i in 1:length(object$dvar)) {
+        text(
+          x = data[, mvar], 
+          y = data[, object$dvar[i]], 
+          label = round(data[, object$dvar[i]], theme$annotations$round), 
+          col = theme$annotations$col, 
+          pos = theme$annotations$pos, 
+          offset = theme$annotations$offset, 
+          cex = theme$annotations$cex
+        )
+      }
     }
     
     # add lines ---------------------------------------------------------------
     
-    if (!is.null(object$lines)) 
-      .add_lines(data, mvar, dvar, pvar, design, object$lines)
-  
+    if (!is.null(object$lines)) {
+      object$lines <- .prepare_arg_lines(object$lines)
+      
+      for(i in 1:length(object$dvar)) {
+        for(j in 1:length(object$lines)) {
+          if (object$lines[[j]]$variable == ".dvar") object$lines[[j]]$variable <- object$dvar[1]
+          if (object$lines[[j]]$variable == object$dvar[i])
+            .add_lines(data, mvar, object$dvar[i], pvar, design, object$lines[[j]])
+        }
+      }
+      
+      
+    }
     # add phase names ---------------------------------------------------------
     if (is.null(object$phase_names$labels)) {
       case_phase_names <- design$values
@@ -459,6 +507,51 @@ print.scplot <- function(object) {
     
   }
   
+  # add legend -----------
+  
+  if (!is.null(object$legend)) {
+    
+    if (is.null(theme$legend$x)) {
+      x <- par("usr")[2] + (par("usr")[2] - par("usr")[2]) * 0.05
+    } else {
+      x <- theme$legend$x
+    }
+    
+    if (is.null(theme$legend$y)) 
+      y <- par("usr")[4]  else y <- theme$legend$y
+    
+    length <- 1:sum(names(theme$data_line) != ".default")
+    
+    if (!identical(object$legend, ".default")) {
+      legend_labels <- object$legend
+    } else {
+      legend_labels <- names(theme$data_line)[length]
+    }
+    
+    legend_pch <- sapply(theme$data_dots, function(x) x$pch)[length]
+    legend_col <- sapply(theme$data_dots, function(x) x$col)[length]
+    legend_pt_cex <- sapply(theme$data_dots, function(x) x$cex)[length]
+    legend_lwd <- sapply(theme$data_line, function(x) x$lwd)[length]
+    legend_lty <- sapply(theme$data_line, function(x) x$lty)[length]
+      
+    legend(
+      x = x,
+      y = y, 
+      legend = legend_labels,
+      xpd = NA, 
+      pch = legend_pch,
+      col = legend_col,
+      pt.cex = legend_pt_cex,
+      cex = theme$legend$cex,
+      lty = legend_lty,
+      lwd = legend_lwd,
+      text.col = theme$legend$text_col,
+      bg = theme$legend$bg_col,
+      seg.len = theme$legend$line_length
+    )
+    
+  }
+  
   # add title -----------------------------------------------------------
   
   if (!is.null(object$title)) {
@@ -530,189 +623,56 @@ print.scplot <- function(object) {
   
 }
 
-.add_lines <- function(data, mvar, dvar, pvar, design, lines) {
+.add_lines <- function(data, mvar, dvar, pvar, design, line) {
 
-    for(i_lines in seq_along(lines)) {
       
-      line <- lines[[i_lines]]
-      
-      if (is.null(line[["lty"]])) line[["lty"]] <- "dashed"
-      if (is.null(line[["lwd"]])) line[["lwd"]] <- 2
-      if (is.null(line[["col"]])) line[["col"]] <- "black"
-      
-      lty.line <- line[["lty"]]
-      lwd.line <- line[["lwd"]]
-      col.line <- line[["col"]]
-      
-      if (line[["stat"]] == "trend") {
-        for(i in 1:length(design$values)) {
-          x <- data[design$start[i]:design$stop[i], mvar]
-          y <- data[design$start[i]:design$stop[i], dvar]
-          reg <- lm(y~x)
-          lines(
-            x = c(min(x), max(x)), 
-            y = c(
-              reg$coefficients[1] + min(x) * reg$coefficients[2], 
-              reg$coefficients[1] + max(x) * reg$coefficients[2]
-            ), 
-            lty = lty.line, 
-            col = col.line, 
-            lwd = lwd.line
-          )
-        }
-      }
-      if (line[["stat"]] == "median") {
-        for(i in 1:length(design$values)) {
-          x <- data[design$start[i]:design$stop[i], mvar]
-          y <- data[design$start[i]:design$stop[i], dvar]
-          lines(
-            x = c(min(x), max(x)), 
-            y = c(median(y, na.rm = TRUE), median(y, na.rm = TRUE)), 
-            lty = lty.line, 
-            col = col.line, 
-            lwd = lwd.line
-          )
-        }      
-      }
-      if (line[["stat"]] == "mean") {
-        if (is.null(line[["trim"]])) line[["trim"]] <- 0.1
-        lines.par <- line[["trim"]]
-        
-        for(i in 1:length(design$values)) {
-          x <- data[design$start[i]:design$stop[i],mvar]
-          y <- data[design$start[i]:design$stop[i],dvar]
-          lines(
-            x = c(min(x), max(x)), 
-            y = c(
-              mean(y, trim = lines.par, na.rm = TRUE), 
-              mean(y, trim = lines.par, na.rm = TRUE)
-            ), 
-            lty = lty.line, 
-            col = col.line, 
-            lwd = lwd.line
-          )
-        }
-      }
-      if (line[["stat"]] == "trendA") {
-        x <- data[design$start[1]:design$stop[1], mvar]
-        y <- data[design$start[1]:design$stop[1], dvar]
-        maxMT <- max(data[, mvar])
+    if (is.null(line[["lty"]])) line[["lty"]] <- "dashed"
+    if (is.null(line[["lwd"]])) line[["lwd"]] <- 2
+    if (is.null(line[["col"]])) line[["col"]] <- "black"
+    
+    lty.line <- line[["lty"]]
+    lwd.line <- line[["lwd"]]
+    col.line <- line[["col"]]
+    
+    if (line[["stat"]] == "trend") {
+      for(i in 1:length(design$values)) {
+        x <- data[design$start[i]:design$stop[i], mvar]
+        y <- data[design$start[i]:design$stop[i], dvar]
         reg <- lm(y~x)
         lines(
-          x = c(min(x), maxMT), 
+          x = c(min(x), max(x)), 
           y = c(
             reg$coefficients[1] + min(x) * reg$coefficients[2], 
-            reg$coefficients[1] + maxMT * reg$coefficients[2]
+            reg$coefficients[1] + max(x) * reg$coefficients[2]
           ), 
           lty = lty.line, 
           col = col.line, 
           lwd = lwd.line
         )
       }
-      if (line[["stat"]] == "trendA_bisplit") {
-        x     <- data[design$start[1]:design$stop[1],mvar]
-        y     <- data[design$start[1]:design$stop[1],dvar]
-        maxMT <- max(data[,mvar])
-        # na.rm = FALSE for now to prevent misuse; 
-        # will draw no line if NA present
-        md1   <- c(median(y[1:floor(length(y)/2)], na.rm = FALSE),
-                   median(x[1:floor(length(x)/2)], na.rm = FALSE))
-        md2   <- c(median(y[ceiling(length(y)/2+1):length(y)], na.rm = FALSE),
-                   median(x[ceiling(length(x)/2+1):length(x)], na.rm = FALSE))
-        md    <- rbind(md1, md2)
-        reg <- lm(md[,1]~md[,2])
+    }
+    if (line[["stat"]] == "median") {
+      for(i in 1:length(design$values)) {
+        x <- data[design$start[i]:design$stop[i], mvar]
+        y <- data[design$start[i]:design$stop[i], dvar]
         lines(
-          x = c(min(x), maxMT), 
-          y = c(
-            reg$coefficients[1] + min(x) * reg$coefficients[2], 
-            reg$coefficients[1] + maxMT * reg$coefficients[2]
-          ), 
-          lty = lty.line, 
-          col = col.line, 
-          lwd = lwd.line
-        )
-      }
-      if (line[["stat"]] == "trendA_trisplit") {
-        x     <- data[design$start[1]:design$stop[1],mvar]
-        y     <- data[design$start[1]:design$stop[1],dvar]
-        maxMT <- max(data[,mvar])
-        # na.rm = FALSE for now to prevent misuse; 
-        # will draw no line if NA present
-        md1   <- c(
-          median(y[1:floor(length(y) / 3)], na.rm = FALSE),
-          median(x[1:floor(length(x) / 3)], na.rm = FALSE)
-        )
-        md2   <- c(
-          median(y[ceiling(length(y) / 3 * 2 + 1):length(y)], na.rm = FALSE),
-          median(x[ceiling(length(x) / 3 * 2 + 1):length(x)], na.rm = FALSE)
-        )
-        md    <- rbind(md1, md2)
-        reg <- lm(md[,1] ~ md[,2])
-        lines(
-          x = c(min(x), maxMT), 
-          y = c(
-            reg$coefficients[1]  + min(x) * reg$coefficients[2], 
-            reg$coefficients[1] + maxMT * reg$coefficients[2]
-          ), 
-          lty = lty.line, 
-          col = col.line, 
-          lwd = lwd.line
-        )
-      }
-      if (line[["stat"]] == "loreg") {
-        if (is.null(line[["f"]])) line[["f"]] <- 0.5
-        lines.par <- line[["f"]]
-        reg <- lowess(data[,dvar] ~ data[,mvar], f = lines.par)
-        lines(reg, lty = lty.line, col = col.line, lwd = lwd.line)
-      }
-      
-      if (line[["stat"]] %in% c("maxA", "pnd")) {
-        x <- data[design$start[1]:design$stop[1],mvar]
-        y <- data[design$start[1]:design$stop[1],dvar]
-        maxMT <- max(data[,mvar])
-        lines(
-          x = c(min(x), maxMT), 
-          y = c(max(y), max(y)), 
-          lty = lty.line, 
-          col = col.line, 
-          lwd = lwd.line
-        )		
-      }
-      
-      if (line[["stat"]] == "minA") {
-        x <- data[design$start[1]:design$stop[1],mvar]
-        y <- data[design$start[1]:design$stop[1],dvar]
-        maxMT <- max(data[,mvar])
-        lines(
-          x = c(min(x), maxMT), 
-          y = c(min(y), min(y)), 
-          lty = lty.line, 
-          col = col.line, 
-          lwd = lwd.line
-        )		
-      }
-      if (line[["stat"]] == "medianA") {
-        x <- data[design$start[1]:design$stop[1],mvar]
-        y <- data[design$start[1]:design$stop[1],dvar]
-        maxMT <- max(data[,mvar])
-        
-        lines(
-          x = c(min(x), maxMT), 
+          x = c(min(x), max(x)), 
           y = c(median(y, na.rm = TRUE), median(y, na.rm = TRUE)), 
           lty = lty.line, 
           col = col.line, 
           lwd = lwd.line
-        )		
-      }
-      if (line[["stat"]] == "meanA") {
-        if (is.null(line[["trim"]])) line[["trim"]] <- 0.1
-        lines.par <- line[["trim"]]
-        
-        x <- data[design$start[1]:design$stop[1],mvar]
-        y <- data[design$start[1]:design$stop[1],dvar]
-        maxMT <- max(data[,mvar])
+        )
+      }      
+    }
+    if (line[["stat"]] == "mean") {
+      if (is.null(line[["trim"]])) line[["trim"]] <- 0.1
+      lines.par <- line[["trim"]]
+      
+      for(i in 1:length(design$values)) {
+        x <- data[design$start[i]:design$stop[i],mvar]
+        y <- data[design$start[i]:design$stop[i],dvar]
         lines(
-          x = c(min(x), maxMT), 
+          x = c(min(x), max(x)), 
           y = c(
             mean(y, trim = lines.par, na.rm = TRUE), 
             mean(y, trim = lines.par, na.rm = TRUE)
@@ -720,35 +680,188 @@ print.scplot <- function(object) {
           lty = lty.line, 
           col = col.line, 
           lwd = lwd.line
-        )		
+        )
       }
+    }
+    if (line[["stat"]] == "trendA") {
+      x <- data[design$start[1]:design$stop[1], mvar]
+      y <- data[design$start[1]:design$stop[1], dvar]
+      maxMT <- max(data[, mvar])
+      reg <- lm(y~x)
+      lines(
+        x = c(min(x), maxMT), 
+        y = c(
+          reg$coefficients[1] + min(x) * reg$coefficients[2], 
+          reg$coefficients[1] + maxMT * reg$coefficients[2]
+        ), 
+        lty = lty.line, 
+        col = col.line, 
+        lwd = lwd.line
+      )
+    }
+    if (line[["stat"]] == "trendA_bisplit") {
+      x     <- data[design$start[1]:design$stop[1],mvar]
+      y     <- data[design$start[1]:design$stop[1],dvar]
+      maxMT <- max(data[,mvar])
+      # na.rm = FALSE for now to prevent misuse; 
+      # will draw no line if NA present
+      md1   <- c(median(y[1:floor(length(y)/2)], na.rm = FALSE),
+                 median(x[1:floor(length(x)/2)], na.rm = FALSE))
+      md2   <- c(median(y[ceiling(length(y)/2+1):length(y)], na.rm = FALSE),
+                 median(x[ceiling(length(x)/2+1):length(x)], na.rm = FALSE))
+      md    <- rbind(md1, md2)
+      reg <- lm(md[,1]~md[,2])
+      lines(
+        x = c(min(x), maxMT), 
+        y = c(
+          reg$coefficients[1] + min(x) * reg$coefficients[2], 
+          reg$coefficients[1] + maxMT * reg$coefficients[2]
+        ), 
+        lty = lty.line, 
+        col = col.line, 
+        lwd = lwd.line
+      )
+    }
+    if (line[["stat"]] == "trendA_trisplit") {
+      x     <- data[design$start[1]:design$stop[1],mvar]
+      y     <- data[design$start[1]:design$stop[1],dvar]
+      maxMT <- max(data[,mvar])
+      # na.rm = FALSE for now to prevent misuse; 
+      # will draw no line if NA present
+      md1   <- c(
+        median(y[1:floor(length(y) / 3)], na.rm = FALSE),
+        median(x[1:floor(length(x) / 3)], na.rm = FALSE)
+      )
+      md2   <- c(
+        median(y[ceiling(length(y) / 3 * 2 + 1):length(y)], na.rm = FALSE),
+        median(x[ceiling(length(x) / 3 * 2 + 1):length(x)], na.rm = FALSE)
+      )
+      md    <- rbind(md1, md2)
+      reg <- lm(md[,1] ~ md[,2])
+      lines(
+        x = c(min(x), maxMT), 
+        y = c(
+          reg$coefficients[1]  + min(x) * reg$coefficients[2], 
+          reg$coefficients[1] + maxMT * reg$coefficients[2]
+        ), 
+        lty = lty.line, 
+        col = col.line, 
+        lwd = lwd.line
+      )
+    }
+    if (line[["stat"]] == "loreg") {
+      if (is.null(line[["f"]])) line[["f"]] <- 0.5
+      lines.par <- line[["f"]]
+      reg <- lowess(data[,dvar] ~ data[,mvar], f = lines.par)
+      lines(reg, lty = lty.line, col = col.line, lwd = lwd.line)
+    }
+    
+    if (line[["stat"]] %in% c("maxA", "pnd")) {
+      x <- data[design$start[1]:design$stop[1],mvar]
+      y <- data[design$start[1]:design$stop[1],dvar]
+      maxMT <- max(data[,mvar])
+      lines(
+        x = c(min(x), maxMT), 
+        y = c(max(y), max(y)), 
+        lty = lty.line, 
+        col = col.line, 
+        lwd = lwd.line
+      )		
+    }
+    
+    if (line[["stat"]] == "minA") {
+      x <- data[design$start[1]:design$stop[1],mvar]
+      y <- data[design$start[1]:design$stop[1],dvar]
+      maxMT <- max(data[,mvar])
+      lines(
+        x = c(min(x), maxMT), 
+        y = c(min(y), min(y)), 
+        lty = lty.line, 
+        col = col.line, 
+        lwd = lwd.line
+      )		
+    }
+    if (line[["stat"]] == "medianA") {
+      x <- data[design$start[1]:design$stop[1],mvar]
+      y <- data[design$start[1]:design$stop[1],dvar]
+      maxMT <- max(data[,mvar])
       
-      if (line[["stat"]] == "plm") {
-        pr <- plm(data_list[case])
-        y <- fitted(pr$full.model)
-        lines(data[[mvar]], y, lty = lty.line, col = col.line, lwd = lwd.line)
-      }
-      if (line[["stat"]] == "plm.ar") {
-        if (is.null(line[["ar"]])) line[["ar"]] <-2
-        lines.par <- line[["ar"]]
-        pr <- plm(data_list[case], AR = lines.par)
-        y <- fitted(pr$full.model)
-        lines(data[[mvar]], y, lty = lty.line, col = col.line, lwd = lwd.line)
-      }
+      lines(
+        x = c(min(x), maxMT), 
+        y = c(median(y, na.rm = TRUE), median(y, na.rm = TRUE)), 
+        lty = lty.line, 
+        col = col.line, 
+        lwd = lwd.line
+      )		
+    }
+    if (line[["stat"]] == "meanA") {
+      if (is.null(line[["trim"]])) line[["trim"]] <- 0.1
+      lines.par <- line[["trim"]]
       
-      if (line[["stat"]] == "movingMean") {
-        if (is.null(line[["lag"]])) line[["lag"]] <- 1
-        lines.par <- line[["lag"]]
-        y <- .moving_average(data[, dvar],lines.par, mean)
-        lines(data[, mvar], y, lty = lty.line, col = col.line, lwd = lwd.line)
-      }
-      if (line[["stat"]] == "movingMedian") {
-        if (is.null(line[["lag"]])) line[["lag"]] <- 1
-        lines.par <- line[["lag"]]
-        y <- .moving_average(data[, dvar],lines.par, median)
-        lines(data[, mvar], y, lty = lty.line, col = col.line, lwd = lwd.line)
-      }
+      x <- data[design$start[1]:design$stop[1],mvar]
+      y <- data[design$start[1]:design$stop[1],dvar]
+      maxMT <- max(data[,mvar])
+      lines(
+        x = c(min(x), maxMT), 
+        y = c(
+          mean(y, trim = lines.par, na.rm = TRUE), 
+          mean(y, trim = lines.par, na.rm = TRUE)
+        ), 
+        lty = lty.line, 
+        col = col.line, 
+        lwd = lwd.line
+      )		
+    }
+    
+    if (line[["stat"]] == "plm") {
+      pr <- plm(data_list[case])
+      y <- fitted(pr$full.model)
+      lines(data[[mvar]], y, lty = lty.line, col = col.line, lwd = lwd.line)
+    }
+    if (line[["stat"]] == "plm.ar") {
+      if (is.null(line[["ar"]])) line[["ar"]] <-2
+      lines.par <- line[["ar"]]
+      pr <- plm(data_list[case], AR = lines.par)
+      y <- fitted(pr$full.model)
+      lines(data[[mvar]], y, lty = lty.line, col = col.line, lwd = lwd.line)
+    }
+    
+    if (line[["stat"]] == "movingMean") {
+      if (is.null(line[["lag"]])) line[["lag"]] <- 1
+      lines.par <- line[["lag"]]
+      y <- .moving_average(data[, dvar],lines.par, mean)
+      lines(data[, mvar], y, lty = lty.line, col = col.line, lwd = lwd.line)
+    }
+    if (line[["stat"]] == "movingMedian") {
+      if (is.null(line[["lag"]])) line[["lag"]] <- 1
+      lines.par <- line[["lag"]]
+      y <- .moving_average(data[, dvar],lines.par, median)
+      lines(data[, mvar], y, lty = lty.line, col = col.line, lwd = lwd.line)
     }
   
 }
 
+.draw_data <- function(data, mvar, dvar, design, line, dots) {
+  
+  for(i in 1:length(design$values)) {
+    x <- data[design$start[i]:design$stop[i], mvar]
+    y <- data[design$start[i]:design$stop[i], dvar]
+    if (!is.null(line$col)) {
+      lines(
+        x, y, 
+        type = "l", 
+        lty = line$lty,#theme$lty.line, 
+        lwd = line$lwd,#,theme$lwd.line,
+        col = line$col#theme$col.line
+      )
+    }
+    if (!is.null(dots$col)) {
+      points(
+        x, y,
+        pch = dots$pch, 
+        cex = dots$cex, 
+        col = dots$col
+      )
+    }
+  }  
+}

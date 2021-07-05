@@ -206,27 +206,44 @@
   cex.casenames = 1, cex.phasenames = 1, cex.dots = 0.8,
   
   col.line = "black", col.dots = "black", col.seperators = "black", 
-  col.fill = "grey75", col.fill.bg = "grey95", col.bg = "white", col = "black", 
-  col.text = "black", col.casenames = "black", col.phasenames = "black",
+  col.fill.bg = "white", col.bg = "white", col.box = NULL,
+  col.casenames = "black", col.phasenames = "black",
   col.xlab = "black", col.ylab = "black", col.ridge = NULL,
   col.xaxis = "black", col.yaxis = "black", col.frame = NULL, col.grid = NULL,
   
   col.line.xaxis = "black", col.ticks.xaxis = "black",
   col.line.yaxis = "black", col.ticks.yaxis = "black",
   
+  angle.xaxis = 0, angle.yaxis = 0,
   
   align.main = "center", align.caption = "left",
   margin.main = 0, margin.caption = 0.02, 
   wrap.caption = NULL, wrap.main = NULL,
   parse.main = FALSE, parse.caption = FALSE,
-  
   length.ticks.xaxis = -0.3, length.ticks.yaxis = -0.3,
-  
   extent.seperators = "full",
-  
   annotations = NULL, 
+  names = list(side = 3, line = -1, adj = 0),
   
-  names = list(side = 3, line = -1, adj = 0)
+  legend = list(
+    x = NULL, y = NULL, 
+    cex = 0.8, text_col = "black", bg_col = "white", line_length = 1
+  ),
+  
+  ## maybe a new structure
+  
+  data_line = list(
+    dvar = list(col = "black", lty = "solid", lwd = 2),
+    .default = list(col = "darkred", lty = "solid", lwd = 2),
+    .default = list(col = "darkgreen", lty = "solid", lwd = 2)
+  ),
+  data_dots = list(
+    dvar = list(col = "black", pch = 17, cex = 0.8),
+    .default = list(col = "darkred", pch = 18, cex = 0.8),
+    .default = list(col = "darkgreen", pch = 19, cex = 0.8)
+  ),
+  
+  NULL
 )
 
 .opt$scplot_themes$tiny <- list(
@@ -284,22 +301,45 @@
   col.xlab = "white", col.ylab = "white",
   col.xaxis = "white", col.yaxis = "white",
   col.line.xaxis = "#DDDDDD", col.ticks.xaxis = "#DDDDDD",
-  col.line.yaxis = "#DDDDDD", col.ticks.yaxis = "#DDDDDD"
+  col.line.yaxis = "#DDDDDD", col.ticks.yaxis = "#DDDDDD",
+  
+  data_line = list(
+    dvar = list(col = "#DDDDDD", lty = "solid", lwd = 2),
+    .default = list(col = "#FFAAAA", lty = "solid", lwd = 2),
+    .default = list(col = "#AAAAFF", lty = "solid", lwd = 2)
+  ),
+  data_dots = list(
+    dvar = list(col = "#E94560", pch = 17, cex = 0.8),
+    .default = list(col = "#E92540", pch = 18, cex = 0.8),
+    .default = list(col = "#E90520", pch = 19, cex = 0.8)
+  )
 )
 
 .opt$scplot_themes$nodots <- list(
-  col.ridge = "grey95",
-  type = "l", col.dots = "", fill = TRUE, col.fill = "grey95", grid = TRUE, 
-  col.grid = "grey80", fill.bg = TRUE, col.fill.bg = "grey99")
+  col.ridge = "grey95", col.dots = NULL, 
+  col.fill = "grey95", col.grid = "grey80", col.fill.bg = "grey99"
+)
 
 .opt$scplot_themes$sienna <- list(
   col.grid = "orange", pch = 18, col.line = "grey85", 
-  col.dots = "seagreen4", lwd.line = 2, col.bg = "seashell", col.fill.bg = "moccasin", 
+  col.dots = "seagreen4", lwd.line = 2, col.bg = "seashell", 
+  col.fill.bg = "moccasin", col.frame = "darkseagreen", 
   col.line = "darkolivegreen", col.seperators = "sienna4", 
   col.casenames = "sienna4", col.phasenames = "sienna4",
   cex.ylab = 0.8, cex.xlab = 0.8, cex.xaxis = 0.7, cex.yaxis = 0.7,
   cex.casenames = 0.8, cex.phasenames = 0.8,
-  col.frame = "darkseagreen", 
+  
+  data_line = list(
+    dvar = list(col = "darkolivegreen", lty = "solid", lwd = 2),
+    .default = list(col = "darkseagreen", lty = "solid", lwd = 2),
+    .default = list(col = "sienna4", lty = "solid", lwd = 2)
+  ),
+  data_dots = list(
+    dvar = list(col = "seagreen4", pch = 17, cex = 0.8),
+    .default = list(col = "seagreen3", pch = 18, cex = 0.8),
+    .default = list(col = "seagreen2", pch = 19, cex = 0.8)
+  ),
+  
   font = "serif"
 )
 

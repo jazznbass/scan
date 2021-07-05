@@ -3,6 +3,7 @@
 \name{scplot}
 \alias{scplot}
 \alias{add_theme}
+\alias{set_theme_element}
 \alias{add_statline}
 \alias{set_xlabel}
 \alias{set_ylabel}
@@ -24,27 +25,57 @@
 \alias{set_dots}
 \alias{add_ridge}
 \alias{set_seperator}
+\alias{add_dataline}
+\alias{add_legend}
+\alias{add_margins}
 \title{Plot single-case data}
 \usage{
 scplot(data)
 
 add_theme(object, theme, ...)
 
-add_statline(object, stat, colour = NULL, width = NULL, type = NULL, ...)
+set_theme_element(object, ...)
+
+add_statline(
+  object,
+  stat,
+  colour = NULL,
+  width = NULL,
+  type = NULL,
+  variable = ".dvar",
+  ...
+)
 
 set_xlabel(object, label, colour, size)
 
 set_ylabel(object, label, colour, size, line, orientation)
 
-set_xaxis(object, limits, increment, colour, size, line)
+set_xaxis(
+  object,
+  limits,
+  increment,
+  increment_from,
+  colour,
+  size,
+  line,
+  positions
+)
 
-set_yaxis(object, limits, colour, size)
+set_yaxis(object, limits, colour, size, increment, increment_from, positions)
 
 add_title(object, label, colour, size, font, align, parse)
 
 add_caption(object, label, colour, size, font, align, wrap, margin, parse)
 
-add_marks(object, case, positions, colour = "red", size = 1, shape = 1)
+add_marks(
+  object,
+  case = 1,
+  positions,
+  colour = "red",
+  size = 1,
+  shape = 1,
+  variable = ".dvar"
+)
 
 set_phasenames(object, ..., colour, size)
 
@@ -71,13 +102,28 @@ add_labels(
   round = 1
 )
 
-set_line(object, colour, width, type)
+set_line(object, colour, width, type, variable)
 
-set_dots(object, colour, size, shape)
+set_dots(object, colour, size, shape, variable)
 
 add_ridge(object, colour = "grey98")
 
 set_seperator(object, colour, width, type, extent, label, size)
+
+add_dataline(
+  object,
+  variable,
+  colour = NULL,
+  width = NULL,
+  type = NULL,
+  colour_dots = NULL,
+  shape = NULL,
+  size = NULL
+)
+
+add_legend(object, labels = ".default", x, y)
+
+add_margins(object, outer, inner)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -86,7 +132,7 @@ set_seperator(object, colour, width, type, extent, label, size)
 Possible values: default, yaxis, tiny, small, big, chart, ridge, 
 annotate, grid, grid2, dark, nodots, sienna, phase_color, phase_shade}
 
-\item{...}{Further arguments passed to the function.}
+\item{...}{various style parameter}
 
 \item{stat}{A character string defining a line or curve to be
 plotted. Possible values: "median", "mean", "trend", "trendA", 
@@ -113,6 +159,9 @@ a proper scale based on the given data.}
 
 \item{increment}{An integer. Increment of the x-axis. 1 :each mt value will be printed, 2 : every other value, 3 : every third values etc.}
 
+\item{positions}{Either a vector indicating the dot to be highlighted or a 
+character string with a logical expression (e.g. values < mean(values))}
+
 \item{align}{Character string. One of "left", "right", "center"}
 
 \item{parse}{If TRUE, the label is interpreted as an expression. Default = FALSE.}
@@ -121,9 +170,6 @@ a proper scale based on the given data.}
 If set to FALSE, no automatic linebreak is set.}
 
 \item{case}{Numerical vector with the csae number or character string "all" for all cases.}
-
-\item{positions}{Either a vector indicating the dot to be highlighted or a 
-character string with a logical expression (e.g. values < mean(values))}
 
 \item{shape}{Number. See pch graphical parameter on par help page.}
 
@@ -148,6 +194,9 @@ character string with a logical expression (e.g. values < mean(values))}
 \item{round}{Number of digits of the labels.}
 
 \item{extent}{A number between 0 and 1 given the proportion of the plot that is covert by the line or character string "full" or "scale".}
+
+\item{outer}{Vector with four values for the extension of the inner margins
+(negative numbers for smaller margins): c(bottom, left, top, right)}
 }
 \value{
 An scdf plot object that creates a plot when printed.
