@@ -11,26 +11,17 @@ print.scplot <- function(object) {
   theme <- .check_theme(object$theme)
   N <- length(data_list)
   
-  names(theme$data_line)[1] <- object$dvar[1]
-  names(theme$data_dots)[1] <- object$dvar[1]
-  
   # set x/y label  ---------
   
   if (is.null(object$xlabel)) {
     object$xlabel <- mvar
     if (object$xlabel == "mt") object$xlabel <- "Measurement time"
-    object$xlabel <- paste0(
-      toupper(substr(object$xlabel, 1, 1)), 
-      substr(object$xlabel, 2, nchar(object$xlabel))
-    )
+    object$xlabel <- .upperfirst(object$xlabel)
   }
   if (is.null(object$ylabel)) {
     if (length(object$dvar) == 1) {
       object$ylabel <- object$dvar
-      object$ylabel <- paste0(
-        toupper(substr(object$ylabel, 1, 1)), 
-        substr(object$ylabel, 2, nchar(object$ylabel))
-      )
+      object$ylabel <- .upperfirst(object$ylabel)
     } else {
       object$ylabel <- "Values"
     }
@@ -60,10 +51,20 @@ print.scplot <- function(object) {
   
   par("oma" = theme$oma)
   
-  if (!is.null(theme$col.bg)) par("bg" = theme$col.bg)
+  if (!is.null(theme$plot.fill)) par("bg" = theme$plot.fill)
   par("family" = theme$font)
-  par("cex"= 1) # or 1
-
+  par("cex" = 1) # or 1
+  
+  # set dataline for first dvar
+  
+  if (is.null(object$datalines[[1]]$variable)) object$datalines[[1]]$variable <- object$dvar[1]
+  if (is.null(object$datalines[[1]]$col)) object$datalines[[1]]$col <- theme$dataline.col
+  if (is.null(object$datalines[[1]]$width)) object$datalines[[1]]$width <- theme$dataline.width
+  if (is.null(object$datalines[[1]]$linetype)) object$datalines[[1]]$linetype <- theme$dataline.linetype
+  if (is.null(object$datalines[[1]]$dots)) object$datalines[[1]]$dots <- theme$datadots.col
+  if (is.null(object$datalines[[1]]$shape)) object$datalines[[1]]$shape <- theme$datadots.shape
+  if (is.null(object$datalines[[1]]$size)) object$datalines[[1]]$size <- theme$datadots.size
+  
   # set global xlim and ylim ---------
   
   ylim <- object$yaxis$lim
@@ -86,14 +87,14 @@ print.scplot <- function(object) {
   # w_axis <- strwidth(
   #  as.character(ylim[2]), 
   #  units = "inches", 
-  #  cex = theme$cex.yaxis
+  #  cex = theme$yaxis.text.size
   # ) * fac_i_to_l
   # 
   
   w_axis <- 1
   
   w_ticks <- strwidth(
-    "W", units = "inches", cex = theme$cex.yaxis * 0.5 * fac_i_to_l
+    "W", units = "inches", cex = theme$yaxis.text.size * 0.5 * fac_i_to_l
   )
   
   # Horizontal
@@ -117,8 +118,8 @@ print.scplot <- function(object) {
 
   # set lower margin ----------------------------------------------------
 
-  h_axis <- theme$cex.xaxis
-  h_ticks <- 0.5 * theme$cex.xaxis
+  h_axis <- theme$xaxis.text.size
+  h_ticks <- 0.5 * theme$xaxis.text.size
   h_label <- (sum(unlist(strsplit(object$xlabel, "")) == "\n") + 1) 
   
   theme$mar[1] <- theme$mar[1] + h_axis + h_ticks + h_label
@@ -196,10 +197,10 @@ print.scplot <- function(object) {
     
     # add inner background -------------------------------------------------------
     
-    if (!is.null(theme$col.fill.bg)){
+    if (!is.null(theme$panel.col)){
 
       type_phases <- unique(design$values)
-      col <- rep(theme$col.fill.bg, length = length(type_phases))
+      col <- rep(theme$panel.col, length = length(type_phases))
       
       for(i in seq_along(design$values)) {
         x <- data[design$start[i]:design$stop[i], mvar]
@@ -216,15 +217,15 @@ print.scplot <- function(object) {
     
     # add grid --------------------------------------------
 
-    if (!is.null(theme$col.grid)) 
+    if (!is.null(theme$grid.col)) 
       grid(
         NULL, NULL, 
-        col = theme$col.grid, 
-        lty = theme$lty.grid, 
-        lwd = theme$lwd.grid
+        col = theme$grid.col, 
+        lty = theme$grid.linetype, 
+        lwd = theme$grid.width
       )
     
-    # add fill array below lines --------------------------------
+    # add ridge --------------------------------
     
     if (!is.null(theme$col.ridge)) {
       for(i in 1:length(design$values)) {
@@ -242,13 +243,13 @@ print.scplot <- function(object) {
     
     # add frame ---------------------------------
     
-    if (!is.null(theme$col.frame)){
+    if (!is.null(theme$panel.frame.col)){
       rect(
         usr[1],usr[3],usr[2],usr[4], 
         col = NA, 
-        border = theme$col.frame,
-        lwd = theme$lwd.frame,
-        lty = theme$lty.frame
+        border = theme$panel.frame.col,
+        lwd = theme$panel.frame.width,
+        lty = theme$panel.frame.linetype
       )
     }
     # add xaxis --------------------------------------------------------
@@ -261,7 +262,7 @@ print.scplot <- function(object) {
         labels = FALSE, 
         col = theme$col.line.xaxis, 
         col.ticks = theme$col.ticks.xaxis,
-        tcl = theme$length.ticks.xaxis * theme$cex.xaxis
+        tcl = theme$length.ticks.xaxis * theme$xaxis.text.size
       )
       
       if (!is.null(object$xaxis$inc_from)) {
@@ -275,12 +276,12 @@ print.scplot <- function(object) {
       text(
         x = x,  
         y = par("usr")[3], 
-        cex = theme$cex.xaxis, 
-        col = theme$col.xaxis,
+        cex = theme$xaxis.text.size, 
+        col = theme$xaxis.text.col,
         labels = x, 
-        srt = theme$angle.xaxis, 
+        srt = theme$xaxis.text.angle, 
         pos = 1, 
-        offset = theme$cex.xaxis * 0.75, 
+        offset = theme$xaxis.text.size * 0.75, 
         xpd = TRUE
       )
     }
@@ -294,7 +295,7 @@ print.scplot <- function(object) {
       labels = NA, 
       col = theme$col.line.yaxis, 
       col.ticks = theme$col.ticks.yaxis,
-      tcl = theme$length.ticks.yaxis * theme$cex.xaxis
+      tcl = theme$length.ticks.yaxis * theme$xaxis.text.size
     )
     
     if (!is.null(object$yaxis$inc)) {
@@ -310,27 +311,19 @@ print.scplot <- function(object) {
       x = par("usr")[1],
       y = y, 
       labels = y, 
-      offset = theme$cex.yaxis * 0.75,
-      col = theme$col.yaxis,
-      srt = theme$angle.yaxis, 
+      offset = theme$yaxis.text.size * 0.75,
+      col = theme$yaxis.text.col,
+      srt = theme$yaxis.text.angle, 
       pos = 2, 
-      cex = theme$cex.yaxis, 
+      cex = theme$yaxis.text.size, 
       xpd = TRUE
     )
     
     # draw dv lines ---------------------------------------------
     
-    for(i in 1:length(object$dvar)) {
-      
-      id <- which(names(theme$data_line) == object$dvar[i])
-      
-      if (length(id) == 1) {
-        .draw_data(data, mvar, object$dvar[i], design, theme$data_line[[id]], theme$data_dots[[id]])
-      }
-      
+    for(i in seq_along(object$datalines)) {
+      .draw_data(data, mvar, design, object$datalines[[i]])
     }
-    
-
     
     # add marks ---------------------------------------------------------------
     
@@ -368,124 +361,210 @@ print.scplot <- function(object) {
       }
     }
     
-    # add annotations ---------------------------------------------------------
+    # add annotations /value labels ------------------------------------------
     
-    if (!is.null(theme$annotations)) {
+    if (!is.null(theme$labels.col)) {
+      
       for(i in 1:length(object$dvar)) {
+        
+        x <- data[, mvar] + 
+             theme$labels.nudge_x * strwidth("M", cex = theme$labels.size)
+        y <- data[, object$dvar[i]] + 
+             theme$labels.nudge_y * strheight("M", cex = theme$labels.size)
+        
+        label <- round(data[, object$dvar[i]], theme$labels.round)
+        adj <- c(theme$labels.hjust, theme$labels.vjust)
+        
+        if (!is.null(theme$labels.box.fill) || !is.null(theme$labels.box.col)) {
+
+          .add_text_box(
+            text = label, 
+            x = x, 
+            y = y, 
+            adj = adj,
+            cex = theme$labels.size,
+            fill = theme$labels.box.fill,
+            col = theme$labels.box.col,
+            lwd = theme$labels.box.width,
+            lty = theme$labels.box.type,
+            margin = theme$labels.box.margin
+          ) 
+        }
+        
         text(
-          x = data[, mvar], 
-          y = data[, object$dvar[i]], 
-          label = round(data[, object$dvar[i]], theme$annotations$round), 
-          col = theme$annotations$col, 
-          pos = theme$annotations$pos, 
-          offset = theme$annotations$offset, 
-          cex = theme$annotations$cex
+          x = x, 
+          y = y, 
+          label = label, 
+          col = theme$labels.col, 
+          adj = adj,
+          cex = theme$labels.size,
+          font = theme$labels.face,
+          family = theme$labels.family,
+          xpd = TRUE
         )
       }
     }
     
-    # add lines ---------------------------------------------------------------
+    # add statlines ------------------------------------------------------------
     
-    if (!is.null(object$lines)) {
-      object$lines <- .prepare_arg_lines(object$lines)
+    if (!is.null(object$statlines)) {
+      object$statlines <- .prepare_arg_lines(object$statlines)
       
       for(i in 1:length(object$dvar)) {
-        for(j in 1:length(object$lines)) {
-          if (object$lines[[j]]$variable == ".dvar") object$lines[[j]]$variable <- object$dvar[1]
-          if (object$lines[[j]]$variable == object$dvar[i])
-            .add_lines(data, mvar, object$dvar[i], pvar, design, object$lines[[j]])
+        for(j in 1:length(object$statlines)) {
+          if (object$statlines[[j]]$variable == ".dvar") 
+            object$statlines[[j]]$variable <- object$dvar[1]
+          if (object$statlines[[j]]$variable == object$dvar[i])
+            .add_lines(
+              data, mvar, object$dvar[i], pvar, design, object$statlines[[j]]
+            )
         }
       }
       
       
     }
-    # add phase names ---------------------------------------------------------
-    if (is.null(object$phase_names$labels)) {
+    # add phasenames ---------------------------------------------------------
+
+    if (identical(object$phasenames$labels, ".default")) {
       case_phase_names <- design$values
     } else {
-      case_phase_names <- object$phase_names$labels
+      case_phase_names <- object$phasenames$labels
     }
     
-    
     for(i in 1:length(design$values)) {
-      mtext(
-        text = case_phase_names[i], 
-        side = 3, 
-        at = (data[design$stop[i], mvar] - data[design$start[i], mvar]) / 2 + 
-          data[design$start[i], mvar], 
-        cex = theme$cex.phasenames,
-        col = theme$col.phasenames
+      
+      adj <- c(0.5, 0)
+      
+      if (theme$phasenames.position.x == "centre") {
+        x <- (data[design$stop[i], mvar] - data[design$start[i], mvar]) / 2 + 
+              data[design$start[i], mvar]
+        adj[1] <- 0.5
+      }
+      
+      if (theme$phasenames.position.x == "left") {
+        x <- data[design$start[i], mvar]
+        adj[1] <- 0
+      }
+      
+      y <- .yppt(theme$phasenames.position.y)
+      
+      if (identical(theme$phasenames.position.y, "above")) {
+        y <- .yppt(1) + strheight("M", cex = theme$phasenames.size) * 0.2
+        adj[2] <- 0
+      }
+      
+      if (identical(theme$phasenames.position.y, "top")) {
+        y <- .yppt(1) - strheight("M", cex = theme$phasenames.size) * 0.4
+        adj[2] <- 1
+      }      
+      
+      
+      if (!is.null(theme$phasenames.box.fill) || !is.null(theme$phasenames.box.frame)) {
+        .add_text_box(
+          case_phase_names[i], x, y, adj,
+          cex = theme$phasenames.size,
+          fill = theme$phasenames.box.fill,
+          col = theme$phasenames.box.col,
+          lwd = theme$phasenames.box.width,
+          lty = theme$phasenames.box.type,
+          margin = theme$phasenames.box.margin
+         ) 
+      }
+      
+      text(
+        x = x, 
+        y = y, 
+        label = case_phase_names[i], 
+        col = theme$phasenames.col, 
+        cex = theme$phasenames.size,
+        adj = adj,
+        xpd = NA
       )
+      
     }
     
     # add line between phases -------------------------------------------
-    if (is.null(object$label.seperators)) {
+    if (is.null(object$seperators$label)) {
       for(i in 1:(length(design$values) - 1)) {
         x <- data[design$stop[i] + 1, mvar] - 0.5
         x <- c(x, x)
         
-        if (theme$extent.seperators == "full") y <- par("usr")[3:4]
-        if (theme$extent.seperators == "scale") y <- ylim
-        if (is.numeric(theme$extent.seperators)) {
+        if (theme$seperators.extent == "full") y <- par("usr")[3:4]
+        if (theme$seperators.extent == "scale") y <- ylim
+        if (is.numeric(theme$seperators.extent)) {
           .range <- ylim[2] - ylim[1]
-          .cut <- .range * (1 - theme$extent.seperators) / 2
+          .cut <- .range * (1 - theme$seperators.extent) / 2
           y <- c(ylim[1] + .cut, ylim[2] - .cut)
         }
         
         lines(
           x, y, 
-          lty = theme$lty.seperators,
-          lwd =  theme$lwd.seperators, 
-          col = theme$col.seperators,
+          lty = theme$seperators.linetype,
+          lwd =  theme$seperators.width, 
+          col = theme$seperators.col,
           xpd = TRUE
         )
         
       }
     }
     
-    if (!is.null(object$label.seperators)) {
+    if (!is.null(object$seperators$label)) {
       for(i in 1:(length(design$values) - 1)) {
-        tex <- paste(unlist(strsplit(object$label.seperators[i], "")), collapse = "\n")
+        tex <- paste(unlist(strsplit(object$seperators$label[i], "")), collapse = "\n")
         text(
           x = data[design$stop[i] + 1, mvar] - 0.5, 
           y = (y_lim[2] - y_lim[1]) / 2 + y_lim[1], 
           labels = tex, 
-          col = them$col.seperators,
-          cex = theme$size.seperators
+          col = them$seperators.col,
+          cex = theme$seperators.size
         )
       }
       
     }
     
-    # add case name -----------------------------------------------------
-    if (!is.null(object$case_names$labels)) {
-      args <- c(
-        list(text = object$case_names$labels[case]), 
-        cex = theme$cex.casenames,
-        col = theme$col.casenames,
-        theme$names, 
-        at = min(xlim)
+    # add casename -----------------------------------------------------
+    if (!is.null(object$casenames$labels)) {
+      
+      if (!is.null(theme$casenames.position.x)) {
+        x <- theme$casenames.position.x
+      } else {
+        x <- .xppt(0.02) #x <- xlim[1]
+      }
+
+      if (!is.null(theme$casenames.position.y)) {
+        y <- theme$casenames.position.y
+      } else {
+        y <- .yppt(1) - strheight("M", cex = theme$casenames.size) * 0.5
+      }
+      
+      
+      text(
+        x = x,
+        y = y,
+        labels = object$casenames$labels[case],
+        col = theme$casenames.col,
+        cex = theme$casenames.size,
+        adj = c(0, 1),
+        xpd = NA
       )
-      args <- args[!duplicated(names(args))]
-      do.call(mtext, args)
+      
     }
     
     
     # add text ----------------------------------------------------------
+    
     if (length(object$texts) > 0) {
       id_case <- which(sapply(object$texts, function(x) x$case) == case)
       if (length(id_case) > 0) {
         for(i in id_case) {
-          #args <- object$texts[[i]]
-          #args <- args[-which(names(args) == "case")]
-          #do.call(text, args)
           text(
             object$texts[[i]]$x, 
             object$texts[[i]]$y, 
             object$texts[[i]]$label, 
             srt = object$texts[[i]]$angle, 
             col = object$texts[[i]]$col, 
-            cex = object$texts[[i]]$cex
+            cex = object$texts[[i]]$cex,
+            xpd = NA
           )
         }
         
@@ -505,52 +584,75 @@ print.scplot <- function(object) {
       }
     }
     
-  }
-  
-  # add legend -----------
-  
-  if (!is.null(object$legend)) {
+    # add legend -----------
     
-    if (is.null(theme$legend$x)) {
-      x <- par("usr")[2] + (par("usr")[2] - par("usr")[2]) * 0.05
-    } else {
-      x <- theme$legend$x
-    }
-    
-    if (is.null(theme$legend$y)) 
-      y <- par("usr")[4]  else y <- theme$legend$y
-    
-    length <- 1:sum(names(theme$data_line) != ".default")
-    
-    if (!identical(object$legend, ".default")) {
-      legend_labels <- object$legend
-    } else {
-      legend_labels <- names(theme$data_line)[length]
-    }
-    
-    legend_pch <- sapply(theme$data_dots, function(x) x$pch)[length]
-    legend_col <- sapply(theme$data_dots, function(x) x$col)[length]
-    legend_pt_cex <- sapply(theme$data_dots, function(x) x$cex)[length]
-    legend_lwd <- sapply(theme$data_line, function(x) x$lwd)[length]
-    legend_lty <- sapply(theme$data_line, function(x) x$lty)[length]
+    if (!is.null(object$legend)) {
       
-    legend(
-      x = x,
-      y = y, 
-      legend = legend_labels,
-      xpd = NA, 
-      pch = legend_pch,
-      col = legend_col,
-      pt.cex = legend_pt_cex,
-      cex = theme$legend$cex,
-      lty = legend_lty,
-      lwd = legend_lwd,
-      text.col = theme$legend$text_col,
-      bg = theme$legend$bg_col,
-      seg.len = theme$legend$line_length
-    )
+        if (theme$legend.position.case == case) {
+        
+        if (is.null(theme$legend.position.x)) {
+          x <- .xppt(1.02)
+        } else {
+          x <- theme$legend.position.x
+        }
+        
+        if (is.null(theme$legend.position.y)) {
+          y <- .yppt(1)
+        } else {
+          y <- theme$legend.position.y
+        }
+          
+        length <- length(object$datalines)
+          
+        if (!identical(object$legend$labels, ".default")) {
+          legend_labels <- object$legend$labels
+        } else {
+          legend_labels <- .upperfirst(sapply(object$datalines, function(x) x$variable))
+        }
+          
+          legend_pch <- sapply(object$datalines, function(x) x$shape)
+          legend_col <- sapply(object$datalines, function(x) x$col)
+          legend_pt_bg <- sapply(object$datalines, function(x) x$dots)
+          legend_pt_cex <- sapply(object$datalines, function(x) x$size)
+          legend_lwd <- sapply(object$datalines, function(x) x$width)
+          legend_lty <- sapply(object$datalines, function(x) x$linetype)
+          
+          if (isTRUE(object$legend$statlines)){ 
+            legend_labels <- c(
+              legend_labels, 
+              paste(
+                .upperfirst(sapply(object$statlines, function(x) x$stat)),
+                .upperfirst(sapply(object$statlines, function(x) x$variable))
+              )
+            )
+            legend_col <- c(legend_col, sapply(object$statlines, function(x) x$col))
+            legend_pt_cex <- c(legend_pt_cex, rep(0, length(object$statlines)))
+            legend_pt_bg <- c(legend_pt_bg, rep("white", length(object$statlines)))
+            legend_lwd <- c(legend_lwd, sapply(object$statlines, function(x) x$width))
+            legend_lty <- c(legend_lty, sapply(object$statlines, function(x) x$linetype))
+          }
+          
+          legend(
+            x = x,
+            y = y, 
+            legend = legend_labels,
+            xpd = NA, 
+            pch = legend_pch,
+            pt.bg = legend_pt_bg,
+            col = legend_col,
+            pt.cex = legend_pt_cex,
+            cex = theme$legend.text.size,
+            lty = legend_lty,
+            lwd = legend_lwd,
+            text.col = theme$legend.text.col,
+            bg = theme$legend.bg.col,
+            title = object$legend$title,
+            seg.len = theme$legend.line.length
+          )
+      }  
+    }
     
-  }
+  } # end plot case loop
   
   # add title -----------------------------------------------------------
   
@@ -587,6 +689,7 @@ print.scplot <- function(object) {
   # add caption ---------------------------------------------------
   
   if (!is.null(object$caption)) {
+    
     adj <- NA
     
     if (theme$align.caption == "center") adj <- NA
@@ -610,12 +713,12 @@ print.scplot <- function(object) {
 
   par(op)
   
-  if (!is.null(theme$col.box)) {
+  if (!is.null(theme$plot.frame.col)) {
     box(
       which = "figure", 
-      lwd = theme$lwd.box, 
-      lty = theme$lty.box, 
-      col = theme$col.box
+      lwd = theme$plot.frame.width, 
+      lty = theme$plot.frame.linetype,
+      col = theme$plot.frame.col
     )
   }
   
@@ -625,13 +728,12 @@ print.scplot <- function(object) {
 
 .add_lines <- function(data, mvar, dvar, pvar, design, line) {
 
-      
-    if (is.null(line[["lty"]])) line[["lty"]] <- "dashed"
-    if (is.null(line[["lwd"]])) line[["lwd"]] <- 2
+    if (is.null(line[["linetype"]])) line[["linetype"]] <- "dashed"
+    if (is.null(line[["width"]])) line[["width"]] <- 2
     if (is.null(line[["col"]])) line[["col"]] <- "black"
     
-    lty.line <- line[["lty"]]
-    lwd.line <- line[["lwd"]]
+    lty.line <- line[["linetype"]]
+    lwd.line <- line[["width"]]
     col.line <- line[["col"]]
     
     if (line[["stat"]] == "trend") {
@@ -841,27 +943,114 @@ print.scplot <- function(object) {
   
 }
 
-.draw_data <- function(data, mvar, dvar, design, line, dots) {
-  
+.draw_data <- function(data, mvar, design, line) {
+
   for(i in 1:length(design$values)) {
     x <- data[design$start[i]:design$stop[i], mvar]
-    y <- data[design$start[i]:design$stop[i], dvar]
+    y <- data[design$start[i]:design$stop[i], line$variable]
     if (!is.null(line$col)) {
       lines(
         x, y, 
         type = "l", 
-        lty = line$lty,#theme$lty.line, 
-        lwd = line$lwd,#,theme$lwd.line,
-        col = line$col#theme$col.line
+        lty = line$linetype, 
+        lwd = line$width,
+        col = line$col
       )
     }
-    if (!is.null(dots$col)) {
+    if (!is.null(line$dots)) {
       points(
         x, y,
-        pch = dots$pch, 
-        cex = dots$cex, 
-        col = dots$col
+        pch = line$shape, 
+        cex = line$size, 
+        col = line$dots
       )
     }
   }  
+}
+
+.upperfirst <- function(x) {
+  
+  unlist(
+    lapply(x, function(x) 
+      paste0(toupper(substr(x, 1, 1)), substr(x, 2, nchar(x)))
+    )
+  )
+  
+}
+
+.yppt <- function(p, max = par("usr")[4], min = par("usr")[3]) {
+  
+  if (identical(p, "top")) return(par("usr")[4])
+  if (identical(p, "above")) return(par("usr")[4])
+  if (identical(p, "bottom")) return(par("usr")[3])
+  
+  min + (max - min) * p
+}
+
+.xppt <- function(p, max = par("usr")[2], min = par("usr")[1]) {
+  
+  if (identical(p, "left")) return(par("usr")[1])
+  if (identical(p, "right")) return(par("usr")[2])
+  min + (max - min) * p
+}
+
+.add_text_box <- function(text, cex  = 1, x, y, adj, margin = 0.5, 
+                          lwd = "1", 
+                          lty = "solid", 
+                          fill = "white", 
+                          col = "black") {
+  
+  margin <- rep_len(margin, 4)
+  mar <- margin
+  
+  for(i in seq_along(text)) {
+    
+    width   <- strwidth(text[i], cex = cex)
+    height  <- strheight(text[i], cex = cex)
+    
+    margin[c(1, 3)] <- height * mar[c(1, 3)]
+    margin[c(2, 4)] <- strwidth("M", cex = cex) * mar[c(2, 4)]
+    
+    if (adj[1] == 0.5) {
+      x1 <- x[i] - width / 2 - margin[2]
+      x2 <- x[i] + width / 2 + margin[4]    
+    }
+    
+    if (adj[1] == 0) {
+      x1 <- x[i] - margin[2]
+      x2 <- x[i] + width + margin[4]    
+    }
+    
+    if (adj[1] == 1) {
+      x1 <- x[i] - margin[2] - width
+      x2 <- x[i] + margin[4]    
+    }
+    
+    if (adj[2] == 0.5) {
+      y1 <- y[i] - height / 2 - margin[3]
+      y2 <- y[i] + height / 2 + margin[1] 
+    }
+    
+    if (adj[2] == 0) {
+      y1 <- y[i] - margin[1]
+      y2 <- y[i] + height + margin[3] 
+    }
+    
+    if (adj[2] == 1) {
+      y1 <- y[i] - height - margin[1]
+      y2 <- y[i] + margin[3] 
+    }
+    
+    if (is.null(col)) col <- NA
+    
+    rect(
+      x1, y1, x2, y2,
+      col = fill,
+      border = col,
+      lwd = lwd,
+      lty = lty,
+      xpd = NA
+    )
+    
+  }
 }

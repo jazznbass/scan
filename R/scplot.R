@@ -19,11 +19,23 @@ scplot <- function(data) {
     keep.null = TRUE
   )
   
+  default_line <- list(
+    variable = NULL, 
+    col = NULL, 
+    width = NULL, 
+    linetype = NULL,
+    dots = NULL,
+    shape = NULL,
+    size = NULL
+  )
+  
   out <- list(
     scdf = data,
     dvar = scdf_attr(data, .opt$dv), 
     pvar = scdf_attr(data, .opt$phase), 
     mvar = scdf_attr(data, .opt$mt),
+    datalines = list(default_line),
+    statlines = NULL,
     theme = theme,
     title = NULL,
     caption = NULL,
@@ -31,13 +43,13 @@ scplot <- function(data) {
     yaxis = list(lim = NULL),
     xlabel = NULL,
     ylabel = NULL,
-    lines = NULL, 
+    statlines = NULL, 
     marks = NULL, 
     texts = NULL,
     arrows = NULL,
-    phase_names = NULL,
+    phasenames = list(labels = ".default"),
     legend = NULL,
-    case_names = list(labels = .case_names(names(data), length(data)))
+    casenames = list(labels = .case_names(names(data), length(data)))
   )
   class(out) <- "scplot"
   out
@@ -85,24 +97,32 @@ set_theme_element <- function(object, ...) {
 #' "trendA_bisplit", "trendA_trisplit", "maxA", "minA", "meanA", "medianA", 
 #' "plm", "movingMean", "movingMedian", "loreg"
 #' @param width A number defining the line width
-#' @param colour A character string or a number defining the color of an element.
+#' @param color A character string or a number defining the color of an element.
 #' @param size A number deifning the size of an element.
 #' @param type A character string with the line type: "solid", "dashed", "dotted"
 #' @export
-add_statline <- function(object, stat, colour = NULL, 
-                         width = NULL, type = NULL,  variable = ".dvar", ...) {
+add_statline <- function(object, stat, color, 
+                         width, type, variable) {
   
-  lines <- list(stat = stat, col = colour, lwd = width, lty = type, variable = variable, ...)
-  object$lines <- c(object$lines, list(lines))
+  if (missing(color)) color <- object$theme$statline.col
+  if (missing(width)) width <- object$theme$statline.width
+  if (missing(type)) type <- object$theme$statline.linetype
+  if (missing(variable)) variable <- ".dvar"
+  
+  line <- list(
+    stat = stat, col = color, width = width, linetype = type, variable = variable
+  )
+  
+  object$statlines <- c(object$statlines, list(line))
   object
   
 }
 
 #' @rdname scplot
 #' @export
-set_xlabel <- function(object, label, colour, size) {
+set_xlabel <- function(object, label, color, size) {
   
-  if (!missing(colour)) object$theme$col.xlab <- colour
+  if (!missing(color)) object$theme$col.xlab <- color
   if (!missing(size)) object$theme$cex.xlab <- size
   if (!missing(label)) object$xlabel <- label
 
@@ -112,7 +132,7 @@ set_xlabel <- function(object, label, colour, size) {
 #' @rdname scplot
 #' @param orientation of the label: 0 = vertical; 1 = horizontal
 #' @export
-set_ylabel <- function(object, label, colour, size, line, orientation) {
+set_ylabel <- function(object, label, color, size, line, orientation) {
   
   if (!missing(orientation)) {
     if (orientation %in% c("h", "horizontal")) orientation <- 1
@@ -120,7 +140,7 @@ set_ylabel <- function(object, label, colour, size, line, orientation) {
     object$theme$ylab.orientation <- orientation
   }
   
-  if (!missing(colour)) object$theme$col.ylab <- colour
+  if (!missing(color)) object$theme$col.ylab <- color
   if (!missing(size)) object$theme$cex.ylab <- size
   if (!missing(line)) object$theme$vjust.ylab <- line
   if (!missing(label)) object$ylabel <- label
@@ -137,10 +157,10 @@ set_ylabel <- function(object, label, colour, size, line, orientation) {
 #' @param increment An integer. Increment of the x-axis. 1 :each mt value will be printed, 2 : every other value, 3 : every third values etc.
 #' @export
 set_xaxis <- function(object, limits, increment, increment_from, 
-                      colour, size, line, positions) {
+                      color, size, line, positions) {
   
-  if (!missing(colour)) object$theme$col.xaxis <- colour
-  if (!missing(size)) object$theme$cex.xaxis <- size
+  if (!missing(color)) object$theme$xaxis.text.col <- color
+  if (!missing(size)) object$theme$xaxis.text.size <- size
   if (!missing(line)) object$theme$vjust.xlab <- line
   
   if (!missing(limits)) object$xaxis$lim <- limits
@@ -153,11 +173,11 @@ set_xaxis <- function(object, limits, increment, increment_from,
 
 #' @rdname scplot
 #' @export
-set_yaxis <- function(object, limits, colour, size, 
+set_yaxis <- function(object, limits, color, size, 
                       increment, increment_from, positions) {
   
-  if (!missing(colour)) object$theme$col.yaxis <- colour
-  if (!missing(size)) object$theme$cex.yaxis <- size
+  if (!missing(color)) object$theme$yaxis.text.col <- color
+  if (!missing(size)) object$theme$yaxis.text.col <- size
 
   if (!missing(limits)) object$yaxis$lim <- limits
   if (!missing(increment)) object$yaxis$inc <- increment
@@ -175,9 +195,9 @@ set_yaxis <- function(object, limits, colour, size,
 #' If set to FALSE, no automatic linebreak is set.
 #' @param parse If TRUE, the label is interpreted as an expression. Default = FALSE.
 #' @export
-add_title <- function(object, label, colour, size, font, align, parse) {
+add_title <- function(object, label, color, size, font, align, parse) {
   
-  if (!missing(colour)) object$theme$col.main <- colour
+  if (!missing(color)) object$theme$col.main <- color
   if (!missing(size)) object$theme$cex.main <- size
   if (!missing(font)) object$theme$font.main <- font
   if (!missing(align)) object$theme$align.main <- align
@@ -190,10 +210,10 @@ add_title <- function(object, label, colour, size, font, align, parse) {
 #' @rdname scplot
 #' @param label Character string.
 #' @export
-add_caption <- function(object, label, colour, size, font, align, wrap, margin, 
+add_caption <- function(object, label, color, size, font, align, wrap, margin, 
                         parse) {
   
-  if (!missing(colour)) object$theme$col.caption <- colour
+  if (!missing(color)) object$theme$col.caption <- color
   if (!missing(size)) object$theme$cex.caption <- size
   if (!missing(font)) object$theme$font.caption <- font
   if (!missing(align)) object$theme$align.caption <- align
@@ -210,7 +230,7 @@ add_caption <- function(object, label, colour, size, font, align, wrap, margin,
 #' @param shape Number. See pch graphical parameter on par help page.  
 #' @export
 add_marks <- function(object, case = 1, positions, 
-                      colour = "red", size = 1, shape = 1, variable = ".dvar") {
+                      color = "red", size = 1, shape = 1, variable = ".dvar") {
   
   # Marks on the outliers from outlier()
   if (identical(class(positions), c("sc","outlier"))) {
@@ -220,7 +240,7 @@ add_marks <- function(object, case = 1, positions,
         list(
           list(
             case = i, positions = positions$dropped.mt[[i]], 
-            col = colour, cex = size, pch = shape, variable = variable
+            col = color, cex = size, pch = shape, variable = variable
           )
         )
       )
@@ -232,7 +252,7 @@ add_marks <- function(object, case = 1, positions,
       object$marks, 
       list(
         list(
-          case = i, positions = positions, col = colour, 
+          case = i, positions = positions, col = color, 
           cex = size, pch = shape, variable = variable
         )
       )
@@ -245,24 +265,30 @@ add_marks <- function(object, case = 1, positions,
 
 #' @rdname scplot
 #' @export
-set_phasenames <- function(object, ..., colour, size) {
+set_phasenames <- function(object, ..., color, size, x, y, box, frame) {
   
-  if (!missing(colour)) object$theme$col.phasenames <- colour
-  if (!missing(size)) object$theme$cex.phasenames <- size
-  object$phase_names$labels <- c(...)
+  if (!missing(color)) object$theme$phasenames.col <- color
+  if (!missing(size)) object$theme$phasenames.size <- size
+  if (!missing(x)) object$theme$phasenames.position.x <- x
+  if (!missing(y)) object$theme$phasenames.position.y <- y
+  if (!missing(box)) object$theme$phasenames.box.fill <- box
+  if (!missing(frame)) object$theme$phasenames.box.col <- frame
+  
+  labels <-  c(...)
+  if (!is.null(labels)) object$phasenames$labels <- labels
   object
 }
 
 #' @rdname scplot
 #' @export
-set_casenames <- function(object, ..., colour, side, size) {
+set_casenames <- function(object, ..., x, y, color, size) {
   
-  if (!missing(colour)) object$theme$col.casenames <- colour
-  if (!missing(side)) object$theme$names$side <- side
-  if (!missing(size)) object$theme$cex.casenames <- size
-  
-  
-  object$case_names$labels <- c(...)
+  if (!missing(color)) object$theme$casenames.col <- color
+  if (!missing(size)) object$theme$casenames.size <- size
+  if (!missing(x)) object$theme$casenames.position.x <- x
+  if (!missing(y)) object$theme$casenames.position.y <- y
+  labels <-  c(...)
+  if (!is.null(labels)) object$casenames$labels <- labels
   object
 }
 
@@ -270,10 +296,10 @@ set_casenames <- function(object, ..., colour, side, size) {
 #' @param x x position
 #' @param y y position
 #' @export
-add_text <- function(object, case = 1, x, y, label, colour = NULL, size = NULL, 
+add_text <- function(object, case = 1, x, y, label, color = NULL, size = NULL, 
                      angle = 0) {
   
-  text <- list(case = case, labels = label, x = x, y = y, col = colour, cex = size, angle = angle)
+  text <- list(case = case, labels = label, x = x, y = y, col = color, cex = size, angle = angle)
   object$texts <- c(object$texts, list(text))
   object
 }
@@ -287,7 +313,7 @@ add_text <- function(object, case = 1, x, y, label, colour = NULL, size = NULL,
 #' @param length Size of the aroow angels.
 #' @export
 add_arrow <- function(object, case = 1, x0, y0, x1, y1, length = 0.1, 
-                      colour = NULL, ...) {
+                      color = NULL, ...) {
   arrow <- list(
     case = case, 
     x0 = x0, 
@@ -295,7 +321,7 @@ add_arrow <- function(object, case = 1, x0, y0, x1, y1, length = 0.1,
     x1 = x1, 
     y1 = y1, 
     length = length, 
-    col= colour,
+    col= color,
     ...
   )
   object$arrows <- c(object$arrows, list(arrow))
@@ -304,156 +330,152 @@ add_arrow <- function(object, case = 1, x0, y0, x1, y1, length = 0.1,
 
 #' @rdname scplot
 #' @export
-add_grid <- function(object, type, width, colour) {
+add_grid <- function(object, type, width, color) {
 
   object$theme$grid <- TRUE
   
-  if (!missing(colour)) object$theme$col.grid <- colour
-  if (!missing(width)) object$theme$lwd.grid <- width
-  if (!missing(type)) object$theme$lty.grid <- type
+  if (!missing(color)) object$theme$grid.col <- color
+  if (!missing(width)) object$theme$grid.width <- width
+  if (!missing(type)) object$theme$grid.linetype <- type
 
   object
 }
 
 #' @rdname scplot
 #' @export
-set_background <- function(object, colour) {
+set_plot <- function(object, fill, frame) {
   
-  object$theme$fill.bg <- TRUE
-  
-  if (!missing(colour)) object$theme$col.fill.bg <- colour
-  
-  object
-}
-
-#' @rdname scplot
-#' @export
-add_frame <- function(object, colour = "black", size = 1, type = "solid") {
-  
-  object$theme$col.frame <- colour
-  object$theme$lty.frame <- type
-  object$theme$lwd.frame <- size
+  if (!missing(fill)) object$theme$plot.fill.col <- fill
+  if (!missing(frame)) object$theme$plot.frame.col <- frame  
   
   object
 }
 
 #' @rdname scplot
 #' @export
-add_box <- function(object, colour = "black", type = "solid", width = 1) {
+set_panel <- function(object, fill, frame, width, linetype) {
   
-  object$theme$col.box <- colour
-  object$theme$lty.box <- type
-  object$theme$lwd.box <- width
-  
+  if (!missing(fill)) object$theme$panel.col <- fill
+  if (!missing(frame)) object$theme$panel.frame.col <- frame
+  if (!missing(width)) object$theme$panel.frame.width <- width
+  if (!missing(linetype)) object$theme$panel.frame.linetype <- linetype
   object
 }
 
 #' @rdname scplot
-#' @param offset Number with shift from exact position of the label.
 #' @param round Number of digits of the labels.
-#' @param position Number 1, 2, 3,or 4, indicate positions below, to the left of, above and to the right of the exact value coordinate. 
 #' @export
 add_labels <- function(object, 
-                       colour = "black", 
-                       size = 0.6, 
-                       offset = 0.4, 
-                       position = 3, 
-                       round = 1) {
+                       color, 
+                       size, 
+                       nudge_y,
+                       nudge_x,
+                       vjust,
+                       hjust,
+                       round ,
+                       box,
+                       frame) {
   
-  object$theme$annotations <- list(
-    col = colour, cex = size, offset = offset, round = round, pos = position
-  )
-  object
-}
-
-#' @rdname scplot
-#' @export
-set_line <- function(object, colour, width, type, variable) {
-  
-  if (missing(variable)) id <- 1 else id <- which(names(object$theme$data_line) == variable)
-
-  if (!missing(colour)) object$theme$data_line[[id]]$col <- colour
-  if (!missing(width)) object$theme$data_line[[id]]$lwd <- width
-  if (!missing(type)) object$theme$data_line[[id]]$lty <- type
+  if (!missing(color)) object$theme$labels.col <- color
+  if (!missing(size)) object$theme$labels.size <- size
+  if (!missing(vjust)) object$theme$labels.vjust <- vjust
+  if (!missing(hjust)) object$theme$labels.hjust <- hjust
+  if (!missing(nudge_y)) object$theme$labels.nudge_y <- nudge_y
+  if (!missing(nudge_x)) object$theme$labels.nudge_x <- nudge_x
+  if (!missing(round)) object$theme$labels.round <- round
+  if (!missing(box)) object$theme$labels.box.fill <- box
+  if (!missing(frame)) object$theme$labels.box.col <- frame
   
   object
 }
 
 #' @rdname scplot
 #' @export
-set_dots <- function(object, colour, size, shape, variable) {
+add_ridge <- function(object, color = "grey98") {
   
-  
-  if (missing(variable)) id <- 1 else id <- which(names(object$theme$data_dots) == variable)
-  
-  if (!missing(colour)) object$theme$data_dots[[id]]$col <- colour
-  if (!missing(shape)) object$theme$data_dots[[id]]$pch <- shape
-  if (!missing(size)) object$theme$data_dots[[id]]$cex <- size
-
-  object
-}
-
-#' @rdname scplot
-#' @export
-add_ridge <- function(object, colour = "grey98") {
-  
-  object$theme$col.ridge <- colour
+  object$theme$col.ridge <- color
   object
 }
 
 #' @rdname scplot
 #' @param extent A number between 0 and 1 given the proportion of the plot that is covert by the line or character string "full" or "scale".
 #' @export
-set_seperator <- function(object, colour, width, type, extent, label, size) {
+set_seperator <- function(object, color, width, type, extent, label, size) {
   
-  if (!missing(size)) object$theme$size.seperators <- size
-  if (!missing(label)) object$label.seperators <- label
-  if (!missing(colour)) object$theme$col.seperators <- colour
-  if (!missing(width)) object$theme$lwd.seperators <- width
-  if (!missing(type)) object$theme$lty.seperators <- type
-  if (!missing(extent)) object$theme$extent.seperators <- extent
+  if (!missing(size)) object$theme$seperators.size <- size
+  if (!missing(label)) object$seperators$label <- label
+  if (!missing(color)) object$theme$seperators.col <- color
+  if (!missing(width)) object$theme$seperators.width <- width
+  if (!missing(type)) object$theme$seperators.linetype <- type
+  if (!missing(extent)) object$theme$seperators.extent <- extent
   
   object
 }
 
 #' @rdname scplot
 #' @export
-add_dataline <- function(object, variable, colour = NULL, width = NULL, 
-                         type = NULL, colour_dots = NULL,
-                         shape = NULL, size = NULL) {
+add_dataline <- function(object, variable, color, width, linetype, dots, shape, size) {
   
   object$dvar <- c(object$dvar, variable)
   
-  line <- list(list(col = colour, lwd = width, lty = type))
-  names(line) <- variable
+  if (missing(color)) color <- object$theme$dataline.col
+  if (missing(width)) width <- object$theme$dataline.width
+  if (missing(linetype)) linetype <- object$theme$dataline.linetype
+  if (missing(dots)) dots <- color
+  if (missing(shape)) shape <- object$theme$datadots.shape
+  if (missing(size)) size <- object$theme$datadots.size
   
-  dots <- list(list(col = colour, pch = shape, cex = size))
-  names(dots) <- variable
+  new_line <- list(
+    variable = variable, 
+    col = color, 
+    width = width, 
+    linetype = linetype,
+    dots = dots,
+    shape = shape,
+    size = size
+  )
   
-  id <- which(names(object$theme$data_line) == ".default")
-  if (length(id) == 0) object$theme$data_line <- c(object$theme$data_line, line)
-  if (length(id) > 0) {
-    names(object$theme$data_line)[id[1]] <- variable 
-  }  
-  
-  id <- which(names(object$theme$data_dots) == ".default")
-  if (length(id) == 0) object$theme$data_dots <- c(object$theme$data_dots, dots)
-  if (length(id) > 0) {
-    names(object$theme$data_dots)[id[1]] <- variable 
-  }  
+  object$datalines <- c(object$datalines, list(new_line))
   
   object
 }
 
 #' @rdname scplot
 #' @export
-add_legend <- function(object, labels = ".default", x, y) {
+set_dataline <- function(object, variable, color, width, linetype, dots, shape, size) {
   
-  object$legend <- labels
-  if (!missing(x)) object$theme$legend$x <- x
-  if (!missing(y)) object$theme$legend$y <- y
+  if (missing(variable)) variable <- ".dvar"
   
+  vars <- sapply(object$datalines, 
+                 function(x) if(is.null(x$variable)) ".dvar" else x$variable
+          )
+  id <- which(vars == variable)
   
+  if (length(id) != 1) stop("Wrong variable defintion.")
+  
+  if (!missing(color)) object$datalines[[id]]$col <- color
+  if (!missing(width)) object$datalines[[id]]$width <- width
+  if (!missing(linetype)) object$datalines[[id]]$linetype <- linetype
+  if (!missing(dots)) object$datalines[[id]]$dots <- dots
+  if (!missing(shape)) object$datalines[[id]]$shape <-shape
+  if (!missing(size)) object$datalines[[id]]$size <- size
+  
+  object
+}
+
+
+#' @rdname scplot
+#' @export
+add_legend <- function(object, labels = ".default", case = 1, x, y, 
+                       datalines = TRUE, statlines = TRUE, title = NULL) {
+  
+  object$legend$labels <- labels
+  if (!missing(x)) object$theme$legend.position.x <- x
+  if (!missing(y)) object$theme$legend.position.y <- y
+  object$legend$statlines <- statlines
+  object$legend$datalines <- datalines
+  object$theme$legend.position.case <- case
+  object$legend$title <- title
   object
 }
 
@@ -484,3 +506,4 @@ add_margins <- function(object, outer, inner) {
   
   theme
 }
+

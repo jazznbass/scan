@@ -17,15 +17,13 @@
 \alias{add_text}
 \alias{add_arrow}
 \alias{add_grid}
-\alias{set_background}
-\alias{add_frame}
-\alias{add_box}
+\alias{set_plot}
+\alias{set_panel}
 \alias{add_labels}
-\alias{set_line}
-\alias{set_dots}
 \alias{add_ridge}
 \alias{set_seperator}
 \alias{add_dataline}
+\alias{set_dataline}
 \alias{add_legend}
 \alias{add_margins}
 \title{Plot single-case data}
@@ -36,92 +34,84 @@ add_theme(object, theme, ...)
 
 set_theme_element(object, ...)
 
-add_statline(
-  object,
-  stat,
-  colour = NULL,
-  width = NULL,
-  type = NULL,
-  variable = ".dvar",
-  ...
-)
+add_statline(object, stat, color, width, type, variable)
 
-set_xlabel(object, label, colour, size)
+set_xlabel(object, label, color, size)
 
-set_ylabel(object, label, colour, size, line, orientation)
+set_ylabel(object, label, color, size, line, orientation)
 
 set_xaxis(
   object,
   limits,
   increment,
   increment_from,
-  colour,
+  color,
   size,
   line,
   positions
 )
 
-set_yaxis(object, limits, colour, size, increment, increment_from, positions)
+set_yaxis(object, limits, color, size, increment, increment_from, positions)
 
-add_title(object, label, colour, size, font, align, parse)
+add_title(object, label, color, size, font, align, parse)
 
-add_caption(object, label, colour, size, font, align, wrap, margin, parse)
+add_caption(object, label, color, size, font, align, wrap, margin, parse)
 
 add_marks(
   object,
   case = 1,
   positions,
-  colour = "red",
+  color = "red",
   size = 1,
   shape = 1,
   variable = ".dvar"
 )
 
-set_phasenames(object, ..., colour, size)
+set_phasenames(object, ..., color, size, x, y, box, frame)
 
-set_casenames(object, ..., colour, side, size)
+set_casenames(object, ..., x, y, color, size)
 
-add_text(object, case = 1, x, y, label, colour = NULL, size = NULL, angle = 0)
+add_text(object, case = 1, x, y, label, color = NULL, size = NULL, angle = 0)
 
-add_arrow(object, case = 1, x0, y0, x1, y1, length = 0.1, colour = NULL, ...)
+add_arrow(object, case = 1, x0, y0, x1, y1, length = 0.1, color = NULL, ...)
 
-add_grid(object, type, width, colour)
+add_grid(object, type, width, color)
 
-set_background(object, colour)
+set_plot(object, fill, frame)
 
-add_frame(object, colour = "black", size = 1, type = "solid")
-
-add_box(object, colour = "black", type = "solid", width = 1)
+set_panel(object, fill, frame, width, linetype)
 
 add_labels(
   object,
-  colour = "black",
-  size = 0.6,
-  offset = 0.4,
-  position = 3,
-  round = 1
+  color,
+  size,
+  nudge_y,
+  nudge_x,
+  vjust,
+  hjust,
+  round,
+  box,
+  frame
 )
 
-set_line(object, colour, width, type, variable)
+add_ridge(object, color = "grey98")
 
-set_dots(object, colour, size, shape, variable)
+set_seperator(object, color, width, type, extent, label, size)
 
-add_ridge(object, colour = "grey98")
+add_dataline(object, variable, color, width, linetype, dots, shape, size)
 
-set_seperator(object, colour, width, type, extent, label, size)
+set_dataline(object, variable, color, width, linetype, dots, shape, size)
 
-add_dataline(
+add_legend(
   object,
-  variable,
-  colour = NULL,
-  width = NULL,
-  type = NULL,
-  colour_dots = NULL,
-  shape = NULL,
-  size = NULL
+  labels = ".default",
+  case = 1,
+  x,
+  y,
+  datalines = TRUE,
+  statlines = TRUE,
+  title = NULL
 )
-
-add_legend(object, labels = ".default", x, y)
 
 add_margins(object, outer, inner)
 }
@@ -139,7 +129,7 @@ plotted. Possible values: "median", "mean", "trend", "trendA",
 "trendA_bisplit", "trendA_trisplit", "maxA", "minA", "meanA", "medianA", 
 "plm", "movingMean", "movingMedian", "loreg"}
 
-\item{colour}{A character string or a number defining the color of an element.}
+\item{color}{A character string or a number defining the color of an element.}
 
 \item{width}{A number defining the line width}
 
@@ -186,10 +176,6 @@ If set to FALSE, no automatic linebreak is set.}
 \item{y1}{End y position of the line.}
 
 \item{length}{Size of the aroow angels.}
-
-\item{offset}{Number with shift from exact position of the label.}
-
-\item{position}{Number 1, 2, 3,or 4, indicate positions below, to the left of, above and to the right of the exact value coordinate.}
 
 \item{round}{Number of digits of the labels.}
 
