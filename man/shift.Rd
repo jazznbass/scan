@@ -33,8 +33,8 @@ plm(ex)
 }
 \seealso{
 Other data manipulation functions: 
+\code{\link{as.data.frame.scdf}()},
 \code{\link{fill_missing}()},
-\code{\link{longSCDF}()},
 \code{\link{outlier}()},
 \code{\link{ranks}()},
 \code{\link{smooth_cases}()},

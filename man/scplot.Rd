@@ -17,7 +17,7 @@
 \alias{add_text}
 \alias{add_arrow}
 \alias{add_grid}
-\alias{set_plot}
+\alias{set_background}
 \alias{set_panel}
 \alias{add_labels}
 \alias{add_ridge}
@@ -38,7 +38,7 @@ add_statline(object, stat, color, width, type, variable)
 
 set_xlabel(object, label, color, size)
 
-set_ylabel(object, label, color, size, line, orientation)
+set_ylabel(object, label, color, size, vjust, orientation)
 
 set_xaxis(
   object,
@@ -53,9 +53,9 @@ set_xaxis(
 
 set_yaxis(object, limits, color, size, increment, increment_from, positions)
 
-add_title(object, label, color, size, font, align, parse)
+add_title(object, label, color, size, face, align, parse)
 
-add_caption(object, label, color, size, font, align, wrap, margin, parse)
+add_caption(object, label, color, size, face, align, wrap, margin, parse)
 
 add_marks(
   object,
@@ -77,7 +77,7 @@ add_arrow(object, case = 1, x0, y0, x1, y1, length = 0.1, color = NULL, ...)
 
 add_grid(object, type, width, color)
 
-set_plot(object, fill, frame)
+set_background(object, fill, frame)
 
 set_panel(object, fill, frame, width, linetype)
 
