@@ -83,7 +83,7 @@ hplm <- function(data, dvar, pvar, mvar,
   tmp_model <- .add_model_dummies(data = dat, model = model)
   dat <- tmp_model$data
 
-  dat <- longSCDF(dat, l2 = data.l2)
+  dat <- as.data.frame(dat, l2 = data.l2)
 
 # create formulas ---------------------------------------------------------
 

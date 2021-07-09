@@ -21,16 +21,16 @@
 #' 
 #' ## Convert the list of three single-case data frames from Grosche (2011) into one long data frame
 #' Grosche2011
-#' Grosche2011_long <- longSCDF(Grosche2011)
+#' Grosche2011_long <- as.data.frame(Grosche2011)
 #' Grosche2011_long
 #' 
 #' ## Combine an scdf with data for l2
-#' Leidig2018_long <- longSCDF(Leidig2018, l2 = Leidig2018_l2)
+#' Leidig2018_long <- as.data.frame(Leidig2018, l2 = Leidig2018_l2)
 #' names(Leidig2018_long)
 #' summary(Leidig2018_long)
 #' 
 #' @export
-longSCDF <- function(data, l2 = NULL, id = "case") {
+as.data.frame.scdf <- function(data, l2 = NULL, id = "case") {
 
   label <- .case_names(names(data), length(data))
 
@@ -48,4 +48,10 @@ longSCDF <- function(data, l2 = NULL, id = "case") {
   
   outdat
   
+}
+
+#' @rdname as.data.frame.scdf
+#' @export
+longSCDF <- function(...) {
+  as.data.frame(...)
 }
