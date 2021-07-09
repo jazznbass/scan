@@ -28,7 +28,7 @@
 #' Grosche2011filled <- fill_missing(Grosche2011)
 #' study <- c(Grosche2011[2], Grosche2011filled[2])
 #' names(study) <- c("Original", "Filled")
-#' plot(study, style = "grid")
+#' plot(study)
 #' 
 #' ## Fill missing values in a single-case dataset that are NA
 #' Maggie <- rSC(design_rSC(level = list(0,1)), seed = 123)
@@ -41,7 +41,9 @@
 #' plot(study, marks = list(positions = replace.positions), style = "grid2")
 #' 
 #' @export
-fill_missing <- function(data, dvar, mvar, interpolation = "linear", na.rm = TRUE) {
+fill_missing <- function(data, dvar, mvar, 
+                         interpolation = "linear", 
+                         na.rm = TRUE) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -56,24 +58,24 @@ fill_missing <- function(data, dvar, mvar, interpolation = "linear", na.rm = TRU
   for(i in 1:N) {
     dat <- data[[i]]
     if (na.rm) dat <- dat[!is.na(dat[, dvar]), ]
-    new.dat <- dat
+    new_dat <- dat
     for(j in 1 : (nrow(dat) - 1)) {
       if (dat[j + 1, mvar] - dat[j, mvar] != 1){
         
         if (interpolation == "linear") {
-          step.size <- (dat[j + 1, dvar] - dat[j, dvar]) / 
+          step_size <- (dat[j + 1, dvar] - dat[j, dvar]) / 
                        (dat[j + 1, mvar] - dat[j, mvar])
         }
         for(k in (dat[j, mvar] + 1) : (dat[j + 1, mvar] - 1)) {
           tmp <- dat[j, ]
           tmp[, mvar] <- k
           if (interpolation == "linear")
-            tmp[, dvar] <- dat[j, dvar] + step.size * (k - dat[j, mvar])
-          new.dat <- rbind(new.dat, linear = tmp) 
+            tmp[, dvar] <- dat[j, dvar] + step_size * (k - dat[j, mvar])
+          new_dat <- rbind(new_dat, linear = tmp) 
         }
       }
     }
-    data[[i]] <- new.dat[sort.list(new.dat[[mvar]]), ]
+    data[[i]] <- new_dat[sort.list(new_dat[[mvar]]), ]
   }
   attributes(data) <- source_attributes
   data
