@@ -34,13 +34,13 @@ print.scplot <- function(object) {
     theme$oma[3] <- theme$oma[3] + 1 + tmp_chars
   }
   if (!is.null(object$caption)) {
-    if (!is.null(theme$wrap.caption)) {
+    if (!is.null(theme$caption.wrap)) {
       object$caption <- paste(
-        strwrap(object$caption, width = theme$wrap.caption),
+        strwrap(object$caption, width = theme$caption.wrap),
         collapse = "\n"
       )
     }    
-    if (theme$parse.caption) object$caption <- str2expression(object$caption)
+    if (theme$caption.parse) object$caption <- str2expression(object$caption)
     tmp_chars <- sum(unlist(strsplit(object$caption, "")) == "\n")
     theme$oma[1] <- theme$oma[1] + 1 + tmp_chars
   }
@@ -51,7 +51,7 @@ print.scplot <- function(object) {
   
   par("oma" = theme$oma)
   
-  if (!is.null(theme$plot.fill)) par("bg" = theme$plot.fill)
+  if (!is.null(theme$plot.background.fill)) par("bg" = theme$plot.background.fill)
   par("family" = theme$font)
   par("cex" = 1) # or 1
   
@@ -98,22 +98,22 @@ print.scplot <- function(object) {
   )
   
   # Horizontal
-  if (theme$ylab.orientation == 1) {
+  if (theme$yaxis.title.angle == 1) {
     w_label <- strwidth(
       object$ylabel, 
       units = "inches", 
-      cex = theme$cex.ylab
+      cex = theme$yaxis.title.size
     ) * fac_i_to_l
   }
   
   # Vertical
-  if (theme$ylab.orientation == 0) {
-    w_label <- theme$cex.ylab * (sum(unlist(strsplit(object$ylabel, "")) == "\n") + 1)
+  if (theme$yaxis.title.angle == 0) {
+    w_label <- theme$yaxis.title.size * (sum(unlist(strsplit(object$ylabel, "")) == "\n") + 1)
   }
   
   #cat(w_label, w_axis, w_ticks, sep = ", ")
   theme$mar[2] <- theme$mar[2] + w_label + w_axis + w_ticks + 
-                  0.5 * theme$cex.ylab
+                  0.5 * theme$yaxis.title.size
   
 
   # set lower margin ----------------------------------------------------
@@ -153,42 +153,55 @@ print.scplot <- function(object) {
     
     if (N == 1 || case == N) {
       
-      mtext(
-        object$xlabel,
-        side = 1,
-        line = theme$mar[1] - 1.1,
-        padj = 0, # 
-        las = 0,
-        cex = theme$cex.xlab,
-        col = theme$col.xlab
+      x <- (par("usr")[2] - par("usr")[1]) / 2 + par("usr")[1]
+      y <- .line_to_xy(theme$mar[1] - 1.1 + theme$xaxis.title.vjust, side = 1)
+     
+      text(
+        x = x, 
+        y = y,
+        col = theme$xaxis.title.col, 
+        cex = theme$xaxis.title.size,
+        labels = object$xlabel,
+        adj = c(0.5,0),
+        xpd = NA
       )
+      
+      # mtext(
+      #   object$xlabel,
+      #   side = 1,
+      #   line = theme$mar[1] - 1.1 + theme$xaxis.title.vjust,
+      #   padj = 0, # 
+      #   las = 0,
+      #   cex = theme$xaxis.title.size,
+      #   col = theme$xaxis.title.col
+      # )
     }
     
     # add ylab -------------------------------------------------------
 
-    if (theme$ylab.orientation == 0) 
+    if (theme$yaxis.title.angle == 0) 
       mtext(
         text = object$ylabel, 
         side = 2, 
-        line = theme$mar[2] - 0.4,
+        line = theme$mar[2] - 0.4 + theme$yaxis.title.hjust,
         las = 0, 
         adj = 0.5,
         padj = 1,
-        cex = theme$cex.ylab, 
-        col = theme$col.ylab
+        cex = theme$yaxis.title.size, 
+        col = theme$yaxis.title.col
       )
     
-    if (theme$ylab.orientation == 1) {
+    if (theme$yaxis.title.angle == 1) {
       mtext(
         text = object$ylabel, 
         side = 2, # left
-        line = theme$mar[2] - 0.2, # start 0.2 right of the margin
+        line = theme$mar[2] - 0.2 + theme$yaxis.title.hjust, # start 0.2 right of the margin
         las = 1, # horizontal print
         adj = 0, # left aligned
         padj = 1, # text below the "at" position
         at = par("usr")[4], 
-        cex = theme$cex.ylab, 
-        col = theme$col.ylab
+        cex = theme$yaxis.title.size, 
+        col = theme$yaxis.title.col
       )
     }
     
@@ -227,7 +240,7 @@ print.scplot <- function(object) {
     
     # add ridge --------------------------------
     
-    if (!is.null(theme$col.ridge)) {
+    if (!is.null(theme$ridge.col)) {
       for(i in 1:length(design$values)) {
         x <- data[design$start[i]:design$stop[i], mvar]
         y <- data[design$start[i]:design$stop[i], object$dvar[1]]
@@ -236,7 +249,7 @@ print.scplot <- function(object) {
           x_values <- c(x[i], x[i + 1], x[i + 1], x[i])
           #y_values <- c(y_lim[1], y_lim[1], y[i + 1], y[i])
           y_values <- c(par("usr")[3], par("usr")[3], y[i + 1], y[i])
-          polygon(x_values, y_values, col = theme$col.ridge, border = NA)      
+          polygon(x_values, y_values, col = theme$ridge.col, border = NA)      
         }
       }
     }
@@ -260,9 +273,9 @@ print.scplot <- function(object) {
         side = 1, 
         at = xticks_pos, 
         labels = FALSE, 
-        col = theme$col.line.xaxis, 
-        col.ticks = theme$col.ticks.xaxis,
-        tcl = theme$length.ticks.xaxis * theme$xaxis.text.size
+        col = theme$xaxis.line.col, 
+        col.ticks = theme$xaxis.ticks.col,
+        tcl = theme$xaxis.ticks.length * theme$xaxis.text.size
       )
       
       if (!is.null(object$xaxis$inc_from)) {
@@ -293,9 +306,9 @@ print.scplot <- function(object) {
       side = 2, 
       at = yticks_pos, 
       labels = NA, 
-      col = theme$col.line.yaxis, 
-      col.ticks = theme$col.ticks.yaxis,
-      tcl = theme$length.ticks.yaxis * theme$xaxis.text.size
+      col = theme$yaxis.line.col, 
+      col.ticks = theme$yaxis.ticks.col,
+      tcl = theme$xaxis.ticks.length * theme$xaxis.text.size
     )
     
     if (!is.null(object$yaxis$inc)) {
@@ -667,11 +680,11 @@ print.scplot <- function(object) {
     
     adj <- NA
     
-    if (theme$align.main == "center") adj <- NA
-    if (theme$align.main == "left") adj <- 0 + theme$margin.main
-    if (theme$align.main == "right") adj <- 1 - theme$margin.main
+    if (theme$title.align == "center") adj <- NA
+    if (theme$title.align == "left") adj <- 0 + theme$title.margin
+    if (theme$title.align == "right") adj <- 1 - theme$title.margin
     
-    if (theme$parse.main) object$title <- str2expression(object$title)
+    if (theme$title.parse) object$title <- str2expression(object$title)
     
     mtext(
       object$title, 
@@ -679,9 +692,9 @@ print.scplot <- function(object) {
       outer = TRUE, 
       line = 0,
       padj = 0,
-      cex = theme$cex.main, 
-      font = theme$font.main, 
-      col = theme$col.main, 
+      cex = theme$title.size, 
+      font = theme$title.face, 
+      col = theme$title.col, 
       adj = adj 
     )
   }
@@ -692,18 +705,18 @@ print.scplot <- function(object) {
     
     adj <- NA
     
-    if (theme$align.caption == "center") adj <- NA
-    if (theme$align.caption == "left") adj <- 0 + theme$margin.caption
-    if (theme$align.caption == "right") adj <- 1 - theme$margin.caption
+    if (theme$caption.align == "center") adj <- NA
+    if (theme$caption.align == "left") adj <- 0 + theme$caption.margin
+    if (theme$caption.align == "right") adj <- 1 - theme$caption.margin
     
     mtext(
       object$caption, 
       side = 1, 
       line = -1, 
       outer = TRUE, 
-      cex = theme$cex.caption, 
-      font = theme$font.caption, 
-      col = theme$col.caption, 
+      cex = theme$caption.size, 
+      font = theme$caption.face, 
+      col = theme$caption.col, 
       adj = adj,
       padj = 1
     )
@@ -713,12 +726,12 @@ print.scplot <- function(object) {
 
   par(op)
   
-  if (!is.null(theme$plot.frame.col)) {
+  if (!is.null(theme$plot.background.col)) {
     box(
       which = "figure", 
-      lwd = theme$plot.frame.width, 
-      lty = theme$plot.frame.linetype,
-      col = theme$plot.frame.col
+      lwd = theme$plot.background.width, 
+      lty = theme$plot.background.linetype,
+      col = theme$plot.background.col
     )
   }
   
@@ -1053,4 +1066,12 @@ print.scplot <- function(object) {
     )
     
   }
+}
+
+.line_to_xy <- function(line, side = side) {
+  if (side == 1) line <- par('usr')[3] - (par('cxy')[2] * (line + 1))
+  if (side == 3) line <- par('usr')[4] + (par('cxy')[2] * (line + 1))
+  if (side == 2) line <- par('usr')[1] - (par('cxy')[1] * (line + 1))
+  if (side == 4) line <- par('usr')[2] + (par('cxy')[1] * (line + 1))
+  line
 }

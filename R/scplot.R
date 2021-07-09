@@ -122,8 +122,8 @@ add_statline <- function(object, stat, color,
 #' @export
 set_xlabel <- function(object, label, color, size) {
   
-  if (!missing(color)) object$theme$col.xlab <- color
-  if (!missing(size)) object$theme$cex.xlab <- size
+  if (!missing(color)) object$theme$xaxis.title.col <- color
+  if (!missing(size)) object$theme$xaxis.title.size <- size
   if (!missing(label)) object$xlabel <- label
 
   object
@@ -132,17 +132,17 @@ set_xlabel <- function(object, label, color, size) {
 #' @rdname scplot
 #' @param orientation of the label: 0 = vertical; 1 = horizontal
 #' @export
-set_ylabel <- function(object, label, color, size, line, orientation) {
+set_ylabel <- function(object, label, color, size, vjust, orientation) {
   
   if (!missing(orientation)) {
     if (orientation %in% c("h", "horizontal")) orientation <- 1
     if (orientation %in% c("v", "vertical")) orientation <- 0
-    object$theme$ylab.orientation <- orientation
+    object$theme$yaxis.title.angle <- orientation
   }
   
-  if (!missing(color)) object$theme$col.ylab <- color
-  if (!missing(size)) object$theme$cex.ylab <- size
-  if (!missing(line)) object$theme$vjust.ylab <- line
+  if (!missing(color)) object$theme$yaxis.title.col <- color
+  if (!missing(size)) object$theme$yaxis.title.size <- size
+  if (!missing(vjust)) object$theme$yaxis.title.vjust <- vjust
   if (!missing(label)) object$ylabel <- label
   
   object
@@ -195,13 +195,13 @@ set_yaxis <- function(object, limits, color, size,
 #' If set to FALSE, no automatic linebreak is set.
 #' @param parse If TRUE, the label is interpreted as an expression. Default = FALSE.
 #' @export
-add_title <- function(object, label, color, size, font, align, parse) {
+add_title <- function(object, label, color, size, face, align, parse) {
   
-  if (!missing(color)) object$theme$col.main <- color
-  if (!missing(size)) object$theme$cex.main <- size
-  if (!missing(font)) object$theme$font.main <- font
-  if (!missing(align)) object$theme$align.main <- align
-  if (!missing(parse)) object$theme$parse.main <- parse
+  if (!missing(color)) object$theme$title.col <- color
+  if (!missing(size)) object$theme$title.size <- size
+  if (!missing(face)) object$theme$title.face <- face
+  if (!missing(align)) object$theme$title.hjust <- align
+  if (!missing(parse)) object$theme$title.parse <- parse
   
   object$title <- label
   object
@@ -210,16 +210,16 @@ add_title <- function(object, label, color, size, font, align, parse) {
 #' @rdname scplot
 #' @param label Character string.
 #' @export
-add_caption <- function(object, label, color, size, font, align, wrap, margin, 
+add_caption <- function(object, label, color, size, face, align, wrap, margin, 
                         parse) {
   
-  if (!missing(color)) object$theme$col.caption <- color
-  if (!missing(size)) object$theme$cex.caption <- size
-  if (!missing(font)) object$theme$font.caption <- font
-  if (!missing(align)) object$theme$align.caption <- align
-  if (!missing(wrap)) object$theme$wrap.caption <- wrap
-  if (!missing(margin)) object$theme$margin.caption <- margin
-  if (!missing(parse)) object$theme$parse.caption <- parse
+  if (!missing(color)) object$theme$caption.col <- color
+  if (!missing(size)) object$theme$caption.size <- size
+  if (!missing(face)) object$theme$caption.face <- face
+  if (!missing(align)) object$theme$caption.align <- align
+  if (!missing(wrap)) object$theme$caption.wrap <- wrap
+  if (!missing(margin)) object$theme$caption.margin <- margin
+  if (!missing(parse)) object$theme$caption.parse <- parse
   object$caption <- label
   object
 }
@@ -343,10 +343,10 @@ add_grid <- function(object, type, width, color) {
 
 #' @rdname scplot
 #' @export
-set_plot <- function(object, fill, frame) {
+set_background <- function(object, fill, frame) {
   
-  if (!missing(fill)) object$theme$plot.fill.col <- fill
-  if (!missing(frame)) object$theme$plot.frame.col <- frame  
+  if (!missing(fill)) object$theme$plot.background.fill <- fill
+  if (!missing(frame)) object$theme$plot.background.col <- frame  
   
   object
 }
@@ -393,7 +393,7 @@ add_labels <- function(object,
 #' @export
 add_ridge <- function(object, color = "grey98") {
   
-  object$theme$col.ridge <- color
+  object$theme$ridge.col <- color
   object
 }
 
@@ -497,13 +497,9 @@ add_margins <- function(object, outer, inner) {
 
 .check_theme <- function(theme) {
   
-  if (!theme$ylab.orientation %in% 0:1) stop("wrong values for ylabel orientation")
-  
-  if (!is.null(theme$annotations)) {
-    if(is.null(theme$annotations$round)) theme$annotations$round <- 1
-    if(is.null(theme$annotations$offset)) theme$annotations$offset <- 0.5
-  }
+  if (!theme$yaxis.title.angle %in% 0:1) stop("wrong values for ylabel angle")
   
   theme
 }
+
 

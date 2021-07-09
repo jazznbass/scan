@@ -1,3 +1,31 @@
+#' #' @rdname scplot
+#' #' @export
+#' style_box <- function(fill = NULL, size = NULL, linetype = NULL, 
+#'                       color = NULL) {
+#'   
+#'   #structure(, 
+#'   #class = c("scplot_style_box"))
+#'   style <- list(
+#'     fill = fill, color = color, size = size, 
+#'     linetype = linetype
+#'   )
+#'   style
+#' }
+#' 
+#' #' @rdname scplot
+#' #' @export
+#' style_text <- function (family = NULL, face = NULL, size = NULL, 
+#'                         hjust = NULL, vjust = NULL, angle = NULL, 
+#'                         lineheight = NULL, 
+#'                         color = NULL, margin = NULL) {
+#'   
+#'   style <- list(family = family, face = face, color = color, 
+#'                 size = size, hjust = hjust, vjust = vjust, angle = angle, 
+#'                 lineheight = lineheight, margin = margin)
+#' }
+
+
+
 
 # scplot themes -----------------------------------------------------------
 
@@ -7,20 +35,12 @@
   mar = c(bottom = 0, left = 0, top = 1, right = 0.5),
   oma = c(0, 0, 0, 0),
   
-  vjust.xlab = 0, vjust.ylab = 0,
-  
   font = "sans", 
- 
-  
-  ylab.orientation = 0,
-  
-  cex.xlab = 1, cex.ylab = 1, 
 
   panel.col = "white",
   panel.frame.col = NULL,
   panel.frame.width = 1,
   panel.frame.linetype = "solid",
-  
   
   xaxis.text.col = "black",
   xaxis.text.size = 0.8,  
@@ -30,22 +50,47 @@
   yaxis.text.size = 0.8,  
   yaxis.text.angel = 0,
   
-  col.xlab = "black", col.ylab = "black", col.ridge = NULL,
+  xaxis.title.col = "black",
+  xaxis.title.size = 1,
+  xaxis.title.vjust = 0,
   
-  col.line.xaxis = "black", col.ticks.xaxis = "black",
-  col.line.yaxis = "black", col.ticks.yaxis = "black",
+  yaxis.title.col = "black",
+  yaxis.title.size = 1,
+  yaxis.title.hjust = 0,
+  yaxis.title.angle = 0,
+  
+  
+  ridge.col = NULL,
+  
+  xaxis.ticks.col = "black",
+  xaxis.line.col = "black",
+  
+  yaxis.ticks.col = "black",
+  yaxis.line.col = "black",
+  
+  
+  xaxis.ticks.length = -0.3,
+  yaxis.ticks.length = -0.3,
+  
 
+  title.col = "black",
+  title.margin = 0,
+  #title.hjust = "center",
+  title.align = "center",
+  title.wrap = NULL,
+  title.parse = FALSE,
   
-  align.main = "center", align.caption = "left",
-  margin.main = 0, margin.caption = 0.02, 
-  wrap.caption = NULL, wrap.main = NULL,
-  parse.main = FALSE, parse.caption = FALSE,
-  length.ticks.xaxis = -0.3, length.ticks.yaxis = -0.3,
+  caption.col = "black",
+  caption.margin = 0,
+  #caption.hjust = "left",
+  caption.align = "left",
+  caption.wrap = NULL,
+  caption.parse = FALSE,
   
-  plot.fill = NULL,
-  plot.frame.col = NULL,
-  plot.frame.width = 1, 
-  plot.frame.linetype = "solid",
+  plot.background.fill = NULL,
+  plot.background.col = NULL,
+  plot.background.width = 1, 
+  plot.background.linetype = "solid",
   
   labels.col = NULL,
   labels.size = 0.6,
@@ -113,7 +158,7 @@
 
 .opt$scplot_themes$tiny <- list(
   
-  cex.xlab = 0.5, cex.ylab = 0.5, 
+  xaxis.title.size = 0.5, yaxis.title.size = 0.5, 
   xaxis.text.size = 0.5, yaxis.text.size = 0.5,
   casenames.size = 0.5, 
   phasenames.size = 0.5, 
@@ -126,7 +171,7 @@
 
 .opt$scplot_themes$small <- list(
   
-  cex.xlab = 0.75, cex.ylab = 0.75,
+  xaxis.title.size = 0.75, yaxis.title.size = 0.75,
   xaxis.text.size = 0.75, yaxis.text.size = 0.75,
   casenames.size = 0.75, phasenames.size = 0.75,
   grid.width = 0.85,
@@ -136,7 +181,7 @@
 )
 
 .opt$scplot_themes$big <- list(
-  cex.xlab = 1.25, cex.ylab = 1.25,
+  xaxis.title.size = 1.25, yaxis.title.size = 1.25,
   xaxis.text.size = 1.25, yaxis.text.size = 1.25,
   casenames.size = 1.25, phasename.sizes = 1.25, 
   grid.width = 1.5,
@@ -147,11 +192,11 @@
 
 
 .opt$scplot_themes$chart <- list(
-  col.ridge = "grey50",
+  ridge.col = "grey50",
   panel.col = "grey98",
  
   grid.col = "grey75",
-  cex.ylab = 0.8, cex.xlab = 0.8,
+  yaxis.title.size = 0.8, xaxis.title.size = 0.8,
   casenames.size = 0.8, phasenames.size = 0.8,
   dataline.width = 0.7,
   labels.col = "black"
@@ -165,20 +210,22 @@
 )  
 
 .opt$scplot_themes$grid2 <- list(
-  col.ridge = "white", grid.col = "lightgreen", col.frame = "black", 
+  ridge.col = "white", grid.col = "lightgreen", panel.frame.col = "black", 
   panel.col = "grey95", 
   lwd.line = 0.7, pch = 1, xaxis.text.size = 0.8, yaxis.text.size = 0.8
 )  
 
 .opt$scplot_themes$dark <- list(
-  panel.col = "#16213E", 
-  plot.fill = "#1A1A2E", 
+  panel.col = "#16213E",
+  
+  plot.background.fill = "#1A1A2E",
+  
   grid.col = "#999999",
   casenames.col = "white", phasenames.col = "white",
-  col.xlab = "white", col.ylab = "white",
+  xaxis.title.col = "white", yaxis.title.col = "white",
   xaxis.text.col = "white", yaxis.text.col = "white",
-  col.line.xaxis = "#DDDDDD", col.ticks.xaxis = "#DDDDDD",
-  col.line.yaxis = "#DDDDDD", col.ticks.yaxis = "#DDDDDD",
+  xaxis.line.col = "#DDDDDD", xaxis.ticks.col = "#DDDDDD",
+  yaxis.line.col = "#DDDDDD", yaxis.ticks.col = "#DDDDDD",
   
   
   seperators.col = "gold",
@@ -193,18 +240,23 @@
 )
 
 .opt$scplot_themes$nodots <- list(
-  col.ridge = "grey95",
+  ridge.col = "grey95",
   datadots.col = NULL,
-  plot.fill = "grey95", grid.col = "grey80", panel.col = "grey99"
+  
+  plot.background.fill = "grey95", 
+
+  grid.col = "grey80", panel.col = "grey99"
 )
 
 .opt$scplot_themes$sienna <- list(
   grid.col = "orange", 
-  plot.fill = "seashell", 
-  panel.col = "moccasin", col.frame = "darkseagreen", 
+  
+  plot.background.fill = "seashell", 
+  
+  panel.col = "moccasin", panel.frame.col = "darkseagreen", 
   
   casenames.col = "sienna4", phasenames.col = "sienna4",
-  cex.ylab = 0.8, cex.xlab = 0.8, xaxis.text.size = 0.7, yaxis.text.size = 0.7,
+  yaxis.title.size = 0.8, xaxis.title.size = 0.8, xaxis.text.size = 0.7, yaxis.text.size = 0.7,
   casenames.size = 0.8, phasenames.size = 0.8,
   
   seperators.col = "sienna4",
