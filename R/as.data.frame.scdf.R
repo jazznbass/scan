@@ -30,8 +30,10 @@
 #' summary(Leidig2018_long)
 #' 
 #' @export
-as.data.frame.scdf <- function(data, l2 = NULL, id = "case") {
-
+as.data.frame.scdf <- function(x, l2 = NULL, id = "case") {
+  
+  data <- x
+  
   label <- .case_names(names(data), length(data))
 
   outdat <- vector()

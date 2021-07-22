@@ -1,11 +1,13 @@
-#' Draw random names
+#' Samples random names
 #'
 #' @param n Number of names
 #' @param type "neutral", "male", "female", or "mixed"
 #' @param seed A seed for the random number generator.
 #' @return A character vector with random names
+#' @examples 
+#' sample_names(3)
 #' @export
-draw_names <- function(n = 1, type = "neutral", seed = NULL) {
+sample_names <- function(n = 1, type = "neutral", seed = NULL) {
   
   if (!is.null(seed)) set.seed(seed)
   out <- character(0)

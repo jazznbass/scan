@@ -58,42 +58,31 @@
 #' @export
 pand <- function(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases = c(1, 2)) {
   
-  # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-
+  # set default attirubtes
+  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
+  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase)
+  
+  scdf_attr(data, .opt$dv) <- dvar
+  scdf_attr(data, .opt$phase) <- pvar
+  
   data <- .prepare_scdf(data, na.rm = TRUE)
-  data <- .keep_phases(data, phases = phases,pvar = pvar)$data
-  
-  phase.expected <- list()
-  phase.real     <- list()
-  A              <- list()
-  B              <- list()
-  
+  data <- .keep_phases(data, phases = phases, pvar = pvar)$data
+
   N <- length(data)
   
-  for (i in 1:N) {
-    A[[i]] <- data[[i]][data[[i]][, pvar] == "A", dvar]
-    B[[i]] <- data[[i]][data[[i]][, pvar] == "B", dvar]
-    data[[i]][, pvar] <- factor(data[[i]][, pvar])
-    
-    phase.real[[i]]     <- as.numeric(data[[i]][sort.list(data[[i]][[dvar]]), pvar])
-    phase.expected[[i]] <- as.numeric(data[[i]][, pvar])
-    
-  }	
+  A <- lapply(data, function(x) x[x[[pvar]] == "A", dvar])
+  B <- lapply(data, function(x) x[x[[pvar]] == "B", dvar])
+  
+  phase_real <- lapply(data, function(x) as.numeric(as.factor(x[sort.list(x[[dvar]]), pvar])))
+  phase_expected <- lapply(data, function(x) as.numeric(as.factor(x[, pvar])))
   
   tmp <- getOption("warn")
   options(warn = -1)
-  results.cor <- cor.test(unlist(phase.real), unlist(phase.expected), method = "kendall")
+  results_cor <- cor.test(unlist(phase_real), unlist(phase_expected), method = "kendall")
   options(warn = tmp)
   
-  nA <- 0
-  nB <- 0
-  for (i in 1:N) {
-    nA <- nA + length(A[[i]])
-    nB <- nB + length(B[[i]])
-  }
-  
+  nA <- sum(sapply(A, length))
+  nB <- sum(sapply(B, length))
   n <- nA + nB
   
   OD.PP <- rep(NA, N)
@@ -128,14 +117,30 @@ pand <- function(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases
   c <- OD.B / n
   a <- pA - b
   d <- pB - c
-  phi <- (a/(a + c))-(b/(b + d))
+  phi <- (a / (a + c)) - (b / (b + d))
   PAND <- 100 - POD
-  mat <- matrix(c(a,b,c,d), nrow = 2)
+  mat <- matrix(c(a, b, c, d), nrow = 2)
   mat2 <- mat * n
   
-  out <- list(PAND = PAND, phi = phi, POD = POD, OD.PP = OD.PP, OD = OD, n = n, N = N, nA = nA, nB = nB, pA = pA, pB = pB, matrix = mat, matrix.counts = mat2, correlation = results.cor, correction = correction)
+  out <- list(
+    PAND = PAND, 
+    phi = phi, 
+    POD = POD, 
+    OD.PP = OD.PP, 
+    OD = OD, 
+    n = n, 
+    N = N, 
+    nA = nA, 
+    nB = nB, 
+    pA = pA, 
+    pB = pB, 
+    matrix = mat, 
+    matrix.counts = mat2, 
+    correlation = results_cor, 
+    correction = correction
+  )
   
-  class(out) <- c("sc","PAND")
+  class(out) <- c("sc_pand")
   attr(out, .opt$phase) <- pvar
   attr(out, .opt$dv) <- dvar
   out

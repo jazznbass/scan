@@ -90,7 +90,7 @@ overlap <- function(data, dvar, pvar, mvar,
     #design = keep$design[[1]]$values
   )
   
-  class(out) <- c("sc", "overlap")
+  class(out) <- c("sc_overlap")
   
   source_attributes <- attributes(data_list)[[.opt$scdf]]
   attr(out, .opt$phase) <- source_attributes[[.opt$phase]]

@@ -10,6 +10,10 @@
 \alias{print.sc_hplm}
 \alias{print.sc_overlap}
 \alias{print.sc_mplm}
+\alias{print.sc_nap}
+\alias{print.sc_outlier}
+\alias{print.sc_pand}
+\alias{print.sc_pem}
 \title{Print method for scan objects}
 \usage{
 \method{print}{sc}(x, digits = "auto", ...)
@@ -29,6 +33,14 @@
 \method{print}{sc_overlap}(x, digits = "auto", ...)
 
 \method{print}{sc_mplm}(x, digits = "auto", std = FALSE, ...)
+
+\method{print}{sc_nap}(x, digits = "auto", ...)
+
+\method{print}{sc_outlier}(x, digits = "auto", ...)
+
+\method{print}{sc_pand}(x, ...)
+
+\method{print}{sc_pem}(x, ...)
 }
 \arguments{
 \item{x}{Object}

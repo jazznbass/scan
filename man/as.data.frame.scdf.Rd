@@ -6,13 +6,11 @@
 \title{Creating a long format data frame from several single-case data frames
 (scdf).}
 \usage{
-\method{as.data.frame}{scdf}(data, l2 = NULL, id = "case")
+\method{as.data.frame}{scdf}(x, l2 = NULL, id = "case")
 
 longSCDF(...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
-
 \item{l2}{A data frame providing additional variables at Level 2. The scdf
 has to have names for all cases and the Level 2 data frame has to have a
 column with corresponding case names.}

@@ -12,7 +12,6 @@
 #' @seealso \code{\link{overlap}}, \code{\link{plot.scdf}}
 #' @examples
 #'
-#'
 #' ## Descriptive statistics for a study of three single-cases
 #' describe(Grosche2011)
 #'
@@ -27,11 +26,15 @@
 #' @export
 describe <- function(data, dvar, pvar, mvar) {
 
-  # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
-
+  # set defaults attributes
+  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
+  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 
+  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) 
+  
+  scdf_attr(data, .opt$dv) <- dvar
+  scdf_attr(data, .opt$phase) <- pvar
+  scdf_attr(data, .opt$mt) <- mvar
+  
   data_list <- .prepare_scdf(data)
 
   N <- length(data_list)

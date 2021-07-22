@@ -6,6 +6,7 @@
 \alias{export.sc}
 \alias{export.sc_desc}
 \alias{export.sc_hplm}
+\alias{export.sc_overlap}
 \title{Export scan objects to html or latex}
 \usage{
 export(object, ...)
@@ -54,6 +55,18 @@ export(object, ...)
   kable_options = list(),
   round = 2,
   nice = TRUE,
+  ...
+)
+
+\method{export}{sc_overlap}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  round = 2,
+  flip = FALSE,
   ...
 )
 }

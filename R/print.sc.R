@@ -32,14 +32,6 @@ print.sc <- function(x, digits = "auto", ...) {
     
   }
 
-
-# overlap -----------------------------------------------------------------
-
-  if (value == "overlap") {
-    class(x) <- "sc_overlap"
-    print(x, ...)
-  }
-
 # TAU-U -------------------------------------------------------------------
 
   if (value == "TAU-U") {	
@@ -124,30 +116,7 @@ print.sc <- function(x, digits = "auto", ...) {
     
   }	
 
-# NAP ---------------------------------------------------------------------
 
-  if (value == "NAP") {
-    
-    if (digits == "auto") digits <- 2
-    
-    cat("Nonoverlap of All Pairs\n\n")
-    print(x$nap, row.names = FALSE, digits = digits)
-  }
-
-# PEM ---------------------------------------------------------------------
-
-  if (value == "PEM") {
-    cat("Percent Exceeding the Median\n\n")
-    ma <- cbind(PEM = x$PEM, x$test)
-    print(round(ma,3))
-    cat("\n")
-    if (x$decreasing) {
-      cat("Assumed decreasing values in the B-phase.\n\n")
-      cat("Alternative hypothesis: true probability < 50%\n")
-    } else {
-      cat("Alternative hypothesis: true probability > 50%\n")
-    }
-  }
 
 # PND ---------------------------------------------------------------------
 
@@ -315,84 +284,7 @@ print.sc <- function(x, digits = "auto", ...) {
     cat("\n")
   }
   
-# PAND --------------------------------------------------------------------
 
-  if (value == "PAND") {
-    cat("Percentage of all non-overlapping data\n\n")
-    cat("PAND = ", round(x$PAND, 1), "%\n")
-    cat("\u03A6 = ", round(x$phi, 3), " ; \u03A6\u00b2 = ", round(x$phi^2, 3), "\n\n")
-    cat("Number of Cases:", x$N, "\n")
-    cat("Total measurements:", x$n, " ")
-    cat("(in phase A: ", x$nA, "; in phase B: ", x$nB, ")\n", sep = "")
-    cat("n overlapping data per case: ")
-    cat(x$OD.PP, sep = ", ")
-    cat("\n")
-    cat("Total overlapping data: n =",x$OD , "; percentage =", round(x$POD, 1), "\n")
-    ma <- x$matrix
-    cat("\n")
-    cat("2 x 2 Matrix of proportions\n")
-    cat("\t% expected\n")
-    
-    cat("\tA\tB\ttotal\n")
-    cat("%    A",round(ma[1, ] * 100, 1), sum(round(ma[1, ] * 100, 1)), sep = "\t")
-    cat("\n")
-    cat("real B",round(ma[2, ] * 100, 1), sum(round(ma[2, ] * 100, 1)), sep = "\t")
-    cat("\n")
-    cat(" total",sum(round(ma[, 1] * 100, 1)), sum(round(ma[, 2] * 100, 1)), sep = "\t")
-    cat("\n")
-    ma <- x$matrix.counts
-    cat("\n")
-    cat("2 x 2 Matrix of counts\n")
-    cat("\texpected\n")
-    
-    cat("\tA\tB\ttotal\n")
-    cat("     A",round(ma[1, ], 1), sum(round(ma[1, ], 1)), sep = "\t")
-    cat("\n")
-    cat("real B",round(ma[2, ], 1), sum(round(ma[2, ], 1)), sep = "\t")
-    cat("\n")
-    cat(" total",sum(round(ma[,1], 1)), sum(round(ma[,2 ], 1)), sep = "\t")
-    cat("\n")
-    cat("\n")
-    if (x$correction) cat("\nNote. Matrix is corrected for ties\n")
-    cat("\nCorrelation based analysis:\n\n")
-    out <- sprintf(
-      "z = %.3f, p = %.3f, \u03c4 = %.3f",
-      x$correlation$statistic, 
-      x$correlation$p.value, 
-      x$correlation$estimate
-    )
-    cat(out, "\n")
-  }
-
-# outlier -----------------------------------------------------------------
-  
-  if (value == "outlier") {
-    cat("Outlier Analysis for Single-Case Data\n\n")
-    
-    if (x$criteria[1] == "CI") {
-      names(x$ci.matrix) <- x$case.names
-      cat("Criteria: Exceeds", as.numeric(x$criteria[2])*100,"% Confidence Interval\n\n")
-      print(x$ci.matrix)
-    }
-    if (x$criteria[1] == "SD") {
-      names(x$sd.matrix) <- x$case.names
-      cat("Criteria: Exceeds", x$criteria[2], "Standard Deviations\n\n")
-      print(x$sd.matrix)
-    }
-    if (x$criteria[1] == "MAD") {
-      names(x$mad.matrix) <- x$case.names
-      cat("Criteria: Exceeds", x$criteria[2], "Mean Average Deviations\n\n")
-      print(x$mad.matrix)
-    }
-    if (x$criteria[1] == "Cook") {
-      cat("Criteria: Cook's Distance based on piecewise-linear-regression exceeds", x$criteria[2],"\n\n")
-    }
-    for(i in 1:length(x$dropped.n)) {
-      cat("Case",x$case.names[i],": Dropped",x$dropped.n[[i]],"\n")
-    }
-    cat("\n")
-  }
-  
   ##### Additional notes #####
   if (note) .note_vars(x)
 
@@ -644,8 +536,126 @@ print.sc_mplm <- function(x, digits = "auto", std = FALSE, ...) {
   
 }
 
+#' @rdname print.sc
+#' @export
+print.sc_nap <- function(x, digits = "auto", ...) {
+
+  if (digits == "auto") digits <- 2
+  cat("Nonoverlap of All Pairs\n\n")
+  print(x$nap, row.names = FALSE, digits = digits)
+  
+}
 
 
+#' @rdname print.sc
+#' @export
+print.sc_outlier <- function(x, digits = "auto", ...) {
+
+  cat("Outlier Analysis for Single-Case Data\n\n")
+  
+  if (x$criteria[1] == "CI") {
+    names(x$ci.matrix) <- x$case.names
+    cat("Criteria: Exceeds", as.numeric(x$criteria[2]) * 100, "% Confidence Interval\n\n")
+    print(x$ci.matrix)
+  }
+  
+  if (x$criteria[1] == "SD") {
+    names(x$sd.matrix) <- x$case.names
+    cat("Criteria: Exceeds", x$criteria[2], "Standard Deviations\n\n")
+    print(x$sd.matrix)
+  }
+  
+  if (x$criteria[1] == "MAD") {
+    names(x$mad.matrix) <- x$case.names
+    cat("Criteria: Exceeds", x$criteria[2], "Mean Average Deviations\n\n")
+    print(x$mad.matrix)
+  }
+  
+  if (x$criteria[1] == "Cook") {
+    cat("Criteria: Cook's Distance based on piecewise-linear-regression exceeds", x$criteria[2],"\n\n")
+  }
+  
+  for(i in 1:length(x$dropped.n)) {
+    cat("Case",x $case.names[i],": Dropped", x$dropped.n[[i]], "\n")
+  }
+  cat("\n")
+}
+
+#' @rdname print.sc
+#' @export
+#' 
+print.sc_pand <- function(x, ...) {
+  cat("Percentage of all non-overlapping data\n\n")
+  cat("PAND = ", round(x$PAND, 1), "%\n")
+  cat("\u03A6 = ", round(x$phi, 3), " ; \u03A6\u00b2 = ", round(x$phi^2, 3), "\n\n")
+  cat("Number of Cases:", x$N, "\n")
+  cat("Total measurements:", x$n, " ")
+  cat("(in phase A: ", x$nA, "; in phase B: ", x$nB, ")\n", sep = "")
+  cat("n overlapping data per case: ")
+  cat(x$OD.PP, sep = ", ")
+  cat("\n")
+  cat("Total overlapping data: n =",x$OD , "; percentage =", round(x$POD, 1), "\n")
+  ma <- x$matrix
+  cat("\n")
+  cat("2 x 2 Matrix of proportions\n")
+  cat("\t% expected\n")
+  
+  cat("\tA\tB\ttotal\n")
+  cat("%    A",round(ma[1, ] * 100, 1), sum(round(ma[1, ] * 100, 1)), sep = "\t")
+  cat("\n")
+  cat("real B",round(ma[2, ] * 100, 1), sum(round(ma[2, ] * 100, 1)), sep = "\t")
+  cat("\n")
+  cat(" total",sum(round(ma[, 1] * 100, 1)), sum(round(ma[, 2] * 100, 1)), sep = "\t")
+  cat("\n")
+  ma <- x$matrix.counts
+  cat("\n")
+  cat("2 x 2 Matrix of counts\n")
+  cat("\texpected\n")
+  
+  cat("\tA\tB\ttotal\n")
+  cat("     A",round(ma[1, ], 1), sum(round(ma[1, ], 1)), sep = "\t")
+  cat("\n")
+  cat("real B",round(ma[2, ], 1), sum(round(ma[2, ], 1)), sep = "\t")
+  cat("\n")
+  cat(" total",sum(round(ma[,1], 1)), sum(round(ma[,2 ], 1)), sep = "\t")
+  cat("\n")
+  cat("\n")
+  if (x$correction) cat("\nNote. Matrix is corrected for ties\n")
+  cat("\nCorrelation based analysis:\n\n")
+  out <- sprintf(
+    "z = %.3f, p = %.3f, \u03c4 = %.3f",
+    x$correlation$statistic, 
+    x$correlation$p.value, 
+    x$correlation$estimate
+  )
+  cat(out, "\n")
+}
+
+
+#' @rdname print.sc
+#' @export
+#' 
+print.sc_pem <- function(x, ...) {
+  cat("Percent Exceeding the Median\n\n")
+  ma <- cbind(PEM = x$PEM, x$test)
+  print(round(ma, 3))
+  cat("\n")
+  if (x$decreasing) {
+    cat("Assumed decreasing values in the B-phase.\n\n")
+    cat("Alternative hypothesis: true probability < 50%\n")
+  } else {
+    cat("Alternative hypothesis: true probability > 50%\n")
+  }
+}
+
+
+
+
+
+
+
+
+# -----------------------------------------------------------------------
 .note_vars <- function(x) {
   v <- any(attr(x, .opt$dv) != "values")
   p <- attr(x, .opt$phase) != "phase"

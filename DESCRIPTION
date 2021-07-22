@@ -18,8 +18,7 @@ Imports:
   kableExtra,
   readxl,
   mblm,
-  meta
-Suggests:
+  meta,
   magrittr
 Depends: R (>= 3.5.0)
 Description: A collection of procedures for analysing, visualising, 

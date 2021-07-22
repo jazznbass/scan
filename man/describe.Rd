@@ -31,7 +31,6 @@ single-case data.
 }
 \examples{
 
-
 ## Descriptive statistics for a study of three single-cases
 describe(Grosche2011)
 

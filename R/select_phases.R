@@ -2,7 +2,7 @@
 #' 
 #' Useful when working with %>% operators.
 #' 
-#' @param data 
+#' @inheritParams .inheritParams
 #' @param A Selection of the A phase
 #' @param B Selection of the B phase
 #'

@@ -167,7 +167,7 @@ outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
   out$N <- N
   out$case.names <- case.names
   
-  class(out) <- c("sc","outlier")
+  class(out) <- c("sc_outlier")
   attr(out, .opt$phase) <- pvar
   attr(out, .opt$mt) <- mvar
   attr(out, .opt$dv) <- dvar

@@ -164,7 +164,7 @@ plotSC <- function(data, dvar, pvar, mvar,
   ### END: define style
   
   # Marks on the outliers from outlierSC
-  if (identical(class(marks), c("sc","outlier"))) 
+  if (identical(class(marks), c("sc_outlier"))) 
     marks <- list(positions = marks$dropped.mt)
   
   # name cases

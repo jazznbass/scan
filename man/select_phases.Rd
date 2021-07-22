@@ -7,11 +7,13 @@
 select_phases(data, A, B, ...)
 }
 \arguments{
-\item{data}{}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
 
 \item{A}{Selection of the A phase}
 
 \item{B}{Selection of the B phase}
+
+\item{...}{Further arguments passed to the function.}
 }
 \value{
 An scdf with selected phases

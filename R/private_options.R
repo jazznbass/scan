@@ -58,8 +58,7 @@
     "scan ", utils::packageVersion("scan"), 
     " (", utils::packageDate('scan'), ")\n",
     "Single-Case Data Analysis for Single and Multiple Baseline Designs\n"),
-  style = list(),
-  scplot_themes = list()
+  style = list()
   )
 
 # color styles ------------------------------------------------------------
