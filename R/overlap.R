@@ -71,12 +71,27 @@ overlap <- function(data, dvar, pvar, mvar,
     B <- data[data[, pvar] == "B", dvar]
     mtA <- data[data[, pvar] == "A", mvar]
     mtB <- data[data[, pvar] == "B", mvar]
-    n <- sum(!is.na(c(A, B)))
+    nA <- sum(!is.na(A))
+    nB <- sum(!is.na(A))    
+    n <- nA + nB
+    mA <- mean(A, na.rm = TRUE)
+    mB <- mean(B, na.rm = TRUE)    
+    sdA <- sd(A, na.rm = TRUE)
+    sdB <- sd(B, na.rm = TRUE)    
     
-    df$Diff_mean[i] <- mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)
-    df$SMD[i] <- (mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)) / sd(A, na.rm = TRUE)
     
-    df$Hedges_g[i] <- df$SMD[i] * (1 - (3 / (4 * n - 9)))
+    df$Diff_mean[i] <- mB - mA
+    df$SMD[i] <- (mB - mA) / sdA
+    
+    
+    sd_hg <- sqrt(
+      ( (nA - 1) * sdA^2 + (nB - 1) * sdB^2) 
+      / 
+      (nA + nB - 2) 
+    )  
+    
+    df$Hedges_g[i] <- (mB - mA) / sd_hg
+    df$Hedges_g[i] <- df$Hedges_g[i] * (1 - (3 / (4 * n - 9)))
     
     df$Diff_trend[i] <- coef(lm(B ~ I(mtB - mtB[1] + 1)))[2] - 
                         coef(lm(A ~ I(mtA - mtA[1] + 1)))[2]
