@@ -12,7 +12,7 @@ pipe operator, pipes seem to become the standard. For compatibility with older R
 
 - `sample_names()`: Returns a character vector of length `n` with names by randomly drawing from a name list: type = {"neutral", "female", "male", "mixed"}. E.g. `draw_names(7)`.
 
--`add_l2()`: Adds the variables from a second level 2 data frame to an scdf matched by an id variable (deafult is `case`).
+-`add_l2()`: Adds the variables from a second level 2 data frame to an scdf matched by an id variable (default is `case`).
 
 ```{.r}
 Leidig2018 %>%
@@ -21,7 +21,7 @@ Leidig2018 %>%
        slope = FALSE, random.slopes = FALSE, lr.test = FALSE)
 ```
 
-- `select_phases()`: selects and recombines phases into A and B phase (equivalent to th phases arguent fo various functions, but usefull when using %>% operators).
+- `select_phases()`: selects and recombines phases into A and B phase (equivalent to th phases argument for various functions, but useful when using %>% operators).
 
 ```{.r}
 exampleA1B1A2B2 %>% 
