@@ -6,12 +6,13 @@
 #' This might be helpful to prepare data to be used with other packages than scan.
 #' 
 #' 
-#' @inheritParams .inheritParams
+#' @param x An scdf object
 #' @param l2 A data frame providing additional variables at Level 2. The scdf
 #' has to have names for all cases and the Level 2 data frame has to have a
 #' column with corresponding case names.
 #' @param id Variable name of the Level 2 data frame that contains the case
 #' names.
+#' @param ... Not implemented
 #' @return Returns one data frame with data of all single-cases structured by
 #' the case variable.
 #' @author Juergen Wilbert
@@ -30,7 +31,7 @@
 #' summary(Leidig2018_long)
 #' 
 #' @export
-as.data.frame.scdf <- function(x, l2 = NULL, id = "case") {
+as.data.frame.scdf <- function(x, ..., l2 = NULL, id = "case") {
   
   data <- x
   
