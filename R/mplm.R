@@ -1,6 +1,5 @@
 #' Multivariate Piecewise linear model / piecewise regression
 #'
-#' This function is in an experimental status.
 #' The \code{mplm} function computes a multivariate piecewise regression model.
 #'
 #'
@@ -18,26 +17,22 @@
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @examples
-#' ##
-#' mplm(exampleAB_add, dvar = c("wellbeing", "depression"))
-#' mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
+#' res <- mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
+#' print(res)
+#' ## also report standardized coefficients:
+#' print(res, std = TRUE)
 #' @export
 
 mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE, 
                  level = TRUE, slope = TRUE, formula = NULL, update = NULL, 
                  na.action = na.omit, ...) {
-  cat(.opt$function_debugging_warning)
-  if (!requireNamespace("car", quietly = TRUE)) {
-    stop("Package car needed for this function to work. Please install it.",
-      call. = FALSE
-    )
-  }
+ 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
 
-  data <- .SCprepareData(data)
+  data <- .prepare_scdf(data)
 
   N <- length(data)
   if (N > 1) {
@@ -49,10 +44,11 @@ mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE,
   data <- tmp_model$data[[1]]
 
   if (is.null(formula)) {
-    formula <- as.formula(.create_fixed_formula(
+    formula <- .create_fixed_formula(
       dvar = "y", mvar = mvar, slope = slope, level = level,
       trend = trend, VAR_PHASE = tmp_model$VAR_PHASE, VAR_INTER = tmp_model$VAR_INTER
-    ))
+    )
+    formula <- as.formula(formula)
   }
 
   if (!is.null(update)) formula <- update(formula, update)
@@ -63,6 +59,9 @@ mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE,
   full$coef_std <- .std_lm(full)
   out <- list(model = model, full.model = full, formula = formula)
 
-  class(out) <- c("sc", "mpr")
+  class(out) <- c("sc_mplm")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$mt) <- mvar
+  attr(out, .opt$dv) <- dvar
   out
 }

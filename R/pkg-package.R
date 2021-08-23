@@ -13,6 +13,9 @@
 #' @import knitr
 #' @import kableExtra
 #' @import mblm
+#' @import meta
+#' @importFrom magrittr `%>%` 
+#' @importFrom car Anova
 NULL
 
 

@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -91,7 +91,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -143,6 +148,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="add_l2.html">add_l2()</a></code> </p>
+        </td>
+        <td><p>Add level 2variables from an L2 dataset to an scdf file</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="as_scdf.html">as_scdf()</a></code> </p>
         </td>
         <td><p>as_scdf
@@ -156,9 +167,28 @@ Converts a data frame to an scdf object</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="cdc.html">cdc()</a></code> </p>
+        </td>
+        <td><p>Conservative Dual-Criterion Method</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="check_scdf.html">check_scdf()</a></code> </p>
+        </td>
+        <td><p>Validity check for an scdf object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="combine.html">combine()</a></code> <code><a href="combine.html">c(<i>&lt;scdf&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Combine single-case data frames into a multiple case study</p></td>
+        <td><p>Combine single-case data frames</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="convert.html">convert()</a></code> </p>
+        </td>
+        <td><p>Covert
+Converts an scdf object to a text syntax</p></td>
       </tr><tr>
         
         <td>
@@ -168,7 +198,7 @@ Converts a data frame to an scdf object</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="describeSC.html">describeSC()</a></code> </p>
+          <p><code><a href="describe.html">describe()</a></code> <code><a href="describe.html">describeSC()</a></code> </p>
         </td>
         <td><p>Descriptive statistics for single-case data</p></td>
       </tr><tr>
@@ -177,12 +207,6 @@ Converts a data frame to an scdf object</p></td>
           <p><code><a href="dot-inheritParams.html">.inheritParams()</a></code> </p>
         </td>
         <td><p>Dummy function to inherit global descriptions of parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="estimateSC.html">estimateSC()</a></code> </p>
-        </td>
-        <td><p>(Deprecated function) Estimate single-case design</p></td>
       </tr><tr>
         
         <td>
@@ -210,16 +234,17 @@ Converts a data frame to an scdf object</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="is.scdf.html">is.scdf()</a></code> </p>
+        </td>
+        <td><p>scdf objects
+Tests for objects of type "scdf"</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="longSCDF.html">longSCDF()</a></code> </p>
         </td>
         <td><p>Creating a long format data frame from several single-case data frames
 (scdf).</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="makesingleSC.html">makesingleSC()</a></code> </p>
-        </td>
-        <td><p>(Deprecated function) Aggregate multiple single-cases into one case</p></td>
       </tr><tr>
         
         <td>
@@ -265,6 +290,12 @@ Converts a data frame to an scdf object</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="pipe.html">%>%</a></code> </p>
+        </td>
+        <td><p>Pipe</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="plm.html">plm()</a></code> </p>
         </td>
         <td><p>Piecewise linear model / piecewise regression</p></td>
@@ -283,19 +314,13 @@ Converts a data frame to an scdf object</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="power.testSC.html">power.testSC()</a></code> </p>
-        </td>
-        <td><p>(Deprecated function) Empirical power analysis for single-case data</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="power_test.html">power_test()</a></code> <code><a href="power_test.html">power_testSC()</a></code> </p>
         </td>
         <td><p>Empirical power analysis for single-case data</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="print.sc.html">print(<i>&lt;sc&gt;</i>)</a></code> </p>
+          <p><code><a href="print.sc.html">print(<i>&lt;sc&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_ac&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_cdc&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_bctau&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_desc&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_design&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_hplm&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_overlap&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_mplm&gt;</i>)</a></code> </p>
         </td>
         <td><p>Print method for scan objects</p></td>
       </tr><tr>
@@ -343,7 +368,7 @@ Converts a data frame to an scdf object</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="scdf.html">makeSCDF()</a></code> <code><a href="scdf.html">scdf()</a></code> </p>
+          <p><code><a href="scdf.html">scdf()</a></code> </p>
         </td>
         <td><p>Single case data frame</p></td>
       </tr><tr>
@@ -355,9 +380,27 @@ Converts a data frame to an scdf object</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="scplot.html">scplot()</a></code> <code><a href="scplot.html">set_style()</a></code> <code><a href="scplot.html">add_statline()</a></code> <code><a href="scplot.html">set_xlabel()</a></code> <code><a href="scplot.html">set_ylabel()</a></code> <code><a href="scplot.html">set_xaxis()</a></code> <code><a href="scplot.html">set_yaxis()</a></code> <code><a href="scplot.html">add_title()</a></code> <code><a href="scplot.html">add_caption()</a></code> <code><a href="scplot.html">add_marks()</a></code> <code><a href="scplot.html">set_phasenames()</a></code> <code><a href="scplot.html">set_casenames()</a></code> <code><a href="scplot.html">add_text()</a></code> <code><a href="scplot.html">add_arrow()</a></code> <code><a href="scplot.html">add_grid()</a></code> <code><a href="scplot.html">set_background()</a></code> <code><a href="scplot.html">add_frame()</a></code> <code><a href="scplot.html">add_box()</a></code> <code><a href="scplot.html">add_labels()</a></code> <code><a href="scplot.html">set_line()</a></code> <code><a href="scplot.html">set_dots()</a></code> <code><a href="scplot.html">add_ridge()</a></code> <code><a href="scplot.html">set_seperator()</a></code> </p>
+        </td>
+        <td><p>Plot single-case data</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="select_cases.html">select_cases()</a></code> </p>
         </td>
         <td><p>Select a subset of cases</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="select_phases.html">select_phases()</a></code> </p>
+        </td>
+        <td><p>Select phases for overlap analyses</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="set_vars.html">set_vars()</a></code> </p>
+        </td>
+        <td><p>Set analysis variables in an scdf</p></td>
       </tr><tr>
         
         <td>
@@ -433,7 +476,7 @@ Converts a data frame to an scdf object</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">

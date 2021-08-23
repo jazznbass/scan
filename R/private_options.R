@@ -1,3 +1,17 @@
+.neutral.names <- c("", "Addison", "Alex", "Alexis", "Ali", "Arden", "Asher", "Ashton", "Ashley", "Aston", "Aubrey", "Avery", "Bailey", "Billie", "Blair", 
+ "Bobby", "Brett", "Brooke", "Cameron", "Camille", "Carey", "Cary", 
+"Casey", "Kasey", "Charlie", "Charley", "Chris", "Cody", "Corrie", 
+"Corry", "Cory", "Courtney", "Cree", "Kree", "Dakota", "Dallas", 
+"Darby", "Darcy", "Darian", "Delaney", "Dell", "Devin", "Devon", 
+ "Drew", "Elis", "Ellis", "Emerson", "Emery", "Erin", "Evan", 
+ "Finley", "Frankie", "Freddie", "Gail", "Gale", "Gayle", "Gerrie", "Gwyn", "Gwynn", "Gwynne", "Hadley", "Halsey", "Harley", "Haiden", "Hayden", "Hailey", "Haley", "Halley", "Hayley", "Hilary", "Hillary", "Hollis", "Hunter", "Jacy", "Jaime", "Jamie", "Jayme", "Jean", "Jeri", "Jerry", "Jeryl", "Jeryn", "Jesse", "Jo", "Jocelyn", 
+"Joey", "Jordan", "Justice", "Kai", "Kye", "Kary", "Keegan", 
+"Kelly", "Kendall", "Kerry", "Kim", "Kirby", "Kit", "Kyrie", 
+"Lane", "Laurel", "Laurie", "Lee", "Leigh", "Leighton", "Lennox", "Leslie", "Lesley", "Lin", "Lyn", "Lynn", "Lindsay", "Lindsey", "Lindy", "Logan", "Loren", "Louie", "Mackenzie", "Madison", "Maddox", "Madox", "Marian", "Marion", "Marlee", "Marley", "Marlo", "Marlowe", "Meade", "Mel", "Meredith", "Merle", "Milo", "Montana", "Morgan", "Murphy", "Nevada", "Nicky", "Nikki", "Odell", "Peyton", "Paris", "Parris", "Pat", "Paxton", "Payton", "Peyton", "Quinn", "Randi", 
+"Randy", "Reagan", "Regan", "Rennie", "Reese", "Ricky", "Ricki", 
+"Riley", "Ridley", "Ripley", "Robin", "Robyn", "Rory", "Rorie", 
+"Rowan", "Royce", "Rudy", "Russi", "Rylan", "Rynn", "Sam", "Sandy", "Sasha", "Sawyer", "Schuyler", "Skyler", "Skylar", "Scout", "Selby", "Shane", "Shannon", "Shawn", "Shay", "Shelby", "Shelley", "Shirley", "Sidney", "Sydney", "Spencer", "Storm", "Stormy", "Taran", "Tatum", "Taylor", "Tegan", "Temple", "Tommie", "Toni", "Tony", "Tori", "Tory", "Torrey", "Torry", "Tracy", "Valentine", "Vivian", "Wallis", "Waverly", "Willie", "Winnie")
+
 .male.names <- c(
   "Jacob", "Mason", "Ethan", "Noah", "William", "Liam", "Jayden", "Michael", "Alexander", "Aiden", "Daniel", "Matthew", "Elijah", "James", "Anthony", "Benjamin", "Joshua", "Andrew", "David", "Joseph", "Logan", "Jackson", "Christopher", "Gabriel", "Samuel", "Ryan", "Lucas", "John", "Nathan", "Isaac", "Dylan", "Caleb", "Christian", "Landon", "Jonathan", "Carter", "Luke", "Owen", "Brayden", "Gavin", "Wyatt", "Isaiah", "Henry", "Eli", "Hunter", "Jack", "Evan", "Jordan", "Nicholas", "Tyler", "Aaron", "Jeremiah", 
   "Julian", "Cameron", "Levi", "Brandon", "Angel", "Austin", "Connor", "Adrian", "Robert", "Charles", "Thomas", "Sebastian", "Colton", "Jaxon", "Kevin", "Zachary", "Ayden", "Dominic", "Blake", "Jose", "Oliver", "Justin", "Bentley", "Jason", "Chase", "Ian", "Josiah", "Parker", "Xavier", "Adam", "Cooper", "Nathaniel", "Grayson", "Jace", "Carson", "Nolan", "Tristan", "Luis", "Brody", "Juan", "Hudson", "Bryson", "Carlos", "Easton", "Damian", "Alex", "Kayden", "Ryder", "Jesus", "Cole", "Micah", "Vincent", "Max", "Jaxson", "Eric", "Asher", "Hayden", "Diego", "Miles", "Steven", "Ivan", "Elias", "Aidan", "Maxwell", "Bryce", "Antonio", "Giovanni", "Timothy", "Bryan", "Santiago", "Colin", "Richard", "Braxton", "Kaleb", "Kyle", "Kaden", "Preston", "Miguel", "Jonah", "Lincoln", "Riley", "Leo", "Victor", "Brady", "Jeremy", "Mateo", "Brian", "Jaden", "Ashton", "Patrick", "Declan", "Sean", "Joel", "Gael", "Sawyer", "Alejandro", "Marcus", "Leonardo", "Jesse", "Caden", "Jake", "Kaiden", "Wesley", "Camden", "Edward", "Brantley", "Roman", "Axel", "Silas", "Jude", "Grant", "Cayden", "Emmanuel", "George", "Maddox", "Malachi", "Bradley", "Alan", "Weston", "Gage", "Devin", "Greyson", "Kenneth", "Mark", "Oscar", "Tanner", "Rylan", "Nicolas", "Harrison", "Derek", "Peyton", "Ezra", "Tucker", "Emmett", "Avery", "Cody", "Calvin", "Andres", "Jorge", "Abel", "Paul", "Abraham", "Kai", "Collin", "Theodore", "Ezekiel", "Omar", "Jayce", "Conner", "Bennett", "Trevor", "Eduardo", "Peter", "Maximus", "Jaiden", "Jameson", "Seth", "Kingston", "Javier", "Travis", "Garrett", "Everett", "Graham", "Xander", "Cristian", "Damien", "Ryker", "Griffin", "Corbin", "Myles", "Luca", "Zane", "Francisco", "Ricardo", "Alexis", "Stephen", "Zayden", "Iker", "Drake", "Lukas", "Charlie", "Spencer", "Zion", "Erick", "Josue", "Jeffrey", "Trenton", "Chance", "Paxton", "Elliot", "Fernando", "Keegan", "Landen", "Manuel", "Amir", "Shane", "Raymond", "Zander", "Andre", "Israel", "Mario", "Cesar", "Simon", "King", "Jaylen", "Johnathan", "Troy", "Dean", "Clayton", "Dominick", "Tyson", "Jasper", "Martin", "Kyler", "Hector", 
@@ -33,14 +47,16 @@
   case_name    = "name",
   info         = "info",
   author       = "author",
+  rigorous_class_check = TRUE, 
+  neutral.names = .neutral.names,
   female.names = .female.names,
   male.names   = .male.names,
   names        = .names,
-  function_debugging_warning  = "This function is in an experimental state and only implemented for testing und debugging purposes.",
+  function_experimental_warning  = "This function is in an experimental state. The syntax and behaviour will probably change in a future version.",
   function_deprecated_warning = "This function is deprecated. It might be dropped without any further notice in a future update of scan.",
   startup_message = paste0(
     "scan ", utils::packageVersion("scan"), 
-    " (", utils::packageDate('scan'), ")\n",
+    " release candidate (", utils::packageDate('scan'), ")\n",
     "Single-Case Data Analysis for Single and Multiple Baseline Designs\n"),
   style = list()
   )
@@ -48,15 +64,31 @@
 # color styles ------------------------------------------------------------
 
 .opt$style$default = list(
-  frame = "black", annotations = NULL, las = 1, mai = c(0.6, 0.58, 0.2, 0.2), bty = "o", #mai = c(0.6, 0.82, 0.2, 0.42)
-  text.ABlag = NULL, pch = 17, font = "sans", ylab.orientation = 0, 
+  frame = "black",las = 1, mai = c(0.6, 0.58, 0.2, 0.2), 
+  bty = "o", text.ABlag = NULL, pch = 17, font = "sans", 
   fill = FALSE, fill.bg = FALSE, grid = FALSE,  
   lwd = 2, lwd.seperators = 1.5, lwd.grid = 1,
   lty = "solid", lty.seperators = "dashed", lty.grid = "dotted",
+  
+  ylab.orientation = 0,
+  
   cex = 1, cex.axis = 0.8, cex.text = 1, cex.lab = 1,
-  col.lines = "black", col.dots = "black", col.seperators = "black", col.fill = "grey75", col.fill.bg = "grey95", 
-  col.bg = "white", col = "black", col.text = "black", col.fill.bg = "grey95",
-  names = list(side = 3, line = -1, adj = 0)
+  cex.xlab = 1, cex.ylab = 1, cex.xaxis = 0.8, cex.yaxis = 0.8,
+  cex.casenames = 1, cex.phasenames = 1, cex.dots = 0.8,
+  
+  col.lines = "black", col.dots = "black", col.seperators = "black", 
+  col.fill = "grey75", col.fill.bg = "grey95", col.bg = "white", col = "black", 
+  col.text = "black", col.casenames = "black", col.phasenames = "black",
+  col.xlab = "black", col.ylab = "black", col.ridge = NULL,
+  
+  align.main = "center", align.caption = "left",
+  margin.main = 0, margin.caption = 0.02, wrap.caption = NULL, wrap.main = NULL,
+  parse.main = FALSE, parse.caption = FALSE,
+  seperators.extent = "full",
+  
+  annotations = NULL, 
+  
+  names = list(side = 3, line = -1, adj = 0, col = "black", cex = 1)
 )
 
 .opt$style$yaxis <- list(
@@ -66,67 +98,82 @@
 
 .opt$style$tiny <- list(
   cex.text = 0.5, cex = 0.5, cex.lab = 0.5, 
+  cex.casenames = 0.5, cex.phasenames = 0.5, cex.dots = 0.5,
   lwd = 0.7, lwd.seperators = 0.7, lwd.grid = 0.7,
-  mai = c(0.3,0.3,0.1,0.05)
+  mai = c(0.3,0.3,0.1,0.05),
+  names = list(side = 3, line = -1, adj = 0, col = "black", cex = 0.5)
 )
 
 .opt$style$small <- list(
-  cex.text = 0.75, cex = 0.75, cex.lab = 0.75, 
+  cex.text = 0.75, cex = 0.75, cex.lab = 0.75, cex.dots = 0.75,
+  cex.casenames = 0.75, cex.phasenames = 0.75,
   lwd = 0.85, lwd.seperators = 0.85, lwd.grid = 0.85,
-  mai = c(0.5,0.5,0.15,0.1)
+  mai = c(0.5,0.5,0.15,0.1),
+  names = list(side = 3, line = -1, adj = 0, col = "black", cex = 0.75)
 )
 
 .opt$style$big <- list(
   cex.text = 1.25, cex = 1.25, cex.lab = 1.25, 
+  cex.casenames = 1.25, cex.phasenames = 1.25, cex.dots = 1.25,
   lwd = 1.5, lwd.seperators = 1.5, lwd.grid = 1.5,
-  mai = c(0.8,1,0.2,0.2)
+  mai = c(0.8,1,0.2,0.2),
+  names = list(side = 3, line = -1, adj = 0, col = "black", cex = 0.75)
 )
 
 
 .opt$style$chart <- list(
+  col.ridge = "grey50",
   fill.bg = TRUE, col.fill.bg = "grey98", fill = TRUE, col.fill = "grey50", 
-  annotations = list(cex = 0.6, col = "black", offset = 0.4), pch = 19, 
-  frame = NA, grid = "grey75", lwd = 0.7, cex.text = 0.8, cex.lab = 0.8 
+  annotations = list(cex = 0.6, col = "black", offset = 0.4, round = 1, pos = 3),
+  pch = 19, 
+  frame = NA, grid = TRUE, col.grid = "grey75", lwd = 0.7, cex.text = 0.8, 
+  cex.lab = 0.8, 
+  cex.casenames = 0.8, cex.phasenames = 0.8
 )
 
 
 .opt$style$ridge <- list(
+  col.ridge = "grey50",
   fill = "grey50", fill.bg = TRUE, col.fill.bg = "grey95", pch = 20
 )
 
 .opt$style$annotate <- list(
-  annotations = list(cex = 0.6, col = "black", offset = 0.4), pch = 19
+  annotations = list(cex = 0.6, col = "black", offset = 0.4, round = 1, pos = 3), pch = 19
 )
 
 .opt$style$grid <- list(
-  frame = NA, grid = TRUE, col.grid = "lightblue", fill.bg = TRUE, col.fill.bg = "grey95", lwd = 0.7, 
-  pch = 19, cex.axis = 0.8
+  frame = NA, grid = TRUE, col.grid = "lightblue", fill.bg = TRUE, 
+  col.fill.bg = "grey95", lwd = 0.7, pch = 19, cex.axis = 0.8
 )  
 
 .opt$style$grid2 <- list(
-  frame = NA, fill = "white", grid = TRUE, col.grid = "lightgreen", frame = "black", 
+  col.ridge = "white",
+  fill = "white", grid = TRUE, col.grid = "lightgreen", frame = "black", 
   fill.bg = TRUE, col.fill.bg = "grey95", lwd = 0.7, pch = 1, cex.axis = 0.8
 )  
 
 .opt$style$dark <- list(
-  fill.bg = TRUE, col.fill.bg = "black", bty = "o", col.lines = "gold", col.bg = "grey10", 
-  col.dots = "red", col.seperators = "white", col = "white", 
-  col.text = "white")
+  fill.bg = TRUE, col.fill.bg = "black", bty = "o", col.lines = "gold", 
+  col.bg = "grey10", col.dots = "red", col.seperators = "white", col = "white", 
+  col.text = "white", col.casenames = "white", col.phasenames = "white")
 
 .opt$style$nodots <- list(
-  type = "l", col.dots = "", fill = TRUE, col.fill = "grey95", grid = TRUE, col.grid = "grey80",
-  fill.bg = TRUE, col.fill.bg = "grey99")
+  col.ridge = "grey95",
+  type = "l", col.dots = "", fill = TRUE, col.fill = "grey95", grid = TRUE, 
+  col.grid = "grey80", fill.bg = TRUE, col.fill.bg = "grey99")
 
 .opt$style$sienna <- list(
-  grid = TRUE, col.grid = "orange", pch = 18, col.lines = "grey85", col.dots = "seagreen4", 
-  lwd = 2, col.bg = "seashell", fill.bg = "moccasin", col.text = "sienna4", 
-  col = "darkolivegreen", col.seperators = "sienna4", 
-  cex.text = 0.8, cex.lab = 0.8, cex.axis = 0.7, frame = "darkseagreen", 
+  grid = TRUE, col.grid = "orange", pch = 18, col.lines = "grey85", 
+  col.dots = "seagreen4", lwd = 2, col.bg = "seashell", fill.bg = "moccasin", 
+  col.text = "sienna4", col = "darkolivegreen", col.seperators = "sienna4", 
+  col.casenames = "sienna4", col.phasenames = "sienna4",
+  cex.text = 0.8, cex.lab = 0.8, cex.axis = 0.7, 
+  cex.casenames = 0.8, cex.phasenames = 0.8,
+  frame = "darkseagreen", 
   font = "serif")
 
 .opt$style$phase_color <- list(
-  fill.bg = TRUE,
-  col.fill.bg = c("aliceblue", "mistyrose1", "honeydew")
+  fill.bg = TRUE, col.fill.bg = c("aliceblue", "mistyrose1", "honeydew")
 )
 
 .opt$style$phase_shade <- list(
@@ -134,10 +181,7 @@
   col.fill.bg = c("grey94", "grey99", "grey90")
 )
 
-
 # MC Functions ------------------------------------------------------------
-
-
 
 .opt$mc_fun <- list(
   plm_level = function(x) .plm.mt(x, type = "level p"),

@@ -73,7 +73,7 @@ across all phases." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -93,7 +93,12 @@ across all phases." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -108,7 +113,7 @@ across all phases." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Autocorrelation for single-case data</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/autocorr.R'><code>R/autocorr.R</code></a></small>
     <div class="hidden name"><code>autocorr.Rd</code></div>
     </div>
 
@@ -126,7 +131,7 @@ across all phases.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -168,19 +173,30 @@ the length of a phase minus one, NA is returned for this cell.</p>
 <span class='fu'>autocorr</span><span class='op'>(</span><span class='va'>Huber2014</span>, lag.max <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Autocorrelations
 #&gt; 
-#&gt;       case phase lag_1 lag_2
-#&gt;       Adam     A  0.18 -0.40
-#&gt;       Adam     B  0.00 -0.16
-#&gt;       Adam   all  0.26 -0.02
-#&gt;      Berta     A  0.08 -0.52
-#&gt;      Berta     B  0.07 -0.36
-#&gt;      Berta   all  0.30 -0.01
-#&gt;  Christian     A -0.07 -0.24
-#&gt;  Christian     B  0.53  0.40
-#&gt;  Christian   all  0.64  0.55
-#&gt;      David     A -0.40 -0.25
-#&gt;      David     B  0.27  0.35
-#&gt;      David   all  0.45  0.47</div></pre>
+#&gt; Adam 
+#&gt;  Phase Lag 1 Lag 2
+#&gt;      A  0.18 -0.40
+#&gt;      B  0.00 -0.16
+#&gt;    all  0.26 -0.02
+#&gt; 
+#&gt; Berta 
+#&gt;  Phase Lag 1 Lag 2
+#&gt;      A  0.08 -0.52
+#&gt;      B  0.07 -0.36
+#&gt;    all  0.30 -0.01
+#&gt; 
+#&gt; Christian 
+#&gt;  Phase Lag 1 Lag 2
+#&gt;      A -0.07 -0.24
+#&gt;      B  0.53  0.40
+#&gt;    all  0.64  0.55
+#&gt; 
+#&gt; David 
+#&gt;  Phase Lag 1 Lag 2
+#&gt;      A -0.40 -0.25
+#&gt;      B  0.27  0.35
+#&gt;    all  0.45  0.47
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -192,7 +208,7 @@ the length of a phase minus one, NA is returned for this cell.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">

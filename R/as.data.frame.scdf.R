@@ -6,12 +6,13 @@
 #' This might be helpful to prepare data to be used with other packages than scan.
 #' 
 #' 
-#' @inheritParams .inheritParams
+#' @param x An scdf object
 #' @param l2 A data frame providing additional variables at Level 2. The scdf
 #' has to have names for all cases and the Level 2 data frame has to have a
 #' column with corresponding case names.
 #' @param id Variable name of the Level 2 data frame that contains the case
 #' names.
+#' @param ... Not implemented
 #' @return Returns one data frame with data of all single-cases structured by
 #' the case variable.
 #' @author Juergen Wilbert
@@ -21,18 +22,20 @@
 #' 
 #' ## Convert the list of three single-case data frames from Grosche (2011) into one long data frame
 #' Grosche2011
-#' Grosche2011_long <- longSCDF(Grosche2011)
+#' Grosche2011_long <- as.data.frame(Grosche2011)
 #' Grosche2011_long
 #' 
 #' ## Combine an scdf with data for l2
-#' Leidig2018_long <- longSCDF(Leidig2018, l2 = Leidig2018_l2)
+#' Leidig2018_long <- as.data.frame(Leidig2018, l2 = Leidig2018_l2)
 #' names(Leidig2018_long)
 #' summary(Leidig2018_long)
 #' 
 #' @export
-longSCDF <- function(data, l2 = NULL, id = "case") {
-
-  label <- .case.names(names(data), length(data))
+as.data.frame.scdf <- function(x, ..., l2 = NULL, id = "case") {
+  
+  data <- x
+  
+  label <- .case_names(names(data), length(data))
 
   outdat <- vector()
   
@@ -48,4 +51,10 @@ longSCDF <- function(data, l2 = NULL, id = "case") {
   
   outdat
   
+}
+
+#' @rdname as.data.frame.scdf
+#' @export
+longSCDF <- function(...) {
+  as.data.frame(...)
 }

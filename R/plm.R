@@ -73,7 +73,7 @@ plm <- function(data, dvar, pvar, mvar, AR = 0, model = "B&L-B", family = "gauss
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
   
-  data <- .SCprepareData(data, na.rm = TRUE)
+  data <- .prepare_scdf(data, na.rm = TRUE)
   
   ATTRIBUTES <- attributes(data)[[.opt$scdf]]
   

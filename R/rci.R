@@ -41,8 +41,8 @@ rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
 
-  data <- .SCprepareData(data, na.rm = TRUE)
-  data <- .keepphasesSC(data, phases = phases,pvar = pvar)$data
+  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .keep_phases(data, phases = phases,pvar = pvar)$data
   
   N <- length(data)
   
@@ -66,13 +66,17 @@ rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2
   stand.dif <- (mB-mA)/sd(c(A,B))
   RCI.1 <- (mB - mA) / SE.A
   RCI.2 <- (mB - mA) / sqrt(2 * SE.A * SE.A)
-  RCI.3 <- (mB - mA) * rel + (mB - mA) * (1 - rel) / (sqrt(rel) * sqrt(2 * SE.A * SE.A))
+  RCI.3 <- (mB - mA) * rel + (mB - mA) * (1 - rel) / 
+           (sqrt(rel) * sqrt(2 * SE.A * SE.A))
   descriptives.ma <- matrix(
     c(nA, nB, mA, mB, sA, sB, SE.A, SE.B), 2, 4, 
     dimnames = list(c("A-Phase", "B-Phase"), c("n", "mean", "SD", "SE"))
   ) 
-  z <- qnorm(ci+0.5*(1-ci))
-  ci.ma <- matrix(NA, 2, 2, byrow = TRUE, dimnames = list(c("A-Phase", "B-Phase"), c("Lower", "Upper")))
+  z <- qnorm(ci + 0.5 * (1 - ci))
+  ci.ma <- matrix(
+    NA, 2, 2, byrow = TRUE, 
+    dimnames = list(c("A-Phase", "B-Phase"), c("Lower", "Upper"))
+  )
   ci.ma[1,1] <- mA - z * SE.A
   ci.ma[1,2] <- mA + z * SE.A
   ci.ma[2,1] <- mB - z * SE.B
@@ -85,10 +89,24 @@ rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2
     boxplot(dat, ylab = "Mean", main = main)
   }
   
-  RCI.ma <- matrix(c(RCI.1, RCI.2, RCI.3), 3, 1, dimnames = list(c("Jacobson et al.", "Christensen and Mendoza", "Hageman and Arrindell"), "RCI"))
-  out <- list(RCI = RCI.ma, stand.dif = stand.dif, conf = ci.ma, conf.percent = ci, reliability = rel, descriptives = descriptives.ma) 
+  RCI.ma <- matrix(
+    c(RCI.1, RCI.2, RCI.3), 3, 1, 
+    dimnames = list(
+      c("Jacobson et al.", "Christensen and Mendoza", "Hageman and Arrindell"), 
+      "RCI"
+    )
+  )
+  out <- list(
+    RCI = RCI.ma, 
+    stand.dif = stand.dif, 
+    conf = ci.ma, 
+    conf.percent = ci, 
+    reliability = rel, 
+    descriptives = descriptives.ma
+  ) 
   class(out) <- c("sc","rci")
-  
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$dv) <- dvar
   out
 }
 

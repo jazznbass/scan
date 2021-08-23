@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -91,7 +91,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -106,9 +111,235 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      
+      <small>Source: <a href='https://github.com/jazznbass/scan/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="scan-053" class="section level1">
+<h1 class="page-header" data-toc-text="0.53">
+<a href="#scan-053" class="anchor"></a>scan 0.53<small> Unreleased </small>
+</h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li>scdf files now allow to combine studies with different phase designs. Several functions have been adapted to handle cases with differing designs in a mutual analysis.</li>
+<li>The %&gt;% operator has been imported and exported from the magrittr package. Now that R 4.1 has a pipe operator, pipes seem to become the standard. For compatibility with older R Versions, we will stay with the %&gt;% operator for some time befor switching to |&gt;.</li>
+<li>To allow for a piping code, we added several functions: <code>add_l2, select_phases, select_cases, subset, set_vars</code>.</li>
+</ul>
+<div id="new-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h3>
+<p>-<code><a href="../reference/add_l2.html">add_l2()</a></code>: Adds the variables from a second level 2 data frame to an scdf matched by an id variable (deafult is <code>case</code>).</p>
+<pre class="{.r}"><code>Leidig2018 %&gt;%
+  add_l2(Leidig2018_l2) %&gt;%
+  hplm(update.fixed = .~. + gender + migration + ITRF_TOTAL*phaseB, 
+       slope = FALSE, random.slopes = FALSE, lr.test = FALSE)</code></pre>
+<ul>
+<li>
+<code><a href="../reference/select_phases.html">select_phases()</a></code>: selects and recombines phases into A and B phase (equivalent to th phases arguent fo various functions, but usefull when using %&gt;% operators).</li>
+</ul>
+<pre class="{.r}"><code>exampleA1B1A2B2 %&gt;% 
+  select_cases("Pawel", "Moritz") %&gt;%
+  select_phases(A = c(1,3), B = c(2,4)) %&gt;%
+  overlap()</code></pre>
+<ul>
+<li>
+<code><a href="../reference/set_vars.html">set_vars()</a></code>: change the core variables of an scdf (arguments <code>dv</code> for dependent variable, <code>phase</code> for phase variable, and <code>mt</code> for measurement-time variable).</li>
+</ul>
+<pre class="{.r}"><code>exampleAB_add %&gt;%
+  set_vars(dv = "depression") %&gt;%
+  overlap()</code></pre>
+<ul>
+<li>
+<code><a href="../reference/is.scdf.html">is.scdf()</a></code>: Tests if an object is of type “scdf” or not.</li>
+<li>
+<code><a href="../reference/check_scdf.html">check_scdf()</a></code>: Checks for the validity of an scdf object (mainly used for internal test)</li>
+<li>
+<code><a href="../reference/convert.html">convert()</a></code>: Creates an scdf syntax file from an scdf object.</li>
+<li>
+<code>cdc</code>: Applies the Conservative Dual-Criterion Method (CDC; Fisher, Kelley, &amp; Lomas, 2003) to scdf objects.</li>
+</ul>
+<pre class="{.r}"><code><a href="../reference/cdc.html">cdc(Beretvas2008)
+cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")</a></code></pre>
+</div>
+<div id="changes-in-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#changes-in-functions" class="anchor"></a>Changes in functions</h3>
+<ul>
+<li>
+<code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code>: Argument <code>subset</code> changed to <code>filter</code>.</li>
+<li>
+<code><a href="../reference/overlap.html">overlap()</a></code>: Added Hedges-g.</li>
+<li>new trend lines added to <code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>: Koenig’s bi-split / quarter intersect (lines = “trendA_bisplit”) and Tukey’s tri-split / Wald’s slope (lines = “trendA_trisplit”).</li>
+</ul>
+<pre class="{.r}"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(exampleAB_50[8], lines = "trendA_bisplit")
+plot(example_A24, lines = "trendA_trisplit")</a></code></pre>
+<ul>
+<li>
+<code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>: Now allows for multiple lines with different line styles.</li>
+</ul>
+<pre class="{.r}"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(
+  exampleAB, 
+  lines = list(
+    list(type = "median", col = "red", lwd = 0.5),
+    list(type = "trend", col = "blue", lty = "dashed", lwd = 2),
+    list(type = "loreg", f = 0.2, col = "green", lty = "solid", lwd = 1)
+  )
+)</a></code></pre>
+<ul>
+<li><p><code>tau_U()</code>: Solved bug in meta analysis <a href='https://github.com/jazznbass/scan/issues/6'>#6</a>. Reworked the complete function to be more clear and accurate. Added <code>method_meta</code> switching between fixed and random-effect meta analyses. Reworked the print function to look nicer.</p></li>
+<li><p><code><a href="../reference/export.html">export()</a></code>: Reworked the html output. Added a basic output for tau_u. Arguments <code>caption</code> and <code>footnote</code> allow to specify appearance (if left NA object specific output is generated.). <code>booktab = TRUE</code> is now set as a default for kable options.</p></li>
+</ul>
+</div>
+<div id="new-experimental-function-for-ploting" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new-experimental-function-for-ploting" class="anchor"></a>New experimental function for ploting</h3>
+<p>The new <code><a href="../reference/scplot.html">scplot()</a></code> function is here! It allows for a more tidy coding and the use of %&gt;% operators. <code>scplot</code> is in an experimental state and code with current syntax might not work in a later version due to changes in function and argument names. Still, <code><a href="../reference/scplot.html">scplot()</a></code> works in many cases. We plan to add new graphical features primarily to <code>scplot</code> which is already capable of doing more than <code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>.</p>
+<p>Here is an example that implicitly also introduces several of the new graphical functions:</p>
+<pre class="{.r}"><code>scplot(exampleABAB) %&gt;% 
+  add_statline(stat = "trendA", colour = "tomato2") %&gt;%
+  add_statline(stat = "maxA", colour = "lightblue") %&gt;%
+  add_marks(case = 1:2, positions = 14, colour = "red3", size = 3, shape = 4) %&gt;%
+  add_marks(case = "all", positions = 'points &lt; quantile(points, 0.1)', colour = "blue3", size = 2) %&gt;%
+  add_marks(positions = outlier(exampleABAB), colour = "brown", size = 2) %&gt;%
+  add_labels(colour = "sienna") %&gt;%
+  set_xaxis(increment = 4, size = 0.7, colour = "brown") %&gt;%
+  set_yaxis(limits = c(0, 50), colour = "sienna3", size = 0.7) %&gt;%
+  set_ylabel("Points", colour = "sienna3", size = 0.7, orientation = 0) %&gt;%
+  set_xlabel("Weeks", size = 0.7, colour = "brown") %&gt;%
+  add_title("Points by week", colour = "sienna4", size = 1.5, font = 3) %&gt;%
+  set_phasenames("Baseline", "Intervention", "Fall-Back", "Intervention", cex = 1, colour = "darkgreen") %&gt;%
+  set_style("tiny") %&gt;%
+  set_background(c("grey94", "grey99")) %&gt;%
+  add_grid(colour = "grey85", width = 0.5) %&gt;%
+  add_frame("sienna4") %&gt;%
+  set_dots("sienna4", size = 1, shape = 18) %&gt;%
+  set_line("black", width = 1, type = "dotted") %&gt;%
+  add_text(case = 1, x = 5, y = 35, "Wow!!", colour = "darkgreen", angle = 20) %&gt;%
+  add_text(case = 1, 1, 22, "PND", colour = "darkblue", size = 1.3) %&gt;%
+  add_text(case = 1, 4, 8, "Trend", colour = "tomato", size = 1.3) %&gt;%
+  add_arrow(case = 1, 5, 30, 5, 22, colour = "steelblue") %&gt;%
+  add_ridge("white") %&gt;%
+  set_casenames("MY", "FUNNY", "VALENTINE", colour = "steelblue4", size = 0.6) %&gt;%
+  add_box("sienna1", width = 2) %&gt;%
+  set_seperator(extent = 0.9, width = 0.5, type = "solid", colour = "sienna")</code></pre>
+</div>
+<div id="deleted-deprecated-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#deleted-deprecated-functions" class="anchor"></a>Deleted deprecated functions</h3>
+<p>The following functions were deprecated since 2017 and are now removed from scan:</p>
+<ul>
+<li><code>makesingleSC()</code></li>
+<li>
+<code>makeSCDF()</code>: Please use <code>scdf</code> instead.</li>
+<li>
+<code>estimateSC()</code>: Please use <code><a href="../reference/estimate_design.html">estimate_design()</a></code>
+</li>
+<li>
+<code>power.testSC()</code>: Please use <code><a href="../reference/power_test.html">power_test()</a></code>
+</li>
+</ul>
+</div>
+<div id="bugs" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bugs" class="anchor"></a>Bugs</h3>
+<ul>
+<li>
+<code><a href="../reference/print.scdf.html">print.scdf()</a></code> now prints cases when all variable names are wider than the current screen with.</li>
+</ul>
+</div>
+</div>
+</div>
+    <div id="scan-052" class="section level1">
+<h1 class="page-header" data-toc-text="0.52">
+<a href="#scan-052" class="anchor"></a>scan 0.52<small> Unreleased </small>
+</h1>
+<div id="major-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<ul>
+<li>
+<code><a href="../reference/describe.html">describe()</a></code> as the new alias for <code><a href="../reference/describe.html">describeSC()</a></code>
+</li>
+<li>
+<code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>, <code><a href="../reference/style_plot.html">style_plot()</a></code>: New options to style casenames: <code>names</code> which takes a list with tag = value structure. Example:</li>
+</ul>
+<pre class="{.r}"><code>new_style &lt;- style_plot()
+new_style$names$side &lt;- 3
+new_style$names$line &lt;- -1.7
+new_style$names$col &lt;- "darkred"
+new_style$names$cex &lt;- 1.5
+new_style$names$at &lt;- 20
+new_style$names$adj &lt;- 1
+new_style$names$font &lt;- 3
+plot(exampleAB_decreasing, style = new_style)</code></pre>
+<ul>
+<li>
+<code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>, <code><a href="../reference/style_plot.html">style_plot()</a></code>: Different background colors for different phases:</li>
+</ul>
+<pre class="{.r}"><code>new_style &lt;- style_plot()
+new_style$fill.bg &lt;- c("aliceblue", "mistyrose1", "honeydew")
+new_style$lty.seperators &lt;- 0
+plot(exampleABC, style = new_style)</code></pre>
+<pre class="{.r}"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(exampleABAB, style = c("default", "phase_shade"))</a></code></pre>
+</div>
+</div>
+    <div id="scan-0505" class="section level1">
+<h1 class="page-header" data-toc-text="0.50.5">
+<a href="#scan-0505" class="anchor"></a>scan 0.50.5<small> Unreleased </small>
+</h1>
+<div id="major-changes-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
+<ul>
+<li>fixed bug in plot function</li>
+</ul>
+</div>
+</div>
+    <div id="scan-0504" class="section level1">
+<h1 class="page-header" data-toc-text="0.50.4">
+<a href="#scan-0504" class="anchor"></a>scan 0.50.4<small> Unreleased </small>
+</h1>
+<div id="major-changes-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
+<ul>
+<li>New <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> function (method from base <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> for selecting variables, rows, and cases. It takes the arguments <code>subset</code>, <code>select</code>, and <code>cases</code>.</li>
+</ul>
+<pre class="{.r}"><code><a href="https://rdrr.io/r/base/subset.html">subset(exampleAB, (values &lt; 60 &amp; phase == "A") | (values &gt;= 60 &amp; phase == "B"))
+subset(exampleAB_add, select = c(-cigarrets, -depression))
+subset(exampleA1B1A2B2, phase %in% c("A1", "B2"), cases = Pawel:Moritz)</a></code></pre>
+</div>
+</div>
+    <div id="scan-0502" class="section level1">
+<h1 class="page-header" data-toc-text="0.50.2">
+<a href="#scan-0502" class="anchor"></a>scan 0.50.2<small> Unreleased </small>
+</h1>
+<div id="major-changes-4" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
+<ul>
+<li>New <code><a href="../reference/select_cases.html">select_cases()</a></code> function.</li>
+</ul>
+<pre class="{.r}"><code><a href="../reference/select_cases.html">select_cases(exampleAB, "Johanna", "Karolina")
+select_cases(exampleAB, 1,2)
+select_cases(exampleAB, "-Johanna")</a></code></pre>
+</div>
+</div>
+    <div id="scan-050" class="section level1">
+<h1 class="page-header" data-toc-text="0.50">
+<a href="#scan-050" class="anchor"></a>scan 0.50<small> Unreleased </small>
+</h1>
+<div id="major-changes-5" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-5" class="anchor"></a>Major changes</h2>
+<ul>
+<li>Started dropping the <code>SC</code> extension from function names e.g. <code><a href="../reference/overlap.html">overlapSC()</a></code> becomes <code><a href="../reference/overlap.html">overlap()</a></code>
+</li>
+</ul>
+<p>see: <a href="https://jazznbass.github.io/scan-Book/the-scan-package.html#changes-with-version-0.50" class="uri">https://jazznbass.github.io/scan-Book/the-scan-package.html#changes-with-version-0.50</a></p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -122,7 +353,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">

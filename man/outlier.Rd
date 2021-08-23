@@ -61,8 +61,8 @@ plot(Grosche2011, marks = res_outlier)
 }
 \seealso{
 Other data manipulation functions: 
+\code{\link{as.data.frame.scdf}()},
 \code{\link{fill_missing}()},
-\code{\link{longSCDF}()},
 \code{\link{ranks}()},
 \code{\link{shift}()},
 \code{\link{smooth_cases}()},

@@ -73,7 +73,7 @@ single-case data and some additional statistics." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -93,7 +93,12 @@ single-case data and some additional statistics." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -108,7 +113,7 @@ single-case data and some additional statistics." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Overlap indices for single-case data</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/overlap.R'><code>R/overlap.R</code></a></small>
     <div class="hidden name"><code>overlap.Rd</code></div>
     </div>
 
@@ -126,7 +131,7 @@ single-case data and some additional statistics.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -166,7 +171,7 @@ and 4 (as B). Default is <code>phases = c("A","B")</code>.</p></td>
 
 <dt>overlap</dt><dd><p>A data frame consisting of the following indices for
 each single-case for all cases: PND, PEM, PET, NAP, PAND, Tau-U (A vs. B -
-Trend A), Diff_mean, Diff_trend, SMD.</p></dd>
+Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 <dt>phases.A</dt><dd><p>Selection for A phase.</p></dd>
 <dt>phases.B</dt><dd><p>Selection for B phase.</p></dd>
 <dt>design</dt><dd><p>Phase design.</p></dd>
@@ -191,65 +196,68 @@ Trend A), Diff_mean, Diff_trend, SMD.</p></dd>
 <span class='fu'>overlap</span><span class='op'>(</span><span class='va'>Huitema2000</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Overlap Indices
 #&gt; 
-#&gt; Design:  A B 
 #&gt; Comparing phase 1 against phase 2 
 #&gt; 
 #&gt;               Case1
-#&gt; PND           40.00
-#&gt; PEM           70.00
-#&gt; PET          100.00
-#&gt; NAP           70.00
-#&gt; NAP.rescaled  40.00
-#&gt; PAND          60.00
-#&gt; TAU_U         -0.69
+#&gt; Design          A-B
+#&gt; PND              40
+#&gt; PEM              70
+#&gt; PET             100
+#&gt; NAP              70
+#&gt; NAP rescaled     40
+#&gt; PAND             60
+#&gt; Tau_U         -0.69
 #&gt; Base_Tau      -0.73
-#&gt; Diff_mean    -20.40
+#&gt; Diff_mean     -20.4
 #&gt; Diff_trend   -17.87
-#&gt; SMD           -0.90
+#&gt; SMD            -0.9
+#&gt; Hedges_g      -0.86
 #&gt; 
-#&gt; Note. The following variables were used in this analysis:
-#&gt;       'score' as dependent variable, 'phase' as phase ,and 'mt' as measurement time.</div><div class='input'>
+#&gt; The following variables were used in this analysis:
+#&gt; 'score' as dependent variable, 'phase' as phase variable,and 'mt' as measurement-time variable.</div><div class='input'>
 <span class='co'>## Display overlap indices for six single-cases</span>
 <span class='fu'>overlap</span><span class='op'>(</span><span class='va'>GruenkeWilbert2014</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Overlap Indices
 #&gt; 
-#&gt; Design:  A B 
 #&gt; Comparing phase 1 against phase 2 
 #&gt; 
-#&gt;               Anton    Bob   Paul Robert    Sam    Tim
-#&gt; PND          100.00 100.00 100.00 100.00 100.00 100.00
-#&gt; PEM          100.00 100.00 100.00 100.00 100.00 100.00
-#&gt; PET          100.00 100.00 100.00 100.00 100.00 100.00
-#&gt; NAP          100.00 100.00 100.00 100.00 100.00 100.00
-#&gt; NAP.rescaled 100.00 100.00 100.00 100.00 100.00 100.00
-#&gt; PAND         100.00 100.00 100.00 100.00 100.00 100.00
-#&gt; TAU_U          0.48   0.57   0.60   0.49   0.51   0.35
-#&gt; Base_Tau       0.67   0.77   0.75   0.77   0.72   0.60
-#&gt; Diff_mean      4.14   5.82   5.00   4.78   4.48   6.00
-#&gt; Diff_trend     0.43   0.00   0.28  -0.08  -0.07   0.60
-#&gt; SMD            5.07   7.13   6.64   5.72   8.17   7.35
+#&gt;              Anton   Bob  Paul Robert   Sam   Tim
+#&gt; Design         A-B   A-B   A-B    A-B   A-B   A-B
+#&gt; PND            100   100   100    100   100   100
+#&gt; PEM            100   100   100    100   100   100
+#&gt; PET            100   100   100    100   100   100
+#&gt; NAP            100   100   100    100   100   100
+#&gt; NAP rescaled   100   100   100    100   100   100
+#&gt; PAND           100   100   100    100   100   100
+#&gt; Tau_U         0.48  0.57  0.60   0.49  0.51  0.35
+#&gt; Base_Tau      0.67  0.77  0.75   0.77  0.72  0.60
+#&gt; Diff_mean     4.14  5.82  5.00   4.78  4.48  6.00
+#&gt; Diff_trend    0.43  0.00  0.28  -0.08 -0.07  0.60
+#&gt; SMD           5.07  7.13  6.64   5.72  8.17  7.35
+#&gt; Hedges_g      4.83  6.79  6.33   5.45  7.78  7.00
 #&gt; 
-#&gt; Note. The following variables were used in this analysis:
-#&gt;       'score' as dependent variable, 'phase' as phase ,and 'mt' as measurement time.</div><div class='input'>
+#&gt; The following variables were used in this analysis:
+#&gt; 'score' as dependent variable, 'phase' as phase variable,and 'mt' as measurement-time variable.</div><div class='input'>
 <span class='co'>## Combining phases for analyszing designs with more than two phases   </span>
 <span class='fu'>overlap</span><span class='op'>(</span><span class='va'>exampleA1B1A2B2</span>, phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A1"</span>,<span class='st'>"A2"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"B1"</span>,<span class='st'>"B2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Overlap Indices
 #&gt; 
-#&gt; Design:  A1 B1 A2 B2 
-#&gt; Comparing phases 1 + 3 against phases 2 + 4 
+#&gt; Comparing phases A1 + A2 against phases B1 + B2 
 #&gt; 
-#&gt;               Pawel Moritz Jannis
-#&gt; PND           55.00  77.78  71.43
-#&gt; PEM          100.00 100.00 100.00
-#&gt; PET          100.00 100.00 100.00
-#&gt; NAP           94.50  96.84  98.35
-#&gt; NAP.rescaled  89.00  93.69  96.70
-#&gt; PAND          82.50  85.00  90.00
-#&gt; TAU_U          0.45   0.46   0.38
-#&gt; Base_Tau       0.65   0.68   0.68
-#&gt; Diff_mean     12.25  13.58  15.27
-#&gt; Diff_trend    -0.05   0.00  -0.54
-#&gt; SMD            2.68   3.27   3.62</div><div class='input'>
+#&gt;                    Pawel      Moritz      Jannis
+#&gt; Design       A1-B1-A2-B2 A1-B1-A2-B2 A1-B1-A2-B2
+#&gt; PND                   55          78          71
+#&gt; PEM                  100         100         100
+#&gt; PET                  100         100         100
+#&gt; NAP                   94          97          98
+#&gt; NAP rescaled          89          94          97
+#&gt; PAND                  82          85          90
+#&gt; Tau_U               0.45        0.46        0.38
+#&gt; Base_Tau            0.65        0.68        0.68
+#&gt; Diff_mean          12.25       13.58       15.27
+#&gt; Diff_trend         -0.05        0.00       -0.54
+#&gt; SMD                 2.68        3.27        3.62
+#&gt; Hedges_g            2.63        3.21        3.55</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -262,7 +270,7 @@ Trend A), Diff_mean, Diff_trend, SMD.</p></dd>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">

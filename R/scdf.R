@@ -8,8 +8,7 @@ methods::setOldClass(c("scdf", "list"))
 #' The \code{scdf} class is a wrapper for a list containing a dataframe for
 #' each case.
 #'
-#' @aliases scdf scdf-class as.scdf checkSCDF
-#' makeSCDF
+#' @aliases scdf scdf-class as.scdf
 #' @param values A vector containing measurement values of the dependent variable.
 #' @param B.start The first measurement of phase B (simple coding if design is
 #' strictly AB).
@@ -99,43 +98,52 @@ methods::setOldClass(c("scdf", "list"))
 #' )
 #' overlapSC(jim, phases = list(c("A1", "A2"), c("B1", "B2")))
 #' @export
-scdf <- function(values, B.start, mt, phase, phase.design, name, dvar = "values", pvar = "phase", mvar = "mt", ...) {
+scdf <- function(values, 
+                 B.start, 
+                 mt, 
+                 phase, 
+                 phase.design, 
+                 name, 
+                 dvar = "values", 
+                 pvar = "phase", 
+                 mvar = "mt", 
+                 ...) {
   df <- list(...)
 
   if ("var.values" %in% names(df)) {
-    stop("'var.values' is deprecated. Please use 'dvar' instead.")
+    stop("Argument 'var.values' is deprecated. Please use 'dvar' instead.")
   }
   if (!missing(mt)) df <- c(mt = list(mt), df)
   if (!missing(phase)) df <- c(phase = list(phase), df)
   if (!missing(values)) df <- c(values = list(values), df)
 
   if (!(dvar %in% names(df))) {
-    stop("Independent variable not defined correctly!")
+    stop("Dependent variable not defined correctly!")
   }
 
   # create phase.design from a named vector
   if (!is.null(names(df[[dvar]]))) {
-    tmp.names <- names(df[[dvar]])
-    tmp <- c(which(tmp.names != ""), length(tmp.names) + 1)
+    tmp_names <- names(df[[dvar]])
+    tmp <- c(which(tmp_names != ""), length(tmp_names) + 1)
     phase.design <- tmp[-1] - tmp[-length(tmp)]
-    names(phase.design) <- tmp.names[which(tmp.names != "")]
+    names(phase.design) <- tmp_names[which(tmp_names != "")]
   }
 
   # create phase.design from phase variable
   if (!missing(phase)) {
-    tmp.phase <- rle(phase)
-    phase.design <- tmp.phase$lengths
-    names(phase.design) <- tmp.phase$values
+    tmp_phase <- rle(phase)
+    phase.design <- tmp_phase$lengths
+    names(phase.design) <- tmp_phase$values
   }
 
   data <- as.data.frame(df)
 
-  ### for backward campatibility
+  ### for backward compatibility
   if (("MT" %in% names(data)) && missing(mt) && mvar == "mt") {
     warning("Please rename argument 'MT' to 'mt'.")
     mvar <- "MT"
   }
-  ### END : for backward campatibility
+  ### END : for backward compatibility
 
   # create default mt row
   if (!(mvar %in% names(data))) data[, mvar] <- 1:nrow(data)
@@ -143,7 +151,7 @@ scdf <- function(values, B.start, mt, phase, phase.design, name, dvar = "values"
   if (!missing(B.start)) {
     B.start <- match(B.start, data[, mvar])
     if (is.na(B.start)) {
-      stop("No values provided at the measurement.time of B.start in var '", mvar, "'.")
+      stop("No values provided at the measurement-time of B.start in var '", mvar, "'.")
     }
     phase.design <- c("A" = B.start - 1, "B" = nrow(data) - B.start + 1)
   }
@@ -156,11 +164,14 @@ scdf <- function(values, B.start, mt, phase, phase.design, name, dvar = "values"
     stop("Measurement-time variable not defined correctly!")
   }
 
-  data[, pvar] <- factor(rep(names(phase.design), phase.design), levels = unique(names(phase.design)))
+  data[, pvar] <- factor(
+      rep(names(phase.design), phase.design), 
+      levels = unique(names(phase.design))
+  )
 
   data <- list(data)
 
-  attributes(data) <- .defaultAttributesSCDF()
+  attributes(data) <- .default_attributes()
 
   scdf_attr(data, .opt$dv) <- dvar
   scdf_attr(data, .opt$phase) <- pvar

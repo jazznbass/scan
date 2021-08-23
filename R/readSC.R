@@ -92,10 +92,7 @@ readSC <- function(filename = NULL, data = NULL, sep = ",", dec = ".", sort.labe
   for(i in 1:length(dat)) row.names(dat[[i]]) <- 1:nrow(dat[[i]])
   names(dat) <- lab
   cat("Imported", length(dat), "cases.\n")
-  #if (columns == 3) {
-  #  cat("Measurement-times are missing. Standard times were assigned.\n")
-  #  dat <- .SCprepareData(dat)
-  #}
+
   class(dat) <- c("scdf","list")
   scdf_attr(dat, .opt$phase) <- pvar
   scdf_attr(dat, .opt$dv)    <- dvar

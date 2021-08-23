@@ -99,9 +99,9 @@ rand_test <- function (data, dvar, pvar, statistic = "Mean B-A",
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
 
-  data <- .SCprepareData(data)
+  data <- .prepare_scdf(data)
   
-  keep <- .keepphasesSC(data, phases = phases, pvar = pvar)
+  keep <- .keep_phases(data, phases = phases, pvar = pvar)
   data <- keep$data
   
   a   <- lapply(data, function(x) x[x[, pvar] == "A", dvar])
@@ -259,6 +259,8 @@ rand_test <- function (data, dvar, pvar, statistic = "Mean B-A",
     
     out <- list(statistic = statistic, phases.A = keep$phases.A, phases.B = keep$phases.B, N = N, n1 = length(unlist(a)), n2 = length(unlist(b)), limit = limit, startpoints = startpoints, p.value = p.value, number = number, complete = complete, observed.statistic = obs.stat, Z = Z, p.Z.single = p.Z.single, distribution = dist, possible.combinations = possible.combinations, auto.corrected.number = auto.corrected.number)	
     class(out) <- c("sc","rand")
+    attr(out, .opt$phase) <- pvar
+    attr(out, .opt$dv) <- dvar
     out
   }
 }

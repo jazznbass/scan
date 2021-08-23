@@ -56,13 +56,13 @@ for example to include further variables into the regression model.}
 \item{full.model}{Full regression model list}
 }
 \description{
-This function is in an experimental status.
 The \code{mplm} function computes a multivariate piecewise regression model.
 }
 \examples{
-##
-mplm(exampleAB_add, dvar = c("wellbeing", "depression"))
-mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
+res <- mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
+print(res)
+## also report standardized coefficients:
+print(res, std = TRUE)
 }
 \seealso{
 Other regression functions: 

@@ -75,7 +75,7 @@ estimated based on actual data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -95,7 +95,12 @@ estimated based on actual data." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -110,7 +115,7 @@ estimated based on actual data." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Empirical power analysis for single-case data</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/power_test.R'><code>R/power_test.R</code></a></small>
     <div class="hidden name"><code>power_test.Rd</code></div>
     </div>
 
@@ -178,14 +183,14 @@ tests. Default is <code>alpha = 0.05</code>.</p></td>
   rtt <span class='op'>=</span> <span class='fl'>0.8</span>, level <span class='op'>=</span> <span class='fl'>1.4</span>
 <span class='op'>)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>power_test</span><span class='op'>(</span><span class='va'>design</span>, n_sim <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='warning'>Warning: one argument not used by format '1:%.1f'</span></div><div class='input'>
 <span class='co'>## Would you achieve higher power by setting up a MBD with three cases?</span>
 <span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>
   n <span class='op'>=</span> <span class='fl'>3</span>, phase.design <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>6</span>, B <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span>, 
   rtt <span class='op'>=</span> <span class='fl'>0.8</span>, level <span class='op'>=</span> <span class='fl'>1.4</span>
 <span class='op'>)</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>power_test</span><span class='op'>(</span><span class='va'>design</span>, n_sim <span class='op'>=</span> <span class='fl'>10</span>, stat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"hplm_level"</span>, <span class='st'>"rand"</span><span class='op'>)</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='warning'>Warning: one argument not used by format '1:%.1f'</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -198,7 +203,7 @@ tests. Default is <code>alpha = 0.05</code>.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">

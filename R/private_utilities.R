@@ -1,4 +1,4 @@
-.defaultAttributesSCDF <- function(attri = NULL) {
+.default_attributes <- function(attri = NULL) {
   out <- list()
   
   if (!is.null(attri)) out <- attri
@@ -10,7 +10,6 @@
   scdf[[.opt$dv]]      <- "values"
   scdf[[.opt$mt]]      <- "mt"
   out[[.opt$scdf]]     <- scdf
-  
   
   out
 }  
@@ -25,32 +24,32 @@
 } 
 
 
-.SCmovingAverage <- function(x, xLag, FUN = mean) {
+.moving_average <- function(x, xLag, FUN = mean) {
   for(i in (xLag + 1):(length(x) - xLag))
     x[i] <- FUN(x[(i - xLag):(i + xLag)], na.rm = TRUE)
   return(x)
 }
 
-.SCac <- function(x, lag = 1) {
-  m <- mean(x, na.rm = TRUE)
-  ax1 <- x[1:(length(x) - lag)] - m
-  ax2 <- x[(lag + 1):length(x)] - m
-  ac <- sum(ax1 * ax2, na.rm = TRUE) / sum((x - m)^2, na.rm = TRUE)
-  ac
-}
+# .SCac <- function(x, lag = 1) {
+#   m <- mean(x, na.rm = TRUE)
+#   ax1 <- x[1:(length(x) - lag)] - m
+#   ax2 <- x[(lag + 1):length(x)] - m
+#   ac <- sum(ax1 * ax2, na.rm = TRUE) / sum((x - m)^2, na.rm = TRUE)
+#   ac
+# }
 
-.SClm <- function(x = NULL, y) {
-  if (is.null(x))
-    x <- 1:length(y)
-  mx <- mean(x)
-  my <- mean(y)
-  ss.xy <- sum( (x - mx) * (y - my) )
-  ss.xx <- sum( (x - mx)^2 )
-  b <- ss.xy / ss.xx
-  b
-}
+# .SClm <- function(x = NULL, y) {
+#   if (is.null(x))
+#     x <- 1:length(y)
+#   mx <- mean(x)
+#   my <- mean(y)
+#   ss.xy <- sum( (x - mx) * (y - my) )
+#   ss.xx <- sum( (x - mx)^2 )
+#   b <- ss.xy / ss.xx
+#   b
+# }
 
-.SCbeta <- function(model) {
+.beta_weights <- function(model) {
   b <- model$coefficients[-1]
   sx <- apply(model$model[-1], 2, sd)
   sy <- apply(model$model[ 1], 2, sd)
@@ -65,94 +64,28 @@
   phases
 }
 
-.keepphasesSC <- function(data, phases = c(1, 2), set.phases = TRUE, pvar = "phase") {
-  
-  if (is.data.frame(data)) data <- list(data)
-  ATTRIBUTES <- attributes(data)
-  
-  res <- lapply(data, function(x) rle(as.character(x[, pvar]))$values)
-  if (!all(unlist(lapply(res[-1], function(x) identical(x, res[[1]])))))
-    warning("Single-cases do have differing desings.")
-  
-  if (class(phases) %in% c("character","numeric","integer")) {
-    if (!length(phases) == 2) {
-      stop("Phases argument not set correctly. Please provide a vector with two charcters or two numbers. E.g., phases = c(1,3).")
-    }    
-    phases.A <- phases[1]
-    phases.B <- phases[2]
-  }
-  
-  if (class(phases) == "list") {
-    phases.A <- phases[[1]]
-    phases.B <- phases[[2]]
-  }
-  
-  phases.total <- c(phases.A, phases.B)
-  design <- rle(as.character(data[[1]][, pvar]))
-  
-  if (class(phases.total) == "character") {
-    tmp <- sapply(phases.total, function(x) sum(x == design$values)>1)
-    if (any(tmp))
-      stop(paste0("Phase names ", paste0(names(tmp[tmp]))," occure several times. Please give number of phases instead of characters."))
-    
-    tmp <- sapply(phases.total, function(x) any(x == design$values))
-    if (!all(tmp))
-      stop(paste0("Phase names ",  names(tmp[!tmp]) ," do not occure in the data. Please give different phase names."))
-  }
-  
-  if (class(phases.total) == "character") {
-    phases.A <- which(design$values %in% phases.A)
-    phases.B <- which(design$values %in% phases.B)
-  }
-  
-  N <- length(data)
-  design.list <- list()
-  
-  for(case in 1:N) {
-    design <- rle(as.character(data[[case]][,pvar]))
-    design$start <- c(1,cumsum(design$lengths)+1)[1:length(design$lengths)]
-    design$stop <- cumsum(design$lengths)
-    class(design) <- "list"
-    
-    A <- unlist(lapply(phases.A, function(x) design$start[x]:design$stop[x]))
-    B <- unlist(lapply(phases.B, function(x) design$start[x]:design$stop[x]))
-    
-    data[[case]][,pvar] <- as.character(data[[case]][,pvar])
-    
-    if (set.phases) {
-      data[[case]][A ,pvar] <- "A"
-      data[[case]][B ,pvar] <- "B"
-    }
-    data[[case]] <- data[[case]][c(A,B),]
-    design.list[[case]] <- design
-  }
-  attributes(data) <- ATTRIBUTES
-  out <- list(data = data, designs = design.list, N = N, phases.A = phases.A, phases.B = phases.B)
-  return(out)
-}
-
-.stringPhasesSC <- function(A,B) {
-  nomerS = "phase "
-  nomerP = "phases "
-  APART <- 
+.phases_string <- function(A, B) {
+  nomer_s = "phase "
+  nomer_p = "phases "
+  a_part <- 
     if (length(A) == 1)
-      paste0(nomerS, A, collapse = "")
+      paste0(nomer_s, A, collapse = "")
   else 
-    paste0( c(nomerP, A[1], paste0(" + ",A[-1]) ), 
+    paste0( c(nomer_p, A[1], paste0(" + ",A[-1]) ), 
             collapse = "")
   
-  BPART <- 
+  b_part <- 
     if (length(B) == 1)
-      paste0(nomerS, B, collapse = "")
+      paste0(nomer_s, B, collapse = "")
   else 
-    paste0( c(nomerP,B[1], paste0(" + ",B[-1])), 
+    paste0( c(nomer_p,B[1], paste0(" + ",B[-1])), 
             collapse = "")
   
-  out <- paste0(c("Comparing ", APART, " against ", BPART), collapse ="")
+  out <- paste0(c("Comparing ", a_part, " against ", b_part), collapse ="")
   out
 }
 
-.nice.p <- function(p, equal.sign = FALSE) {
+.nice_p <- function(p, equal.sign = FALSE) {
   out <- rep(NA, length(p))
   for(i in 1:length(p)) {
     if (isTRUE(p[i] >= 0.05)) {
@@ -167,7 +100,7 @@
   out
 } 
 
-.case.names <- function(x, n) {
+.case_names <- function(x, n) {
   if (is.null(x)) x <- paste0("Case", 1:n)
   nonames <- which(is.na(x))
   x[nonames] <- paste0("Case", nonames)

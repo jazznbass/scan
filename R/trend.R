@@ -44,7 +44,7 @@ trend <- function(data, dvar, pvar, mvar, offset = -1,model = NULL) {
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt)    else scdf_attr(data, .opt$mt)    <- mvar
   
-  data <- .SCprepareData(data)
+  data <- .prepare_scdf(data)
 
   phase <- NULL
   N <- length(data)
@@ -79,18 +79,26 @@ trend <- function(data, dvar, pvar, mvar, offset = -1,model = NULL) {
     VAR <- paste0(FORMULAS.NAMES[f], ".ALL")
     data.phase <- data
     data.phase[, mvar] <- data.phase[, mvar] - min(data.phase[, mvar], na.rm = TRUE) + 1 + offset
-    ma[which(rows == VAR), 1:3] <- .SCbeta(lm(FORMULAS[[f]], data = data.phase))
+    ma[which(rows == VAR), 1:3] <- .beta_weights(lm(FORMULAS[[f]], data = data.phase))
     for(p in 1: length(design)) {
       data.phase <- data[phases$start[p]:phases$stop[p], ]
       data.phase[, mvar] <- data.phase[,mvar] - min(data.phase[, mvar], na.rm = TRUE) + 1 + offset
       VAR <- paste0(FORMULAS.NAMES[f], ".", design[p])
-      ma[which(rows == VAR), 1:3] <- .SCbeta(lm(FORMULAS[[f]], data = data.phase))
+      ma[which(rows == VAR), 1:3] <- .beta_weights(lm(FORMULAS[[f]], data = data.phase))
     }
     
   }
   
-  out <- list(trend = ma, offset = offset, formulas = FORMULAS.NAMES, design = design)
+  out <- list(
+    trend = ma, 
+    offset = offset, 
+    formulas = FORMULAS.NAMES, 
+    design = design
+  )
   class(out) <- c("sc","trend")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$mt) <- mvar
+  attr(out, .opt$dv) <- dvar
   out
 }
 

@@ -20,13 +20,15 @@
 #' )
 #' plot(study)
 #' @export
-truncate_phase <- function(data, dvar, pvar, truncate = list(A = c(0, 0), B = c(0, 0)), na = TRUE) {
+truncate_phase <- function(data, dvar, pvar, 
+                           truncate = list(A = c(0, 0), B = c(0, 0)), 
+                           na = TRUE) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
 
-  data <- .SCprepareData(data)
+  data <- .prepare_scdf(data)
 
   N <- length(data)
 
@@ -42,10 +44,16 @@ truncate_phase <- function(data, dvar, pvar, truncate = list(A = c(0, 0), B = c(
     }
     for (ph in 1:length(phases$values)) {
       if (truncate[[ph]][1] > 0) {
-        deselect <- c(deselect, phases$start[ph]:(phases$start[ph] + truncate[[ph]][1] - 1))
+        deselect <- c(
+          deselect, 
+          phases$start[ph]:(phases$start[ph] + truncate[[ph]][1] - 1)
+        )
       }
       if (truncate[[ph]][2] > 0) {
-        deselect <- c(deselect, (phases$stop[ph] - truncate[[ph]][2] + 1):phases$stop[ph])
+        deselect <- c(
+          deselect, 
+          (phases$stop[ph] - truncate[[ph]][2] + 1):phases$stop[ph]
+        )
       }
     }
 
@@ -55,7 +63,8 @@ truncate_phase <- function(data, dvar, pvar, truncate = list(A = c(0, 0), B = c(
     if (!na) data[[i]] <- data[[i]][-deselect, ]
     if (na) data[[i]][deselect, dvar] <- NA
   }
-  return(data)
+  
+  data
 }
 
 #' @rdname truncate_phase

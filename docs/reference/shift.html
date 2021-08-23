@@ -73,7 +73,7 @@ is given as a time variable (see example below)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -93,7 +93,12 @@ is given as a time variable (see example below)." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -108,7 +113,7 @@ is given as a time variable (see example below)." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Shift values in a single-case data file</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/shift.R'><code>R/shift.R</code></a></small>
     <div class="hidden name"><code>shift.Rd</code></div>
     </div>
 
@@ -126,7 +131,7 @@ is given as a time variable (see example below).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>value</th>
@@ -168,11 +173,11 @@ Defaults to the measurement time variable.</p></td>
 #&gt; Fitted a gaussian distribution.
 #&gt; F(3, 19) = 46.74; p = 0.000; R² = 0.881; Adjusted R² = 0.862
 #&gt; 
-#&gt;                      B     2.5%    97.5%     SE      t     p    ΔR²
-#&gt; Intercept      258.714  223.364  294.065 18.036 14.344 0.000       
-#&gt; Trend year       1.857   -7.947   11.662  5.002  0.371 0.715 0.0009
-#&gt; Level phase B -148.657 -193.265 -104.050 22.759 -6.532 0.000 0.2679
-#&gt; Slope phase B   -1.726  -11.926    8.474  5.204 -0.332 0.744 0.0007
+#&gt;                      B     2.5%    97.5%     SE      t     p delta R²
+#&gt; Intercept      258.714  223.364  294.065 18.036 14.344 0.000         
+#&gt; Trend year       1.857   -7.947   11.662  5.002  0.371 0.715   0.0009
+#&gt; Level phase B -148.657 -193.265 -104.050 22.759 -6.532 0.000   0.2679
+#&gt; Slope phase B   -1.726  -11.926    8.474  5.204 -0.332 0.744   0.0007
 #&gt; 
 #&gt; Autocorrelations of the residuals
 #&gt;  lag    cr
@@ -193,7 +198,7 @@ Defaults to the measurement time variable.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">

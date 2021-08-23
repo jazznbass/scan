@@ -12,7 +12,7 @@ tau_u(
   tau_method = "b",
   method = "complete",
   phases = c(1, 2),
-  fisher = TRUE,
+  meta_method = "random",
   continuity_correction = FALSE
 )
 
@@ -38,7 +38,7 @@ could be combined by providing a list with two elements. E.g., \code{phases
 = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
 and 4 (as B). Default is \code{phases = c("A","B")}.}
 
-\item{fisher}{If TRUE, meta analyses of Tau U is based on Fisher Z transformed correlations.}
+\item{meta_method}{Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated.}
 
 \item{continuity_correction}{If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.}
 
@@ -55,21 +55,23 @@ This function calculates indices of the Tau-U family as proposed by Parker
 et al. (2011).
 }
 \details{
-Tau-U is an inconsistently operationalized construct.
+Tau-U is an inconsistently operationalized construct. Parker et al. (2011) describe a method which may result in Tau-U lager than 1. A different implementation of the method (provided at http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of tau-a as in the original formulation by Parker). Bossart et. al (2018) describe inconsistencies in the results from this implementation as well. Another problems lies in the calculation in overall Tau-U values from several single cases. This function applies a metaanalyzes to gain the overall values. Each tau value is weighted by the inverse of the variance (ie. the tau standard error). Tau values are not converted to Pearson r values. The argument \code{"meta_method"} calculates a random-effect model ("random") or a fixed effect model ("fixed").
 }
 \examples{
 
-## Calculate tau-U for the example from Parker et al. (2011)
+tau_u(Grosche2011$Eva)
+
+## Replicate  tau-U calculation from Parker et al. (2011)
 bob <- scdf(c(A = 2, 3, 5, 3, B = 4, 5, 5, 7, 6), name = "Bob")
-tau_u(bob)
+res <- tau_u(bob, method = "parker", tau_method = "a")
+print(res, complete = TRUE)
 
-## Calculate tau-U based on Kendall Tau A
-tau_u(Grosche2011$Eva, tau_method = "a")
-
-## Request tau-U for all single-cases fom the Grosche2011 data
+## Request tau-U for all single-cases from the Grosche2011 data set
 tau_u(Grosche2011)
 }
 \references{
+Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018). Interpreting Kendall’s Tau and Tau-U for single-case experimental designs. \emph{Cogent Psychology, 5(1)}, 1–26. https://doi.org/10.1080/23311908.2018.1518687.
+
 Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B.
 (2011). Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
 \emph{Behavior Therapy, 42}, 284-299.

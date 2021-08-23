@@ -46,16 +46,28 @@
 #'      
 #' @export
 
-hplm <- function(data, dvar, pvar, mvar, model = "B&L-B", method = "ML", control = list(opt = "optim"), random.slopes = FALSE, lr.test = FALSE, ICC = TRUE, trend = TRUE, level = TRUE, slope = TRUE, fixed = NULL, random = NULL, update.fixed = NULL, data.l2 = NULL, ...) {
+hplm <- function(data, dvar, pvar, mvar, 
+                 model = "B&L-B", 
+                 method = "ML", 
+                 control = list(opt = "optim"), 
+                 random.slopes = FALSE, 
+                 lr.test = FALSE, 
+                 ICC = TRUE, 
+                 trend = TRUE, 
+                 level = TRUE, 
+                 slope = TRUE, 
+                 fixed = NULL, 
+                 random = NULL, 
+                 update.fixed = NULL, 
+                 data.l2 = NULL, 
+                 ...) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
 
-  dat <- .SCprepareData(data)
-  
-  ATTRIBUTES <- attributes(dat)
+  dat <- .prepare_scdf(data)
   
   N <- length(dat)
   out <- list()
@@ -71,7 +83,7 @@ hplm <- function(data, dvar, pvar, mvar, model = "B&L-B", method = "ML", control
   tmp_model <- .add_model_dummies(data = dat, model = model)
   dat <- tmp_model$data
 
-  dat <- longSCDF(dat, l2 = data.l2)
+  dat <- as.data.frame(dat, l2 = data.l2)
 
 # create formulas ---------------------------------------------------------
 
@@ -103,42 +115,42 @@ hplm <- function(data, dvar, pvar, mvar, model = "B&L-B", method = "ML", control
 # LR tests ----------------------------------------------------------------
 
   if (lr.test) {
-    PREDIC_RAND    <- unlist(strsplit(as.character(random[2]), "\\|"))[1]
-    PREDIC_RAND_ID <- unlist(strsplit(as.character(random[2]), "\\|"))[2]
-    PREDIC_RAND    <- unlist(strsplit(PREDIC_RAND, "\\+"))
-    PREDIC_RAND    <- trimws(PREDIC_RAND)
-    PREDIC_RAND_ID <- trimws(PREDIC_RAND_ID)
+    pred_rand    <- unlist(strsplit(as.character(random[2]), "\\|"))[1]
+    pred_rand_id <- unlist(strsplit(as.character(random[2]), "\\|"))[2]
+    pred_rand    <- unlist(strsplit(pred_rand, "\\+"))
+    pred_rand    <- trimws(pred_rand)
+    pred_rand_id <- trimws(pred_rand_id)
 
-    if (length(PREDIC_RAND) == 1) {
+    if (length(pred_rand) == 1) {
       stop("LR Test not applicable with only one random effect.")
     }
     
-    random.ir <- list(formula(gsub("1", "-1", random)))
-    for(i in 2:length(PREDIC_RAND))
-      random.ir[[i]] <- formula(
-        paste0("~", paste0(PREDIC_RAND[!PREDIC_RAND %in% PREDIC_RAND[i]], 
-        collapse = " + "), " | ", PREDIC_RAND_ID)
+    random_ir <- list(formula(gsub("1", "-1", paste(random, collapse = " "))))
+    for(i in 2:length(pred_rand))
+      random_ir[[i]] <- formula(
+        paste0("~", paste0(pred_rand[!pred_rand %in% pred_rand[i]], 
+        collapse = " + "), " | ", pred_rand_id)
       )
     
-    out$random.ir$restricted <- list()
+    out$random_ir$restricted <- list()
     
     # lme
-    for(i in 1:length(random.ir)) {
-      out$random.ir$restricted[[i]] <- lme(
-        fixed = fixed, random = random.ir[i], data = dat, 
+    for(i in 1:length(random_ir)) {
+      out$random_ir$restricted[[i]] <- lme(
+        fixed = fixed, random = random_ir[i], data = dat, 
         na.action = na.omit, method = method, control=control, 
         keep.data = FALSE, ...)
       
-      out$random.ir$restricted[[i]]$call$fixed <- fixed
+      out$random_ir$restricted[[i]]$call$fixed <- fixed
     }
     out$LR.test <- list()
     
     # LR test
-    for(i in 1:length(random.ir)) {
-      out$LR.test[[i]] <- anova(out$random.ir$restricted[[i]], out$hplm)
+    for(i in 1:length(random_ir)) {
+      out$LR.test[[i]] <- anova(out$random_ir$restricted[[i]], out$hplm)
       
     }
-    attr(out$random.ir, "parameters") <- c("Intercept", PREDIC_RAND)
+    attr(out$random_ir, "parameters") <- c("Intercept", pred_rand)
   }
   
   if (ICC) {
@@ -164,7 +176,7 @@ hplm <- function(data, dvar, pvar, mvar, model = "B&L-B", method = "ML", control
   out$model$fixed  <- fixed
   out$model$random <- random
   
-  class(out) <- c("sc","hplm")
+  class(out) <- c("sc_hplm")
   attr(out, .opt$phase) <- pvar
   attr(out, .opt$mt)    <- mvar
   attr(out, .opt$dv)    <- dvar

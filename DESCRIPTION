@@ -1,10 +1,12 @@
 Package: scan
 Type: Package
 Title: Single-Case Data Analyses for Single and Multiple Baseline Designs
-Version: 0.52
-Date: 2021-2-13
+Version: 0.53
+Date: 2021-8-23
 Author: Juergen Wilbert [aut, cre], Timo Lueke [aut]
-Maintainer: Juergen Wilbert <jwilbert@uni-potsdam.de>
+Authors@R: c(
+    person("Juergen", "Wilbert", email = "juergen.wilbert@uni-potsdam.de", role = c("cre", "aut")),
+    person("Timo", "Lueke", email = "timo.lueke@uni-graz.at", role = "aut"))
 Imports: 
   stats, 
   nlme, 
@@ -12,12 +14,12 @@ Imports:
   methods, 
   graphics,
   car,
-  MASS,
   knitr,
   kableExtra,
   readxl,
-  mblm
-Suggests:
+  mblm,
+  meta,
+  magrittr
 Depends: R (>= 3.5.0)
 Description: A collection of procedures for analysing, visualising, 
   and managing single-case data. These include piecewise linear regression 
@@ -26,9 +28,10 @@ Description: A collection of procedures for analysing, visualising,
   support outlier detection, handling missing values, scaling, truncating, 
   rank transformation, and smoothing. An exporting function helps to generate 
   html and latex tables in a publication friendly style. More details can be 
-  found at <https://jazznbass.github.io/scan-Book/>.
-License: GPL
-URL: https://r-forge.r-project.org/projects/scan/, https://jazznbass.github.io/scan-Book/index.html
+  found at <https://jazznbass.github.io/scan-Book>.
+License: GPL (>= 3)
+URL: https://github.com/jazznbass/scan, https://jazznbass.github.io/scan-Book
+BugReports: https://github.com/jazznbass/scan/issues
 LazyData: true
 Encoding: UTF-8
 RoxygenNote: 7.1.1

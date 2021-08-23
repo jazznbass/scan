@@ -7,7 +7,7 @@
 #' @return 
 #' \item{overlap}{A data frame consisting of the following indices for
 #' each single-case for all cases: PND, PEM, PET, NAP, PAND, Tau-U (A vs. B -
-#' Trend A), Diff_mean, Diff_trend, SMD.}
+#' Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.}
 #' \item{phases.A}{Selection for A phase.}
 #' \item{phases.B}{Selection for B phase.}
 #' \item{design}{Phase design.}
@@ -25,60 +25,92 @@
 #' overlap(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 #' 
 #' @export
-overlap <- function(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2)) {
+overlap <- function(data, dvar, pvar, mvar, 
+                    decreasing = FALSE, 
+                    phases = c(1, 2)){
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
   
-  data.list <- .SCprepareData(data)
-  keep <- .keepphasesSC(data.list, phases = phases, pvar = pvar)
-  data.list <- keep$data
+  data_list <- .prepare_scdf(data)
   
-  design <- rle(as.character(data.list[[1]][, pvar]))$values
-  N <- length(data.list)
+  keep <- .keep_phases(data_list, phases = phases, pvar = pvar)
+  data_list <- keep$data
+  
+  designs <- lapply(keep$designs, function(x) x$values)
+  designs <- sapply(designs, function(x) paste0(x, collapse = "-"))
+  
+  N <- length(data_list)
 
-  case.names <- names(data.list)
+  case_names <- .case_names(names(data_list), length(data_list))
 
-  VAR <- c(
-    "PND", "PEM", "PET", "NAP", "NAP.rescaled", "PAND", "TAU_U", 
-    "Base_Tau",  "Diff_mean", "Diff_trend","SMD"
+  vars <- c(
+    "PND", "PEM", "PET", "NAP", "NAP rescaled", "PAND", "Tau_U", 
+    "Base_Tau",  "Diff_mean", "Diff_trend", "SMD", "Hedges_g"
   )
-  d.f <- as.data.frame(matrix(nrow = N, ncol = length(VAR)))
-  colnames(d.f) <- VAR
-  rownames(d.f) <- c(case.names)
+  df <- as.data.frame(matrix(nrow = N, ncol = length(vars)))
+  colnames(df) <- vars
+  df <- data.frame(Case = case_names, Design = designs, df, check.names = FALSE)
   
   for(i in 1:N) {
-    data <- data.list[i]
-    d.f$PND[i] <- pnd(data, decreasing = decreasing)$PND
-    d.f$PEM[i] <- pem(data, decreasing = decreasing, binom.test = FALSE, chi.test = FALSE)$PEM
-    d.f$PET[i] <- pet(data, decreasing = decreasing)$PET
-    d.f$NAP[i] <- nap(data, decreasing = decreasing)$nap$NAP[1]
-    d.f$NAP.rescaled[i] <- nap(data, decreasing = decreasing)$nap$Rescaled[1]
-    d.f$PAND[i] <- pand(data, decreasing = decreasing)$PAND
-    #d.f$TAU_U[i] <- tauUSC(data)$Overall_tau_u[2]
-    d.f$TAU_U[i] <- tau_u(data)$table[[1]]["A vs. B + Trend B - Trend A", "Tau"]
-    d.f$Base_Tau[i] <- corrected_tau(data)$tau
+    data <- data_list[i]
+    df$PND[i] <- pnd(data, decreasing = decreasing)$PND
+    df$PEM[i] <- pem(data, decreasing = decreasing, binom.test = FALSE, chi.test = FALSE)$PEM
+    df$PET[i] <- pet(data, decreasing = decreasing)$PET
+    df$NAP[i] <- nap(data, decreasing = decreasing)$nap$NAP[1]
+    df$"NAP rescaled"[i] <- nap(data, decreasing = decreasing)$nap$Rescaled[1]
+    df$PAND[i] <- pand(data, decreasing = decreasing)$PAND
+    #df$TAU_U[i] <- tauUSC(data)$Overall_tau_u[2]
+    df$Tau_U[i] <- tau_u(data)$table[[1]]["A vs. B + Trend B - Trend A", "Tau"]
+    df$Base_Tau[i] <- corrected_tau(data)$tau
     
     data <- data[[1]]
     A <- data[data[, pvar] == "A", dvar]
     B <- data[data[, pvar] == "B", dvar]
-    d.f$Diff_mean[i] <- mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)
-    d.f$SMD[i] <- (mean(B, na.rm = TRUE) - mean(A, na.rm = TRUE)) / sd(A, na.rm = TRUE)
+    mtA <- data[data[, pvar] == "A", mvar]
+    mtB <- data[data[, pvar] == "B", mvar]
+    nA <- sum(!is.na(A))
+    nB <- sum(!is.na(A))    
+    n <- nA + nB
+    mA <- mean(A, na.rm = TRUE)
+    mB <- mean(B, na.rm = TRUE)    
+    sdA <- sd(A, na.rm = TRUE)
+    sdB <- sd(B, na.rm = TRUE)    
     
-    A.MT <- data[data[, pvar] == "A", mvar]
-    B.MT <- data[data[, pvar] == "B", mvar]
-    d.f$Diff_trend[i] <- coef(lm(B ~ I(B.MT - B.MT[1] + 1)))[2] - coef(lm(A ~ I(A.MT - A.MT[1] + 1)))[2]
+    
+    df$Diff_mean[i] <- mB - mA
+    df$SMD[i] <- (mB - mA) / sdA
+    
+    
+    sd_hg <- sqrt(
+      ( (nA - 1) * sdA^2 + (nB - 1) * sdB^2) 
+      / 
+      (nA + nB - 2) 
+    )  
+    
+    df$Hedges_g[i] <- (mB - mA) / sd_hg
+    df$Hedges_g[i] <- df$Hedges_g[i] * (1 - (3 / (4 * n - 9)))
+    
+    df$Diff_trend[i] <- coef(lm(B ~ I(mtB - mtB[1] + 1)))[2] - 
+                        coef(lm(A ~ I(mtA - mtA[1] + 1)))[2]
     
   }
   
-  out <- list(overlap = d.f, phases.A = keep$phases.A, phases.B = keep$phases.B, design = keep$design[[1]]$values)
-  class(out) <- c("sc", "overlap")
-  ATTRIBUTES <- attributes(data.list)[[.opt$scdf]]
-  attr(out, .opt$phase) <- ATTRIBUTES[[.opt$phase]]
-  attr(out, .opt$mt)    <- ATTRIBUTES[[.opt$mt]]
-  attr(out, .opt$dv)    <- ATTRIBUTES[[.opt$dv]]
+  out <- list(
+    overlap = df, 
+    phases.A = keep$phases_A, 
+    phases.B = keep$phases_B 
+    #design = keep$design[[1]]$values
+  )
+  
+  class(out) <- c("sc_overlap")
+  
+  source_attributes <- attributes(data_list)[[.opt$scdf]]
+  attr(out, .opt$phase) <- source_attributes[[.opt$phase]]
+  attr(out, .opt$mt)    <- source_attributes[[.opt$mt]]
+  attr(out, .opt$dv)    <- source_attributes[[.opt$dv]]
   
   out
 }

@@ -2,22 +2,82 @@
 % Please edit documentation in R/export.R
 \name{export}
 \alias{export}
+\alias{export.scdf}
+\alias{export.sc}
+\alias{export.sc_desc}
+\alias{export.sc_hplm}
+\alias{export.sc_overlap}
 \title{Export scan objects to html or latex}
 \usage{
-export(
+export(object, ...)
+
+\method{export}{scdf}(
   object,
-  filename = NULL,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  cols,
+  ...
+)
+
+\method{export}{sc}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
   cols,
   flip = FALSE,
-  note = TRUE,
   round = 2,
+  ...
+)
+
+\method{export}{sc_desc}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  flip = FALSE,
+  ...
+)
+
+\method{export}{sc_hplm}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  round = 2,
+  nice = TRUE,
+  ...
+)
+
+\method{export}{sc_overlap}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  round = 2,
+  flip = FALSE,
   ...
 )
 }
 \arguments{
-\item{object}{An scdf}
+\item{object}{An scdf or an object exported from a scan function.}
+
+\item{...}{Further Arguments passed to internal functions.}
+
+\item{caption}{Character string with table caption. If left NA (default) a caption will be created based on the exported object.}
+
+\item{footnote}{Character string with table footnote. If left NA (default) a footnote will be created based on the exported object.}
 
 \item{filename}{Character string with the filename. If a filename is provided
 the output will be written into this file.}
@@ -29,16 +89,15 @@ the output will be written into this file.}
 \item{cols}{Defines which columns are included when a scdf is exported. It is either a vector
 with variable names or the string "main" will select the central variables.}
 
-\item{flip}{If TRUE, some objects are displayed with rows and columns flipped.}
-
-\item{note}{If TRUE additional information are printed below the table.}
+\item{flip}{If TRUE, some objects are exported with rows and columns flipped.}
 
 \item{round}{value for the digits argument passed to the internally used round function.}
 
-\item{...}{Further Arguments passed to internal functions.}
+\item{nice}{If set TRUE (default) output values are rounded and optimized for
+publication tables.}
 }
 \value{
-Returns a specif formated html.
+Returns a specif formated html (or latex).
 }
 \description{
 This function is in an experimental status.

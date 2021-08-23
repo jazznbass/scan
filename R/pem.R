@@ -28,12 +28,14 @@
 #' @export
 pem <- function(data, dvar, pvar, decreasing = FALSE, binom.test = TRUE, chi.test = FALSE, FUN = median, phases = c(1, 2), ...) {
 
-  # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
- 
-  data <- .SCprepareData(data, na.rm = TRUE)
-  data <- .keepphasesSC(data, phases = phases, pvar = pvar)$data
+  # set default attributes
+  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
+  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase)
+  scdf_attr(data, .opt$dv) <- dvar
+  scdf_attr(data, .opt$phase) <- pvar
+  
+  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .keep_phases(data, phases = phases, pvar = pvar)$data
   
   N <- length(data)
   
@@ -79,6 +81,8 @@ pem <- function(data, dvar, pvar, decreasing = FALSE, binom.test = TRUE, chi.tes
   }
   
   out <- list(PEM = PEM, test = stats.ma, decreasing = decreasing)
-  class(out) <- c("sc","PEM")
+  class(out) <- c("sc_pem")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$dv) <- dvar
   out
 }

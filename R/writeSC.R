@@ -38,6 +38,6 @@ writeSC <- function(data, filename = NULL, sep = ",", dec = ".", ...) {
     cat("Write to file", filename, "\n\n")
   }
   
-  utils::write.table(longSCDF(data), file = filename, sep = sep, row.names = FALSE, dec = dec, ...)
+  utils::write.table(as.data.frame(data), file = filename, sep = sep, row.names = FALSE, dec = dec, ...)
   
 }

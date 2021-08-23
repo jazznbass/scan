@@ -1,25 +1,56 @@
-#' Combine single-case data frames into a multiple case study
+#' Combine single-case data frames
 #'
 #' @param ... scdf objects
+#' @param dvar Character string. Name of the dependent variable. Defaults to the dependent variable of the first case provided.
+#' @param pvar Character string. Name of the phase variable. Defaults to the phase variable of the first case provided.
+#' @param mvar Character string. Name of the measurement-time variable. Defaults to the measurement-time variable of the first case provided.
 #'
-#' @return A scdf
+#' @return A scdf. If not set differently, the attributes of this scdf are copied from the first scdf provided (i.e the first argument of the function). 
 #' 
 #' @export
-combine <- function(...) {
+combine <- function(..., dvar = NULL, pvar = NULL, mvar = NULL) {
   scdfs <- list(...)
   
-  ATTRIBUTES <- attributes(scdfs[[1]])
-
+  source_attr <- attributes(scdfs[[1]])
+  
   case_names <- unlist(lapply(scdfs, names))
    
   data <- unlist(scdfs, recursive = FALSE)
-  attributes(data) <- .defaultAttributesSCDF()
+  
+  #attributes(data) <- .default_attributes()
 
-  if (!is.null(ATTRIBUTES[[.opt$scdf]])) attr(data, .opt$scdf) <- ATTRIBUTES[[.opt$scdf]]
+  #if (!is.null(source_attr[[.opt$scdf]])) attr(data, .opt$scdf) <- source_attr[[.opt$scdf]]
+  attributes(data) <- source_attr
+  #attr(data, .opt$scdf) <- source_attr[[.opt$scdf]]
+  
+  if (!is.null(dvar)) scdf_attr(data, .opt$dv) <- dvar
+  if (!is.null(mvar)) scdf_attr(data, .opt$mt) <- mvar
+  if (!is.null(pvar)) scdf_attr(data, .opt$phase) <- pvar
+  
   
   names(data) <- case_names
-  if (!is.null(names(scdfs))) 
-    names(data)[which(names(scdfs) != "")] <- names(scdfs)[which(names(scdfs) != "")]
+  if (!is.null(names(scdfs))) {
+    .names <- names(scdfs)[which(names(scdfs) != "")]
+    names(data)[which(names(scdfs) != "")] <- .names
+    
+  }
+  
+  if (!is.null(dvar)) source_attr[[.opt$dv]] <- dvar
+  if (!is.null(mvar)) source_attr[[.opt$mt]] <- mvar
+  if (!is.null(pvar)) source_attr[[.opt$phase]] <- pvar
+  
+  # check class scdf validity
+  if (.opt$rigorous_class_check) {
+    results <- .check_scdf(data)
+    if (!isTRUE(results)) {
+      if(length(results$warnings) > 0) {
+        warning(results$warnings)
+      }
+      if(length(results$errors) > 0) {
+        stop(results$errors)
+      }
+    } 
+  }
   
   data
 }
@@ -74,55 +105,16 @@ as_scdf <- function(object) {
   if (!is.list(object))
     stop("Object must be a data.frame or a list of data.frames.")
   
-  attributes(object) <- .defaultAttributesSCDF(attributes(object)) 
+  attributes(object) <- .default_attributes(attributes(object)) 
   object
   
 }
 
-
-checkSCDF <- function(data) {
-  cat("Checking object ...\n\n")
-  if (!identical(class(data),c("scdf","list")))
-    cat("Object is not of class 'scdf'.\n")
-  if (!("list" %in% class(data))) {
-    cat("Object is not of class 'list'.\n")
-    return(invisible(FALSE))
-  }
-  if (!all(unlist(lapply(data, function(x) is.data.frame(x))))) {
-    cat("Not all list-elements are data frames.\n")
-    return(invisible(FALSE))
-  }
-  if (!all(unlist(lapply(data, function(x) {c("phase") %in% names(x)})))) {
-    cat("Not all dataframes have a phase column.\n")
-    return(invisible(FALSE))
-  }
-  if (!all(unlist(lapply(data, function(x) {c("values") %in% names(x)})))) {
-    cat("Not all dataframes have a values column.\n")
-    return(invisible(FALSE))
-  }
-  if (!all(unlist(lapply(data, function(x) {c("mt") %in% names(x)}))))
-    cat("Note: Not all dataframes have an 'mt' column.\n")
-  phases <- rle(as.character(data[[1]]$phase))$values
-  if (!all(unlist(lapply(data, function(x) identical(rle(as.character(x$phase))$values, phases)))))
-    cat("Warning: Phases are not identical for all cases.\n")
-  cat("Done!\n")
-  return(invisible(FALSE))
-}
-
-#' @rdname scdf
-#' @param MT Deprecated: Measurement times
+#' scdf objects
+#' Tests for objects of type "scdf"
+#'
+#' @param x An object to be tested
+#' @return Returns TRUE or FALSE depending on whether its argument is of scdf type or not.
 #' @export
-makeSCDF <- function (data, B.start = NULL, MT = NULL){
-  warning("This function is deprecated. Please use the scdf function.\n\n")
-  args <- list(
-    values = data,
-    B.start = B.start
-  )
-  if (!is.null(MT)) args$mt <- MT
-    
-  do.call(scdf, args)
-  #scdf(values = data, B.start = B.start, mt = MT)[[1]]
-}
-
-
+is.scdf <- function(x) inherits(x, "scdf")
 

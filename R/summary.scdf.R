@@ -17,10 +17,15 @@ summary.scdf <- function(object, ...) {
   )
   
   rows <- lapply(object, nrow)
-  out <- data.frame(Measurements = unlist(rows), Design = unlist(designs))
-  if(!is.null(names(object))) row.names(out) <- names(object)
-  
-  print(out)
+
+  out <- data.frame(
+    " " = format(.case_names(names(object), length(object)), justify = "left"),
+    Measurements = unlist(rows), 
+    Design = unlist(designs),
+    check.names = FALSE
+  )
+
+  print(out, row.names = FALSE)
   cat("\n", sep = "")
   var.names <- TRUE
   if(var.names) {

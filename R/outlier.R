@@ -52,12 +52,12 @@ outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
   
-  data.list <- .SCprepareData(data)
+  data_list <- .prepare_scdf(data)
  
   out <- list()
   
-  N <- length(data.list)
-  case.names <- names(data.list)
+  N <- length(data_list)
+  case.names <- names(data_list)
   dropped.mts <- list()
   dropped.n <- list()
   ci.matrix <- list()
@@ -66,7 +66,7 @@ outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
   cook <- list()
   
   for(i in 1:N) {
-    data <- data.list[[i]]
+    data <- data_list[[i]]
     
     phases <- rle(as.character(data[, pvar]))$value
     values <- lapply(phases, function(x) data[data[, pvar] == x, dvar])
@@ -143,20 +143,20 @@ outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
       else 
         cut.off <- as.numeric(criteria[2])
 
-      reg <- plm(data.list[i], dvar = dvar, pvar = pvar, mvar = mvar)$full.model
+      reg <- plm(data_list[i], dvar = dvar, pvar = pvar, mvar = mvar)$full.model
       
       cd <- cooks.distance(reg)
       filter <- cd >= cut.off
-      cook[[i]] <- data.frame(Cook = round(cd, 2), MT = data.list[[i]][, mvar])
+      cook[[i]] <- data.frame(Cook = round(cd, 2), MT = data_list[[i]][, mvar])
     }		
     
-    dropped.mts[[i]] <- data.list[[i]][filter, mvar]
+    dropped.mts[[i]] <- data_list[[i]][filter, mvar]
     dropped.n[[i]]   <- sum(filter)
     
-    data.list[[i]] <- data.list[[i]][!filter, ]
+    data_list[[i]] <- data_list[[i]][!filter, ]
   }
   
-  out$data <- data.list
+  out$data <- data_list
   out$dropped.mt <- dropped.mts
   out$dropped.n <- dropped.n
   out$ci.matrix <- ci.matrix
@@ -166,7 +166,11 @@ outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
   out$criteria <- criteria
   out$N <- N
   out$case.names <- case.names
-  class(out) <- c("sc","outlier")
+  
+  class(out) <- c("sc_outlier")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$mt) <- mvar
+  attr(out, .opt$dv) <- dvar
   out
 }
 

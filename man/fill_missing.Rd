@@ -48,7 +48,7 @@ single-case data and you want to calculate overlap indices
 Grosche2011filled <- fill_missing(Grosche2011)
 study <- c(Grosche2011[2], Grosche2011filled[2])
 names(study) <- c("Original", "Filled")
-plot(study, style = "grid")
+plot(study)
 
 ## Fill missing values in a single-case dataset that are NA
 Maggie <- rSC(design_rSC(level = list(0,1)), seed = 123)
@@ -63,7 +63,7 @@ plot(study, marks = list(positions = replace.positions), style = "grid2")
 }
 \seealso{
 Other data manipulation functions: 
-\code{\link{longSCDF}()},
+\code{\link{as.data.frame.scdf}()},
 \code{\link{outlier}()},
 \code{\link{ranks}()},
 \code{\link{shift}()},

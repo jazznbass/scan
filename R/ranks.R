@@ -23,7 +23,7 @@ ranks <- function(data, var, grand = TRUE, ...) {
 
   if(isTRUE(grand)) {
     ATTRIBUTES <- attributes(data)
-    data       <- longSCDF(data)
+    data       <- as.data.frame(data)
     data$case  <- factor(data$case, levels = unique(data$case))
     for (v in var) data[, v] <- rank(data[, v], na.last = "keep", ...)
     data <- split(data, data$case)

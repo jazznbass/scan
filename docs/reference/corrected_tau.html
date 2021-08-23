@@ -73,7 +73,7 @@ after correcting for a baseline trend." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -93,7 +93,12 @@ after correcting for a baseline trend." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -108,7 +113,7 @@ after correcting for a baseline trend." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Baseline corrected tau</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/corrected_tau.R'><code>R/corrected_tau.R</code></a></small>
     <div class="hidden name"><code>corrected_tau.Rd</code></div>
     </div>
 
@@ -135,7 +140,7 @@ after correcting for a baseline trend.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -168,7 +173,7 @@ and 4 (as B). Default is <code>phases = c("A","B")</code>.</p></td>
     </tr>
     <tr>
       <th>repeated</th>
-      <td><p>If TRUE applies the repeated median method for caluclating slope and intercept (<code>mblm</code>)</p></td>
+      <td><p>If TRUE applies the repeated median method for calculating slope and intercept (<code>mblm</code>)</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -178,12 +183,12 @@ and 4 (as B). Default is <code>phases = c("A","B")</code>.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This method has been proposed by Tarlow (2016). The baseline data are checked for a singificant 
+    <p>This method has been proposed by Tarlow (2016). The baseline data are checked for a significant 
 autocorrelation (based on Kendalls Tau). If so, a non-parameteric Theil-Sen regression is applied
 for the baseline data where the dependent values are regressed on the measurement time. The resulting slope
 information is then used to predict data of the B-phase. The dependent variable is now corrected for this baseline trend 
-and the resudials of the Theil-Sen regression are taken for further caluculations.
-Finally, a tau is calculated for the dependent variable and the dichtomos phase variable.
+and the residuals of the Theil-Sen regression are taken for further calculations.
+Finally, a tau is calculated for the dependent variable and the dichotomous phase variable.
 The function here provides two extensions to this procedure: The more accurate Siegel repeated median regression
 is applied when <code>repeated = TRUE</code> and a continuity correction is applied when <code>continuity = TRUE</code> (both are the default settings).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -206,17 +211,18 @@ Size Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior Modific
 <code><a href='tau_u.html'>tau_u</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='makeSCDF.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>33</span>,<span class='fl'>25</span>,<span class='fl'>17</span>,<span class='fl'>25</span>,<span class='fl'>14</span>,<span class='fl'>13</span>,<span class='fl'>15</span>, B <span class='op'>=</span> <span class='fl'>15</span>,<span class='fl'>16</span>,<span class='fl'>16</span>,<span class='fl'>5</span>,<span class='fl'>7</span>,<span class='fl'>9</span>,<span class='fl'>6</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>8</span>,<span class='fl'>11</span>,<span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>33</span>,<span class='fl'>25</span>,<span class='fl'>17</span>,<span class='fl'>25</span>,<span class='fl'>14</span>,<span class='fl'>13</span>,<span class='fl'>15</span>, B <span class='op'>=</span> <span class='fl'>15</span>,<span class='fl'>16</span>,<span class='fl'>16</span>,<span class='fl'>5</span>,<span class='fl'>7</span>,<span class='fl'>9</span>,<span class='fl'>6</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>8</span>,<span class='fl'>11</span>,<span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>corrected_tau</span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Baseline corrected tau
 #&gt; 
-#&gt; Auto correlation in baseline:
-#&gt; tau = -0.68; p = 0.023 
 #&gt; 
-#&gt; Baseline corrected tau:
-#&gt; tau = 0.66; p = 0.001 
+#&gt; Continuity correction applied
+#&gt;                            tau     z     p
+#&gt; Baseline autocorrelation -0.68 -2.28  &lt;.05
+#&gt; Uncorrected tau          -0.57 -2.98  &lt;.01
+#&gt; Baseline correted tau     0.66  3.41 &lt;.001
 #&gt; 
-#&gt; Baseline correction applied.
+#&gt; Baseline correction should be applied.
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -229,7 +235,7 @@ Size Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior Modific
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">

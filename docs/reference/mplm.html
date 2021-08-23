@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="Multivariate Piecewise linear model / piecewise regression — mplm" />
-<meta property="og:description" content="This function is in an experimental status.
-The mplm function computes a multivariate piecewise regression model." />
+<meta property="og:description" content="The mplm function computes a multivariate piecewise regression model." />
 
 
 
@@ -73,7 +72,7 @@ The mplm function computes a multivariate piecewise regression model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.50.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53</span>
       </span>
     </div>
 
@@ -93,7 +92,12 @@ The mplm function computes a multivariate piecewise regression model." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jazznbass/scan/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -108,13 +112,12 @@ The mplm function computes a multivariate piecewise regression model." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Multivariate Piecewise linear model / piecewise regression</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/mplm.R'><code>R/mplm.R</code></a></small>
     <div class="hidden name"><code>mplm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function is in an experimental status.
-The <code>mplm</code> function computes a multivariate piecewise regression model.</p>
+    <p>The <code>mplm</code> function computes a multivariate piecewise regression model.</p>
     </div>
 
     <pre class="usage"><span class='fu'>mplm</span><span class='op'>(</span>
@@ -137,7 +140,7 @@ The <code>mplm</code> function computes a multivariate piecewise regression mode
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A single-case data frame. See <code><a href='makeSCDF.html'>scdf</a></code> to learn about this format.</p></td>
+      <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
       <th>dvar</th>
@@ -210,29 +213,64 @@ for example to include further variables into the regression model.</p></td>
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>##</span>
-<span class='fu'>mplm</span><span class='op'>(</span><span class='va'>exampleAB_add</span>, dvar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wellbeing"</span>, <span class='st'>"depression"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; This function is in an experimental state and only implemented for testing und debugging purposes.</div><div class='output co'>#&gt; Multivariate piecewise linear model
+    <pre class="examples"><div class='input'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>mplm</span><span class='op'>(</span><span class='va'>Leidig2018</span><span class='op'>$</span><span class='va'>`1a1`</span>, dvar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"academic_engagement"</span>, <span class='st'>"disruptive_behavior"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Multivariate piecewise linear model
 #&gt; 
 #&gt; Dummy model: B&amp;L-B 
 #&gt; 
-#&gt; Coefficients:
-#&gt;                         wellbeing depression
-#&gt; (Intercept)            48.0380952  4.0857143
-#&gt; day                     0.3785714  0.1142857
-#&gt; Level Phase Medication  3.8633333 -0.7800000
-#&gt; Slope Phase Medication -0.2754945 -0.1650549
+#&gt; Coefficients: 
+#&gt;               academic_engagement disruptive_behavior
+#&gt; (Intercept)                 2.986              0.7671
+#&gt; Trend                      -0.216              0.0822
+#&gt; Level Phase B               2.121             -1.3096
+#&gt; Slope Phase B               0.219             -0.0803
 #&gt; 
-#&gt; Formula: y ~ 1 + day + phaseMedication + interMedication
+#&gt; Formula: y ~ 1 + mt + phaseB + interB
 #&gt; 
 #&gt; Type III MANOVA Tests: Pillai test statistic
-#&gt;                        Df test stat approx F num Df den Df Pr(&gt;F)    
-#&gt; (Intercept)             1   0.89679  152.053      2     35 &lt;2e-16 ***
-#&gt; day                     1   0.05450    1.009      2     35 0.3750    
-#&gt; Level Phase Medication  1   0.03846    0.700      2     35 0.5034    
-#&gt; Slope Phase Medication  1   0.03911    0.712      2     35 0.4975    
+#&gt;               Df test stat approx F num Df den Df  Pr(&gt;F)    
+#&gt; (Intercept)    1    0.2210    11.06      2     78 5.9e-05 ***
+#&gt; Trend          1    0.0317     1.28      2     78    0.29    
+#&gt; Level Phase B  1    0.2217    11.11      2     78 5.7e-05 ***
+#&gt; Slope Phase B  1    0.0315     1.27      2     78    0.29    
 #&gt; ---
-#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</div></pre>
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; 
+#&gt; The following variables were used in this analysis:
+#&gt; 'academic_engagement/ disruptive_behavior' as dependent variable, 'phase' as phase variable,and 'mt' as measurement-time variable.</div><div class='input'><span class='co'>## also report standardized coefficients:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, std <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Multivariate piecewise linear model
+#&gt; 
+#&gt; Dummy model: B&amp;L-B 
+#&gt; 
+#&gt; Coefficients: 
+#&gt;               academic_engagement disruptive_behavior
+#&gt; (Intercept)                 2.986              0.7671
+#&gt; Trend                      -0.216              0.0822
+#&gt; Level Phase B               2.121             -1.3096
+#&gt; Slope Phase B               0.219             -0.0803
+#&gt; 
+#&gt; Standardized coefficients: 
+#&gt;               academic_engagement disruptive_behavior
+#&gt; (Intercept)                 0.000               0.000
+#&gt; Trend                      -5.979               5.107
+#&gt; Level Phase B               0.522              -0.722
+#&gt; Slope Phase B               5.974              -4.917
+#&gt; 
+#&gt; Formula: y ~ 1 + mt + phaseB + interB
+#&gt; 
+#&gt; Type III MANOVA Tests: Pillai test statistic
+#&gt;               Df test stat approx F num Df den Df  Pr(&gt;F)    
+#&gt; (Intercept)    1    0.2210    11.06      2     78 5.9e-05 ***
+#&gt; Trend          1    0.0317     1.28      2     78    0.29    
+#&gt; Level Phase B  1    0.2217    11.11      2     78 5.7e-05 ***
+#&gt; Slope Phase B  1    0.0315     1.27      2     78    0.29    
+#&gt; ---
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt; 
+#&gt; The following variables were used in this analysis:
+#&gt; 'academic_engagement/ disruptive_behavior' as dependent variable, 'phase' as phase variable,and 'mt' as measurement-time variable.</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -244,7 +282,7 @@ for example to include further variables into the regression model.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juergen Wilbert.</p>
+  <p>Developed by Juergen Wilbert, Timo Lueke.</p>
 </div>
 
 <div class="pkgdown">
