@@ -93,44 +93,9 @@ print.sc <- function(x, digits = "auto", ...) {
     print(ma)
   }
 
-# PET ---------------------------------------------------------------------
-  
-  if (value == "PET") {	
-    cat("Percent Exceeding the Trend\n\n")
-    cat("N cases = ", x$N, "\n")
-    cat("\n")
-    ma <- cbind(x$PET, x$p, x$PET.ci)
-    colnames(ma) <- c("PET", "binom.p", "PET CI")
-    rownames(ma) <- x$case.names
-    print(round(ma, 3))
-    cat("\n")
-    
-    if (x$decreasing) {
-      cat("Assumed decreasing values in the B-phase.\n\n")
-      cat("Binom.test: alternative hypothesis: true probability < 50%\n")
-      cat(sprintf("PET CI: Percent of values less than lower %d%% confidence threshold (smaller %.3f*se below predicted value)\n", x$ci,x$se.factor))
-    } else {
-      cat("Binom.test: alternative hypothesis: true probability > 50%\n")
-      cat(sprintf("PET CI: Percent of values greater than upper %d%% confidence threshold (greater %.3f*se above predicted value)\n", x$ci,x$se.factor))
-    }
-    
-  }	
 
 
 
-# PND ---------------------------------------------------------------------
-
-  if (value == "PND") {
-    cat("Percent Non-Overlapping Data\n\n")
-    out <- data.frame(
-      Case = x$case.names, 
-      PND = paste0(round(x$PND, 2),"%"), 
-      "Total" = x$n.B, 
-      "Exceeds" = round(x$PND / 100 * x$n.B)
-    )
-    print(out, row.names = FALSE)
-    cat("\nMean  :", round(mean(x$PND, na.rm = TRUE), 2),"%\n")
-  }	
 
 # trend -------------------------------------------------------------------
 
@@ -210,79 +175,6 @@ print.sc <- function(x, digits = "auto", ...) {
     cat(sprintf("z = %0.4f, p = %0.4f (single sided)\n", x$Z, x$p.Z.single))
   }
   
-# plm ---------------------------------------------------------------------
-
-  if (value == "pr"){
-    cat("Piecewise Regression Analysis\n\n")
-    cat("Dummy model: ", x$model,"\n\n")
-    cat("Fitted a", x$family, "distribution.\n")		
-    
-    if (x$ar > 0)
-      cat("Correlated residuals up to autoregressions of lag",
-          x$ar, "are modelled\n\n")
-    
-    if (x$family == "poisson" || x$family == "nbinomial") {
-      Chi <- x$full$null.deviance - x$full$deviance
-      DF <- x$full$df.null - x$full$df.residual
-      cat(sprintf(
-        "\u0347\u00b2(%d) = %.2f; p = %0.3f; AIC = %.0f\n\n", 
-        DF, Chi, 1 - pchisq(Chi, df = DF), x$full$aic)
-      )	
-    } else {
-      cat(sprintf(
-        "F(%d, %d) = %.2f; p = %0.3f; R\u00b2 = %0.3f; Adjusted R\u00b2 = %0.3f\n\n", 
-        x$F.test["df1"], x$F.test["df2"], x$F.test["F"], 
-        x$F.test["p"],   x$F.test["R2"],  x$F.test["R2.adj"])
-      )	
-    }
-    
-    if (x$ar == 0) res <- summary(x$full.model)$coefficients
-    if (x$ar  > 0) res <- summary(x$full.model)$tTable
-    if (nrow(res) == 1) {
-      res <- cbind(
-        res[, 1, drop = FALSE], 
-        t(suppressMessages(confint(x$full))), 
-        res[, 2:4, drop = FALSE]
-      )
-    } else res <- cbind(
-        res[,1], 
-        suppressMessages(confint(x$full)), 
-        res[, 2:4]
-      )
-    
-    res <- round(res,3)
-    res <- as.data.frame(res)
-    if (!is.null(x$r.squares)) 
-      res$R2 <- c("", format(round(x$r.squares, 4)))
-    
-    row.names(res) <- .plm.row.names(row.names(res), x)
-   
-    if (!is.null(x$r.squares))
-      colnames(res) <- c("B","2.5%","97.5%","SE", "t","p", "delta R\u00b2")		
-    if (is.null(x$r.squares))
-      colnames(res) <- c("B","2.5%","97.5%","SE", "t","p")		
-    
-    if (x$family == "poisson" || x$family == "nbinomial") {
-      OR <- exp(res[, 1:3])
-      Q <- (OR - 1) / (OR + 1)
-      res <- cbind(res[, -7], round(OR, 3), round(Q, 2))
-      colnames(res) <- c(
-        "B", "2.5%", "97.5%", "SE", "t", "p", "Odds Ratio", 
-        "2.5%", "97.5%","Yule's Q","2.5%", "97.5%"
-        )		
-    }
-    print(res)
-    cat("\n")
-    cat("Autocorrelations of the residuals\n")
-    lag.max = 3
-    cr <- acf(residuals(x$full.model), lag.max = lag.max,plot = FALSE)$acf[2:(1 + lag.max)]
-    cr <- round(cr, 2)
-    print(data.frame(lag = 1:lag.max, cr = cr), row.names = FALSE)
-    cat("\n")
-    cat("Formula: ")
-    print(x$formula, showEnv = FALSE)
-    cat("\n")
-  }
   
 
   ##### Additional notes #####
@@ -649,8 +541,123 @@ print.sc_pem <- function(x, ...) {
 }
 
 
+#' @rdname print.sc
+#' @export
+#' 
+print.sc_pet <- function(x, ...) {
+  cat("Percent Exceeding the Trend\n\n")
+  cat("N cases = ", x$N, "\n")
+  cat("\n")
+  ma <- cbind(x$PET, x$p, x$PET.ci)
+  colnames(ma) <- c("PET", "binom.p", "PET CI")
+  rownames(ma) <- x$case.names
+  print(round(ma, 3))
+  cat("\n")
+  
+  if (x$decreasing) {
+    cat("Assumed decreasing values in the B-phase.\n\n")
+    cat("Binom.test: alternative hypothesis: true probability < 50%\n")
+    cat(sprintf("PET CI: Percent of values less than lower %d%% confidence threshold (smaller %.3f*se below predicted value)\n", x$ci,x$se.factor))
+  } else {
+    cat("Binom.test: alternative hypothesis: true probability > 50%\n")
+    cat(sprintf("PET CI: Percent of values greater than upper %d%% confidence threshold (greater %.3f*se above predicted value)\n", x$ci,x$se.factor))
+  }
+  
+}	
+
+#' @rdname print.sc
+#' @export
+#' 
+print.sc_pnd <- function(x, ...) {
+  cat("Percent Non-Overlapping Data\n\n")
+  out <- data.frame(
+    Case = x$case.names, 
+    PND = paste0(round(x$PND, 2),"%"), 
+    "Total" = x$n.B, 
+    "Exceeds" = round(x$PND / 100 * x$n.B)
+  )
+  print(out, row.names = FALSE)
+  cat("\nMean  :", round(mean(x$PND, na.rm = TRUE), 2),"%\n")
+}	
 
 
+
+
+#' @rdname print.sc
+#' @export
+#' 
+print.sc_plm <- function(x, ...) {
+  cat("Piecewise Regression Analysis\n\n")
+  cat("Dummy model: ", x$model,"\n\n")
+  cat("Fitted a", x$family, "distribution.\n")		
+  
+  if (x$ar > 0)
+    cat("Correlated residuals up to autoregressions of lag",
+        x$ar, "are modelled\n\n")
+  
+  if (x$family == "poisson" || x$family == "nbinomial") {
+    Chi <- x$full$null.deviance - x$full$deviance
+    DF <- x$full$df.null - x$full$df.residual
+    cat(sprintf(
+      "\u0347\u00b2(%d) = %.2f; p = %0.3f; AIC = %.0f\n\n", 
+      DF, Chi, 1 - pchisq(Chi, df = DF), x$full$aic)
+    )	
+  } else {
+    cat(sprintf(
+      "F(%d, %d) = %.2f; p = %0.3f; R\u00b2 = %0.3f; Adjusted R\u00b2 = %0.3f\n\n", 
+      x$F.test["df1"], x$F.test["df2"], x$F.test["F"], 
+      x$F.test["p"],   x$F.test["R2"],  x$F.test["R2.adj"])
+    )	
+  }
+  
+  if (x$ar == 0) res <- summary(x$full.model)$coefficients
+  if (x$ar  > 0) res <- summary(x$full.model)$tTable
+  if (nrow(res) == 1) {
+    res <- cbind(
+      res[, 1, drop = FALSE], 
+      t(suppressMessages(confint(x$full))), 
+      res[, 2:4, drop = FALSE]
+    )
+  } else res <- cbind(
+    res[,1], 
+    suppressMessages(confint(x$full)), 
+    res[, 2:4]
+  )
+  
+  res <- round(res, 3)
+  res <- as.data.frame(res)
+  if (!is.null(x$r.squares)) 
+    res$R2 <- c("", format(round(x$r.squares, 4)))
+  
+  row.names(res) <- .plm.row.names(row.names(res), x)
+  
+  if (!is.null(x$r.squares))
+    colnames(res) <- c("B","2.5%","97.5%","SE", "t","p", "delta R\u00b2")		
+  if (is.null(x$r.squares))
+    colnames(res) <- c("B","2.5%","97.5%","SE", "t","p")		
+  
+  if (x$family == "poisson" || x$family == "nbinomial") {
+    OR <- exp(res[, 1:3])
+    Q <- (OR - 1) / (OR + 1)
+    res <- cbind(res[, -7], round(OR, 3), round(Q, 2))
+    colnames(res) <- c(
+      "B", "2.5%", "97.5%", "SE", "t", "p", "Odds Ratio", 
+      "2.5%", "97.5%","Yule's Q","2.5%", "97.5%"
+    )		
+  }
+  print(res)
+  cat("\n")
+  cat("Autocorrelations of the residuals\n")
+  lag.max = 3
+  cr <- acf(residuals(x$full.model), lag.max = lag.max,plot = FALSE)$acf[2:(1 + lag.max)]
+  cr <- round(cr, 2)
+  print(data.frame(lag = 1:lag.max, cr = cr), row.names = FALSE)
+  cat("\n")
+  cat("Formula: ")
+  print(x$formula, showEnv = FALSE)
+  cat("\n")
+  .note_vars(x)
+}
 
 
 

@@ -14,6 +14,9 @@
 \alias{print.sc_outlier}
 \alias{print.sc_pand}
 \alias{print.sc_pem}
+\alias{print.sc_pet}
+\alias{print.sc_pnd}
+\alias{print.sc_plm}
 \title{Print method for scan objects}
 \usage{
 \method{print}{sc}(x, digits = "auto", ...)
@@ -41,6 +44,12 @@
 \method{print}{sc_pand}(x, ...)
 
 \method{print}{sc_pem}(x, ...)
+
+\method{print}{sc_pet}(x, ...)
+
+\method{print}{sc_pnd}(x, ...)
+
+\method{print}{sc_plm}(x, ...)
 }
 \arguments{
 \item{x}{Object}

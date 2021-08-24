@@ -15,10 +15,10 @@
 
 \item{cases}{Expression, indicating cases to keep from an scdf.}
 
-\item{...}{[use not implemented yet]}
+\item{...}{[not implemented]}
 }
 \value{
-An scdf with cases filtered by the filter expression.
+An scdf.
 }
 \description{
 Subset cases, rows, and variables

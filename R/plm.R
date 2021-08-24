@@ -158,7 +158,7 @@ plm <- function(data, dvar, pvar, mvar, AR = 0, model = "B&L-B", family = "gauss
     data = data
   )
 
-  class(out) <- c("sc", "pr")
+  class(out) <- c("sc_plm")
   attr(out, .opt$phase)  <- ATTRIBUTES[.opt$phase]
   attr(out, .opt$mt)     <- ATTRIBUTES[.opt$mt]
   attr(out, .opt$dv)     <- ATTRIBUTES[.opt$dv]
