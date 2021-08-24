@@ -660,8 +660,6 @@ print.sc_plm <- function(x, ...) {
 }
 
 
-
-
 # -----------------------------------------------------------------------
 .note_vars <- function(x) {
   v <- any(attr(x, .opt$dv) != "values")
@@ -670,8 +668,8 @@ print.sc_plm <- function(x, ...) {
   if (v || p || m) { 
     cat("\nThe following variables were used in this analysis:\n'", 
         paste0(attr(x, .opt$dv), collapse = "/ "), "' as dependent variable, '", 
-        attr(x, .opt$phase), "' as phase variable,and '", 
-        attr(x, .opt$mt),"' as measurement-time variable.\n", sep = "")
+        paste0(attr(x, .opt$phase), collapse = "/ "), "' as phase variable, and '", 
+        paste0(attr(x, .opt$mt), collapse = "/ "),"' as measurement-time variable.\n", sep = "")
   }
 }
 
