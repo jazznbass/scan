@@ -1,12 +1,12 @@
 #' Subset cases, rows, and variables
 #'
 #' @param x An scdf object.
+#' @param ... [not implemented]
 #' @param filter Logical expression indicating rows to keep: missing values are taken as false.
 #' @param select Expression, indicating columns to select from an scdf.
 #' @param cases Expression, indicating cases to keep from an scdf.
-#' @param ... [use not implemented yet]
 #'
-#' @return An scdf with cases filtered by the filter expression.
+#' @return An scdf.
 #' @export
 #'
 #' @examples

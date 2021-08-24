@@ -5,7 +5,7 @@
 - scdf files now allow to combine studies with different phase designs.
 Several functions have been adapted to handle cases with differing designs in a mutual analysis.
 - The %>% operator has been imported and exported from the magrittr package. Now that R 4.1 has a
-pipe operator, pipes seem to become the standard. For compatibility with older R Versions, we will stay with the %>% operator for some time befor switching to |>.
+pipe operator, pipes seem to become the standard. For compatibility with older R Versions, we will stay with the `%>%` operator for some time before switching to `|>`.
 - To allow for a piping code, we added several functions: `add_l2, select_phases, select_cases, subset, set_vars`.
 
 ### New functions
