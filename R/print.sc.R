@@ -2,185 +2,34 @@
 #'
 #' @param x Object 
 #' @param digits The minimum number of significant digits to be use. 
-#' If set to "auto" (default), values are predefnied.
+#' If set to "auto" (default), values are predefined.
 #' @param ... Further parameters passed to the print function
+#' @name print.sc
+NULL
+
+#' @rdname print.sc
 #' @export
+print.sc_power <- function(x, digits = "auto", ...) {
 
-print.sc <- function(x, digits = "auto", ...) {
-  
-  value <- class(x)[2]
-  note <- FALSE
-  
-  args <- list(...)
-  if (is.null(args)) args <- list()
-
-# baseline corrected tau --------------------------------------------------
-  if (value == "base_corr_tau") {
-    
-    if (digits == "auto") digits <- 2
-    
-    cat("Baseline corrected tau\n\n")
-    cat("Auto correlation in baseline:\n")
-    cat("tau =", round(x$auto_tau$tau, 2))
-    cat("; p =", round(x$auto_tau$p, 3), "\n\n")
-    
-    cat("Baseline corrected tau:\n")
-    cat("tau =", round(x$tau, digits))
-    cat("; p =", round(x$p, 3),"\n\n")
-    if (x$correction)  cat("Baseline correction applied.\n\n")
-    if (!x$correction) cat("Baseline correction not applied.\n\n")
-    
-  }
-
-# TAU-U -------------------------------------------------------------------
-
-  if (value == "TAU-U") {	
-    
-    if (digits == "auto") digits <- 3
-    
-    cat("Tau-U\n")
-    cat("Method:", x$method, "\n")
-    cat("Applied Kendall's Tau-", x$tau_method, "\n\n", sep = "")
-    
-    out <- x$table
-    
-    if (length(out) > 1) {
-      cat("Overall Tau-U: \n")
-      print(x$Overall_tau_u, row.names = FALSE, digits = digits)
-      cat("\n")
-    }
-    
-    complete <- FALSE
-    if (any(names(args) == "complete")) complete <- args$complete
-    if (!complete) {
-      select_vars <- c("Tau", "SE_Tau", "Z", "p")
-      select_rows <- match(
-        c(
-          "A vs. B", 
-          "A vs. B - Trend A",
-          "A vs. B + Trend B", 
-          "A vs. B + Trend B - Trend A"
-        ), row.names(x$table[[1]])
-      )
-        
-      out <- lapply(x$table, function(x) round(x[select_rows, select_vars], 3))
-    }
-    
-    for(i in seq_along(out)) {
-      cat("Case:", names(out)[i], "\n")
-      print(out[[i]], digits = digits)
-      cat("\n")
-    }
-  }
-  
-# power -------------------------------------------------------------------
-
-  if (value == "power") {	
-    cat("Test-Power in percent:\n")
-    ma <- matrix(
-      unlist(x[1:16]) * 100, byrow = FALSE, ncol = 2, 
-      dimnames = list(
-        c("tauU: A vs. B - Trend A", 
-          paste0("Rand-Test: ",x$rand.test.stat[1]),  
-          "PLM.Norm: Level", 
-          "PLM.Norm: Slope", 
-          "PLM.Poisson: Level", 
-          "PLM.Poisson: Slope", 
-          "HPLM: Level", 
-          "HPLM: Slope"), 
-        c("Power", "Alpha-error")
-        ))
-    print(ma)
-  }
-
-
-
-
-
-# trend -------------------------------------------------------------------
-
-  if (value == "trend") {
-    x$trend <- round(x$trend, 3)
-    cat("Trend for each phase\n\n")
-    #cat("N cases = ", x$N,"\n")
-    #cat("\n")
-    print(x$trend)
-    cat("\n")
-    cat("Note. Measurement-times of phase B start at", 1 + x$offset, "\n")
-  }
-
-# rci -------------------------------------------------------------------
-
-  if (value == "rci") {
-    #cat("!!! Caution! This function is under development and not yet ready for use!!!\n\n")
-    cat("Reliable Change Index\n\n")
-    cat("Mean Difference = ", x$descriptives[2, 2] - x$descriptives[1, 2], "\n")
-    cat("Standardized Difference = ", x$stand.dif, "\n")
-    cat("\n")
-    cat("Descriptives:\n")
-    print(x$descriptives)
-    cat("\n")
-    cat("Reliability = ", x$reliability, "\n")
-    cat("\n")
-    cat(x$conf.percent * 100, "% Confidence Intervals:\n")
-    print(x$conf)
-    cat("\n")
-    cat("Reliable Change Indices:\n")
-    print(x$RCI)
-    cat("\n")
-  }
-  
-# rand --------------------------------------------------------------------
-
-  if (value == "rand") {
-    cat("Randomization Test\n\n")
-    if (x$N > 1) cat("Test for", x$N, "cases.\n\n")
-
-    cat(.phases_string(x$phases.A, x$phases.B), "\n")
-    
-    cat("Statistic: ",x$statistic,"\n\n")
-    if (is.na(x$startpoints[1])) {
-      cat("Minimal length of each phase: ", x$limit, "\n")
-    } else {
-      cat("Possible starting points of phase B: ", x$startpoints, "\n")
-    }
-    cat("Observed statistic = ", x$observed.statistic, "\n")
-    cat("\n")
-    if (x$auto.corrected.number) {
-      cat("Warning! The assigned number of random permutations exceeds the number of possible permutations.\nAnalysis is restricted to all possible permutations.\n")
-    }
-    if (x$complete) {
-      cat("\nDistribution based on all", x$possible.combinations,"possible combinations.\n")
-    } else 
-      cat("\nDistribution based on a random sample of all", x$possible.combinations, "possible combinations.\n")
-    
-    cat("n   = ", x$number,"\n")
-    cat("M   = ", mean(x$distribution),"\n")
-    cat("SD  = ", sd(x$distribution),"\n")
-    cat("Min = ", min(x$distribution),"\n")
-    cat("Max = ", max(x$distribution),"\n")
-    cat("\n")
-    if (x$p.value == 0)
-      cat("p   < ", format(1/x$number, scientific = FALSE), "\n")
-    else
-      cat("p   = ", x$p.value, "\n")
-    if (x$number > 3 & x$number < 5001) {
-      sh <- shapiro.test(x$distribution)
-      cat(sprintf("\nShapiro-Wilk Normality Test: W = %0.3f; p = %0.3f",sh[[1]], sh$p.value))
-      if (sh$p.value > .05)
-        cat("  (Hypothesis of Normality maintained)\n")
-      else
-        cat("  (Hypothesis of Normality rejected)\n")
-    } else cat("\nSample size must be between 3 and 5000 to perform a Shapiro-Wilk Test.\n")
-    cat(sprintf("z = %0.4f, p = %0.4f (single sided)\n", x$Z, x$p.Z.single))
-  }
-  
-  
-
-  ##### Additional notes #####
-  if (note) .note_vars(x)
-
-  }
+  cat("Test-Power in percent:\n")
+  ma <- matrix(
+    unlist(x[1:16]) * 100, byrow = FALSE, ncol = 2, 
+    dimnames = list(
+      c(
+        "tauU: A vs. B - Trend A", 
+        paste0("Rand-Test: ",x$rand.test.stat[1]),  
+        "PLM.Norm: Level", 
+        "PLM.Norm: Slope", 
+        "PLM.Poisson: Level", 
+        "PLM.Poisson: Slope", 
+        "HPLM: Level", 
+        "HPLM: Slope"
+      ), 
+      c("Power", "Alpha-error")
+    )
+  )
+  ma
+}
 
 
 #' @rdname print.sc
@@ -235,10 +84,11 @@ print.sc_cdc <- function(x, nice = TRUE, ...) {
 #' @param nice If set TRUE (default) output values are rounded and optimized for
 #' publication tables.
 #' @export
-print.sc_bctau <- function(x, nice = TRUE, ...) {
+print.sc_bctau <- function(x, nice = TRUE, digits = "auto", ...) {
   
   cat("Baseline corrected tau\n\n")
   cat("\n")
+  
   
   if (x$continuity) {
     cat("Continuity correction applied\n")
@@ -246,10 +96,18 @@ print.sc_bctau <- function(x, nice = TRUE, ...) {
     cat("Continuity correction not applied.\n")
   }
   
-  if (nice) {
-    x$parameters$p <- .nice_p(x$parameters$p)
+  if (digits == "auto") {
+    x$parameters$p <- round(x$parameters$p, 3)
     x$parameters$z <- sprintf("%.2f", x$parameters$z)
     x$parameters$tau <- sprintf("%.2f", x$parameters$tau)
+  } else {
+    x$parameters$p <- round(x$parameters$p, digits)
+    x$parameters$z <- round(x$parameters$z, digits)
+    x$parameters$tau <- round(x$parameters$tau, digits)
+  }
+  
+  if (nice) {
+    x$parameters$p <- .nice_p(x$parameters$p)
   }
   
   rownames(x$parameters) <- x$parameters$Model
@@ -580,7 +438,47 @@ print.sc_pnd <- function(x, ...) {
   cat("\nMean  :", round(mean(x$PND, na.rm = TRUE), 2),"%\n")
 }	
 
-
+#' @rdname print.sc
+#' @param complete Print further parameters.
+#' @export
+#' 
+print.sc_tauu <- function(x, complete = FALSE, digits = "auto", ...) {
+  
+  if (digits == "auto") digits <- 3
+  
+  cat("Tau-U\n")
+  cat("Method:", x$method, "\n")
+  cat("Applied Kendall's Tau-", x$tau_method, "\n\n", sep = "")
+  
+  out <- x$table
+  
+  if (length(out) > 1) {
+    cat("Overall Tau-U: \n")
+    print(x$Overall_tau_u, row.names = FALSE, digits = digits)
+    cat("\n")
+  }
+  
+  if (!complete) {
+    select_vars <- c("Tau", "SE_Tau", "Z", "p")
+    select_rows <- match(
+      c(
+        "A vs. B", 
+        "A vs. B - Trend A",
+        "A vs. B + Trend B", 
+        "A vs. B + Trend B - Trend A"
+      ), row.names(x$table[[1]])
+    )
+    
+    out <- lapply(x$table, function(x) round(x[select_rows, select_vars], 3))
+  }
+  
+  for(i in seq_along(out)) {
+    cat("Case:", names(out)[i], "\n")
+    print(out[[i]], digits = digits)
+    cat("\n")
+  }
+  
+}
 
 
 #' @rdname print.sc
@@ -632,9 +530,9 @@ print.sc_plm <- function(x, ...) {
   row.names(res) <- .plm.row.names(row.names(res), x)
   
   if (!is.null(x$r.squares))
-    colnames(res) <- c("B","2.5%","97.5%","SE", "t","p", "delta R\u00b2")		
+    colnames(res) <- c("B", "2.5%", "97.5%", "SE", "t", "p", "delta R\u00b2")		
   if (is.null(x$r.squares))
-    colnames(res) <- c("B","2.5%","97.5%","SE", "t","p")		
+    colnames(res) <- c("B", "2.5%", "97.5%", "SE", "t", "p")		
   
   if (x$family == "poisson" || x$family == "nbinomial") {
     OR <- exp(res[, 1:3])
@@ -642,7 +540,7 @@ print.sc_plm <- function(x, ...) {
     res <- cbind(res[, -7], round(OR, 3), round(Q, 2))
     colnames(res) <- c(
       "B", "2.5%", "97.5%", "SE", "t", "p", "Odds Ratio", 
-      "2.5%", "97.5%","Yule's Q","2.5%", "97.5%"
+      "2.5%", "97.5%", "Yule's Q", "2.5%", "97.5%"
     )		
   }
   print(res)
@@ -660,7 +558,104 @@ print.sc_plm <- function(x, ...) {
 }
 
 
-# -----------------------------------------------------------------------
+#' @rdname print.sc
+#' @export
+#' 
+print.sc_trend <- function(x, digits = 3, ...) {
+  x$trend <- round(x$trend, digits)
+  cat("Trend for each phase\n\n")
+  print(x$trend)
+  cat("\n")
+  cat("Note. Measurement-times of phase B start at", 1 + x$offset, "\n")
+  .note_vars(x)
+}
+
+#' @rdname print.sc
+#' @export
+#' 
+print.sc_rand <- function(x, ...) {
+  
+  cat("Randomization Test\n\n")
+  if (x$N > 1) cat("Test for", x$N, "cases.\n\n")
+  
+  cat(.phases_string(x$phases.A, x$phases.B), "\n")
+  
+  cat("Statistic: ", x$statistic, "\n\n")
+  
+  if (is.na(x$startpoints[1])) {
+    cat("Minimal length of each phase:", "A =", x$limit[1], ", B =", x$limit[2], "\n")
+  } else {
+    cat("Possible starting points of phase B: ", x$startpoints, "\n")
+  }
+  cat("Observed statistic = ", x$observed.statistic, "\n")
+  
+  if (x$auto.corrected.number) {
+    cat("\nWarning! The assigned number of random permutations exceeds the",
+        "number of possible permutations.", 
+        "\nAnalysis is restricted to all possible permutations.\n")
+  }
+  if (x$complete) {
+    cat("\nDistribution based on all", x$possible.combinations, 
+        "possible combinations.\n")
+  } else 
+    cat("\nDistribution based on a random sample of all", 
+        x$possible.combinations, 
+        "possible combinations.\n")
+  
+  cat("n   = ", x$number,"\n")
+  cat("M   = ", mean(x$distribution),"\n")
+  cat("SD  = ", sd(x$distribution),"\n")
+  cat("Min = ", min(x$distribution),"\n")
+  cat("Max = ", max(x$distribution),"\n")
+  cat("\n")
+  cat("Probability of observed statistic based on distribution:\n")
+  
+  if (x$p.value == 0) {
+    cat("p   < ", format(1/x$number, scientific = FALSE), "\n")
+  } else {
+    cat("p   = ", x$p.value, "\n")
+  }
+  
+  if (x$number > 3 && x$number < 5001) {
+    sh <- shapiro.test(x$distribution)
+    cat(sprintf("\nShapiro-Wilk Normality Test: W = %0.3f; p = %0.3f",sh[[1]], sh$p.value))
+    if (sh$p.value > .05) {
+      cat("  (Hypothesis of normality maintained)\n")
+    } else {
+      cat("  (Hypothesis of normality rejected)\n")
+    }
+  } else {
+    cat("\nSample size must be between 3 and 5000 to perform a Shapiro-Wilk Test.\n")
+  }
+  
+  cat("\nProbabilty of observed statistic based on the assumption of normality:\n")
+  cat(sprintf("z = %0.4f, p = %0.4f (single sided)\n", x$Z, x$p.Z.single))
+  
+}
+
+#' @rdname print.sc
+#' @export
+#' 
+print.sc_rci <- function(x, ...) {
+  
+  cat("Reliable Change Index\n\n")
+  cat("Mean Difference = ", x$descriptives[2, 2] - x$descriptives[1, 2], "\n")
+  cat("Standardized Difference = ", x$stand.dif, "\n")
+  cat("\n")
+  cat("Descriptives:\n")
+  print(x$descriptives)
+  cat("\n")
+  cat("Reliability = ", x$reliability, "\n")
+  cat("\n")
+  cat(x$conf.percent * 100, "% Confidence Intervals:\n")
+  print(x$conf)
+  cat("\n")
+  cat("Reliable Change Indices:\n")
+  print(x$RCI)
+  cat("\n")
+}
+
+
 .note_vars <- function(x) {
   v <- any(attr(x, .opt$dv) != "values")
   p <- attr(x, .opt$phase) != "phase"

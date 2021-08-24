@@ -311,7 +311,7 @@ tau_u <- function(data, dvar, pvar,
   names(out$table) <- names(data)
   names(out$tau_u) <- names(data)
   
-  class(out) <- c("sc", "TAU-U")
+  class(out) <- c("sc_tauu")
   attr(out, .opt$phase) <- pvar
   attr(out, .opt$dv) <- dvar
   out

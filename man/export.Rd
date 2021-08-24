@@ -3,11 +3,12 @@
 \name{export}
 \alias{export}
 \alias{export.scdf}
-\alias{export.sc}
 \alias{export.sc_desc}
 \alias{export.sc_hplm}
 \alias{export.sc_plm}
 \alias{export.sc_overlap}
+\alias{export.sc_trend}
+\alias{export.sc_tauu}
 \title{Export scan objects to html or latex}
 \usage{
 export(object, ...)
@@ -20,19 +21,6 @@ export(object, ...)
   kable_styling_options = list(),
   kable_options = list(),
   cols,
-  ...
-)
-
-\method{export}{sc}(
-  object,
-  caption = NA,
-  footnote = NA,
-  filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
-  cols,
-  flip = FALSE,
-  round = 2,
   ...
 )
 
@@ -80,6 +68,28 @@ export(object, ...)
   kable_options = list(),
   round = 2,
   flip = FALSE,
+  ...
+)
+
+\method{export}{sc_trend}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  round = 2,
+  flip = TRUE,
+  ...
+)
+
+\method{export}{sc_tauu}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
   ...
 )
 }

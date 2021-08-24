@@ -81,7 +81,7 @@ power_test <- function(design,
   res <- sapply(res, function(x) binom.test(round(x * n_sim * 2), n_sim * 2, p = 0.5)$p.value)
   out$p <- round(res, 3)
 
-  #class(out) <- c("sc","power")
+  class(out) <- c("sc_power")
   out
 }
 

@@ -2,6 +2,7 @@
 % Please edit documentation in R/print.sc.R
 \name{print.sc}
 \alias{print.sc}
+\alias{print.sc_power}
 \alias{print.sc_ac}
 \alias{print.sc_cdc}
 \alias{print.sc_bctau}
@@ -16,16 +17,20 @@
 \alias{print.sc_pem}
 \alias{print.sc_pet}
 \alias{print.sc_pnd}
+\alias{print.sc_tauu}
 \alias{print.sc_plm}
+\alias{print.sc_trend}
+\alias{print.sc_rand}
+\alias{print.sc_rci}
 \title{Print method for scan objects}
 \usage{
-\method{print}{sc}(x, digits = "auto", ...)
+\method{print}{sc_power}(x, digits = "auto", ...)
 
 \method{print}{sc_ac}(x, digits = "auto", ...)
 
 \method{print}{sc_cdc}(x, nice = TRUE, ...)
 
-\method{print}{sc_bctau}(x, nice = TRUE, ...)
+\method{print}{sc_bctau}(x, nice = TRUE, digits = "auto", ...)
 
 \method{print}{sc_desc}(x, digits = "auto", ...)
 
@@ -49,13 +54,21 @@
 
 \method{print}{sc_pnd}(x, ...)
 
+\method{print}{sc_tauu}(x, complete = FALSE, digits = "auto", ...)
+
 \method{print}{sc_plm}(x, ...)
+
+\method{print}{sc_trend}(x, digits = 3, ...)
+
+\method{print}{sc_rand}(x, ...)
+
+\method{print}{sc_rci}(x, ...)
 }
 \arguments{
 \item{x}{Object}
 
 \item{digits}{The minimum number of significant digits to be use. 
-If set to "auto" (default), values are predefnied.}
+If set to "auto" (default), values are predefined.}
 
 \item{...}{Further parameters passed to the print function}
 
@@ -63,6 +76,8 @@ If set to "auto" (default), values are predefnied.}
 publication tables.}
 
 \item{std}{If TRUE, a table with standardized estimates is included.}
+
+\item{complete}{Print further parameters.}
 }
 \description{
 Print method for scan objects

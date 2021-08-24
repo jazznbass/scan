@@ -88,11 +88,18 @@
 #' rand_test(Grosche2011, statistic = "Median B-A", complete = TRUE, limit = 4, seed = 123)
 #' 
 #' @export
-rand_test <- function (data, dvar, pvar, statistic = "Mean B-A", 
-                    number = 500, complete = FALSE, limit = 5, 
-                    startpoints = NA, exclude.equal = FALSE, 
-                    graph = FALSE, output = "c", phases = c("A","B"), seed = NULL) {
-  
+rand_test <- function (data, dvar, pvar, 
+                       statistic = "Mean B-A", 
+                       number = 500, 
+                       complete = FALSE, 
+                       limit = 5, 
+                       startpoints = NA, 
+                       exclude.equal = FALSE, 
+                       graph = FALSE, 
+                       output = "c", 
+                       phases = c("A", "B"), 
+                       seed = NULL) {
+
   if(!is.null(seed)) set.seed(seed)
   
   # set attributes to arguments else set to defaults of scdf
@@ -257,8 +264,27 @@ rand_test <- function (data, dvar, pvar, statistic = "Mean B-A",
   if (output == "c") {
     possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[N]
     
-    out <- list(statistic = statistic, phases.A = keep$phases.A, phases.B = keep$phases.B, N = N, n1 = length(unlist(a)), n2 = length(unlist(b)), limit = limit, startpoints = startpoints, p.value = p.value, number = number, complete = complete, observed.statistic = obs.stat, Z = Z, p.Z.single = p.Z.single, distribution = dist, possible.combinations = possible.combinations, auto.corrected.number = auto.corrected.number)	
-    class(out) <- c("sc","rand")
+    out <- list(
+      statistic = statistic, 
+      phases.A = keep$phases_A, 
+      phases.B = keep$phases_B, 
+      N = N, 
+      n1 = length(unlist(a)), 
+      n2 = length(unlist(b)), 
+      limit = limit, 
+      startpoints = startpoints, 
+      p.value = p.value, 
+      number = number, 
+      complete = complete, 
+      observed.statistic = obs.stat, 
+      Z = Z, 
+      p.Z.single = p.Z.single, 
+      distribution = dist, 
+      possible.combinations = possible.combinations, 
+      auto.corrected.number = auto.corrected.number
+    )
+    
+    class(out) <- c("sc_rand")
     attr(out, .opt$phase) <- pvar
     attr(out, .opt$dv) <- dvar
     out

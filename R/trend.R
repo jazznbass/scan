@@ -95,7 +95,7 @@ trend <- function(data, dvar, pvar, mvar, offset = -1,model = NULL) {
     formulas = FORMULAS.NAMES, 
     design = design
   )
-  class(out) <- c("sc","trend")
+  class(out) <- c("sc_trend")
   attr(out, .opt$phase) <- pvar
   attr(out, .opt$mt) <- mvar
   attr(out, .opt$dv) <- dvar

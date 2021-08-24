@@ -64,7 +64,7 @@ corrected_tau <- function(data, dvar, pvar, mvar, phases = c(1, 2), alpha = 0.05
   if (corr_applied) tau <- base_corr_tau else tau <- uncorrected_tau
 
   df <- data.frame(
-    Model = c("Baseline autocorrelation", "Uncorrected tau", "Baseline correted tau"),
+    Model = c("Baseline autocorrelation", "Uncorrected tau", "Baseline corrected tau"),
     tau = c(auto_tau$tau, uncorrected_tau$tau, base_corr_tau$tau),
     z = c(auto_tau$z, uncorrected_tau$z, base_corr_tau$z),
     p = c(auto_tau$p, uncorrected_tau$p, base_corr_tau$p),

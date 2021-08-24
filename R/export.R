@@ -95,99 +95,6 @@ export.scdf <- function(object, caption = NA, footnote = NA, filename = NA,
 
 #' @rdname export
 #' @export
-export.sc <- function(object, caption = NA, footnote = NA, filename = NA,
-                      kable_styling_options = list(), kable_options = list(),
-                      cols, flip = FALSE, round = 2, ...) {
- 
-  table <- FALSE
-  
-  kable_options <- .join_kabel(kable_options)
-  kable_styling_options <- .join_kabel_styling(kable_styling_options)
-  
-  if (!any(class(object) %in% c("sc", "scdf"))) {
-    stop("export can only handle objects returned by scan.\n")
-  }
-  
-  x <- class(object)[2]
-  
-  # trend -------------------------------------------------------------------
-  
-  if (x == "trend") {
-    
-    if (is.na(caption)) caption <- c("Trend analysis")
-    kable_options$caption <- caption
-    
-    out <- object$trend
-    if (isTRUE(flip)) out <- t(out)
-    
-    tmp.rownames <- rownames(out)
-    rownames(out) <- NULL
-    for (tmp in object$formulas) {
-      tmp.rownames <- gsub(paste0(tmp, "."), "", tmp.rownames)
-    }
-    out <- cbind(Phase = tmp.rownames, out)
-    
-    kable_options$x <- out
-    table <- do.call(kable, kable_options)
-    kable_styling_options$kable_input <- table
-    table <- do.call(kable_styling, kable_styling_options)
-    
-    for (i in 1:length(object$formulas)) {
-      table <- group_rows(
-        table, object$formulas[i],
-        1 + (i - 1) * (length(object$design) + 1),
-        i * (length(object$design) + 1)
-      )
-    }
-    
-    if (!is.na(footnote) && footnote != "") 
-      table <- footnote(table, general = footnote, threeparttable = TRUE)
-  }
-  
-  
-    
-  # tau_u ---------------------------------------------------------------------
-  
-  if (x == "TAU-U") {
-    
-    if (is.na(caption)) {
-      #A <- object$design[object$phases.A]
-      #B <- object$design[object$phases.B]
-      caption <- c("Tau-U")#, .phases_string(A, B))
-    }
-    kable_options$caption <- caption
-    
-    if (is.na(footnote)) {
-      footnote <- paste(
-        "Method is '", object$method, 
-        "'; Analyses based on Kendall's Tau ", object$tau_method, 
-        collapse = ""
-      )
-    }
-    
-    out <- object$Overall_tau_u
-    out$p <- .nice_p(out$p)
-    colnames(out) <- c("Model", "Tau", "SE", "z", "p")
-  
-    kable_options$x <- out
-    kable_options$align <- c("l", rep("r", ncol(out) - 1))
-    table <- do.call(kable, kable_options)
-    kable_styling_options$kable_input <- table
-    table <- do.call(kable_styling, kable_styling_options)
-    if (!is.na(footnote) && footnote != "") 
-      table <- footnote(table, general = footnote, threeparttable = TRUE)
-  }
-  
-  # finish ------------------------------------------------------------------
-  
-  if (!is.na(filename)) cat(table, file = filename)
-  
-  if (isFALSE(table)) warning(paste("No export function is available for object of class", x))
-  table
-}
-
-#' @rdname export
-#' @export
 export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
                            kable_styling_options = list(), 
                            kable_options = list(), 
@@ -495,10 +402,6 @@ export.sc_plm <- function(object, caption = NA, footnote = NA, filename = NA,
 }
 
 
-
-
-
-
 #' @rdname export
 #' @export
 export.sc_overlap <- function(object, caption = NA, footnote = NA, filename = NA,
@@ -564,6 +467,97 @@ export.sc_overlap <- function(object, caption = NA, footnote = NA, filename = NA
   table
 }
 
+#' @rdname export
+#' @export
+export.sc_trend <- function(object, caption = NA, footnote = NA, filename = NA,
+                            kable_styling_options = list(), 
+                            kable_options = list(), 
+                            round = 2,
+                            flip = TRUE,
+                            ...) {
+  
+  kable_options <- .join_kabel(kable_options)
+  kable_styling_options <- .join_kabel_styling(kable_styling_options)
+  
+  if (is.na(caption)) caption <- c("Trend analysis")
+  kable_options$caption <- caption
+  
+  out <- object$trend
+  if (isTRUE(flip)) out <- t(out)
+  
+  tmp.rownames <- rownames(out)
+  rownames(out) <- NULL
+  for (tmp in object$formulas) {
+    tmp.rownames <- gsub(paste0(tmp, "."), "", tmp.rownames)
+  }
+  out <- cbind(Phase = tmp.rownames, out)
+  
+  kable_options$x <- out
+  table <- do.call(kable, kable_options)
+  kable_styling_options$kable_input <- table
+  table <- do.call(kable_styling, kable_styling_options)
+  
+  for (i in 1:length(object$formulas)) {
+    table <- group_rows(
+      table, object$formulas[i],
+      1 + (i - 1) * (length(object$design) + 1),
+      i * (length(object$design) + 1)
+    )
+  }
+  
+  if (!is.na(footnote) && footnote != "") 
+    table <- footnote(table, general = footnote, threeparttable = TRUE)
+  
+  # finish ------------------------------------------------------------------
+  
+  if (!is.na(filename)) cat(table, file = filename)
+  table
+}
+
+
+#' @rdname export
+#' @export
+export.sc_tauu <- function(object, caption = NA, footnote = NA, filename = NA,
+                            kable_styling_options = list(), 
+                            kable_options = list(), 
+                            ...) {
+  
+  kable_options <- .join_kabel(kable_options)
+  kable_styling_options <- .join_kabel_styling(kable_styling_options)
+  
+  if (is.na(caption)) {
+    #A <- object$design[object$phases.A]
+    #B <- object$design[object$phases.B]
+    caption <- c("Overall Tau-U")#, .phases_string(A, B))
+  }
+  kable_options$caption <- caption
+  
+  if (is.na(footnote)) {
+    footnote <- paste(
+      "Method is '", object$method, 
+      "'; Analyses based on Kendall's Tau ", object$tau_method, 
+      collapse = ""
+    )
+  }
+  
+  out <- object$Overall_tau_u
+  out$p <- .nice_p(out$p)
+  colnames(out) <- c("Model", "Tau", "SE", "z", "p")
+  
+  kable_options$x <- out
+  kable_options$align <- c("l", rep("r", ncol(out) - 1))
+  table <- do.call(kable, kable_options)
+  kable_styling_options$kable_input <- table
+  table <- do.call(kable_styling, kable_styling_options)
+  if (!is.na(footnote) && footnote != "") 
+    table <- footnote(table, general = footnote, threeparttable = TRUE)
+  
+  # finish ------------------------------------------------------------------
+  
+  if (!is.na(filename)) cat(table, file = filename)
+  table
+}
+
 
 
 .join_kabel <- function(kable_options) {
@@ -575,6 +569,9 @@ export.sc_overlap <- function(object, caption = NA, footnote = NA, filename = NA
   
   kable_options
 } 
+
+
+
 
 
 .join_kabel_styling <- function(kable_styling_options) {
