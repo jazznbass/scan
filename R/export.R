@@ -363,7 +363,13 @@ export.sc_plm <- function(object, caption = NA, footnote = NA, filename = NA,
     
     Chi <- object$full$null.deviance - object$full$deviance
     DF <- object$full$df.null - object$full$df.residual
-    F_test <- sprintf("\u0347\u00b2(%d) = %.2f; <i>p</i> = %0.3f; <i>AIC</i> = %.0f", DF, Chi, 1 - pchisq(Chi, df = DF), object$full$aic)
+    F_test <- sprintf(
+      "X\u00b2(%d) = %.2f; p %s; AIC = %.0f", 
+      DF, 
+      Chi, 
+      .nice_p(1 - pchisq(Chi, df = DF), TRUE), 
+      object$full$aic
+    )
   }
   
   out <- cbind(Parameter = rownames(out), out, stringsAsFactors = FALSE)
@@ -378,8 +384,11 @@ export.sc_plm <- function(object, caption = NA, footnote = NA, filename = NA,
     out$"Delta R\u00b2" <- gsub("^0\\.", ".", out$"Delta R\u00b2")
     F_test <- sprintf(
       "F(%d, %d) = %.2f; p %s; R\u00b2 = %0.3f; Adjusted R\u00b2 = %0.3f", 
-      object$F.test["df1"], object$F.test["df2"], object$F.test["F"], 
-      .nice_p(object$F.test["p"], TRUE), object$F.test["R2"], object$F.test["R2.adj"]
+      object$F.test["df1"], 
+      object$F.test["df2"], 
+      object$F.test["F"], 
+      .nice_p(object$F.test["p"], TRUE), 
+      object$F.test["R2"], object$F.test["R2.adj"]
     )
   }
   
@@ -390,7 +399,17 @@ export.sc_plm <- function(object, caption = NA, footnote = NA, filename = NA,
   table <- do.call(kable, kable_options)
   kable_styling_options$kable_input <- table
   table <- do.call(kable_styling, kable_styling_options)
-  table <- add_header_above(table, c(" " = 2, "CI(95%)" = 2, " " = 4))
+  
+  if (object$family == "gaussian") {
+    table <- add_header_above(table, c(" " = 2, "CI(95%)" = 2, " " = 4))
+  }
+  
+  if (object$family %in% c("poisson", "nbinomial")) {
+    table <- add_header_above(table, 
+      c(" " = 2, "CI(95%)" = 2, " " = 4, "CI(95%)" = 2," " = 1, "CI(95%)" = 2 )
+    )
+  }
+  
   if (!is.na(footnote) && footnote != "") 
     table <- footnote(table, general = footnote, threeparttable = TRUE)
   
