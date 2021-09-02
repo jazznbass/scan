@@ -10,7 +10,11 @@ pipe operator, pipes seem to become the standard. For compatibility with older R
 
 ### New functions
 
-- `sample_names()`: Returns a character vector of length `n` with names by randomly drawing from a name list: type = {"neutral", "female", "male", "mixed"}. E.g. `draw_names(7)`.
+- `sample_names()`: Returns a character vector of length `n` with names by randomly drawing from a name list: type = {"neutral", "female", "male", "mixed"}. Useful to anonymize scdf files
+
+``` {.r}
+names(exampleAB) <- sample_names(3)
+```
 
 -`add_l2()`: Adds the variables from a second level 2 data frame to an scdf matched by an id variable (default is `case`).
 
@@ -39,8 +43,14 @@ exampleAB_add %>%
 ```
 
 - `is.scdf()`: Tests if an object is of type "scdf" or not.
-- `check_scdf()`: Checks for the validity of an scdf object (mainly used for internal test)
+- `check_scdf()`: Checks for the validity of an scdf object (mainly used for internal tests)
 - `convert()`: Creates an scdf syntax file from an scdf object.
+
+``` {.r}
+# Create a syntax to code the scdf exampleAB and write it into an R file
+convert(exampleAB, file = "cases.R")
+```
+
 - `cdc`: Applies the Conservative Dual-Criterion Method (CDC; Fisher, Kelley, & Lomas, 2003) to scdf objects.
 
 ``` {.r}
@@ -72,7 +82,7 @@ plot(
 )
 ```
 
-- `tau_U()`: Solved bug in meta analysis #6. Reworked the complete function to be more clear and accurate. Added `method_meta` switching between fixed and random-effect meta analyses. Reworked the print function to look nicer.
+- `tau_u()`: Solved bug in meta analysis #6. Reworked the complete function to be more clear and accurate. Added `method_meta` switching between fixed and random-effect meta analyses. Reworked the print function to look nicer.
 
 - `export()`: Reworked the html output. Added a basic output for tau_u. Arguments `caption` and `footnote` allow to specify appearance (if left NA object specific output is generated.). `booktab = TRUE` is now set as a default for kable options.
 
