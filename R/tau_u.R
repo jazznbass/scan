@@ -305,6 +305,7 @@ tau_u <- function(data, dvar, pvar,
   # Overall Tau -------------------------------------------------------------
   
   out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method)
+  out$meta_method <- meta_method 
   
   # return ------------------------------------------------------------------
   

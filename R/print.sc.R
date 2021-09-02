@@ -453,7 +453,8 @@ print.sc_tauu <- function(x, complete = FALSE, digits = "auto", ...) {
   out <- x$table
   
   if (length(out) > 1) {
-    cat("Overall Tau-U: \n")
+    cat("Overall Tau-U\n")
+    cat("Meta-anlysis model:", x$meta_method, "effect\n\n")
     print(x$Overall_tau_u, row.names = FALSE, digits = digits)
     cat("\n")
   }
