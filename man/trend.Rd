@@ -47,7 +47,7 @@ specific formula class.
 ## Compute the linear and squared regression for a random single-case
 design <- design_rSC(slope = 0.5)
 matthea <- rSC(design)
-trendSC(matthea)
+trend(matthea)
 
 ## Besides the linear and squared regression models compute two custom models:
 ## a) a cubic model, and b) the values predicted by the natural logarithm of the
