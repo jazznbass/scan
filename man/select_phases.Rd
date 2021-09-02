@@ -2,7 +2,7 @@
 % Please edit documentation in R/select_phases.R
 \name{select_phases}
 \alias{select_phases}
-\title{Select phases for overlap analyses}
+\title{Select and combine phases for overlap analyses}
 \usage{
 select_phases(data, A, B, ...)
 }
@@ -20,4 +20,9 @@ An scdf with selected phases
 }
 \description{
 Useful when working with %>% operators.
+}
+\examples{
+exampleA1B1A2B2 \%>\% 
+  select_phases(A = c(1, 3), B = c(2, 4)) \%>\%
+  overlap()
 }
