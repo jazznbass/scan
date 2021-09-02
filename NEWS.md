@@ -29,7 +29,6 @@ Leidig2018 %>%
 
 ```{.r}
 exampleA1B1A2B2 %>% 
-  select_cases("Pawel", "Moritz") %>%
   select_phases(A = c(1, 3), B = c(2, 4)) %>%
   overlap()
 ```
