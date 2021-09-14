@@ -2,19 +2,33 @@
 % Please edit documentation in R/set_var.R
 \name{set_vars}
 \alias{set_vars}
+\alias{set_dvar}
+\alias{set_mvar}
+\alias{set_pvar}
 \title{Set analysis variables in an scdf}
 \usage{
-set_vars(data, dv, mt, phase)
+set_vars(data, dvar, mvar, pvar)
+
+set_dvar(data, dvar)
+
+set_mvar(data, mvar)
+
+set_pvar(data, pvar)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
 
-\item{dv}{Character string. Name of the dependent variable.}
+\item{dvar}{Character string. Name of the dependent variable.}
 
-\item{mt}{Character string. Name of the measurement-time variable.}
+\item{mvar}{Character string. Name of the measurement-time variable.}
 
-\item{phase}{Character string. Name of the phase variable.}
+\item{pvar}{Character string. Name of the phase variable.}
 }
 \description{
 Set analysis variables in an scdf
+}
+\examples{
+exampleAB_add \%>\% 
+  set_dvar("depression") \%>\%
+  describe()
 }

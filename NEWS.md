@@ -6,7 +6,7 @@
 Several functions have been adapted to handle cases with differing designs in a mutual analysis.
 - The %>% operator has been imported and exported from the magrittr package. Now that R 4.1 has a
 pipe operator, pipes seem to become the standard. For compatibility with older R Versions, we will stay with the `%>%` operator for some time before switching to `|>`.
-- To allow for a piping code, we added several functions: `add_l2, select_phases, select_cases, subset, set_vars`.
+- To allow for a piping code, we added several functions: `add_l2, select_phases, select_cases, subset, set_vars, set_dvar, set_mvar, set_pvar`.
 
 ### New functions
 
@@ -33,7 +33,9 @@ exampleA1B1A2B2 %>%
   overlap()
 ```
 
-- `set_vars()`: change the core variables of an scdf (arguments `dv` for dependent variable, `phase` for phase variable, and `mt` for measurement-time variable).
+- `set_vars()`: change the core variables of an scdf (arguments `dvar` for dependent variable, `pvar` for phase variable, and `mvar` for measurement-time variable).
+
+- `set_dvar()`, `set_mvar()`, `set_pvar()`: Shortcuts to set dvar, mvar, or pvar in a piping script e.g. `exmpleAB_add %>% set_dvar("depression") %>% describe()`
 
 ```{.r}
 exampleAB_add %>%
