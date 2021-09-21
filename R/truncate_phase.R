@@ -1,6 +1,6 @@
 #' Truncate single-case data
 #'
-#' This function truncates data points at the beginning and / or end each phase.
+#' This function truncates data points at the beginning and / or end of each phase in each case.
 #'
 #' @inheritParams .inheritParams
 #' @param truncate A list with a vector of two (beginning and end) values for each phase defining the number of data points to be deleted.
