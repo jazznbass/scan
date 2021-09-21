@@ -21,13 +21,14 @@ describeSC(...)
 \item{...}{Further arguments passed to the function.}
 }
 \value{
-A data frame of descriptive statistics (for each single-case), i.e.:
-number of observations, number of missing values, measures of central
-tendency, variation, and trend.
+A list containing a data frame of descriptive statistics (descriptives); the cse design (design); the number of cases (N)
 }
 \description{
 The \code{describe} function provides common descriptive statistics for
 single-case data.
+}
+\details{
+n = number of measurements; mis = number of missing vaues; m = mean; md = median; sd = standard deviation; mad = median average deviation; min = minimum; max = maximum; trend = weight of depended variable regressed on time (values ~ mt).
 }
 \examples{
 
@@ -37,11 +38,9 @@ describe(Grosche2011)
 ## Descriptives of a three phase design
 describe(exampleABC)
 
-\dontrun{
 ## Write descriptive statistics to .csv-file
 study <- describe(Waddell2011)
-write.csv(study$descriptives, file = "descriptives.csv")
-}
+write.csv(study$descriptives, file = tempfile())
 }
 \seealso{
 \code{\link{overlap}}, \code{\link{plot.scdf}}
