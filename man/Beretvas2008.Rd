@@ -25,6 +25,7 @@
 \alias{exampleAB_50}
 \alias{exampleAB_50.l2}
 \alias{exampleABC_150}
+\alias{exampleAB_mpd}
 \alias{Lenz2013}
 \alias{Leidig2018}
 \alias{Leidig2018_l2}

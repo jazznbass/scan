@@ -28,6 +28,7 @@
 #' exampleAB_50 
 #' exampleAB_50.l2 
 #' exampleABC_150
+#' exampleAB_mpd
 #' Huber2014
 #' Lenz2013
 #' Leidig2018
