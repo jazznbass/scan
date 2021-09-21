@@ -11,9 +11,9 @@
 #' @export
 
 set_vars <- function(data, dvar, mvar, pvar) {
-  if (!missing(dv)) scdf_attr(data, .opt$dv) <- dv
-  if (!missing(mt)) scdf_attr(data, .opt$mt) <- mt
-  if (!missing(phase)) scdf_attr(data, .opt$phase) <- phase
+  if (!missing(dvar)) scdf_attr(data, .opt$dvar) <- dvar
+  if (!missing(mvar)) scdf_attr(data, .opt$mvar) <- mvar
+  if (!missing(pvar)) scdf_attr(data, .opt$pvar) <- pvar
   data
 }
 
