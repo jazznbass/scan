@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Truncate single-case data — truncate_phase" />
-<meta property="og:description" content="This function truncates data points at the beginning and / or end each phase." />
+<meta property="og:description" content="This function truncates data points at the beginning and / or end of each phase in each case." />
 
 
 
@@ -112,12 +112,12 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Truncate single-case data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/truncate.R'><code>R/truncate.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/jazznbass/scan/blob/master/R/truncate_phase.R'><code>R/truncate_phase.R</code></a></small>
     <div class="hidden name"><code>truncate_phase.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function truncates data points at the beginning and / or end each phase.</p>
+    <p>This function truncates data points at the beginning and / or end of each phase in each case.</p>
     </div>
 
     <pre class="usage"><span class='fu'>truncate_phase</span><span class='op'>(</span>
@@ -153,7 +153,7 @@ of each phase for each single case.</p></td>
     </tr>
     <tr>
       <th>na</th>
-      <td><p>If FALSE, the truncated measurement times are deletet. If TRUE, NAs are set for the dependent variable.</p></td>
+      <td><p>If FALSE, the truncated measurement times are deleted. If TRUE, NAs are set for the dependent variable.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -167,8 +167,8 @@ of each phase for each single case.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other data manipulation functions: 
+<code><a href='as.data.frame.scdf.html'>as.data.frame.scdf</a>()</code>,
 <code><a href='fill_missing.html'>fill_missing</a>()</code>,
-<code><a href='longSCDF.html'>longSCDF</a>()</code>,
 <code><a href='outlier.html'>outlier</a>()</code>,
 <code><a href='ranks.html'>ranks</a>()</code>,
 <code><a href='shift.html'>shift</a>()</code>,

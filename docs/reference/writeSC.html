@@ -159,23 +159,21 @@ Default is <code>dec = "."</code></p></td>
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>## Write single-case data to a .csv-file</span>
+    <pre class="examples"><div class='input'><span class='co'>## Write single-case data to a .csv-file</span>
+<span class='va'>filename</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>jessica</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span><span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>level <span class='op'>=</span> <span class='fl'>.5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>writeSC</span><span class='op'>(</span><span class='va'>jessica</span>, <span class='st'>"SCdata_Jessica.csv"</span><span class='op'>)</span>
+<span class='fu'>writeSC</span><span class='op'>(</span><span class='va'>jessica</span>, <span class='va'>filename</span><span class='op'>)</span>
 
 <span class='co'>## Write multiple cases to a .csv-file with semicolon as field and comma as decimal separator</span>
-<span class='fu'>writeSC</span><span class='op'>(</span><span class='va'>Grosche2011</span>, <span class='st'>"MBDdata_Grosche.csv"</span>, sep <span class='op'>=</span> <span class='st'>";"</span>, dec <span class='op'>=</span> <span class='st'>","</span><span class='op'>)</span>
+<span class='fu'>writeSC</span><span class='op'>(</span><span class='va'>Grosche2011</span>, <span class='va'>filename</span>, sep <span class='op'>=</span> <span class='st'>";"</span>, dec <span class='op'>=</span> <span class='st'>","</span><span class='op'>)</span>
 
 <span class='co'>## writeSC and readSC</span>
-<span class='va'>filename</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"test.csv"</span><span class='op'>)</span>
 <span class='fu'>writeSC</span><span class='op'>(</span><span class='va'>exampleA1B1A2B2_zvt</span>, <span class='va'>filename</span><span class='op'>)</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='readSC.html'>readSC</a></span><span class='op'>(</span><span class='va'>filename</span>, cvar <span class='op'>=</span> <span class='st'>"case"</span>, pvar <span class='op'>=</span> <span class='st'>"part"</span>, dvar <span class='op'>=</span> <span class='st'>"zvt"</span>, mvar <span class='op'>=</span> <span class='st'>"day"</span><span class='op'>)</span>
-<span class='va'>res1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='describe.html'>describeSC</a></span><span class='op'>(</span><span class='va'>exampleA1B1A2B2_zvt</span><span class='op'>)</span><span class='op'>$</span><span class='va'>descriptives</span>
-<span class='va'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='describe.html'>describeSC</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span><span class='op'>$</span><span class='va'>descriptives</span>
-<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='va'>res1</span>,<span class='va'>res2</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+</div><div class='output co'>#&gt; Imported 3 cases.</div><div class='input'><span class='va'>res1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='describe.html'>describe</a></span><span class='op'>(</span><span class='va'>exampleA1B1A2B2_zvt</span><span class='op'>)</span><span class='op'>$</span><span class='va'>descriptives</span>
+<span class='va'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='describe.html'>describe</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span><span class='op'>$</span><span class='va'>descriptives</span>
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>res1</span>,<span class='va'>res2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

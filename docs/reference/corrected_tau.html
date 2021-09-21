@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="Baseline corrected tau — corrected_tau" />
-<meta property="og:description" content="Kendalls tau correlation for the dependent variable and the phase variable is calculated
-after correcting for a baseline trend." />
+<meta property="og:description" content="Kendalls tau correlation for the dependent variable and the phase variable 
+is calculated after correcting for a baseline trend." />
 
 
 
@@ -118,8 +118,8 @@ after correcting for a baseline trend." />
     </div>
 
     <div class="ref-description">
-    <p>Kendalls tau correlation for the dependent variable and the phase variable is calculated
-after correcting for a baseline trend.</p>
+    <p>Kendalls tau correlation for the dependent variable and the phase variable 
+is calculated after correcting for a baseline trend.</p>
     </div>
 
     <pre class="usage"><span class='fu'>corrected_tau</span><span class='op'>(</span>
@@ -183,14 +183,19 @@ and 4 (as B). Default is <code>phases = c("A","B")</code>.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This method has been proposed by Tarlow (2016). The baseline data are checked for a significant 
-autocorrelation (based on Kendalls Tau). If so, a non-parameteric Theil-Sen regression is applied
-for the baseline data where the dependent values are regressed on the measurement time. The resulting slope
-information is then used to predict data of the B-phase. The dependent variable is now corrected for this baseline trend 
-and the residuals of the Theil-Sen regression are taken for further calculations.
-Finally, a tau is calculated for the dependent variable and the dichotomous phase variable.
-The function here provides two extensions to this procedure: The more accurate Siegel repeated median regression
-is applied when <code>repeated = TRUE</code> and a continuity correction is applied when <code>continuity = TRUE</code> (both are the default settings).</p>
+    <p>This method has been proposed by Tarlow (2016). The baseline data 
+are checked for a significant autocorrelation (based on Kendalls Tau). 
+If so, a non-parameteric Theil-Sen regression is applied for the baseline 
+data where the dependent values are regressed on the measurement time. 
+The resulting slope information is then used to predict data of the B-phase. 
+The dependent variable is now corrected for this baseline trend and the 
+residuals of the Theil-Sen regression are taken for further calculations.
+Finally, Kendalls tau is calculated for the dependent variable and the 
+dichotomous phase variable.
+The function here provides two extensions to this procedure: 
+The more accurate Siegel repeated median regression is applied when 
+<code>repeated = TRUE</code> and a continuity correction is applied when 
+<code>continuity = TRUE</code> (both are the default settings).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Tarlow, K. R. (2016). An Improved Rank Correlation Effect 
@@ -217,10 +222,10 @@ Size Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior Modific
 #&gt; 
 #&gt; 
 #&gt; Continuity correction applied
-#&gt;                            tau     z     p
-#&gt; Baseline autocorrelation -0.68 -2.28  &lt;.05
-#&gt; Uncorrected tau          -0.57 -2.98  &lt;.01
-#&gt; Baseline correted tau     0.66  3.41 &lt;.001
+#&gt;                            tau     z    p
+#&gt; Baseline autocorrelation -0.68 -2.28 &lt;.05
+#&gt; Uncorrected tau          -0.57 -2.98 &lt;.01
+#&gt; Baseline corrected tau    0.66  3.41 &lt;.01
 #&gt; 
 #&gt; Baseline correction should be applied.
 #&gt; </div></pre>

@@ -176,6 +176,9 @@ Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 <dt>phases.B</dt><dd><p>Selection for B phase.</p></dd>
 <dt>design</dt><dd><p>Phase design.</p></dd>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See corresponding functions of PND, PEM, PET, NAP, PAND for calculation. Tau_U reports "A vs. B + Trend B - Trend A". Base_Tau is baseline corrected tau (correction applied when autocorrelation in phase A is significant). Diff_mean is the mean difference. Diff_trend is the difference in the regression estimation of the dependent variable on measurement-time ( x ~ mt) for each phase. SMD is the mean difference divided by the standardd eviation of phase A. Hedges_g is the mean difference divided by the pooled standard deviation [sqrt(((nA - 1) * sdA^2 + (nB - 1) * sdB^2) / (nA + nB - 2) )] with a hedges correction applied [(* (1 - (3 / (4 * n - 9) ) )].</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other overlap functions: 
@@ -211,10 +214,10 @@ Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 #&gt; Diff_mean     -20.4
 #&gt; Diff_trend   -17.87
 #&gt; SMD            -0.9
-#&gt; Hedges_g      -0.86
+#&gt; Hedges_g      -0.71
 #&gt; 
 #&gt; The following variables were used in this analysis:
-#&gt; 'score' as dependent variable, 'phase' as phase variable,and 'mt' as measurement-time variable.</div><div class='input'>
+#&gt; 'score' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</div><div class='input'>
 <span class='co'>## Display overlap indices for six single-cases</span>
 <span class='fu'>overlap</span><span class='op'>(</span><span class='va'>GruenkeWilbert2014</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Overlap Indices
@@ -234,10 +237,10 @@ Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 #&gt; Diff_mean     4.14  5.82  5.00   4.78  4.48  6.00
 #&gt; Diff_trend    0.43  0.00  0.28  -0.08 -0.07  0.60
 #&gt; SMD           5.07  7.13  6.64   5.72  8.17  7.35
-#&gt; Hedges_g      4.83  6.79  6.33   5.45  7.78  7.00
+#&gt; Hedges_g      4.54  6.44  6.28   4.92  5.60  5.85
 #&gt; 
 #&gt; The following variables were used in this analysis:
-#&gt; 'score' as dependent variable, 'phase' as phase variable,and 'mt' as measurement-time variable.</div><div class='input'>
+#&gt; 'score' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</div><div class='input'>
 <span class='co'>## Combining phases for analyszing designs with more than two phases   </span>
 <span class='fu'>overlap</span><span class='op'>(</span><span class='va'>exampleA1B1A2B2</span>, phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A1"</span>,<span class='st'>"A2"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"B1"</span>,<span class='st'>"B2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Overlap Indices
@@ -257,7 +260,7 @@ Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 #&gt; Diff_mean          12.25       13.58       15.27
 #&gt; Diff_trend         -0.05        0.00       -0.54
 #&gt; SMD                 2.68        3.27        3.62
-#&gt; Hedges_g            2.63        3.21        3.55</div><div class='input'>
+#&gt; Hedges_g            2.07        2.68        2.80</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

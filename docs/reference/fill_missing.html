@@ -170,7 +170,7 @@ single-case data and you want to calculate overlap indices
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other data manipulation functions: 
-<code><a href='longSCDF.html'>longSCDF</a>()</code>,
+<code><a href='as.data.frame.scdf.html'>as.data.frame.scdf</a>()</code>,
 <code><a href='outlier.html'>outlier</a>()</code>,
 <code><a href='ranks.html'>ranks</a>()</code>,
 <code><a href='shift.html'>shift</a>()</code>,
@@ -191,7 +191,7 @@ single-case data and you want to calculate overlap indices
 <span class='va'>Grosche2011filled</span> <span class='op'>&lt;-</span> <span class='fu'>fill_missing</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span>
 <span class='va'>study</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>, <span class='va'>Grosche2011filled</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>study</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Original"</span>, <span class='st'>"Filled"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>study</span>, style <span class='op'>=</span> <span class='st'>"grid"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>study</span><span class='op'>)</span>
 </div><div class='img'><img src='fill_missing-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## Fill missing values in a single-case dataset that are NA</span>
 <span class='va'>Maggie</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span><span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>, seed <span class='op'>=</span> <span class='fl'>123</span><span class='op'>)</span>

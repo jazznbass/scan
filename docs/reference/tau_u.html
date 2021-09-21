@@ -194,7 +194,19 @@ statistics.</p></dd> <dt>tau_u</dt><dd><p>Tau-U value.</p></dd>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Tau-U is an inconsistently operationalized construct. Parker et al. (2011) describe a method which may result in Tau-U lager than 1. A different implementation of the method (provided at http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of tau-a as in the original formulation by Parker). Bossart et. al (2018) describe inconsistencies in the results from this implementation as well. Another problems lies in the calculation in overall Tau-U values from several single cases. This function applies a metaanalyzes to gain the overall values. Each tau value is weighted by the inverse of the variance (ie. the tau standard error). Tau values are not converted to Pearson r values. The argument <code>"meta_method"</code> calculates a random-effect model ("random") or a fixed effect model ("fixed").</p>
+    <p>Tau-U is an inconsistently operationalized construct. Parker et al.
+(2011) describe a method which may result in Tau-U lager than 1. 
+A different implementation of the method 
+(provided at http://www.singlecaseresearch.org/calculators/tau-u) uses 
+tau-b (instead of tau-a as in the original formulation by Parker). 
+Bossart et. al (2018) describe inconsistencies in the results from this
+implementation as well. Another problems lies in the calculation in overall 
+Tau-U values from several single cases. The function presented here 
+applies a metaanalyzes to gain the overall values. Each tau value is 
+weighted by the inverse of the variance (ie. the tau standard error). 
+Tau values are not converted to Pearson r values. The argument 
+<code>"meta_method"</code> calculates a random-effect model ("random") or 
+a fixed effect model ("fixed").</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Brossart, D. F., Laird, V. C., &amp; Armstrong, T. W. (2018). Interpreting Kendall’s Tau and Tau-U for single-case experimental designs. <em>Cogent Psychology, 5(1)</em>, 1–26. https://doi.org/10.1080/23311908.2018.1518687.</p>
@@ -259,7 +271,9 @@ statistics.</p></dd> <dt>tau_u</dt><dd><p>Tau-U value.</p></dd>
 #&gt; Method: complete 
 #&gt; Applied Kendall's Tau-b
 #&gt; 
-#&gt; Overall Tau-U: 
+#&gt; Overall Tau-U
+#&gt; Meta-anlysis model: random effect
+#&gt; 
 #&gt;                        Model  Tau_U     se     z     p
 #&gt;                      A vs. B 0.0623 0.1587 0.392 0.695
 #&gt;            A vs. B - Trend A 0.0762 0.0995 0.765 0.444

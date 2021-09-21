@@ -120,7 +120,13 @@
     <p>Set analysis variables in an scdf</p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_vars</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>dv</span>, <span class='va'>mt</span>, <span class='va'>phase</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>set_vars</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>dvar</span>, <span class='va'>mvar</span>, <span class='va'>pvar</span><span class='op'>)</span>
+
+<span class='fu'>set_dvar</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>dvar</span><span class='op'>)</span>
+
+<span class='fu'>set_mvar</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>mvar</span><span class='op'>)</span>
+
+<span class='fu'>set_pvar</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>pvar</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,20 +136,51 @@
       <td><p>A single-case data frame. See <code><a href='scdf.html'>scdf</a></code> to learn about this format.</p></td>
     </tr>
     <tr>
-      <th>dv</th>
+      <th>dvar</th>
       <td><p>Character string. Name of the dependent variable.</p></td>
     </tr>
     <tr>
-      <th>mt</th>
+      <th>mvar</th>
       <td><p>Character string. Name of the measurement-time variable.</p></td>
     </tr>
     <tr>
-      <th>phase</th>
+      <th>pvar</th>
       <td><p>Character string. Name of the phase variable.</p></td>
     </tr>
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>exampleAB_add</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>set_dvar</span><span class='op'>(</span><span class='st'>"depression"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='describe.html'>describe</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Describe Single-Case Data
+#&gt; 
+#&gt;                           Rolf
+#&gt; Design         Base-Medication
+#&gt; n.Base                      15
+#&gt; n.Medication                25
+#&gt; mis.Base                     0
+#&gt; mis.Medication               0
+#&gt; 
+#&gt;                    Rolf
+#&gt; m.Base                5
+#&gt; m.Medication       4.36
+#&gt; md.Base               6
+#&gt; md.Medication         3
+#&gt; sd.Base           2.673
+#&gt; sd.Medication     3.252
+#&gt; mad.Base          2.965
+#&gt; mad.Medication    2.965
+#&gt; min.Base              0
+#&gt; min.Medication        0
+#&gt; max.Base              9
+#&gt; max.Medication       10
+#&gt; trend.Base        0.114
+#&gt; trend.Medication -0.051
+#&gt; 
+#&gt; The following variables were used in this analysis:
+#&gt; 'depression' as dependent variable, 'phase' as phase variable, and 'day' as measurement-time variable.</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
