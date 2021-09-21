@@ -1,10 +1,14 @@
-#' Add level 2variables from an L2 dataset to an scdf file
+#' Add level 2 
+#' 
+#' Add level 2 variables from a level 2 dataset to an scdf file
 #'
 #' @inheritParams .inheritParams
 #' @param data_l2 A level 2 dataset.
 #' @param cvar Character string with the name of the "case" variable in the 
 #' L2 dataset (default is 'case').
 #' @return An scdf
+#' @examples
+#' Leidig2018 %>% add_l2(Leidig2018_l2)
 #' @export
 add_l2 <- function(data, data_l2, cvar = "case") {
   

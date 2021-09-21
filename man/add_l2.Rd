@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_l2.R
 \name{add_l2}
 \alias{add_l2}
-\title{Add level 2variables from an L2 dataset to an scdf file}
+\title{Add level 2}
 \usage{
 add_l2(data, data_l2, cvar = "case")
 }
@@ -18,5 +18,8 @@ L2 dataset (default is 'case').}
 An scdf
 }
 \description{
-Add level 2variables from an L2 dataset to an scdf file
+Add level 2 variables from a level 2 dataset to an scdf file
+}
+\examples{
+Leidig2018 \%>\% add_l2(Leidig2018_l2)
 }
