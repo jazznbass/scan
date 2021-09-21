@@ -1,16 +1,15 @@
 #' Trend analysis for single-cases data
 #' 
-#' The \code{trendSC} function provides an overview of linear trends in
+#' The \code{trend} function provides an overview of linear trends in
 #' single-case data.  By default, it gives you the intercept and slope of a
 #' linear and a squared regression of measurement-time on scores.  Models are
-#' computed separately for each phase and across all phases.  For a
+#' computed separately for each phase and across all phases. For a
 #' more advanced application, you can add regression models using the R
 #' specific formula class.
 #' 
-#' 
 #' @inheritParams .inheritParams
 #' @param offset An offset for the first measurement-time of each phase (MT). If
-#' set \code{offset = 0}, the phase measurement is handled as MT 1.
+#' \code{offset = 0}, the phase measurement is handled as MT 1.
 #' Default is \code{offset = -1}, setting the first value of MT to 0.
 #' @param model A string or a list of (named) strings each depicting one
 #' regression model. This is a formula expression of the standard R class. The
@@ -20,7 +19,7 @@
 #' \item{offset}{Numeric argument from function call (see \code{Arguments}
 #' section).}
 #' @author Juergen Wilbert
-#' @seealso \code{\link{describeSC}}, \code{\link{autocorrSC}},
+#' @seealso \code{\link{describe}}, \code{\link{autocorr}},
 #' \code{\link{plm}}
 #' @examples
 #' 
@@ -37,62 +36,77 @@
 #' trend(ben, offset = 0, model = c("Cubic" = values ~ I(mt^3), "Log Time" = values ~ log(mt)))
 #' 
 #' @export
-trend <- function(data, dvar, pvar, mvar, offset = -1,model = NULL) {
+trend <- function(data, dvar, pvar, mvar, offset = -1, model = NULL) {
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)    else scdf_attr(data, .opt$dv)    <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt)    else scdf_attr(data, .opt$mt)    <- mvar
+  if (missing(dvar)) 
+    dvar <- scdf_attr(data, .opt$dv)    else scdf_attr(data, .opt$dv)    <- dvar
+  if (missing(pvar)) 
+    pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
+  if (missing(mvar)) 
+    mvar <- scdf_attr(data, .opt$mt)    else scdf_attr(data, .opt$mt)    <- mvar
   
   data <- .prepare_scdf(data)
 
   phase <- NULL
   N <- length(data)
   if(N > 1) {
-    stop("Multiple single-cases are given. Calculations can only be applied to one single-case data set.\n")
+    stop("Multiple single-cases are given. ",          
+         "Calculations can only be applied to one single-case data set.\n")
   }
   data <- data[[1]]
   
   design <- rle(as.character(data[, pvar]))$values
   while(any(duplicated(design))) {
-    design[anyDuplicated(design)] <- paste0(design[anyDuplicated(design)], ".phase", anyDuplicated(design))
+    design[anyDuplicated(design)] <- paste0(
+      design[anyDuplicated(design)], 
+      ".phase", 
+      anyDuplicated(design)
+    )
   }
   
   phases <- .phasestructure(data, pvar = pvar)
   
-  FORMULAS <- c(formula(paste0(dvar, " ~ "  , mvar)) , 
-                formula(paste0(dvar, " ~ I(", mvar, "^2)")))
-  FORMULAS.NAMES <- c("Linear", "Squared")
+  fomulas <- c(
+    formula(paste0(dvar, " ~ ", mvar)) , 
+    formula(paste0(dvar, " ~ I(", mvar, "^2)"))
+  )
+  fomulas_names <- c("Linear", "Squared")
   if(!is.null(model)) {
-    FORMULAS <- c(FORMULAS, model)
-    FORMULAS.NAMES <- c(FORMULAS.NAMES, names(model))
+    fomulas <- c(fomulas, model)
+    fomulas_names <- c(fomulas_names, names(model))
   }
   tmp <- length(design) + 1
-  rows <- paste0( paste0(rep(FORMULAS.NAMES, each = tmp), ".") ,c("ALL", design))
+  rows <- paste0( paste0(rep(fomulas_names, each = tmp), ".") ,c("ALL", design))
   
   ma <- matrix(NA, nrow = length(rows), ncol = 3)
   row.names(ma) <- rows
   colnames(ma) <- c("Intercept", "B", "Beta")
   ma <- as.data.frame(ma)
   
-  for(f in 1:length(FORMULAS)) {
-    VAR <- paste0(FORMULAS.NAMES[f], ".ALL")
+  for(f in 1:length(fomulas)) {
+    var <- paste0(fomulas_names[f], ".ALL")
     data.phase <- data
-    data.phase[, mvar] <- data.phase[, mvar] - min(data.phase[, mvar], na.rm = TRUE) + 1 + offset
-    ma[which(rows == VAR), 1:3] <- .beta_weights(lm(FORMULAS[[f]], data = data.phase))
+    data.phase[, mvar] <- data.phase[, mvar] - 
+                          min(data.phase[, mvar], na.rm = TRUE) + 1 + offset
+    ma[which(rows == var), 1:3] <- .beta_weights(
+      lm(fomulas[[f]], data = data.phase)
+    )
     for(p in 1: length(design)) {
       data.phase <- data[phases$start[p]:phases$stop[p], ]
-      data.phase[, mvar] <- data.phase[,mvar] - min(data.phase[, mvar], na.rm = TRUE) + 1 + offset
-      VAR <- paste0(FORMULAS.NAMES[f], ".", design[p])
-      ma[which(rows == VAR), 1:3] <- .beta_weights(lm(FORMULAS[[f]], data = data.phase))
+      data.phase[, mvar] <- data.phase[,mvar] - 
+                            min(data.phase[, mvar], na.rm = TRUE) + 1 + offset
+      var <- paste0(fomulas_names[f], ".", design[p])
+      ma[which(rows == var), 1:3] <- .beta_weights(
+        lm(fomulas[[f]], data = data.phase)
+      )
     }
-    
   }
   
   out <- list(
     trend = ma, 
     offset = offset, 
-    formulas = FORMULAS.NAMES, 
+    formulas = fomulas_names, 
     design = design
   )
   class(out) <- c("sc_trend")

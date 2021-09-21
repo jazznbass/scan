@@ -19,7 +19,7 @@ trendSC(...)
 \item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
 
 \item{offset}{An offset for the first measurement-time of each phase (MT). If
-set \code{offset = 0}, the phase measurement is handled as MT 1.
+\code{offset = 0}, the phase measurement is handled as MT 1.
 Default is \code{offset = -1}, setting the first value of MT to 0.}
 
 \item{model}{A string or a list of (named) strings each depicting one
@@ -35,10 +35,10 @@ of separate regression models for phase A, phase B, and the whole data.}
 section).}
 }
 \description{
-The \code{trendSC} function provides an overview of linear trends in
+The \code{trend} function provides an overview of linear trends in
 single-case data.  By default, it gives you the intercept and slope of a
 linear and a squared regression of measurement-time on scores.  Models are
-computed separately for each phase and across all phases.  For a
+computed separately for each phase and across all phases. For a
 more advanced application, you can add regression models using the R
 specific formula class.
 }
@@ -58,7 +58,7 @@ trend(ben, offset = 0, model = c("Cubic" = values ~ I(mt^3), "Log Time" = values
 
 }
 \seealso{
-\code{\link{describeSC}}, \code{\link{autocorrSC}},
+\code{\link{describe}}, \code{\link{autocorr}},
 \code{\link{plm}}
 }
 \author{
