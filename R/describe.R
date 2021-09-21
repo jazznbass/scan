@@ -5,9 +5,8 @@
 #'
 #'
 #' @inheritParams .inheritParams
-#' @return A data frame of descriptive statistics (for each single-case), i.e.:
-#' number of observations, number of missing values, measures of central
-#' tendency, variation, and trend.
+#' @details n = number of measurements; mis = number of missing vaues; m = mean; md = median; sd = standard deviation; mad = median average deviation; min = minimum; max = maximum; trend = weight of depended variable regressed on time (values ~ mt). 
+#' @return A list containing a data frame of descriptive statistics (descriptives); the cse design (design); the number of cases (N)
 #' @author Juergen Wilbert
 #' @seealso \code{\link{overlap}}, \code{\link{plot.scdf}}
 #' @examples
@@ -18,11 +17,9 @@
 #' ## Descriptives of a three phase design
 #' describe(exampleABC)
 #'
-#' \dontrun{
 #' ## Write descriptive statistics to .csv-file
 #' study <- describe(Waddell2011)
-#' write.csv(study$descriptives, file = "descriptives.csv")
-#' }
+#' write.csv(study$descriptives, file = tempfile())
 #' @export
 describe <- function(data, dvar, pvar, mvar) {
 
@@ -48,7 +45,7 @@ describe <- function(data, dvar, pvar, mvar) {
   
   design <- unique(unlist(designs))
   
-  designs <- sapply(designs, function(x) paste0(x, collapse = " "))
+  designs <- sapply(designs, function(x) paste0(x, collapse = "-"))
   
   while (any(duplicated(design))) {
     design[anyDuplicated(design)] <-

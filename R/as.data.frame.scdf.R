@@ -1,8 +1,8 @@
 #' Creating a long format data frame from several single-case data frames
 #' (scdf).
 #' 
-#' The longSCDF function transposes a scdf into one long data frame.
-#' Additionally, a data frame can be merged that includes data of the subjects.
+#' The as.data.frame function transposes an scdf into one long data frame.
+#' Additionally, a data frame can be merged that includes level 2 data of the subjects.
 #' This might be helpful to prepare data to be used with other packages than scan.
 #' 
 #' 

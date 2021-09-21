@@ -15,7 +15,19 @@
 #' family, including: Pairs, positive and negative comparisons, S, and Tau}
 #' \item{matrix}{The matrix of comparisons used for calculating the
 #' statistics.} \item{tau_u}{Tau-U value.}
-#' @details Tau-U is an inconsistently operationalized construct. Parker et al. (2011) describe a method which may result in Tau-U lager than 1. A different implementation of the method (provided at http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of tau-a as in the original formulation by Parker). Bossart et. al (2018) describe inconsistencies in the results from this implementation as well. Another problems lies in the calculation in overall Tau-U values from several single cases. This function applies a metaanalyzes to gain the overall values. Each tau value is weighted by the inverse of the variance (ie. the tau standard error). Tau values are not converted to Pearson r values. The argument \code{"meta_method"} calculates a random-effect model ("random") or a fixed effect model ("fixed").
+#' @details Tau-U is an inconsistently operationalized construct. Parker et al.
+#' (2011) describe a method which may result in Tau-U lager than 1. 
+#' A different implementation of the method 
+#' (provided at http://www.singlecaseresearch.org/calculators/tau-u) uses 
+#' tau-b (instead of tau-a as in the original formulation by Parker). 
+#' Bossart et. al (2018) describe inconsistencies in the results from this
+#' implementation as well. Another problems lies in the calculation in overall 
+#' Tau-U values from several single cases. The function presented here 
+#' applies a metaanalyzes to gain the overall values. Each tau value is 
+#' weighted by the inverse of the variance (ie. the tau standard error). 
+#' Tau values are not converted to Pearson r values. The argument 
+#' \code{"meta_method"} calculates a random-effect model ("random") or 
+#' a fixed effect model ("fixed").
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @references Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018). Interpreting Kendall’s Tau and Tau-U for single-case experimental designs. \emph{Cogent Psychology, 5(1)}, 1–26. https://doi.org/10.1080/23311908.2018.1518687.
@@ -52,8 +64,10 @@ tau_u <- function(data, dvar, pvar,
     stop("meta_method muste be 'random' or 'fixed'.")
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
+  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
+  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase)
+  scdf_attr(data, .opt$phase) <- pvar
+  scdf_attr(data, .opt$dv) <- dvar
   
   data <- .prepare_scdf(data)
   data <- .keep_phases(data, phases = phases, pvar = pvar)$data

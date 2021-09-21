@@ -43,18 +43,23 @@ and 4 (as B). Default is \code{phases = c("A","B")}.}
 \item{...}{Further arguments passed to the function.}
 }
 \description{
-Kendalls tau correlation for the dependent variable and the phase variable is calculated
-after correcting for a baseline trend.
+Kendalls tau correlation for the dependent variable and the phase variable 
+is calculated after correcting for a baseline trend.
 }
 \details{
-This method has been proposed by Tarlow (2016). The baseline data are checked for a significant 
-autocorrelation (based on Kendalls Tau). If so, a non-parameteric Theil-Sen regression is applied
-for the baseline data where the dependent values are regressed on the measurement time. The resulting slope
-information is then used to predict data of the B-phase. The dependent variable is now corrected for this baseline trend 
-and the residuals of the Theil-Sen regression are taken for further calculations.
-Finally, a tau is calculated for the dependent variable and the dichotomous phase variable.
-The function here provides two extensions to this procedure: The more accurate Siegel repeated median regression
-is applied when \code{repeated = TRUE} and a continuity correction is applied when \code{continuity = TRUE} (both are the default settings).
+This method has been proposed by Tarlow (2016). The baseline data 
+are checked for a significant autocorrelation (based on Kendalls Tau). 
+If so, a non-parameteric Theil-Sen regression is applied for the baseline 
+data where the dependent values are regressed on the measurement time. 
+The resulting slope information is then used to predict data of the B-phase. 
+The dependent variable is now corrected for this baseline trend and the 
+residuals of the Theil-Sen regression are taken for further calculations.
+Finally, Kendalls tau is calculated for the dependent variable and the 
+dichotomous phase variable.
+The function here provides two extensions to this procedure: 
+The more accurate Siegel repeated median regression is applied when 
+\code{repeated = TRUE} and a continuity correction is applied when 
+\code{continuity = TRUE} (both are the default settings).
 }
 \examples{
 dat <- scdf(c(A = 33,25,17,25,14,13,15, B = 15,16,16,5,7,9,6,5,3,3,8,11,7))

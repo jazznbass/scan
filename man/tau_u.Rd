@@ -55,7 +55,19 @@ This function calculates indices of the Tau-U family as proposed by Parker
 et al. (2011).
 }
 \details{
-Tau-U is an inconsistently operationalized construct. Parker et al. (2011) describe a method which may result in Tau-U lager than 1. A different implementation of the method (provided at http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of tau-a as in the original formulation by Parker). Bossart et. al (2018) describe inconsistencies in the results from this implementation as well. Another problems lies in the calculation in overall Tau-U values from several single cases. This function applies a metaanalyzes to gain the overall values. Each tau value is weighted by the inverse of the variance (ie. the tau standard error). Tau values are not converted to Pearson r values. The argument \code{"meta_method"} calculates a random-effect model ("random") or a fixed effect model ("fixed").
+Tau-U is an inconsistently operationalized construct. Parker et al.
+(2011) describe a method which may result in Tau-U lager than 1. 
+A different implementation of the method 
+(provided at http://www.singlecaseresearch.org/calculators/tau-u) uses 
+tau-b (instead of tau-a as in the original formulation by Parker). 
+Bossart et. al (2018) describe inconsistencies in the results from this
+implementation as well. Another problems lies in the calculation in overall 
+Tau-U values from several single cases. The function presented here 
+applies a metaanalyzes to gain the overall values. Each tau value is 
+weighted by the inverse of the variance (ie. the tau standard error). 
+Tau values are not converted to Pearson r values. The argument 
+\code{"meta_method"} calculates a random-effect model ("random") or 
+a fixed effect model ("fixed").
 }
 \examples{
 

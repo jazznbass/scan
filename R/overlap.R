@@ -4,6 +4,7 @@
 #' single-case data and some additional statistics.
 #' 
 #' @inheritParams .inheritParams
+#' @details See corresponding functions of PND, PEM, PET, NAP, PAND for calculation. Tau_U reports "A vs. B + Trend B - Trend A". Base_Tau is baseline corrected tau (correction applied when autocorrelation in phase A is significant). Diff_mean is the mean difference. Diff_trend is the difference in the regression estimation of the dependent variable on measurement-time ( x ~ mt) for each phase. SMD is the mean difference divided by the standardd eviation of phase A. Hedges_g is the mean difference divided by the pooled standard deviation [sqrt(((nA - 1) * sdA^2 + (nB - 1) * sdB^2) / (nA + nB - 2) )] with a hedges correction applied [(* (1 - (3 / (4 * n - 9) ) )].
 #' @return 
 #' \item{overlap}{A data frame consisting of the following indices for
 #' each single-case for all cases: PND, PEM, PET, NAP, PAND, Tau-U (A vs. B -
@@ -30,9 +31,12 @@ overlap <- function(data, dvar, pvar, mvar,
                     phases = c(1, 2)){
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
+  if (missing(dvar)) 
+    dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
+  if (missing(pvar)) 
+    pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
+  if (missing(mvar)) 
+    mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
   
   data_list <- .prepare_scdf(data)
   
@@ -82,7 +86,6 @@ overlap <- function(data, dvar, pvar, mvar,
     
     df$Diff_mean[i] <- mB - mA
     df$SMD[i] <- (mB - mA) / sdA
-    
     
     sd_hg <- sqrt(
       ( (nA - 1) * sdA^2 + (nB - 1) * sdB^2) 

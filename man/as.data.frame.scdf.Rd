@@ -27,8 +27,8 @@ Returns one data frame with data of all single-cases structured by
 the case variable.
 }
 \description{
-The longSCDF function transposes a scdf into one long data frame.
-Additionally, a data frame can be merged that includes data of the subjects.
+The as.data.frame function transposes an scdf into one long data frame.
+Additionally, a data frame can be merged that includes level 2 data of the subjects.
 This might be helpful to prepare data to be used with other packages than scan.
 }
 \examples{
