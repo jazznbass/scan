@@ -15,24 +15,20 @@
 #' \code{\link{saveRDS}}
 #' @keywords manip
 #' @examples
-#' \dontrun{
 #' ## Write single-case data to a .csv-file
 #' filename <- tempfile()
 #' jessica <- rSC(design_rSC(level = .5))
 #' writeSC(jessica, filename)
 #' 
 #' ## Write multiple cases to a .csv-file with semicolon as field and comma as decimal separator
-#' 
 #' writeSC(Grosche2011, filename, sep = ";", dec = ",")
 #' 
 #' ## writeSC and readSC
-#' filename <- tempfile()
 #' writeSC(exampleA1B1A2B2_zvt, filename)
 #' dat <- readSC(filename, cvar = "case", pvar = "part", dvar = "zvt", mvar = "day")
 #' res1 <- describe(exampleA1B1A2B2_zvt)$descriptives
 #' res2 <- describe(dat)$descriptives
-#' identical(res1,res2)
-#' }
+#' all.equal(res1,res2)
 #' @export
 writeSC <- function(data, filename = NULL, sep = ",", dec = ".", ...) {
   if(is.null(filename)) {
