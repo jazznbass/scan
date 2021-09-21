@@ -6,7 +6,7 @@
 #' @param truncate A list with a vector of two (beginning and end) values for each phase defining the number of data points to be deleted.
 #' For lists of single-case data frames, the truncation is adapted to the length
 #' of each phase for each single case.
-#' @param na If FALSE, the truncated measurement times are deletet. If TRUE, NAs are set for the dependent variable.
+#' @param na If FALSE, the truncated measurement times are deleted. If TRUE, NAs are set for the dependent variable.
 #' @return A truncated data frame (for each single-case).
 #' @author Juergen Wilbert
 #' @family data manipulation functions
@@ -25,14 +25,15 @@ truncate_phase <- function(data, dvar, pvar,
                            na = TRUE) {
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
+  if (missing(pvar)) 
+    pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
+  if (missing(dvar)) 
+    dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
 
   data <- .prepare_scdf(data)
 
   N <- length(data)
 
-  cat("Deletet measurements per case:\n\n")
   for (i in 1:N) {
     phases <- rle(as.character(data[[i]][[pvar]]))
     phases$start <- c(1, cumsum(phases$lengths) + 1)[1:length(phases$lengths)]
@@ -57,6 +58,7 @@ truncate_phase <- function(data, dvar, pvar,
       }
     }
 
+    cat("Deletet measurements per case:\n\n")
     cat(paste0(names(data)[i], ": "))
     cat(deselect)
     cat("\n")
