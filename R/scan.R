@@ -16,7 +16,6 @@
     scan.print.long   = FALSE,
     scan.print.scdf.name = TRUE,
     scan.plot.style = "grid",
-    scan.scplot.theme = "grid",
     scan.deprecated.warning = FALSE,
     scan.export.kable = list(digits = 2, linesep ="", booktab = TRUE),
     scan.export.kable_styling = list(
