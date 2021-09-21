@@ -567,7 +567,7 @@ print.sc_trend <- function(x, digits = 3, ...) {
   cat("Trend for each phase\n\n")
   print(x$trend)
   cat("\n")
-  cat("Note. Measurement-times of phase B start at", 1 + x$offset, "\n")
+  cat("Note. Measurement-times start at", 1 + x$offset, " for each phase\n")
   .note_vars(x)
 }
 
