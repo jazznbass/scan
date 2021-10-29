@@ -1,5 +1,9 @@
-# scan - Single-Case Data Analyses for Single and Multiple Baseline Designs
+# scan - Single-Case Data Analyses for Single and Multiple Baseline Designs <img src='man/figures/logo.png' align="right" height = "135" />
 
+<!-- badges: start -->
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/scan?color=blue)](https://cran.r-project.org/package=scan)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/scan?color=orange)](https://cran.rstudio.com/package=scan)
+<!-- badges: end -->
 
 This package provides a collection of procedures for analysing, visualising, 
 and managing single-case data. These include piecewise linear regression 
