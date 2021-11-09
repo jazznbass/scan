@@ -6,9 +6,9 @@ Date: 2021-10-29
 Author: Juergen Wilbert [cre, aut], Timo Lueke [aut]
 Authors@R: c(
   person("Juergen", "Wilbert", email = "juergen.wilbert@uni-potsdam.de", 
-    role = c("cre", "aut"), comment = c(ORCID = "0000-0002-8392-2873")),
-  person("Timo", "Lueke", email = "timo.lueke@uni-graz.at", 
-    role = "aut"), comment = c(ORCID = "0000-0002-2603-7341"))
+    role = c("cre", "aut"), comment = c(ORCID = "0000-0002-8392-2873")), 
+  person("Timo", "Lueke", email = "timo.lueke@uni-graz.at", role = "aut", 
+    comment = c(ORCID = "0000-0002-2603-7341")))
 Imports: 
   stats, 
   nlme, 
