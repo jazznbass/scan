@@ -1,12 +1,14 @@
 Package: scan
 Type: Package
 Title: Single-Case Data Analyses for Single and Multiple Baseline Designs
-Version: 0.53
-Date: 2021-9-22
+Version: 0.53.1
+Date: 2021-12-11
 Author: Juergen Wilbert [cre, aut], Timo Lueke [aut]
 Authors@R: c(
-    person("Juergen", "Wilbert", email = "juergen.wilbert@uni-potsdam.de", role = c("cre", "aut")),
-    person("Timo", "Lueke", email = "timo.lueke@uni-graz.at", role = "aut"))
+  person("Juergen", "Wilbert", email = "juergen.wilbert@uni-potsdam.de", 
+    role = c("cre", "aut"), comment = c(ORCID = "0000-0002-8392-2873")), 
+  person("Timo", "Lueke", email = "timo.lueke@uni-graz.at", role = "aut", 
+    comment = c(ORCID = "0000-0002-2603-7341")))
 Imports: 
   stats, 
   nlme, 
