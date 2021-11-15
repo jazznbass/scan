@@ -1,3 +1,7 @@
+# scan 0.53.2
+
+- solved #46: plm throws no error, when a phase is of length 1
+
 # scan 0.53
 
 ## Major changes

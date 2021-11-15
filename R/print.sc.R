@@ -511,23 +511,29 @@ print.sc_plm <- function(x, ...) {
   
   if (x$ar == 0) res <- summary(x$full.model)$coefficients
   if (x$ar  > 0) res <- summary(x$full.model)$tTable
+  
+  ci <- suppressMessages(confint(x$full))
+  parameter_filter <- apply(ci, 1, function(x) if(!all(is.na(x))) TRUE else FALSE)
+  ci <- ci[parameter_filter, ]
+  
   if (nrow(res) == 1) {
     res <- cbind(
       res[, 1, drop = FALSE], 
-      t(suppressMessages(confint(x$full))), 
+      t(ci), 
       res[, 2:4, drop = FALSE]
     )
   } else res <- cbind(
     res[,1], 
-    suppressMessages(confint(x$full)), 
+    ci, 
     res[, 2:4]
   )
   
   res <- round(res, 3)
   res <- as.data.frame(res)
-  if (!is.null(x$r.squares)) 
+  if (!is.null(x$r.squares)) {
+    x$r.squares <- x$r.squares[c(parameter_filter[-1])]
     res$R2 <- c("", format(round(x$r.squares, 4)))
-  
+  }
   row.names(res) <- .plm.row.names(row.names(res), x)
   
   if (!is.null(x$r.squares))
