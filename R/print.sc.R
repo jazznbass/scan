@@ -322,7 +322,8 @@ print.sc_outlier <- function(x, digits = "auto", ...) {
   }
   
   if (x$criteria[1] == "Cook") {
-    cat("Criteria: Cook's Distance based on piecewise-linear-regression exceeds", x$criteria[2],"\n\n")
+    cat("Criteria: Cook's Distance based on piecewise-linear-regression exceeds", 
+        x$criteria[2],"\n\n")
   }
   
   for(i in 1:length(x$dropped.n)) {
@@ -336,15 +337,19 @@ print.sc_outlier <- function(x, digits = "auto", ...) {
 #' 
 print.sc_pand <- function(x, ...) {
   cat("Percentage of all non-overlapping data\n\n")
-  cat("PAND = ", round(x$PAND, 1), "%\n")
-  cat("\u03A6 = ", round(x$phi, 3), " ; \u03A6\u00b2 = ", round(x$phi^2, 3), "\n\n")
-  cat("Number of Cases:", x$N, "\n")
+  cat("PAND = ", round(x$pand, 1), "%\n")
+  cat("\u03A6 = ", round(x$phi, 3), 
+      " ; \u03A6\u00b2 = ", 
+      round(x$phi^2, 3), "\n\n")
+  cat("Number of cases:", x$N, "\n")
   cat("Total measurements:", x$n, " ")
   cat("(in phase A: ", x$nA, "; in phase B: ", x$nB, ")\n", sep = "")
   cat("n overlapping data per case: ")
-  cat(x$OD.PP, sep = ", ")
+  cat(x$overlaps_cases, sep = ", ")
   cat("\n")
-  cat("Total overlapping data: n =",x$OD , "; percentage =", round(x$POD, 1), "\n")
+  cat("Total overlapping data: n =",x$overlaps , 
+      "; percentage =", round(x$perc_overlap, 1), 
+      "\n")
   ma <- x$matrix
   cat("\n")
   cat("2 x 2 Matrix of proportions\n")
@@ -357,7 +362,7 @@ print.sc_pand <- function(x, ...) {
   cat("\n")
   cat(" total",sum(round(ma[, 1] * 100, 1)), sum(round(ma[, 2] * 100, 1)), sep = "\t")
   cat("\n")
-  ma <- x$matrix.counts
+  ma <- x$matrix_counts
   cat("\n")
   cat("2 x 2 Matrix of counts\n")
   cat("\texpected\n")

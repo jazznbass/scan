@@ -130,13 +130,13 @@ plm <- function(data, dvar, pvar, mvar, AR = 0, model = "B&L-B", family = "gauss
   df1.full <- n - 1 - df2.full
   
   QSE <- sum(full$residuals^2, na.rm = TRUE)
-  QST <- sum((data[, dvar] - mean(data[, dvar]))^2)
+  QST <- sum((data[[dvar]] - mean(data[[dvar]]))^2)
   MQSA <- (QST - QSE) / df1.full
   MQSE <- QSE / df2.full
   F.full <- MQSA / MQSE
   p.full <- pf(F.full, df1.full, df2.full, lower.tail = FALSE)
   
-  total.variance <- var(data[, dvar])
+  total.variance <- var(data[[dvar]])
   r2.full     <- 1 - (var(full$residuals) / total.variance)
   r2.full.adj <- 1 - (1 - r2.full) * ((n - df.int) / df2.full)
 
