@@ -27,10 +27,16 @@
   names(data) <- .case_names(names(data), length(data))
   
   for(case in 1:length(data)) {
+    
+    if ("tbl_df" %in% class(data[[case]])) {
+      class(data[[case]]) <- "data.frame"
+      message("Found tibble within scdf and changed it to data.frame.")
+    }
+    
     vars <- names(data[[case]])
-    if (na.rm) data[[case]] <- data[[case]][!is.na(data[[case]][, dvar]), ]
-    if (!is.factor(data[[case]][, pvar])) {
-      data[[case]][, pvar] <- as.factor(data[[case]][, pvar])
+    if (na.rm) data[[case]] <- data[[case]][!is.na(data[[case]][[dvar]]), ]
+    if (!is.factor(data[[case]][[pvar]])) {
+      data[[case]][[pvar]] <- as.factor(data[[case]][[pvar]])
     }
     
     #if (is.na(names(data)[case])) names(data)[case] <- paste0("Case ", case)
