@@ -1,6 +1,7 @@
 # scan 0.53.2
 
 - solved #46: plm throws no error, when a phase is of length 1
+- solved: throws warning for corrected-tau when A phase has less than three rows.
 
 # scan 0.53
 
