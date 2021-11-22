@@ -56,6 +56,12 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   A_data <- data[rowsA, ]
   B_data <- data[rowsB, ]
   
+  if (nrow(A_data) < 3) {
+    warning(
+      "Phase A needs more than 2 measurements to calculate autocorrelation."
+    )
+  }
+  
   auto_tau <- .kendall(
     A_data[[dvar]], 
     A_data[[mvar]], 
@@ -72,7 +78,16 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   x <- data[[dvar]]
   uncorrected_tau <- .kendall(x, y, continuity_correction = continuity)
   
-  if (auto_tau$p <= alpha) corr_applied <- TRUE else corr_applied <- FALSE
+  if (is.na(auto_tau$p)) {
+    corr_applied <- FALSE
+  } else {
+    if (auto_tau$p <= alpha) {
+      corr_applied <- TRUE
+    } else {
+      corr_applied <- FALSE
+    }
+  }
+  
   if (corr_applied) tau <- base_corr_tau else tau <- uncorrected_tau
 
   df <- data.frame(
