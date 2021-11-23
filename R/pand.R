@@ -20,14 +20,14 @@
 #' a frequency matrix, which is corrected for ties. A tie is counted as the
 #' half of a measurement in both phases. Set \code{correction = FALSE} to use
 #' the uncorrected matrix, which is not recommended.
-#' @return \item{PAND}{Percentage of all non-overlapping data.}
+#' @return \item{pand}{Percentage of all non-overlapping data.}
 #' \item{phi}{Effect size Phi based on expected and observed values.}
-#' \item{POD}{Percentage of overlapping data points.} \item{OD}{Number of
+#' \item{perc_overlap}{Percentage of overlapping data points.} \item{overlaps}{Number of
 #' overlapping data points.} \item{n}{Number of data points.} \item{N}{Number
 #' of cases.} \item{nA}{Number of data points in phase A.} \item{nB}{Number of
 #' data points in phase B.} \item{pA}{Percentage of data points in phase A.}
 #' \item{pB}{Percentage of data points in phase B.} \item{matrix}{2x2 frequency
-#' matrix of phase A and B comparisons.} \item{matrix.counts}{2x2 counts matrix
+#' matrix of phase A and B comparisons.} \item{matrix_counts}{2x2 counts matrix
 #' of phase A and B comparisons.} \item{correlation}{A list of the
 #' \code{correlation} values: statistic, parameter, p.value, estimate,
 #' null.value, alternative, method, data.name, correction.}
@@ -56,7 +56,10 @@
 #' pand(cubs, decreasing = TRUE)
 #' 
 #' @export
-pand <- function(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases = c(1, 2)) {
+pand <- function(data, dvar, pvar, 
+                 decreasing = FALSE, 
+                 correction = TRUE, 
+                 phases = c(1, 2)) {
   
   # set default attirubtes
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
@@ -73,21 +76,27 @@ pand <- function(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases
   A <- lapply(data, function(x) x[x[[pvar]] == "A", dvar])
   B <- lapply(data, function(x) x[x[[pvar]] == "B", dvar])
   
-  phase_real <- lapply(data, function(x) as.numeric(as.factor(x[sort.list(x[[dvar]]), pvar])))
-  phase_expected <- lapply(data, function(x) as.numeric(as.factor(x[, pvar])))
+  phase_real <- 
+    lapply(
+      data, function(x) 
+        as.numeric(as.factor(x[[pvar]][sort.list(x[[dvar]])]))
+    )
+  phase_expected <- lapply(data, function(x) as.numeric(as.factor(x[[pvar]])))
   
   tmp <- getOption("warn")
   options(warn = -1)
-  results_cor <- cor.test(unlist(phase_real), unlist(phase_expected), method = "kendall")
+  results_cor <- cor.test(
+    unlist(phase_real), unlist(phase_expected), method = "kendall"
+  )
   options(warn = tmp)
   
   nA <- sum(sapply(A, length))
   nB <- sum(sapply(B, length))
   n <- nA + nB
   
-  OD.PP <- rep(NA, N)
-  OD.A <- 0
-  OD.B <- 0
+  overlaps_cases <- rep(NA, N)
+  overlaps_A <- 0
+  overlaps_B <- 0
   
   for (i in 1:N) {
     z <- data[[i]][, dvar, drop = FALSE]
@@ -99,35 +108,35 @@ pand <- function(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases
     AB <- sum(rang[1:n1] > n1)
     BA <- sum(rang[(n1 + 1):n12] <= n1)
     if(correction) {
-      ord <- z[rang, ]
+      ord <- z[[1]][rang]
       AB <- AB + 0.5 * sum(ord[1:n1] == min(ord[(n1 + 1):n12]))
       BA <- BA + 0.5 * sum(ord[(n1 + 1):n12] == max(ord[1:n1]))
     }
-    OD.PP[i] <- AB + BA
-    OD.A <- OD.A + AB
-    OD.B <- OD.B + BA
+    overlaps_cases[i] <- AB + BA
+    overlaps_A <- overlaps_A + AB
+    overlaps_B <- overlaps_B + BA
   }
   
-  OD <- sum(OD.PP)
-  POD <- OD / n * 100
+  overlaps <- sum(overlaps_cases)
+  perc_overlap <- overlaps / n * 100
   pA <- nA / n
   pB <- nB / n
   
-  b <- OD.A / n
-  c <- OD.B / n
+  b <- overlaps_A / n
+  c <- overlaps_B / n
   a <- pA - b
   d <- pB - c
   phi <- (a / (a + c)) - (b / (b + d))
-  PAND <- 100 - POD
+  pand <- 100 - perc_overlap
   mat <- matrix(c(a, b, c, d), nrow = 2)
   mat2 <- mat * n
   
   out <- list(
-    PAND = PAND, 
+    pand = pand, 
     phi = phi, 
-    POD = POD, 
-    OD.PP = OD.PP, 
-    OD = OD, 
+    perc_overlap = perc_overlap, 
+    overlaps_cases = overlaps_cases, 
+    overlaps = overlaps, 
     n = n, 
     N = N, 
     nA = nA, 
@@ -135,7 +144,7 @@ pand <- function(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases
     pA = pA, 
     pB = pB, 
     matrix = mat, 
-    matrix.counts = mat2, 
+    matrix_counts = mat2, 
     correlation = results_cor, 
     correction = correction
   )

@@ -29,14 +29,14 @@ could be combined by providing a list with two elements. E.g., \code{phases
 and 4 (as B). Default is \code{phases = c("A","B")}.}
 }
 \value{
-\item{PAND}{Percentage of all non-overlapping data.}
+\item{pand}{Percentage of all non-overlapping data.}
 \item{phi}{Effect size Phi based on expected and observed values.}
-\item{POD}{Percentage of overlapping data points.} \item{OD}{Number of
+\item{perc_overlap}{Percentage of overlapping data points.} \item{overlaps}{Number of
 overlapping data points.} \item{n}{Number of data points.} \item{N}{Number
 of cases.} \item{nA}{Number of data points in phase A.} \item{nB}{Number of
 data points in phase B.} \item{pA}{Percentage of data points in phase A.}
 \item{pB}{Percentage of data points in phase B.} \item{matrix}{2x2 frequency
-matrix of phase A and B comparisons.} \item{matrix.counts}{2x2 counts matrix
+matrix of phase A and B comparisons.} \item{matrix_counts}{2x2 counts matrix
 of phase A and B comparisons.} \item{correlation}{A list of the
 \code{correlation} values: statistic, parameter, p.value, estimate,
 null.value, alternative, method, data.name, correction.}

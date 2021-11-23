@@ -322,7 +322,8 @@ print.sc_outlier <- function(x, digits = "auto", ...) {
   }
   
   if (x$criteria[1] == "Cook") {
-    cat("Criteria: Cook's Distance based on piecewise-linear-regression exceeds", x$criteria[2],"\n\n")
+    cat("Criteria: Cook's Distance based on piecewise-linear-regression exceeds", 
+        x$criteria[2],"\n\n")
   }
   
   for(i in 1:length(x$dropped.n)) {
@@ -336,15 +337,19 @@ print.sc_outlier <- function(x, digits = "auto", ...) {
 #' 
 print.sc_pand <- function(x, ...) {
   cat("Percentage of all non-overlapping data\n\n")
-  cat("PAND = ", round(x$PAND, 1), "%\n")
-  cat("\u03A6 = ", round(x$phi, 3), " ; \u03A6\u00b2 = ", round(x$phi^2, 3), "\n\n")
-  cat("Number of Cases:", x$N, "\n")
+  cat("PAND = ", round(x$pand, 1), "%\n")
+  cat("\u03A6 = ", round(x$phi, 3), 
+      " ; \u03A6\u00b2 = ", 
+      round(x$phi^2, 3), "\n\n")
+  cat("Number of cases:", x$N, "\n")
   cat("Total measurements:", x$n, " ")
   cat("(in phase A: ", x$nA, "; in phase B: ", x$nB, ")\n", sep = "")
   cat("n overlapping data per case: ")
-  cat(x$OD.PP, sep = ", ")
+  cat(x$overlaps_cases, sep = ", ")
   cat("\n")
-  cat("Total overlapping data: n =",x$OD , "; percentage =", round(x$POD, 1), "\n")
+  cat("Total overlapping data: n =",x$overlaps , 
+      "; percentage =", round(x$perc_overlap, 1), 
+      "\n")
   ma <- x$matrix
   cat("\n")
   cat("2 x 2 Matrix of proportions\n")
@@ -357,7 +362,7 @@ print.sc_pand <- function(x, ...) {
   cat("\n")
   cat(" total",sum(round(ma[, 1] * 100, 1)), sum(round(ma[, 2] * 100, 1)), sep = "\t")
   cat("\n")
-  ma <- x$matrix.counts
+  ma <- x$matrix_counts
   cat("\n")
   cat("2 x 2 Matrix of counts\n")
   cat("\texpected\n")
@@ -511,23 +516,29 @@ print.sc_plm <- function(x, ...) {
   
   if (x$ar == 0) res <- summary(x$full.model)$coefficients
   if (x$ar  > 0) res <- summary(x$full.model)$tTable
+  
+  ci <- suppressMessages(confint(x$full))
+  parameter_filter <- apply(ci, 1, function(x) if(!all(is.na(x))) TRUE else FALSE)
+  ci <- ci[parameter_filter, ]
+  
   if (nrow(res) == 1) {
     res <- cbind(
       res[, 1, drop = FALSE], 
-      t(suppressMessages(confint(x$full))), 
+      t(ci), 
       res[, 2:4, drop = FALSE]
     )
   } else res <- cbind(
     res[,1], 
-    suppressMessages(confint(x$full)), 
+    ci, 
     res[, 2:4]
   )
   
   res <- round(res, 3)
   res <- as.data.frame(res)
-  if (!is.null(x$r.squares)) 
+  if (!is.null(x$r.squares)) {
+    x$r.squares <- x$r.squares[c(parameter_filter[-1])]
     res$R2 <- c("", format(round(x$r.squares, 4)))
-  
+  }
   row.names(res) <- .plm.row.names(row.names(res), x)
   
   if (!is.null(x$r.squares))

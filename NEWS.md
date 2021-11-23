@@ -1,3 +1,9 @@
+# scan 0.53.2
+
+- solved #46: `plm` throws no error, when a phase is of length 1
+- solved #48: throws warning for `corrected_tau` when A phase has less than three rows.
+- solved #49: changes class from tibble to data.frame within scdf.
+
 # scan 0.53
 
 ## Major changes

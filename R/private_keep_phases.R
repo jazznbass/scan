@@ -1,9 +1,9 @@
 .keep_phases <- function(data, 
-                          phases = c(1, 2), 
-                          set.phases = TRUE, 
-                          pvar = "phase") {
+                         phases = c(1, 2), 
+                         set.phases = TRUE, 
+                         pvar = "phase") {
   
-  #if (is.data.frame(data)) data <- list(data)
+  
   source_attributes <- attributes(data)
   
   warning <- character(0)
@@ -29,7 +29,7 @@
   
   for(case in 1:N) {
     
-    design <- rle(as.character(data[[case]][, pvar]))
+    design <- rle(as.character(data[[case]][[pvar]]))
     
     if (class(phases_total) == "character") {
       select_A <- which(design$values %in% phases_A)
@@ -42,10 +42,10 @@
     
     if (class(phases_total) != "character") {
       if (any(phases_total > length(design$values))) {
-        warning <- c(warning, paste0("Phase(s) not found. Case ", case, " dropped.\n"))
-        #warning(
-        #  paste0("Phase(s) not found. Case ", case, " dropped.\n")
-        #)
+        warning <- c(
+          warning, 
+          paste0("Phase(s) not found. Case ", case, " dropped.\n")
+        )
         dropped_cases <- c(dropped_cases, case)
         next
       }
@@ -58,7 +58,8 @@
         stop(
           paste0(
             "Selected phase ", paste(names(tmp[tmp])), 
-            " occure several times. Please give number of phases instead of characters."
+            " occure several times. ",
+            "Please give number of phases instead of characters."
           )
         )
       }
@@ -66,11 +67,11 @@
       tmp <- sapply(phases_total, function(x) any(x == design$values))
       if (!all(tmp)) {  
         warning <- c(
-          warning, paste0("Phase(s) ",  names(tmp[!tmp]), " not found. Case ", case, " dropped.\n")
+          warning, 
+          paste0("Phase(s) ",  names(tmp[!tmp]), " not found. Case ", case, 
+            " dropped.\n")
         )
-        #warning(
-        #  paste0("Phase(s) ",  names(tmp[!tmp]), " not found. Case ", case, " dropped.\n")
-        #)
+      
         dropped_cases <- c(dropped_cases, case)
         next
       }
@@ -84,7 +85,7 @@
     A <- unlist(lapply(select_A, function(x) design$start[x]:design$stop[x]))
     B <- unlist(lapply(select_B, function(x) design$start[x]:design$stop[x]))
     
-    data[[case]][,pvar] <- as.character(data[[case]][, pvar])
+    data[[case]][[pvar]] <- as.character(data[[case]][[pvar]])
     
     if (set.phases) {
       data[[case]][A ,pvar] <- "A"
