@@ -56,12 +56,6 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   A_data <- data[rowsA, ]
   B_data <- data[rowsB, ]
   
-  if (nrow(A_data) < 3) {
-    warning(
-      "Phase A needs more than 2 measurements to calculate autocorrelation."
-    )
-  }
-  
   auto_tau <- .kendall(
     A_data[[dvar]], 
     A_data[[mvar]], 

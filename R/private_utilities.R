@@ -109,6 +109,14 @@
 
 .kendall <- function(x, y, tau_method = "b", continuity_correction = TRUE) {
   
+  if (length(x) < 3) {
+    warning("could not calculate p-values for tau. Less than two data points.")
+  }
+  
+  if (var(x) == 0 || var(y) == 0) {
+    warning("could not calculate tau. Variance is zero.")
+  }
+  
   out <- list()
   dat <- data.frame(cbind(x, y))
   dat <- dat[sort.list(dat$x), ]
