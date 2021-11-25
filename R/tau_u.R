@@ -10,8 +10,10 @@
 #' calculates the number of possible pairs as described in Parker et al. (2011)
 #' which might lead to tau-U values greater than 1.
 #' @param meta_method Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated.
+#' @param ci Confidence interval for meta analyzes.
 #' @param continuity_correction If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.
-#' @return \item{table}{A data frame containing statistics from the Tau-U
+#' @return 
+#' \item{table}{A data frame containing statistics from the Tau-U
 #' family, including: Pairs, positive and negative comparisons, S, and Tau}
 #' \item{matrix}{The matrix of comparisons used for calculating the
 #' statistics.} \item{tau_u}{Tau-U value.}
@@ -53,6 +55,7 @@ tau_u <- function(data, dvar, pvar,
                   method = "complete", 
                   phases = c(1, 2), 
                   meta_method = "random",
+                  ci = 0.95,
                   continuity_correction = FALSE) {
   
   # validity check
@@ -88,14 +91,12 @@ tau_u <- function(data, dvar, pvar,
     "A vs. B", 
     "Trend A", 
     "Trend B", 
-    #"Trend B - Trend A", 
     "A vs. B - Trend A",
     "A vs. B + Trend B", 
     "A vs. B + Trend B - Trend A"
   )
   col_names <- c(
-    #"kendall", "k_p", "n", 
-    "pairs", "pos", "neg", "ties", "S", "D", "Tau",
+    "pairs", "pos", "neg", "ties", "S", "D", "Tau", "CI lower", "CI upper",
     "SD_S", "VAR_S", "SE_Tau", "Z", "p"
   )
   
@@ -309,6 +310,10 @@ tau_u <- function(data, dvar, pvar,
     table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
     table_tau$p <- pnorm(abs(table_tau$Z), lower.tail = FALSE) * 2
     
+    ci_z <- qnorm((1 - ci) /2, lower.tail = FALSE)
+    table_tau$`CI lower` <-  table_tau$Tau - ci_z * table_tau$SE_Tau
+    table_tau$`CI upper` <-  table_tau$Tau + ci_z * table_tau$SE_Tau
+    
     out$table[[i]] <- table_tau
     out$matrix[[i]] <- tau_m
     out$tau_u[[i]] <- c(
@@ -318,11 +323,12 @@ tau_u <- function(data, dvar, pvar,
   
   # Overall Tau -------------------------------------------------------------
   
-  out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method)
+  out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method, ci = ci)
   out$meta_method <- meta_method 
   
   # return ------------------------------------------------------------------
   
+  out$ci <- ci
   names(out$table) <- names(data)
   names(out$tau_u) <- names(data)
   
@@ -340,13 +346,17 @@ tauUSC <- function(...) {
   tau_u(...)
 }
 
-.meta_tau_u <- function(tau_matrix, method = NA) {
+.meta_tau_u <- function(tau_matrix, method = NA, ci = 0.95) {
+  
+  ci_z <- qnorm((1 - ci) /2, lower.tail = FALSE)
   
   .random <- function(tau, se) {
     res <- metagen(tau, se)
     ret <- list()
     ret$Tau_U <- res$TE.random
     ret$se <- res$seTE.random
+    ret$'CI lower' <- ret$Tau_U - ci_z * ret$se
+    ret$'CI upper' <- ret$Tau_U + ci_z * ret$se
     ret$z <- res$zval.random
     ret$p <- res$pval.random
     ret
@@ -357,6 +367,8 @@ tauUSC <- function(...) {
     ret <- list()
     ret$Tau_U <- res$TE.fixed
     ret$se <- res$seTE.fixed
+    ret$'CI lower' <- ret$Tau_U - ci_z * ret$se
+    ret$'CI upper' <- ret$Tau_U + ci_z * ret$se
     ret$z <- res$zval.fixed
     ret$p <- res$pval.fixed
     ret
@@ -374,8 +386,11 @@ tauUSC <- function(...) {
     Model = character(4), 
     Tau_U = numeric(4),
     se = numeric(4),
+    'CI lower' = numeric(4),
+    'CI upper' = numeric(4),
     z = numeric(4),
-    p = numeric(4)
+    p = numeric(4),
+    check.names = FALSE
   )
   
   out[1,] <- .ot("A vs. B") 
@@ -385,3 +400,4 @@ tauUSC <- function(...) {
   
   out
 }
+

@@ -13,6 +13,7 @@ tau_u(
   method = "complete",
   phases = c(1, 2),
   meta_method = "random",
+  ci = 0.95,
   continuity_correction = FALSE
 )
 
@@ -39,6 +40,8 @@ could be combined by providing a list with two elements. E.g., \code{phases
 and 4 (as B). Default is \code{phases = c("A","B")}.}
 
 \item{meta_method}{Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated.}
+
+\item{ci}{Confidence interval for meta analyzes.}
 
 \item{continuity_correction}{If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.}
 
