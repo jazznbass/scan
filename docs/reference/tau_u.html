@@ -81,7 +81,7 @@ et al. (2011)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
       </span>
     </div>
 
@@ -144,6 +144,7 @@ et al. (2011).</p>
   method <span class='op'>=</span> <span class='st'>"complete"</span>,
   phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>,
   meta_method <span class='op'>=</span> <span class='st'>"random"</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   continuity_correction <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span>
 
@@ -186,6 +187,10 @@ and 4 (as B). Default is <code>phases = c("A","B")</code>.</p></td>
     <tr>
       <th>meta_method</th>
       <td><p>Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated.</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Confidence interval for meta analyzes.</p></td>
     </tr>
     <tr>
       <th>continuity_correction</th>
@@ -247,6 +252,7 @@ a fixed effect model ("fixed").</p>
 </div><div class='output co'>#&gt; Tau-U
 #&gt; Method: complete 
 #&gt; Applied Kendall's Tau-b
+#&gt; 95% CIs for tau are reported.
 #&gt; 
 #&gt; Case: Eva 
 #&gt;                               Tau SE_Tau    Z     p
@@ -262,37 +268,39 @@ a fixed effect model ("fixed").</p>
 </div><div class='output co'>#&gt; Tau-U
 #&gt; Method: parker 
 #&gt; Applied Kendall's Tau-a
+#&gt; 95% CIs for tau are reported.
 #&gt; 
 #&gt; Case: Bob 
-#&gt;                             pairs pos neg ties  S  D   Tau SD_S VAR_S SE_Tau
-#&gt; A vs. B                        20  17   1    2 16 20 0.800 8.16 66.67  0.408
-#&gt; Trend A                         6   4   1    1  3  6 0.500 2.94  8.67  0.491
-#&gt; Trend B                        10   8   1    1  7 10 0.700 4.08 16.67  0.408
-#&gt; A vs. B - Trend A              20  18   5    3 13 20 0.650 9.59 92.00  0.480
-#&gt; A vs. B + Trend B              30  25   2    3 23 30 0.767 9.59 92.00  0.320
-#&gt; A vs. B + Trend B - Trend A    36  26   6    4 20 36 0.556 9.59 92.00  0.266
-#&gt;                                Z      p
-#&gt; A vs. B                     1.96 0.0500
-#&gt; Trend A                     1.02 0.3082
-#&gt; Trend B                     1.71 0.0864
-#&gt; A vs. B - Trend A           1.36 0.1753
-#&gt; A vs. B + Trend B           2.40 0.0165
-#&gt; A vs. B + Trend B - Trend A 2.09 0.0371
+#&gt;                             pairs pos neg ties  S  D   Tau  CI lower CI upper
+#&gt; A vs. B                        20  17   1    2 16 20 0.800 -0.000152     1.60
+#&gt; Trend A                         6   4   1    1  3  6 0.500 -0.461663     1.46
+#&gt; Trend B                        10   8   1    1  7 10 0.700 -0.100152     1.50
+#&gt; A vs. B - Trend A              20  18   5    3 13 20 0.650 -0.289966     1.59
+#&gt; A vs. B + Trend B              30  25   2    3 23 30 0.767  0.140023     1.39
+#&gt; A vs. B + Trend B - Trend A    36  26   6    4 20 36 0.556  0.033352     1.08
+#&gt;                             SD_S VAR_S SE_Tau    Z      p
+#&gt; A vs. B                     8.16 66.67  0.408 1.96 0.0500
+#&gt; Trend A                     2.94  8.67  0.491 1.02 0.3082
+#&gt; Trend B                     4.08 16.67  0.408 1.71 0.0864
+#&gt; A vs. B - Trend A           9.59 92.00  0.480 1.36 0.1753
+#&gt; A vs. B + Trend B           9.59 92.00  0.320 2.40 0.0165
+#&gt; A vs. B + Trend B - Trend A 9.59 92.00  0.266 2.09 0.0371
 #&gt; </div><div class='input'>
 <span class='co'>## Request tau-U for all single-cases from the Grosche2011 data set</span>
 <span class='fu'>tau_u</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Tau-U
 #&gt; Method: complete 
 #&gt; Applied Kendall's Tau-b
+#&gt; 95% CIs for tau are reported.
 #&gt; 
 #&gt; Overall Tau-U
 #&gt; Meta-anlysis model: random effect
 #&gt; 
-#&gt;                        Model  Tau_U     se     z     p
-#&gt;                      A vs. B 0.0623 0.1587 0.392 0.695
-#&gt;            A vs. B - Trend A 0.0762 0.0995 0.765 0.444
-#&gt;            A vs. B + Trend B 0.1800 0.1637 1.100 0.271
-#&gt;  A vs. B + Trend B - Trend A 0.1992 0.1572 1.267 0.205
+#&gt;                        Model  Tau_U     se CI lower CI upper     z     p
+#&gt;                      A vs. B 0.0623 0.1587   -0.249    0.373 0.392 0.695
+#&gt;            A vs. B - Trend A 0.0762 0.0995   -0.119    0.271 0.765 0.444
+#&gt;            A vs. B + Trend B 0.1800 0.1637   -0.141    0.501 1.100 0.271
+#&gt;  A vs. B + Trend B - Trend A 0.1992 0.1572   -0.109    0.507 1.267 0.205
 #&gt; 
 #&gt; Case: Eva 
 #&gt;                               Tau SE_Tau    Z     p

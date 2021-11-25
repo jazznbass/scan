@@ -453,8 +453,8 @@ print.sc_tauu <- function(x, complete = FALSE, digits = "auto", ...) {
   
   cat("Tau-U\n")
   cat("Method:", x$method, "\n")
-  cat("Applied Kendall's Tau-", x$tau_method, "\n\n", sep = "")
-  
+  cat("Applied Kendall's Tau-", x$tau_method, "\n", sep = "")
+  cat(x$ci * 100, "% CIs for tau are reported.\n\n", sep = "")
   out <- x$table
   
   if (length(out) > 1) {

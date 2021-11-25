@@ -83,7 +83,7 @@ intervention." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
       </span>
     </div>
 
@@ -184,14 +184,14 @@ and 4 (as B). Default is <code>phases = c("A","B")</code>.</p></td>
 
     
 
-<dt>PAND</dt><dd><p>Percentage of all non-overlapping data.</p></dd>
+<dt>pand</dt><dd><p>Percentage of all non-overlapping data.</p></dd>
 <dt>phi</dt><dd><p>Effect size Phi based on expected and observed values.</p></dd>
-<dt>POD</dt><dd><p>Percentage of overlapping data points.</p></dd> <dt>OD</dt><dd><p>Number of
+<dt>perc_overlap</dt><dd><p>Percentage of overlapping data points.</p></dd> <dt>overlaps</dt><dd><p>Number of
 overlapping data points.</p></dd> <dt>n</dt><dd><p>Number of data points.</p></dd> <dt>N</dt><dd><p>Number
 of cases.</p></dd> <dt>nA</dt><dd><p>Number of data points in phase A.</p></dd> <dt>nB</dt><dd><p>Number of
 data points in phase B.</p></dd> <dt>pA</dt><dd><p>Percentage of data points in phase A.</p></dd>
 <dt>pB</dt><dd><p>Percentage of data points in phase B.</p></dd> <dt>matrix</dt><dd><p>2x2 frequency
-matrix of phase A and B comparisons.</p></dd> <dt>matrix.counts</dt><dd><p>2x2 counts matrix
+matrix of phase A and B comparisons.</p></dd> <dt>matrix_counts</dt><dd><p>2x2 counts matrix
 of phase A and B comparisons.</p></dd> <dt>correlation</dt><dd><p>A list of the
 <code>correlation</code> values: statistic, parameter, p.value, estimate,
 null.value, alternative, method, data.name, correction.</p></dd>
@@ -243,7 +243,7 @@ Research: Nonoverlap of All Pairs. <em>Behavior Therapy, 40</em>, 357-367.</p>
 #&gt; PAND =  70 %
 #&gt; Φ =  0.375  ; Φ² =  0.141 
 #&gt; 
-#&gt; Number of Cases: 3 
+#&gt; Number of cases: 3 
 #&gt; Total measurements: 30  (in phase A: 12; in phase B: 18)
 #&gt; n overlapping data per case: 3, 4, 2
 #&gt; Total overlapping data: n = 9 ; percentage = 30 
@@ -273,7 +273,7 @@ Research: Nonoverlap of All Pairs. <em>Behavior Therapy, 40</em>, 357-367.</p>
 #&gt; PAND =  80 %
 #&gt; Φ =  0.6  ; Φ² =  0.36 
 #&gt; 
-#&gt; Number of Cases: 1 
+#&gt; Number of cases: 1 
 #&gt; Total measurements: 10  (in phase A: 5; in phase B: 5)
 #&gt; n overlapping data per case: 2
 #&gt; Total overlapping data: n = 2 ; percentage = 20 
@@ -306,7 +306,7 @@ Research: Nonoverlap of All Pairs. <em>Behavior Therapy, 40</em>, 357-367.</p>
 #&gt; PAND =  81.8 %
 #&gt; Φ =  0.607  ; Φ² =  0.369 
 #&gt; 
-#&gt; Number of Cases: 1 
+#&gt; Number of cases: 1 
 #&gt; Total measurements: 11  (in phase A: 4; in phase B: 7)
 #&gt; n overlapping data per case: 2
 #&gt; Total overlapping data: n = 2 ; percentage = 18.2 
