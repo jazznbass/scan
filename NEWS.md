@@ -1,5 +1,5 @@
 
-# scan 0.54.4
+# scan 0.53.4
 
 - `load_scdf` and `save_scdf` replace `readSC` and `writeSC`. The latter are kept working.
 - `load_scdf` extracts filetype from file extension.
