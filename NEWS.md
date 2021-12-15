@@ -1,4 +1,9 @@
 
+# scan 0.53.5
+
+- solved wrong calculation of Hedges G when phase length differed.
+- new function `smd()` reporting various types of standardized mean differences.
+
 # scan 0.53.4
 
 - `load_scdf` and `save_scdf` replace `readSC` and `writeSC`. The latter are kept working.
