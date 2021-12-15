@@ -76,7 +76,7 @@ overlap <- function(data, dvar, pvar, mvar,
     mtA <- data[data[, pvar] == "A", mvar]
     mtB <- data[data[, pvar] == "B", mvar]
     nA <- sum(!is.na(A))
-    nB <- sum(!is.na(A))    
+    nB <- sum(!is.na(B))    
     n <- nA + nB
     mA <- mean(A, na.rm = TRUE)
     mB <- mean(B, na.rm = TRUE)    
