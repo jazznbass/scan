@@ -85,7 +85,7 @@ change&quot;." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -228,64 +228,68 @@ https://doi.org/10.1901/jaba.2003.36-387</p>
     <p>Timo Lueke</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Apply the CDC method (standard OLS line)</span>
-<span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>1</span>, slope <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span>
-<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span><span class='va'>design</span>, seed <span class='op'>=</span> <span class='fl'>42</span><span class='op'>)</span>
-<span class='fu'>cdc</span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Conservative Dual Criterion
-#&gt; 
-#&gt; N cases =  1 
-#&gt; 
-#&gt;   Case nB improve nB binom p    CDC Evaluation
-#&gt;  Case1         14 15   &lt;.001 systematic change
-#&gt; 
-#&gt; Assuming an expected increase in phase B.
-#&gt; Alternative hypothesis (Binomial test): true probability &gt; 50%</div><div class='input'>
-<span class='co'>## Apply the CDC with Koenig's bi-split and an expected decrease in phase B.</span>
-<span class='fu'>cdc</span><span class='op'>(</span><span class='va'>exampleAB_decreasing</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span>, trend_method <span class='op'>=</span> <span class='st'>"bisplit"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Conservative Dual Criterion
-#&gt; 
-#&gt; N cases =  3 
-#&gt; 
-#&gt;   Case nB improve nB binom p    CDC Evaluation
-#&gt;  Peter          6 12     .61         no change
-#&gt;   Tony         12 12   &lt;.001 systematic change
-#&gt;  Bruce          7 14     .60         no change
-#&gt; 
-#&gt; Assuming an expected decrease in phase B.
-#&gt; Alternative hypothesis (Binomial test): true probability &lt; 50%
-#&gt; Overall evaluation of all MBD instances:   no change </div><div class='input'>
-<span class='co'>## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.</span>
-<span class='fu'>cdc</span><span class='op'>(</span><span class='va'>exampleABAB</span>, trend_method <span class='op'>=</span> <span class='st'>"trisplit"</span>, phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Conservative Dual Criterion
-#&gt; 
-#&gt; N cases =  3 
-#&gt; 
-#&gt;     Case nB improve nB binom p    CDC Evaluation
-#&gt;   Howard         10 10   &lt;.001 systematic change
-#&gt;  Sheldon          4 10     .82         no change
-#&gt;  Leonard          7  7    &lt;.01 systematic change
-#&gt; 
-#&gt; Assuming an expected increase in phase B.
-#&gt; Alternative hypothesis (Binomial test): true probability &gt; 50%
-#&gt; Overall evaluation of all MBD instances:   no change </div><div class='input'>
-<span class='co'>## Apply the Dual-Criterion (DC) method (i.e., mean and trend without shifting).</span>
-<span class='fu'>cdc</span><span class='op'>(</span><span class='va'>exampleAB_decreasing</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span>, trend_method <span class='op'>=</span> <span class='st'>"bisplit"</span>, conservative <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Conservative Dual Criterion
-#&gt; 
-#&gt; N cases =  3 
-#&gt; 
-#&gt;   Case nB improve nB binom p    CDC Evaluation
-#&gt;  Peter          6 12     .61         no change
-#&gt;   Tony         12 12   &lt;.001 systematic change
-#&gt;  Bruce         10 14     .08         no change
-#&gt; 
-#&gt; Assuming an expected decrease in phase B.
-#&gt; Alternative hypothesis (Binomial test): true probability &lt; 50%
-#&gt; Overall evaluation of all MBD instances:   no change </div><div class='input'>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Apply the CDC method (standard OLS line)</span></span>
+<span class='r-in'><span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>1</span>, slope <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span><span class='va'>design</span>, seed <span class='op'>=</span> <span class='fl'>42</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>cdc</span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Conservative Dual Criterion</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N cases =  1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Case nB improve nB binom p    CDC Evaluation</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Case1         14 15   &lt;.001 systematic change</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Assuming an expected increase in phase B.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Alternative hypothesis (Binomial test): true probability &gt; 50%</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Apply the CDC with Koenig's bi-split and an expected decrease in phase B.</span></span>
+<span class='r-in'><span class='fu'>cdc</span><span class='op'>(</span><span class='va'>exampleAB_decreasing</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span>, trend_method <span class='op'>=</span> <span class='st'>"bisplit"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Conservative Dual Criterion</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N cases =  3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Case nB improve nB binom p    CDC Evaluation</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Peter          6 12     .61         no change</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Tony         12 12   &lt;.001 systematic change</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Bruce          7 14     .60         no change</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Assuming an expected decrease in phase B.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Alternative hypothesis (Binomial test): true probability &lt; 50%</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Overall evaluation of all MBD instances:   no change </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.</span></span>
+<span class='r-in'><span class='fu'>cdc</span><span class='op'>(</span><span class='va'>exampleABAB</span>, trend_method <span class='op'>=</span> <span class='st'>"trisplit"</span>, phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Conservative Dual Criterion</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N cases =  3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Case nB improve nB binom p    CDC Evaluation</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Howard         10 10   &lt;.001 systematic change</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Sheldon          4 10     .82         no change</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Leonard          7  7    &lt;.01 systematic change</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Assuming an expected increase in phase B.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Alternative hypothesis (Binomial test): true probability &gt; 50%</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Overall evaluation of all MBD instances:   no change </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Apply the Dual-Criterion (DC) method (i.e., mean and trend without shifting).</span></span>
+<span class='r-in'><span class='fu'>cdc</span><span class='op'>(</span><span class='va'>exampleAB_decreasing</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span>, trend_method <span class='op'>=</span> <span class='st'>"bisplit"</span>, conservative <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Conservative Dual Criterion</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N cases =  3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Case nB improve nB binom p    CDC Evaluation</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Peter          6 12     .61         no change</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Tony         12 12   &lt;.001 systematic change</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Bruce         10 14     .08         no change</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Assuming an expected decrease in phase B.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Alternative hypothesis (Binomial test): true probability &lt; 50%</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Overall evaluation of all MBD instances:   no change </span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

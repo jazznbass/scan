@@ -84,7 +84,7 @@ This might be helpful to prepare data to be used with other packages than scan."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -189,143 +189,147 @@ the case variable.</p>
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Convert the list of three single-case data frames from Grosche (2011) into one long data frame</span>
-<span class='va'>Grosche2011</span>
-</div><div class='output co'>#&gt; #A single-case data frame with 3 cases
-#&gt; 
-#&gt;  Eva: values mt phase | Georg: values mt phase | Olaf: values mt phase |
-#&gt;          3.4  0     A |            13  0     A |          7.7  0     A |
-#&gt;          2.1  1     A |          17.4  1     A |          7.3  1     A |
-#&gt;          1.5  7     A |            13  6     A |            7  7     A |
-#&gt;          3.2  8     A |           7.7 10     A |          5.4  8     A |
-#&gt;          3.1 13     A |           8.8 13     A |          4.6 14     A |
-#&gt;          2.8 15     A |           7.5 15     A |            3 15     A |
-#&gt;          2.4 38     B |           5.8 36     A |          4.7 38     A |
-#&gt;          1.9 42     B |           6.3 38     B |            5 42     A |
-#&gt;          2.2 45     B |           5.6 41     B |          5.7 43     A |
-#&gt;          2.6 49     B |          12.8 43     B |          7.6 49     A |
-#&gt;          3.9 50     B |           9.2 48     B |            7 50     A |
-#&gt;          4.1 56     B |          10.6 50     B |          7.5 56     A |
-#&gt;          3.3 63     B |           9.2 55     B |          6.9 59     B |
-#&gt;          2.7 64     B |          10.7 59     B |          4.9 63     B |
-#&gt;          4.3 70     B |           7.6 62     B |          6.7 64     B |
-#&gt; # ... up to 9 more rows</div><div class='input'><span class='va'>Grosche2011_long</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span>
-<span class='va'>Grosche2011_long</span>
-</div><div class='output co'>#&gt;     case values  mt phase
-#&gt; 1    Eva   3.39   0     A
-#&gt; 2    Eva   2.09   1     A
-#&gt; 3    Eva   1.46   7     A
-#&gt; 4    Eva   3.23   8     A
-#&gt; 5    Eva   3.06  13     A
-#&gt; 6    Eva   2.83  15     A
-#&gt; 7    Eva   2.44  38     B
-#&gt; 8    Eva   1.86  42     B
-#&gt; 9    Eva   2.17  45     B
-#&gt; 10   Eva   2.59  49     B
-#&gt; 11   Eva   3.92  50     B
-#&gt; 12   Eva   4.14  56     B
-#&gt; 13   Eva   3.31  63     B
-#&gt; 14   Eva   2.69  64     B
-#&gt; 15   Eva   4.27  70     B
-#&gt; 16   Eva   4.66  77     B
-#&gt; 17   Eva   3.20  78     B
-#&gt; 18   Eva   4.98  91     B
-#&gt; 19   Eva   4.42  92     B
-#&gt; 20 Georg  13.00   0     A
-#&gt; 21 Georg  17.40   1     A
-#&gt; 22 Georg  13.00   6     A
-#&gt; 23 Georg   7.74  10     A
-#&gt; 24 Georg   8.82  13     A
-#&gt; 25 Georg   7.50  15     A
-#&gt; 26 Georg   5.82  36     A
-#&gt; 27 Georg   6.26  38     B
-#&gt; 28 Georg   5.60  41     B
-#&gt; 29 Georg  12.79  43     B
-#&gt; 30 Georg   9.17  48     B
-#&gt; 31 Georg  10.59  50     B
-#&gt; 32 Georg   9.23  55     B
-#&gt; 33 Georg  10.71  59     B
-#&gt; 34 Georg   7.61  62     B
-#&gt; 35 Georg   9.78  64     B
-#&gt; 36 Georg   8.33  69     B
-#&gt; 37 Georg  12.00  71     B
-#&gt; 38 Georg  12.19  77     B
-#&gt; 39 Georg  10.70  78     B
-#&gt; 40 Georg  11.36  85     B
-#&gt; 41 Georg   7.89  91     B
-#&gt; 42 Georg  10.82  94     B
-#&gt; 43 Georg  11.56 101     B
-#&gt; 44  Olaf   7.69   0     A
-#&gt; 45  Olaf   7.27   1     A
-#&gt; 46  Olaf   7.02   7     A
-#&gt; 47  Olaf   5.37   8     A
-#&gt; 48  Olaf   4.57  14     A
-#&gt; 49  Olaf   3.02  15     A
-#&gt; 50  Olaf   4.68  38     A
-#&gt; 51  Olaf   4.97  42     A
-#&gt; 52  Olaf   5.73  43     A
-#&gt; 53  Olaf   7.63  49     A
-#&gt; 54  Olaf   6.98  50     A
-#&gt; 55  Olaf   7.50  56     A
-#&gt; 56  Olaf   6.91  59     B
-#&gt; 57  Olaf   4.86  63     B
-#&gt; 58  Olaf   6.71  64     B
-#&gt; 59  Olaf   5.67  70     B
-#&gt; 60  Olaf   5.00  71     B
-#&gt; 61  Olaf   6.14  80     B
-#&gt; 62  Olaf   8.14  91     B
-#&gt; 63  Olaf   4.53  97     B</div><div class='input'>
-<span class='co'>## Combine an scdf with data for l2</span>
-<span class='va'>Leidig2018_long</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>Leidig2018</span>, l2 <span class='op'>=</span> <span class='va'>Leidig2018_l2</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>Leidig2018_long</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "case"                  "mt"                    "academic_engagement"  
-#&gt;  [4] "classID"               "weekday"               "disruptive_behavior"  
-#&gt;  [7] "phase"                 "class"                 "gender"               
-#&gt; [10] "migration"             "first_language_german" "SDQ_TOTAL"            
-#&gt; [13] "SDQ_EXTERNALIZING"     "SDQ_INTERNALIZING"     "ITRF_TOTAL"           
-#&gt; [16] "ITRF_ACADEMIC"         "ITRF_BEHAVIOR"        </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>Leidig2018_long</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      case                 mt         academic_engagement   classID         
-#&gt;  Length:3780        Min.   :  1.00   Min.   :0.0         Length:3780       
-#&gt;  Class :character   1st Qu.: 27.75   1st Qu.:3.0         Class :character  
-#&gt;  Mode  :character   Median : 54.50   Median :4.0         Mode  :character  
-#&gt;                     Mean   : 54.50   Mean   :3.7                           
-#&gt;                     3rd Qu.: 81.25   3rd Qu.:5.0                           
-#&gt;                     Max.   :108.00   Max.   :5.0                           
-#&gt;                                      NA's   :1366                          
-#&gt;     weekday      disruptive_behavior phase       class          
-#&gt;  Min.   :1.000   Min.   :0.0000      A: 730   Length:3780       
-#&gt;  1st Qu.:2.000   1st Qu.:0.0000      B:3050   Class :character  
-#&gt;  Median :3.000   Median :0.0000               Mode  :character  
-#&gt;  Mean   :3.028   Mean   :0.6192                                 
-#&gt;  3rd Qu.:4.000   3rd Qu.:1.0000                                 
-#&gt;  Max.   :5.000   Max.   :4.0000                                 
-#&gt;                  NA's   :1393                                   
-#&gt;      gender         migration      first_language_german   SDQ_TOTAL    
-#&gt;  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000        Min.   : 4.00  
-#&gt;  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000        1st Qu.: 8.00  
-#&gt;  Median :0.0000   Median :1.0000   Median :1.0000        Median :11.00  
-#&gt;  Mean   :0.1429   Mean   :0.5429   Mean   :0.7429        Mean   :11.46  
-#&gt;  3rd Qu.:0.0000   3rd Qu.:1.0000   3rd Qu.:1.0000        3rd Qu.:14.00  
-#&gt;  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000        Max.   :22.00  
-#&gt;                                                                         
-#&gt;  SDQ_EXTERNALIZING SDQ_INTERNALIZING   ITRF_TOTAL   ITRF_ACADEMIC   
-#&gt;  Min.   : 3.000    Min.   : 0.0      Min.   : 3.0   Min.   : 0.000  
-#&gt;  1st Qu.: 6.000    1st Qu.: 1.0      1st Qu.:12.0   1st Qu.: 2.000  
-#&gt;  Median : 9.000    Median : 2.0      Median :16.0   Median : 9.000  
-#&gt;  Mean   : 8.857    Mean   : 2.6      Mean   :17.4   Mean   : 9.286  
-#&gt;  3rd Qu.:11.000    3rd Qu.: 3.0      3rd Qu.:23.0   3rd Qu.:16.000  
-#&gt;  Max.   :18.000    Max.   :10.0      Max.   :35.0   Max.   :24.000  
-#&gt;                                                                     
-#&gt;  ITRF_BEHAVIOR   
-#&gt;  Min.   : 0.000  
-#&gt;  1st Qu.: 4.000  
-#&gt;  Median : 7.000  
-#&gt;  Mean   : 8.114  
-#&gt;  3rd Qu.:11.000  
-#&gt;  Max.   :20.000  
-#&gt;                  </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Convert the list of three single-case data frames from Grosche (2011) into one long data frame</span></span>
+<span class='r-in'><span class='va'>Grosche2011</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> #A single-case data frame with 3 cases</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Eva: values mt phase | Georg: values mt phase | Olaf: values mt phase |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          3.4  0     A |            13  0     A |          7.7  0     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          2.1  1     A |          17.4  1     A |          7.3  1     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          1.5  7     A |            13  6     A |            7  7     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          3.2  8     A |           7.7 10     A |          5.4  8     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          3.1 13     A |           8.8 13     A |          4.6 14     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          2.8 15     A |           7.5 15     A |            3 15     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          2.4 38     B |           5.8 36     A |          4.7 38     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          1.9 42     B |           6.3 38     B |            5 42     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          2.2 45     B |           5.6 41     B |          5.7 43     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          2.6 49     B |          12.8 43     B |          7.6 49     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          3.9 50     B |           9.2 48     B |            7 50     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          4.1 56     B |          10.6 50     B |          7.5 56     A |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          3.3 63     B |           9.2 55     B |          6.9 59     B |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          2.7 64     B |          10.7 59     B |          4.9 63     B |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          4.3 70     B |           7.6 62     B |          6.7 64     B |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # ... up to 9 more rows</span>
+<span class='r-in'><span class='va'>Grosche2011_long</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>Grosche2011_long</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     case values  mt phase</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1    Eva   3.39   0     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2    Eva   2.09   1     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3    Eva   1.46   7     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4    Eva   3.23   8     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5    Eva   3.06  13     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6    Eva   2.83  15     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7    Eva   2.44  38     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8    Eva   1.86  42     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9    Eva   2.17  45     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10   Eva   2.59  49     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11   Eva   3.92  50     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12   Eva   4.14  56     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13   Eva   3.31  63     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14   Eva   2.69  64     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15   Eva   4.27  70     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16   Eva   4.66  77     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17   Eva   3.20  78     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18   Eva   4.98  91     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19   Eva   4.42  92     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20 Georg  13.00   0     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21 Georg  17.40   1     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22 Georg  13.00   6     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23 Georg   7.74  10     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24 Georg   8.82  13     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25 Georg   7.50  15     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26 Georg   5.82  36     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27 Georg   6.26  38     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28 Georg   5.60  41     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29 Georg  12.79  43     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30 Georg   9.17  48     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31 Georg  10.59  50     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32 Georg   9.23  55     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 33 Georg  10.71  59     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 34 Georg   7.61  62     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 35 Georg   9.78  64     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 36 Georg   8.33  69     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 37 Georg  12.00  71     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 38 Georg  12.19  77     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 39 Georg  10.70  78     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40 Georg  11.36  85     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 41 Georg   7.89  91     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 42 Georg  10.82  94     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 43 Georg  11.56 101     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 44  Olaf   7.69   0     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 45  Olaf   7.27   1     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 46  Olaf   7.02   7     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 47  Olaf   5.37   8     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 48  Olaf   4.57  14     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 49  Olaf   3.02  15     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 50  Olaf   4.68  38     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 51  Olaf   4.97  42     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 52  Olaf   5.73  43     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 53  Olaf   7.63  49     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 54  Olaf   6.98  50     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 55  Olaf   7.50  56     A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 56  Olaf   6.91  59     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 57  Olaf   4.86  63     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 58  Olaf   6.71  64     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 59  Olaf   5.67  70     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60  Olaf   5.00  71     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 61  Olaf   6.14  80     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 62  Olaf   8.14  91     B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 63  Olaf   4.53  97     B</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Combine an scdf with data for l2</span></span>
+<span class='r-in'><span class='va'>Leidig2018_long</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>Leidig2018</span>, l2 <span class='op'>=</span> <span class='va'>Leidig2018_l2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>Leidig2018_long</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "case"                  "mt"                    "academic_engagement"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] "classID"               "weekday"               "disruptive_behavior"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "phase"                 "class"                 "gender"               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] "migration"             "first_language_german" "SDQ_TOTAL"            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] "SDQ_EXTERNALIZING"     "SDQ_INTERNALIZING"     "ITRF_TOTAL"           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [16] "ITRF_ACADEMIC"         "ITRF_BEHAVIOR"        </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>Leidig2018_long</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      case                 mt         academic_engagement   classID         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Length:3780        Min.   :  1.00   Min.   :0.0         Length:3780       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Class :character   1st Qu.: 27.75   1st Qu.:3.0         Class :character  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mode  :character   Median : 54.50   Median :4.0         Mode  :character  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     Mean   : 54.50   Mean   :3.7                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     3rd Qu.: 81.25   3rd Qu.:5.0                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     Max.   :108.00   Max.   :5.0                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                      NA's   :1366                          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     weekday      disruptive_behavior phase       class          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   :1.000   Min.   :0.0000      A: 730   Length:3780       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.:2.000   1st Qu.:0.0000      B:3050   Class :character  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median :3.000   Median :0.0000               Mode  :character  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   :3.028   Mean   :0.6192                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.:4.000   3rd Qu.:1.0000                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   :5.000   Max.   :4.0000                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  NA's   :1393                                   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      gender         migration      first_language_german   SDQ_TOTAL    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000        Min.   : 4.00  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000        1st Qu.: 8.00  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median :0.0000   Median :1.0000   Median :1.0000        Median :11.00  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   :0.1429   Mean   :0.5429   Mean   :0.7429        Mean   :11.46  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.:0.0000   3rd Qu.:1.0000   3rd Qu.:1.0000        3rd Qu.:14.00  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000        Max.   :22.00  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  SDQ_EXTERNALIZING SDQ_INTERNALIZING   ITRF_TOTAL   ITRF_ACADEMIC   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   : 3.000    Min.   : 0.0      Min.   : 3.0   Min.   : 0.000  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.: 6.000    1st Qu.: 1.0      1st Qu.:12.0   1st Qu.: 2.000  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median : 9.000    Median : 2.0      Median :16.0   Median : 9.000  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   : 8.857    Mean   : 2.6      Mean   :17.4   Mean   : 9.286  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.:11.000    3rd Qu.: 3.0      3rd Qu.:23.0   3rd Qu.:16.000  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   :18.000    Max.   :10.0      Max.   :35.0   Max.   :24.000  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  ITRF_BEHAVIOR   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   : 0.000  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.: 4.000  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median : 7.000  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   : 8.114  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.:11.000  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   :20.000  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

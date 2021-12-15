@@ -83,7 +83,7 @@ and extended for the use in AB designs." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -297,61 +297,64 @@ Tests</em>. Available from: <a href='https://CRAN.R-project.org/package=SCRT'>ht
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Compute a randomization test on the first case of the byHeart2011 data and include a graph</span>
-<span class='fu'>rand_test</span><span class='op'>(</span><span class='va'>byHeart2011</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, statistic <span class='op'>=</span> <span class='st'>"Median B-A"</span>, graph <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='fl'>123</span><span class='op'>)</span>
-</div><div class='img'><img src='rand_test-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Randomization Test
-#&gt; 
-#&gt; Comparing phase A against phase B 
-#&gt; Statistic:  Median B-A 
-#&gt; 
-#&gt; Minimal length of each phase: A = 5 , B = 5 
-#&gt; Observed statistic =  15 
-#&gt; 
-#&gt; Warning! The assigned number of random permutations exceeds the number of possible permutations. 
-#&gt; Analysis is restricted to all possible permutations.
-#&gt; 
-#&gt; Distribution based on all 11 possible combinations.
-#&gt; n   =  11 
-#&gt; M   =  14.40909 
-#&gt; SD  =  1.338249 
-#&gt; Min =  12 
-#&gt; Max =  16 
-#&gt; 
-#&gt; Probability of observed statistic based on distribution:
-#&gt; p   =  0.6363636 
-#&gt; 
-#&gt; Shapiro-Wilk Normality Test: W = 0.868; p = 0.073  (Hypothesis of normality maintained)
-#&gt; 
-#&gt; Probabilty of observed statistic based on the assumption of normality:
-#&gt; z = 0.4416, p = 0.3294 (single sided)</div><div class='input'>
-<span class='co'>## Compute a randomization test on the Grosche2011 data using complete permutation</span>
-<span class='fu'>rand_test</span><span class='op'>(</span><span class='va'>Grosche2011</span>, statistic <span class='op'>=</span> <span class='st'>"Median B-A"</span>, complete <span class='op'>=</span> <span class='cn'>TRUE</span>, limit <span class='op'>=</span> <span class='fl'>4</span>, seed <span class='op'>=</span> <span class='fl'>123</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Randomization Test
-#&gt; 
-#&gt; Test for 3 cases.
-#&gt; 
-#&gt; Comparing phase A against phase B 
-#&gt; Statistic:  Median B-A 
-#&gt; 
-#&gt; Minimal length of each phase: A = 4 , B = 4 
-#&gt; Observed statistic =  0.365 
-#&gt; 
-#&gt; Distribution based on all 2652 possible combinations.
-#&gt; n   =  2652 
-#&gt; M   =  1.004859 
-#&gt; SD  =  0.7805234 
-#&gt; Min =  -1.445 
-#&gt; Max =  1.71 
-#&gt; 
-#&gt; Probability of observed statistic based on distribution:
-#&gt; p   =  0.8435143 
-#&gt; 
-#&gt; Shapiro-Wilk Normality Test: W = 0.804; p = 0.000  (Hypothesis of normality rejected)
-#&gt; 
-#&gt; Probabilty of observed statistic based on the assumption of normality:
-#&gt; z = -0.8198, p = 0.7938 (single sided)</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Compute a randomization test on the first case of the byHeart2011 data and include a graph</span></span>
+<span class='r-in'><span class='fu'>rand_test</span><span class='op'>(</span><span class='va'>byHeart2011</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, statistic <span class='op'>=</span> <span class='st'>"Median B-A"</span>, graph <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='fl'>123</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='rand_test-1.png' alt='' width='700' height='433' /></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Randomization Test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Comparing phase A against phase B </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Statistic:  Median B-A </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Minimal length of each phase: A = 5 , B = 5 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Observed statistic =  15 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Warning! The assigned number of random permutations exceeds the number of possible permutations. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Analysis is restricted to all possible permutations.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Distribution based on all 11 possible combinations.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n   =  11 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> M   =  14.40909 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> SD  =  1.338249 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Min =  12 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Max =  16 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Probability of observed statistic based on distribution:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> p   =  0.6363636 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Shapiro-Wilk Normality Test: W = 0.868; p = 0.073  (Hypothesis of normality maintained)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Probabilty of observed statistic based on the assumption of normality:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> z = 0.4416, p = 0.3294 (single sided)</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Compute a randomization test on the Grosche2011 data using complete permutation</span></span>
+<span class='r-in'><span class='fu'>rand_test</span><span class='op'>(</span><span class='va'>Grosche2011</span>, statistic <span class='op'>=</span> <span class='st'>"Median B-A"</span>, complete <span class='op'>=</span> <span class='cn'>TRUE</span>, limit <span class='op'>=</span> <span class='fl'>4</span>, seed <span class='op'>=</span> <span class='fl'>123</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Randomization Test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Test for 3 cases.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Comparing phase A against phase B </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Statistic:  Median B-A </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Minimal length of each phase: A = 4 , B = 4 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Observed statistic =  0.365 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Distribution based on all 2652 possible combinations.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n   =  2652 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> M   =  1.004859 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> SD  =  0.7805234 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Min =  -1.445 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Max =  1.71 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Probability of observed statistic based on distribution:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> p   =  0.8435143 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Shapiro-Wilk Normality Test: W = 0.804; p = 0.000  (Hypothesis of normality rejected)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Probabilty of observed statistic based on the assumption of normality:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> z = -0.8198, p = 0.7938 (single sided)</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -84,7 +84,7 @@ the predicted progress is computed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -209,26 +209,27 @@ above).</p></dd> <dt>case.names</dt><dd><p>Assigned name of single-case.</p></dd
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Calculate the PET and use a 99%-CI for the additional calculation</span>
-<span class='co'># create random example data</span>
-<span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>5</span>, slope <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span>
-<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span><span class='va'>design</span>, seed <span class='op'>=</span> <span class='fl'>23</span><span class='op'>)</span>
-<span class='fu'>pet</span><span class='op'>(</span><span class='va'>dat</span>, ci <span class='op'>=</span> <span class='fl'>.99</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Percent Exceeding the Trend
-#&gt; 
-#&gt; N cases =  5 
-#&gt; 
-#&gt;           PET binom.p PET CI
-#&gt; Case1  13.333   1.000  0.000
-#&gt; Case2 100.000   0.000 53.333
-#&gt; Case3 100.000   0.000 93.333
-#&gt; Case4   0.000   1.000  0.000
-#&gt; Case5  80.000   0.018  0.000
-#&gt; 
-#&gt; Binom.test: alternative hypothesis: true probability &gt; 50%
-#&gt; PET CI: Percent of values greater than upper 99% confidence threshold (greater 2.326*se above predicted value)</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Calculate the PET and use a 99%-CI for the additional calculation</span></span>
+<span class='r-in'><span class='co'># create random example data</span></span>
+<span class='r-in'><span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>5</span>, slope <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span><span class='va'>design</span>, seed <span class='op'>=</span> <span class='fl'>23</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>pet</span><span class='op'>(</span><span class='va'>dat</span>, ci <span class='op'>=</span> <span class='fl'>.99</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Percent Exceeding the Trend</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N cases =  5 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           PET binom.p PET CI</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Case1  13.333   1.000  0.000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Case2 100.000   0.000 53.333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Case3 100.000   0.000 93.333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Case4   0.000   1.000  0.000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Case5  80.000   0.018  0.000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Binom.test: alternative hypothesis: true probability &gt; 50%</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PET CI: Percent of values greater than upper 99% confidence threshold (greater 2.326*se above predicted value)</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

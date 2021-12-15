@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -154,67 +154,70 @@
     <p>An scdf with a subset of cases</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>select_cases</span><span class='op'>(</span><span class='va'>exampleAB</span>, <span class='st'>"Johanna"</span>, <span class='st'>"Karolina"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; #A single-case data frame with 2 cases
-#&gt; 
-#&gt;  Johanna: phase values mt | Karolina: phase values mt |
-#&gt;               A     54  1 |               A     41  1 |
-#&gt;               A     53  2 |               A     59  2 |
-#&gt;               A     56  3 |               A     56  3 |
-#&gt;               A     58  4 |               A     51  4 |
-#&gt;               A     52  5 |               A     52  5 |
-#&gt;               B     61  6 |               B     57  6 |
-#&gt;               B     62  7 |               B     56  7 |
-#&gt;               B     71  8 |               B     67  8 |
-#&gt;               B     66  9 |               B     75  9 |
-#&gt;               B     64 10 |               B     66 10 |
-#&gt;               B     78 11 |               B     69 11 |
-#&gt;               B     70 12 |               B     68 12 |
-#&gt;               B     74 13 |               B     73 13 |
-#&gt;               B     82 14 |               B     77 14 |
-#&gt;               B     77 15 |               B     79 15 |
-#&gt; # ... up to 5 more rows</div><div class='input'><span class='co'># or: select_cases(exampleAB, c("Johanna", "Karolina"))</span>
-<span class='fu'>select_cases</span><span class='op'>(</span><span class='va'>exampleAB</span>, <span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; #A single-case data frame with 2 cases
-#&gt; 
-#&gt;  Johanna: phase values mt | Karolina: phase values mt |
-#&gt;               A     54  1 |               A     41  1 |
-#&gt;               A     53  2 |               A     59  2 |
-#&gt;               A     56  3 |               A     56  3 |
-#&gt;               A     58  4 |               A     51  4 |
-#&gt;               A     52  5 |               A     52  5 |
-#&gt;               B     61  6 |               B     57  6 |
-#&gt;               B     62  7 |               B     56  7 |
-#&gt;               B     71  8 |               B     67  8 |
-#&gt;               B     66  9 |               B     75  9 |
-#&gt;               B     64 10 |               B     66 10 |
-#&gt;               B     78 11 |               B     69 11 |
-#&gt;               B     70 12 |               B     68 12 |
-#&gt;               B     74 13 |               B     73 13 |
-#&gt;               B     82 14 |               B     77 14 |
-#&gt;               B     77 15 |               B     79 15 |
-#&gt; # ... up to 5 more rows</div><div class='input'><span class='co'># or: select_cases(exampleAB, 1:2)</span>
-<span class='fu'>select_cases</span><span class='op'>(</span><span class='va'>exampleAB</span>, <span class='st'>"-Johanna"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; #A single-case data frame with 2 cases
-#&gt; 
-#&gt;  Karolina: phase values mt | Anja: phase values mt |
-#&gt;                A     41  1 |           A     55  1 |
-#&gt;                A     59  2 |           A     58  2 |
-#&gt;                A     56  3 |           A     53  3 |
-#&gt;                A     51  4 |           A     50  4 |
-#&gt;                A     52  5 |           A     52  5 |
-#&gt;                B     57  6 |           B     55  6 |
-#&gt;                B     56  7 |           B     68  7 |
-#&gt;                B     67  8 |           B     68  8 |
-#&gt;                B     75  9 |           B     81  9 |
-#&gt;                B     66 10 |           B     67 10 |
-#&gt;                B     69 11 |           B     78 11 |
-#&gt;                B     68 12 |           B     73 12 |
-#&gt;                B     73 13 |           B     72 13 |
-#&gt;                B     77 14 |           B     78 14 |
-#&gt;                B     79 15 |           B     81 15 |
-#&gt; # ... up to 5 more rows</div><div class='input'><span class='co'># or: select_cases(exampleAB, c("-Johanna", "-Karolina"))</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>select_cases</span><span class='op'>(</span><span class='va'>exampleAB</span>, <span class='st'>"Johanna"</span>, <span class='st'>"Karolina"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> #A single-case data frame with 2 cases</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Johanna: phase values mt | Karolina: phase values mt |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               A     54  1 |               A     41  1 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               A     53  2 |               A     59  2 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               A     56  3 |               A     56  3 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               A     58  4 |               A     51  4 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               A     52  5 |               A     52  5 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     61  6 |               B     57  6 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     62  7 |               B     56  7 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     71  8 |               B     67  8 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     66  9 |               B     75  9 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     64 10 |               B     66 10 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     78 11 |               B     69 11 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     70 12 |               B     68 12 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     74 13 |               B     73 13 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     82 14 |               B     77 14 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     77 15 |               B     79 15 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # ... up to 5 more rows</span>
+<span class='r-in'><span class='co'># or: select_cases(exampleAB, c("Johanna", "Karolina"))</span></span>
+<span class='r-in'><span class='fu'>select_cases</span><span class='op'>(</span><span class='va'>exampleAB</span>, <span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> #A single-case data frame with 2 cases</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Johanna: phase values mt | Karolina: phase values mt |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               A     54  1 |               A     41  1 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               A     53  2 |               A     59  2 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               A     56  3 |               A     56  3 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               A     58  4 |               A     51  4 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               A     52  5 |               A     52  5 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     61  6 |               B     57  6 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     62  7 |               B     56  7 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     71  8 |               B     67  8 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     66  9 |               B     75  9 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     64 10 |               B     66 10 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     78 11 |               B     69 11 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     70 12 |               B     68 12 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     74 13 |               B     73 13 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     82 14 |               B     77 14 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B     77 15 |               B     79 15 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # ... up to 5 more rows</span>
+<span class='r-in'><span class='co'># or: select_cases(exampleAB, 1:2)</span></span>
+<span class='r-in'><span class='fu'>select_cases</span><span class='op'>(</span><span class='va'>exampleAB</span>, <span class='st'>"-Johanna"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> #A single-case data frame with 2 cases</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Karolina: phase values mt | Anja: phase values mt |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                A     41  1 |           A     55  1 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                A     59  2 |           A     58  2 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                A     56  3 |           A     53  3 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                A     51  4 |           A     50  4 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                A     52  5 |           A     52  5 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                B     57  6 |           B     55  6 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                B     56  7 |           B     68  7 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                B     67  8 |           B     68  8 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                B     75  9 |           B     81  9 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                B     66 10 |           B     67 10 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                B     69 11 |           B     78 11 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                B     68 12 |           B     73 12 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                B     73 13 |           B     72 13 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                B     77 14 |           B     78 14 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                B     79 15 |           B     81 15 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # ... up to 5 more rows</span>
+<span class='r-in'><span class='co'># or: select_cases(exampleAB, c("-Johanna", "-Karolina"))</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

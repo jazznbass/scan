@@ -82,7 +82,7 @@ design_rSC is used to set up a design matrix with all parameters needed for the 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -314,74 +314,77 @@ the vector, values will be repeated.</p></td>
     <p>Juergen Wibert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Create random single-case data and inspect it</span>
-<span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'>design_rSC</span><span class='op'>(</span>
-  n <span class='op'>=</span> <span class='fl'>3</span>, rtt <span class='op'>=</span> <span class='fl'>0.75</span>, slope <span class='op'>=</span> <span class='fl'>0.1</span>, extreme.p <span class='op'>=</span> <span class='fl'>0.1</span>,
-  missing.p <span class='op'>=</span> <span class='fl'>0.1</span>
-<span class='op'>)</span>
-<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>rSC</span><span class='op'>(</span><span class='va'>design</span>, round <span class='op'>=</span> <span class='fl'>1</span>, random.names <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='fl'>123</span><span class='op'>)</span>
-<span class='fu'><a href='describe.html'>describeSC</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Describe Single-Case Data
-#&gt; 
-#&gt;        Vanessa Bryn Tia
-#&gt; Design     A-B  A-B A-B
-#&gt; n.A          5    5   5
-#&gt; n.B         15   15  15
-#&gt; mis.A        0    1   0
-#&gt; mis.B        2    1   2
-#&gt; 
-#&gt;         Vanessa   Bryn    Tia
-#&gt; m.A       51.12  50.00  54.36
-#&gt; m.B      57.115 52.793 56.892
-#&gt; md.A       50.4   49.2   52.6
-#&gt; md.B      59.60  55.75  59.20
-#&gt; sd.A      4.672  3.631  4.538
-#&gt; sd.B     10.403 12.893  8.003
-#&gt; mad.A     2.520  2.076  3.410
-#&gt; mad.B     7.858 10.601  6.672
-#&gt; min.A      46.8   46.5   50.3
-#&gt; min.B      29.7   19.7   38.7
-#&gt; max.A      59.0   55.1   61.8
-#&gt; max.B      71.3   65.2   67.7
-#&gt; trend.A    0.95   1.36   2.27
-#&gt; trend.B   0.935  1.693  1.358</div><div class='input'><span class='fu'><a href='plot.scdf.html'>plotSC</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='img'><img src='random-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>## And now have a look at poisson-distributed data</span>
-<span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'>design_rSC</span><span class='op'>(</span>
-  n <span class='op'>=</span> <span class='fl'>3</span>, B.start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>10</span>, <span class='fl'>14</span><span class='op'>)</span>, MT <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>12</span>, <span class='fl'>20</span>, <span class='fl'>22</span><span class='op'>)</span>, m <span class='op'>=</span> <span class='fl'>10</span>,
-  distribution <span class='op'>=</span> <span class='st'>"poisson"</span>, level <span class='op'>=</span> <span class='op'>-</span><span class='fl'>5</span>, missing.p <span class='op'>=</span> <span class='fl'>0.1</span>
-<span class='op'>)</span>
-<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>rSC</span><span class='op'>(</span><span class='va'>design</span>, seed <span class='op'>=</span> <span class='fl'>1234</span><span class='op'>)</span>
-<span class='fu'><a href='pand.html'>pand</a></span><span class='op'>(</span><span class='va'>dat</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span>, correction <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Percentage of all non-overlapping data
-#&gt; 
-#&gt; PAND =  95.9 %
-#&gt; Φ =  0.918  ; Φ² =  0.843 
-#&gt; 
-#&gt; Number of cases: 3 
-#&gt; Total measurements: 49  (in phase A: 23; in phase B: 26)
-#&gt; n overlapping data per case: 2, 0, 0
-#&gt; Total overlapping data: n = 2 ; percentage = 4.1 
-#&gt; 
-#&gt; 2 x 2 Matrix of proportions
-#&gt; 	% expected
-#&gt; 	A	B	total
-#&gt; %    A	44.9	2	46.9
-#&gt; real B	2	51	53
-#&gt;  total	46.9	53
-#&gt; 
-#&gt; 2 x 2 Matrix of counts
-#&gt; 	expected
-#&gt; 	A	B	total
-#&gt;      A	22	1	23
-#&gt; real B	1	25	26
-#&gt;  total	23	26
-#&gt; 
-#&gt; 
-#&gt; Correlation based analysis:
-#&gt; 
-#&gt; z = -4.993, p = 0.000, τ = -0.721 </div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Create random single-case data and inspect it</span></span>
+<span class='r-in'><span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'>design_rSC</span><span class='op'>(</span></span>
+<span class='r-in'>  n <span class='op'>=</span> <span class='fl'>3</span>, rtt <span class='op'>=</span> <span class='fl'>0.75</span>, slope <span class='op'>=</span> <span class='fl'>0.1</span>, extreme.p <span class='op'>=</span> <span class='fl'>0.1</span>,</span>
+<span class='r-in'>  missing.p <span class='op'>=</span> <span class='fl'>0.1</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>rSC</span><span class='op'>(</span><span class='va'>design</span>, round <span class='op'>=</span> <span class='fl'>1</span>, random.names <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='fl'>123</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='describe.html'>describeSC</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Describe Single-Case Data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        Vanessa Bryn Tia</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Design     A-B  A-B A-B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n.A          5    5   5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n.B         15   15  15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mis.A        0    1   0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mis.B        2    1   2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         Vanessa   Bryn    Tia</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> m.A       51.12  50.00  54.36</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> m.B      57.115 52.793 56.892</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> md.A       50.4   49.2   52.6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> md.B      59.60  55.75  59.20</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sd.A      4.672  3.631  4.538</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sd.B     10.403 12.893  8.003</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mad.A     2.520  2.076  3.410</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mad.B     7.858 10.601  6.672</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> min.A      46.8   46.5   50.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> min.B      29.7   19.7   38.7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> max.A      59.0   55.1   61.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> max.B      71.3   65.2   67.7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> trend.A    0.95   1.36   2.27</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> trend.B   0.935  1.693  1.358</span>
+<span class='r-in'><span class='fu'><a href='plot.scdf.html'>plotSC</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='random-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## And now have a look at poisson-distributed data</span></span>
+<span class='r-in'><span class='va'>design</span> <span class='op'>&lt;-</span> <span class='fu'>design_rSC</span><span class='op'>(</span></span>
+<span class='r-in'>  n <span class='op'>=</span> <span class='fl'>3</span>, B.start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>10</span>, <span class='fl'>14</span><span class='op'>)</span>, MT <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>12</span>, <span class='fl'>20</span>, <span class='fl'>22</span><span class='op'>)</span>, m <span class='op'>=</span> <span class='fl'>10</span>,</span>
+<span class='r-in'>  distribution <span class='op'>=</span> <span class='st'>"poisson"</span>, level <span class='op'>=</span> <span class='op'>-</span><span class='fl'>5</span>, missing.p <span class='op'>=</span> <span class='fl'>0.1</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>rSC</span><span class='op'>(</span><span class='va'>design</span>, seed <span class='op'>=</span> <span class='fl'>1234</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='pand.html'>pand</a></span><span class='op'>(</span><span class='va'>dat</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span>, correction <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Percentage of all non-overlapping data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PAND =  95.9 %</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Φ =  0.918  ; Φ² =  0.843 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Number of cases: 3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total measurements: 49  (in phase A: 23; in phase B: 26)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n overlapping data per case: 2, 0, 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total overlapping data: n = 2 ; percentage = 4.1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 x 2 Matrix of proportions</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	% expected</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	A	B	total</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> %    A	44.9	2	46.9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> real B	2	51	53</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  total	46.9	53</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 x 2 Matrix of counts</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	expected</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	A	B	total</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      A	22	1	23</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> real B	1	25	26</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  total	23	26</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Correlation based analysis:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> z = -4.993, p = 0.000, τ = -0.721 </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

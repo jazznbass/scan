@@ -83,7 +83,7 @@ intervention." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -231,107 +231,110 @@ Research: Nonoverlap of All Pairs. <em>Behavior Therapy, 40</em>, 357-367.</p>
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Calculate the PAND for a MMBD over three cases</span>
-<span class='va'>gunnar</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>4</span>,<span class='fl'>7</span><span class='op'>)</span>, B.start <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-<span class='va'>birgit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>7</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>7</span><span class='op'>)</span>, B.start <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>bodo</span>   <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>7</span>,<span class='fl'>6</span>,<span class='fl'>8</span>,<span class='fl'>7</span><span class='op'>)</span>, B.start <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
-<span class='va'>mbd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>gunnar</span>, <span class='va'>birgit</span>, <span class='va'>bodo</span><span class='op'>)</span>
-<span class='fu'>pand</span><span class='op'>(</span><span class='va'>mbd</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Percentage of all non-overlapping data
-#&gt; 
-#&gt; PAND =  70 %
-#&gt; Φ =  0.375  ; Φ² =  0.141 
-#&gt; 
-#&gt; Number of cases: 3 
-#&gt; Total measurements: 30  (in phase A: 12; in phase B: 18)
-#&gt; n overlapping data per case: 3, 4, 2
-#&gt; Total overlapping data: n = 9 ; percentage = 30 
-#&gt; 
-#&gt; 2 x 2 Matrix of proportions
-#&gt; 	% expected
-#&gt; 	A	B	total
-#&gt; %    A	25	15	40
-#&gt; real B	15	45	60
-#&gt;  total	40	60
-#&gt; 
-#&gt; 2 x 2 Matrix of counts
-#&gt; 	expected
-#&gt; 	A	B	total
-#&gt;      A	7.5	4.5	12
-#&gt; real B	4.5	13.5	18
-#&gt;  total	12	18
-#&gt; 
-#&gt; 
-#&gt; Note. Matrix is corrected for ties
-#&gt; 
-#&gt; Correlation based analysis:
-#&gt; 
-#&gt; z = 2.393, p = 0.017, τ = 0.444 </div><div class='input'><span class='fu'>pand</span><span class='op'>(</span><span class='va'>bodo</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Percentage of all non-overlapping data
-#&gt; 
-#&gt; PAND =  80 %
-#&gt; Φ =  0.6  ; Φ² =  0.36 
-#&gt; 
-#&gt; Number of cases: 1 
-#&gt; Total measurements: 10  (in phase A: 5; in phase B: 5)
-#&gt; n overlapping data per case: 2
-#&gt; Total overlapping data: n = 2 ; percentage = 20 
-#&gt; 
-#&gt; 2 x 2 Matrix of proportions
-#&gt; 	% expected
-#&gt; 	A	B	total
-#&gt; %    A	40	10	50
-#&gt; real B	10	40	50
-#&gt;  total	50	50
-#&gt; 
-#&gt; 2 x 2 Matrix of counts
-#&gt; 	expected
-#&gt; 	A	B	total
-#&gt;      A	4	1	5
-#&gt; real B	1	4	5
-#&gt;  total	5	5
-#&gt; 
-#&gt; 
-#&gt; Note. Matrix is corrected for ties
-#&gt; 
-#&gt; Correlation based analysis:
-#&gt; 
-#&gt; z = 1.800, p = 0.072, τ = 0.600 </div><div class='input'>
-<span class='co'>## Calculate the PAND with an expected decrease of phase B scores</span>
-<span class='va'>cubs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>,<span class='fl'>22</span>,<span class='fl'>24</span>,<span class='fl'>17</span>,<span class='fl'>21</span>,<span class='fl'>13</span>,<span class='fl'>10</span>,<span class='fl'>9</span>,<span class='fl'>20</span>,<span class='fl'>9</span>,<span class='fl'>18</span><span class='op'>)</span>, B.start <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-<span class='fu'>pand</span><span class='op'>(</span><span class='va'>cubs</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Percentage of all non-overlapping data
-#&gt; 
-#&gt; PAND =  81.8 %
-#&gt; Φ =  0.607  ; Φ² =  0.369 
-#&gt; 
-#&gt; Number of cases: 1 
-#&gt; Total measurements: 11  (in phase A: 4; in phase B: 7)
-#&gt; n overlapping data per case: 2
-#&gt; Total overlapping data: n = 2 ; percentage = 18.2 
-#&gt; 
-#&gt; 2 x 2 Matrix of proportions
-#&gt; 	% expected
-#&gt; 	A	B	total
-#&gt; %    A	27.3	9.1	36.4
-#&gt; real B	9.1	54.5	63.6
-#&gt;  total	36.4	63.6
-#&gt; 
-#&gt; 2 x 2 Matrix of counts
-#&gt; 	expected
-#&gt; 	A	B	total
-#&gt;      A	3	1	4
-#&gt; real B	1	6	7
-#&gt;  total	4	7
-#&gt; 
-#&gt; 
-#&gt; Note. Matrix is corrected for ties
-#&gt; 
-#&gt; Correlation based analysis:
-#&gt; 
-#&gt; z = -1.807, p = 0.071, τ = -0.571 </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Calculate the PAND for a MMBD over three cases</span></span>
+<span class='r-in'><span class='va'>gunnar</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>4</span>,<span class='fl'>7</span><span class='op'>)</span>, B.start <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>birgit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span>,<span class='fl'>7</span>,<span class='fl'>4</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>4</span>,<span class='fl'>7</span><span class='op'>)</span>, B.start <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bodo</span>   <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>7</span>,<span class='fl'>6</span>,<span class='fl'>8</span>,<span class='fl'>7</span><span class='op'>)</span>, B.start <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mbd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>gunnar</span>, <span class='va'>birgit</span>, <span class='va'>bodo</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>pand</span><span class='op'>(</span><span class='va'>mbd</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Percentage of all non-overlapping data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PAND =  70 %</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Φ =  0.375  ; Φ² =  0.141 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Number of cases: 3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total measurements: 30  (in phase A: 12; in phase B: 18)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n overlapping data per case: 3, 4, 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total overlapping data: n = 9 ; percentage = 30 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 x 2 Matrix of proportions</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	% expected</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	A	B	total</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> %    A	25	15	40</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> real B	15	45	60</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  total	40	60</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 x 2 Matrix of counts</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	expected</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	A	B	total</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      A	7.5	4.5	12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> real B	4.5	13.5	18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  total	12	18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Note. Matrix is corrected for ties</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Correlation based analysis:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> z = 2.393, p = 0.017, τ = 0.444 </span>
+<span class='r-in'><span class='fu'>pand</span><span class='op'>(</span><span class='va'>bodo</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Percentage of all non-overlapping data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PAND =  80 %</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Φ =  0.6  ; Φ² =  0.36 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Number of cases: 1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total measurements: 10  (in phase A: 5; in phase B: 5)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n overlapping data per case: 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total overlapping data: n = 2 ; percentage = 20 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 x 2 Matrix of proportions</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	% expected</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	A	B	total</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> %    A	40	10	50</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> real B	10	40	50</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  total	50	50</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 x 2 Matrix of counts</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	expected</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	A	B	total</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      A	4	1	5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> real B	1	4	5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  total	5	5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Note. Matrix is corrected for ties</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Correlation based analysis:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> z = 1.800, p = 0.072, τ = 0.600 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Calculate the PAND with an expected decrease of phase B scores</span></span>
+<span class='r-in'><span class='va'>cubs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>,<span class='fl'>22</span>,<span class='fl'>24</span>,<span class='fl'>17</span>,<span class='fl'>21</span>,<span class='fl'>13</span>,<span class='fl'>10</span>,<span class='fl'>9</span>,<span class='fl'>20</span>,<span class='fl'>9</span>,<span class='fl'>18</span><span class='op'>)</span>, B.start <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>pand</span><span class='op'>(</span><span class='va'>cubs</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Percentage of all non-overlapping data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PAND =  81.8 %</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Φ =  0.607  ; Φ² =  0.369 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Number of cases: 1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total measurements: 11  (in phase A: 4; in phase B: 7)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n overlapping data per case: 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Total overlapping data: n = 2 ; percentage = 18.2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 x 2 Matrix of proportions</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	% expected</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	A	B	total</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> %    A	27.3	9.1	36.4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> real B	9.1	54.5	63.6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  total	36.4	63.6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 x 2 Matrix of counts</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	expected</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	A	B	total</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      A	3	1	4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> real B	1	6	7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  total	4	7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Note. Matrix is corrected for ties</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Correlation based analysis:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> z = -1.807, p = 0.071, τ = -0.571 </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

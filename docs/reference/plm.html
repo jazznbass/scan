@@ -81,7 +81,7 @@ McKean, 2000)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -254,121 +254,125 @@ Measurement, 60</em>, 38-58.</p>
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Compute a piecewise regression model for a random single-case</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
-<span class='va'>AB</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>
-  phase.design <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>10</span>, B <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>, 
-  level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>0</span>, B <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>, slope <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>0</span>, B <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>, 
-  trend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0.05</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span>design <span class='op'>=</span> <span class='va'>AB</span><span class='op'>)</span>
-<span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, AR <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Piecewise Regression Analysis
-#&gt; 
-#&gt; Dummy model:  B&amp;L-B 
-#&gt; 
-#&gt; Fitted a gaussian distribution.
-#&gt; Correlated residuals up to autoregressions of lag 3 are modelled
-#&gt; 
-#&gt; F(3, 26) = 47.38; p = 0.000; R² = 0.845; Adjusted R² = 0.828
-#&gt; 
-#&gt;                    B   2.5%  97.5%    SE      t     p delta R²
-#&gt; Intercept     53.234 47.630 58.838 2.859 18.618 0.000         
-#&gt; Trend mt      -0.166 -1.032  0.701 0.442 -0.374 0.711  -0.0012
-#&gt; Level phase B 15.353  9.550 21.156 2.961  5.185 0.000   0.0735
-#&gt; Slope phase B  0.913 -0.045  1.871 0.489  1.869 0.073   0.0162
-#&gt; 
-#&gt; Autocorrelations of the residuals
-#&gt;  lag    cr
-#&gt;    1 -0.12
-#&gt;    2 -0.23
-#&gt;    3  0.38
-#&gt; 
-#&gt; Formula: values ~ 1 + mt + phaseB + interB
-#&gt; </div><div class='input'>
-<span class='co'>## Another example with a more complex design</span>
-<span class='va'>A1B1A2B2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span>
-  phase.design <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A1 <span class='op'>=</span> <span class='fl'>15</span>, B1 <span class='op'>=</span> <span class='fl'>20</span>, A2 <span class='op'>=</span> <span class='fl'>15</span>, B2 <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>, 
-  level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A1 <span class='op'>=</span> <span class='fl'>0</span>, B1 <span class='op'>=</span> <span class='fl'>1</span>, A2 <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, B2 <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,
-  slope <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A1 <span class='op'>=</span> <span class='fl'>0</span>, B1 <span class='op'>=</span> <span class='fl'>0.0</span>, A1 <span class='op'>=</span> <span class='fl'>0</span>, B2 <span class='op'>=</span> <span class='fl'>0.0</span><span class='op'>)</span>,
-  trend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0.0</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span>design <span class='op'>=</span> <span class='va'>A1B1A2B2</span>, seed <span class='op'>=</span> <span class='fl'>123</span><span class='op'>)</span>
-<span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, model <span class='op'>=</span> <span class='st'>"JW"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Piecewise Regression Analysis
-#&gt; 
-#&gt; Dummy model:  JW 
-#&gt; 
-#&gt; Fitted a gaussian distribution.
-#&gt; F(7, 62) = 11.05; p = 0.000; R² = 0.555; Adjusted R² = 0.505
-#&gt; 
-#&gt;                      B    2.5%  97.5%    SE      t     p delta R²
-#&gt; Intercept       51.439  46.427 56.451 2.557 20.115 0.000         
-#&gt; Trend mt        -0.085  -0.636  0.467 0.281 -0.301 0.764   0.0006
-#&gt; Level phase B1   7.536   1.297 13.775 3.183  2.367 0.021   0.0402
-#&gt; Level phase A2 -11.120 -17.517 -4.722 3.264 -3.407 0.001   0.0833
-#&gt; Level phase B2  10.261   4.022 16.500 3.183  3.224 0.002   0.0746
-#&gt; Slope phase B1   0.280  -0.377  0.937 0.335  0.835 0.407   0.0050
-#&gt; Slope phase A2  -0.240  -0.897  0.417 0.335 -0.716 0.477   0.0037
-#&gt; Slope phase B2   0.119  -0.538  0.776 0.335  0.354 0.724   0.0009
-#&gt; 
-#&gt; Autocorrelations of the residuals
-#&gt;  lag    cr
-#&gt;    1 -0.05
-#&gt;    2 -0.12
-#&gt;    3  0.12
-#&gt; 
-#&gt; Formula: values ~ 1 + mt + phaseB1 + phaseA2 + phaseB2 + interB1 + interA2 + 
-#&gt;     interB2
-#&gt; </div><div class='input'>
-<span class='co'>## no slope effects were found. Therefore you might want to drop slope estimation:</span>
-<span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, slope <span class='op'>=</span> <span class='cn'>FALSE</span>, model <span class='op'>=</span> <span class='st'>"JW"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Piecewise Regression Analysis
-#&gt; 
-#&gt; Dummy model:  JW 
-#&gt; 
-#&gt; Fitted a gaussian distribution.
-#&gt; F(4, 65) = 19.73; p = 0.000; R² = 0.548; Adjusted R² = 0.521
-#&gt; 
-#&gt;                      B    2.5%  97.5%    SE      t     p delta R²
-#&gt; Intercept       50.157  47.279 53.035 1.468 34.157 0.000         
-#&gt; Trend mt         0.076  -0.133  0.284 0.107  0.710 0.480   0.0035
-#&gt; Level phase B1   7.671   2.879 12.463 2.445  3.137 0.003   0.0684
-#&gt; Level phase A2 -10.945 -15.737 -6.153 2.445 -4.477 0.000   0.1392
-#&gt; Level phase B2   9.402   4.610 14.194 2.445  3.846 0.000   0.1028
-#&gt; 
-#&gt; Autocorrelations of the residuals
-#&gt;  lag    cr
-#&gt;    1 -0.03
-#&gt;    2 -0.09
-#&gt;    3  0.13
-#&gt; 
-#&gt; Formula: values ~ 1 + mt + phaseB1 + phaseA2 + phaseB2
-#&gt; </div><div class='input'>
-<span class='co'>## and now drop the trend estimation as well</span>
-<span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, slope <span class='op'>=</span> <span class='cn'>FALSE</span>, trend <span class='op'>=</span> <span class='cn'>FALSE</span>, model <span class='op'>=</span> <span class='st'>"JW"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Piecewise Regression Analysis
-#&gt; 
-#&gt; Dummy model:  JW 
-#&gt; 
-#&gt; Fitted a gaussian distribution.
-#&gt; F(3, 66) = 26.34; p = 0.000; R² = 0.545; Adjusted R² = 0.524
-#&gt; 
-#&gt;                     B    2.5%  97.5%    SE      t p delta R²
-#&gt; Intercept      50.762  48.427 53.097 1.191 42.611 0         
-#&gt; Level phase B1  8.995   5.906 12.084 1.576  5.708 0   0.2247
-#&gt; Level phase A2 -9.621 -12.710 -6.532 1.576 -6.105 0   0.2570
-#&gt; Level phase B2 10.726   7.637 13.815 1.576  6.806 0   0.3195
-#&gt; 
-#&gt; Autocorrelations of the residuals
-#&gt;  lag    cr
-#&gt;    1 -0.01
-#&gt;    2 -0.08
-#&gt;    3  0.13
-#&gt; 
-#&gt; Formula: values ~ 1 + phaseB1 + phaseA2 + phaseB2
-#&gt; </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Compute a piecewise regression model for a random single-case</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>AB</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span></span>
+<span class='r-in'>  phase.design <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>10</span>, B <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>, </span>
+<span class='r-in'>  level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>0</span>, B <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>, slope <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>0</span>, B <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>, </span>
+<span class='r-in'>  trend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0.05</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span>design <span class='op'>=</span> <span class='va'>AB</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, AR <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Piecewise Regression Analysis</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Dummy model:  B&amp;L-B </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Fitted a gaussian distribution.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Correlated residuals up to autoregressions of lag 3 are modelled</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> F(3, 26) = 47.38; p = 0.000; R² = 0.845; Adjusted R² = 0.828</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    B   2.5%  97.5%    SE      t     p delta R²</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Intercept     53.234 47.630 58.838 2.859 18.618 0.000         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trend mt      -0.166 -1.032  0.701 0.442 -0.374 0.711  -0.0012</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase B 15.353  9.550 21.156 2.961  5.185 0.000   0.0735</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Slope phase B  0.913 -0.045  1.871 0.489  1.869 0.073   0.0162</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Autocorrelations of the residuals</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  lag    cr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1 -0.12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    2 -0.23</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    3  0.38</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Formula: values ~ 1 + mt + phaseB + interB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Another example with a more complex design</span></span>
+<span class='r-in'><span class='va'>A1B1A2B2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>design_rSC</a></span><span class='op'>(</span></span>
+<span class='r-in'>  phase.design <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A1 <span class='op'>=</span> <span class='fl'>15</span>, B1 <span class='op'>=</span> <span class='fl'>20</span>, A2 <span class='op'>=</span> <span class='fl'>15</span>, B2 <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>, </span>
+<span class='r-in'>  level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A1 <span class='op'>=</span> <span class='fl'>0</span>, B1 <span class='op'>=</span> <span class='fl'>1</span>, A2 <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, B2 <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,</span>
+<span class='r-in'>  slope <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>A1 <span class='op'>=</span> <span class='fl'>0</span>, B1 <span class='op'>=</span> <span class='fl'>0.0</span>, A1 <span class='op'>=</span> <span class='fl'>0</span>, B2 <span class='op'>=</span> <span class='fl'>0.0</span><span class='op'>)</span>,</span>
+<span class='r-in'>  trend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0.0</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>rSC</a></span><span class='op'>(</span>design <span class='op'>=</span> <span class='va'>A1B1A2B2</span>, seed <span class='op'>=</span> <span class='fl'>123</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, model <span class='op'>=</span> <span class='st'>"JW"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Piecewise Regression Analysis</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Dummy model:  JW </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Fitted a gaussian distribution.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> F(7, 62) = 11.05; p = 0.000; R² = 0.555; Adjusted R² = 0.505</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      B    2.5%  97.5%    SE      t     p delta R²</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Intercept       51.439  46.427 56.451 2.557 20.115 0.000         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trend mt        -0.085  -0.636  0.467 0.281 -0.301 0.764   0.0006</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase B1   7.536   1.297 13.775 3.183  2.367 0.021   0.0402</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase A2 -11.120 -17.517 -4.722 3.264 -3.407 0.001   0.0833</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase B2  10.261   4.022 16.500 3.183  3.224 0.002   0.0746</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Slope phase B1   0.280  -0.377  0.937 0.335  0.835 0.407   0.0050</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Slope phase A2  -0.240  -0.897  0.417 0.335 -0.716 0.477   0.0037</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Slope phase B2   0.119  -0.538  0.776 0.335  0.354 0.724   0.0009</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Autocorrelations of the residuals</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  lag    cr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1 -0.05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    2 -0.12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    3  0.12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Formula: values ~ 1 + mt + phaseB1 + phaseA2 + phaseB2 + interB1 + interA2 + </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     interB2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## no slope effects were found. Therefore you might want to drop slope estimation:</span></span>
+<span class='r-in'><span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, slope <span class='op'>=</span> <span class='cn'>FALSE</span>, model <span class='op'>=</span> <span class='st'>"JW"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Piecewise Regression Analysis</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Dummy model:  JW </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Fitted a gaussian distribution.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> F(4, 65) = 19.73; p = 0.000; R² = 0.548; Adjusted R² = 0.521</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      B    2.5%  97.5%    SE      t     p delta R²</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Intercept       50.157  47.279 53.035 1.468 34.157 0.000         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trend mt         0.076  -0.133  0.284 0.107  0.710 0.480   0.0035</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase B1   7.671   2.879 12.463 2.445  3.137 0.003   0.0684</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase A2 -10.945 -15.737 -6.153 2.445 -4.477 0.000   0.1392</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase B2   9.402   4.610 14.194 2.445  3.846 0.000   0.1028</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Autocorrelations of the residuals</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  lag    cr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1 -0.03</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    2 -0.09</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    3  0.13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Formula: values ~ 1 + mt + phaseB1 + phaseA2 + phaseB2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## and now drop the trend estimation as well</span></span>
+<span class='r-in'><span class='fu'>plm</span><span class='op'>(</span><span class='va'>dat</span>, slope <span class='op'>=</span> <span class='cn'>FALSE</span>, trend <span class='op'>=</span> <span class='cn'>FALSE</span>, model <span class='op'>=</span> <span class='st'>"JW"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Piecewise Regression Analysis</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Dummy model:  JW </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Fitted a gaussian distribution.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> F(3, 66) = 26.34; p = 0.000; R² = 0.545; Adjusted R² = 0.524</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     B    2.5%  97.5%    SE      t p delta R²</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Intercept      50.762  48.427 53.097 1.191 42.611 0         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase B1  8.995   5.906 12.084 1.576  5.708 0   0.2247</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase A2 -9.621 -12.710 -6.532 1.576 -6.105 0   0.2570</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase B2 10.726   7.637 13.815 1.576  6.806 0   0.3195</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Autocorrelations of the residuals</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  lag    cr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1 -0.01</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    2 -0.08</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    3  0.13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Formula: values ~ 1 + phaseB1 + phaseA2 + phaseB2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

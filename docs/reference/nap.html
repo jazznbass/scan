@@ -86,7 +86,7 @@ intuitive NAP (0-100%) is also displayed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -206,23 +206,25 @@ single-case research: Nonoverlap of all pairs. <em>Behavior Therapy, 40</em>,
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Calculate NAP for a study with  lower expected phase B scores (e.g. aggressive behavior)</span>
-<span class='va'>gretchen</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>12</span>,<span class='fl'>14</span>,<span class='fl'>9</span>,<span class='fl'>10</span>, B <span class='op'>=</span> <span class='fl'>10</span>,<span class='fl'>6</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>nap</span><span class='op'>(</span><span class='va'>gretchen</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Nonoverlap of All Pairs
-#&gt; 
-#&gt;   Case NAP Rescaled Pairs Positives Ties  W     p
-#&gt;  Case1  94       88    24        22    1 22 0.016</div><div class='input'>
-<span class='co'>## Request NAP for all cases from the Grosche2011 data</span>
-<span class='fu'>nap</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Nonoverlap of All Pairs
-#&gt; 
-#&gt;   Case NAP Rescaled Pairs Positives Ties  W    p
-#&gt;    Eva  69     38.5    78        54    0 24 0.10
-#&gt;  Georg  48     -4.2   119        57    0 62 0.58
-#&gt;   Olaf  45    -10.4    96        43    0 53 0.66</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Calculate NAP for a study with  lower expected phase B scores (e.g. aggressive behavior)</span></span>
+<span class='r-in'><span class='va'>gretchen</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>12</span>,<span class='fl'>14</span>,<span class='fl'>9</span>,<span class='fl'>10</span>, B <span class='op'>=</span> <span class='fl'>10</span>,<span class='fl'>6</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>nap</span><span class='op'>(</span><span class='va'>gretchen</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nonoverlap of All Pairs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Case NAP Rescaled Pairs Positives Ties  W     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Case1  94       88    24        22    1 22 0.016</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Request NAP for all cases from the Grosche2011 data</span></span>
+<span class='r-in'><span class='fu'>nap</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Nonoverlap of All Pairs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Case NAP Rescaled Pairs Positives Ties  W    p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Eva  69     38.5    78        54    0 24 0.10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Georg  48     -4.2   119        57    0 62 0.58</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Olaf  45    -10.4    96        43    0 53 0.66</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
