@@ -81,7 +81,7 @@ across all phases." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -183,34 +183,35 @@ the length of a phase minus one, NA is returned for this cell.</p>
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Compute autocorrelations for a list of four single-cases up to lag 2.</span>
-<span class='fu'>autocorr</span><span class='op'>(</span><span class='va'>Huber2014</span>, lag.max <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Autocorrelations
-#&gt; 
-#&gt; Adam 
-#&gt;  Phase Lag 1 Lag 2
-#&gt;      A  0.18 -0.40
-#&gt;      B  0.00 -0.16
-#&gt;    all  0.26 -0.02
-#&gt; 
-#&gt; Berta 
-#&gt;  Phase Lag 1 Lag 2
-#&gt;      A  0.08 -0.52
-#&gt;      B  0.07 -0.36
-#&gt;    all  0.30 -0.01
-#&gt; 
-#&gt; Christian 
-#&gt;  Phase Lag 1 Lag 2
-#&gt;      A -0.07 -0.24
-#&gt;      B  0.53  0.40
-#&gt;    all  0.64  0.55
-#&gt; 
-#&gt; David 
-#&gt;  Phase Lag 1 Lag 2
-#&gt;      A -0.40 -0.25
-#&gt;      B  0.27  0.35
-#&gt;    all  0.45  0.47
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'>## Compute autocorrelations for a list of four single-cases up to lag 2.</span></span>
+<span class='r-in'><span class='fu'>autocorr</span><span class='op'>(</span><span class='va'>Huber2014</span>, lag.max <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Autocorrelations</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Adam </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Phase Lag 1 Lag 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      A  0.18 -0.40</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      B  0.00 -0.16</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    all  0.26 -0.02</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Berta </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Phase Lag 1 Lag 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      A  0.08 -0.52</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      B  0.07 -0.36</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    all  0.30 -0.01</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Christian </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Phase Lag 1 Lag 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      A -0.07 -0.24</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      B  0.53  0.40</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    all  0.64  0.55</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> David </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Phase Lag 1 Lag 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      A -0.40 -0.25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      B  0.27  0.35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    all  0.45  0.47</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

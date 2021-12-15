@@ -1,4 +1,28 @@
 
+# scan 0.53.5
+
+- solved wrong calculation of Hedges G when phase length differed.
+- new function `smd()` reporting various types of standardized mean differences.
+
+# scan 0.53.4
+
+- `load_scdf` and `save_scdf` replace `readSC` and `writeSC`. The latter are kept working.
+- `load_scdf` extracts filetype from file extension.
+- New `yaml` import options for scdf files
+
+```yml
+Anna:
+  values:
+    A: [1, 3, 4, 5, 6, 7]
+    B: [8, 9, 10, 10, 11]
+
+Toni:
+  values:
+    A: [2, 3, 4, 5, 6, 7]
+    B: [3, 9, 10, 10,11]
+  control_var: [1,2,3,4,5,6,7,8,1,2,3]
+
+```
 
 # scan 0.53.3
 
@@ -24,13 +48,13 @@ pipe operator, pipes seem to become the standard. For compatibility with older R
 
 - `sample_names()`: Returns a character vector of length `n` with names by randomly drawing from a name list: type = {"neutral", "female", "male", "mixed"}. Useful to anonymize scdf files
 
-``` {.r}
+```R
 names(exampleAB) <- sample_names(3)
 ```
 
 -`add_l2()`: Adds the variables from a second level 2 data frame to an scdf matched by an id variable (default is `case`).
 
-```{.r}
+```R
 Leidig2018 %>%
   add_l2(Leidig2018_l2) %>%
   hplm(update.fixed = .~. + gender + migration + ITRF_TOTAL*phaseB, 
@@ -39,7 +63,7 @@ Leidig2018 %>%
 
 - `select_phases()`: selects and recombines phases into A and B phase (equivalent to th phases argument for various functions, but useful when using %>% operators).
 
-```{.r}
+```R
 exampleA1B1A2B2 %>% 
   select_phases(A = c(1, 3), B = c(2, 4)) %>%
   overlap()
@@ -49,7 +73,7 @@ exampleA1B1A2B2 %>%
 
 - `set_dvar()`, `set_mvar()`, `set_pvar()`: Shortcuts to set dvar, mvar, or pvar in a piping script e.g. `exmpleAB_add %>% set_dvar("depression") %>% describe()`
 
-```{.r}
+```R
 exampleAB_add %>%
   set_vars(dv = "depression") %>%
   overlap()
@@ -59,14 +83,14 @@ exampleAB_add %>%
 - `check_scdf()`: Checks for the validity of an scdf object (mainly used for internal tests)
 - `convert()`: Creates an scdf syntax file from an scdf object.
 
-``` {.r}
+```R
 # Create a syntax to code the scdf exampleAB and write it into an R file
 convert(exampleAB, file = "cases.R")
 ```
 
 - `cdc`: Applies the Conservative Dual-Criterion Method (CDC; Fisher, Kelley, & Lomas, 2003) to scdf objects.
 
-``` {.r}
+```R
 cdc(Beretvas2008)
 cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
 ```
@@ -77,14 +101,14 @@ cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
 - `overlap()`: Added Hedges-g.
 - new trend lines added to `plot.scdf()`: Koenig's bi-split / quarter intersect (lines = "trendA_bisplit") and Tukey's tri-split / Wald's slope (lines = "trendA_trisplit").
 
-``` {.r}
+```R
 plot(exampleAB_50[8], lines = "trendA_bisplit")
 plot(example_A24, lines = "trendA_trisplit")
 ```
 
 - `plot.scdf()`: Now allows for multiple lines with different line styles.
 
-``` {.r}
+```R
 plot(
   exampleAB, 
   lines = list(

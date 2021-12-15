@@ -81,7 +81,7 @@ single-case data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -179,72 +179,74 @@ single-case data.</p>
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Descriptive statistics for a study of three single-cases</span>
-<span class='fu'>describe</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Describe Single-Case Data
-#&gt; 
-#&gt;        Eva Georg Olaf
-#&gt; Design A-B   A-B  A-B
-#&gt; n.A      6     7   12
-#&gt; n.B     13    17    8
-#&gt; mis.A    0     0    0
-#&gt; mis.B    0     0    0
-#&gt; 
-#&gt;            Eva  Georg   Olaf
-#&gt; m.A      2.677 10.469  6.036
-#&gt; m.B      3.435  9.799  5.995
-#&gt; md.A     2.945  8.820  6.355
-#&gt; md.B     3.310 10.590  5.905
-#&gt; sd.A     0.750  4.112  1.524
-#&gt; sd.B     1.029  2.089  1.225
-#&gt; mad.A    0.541  4.448  1.794
-#&gt; mad.B    1.290  2.090  1.416
-#&gt; min.A     1.46   5.82   3.02
-#&gt; min.B     1.86   5.60   4.53
-#&gt; max.A     3.39  17.40   7.69
-#&gt; max.B     4.98  12.79   8.14
-#&gt; trend.A  0.014 -0.268  0.007
-#&gt; trend.B  0.044  0.043  0.000</div><div class='input'>
-<span class='co'>## Descriptives of a three phase design</span>
-<span class='fu'>describe</span><span class='op'>(</span><span class='va'>exampleABC</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Describe Single-Case Data
-#&gt; 
-#&gt;        Marie Rosalind  Lise
-#&gt; Design A-B-C    A-B-C A-B-C
-#&gt; n.A       10       15    20
-#&gt; n.B       10        8     7
-#&gt; n.C       10        7     3
-#&gt; mis.A      0        0     0
-#&gt; mis.B      0        0     0
-#&gt; mis.C      0        0     0
-#&gt; 
-#&gt;           Marie Rosalind    Lise
-#&gt; m.A      52.000   52.267  52.350
-#&gt; m.B      72.100   73.250  73.571
-#&gt; m.C      68.000   66.429  71.333
-#&gt; md.A       53.5     52.0    52.0
-#&gt; md.B       72.5     72.0    73.0
-#&gt; md.C         69       68      76
-#&gt; sd.A      8.287    8.146  10.869
-#&gt; sd.B     11.367   13.134  10.644
-#&gt; sd.C     12.702   10.486  21.385
-#&gt; mad.A    11.119    7.413  10.378
-#&gt; mad.B    10.378   10.378  16.309
-#&gt; mad.C    17.791   11.861  20.756
-#&gt; min.A        39       37      35
-#&gt; min.B        47       54      60
-#&gt; min.C        51       52      48
-#&gt; max.A        63       65      74
-#&gt; max.B        85       97      87
-#&gt; max.C        87       78      90
-#&gt; trend.A  -1.915    0.500  -0.088
-#&gt; trend.B  -0.612    0.643   1.929
-#&gt; trend.C  -0.194   -2.929 -14.000</div><div class='input'>
-<span class='co'>## Write descriptive statistics to .csv-file</span>
-<span class='va'>study</span> <span class='op'>&lt;-</span> <span class='fu'>describe</span><span class='op'>(</span><span class='va'>Waddell2011</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/write.table.html'>write.csv</a></span><span class='op'>(</span><span class='va'>study</span><span class='op'>$</span><span class='va'>descriptives</span>, file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Descriptive statistics for a study of three single-cases</span></span>
+<span class='r-in'><span class='fu'>describe</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Describe Single-Case Data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        Eva Georg Olaf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Design A-B   A-B  A-B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n.A      6     7   12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n.B     13    17    8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mis.A    0     0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mis.B    0     0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            Eva  Georg   Olaf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> m.A      2.677 10.469  6.036</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> m.B      3.435  9.799  5.995</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> md.A     2.945  8.820  6.355</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> md.B     3.310 10.590  5.905</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sd.A     0.750  4.112  1.524</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sd.B     1.029  2.089  1.225</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mad.A    0.541  4.448  1.794</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mad.B    1.290  2.090  1.416</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> min.A     1.46   5.82   3.02</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> min.B     1.86   5.60   4.53</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> max.A     3.39  17.40   7.69</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> max.B     4.98  12.79   8.14</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> trend.A  0.014 -0.268  0.007</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> trend.B  0.044  0.043  0.000</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Descriptives of a three phase design</span></span>
+<span class='r-in'><span class='fu'>describe</span><span class='op'>(</span><span class='va'>exampleABC</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Describe Single-Case Data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        Marie Rosalind  Lise</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Design A-B-C    A-B-C A-B-C</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n.A       10       15    20</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n.B       10        8     7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n.C       10        7     3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mis.A      0        0     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mis.B      0        0     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mis.C      0        0     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           Marie Rosalind    Lise</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> m.A      52.000   52.267  52.350</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> m.B      72.100   73.250  73.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> m.C      68.000   66.429  71.333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> md.A       53.5     52.0    52.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> md.B       72.5     72.0    73.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> md.C         69       68      76</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sd.A      8.287    8.146  10.869</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sd.B     11.367   13.134  10.644</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sd.C     12.702   10.486  21.385</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mad.A    11.119    7.413  10.378</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mad.B    10.378   10.378  16.309</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mad.C    17.791   11.861  20.756</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> min.A        39       37      35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> min.B        47       54      60</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> min.C        51       52      48</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> max.A        63       65      74</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> max.B        85       97      87</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> max.C        87       78      90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> trend.A  -1.915    0.500  -0.088</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> trend.B  -0.612    0.643   1.929</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> trend.C  -0.194   -2.929 -14.000</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Write descriptive statistics to .csv-file</span></span>
+<span class='r-in'><span class='va'>study</span> <span class='op'>&lt;-</span> <span class='fu'>describe</span><span class='op'>(</span><span class='va'>Waddell2011</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/write.table.html'>write.csv</a></span><span class='op'>(</span><span class='va'>study</span><span class='op'>$</span><span class='va'>descriptives</span>, file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

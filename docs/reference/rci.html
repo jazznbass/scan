@@ -82,7 +82,7 @@ use! The rciSC function computes three indices of reliable change
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -207,33 +207,35 @@ directions. <em>Journal of Personality Assessment, 82</em>, 50 - 59.</p>
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Report the RCIs of the first case from the byHeart data and include a graph</span>
-<span class='fu'>rci</span><span class='op'>(</span><span class='va'>byHeart2011</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, graph <span class='op'>=</span> <span class='cn'>TRUE</span>, rel <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span>
-</div><div class='img'><img src='rci-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Reliable Change Index
-#&gt; 
-#&gt; Mean Difference =  12.4 
-#&gt; Standardized Difference =  1.69056 
-#&gt; 
-#&gt; Descriptives:
-#&gt;          n mean        SD       SE
-#&gt; A-Phase  5  0.4 0.5477226 0.244949
-#&gt; B-Phase 15 12.8 5.6340800 2.519637
-#&gt; 
-#&gt; Reliability =  0.8 
-#&gt; 
-#&gt; 95 % Confidence Intervals:
-#&gt;               Lower      Upper
-#&gt; A-Phase -0.08009117  0.8800912
-#&gt; B-Phase  7.86160191 17.7383981
-#&gt; 
-#&gt; Reliable Change Indices:
-#&gt;                              RCI
-#&gt; Jacobson et al.         50.62279
-#&gt; Christensen and Mendoza 35.79572
-#&gt; Hageman and Arrindell   17.92417
-#&gt; </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Report the RCIs of the first case from the byHeart data and include a graph</span></span>
+<span class='r-in'><span class='fu'>rci</span><span class='op'>(</span><span class='va'>byHeart2011</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, graph <span class='op'>=</span> <span class='cn'>TRUE</span>, rel <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='rci-1.png' alt='' width='700' height='433' /></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Reliable Change Index</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mean Difference =  12.4 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Standardized Difference =  1.69056 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Descriptives:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          n mean        SD       SE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A-Phase  5  0.4 0.5477226 0.244949</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B-Phase 15 12.8 5.6340800 2.519637</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Reliability =  0.8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95 % Confidence Intervals:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               Lower      Upper</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A-Phase -0.08009117  0.8800912</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B-Phase  7.86160191 17.7383981</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Reliable Change Indices:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                              RCI</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Jacobson et al.         50.62279</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Christensen and Mendoza 35.79572</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hageman and Arrindell   17.92417</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

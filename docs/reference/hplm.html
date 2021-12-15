@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -269,59 +269,61 @@ variables belong to.</p></td>
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Compute hplm model on a MBD over fifty cases (restricted log-likelihood)</span>
-<span class='fu'>hplm</span><span class='op'>(</span><span class='va'>exampleAB_50</span>, method <span class='op'>=</span> <span class='st'>"REML"</span>, random.slopes <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Hierarchical Piecewise Linear Regression
-#&gt; 
-#&gt; Estimation method REML 
-#&gt; Slope estimation method: B&amp;L-B 
-#&gt; 50 Cases
-#&gt; 
-#&gt; ICC = 0.199; L = 193.8; p = 0.000
-#&gt; 
-#&gt; Fixed effects (values ~ 1 + mt + phaseB + interB)
-#&gt; 
-#&gt;                    B    SE   df      t p
-#&gt; Intercept     51.615 1.291 1281 39.982 0
-#&gt; Trend mt       0.671 0.115 1281  5.843 0
-#&gt; Level phase B 12.939 0.589 1281 21.950 0
-#&gt; Slope phase B  0.860 0.119 1281  7.240 0
-#&gt; 
-#&gt; Random effects (~1 | case)
-#&gt; 
-#&gt;           EstimateSD
-#&gt; Intercept      8.265
-#&gt; Residual       5.342</div><div class='input'>
-<span class='co'>## Analyzing with additional L2 variables</span>
-<span class='fu'>hplm</span><span class='op'>(</span><span class='va'>Leidig2018</span>, data.l2 <span class='op'>=</span> <span class='va'>Leidig2018_l2</span>, 
-     update.fixed <span class='op'>=</span> <span class='va'>.</span><span class='op'>~</span><span class='va'>.</span> <span class='op'>+</span> <span class='va'>gender</span> <span class='op'>+</span> <span class='va'>migration</span> <span class='op'>+</span> <span class='va'>ITRF_TOTAL</span><span class='op'>*</span><span class='va'>phaseB</span>, 
-     slope <span class='op'>=</span> <span class='cn'>FALSE</span>, random.slopes <span class='op'>=</span> <span class='cn'>FALSE</span>, lr.test <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Hierarchical Piecewise Linear Regression
-#&gt; 
-#&gt; Estimation method ML 
-#&gt; Slope estimation method: B&amp;L-B 
-#&gt; 35 Cases
-#&gt; 
-#&gt; ICC = 0.344; L = 875.4; p = 0.000
-#&gt; 
-#&gt; Fixed effects (academic_engagement ~ mt + phaseB + gender + migration + ITRF_TOTAL +     phaseB:ITRF_TOTAL)
-#&gt; 
-#&gt;                               B    SE   df      t     p
-#&gt; Intercept                 3.747 0.262 2376 14.285 0.000
-#&gt; Trend mt                  0.004 0.001 2376  6.019 0.000
-#&gt; Level phase B             0.667 0.098 2376  6.808 0.000
-#&gt; gender                   -0.020 0.301   31 -0.067 0.947
-#&gt; migration                -0.300 0.193   31 -1.556 0.130
-#&gt; ITRF_TOTAL               -0.035 0.013   31 -2.674 0.012
-#&gt; Level phase B:ITRF_TOTAL -0.001 0.005 2376 -0.279 0.780
-#&gt; 
-#&gt; Random effects (~1 | case)
-#&gt; 
-#&gt;           EstimateSD
-#&gt; Intercept      0.557
-#&gt; Residual       0.785</div><div class='input'>     
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Compute hplm model on a MBD over fifty cases (restricted log-likelihood)</span></span>
+<span class='r-in'><span class='fu'>hplm</span><span class='op'>(</span><span class='va'>exampleAB_50</span>, method <span class='op'>=</span> <span class='st'>"REML"</span>, random.slopes <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hierarchical Piecewise Linear Regression</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Estimation method REML </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Slope estimation method: B&amp;L-B </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 50 Cases</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ICC = 0.199; L = 193.8; p = 0.000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Fixed effects (values ~ 1 + mt + phaseB + interB)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    B    SE   df      t p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Intercept     51.615 1.291 1281 39.982 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trend mt       0.671 0.115 1281  5.843 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase B 12.939 0.589 1281 21.950 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Slope phase B  0.860 0.119 1281  7.240 0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Random effects (~1 | case)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           EstimateSD</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Intercept      8.265</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual       5.342</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Analyzing with additional L2 variables</span></span>
+<span class='r-in'><span class='fu'>hplm</span><span class='op'>(</span><span class='va'>Leidig2018</span>, data.l2 <span class='op'>=</span> <span class='va'>Leidig2018_l2</span>, </span>
+<span class='r-in'>     update.fixed <span class='op'>=</span> <span class='va'>.</span><span class='op'>~</span><span class='va'>.</span> <span class='op'>+</span> <span class='va'>gender</span> <span class='op'>+</span> <span class='va'>migration</span> <span class='op'>+</span> <span class='va'>ITRF_TOTAL</span><span class='op'>*</span><span class='va'>phaseB</span>, </span>
+<span class='r-in'>     slope <span class='op'>=</span> <span class='cn'>FALSE</span>, random.slopes <span class='op'>=</span> <span class='cn'>FALSE</span>, lr.test <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hierarchical Piecewise Linear Regression</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Estimation method ML </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Slope estimation method: B&amp;L-B </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 35 Cases</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ICC = 0.344; L = 875.4; p = 0.000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Fixed effects (academic_engagement ~ mt + phaseB + gender + migration + ITRF_TOTAL +     phaseB:ITRF_TOTAL)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                               B    SE   df      t     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Intercept                 3.747 0.262 2376 14.285 0.000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trend mt                  0.004 0.001 2376  6.019 0.000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase B             0.667 0.098 2376  6.808 0.000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> gender                   -0.020 0.301   31 -0.067 0.947</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> migration                -0.300 0.193   31 -1.556 0.130</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ITRF_TOTAL               -0.035 0.013   31 -2.674 0.012</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Level phase B:ITRF_TOTAL -0.001 0.005 2376 -0.279 0.780</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Random effects (~1 | case)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           EstimateSD</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Intercept      0.557</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Residual       0.785</span>
+<span class='r-in'>     </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

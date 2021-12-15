@@ -81,7 +81,7 @@ et al. (2011)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -247,82 +247,85 @@ a fixed effect model ("fixed").</p>
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>tau_u</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>$</span><span class='va'>Eva</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Tau-U
-#&gt; Method: complete 
-#&gt; Applied Kendall's Tau-b
-#&gt; 95% CIs for tau are reported.
-#&gt; 
-#&gt; Case: Eva 
-#&gt;                               Tau SE_Tau    Z     p
-#&gt; A vs. B                     0.385  0.292 1.32 0.188
-#&gt; A vs. B - Trend A           0.262  0.186 1.41 0.159
-#&gt; A vs. B + Trend B           0.490  0.172 2.85 0.004
-#&gt; A vs. B + Trend B - Trend A 0.485  0.167 2.90 0.004
-#&gt; </div><div class='input'>
-<span class='co'>## Replicate  tau-U calculation from Parker et al. (2011)</span>
-<span class='va'>bob</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>3</span>, B <span class='op'>=</span> <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span><span class='op'>)</span>, name <span class='op'>=</span> <span class='st'>"Bob"</span><span class='op'>)</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>tau_u</span><span class='op'>(</span><span class='va'>bob</span>, method <span class='op'>=</span> <span class='st'>"parker"</span>, tau_method <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, complete <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Tau-U
-#&gt; Method: parker 
-#&gt; Applied Kendall's Tau-a
-#&gt; 95% CIs for tau are reported.
-#&gt; 
-#&gt; Case: Bob 
-#&gt;                             pairs pos neg ties  S  D   Tau  CI lower CI upper
-#&gt; A vs. B                        20  17   1    2 16 20 0.800 -0.000152     1.60
-#&gt; Trend A                         6   4   1    1  3  6 0.500 -0.461663     1.46
-#&gt; Trend B                        10   8   1    1  7 10 0.700 -0.100152     1.50
-#&gt; A vs. B - Trend A              20  18   5    3 13 20 0.650 -0.289966     1.59
-#&gt; A vs. B + Trend B              30  25   2    3 23 30 0.767  0.140023     1.39
-#&gt; A vs. B + Trend B - Trend A    36  26   6    4 20 36 0.556  0.033352     1.08
-#&gt;                             SD_S VAR_S SE_Tau    Z      p
-#&gt; A vs. B                     8.16 66.67  0.408 1.96 0.0500
-#&gt; Trend A                     2.94  8.67  0.491 1.02 0.3082
-#&gt; Trend B                     4.08 16.67  0.408 1.71 0.0864
-#&gt; A vs. B - Trend A           9.59 92.00  0.480 1.36 0.1753
-#&gt; A vs. B + Trend B           9.59 92.00  0.320 2.40 0.0165
-#&gt; A vs. B + Trend B - Trend A 9.59 92.00  0.266 2.09 0.0371
-#&gt; </div><div class='input'>
-<span class='co'>## Request tau-U for all single-cases from the Grosche2011 data set</span>
-<span class='fu'>tau_u</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Tau-U
-#&gt; Method: complete 
-#&gt; Applied Kendall's Tau-b
-#&gt; 95% CIs for tau are reported.
-#&gt; 
-#&gt; Overall Tau-U
-#&gt; Meta-anlysis model: random effect
-#&gt; 
-#&gt;                        Model  Tau_U     se CI lower CI upper     z     p
-#&gt;                      A vs. B 0.0623 0.1587   -0.249    0.373 0.392 0.695
-#&gt;            A vs. B - Trend A 0.0762 0.0995   -0.119    0.271 0.765 0.444
-#&gt;            A vs. B + Trend B 0.1800 0.1637   -0.141    0.501 1.100 0.271
-#&gt;  A vs. B + Trend B - Trend A 0.1992 0.1572   -0.109    0.507 1.267 0.205
-#&gt; 
-#&gt; Case: Eva 
-#&gt;                               Tau SE_Tau    Z     p
-#&gt; A vs. B                     0.385  0.292 1.32 0.188
-#&gt; A vs. B - Trend A           0.262  0.186 1.41 0.159
-#&gt; A vs. B + Trend B           0.490  0.172 2.85 0.004
-#&gt; A vs. B + Trend B - Trend A 0.485  0.167 2.90 0.004
-#&gt; 
-#&gt; Case: Georg 
-#&gt;                                Tau SE_Tau      Z     p
-#&gt; A vs. B                     -0.042  0.265 -0.159 0.874
-#&gt; A vs. B - Trend A            0.056  0.164  0.342 0.732
-#&gt; A vs. B + Trend B            0.140  0.150  0.931 0.352
-#&gt; A vs. B + Trend B - Trend A  0.192  0.146  1.315 0.188
-#&gt; 
-#&gt; Case: Olaf 
-#&gt;                                Tau SE_Tau      Z     p
-#&gt; A vs. B                     -0.104  0.270 -0.386 0.700
-#&gt; A vs. B - Trend A           -0.057  0.170 -0.336 0.737
-#&gt; A vs. B + Trend B           -0.091  0.177 -0.516 0.606
-#&gt; A vs. B + Trend B - Trend A -0.074  0.162 -0.454 0.650
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='fu'>tau_u</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>$</span><span class='va'>Eva</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Tau-U</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Method: complete </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Applied Kendall's Tau-b</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95% CIs for tau are reported.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Case: Eva </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                               Tau SE_Tau    Z     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B                     0.385  0.292 1.32 0.188</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B - Trend A           0.262  0.186 1.41 0.159</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B           0.490  0.172 2.85 0.004</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B - Trend A 0.485  0.167 2.90 0.004</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Replicate  tau-U calculation from Parker et al. (2011)</span></span>
+<span class='r-in'><span class='va'>bob</span> <span class='op'>&lt;-</span> <span class='fu'><a href='scdf.html'>scdf</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>3</span>, B <span class='op'>=</span> <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span><span class='op'>)</span>, name <span class='op'>=</span> <span class='st'>"Bob"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>tau_u</span><span class='op'>(</span><span class='va'>bob</span>, method <span class='op'>=</span> <span class='st'>"parker"</span>, tau_method <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>res</span>, complete <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Tau-U</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Method: parker </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Applied Kendall's Tau-a</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95% CIs for tau are reported.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Case: Bob </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                             pairs pos neg ties  S  D   Tau  CI lower CI upper</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B                        20  17   1    2 16 20 0.800 -0.000152     1.60</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trend A                         6   4   1    1  3  6 0.500 -0.461663     1.46</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trend B                        10   8   1    1  7 10 0.700 -0.100152     1.50</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B - Trend A              20  18   5    3 13 20 0.650 -0.289966     1.59</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B              30  25   2    3 23 30 0.767  0.140023     1.39</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B - Trend A    36  26   6    4 20 36 0.556  0.033352     1.08</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                             SD_S VAR_S SE_Tau    Z      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B                     8.16 66.67  0.408 1.96 0.0500</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trend A                     2.94  8.67  0.491 1.02 0.3082</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Trend B                     4.08 16.67  0.408 1.71 0.0864</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B - Trend A           9.59 92.00  0.480 1.36 0.1753</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B           9.59 92.00  0.320 2.40 0.0165</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B - Trend A 9.59 92.00  0.266 2.09 0.0371</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Request tau-U for all single-cases from the Grosche2011 data set</span></span>
+<span class='r-in'><span class='fu'>tau_u</span><span class='op'>(</span><span class='va'>Grosche2011</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Tau-U</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Method: complete </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Applied Kendall's Tau-b</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95% CIs for tau are reported.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Overall Tau-U</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Meta-anlysis model: random effect</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        Model  Tau_U     se CI lower CI upper     z     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      A vs. B 0.0623 0.1587   -0.249    0.373 0.392 0.695</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            A vs. B - Trend A 0.0762 0.0995   -0.119    0.271 0.765 0.444</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            A vs. B + Trend B 0.1800 0.1637   -0.141    0.501 1.100 0.271</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  A vs. B + Trend B - Trend A 0.1992 0.1572   -0.109    0.507 1.267 0.205</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Case: Eva </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                               Tau SE_Tau    Z     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B                     0.385  0.292 1.32 0.188</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B - Trend A           0.262  0.186 1.41 0.159</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B           0.490  0.172 2.85 0.004</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B - Trend A 0.485  0.167 2.90 0.004</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Case: Georg </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                Tau SE_Tau      Z     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B                     -0.042  0.265 -0.159 0.874</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B - Trend A            0.056  0.164  0.342 0.732</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B            0.140  0.150  0.931 0.352</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B - Trend A  0.192  0.146  1.315 0.188</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Case: Olaf </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                Tau SE_Tau      Z     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B                     -0.104  0.270 -0.386 0.700</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B - Trend A           -0.057  0.170 -0.336 0.737</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B           -0.091  0.177 -0.516 0.606</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A vs. B + Trend B - Trend A -0.074  0.162 -0.454 0.650</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

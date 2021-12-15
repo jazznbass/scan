@@ -81,7 +81,7 @@ single-case data and some additional statistics." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.53.5</span>
       </span>
     </div>
 
@@ -208,74 +208,77 @@ Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
     <p>Juergen Wilbert</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Display overlap indices for one single-case</span>
-<span class='fu'>overlap</span><span class='op'>(</span><span class='va'>Huitema2000</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Overlap Indices
-#&gt; 
-#&gt; Comparing phase 1 against phase 2 
-#&gt; 
-#&gt;               Case1
-#&gt; Design          A-B
-#&gt; PND              40
-#&gt; PEM              70
-#&gt; PET             100
-#&gt; NAP              70
-#&gt; NAP rescaled     40
-#&gt; PAND             60
-#&gt; Tau_U         -0.69
-#&gt; Base_Tau      -0.73
-#&gt; Diff_mean     -20.4
-#&gt; Diff_trend   -17.87
-#&gt; SMD            -0.9
-#&gt; Hedges_g      -0.71
-#&gt; 
-#&gt; The following variables were used in this analysis:
-#&gt; 'score' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</div><div class='input'>
-<span class='co'>## Display overlap indices for six single-cases</span>
-<span class='fu'>overlap</span><span class='op'>(</span><span class='va'>GruenkeWilbert2014</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Overlap Indices
-#&gt; 
-#&gt; Comparing phase 1 against phase 2 
-#&gt; 
-#&gt;              Anton   Bob  Paul Robert   Sam   Tim
-#&gt; Design         A-B   A-B   A-B    A-B   A-B   A-B
-#&gt; PND            100   100   100    100   100   100
-#&gt; PEM            100   100   100    100   100   100
-#&gt; PET            100   100   100    100   100   100
-#&gt; NAP            100   100   100    100   100   100
-#&gt; NAP rescaled   100   100   100    100   100   100
-#&gt; PAND           100   100   100    100   100   100
-#&gt; Tau_U         0.48  0.57  0.60   0.49  0.51  0.35
-#&gt; Base_Tau      0.67  0.77  0.75   0.77  0.72  0.60
-#&gt; Diff_mean     4.14  5.82  5.00   4.78  4.48  6.00
-#&gt; Diff_trend    0.43  0.00  0.28  -0.08 -0.07  0.60
-#&gt; SMD           5.07  7.13  6.64   5.72  8.17  7.35
-#&gt; Hedges_g      4.54  6.44  6.28   4.92  5.60  5.85
-#&gt; 
-#&gt; The following variables were used in this analysis:
-#&gt; 'score' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</div><div class='input'>
-<span class='co'>## Combining phases for analyszing designs with more than two phases   </span>
-<span class='fu'>overlap</span><span class='op'>(</span><span class='va'>exampleA1B1A2B2</span>, phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A1"</span>,<span class='st'>"A2"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"B1"</span>,<span class='st'>"B2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Overlap Indices
-#&gt; 
-#&gt; Comparing phases A1 + A2 against phases B1 + B2 
-#&gt; 
-#&gt;                    Pawel      Moritz      Jannis
-#&gt; Design       A1-B1-A2-B2 A1-B1-A2-B2 A1-B1-A2-B2
-#&gt; PND                   55          78          71
-#&gt; PEM                  100         100         100
-#&gt; PET                  100         100         100
-#&gt; NAP                   94          97          98
-#&gt; NAP rescaled          89          94          97
-#&gt; PAND                  82          85          90
-#&gt; Tau_U               0.45        0.46        0.38
-#&gt; Base_Tau            0.65        0.68        0.68
-#&gt; Diff_mean          12.25       13.58       15.27
-#&gt; Diff_trend         -0.05        0.00       -0.54
-#&gt; SMD                 2.68        3.27        3.62
-#&gt; Hedges_g            2.07        2.68        2.80</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## Display overlap indices for one single-case</span></span>
+<span class='r-in'><span class='fu'>overlap</span><span class='op'>(</span><span class='va'>Huitema2000</span>, decreasing <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Overlap Indices</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Comparing phase 1 against phase 2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               Case1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Design          A-B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PND              40</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PEM              70</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PET             100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NAP              70</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NAP rescaled     40</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PAND             60</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Tau_U         -0.69</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Base_Tau      -0.73</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Diff_mean     -20.4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Diff_trend   -17.87</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> SMD            -0.9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hedges_g      -0.71</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> The following variables were used in this analysis:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 'score' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Display overlap indices for six single-cases</span></span>
+<span class='r-in'><span class='fu'>overlap</span><span class='op'>(</span><span class='va'>GruenkeWilbert2014</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Overlap Indices</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Comparing phase 1 against phase 2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              Anton   Bob  Paul Robert   Sam   Tim</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Design         A-B   A-B   A-B    A-B   A-B   A-B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PND            100   100   100    100   100   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PEM            100   100   100    100   100   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PET            100   100   100    100   100   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NAP            100   100   100    100   100   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NAP rescaled   100   100   100    100   100   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PAND           100   100   100    100   100   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Tau_U         0.48  0.57  0.60   0.49  0.51  0.35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Base_Tau      0.67  0.77  0.75   0.77  0.72  0.60</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Diff_mean     4.14  5.82  5.00   4.78  4.48  6.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Diff_trend    0.43  0.00  0.28  -0.08 -0.07  0.60</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> SMD           5.07  7.13  6.64   5.72  8.17  7.35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hedges_g      5.06  6.50  6.53   4.90  5.36  6.11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> The following variables were used in this analysis:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 'score' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Combining phases for analyszing designs with more than two phases   </span></span>
+<span class='r-in'><span class='fu'>overlap</span><span class='op'>(</span><span class='va'>exampleA1B1A2B2</span>, phases <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A1"</span>,<span class='st'>"A2"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"B1"</span>,<span class='st'>"B2"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Overlap Indices</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Comparing phases A1 + A2 against phases B1 + B2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    Pawel      Moritz      Jannis</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Design       A1-B1-A2-B2 A1-B1-A2-B2 A1-B1-A2-B2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PND                   55          78          71</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PEM                  100         100         100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PET                  100         100         100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NAP                   94          97          98</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NAP rescaled          89          94          97</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PAND                  82          85          90</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Tau_U               0.45        0.46        0.38</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Base_Tau            0.65        0.68        0.68</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Diff_mean          12.25       13.58       15.27</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Diff_trend         -0.05        0.00       -0.54</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> SMD                 2.68        3.27        3.62</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hedges_g            2.07        2.72        2.98</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
