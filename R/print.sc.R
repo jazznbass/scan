@@ -87,15 +87,19 @@ print.sc_cdc <- function(x, nice = TRUE, ...) {
 print.sc_bctau <- function(x, nice = TRUE, digits = "auto", ...) {
   
   cat("Baseline corrected tau\n\n")
-  cat("\n")
   
+  if (x$repeated) {
+    cat("Method: Siegel repeated median regression\n")
+  } else {
+    cat("Method: Theil-Sen regression\n")
+  }
   
   if (x$continuity) {
     cat("Continuity correction applied\n")
   } else {
     cat("Continuity correction not applied.\n")
   }
-  
+  cat("\n")
   if (digits == "auto") {
     x$parameters$p <- round(x$parameters$p, 3)
     x$parameters$z <- sprintf("%.2f", x$parameters$z)
@@ -667,19 +671,6 @@ print.sc_rci <- function(x, ...) {
   cat("\n")
 }
 
-
-.note_vars <- function(x) {
-  v <- any(attr(x, .opt$dv) != "values")
-  p <- attr(x, .opt$phase) != "phase"
-  m <- attr(x, .opt$mt) != "mt"
-  if (v || p || m) { 
-    cat("\nThe following variables were used in this analysis:\n'", 
-        paste0(attr(x, .opt$dv), collapse = "/ "), "' as dependent variable, '", 
-        paste0(attr(x, .opt$phase), collapse = "/ "), "' as phase variable, and '", 
-        paste0(attr(x, .opt$mt), collapse = "/ "),"' as measurement-time variable.\n", sep = "")
-  }
-}
-
 #' @rdname print.sc
 #' @export
 print.sc_smd <- function(x, digits = "auto", ...) {
@@ -696,3 +687,17 @@ print.sc_smd <- function(x, digits = "auto", ...) {
   .note_vars(x)
   
 }
+
+
+.note_vars <- function(x) {
+  v <- any(attr(x, .opt$dv) != "values")
+  p <- attr(x, .opt$phase) != "phase"
+  m <- attr(x, .opt$mt) != "mt"
+  if (v || p || m) { 
+    cat("\nThe following variables were used in this analysis:\n'", 
+        paste0(attr(x, .opt$dv), collapse = "/ "), "' as dependent variable, '", 
+        paste0(attr(x, .opt$phase), collapse = "/ "), "' as phase variable, and '", 
+        paste0(attr(x, .opt$mt), collapse = "/ "),"' as measurement-time variable.\n", sep = "")
+  }
+}
+
