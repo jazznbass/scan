@@ -4,7 +4,15 @@
 \alias{plot.sc_rand}
 \title{Plot random distirubtion}
 \usage{
-\method{plot}{sc_rand}(object, ...)
+\method{plot}{sc_rand}(
+  object,
+  xlab = NA,
+  ylab = "Frequency",
+  title = "Random distribution",
+  text_observed = "observed",
+  color = "lightgrey",
+  ...
+)
 }
 \arguments{
 \item{object}{Object returned from rand_test() function}
