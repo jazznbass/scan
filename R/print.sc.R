@@ -150,19 +150,36 @@ print.sc_desc <- function(x, digits = "auto", ...) {
 print.sc_design <- function(x, ...) {
   cat("A scdf design matrix\n\n")
   cat("Number of cases:", length(x$cases), "\n")
-  cat("Mean: ", x$cases[[1]]$m[1], "\n")
+  cat("Start values: ", sapply(x$cases, function(x) {x$start_value[1]}), "\n")
   cat("SD = ", x$cases[[1]]$s[1], "\n")
   cat("rtt = ", x$cases[[1]]$rtt[1], "\n")
   cat("Phase design: ", as.character(x$cases[[1]]$phase), "\n")
-  
-  cat("mean trend-effect: ", apply(sapply(x$cases, function(x) {x$trend}), 1, mean, na.rm = TRUE)[1], "\n")
-  cat("mean level-effect: ", apply(sapply(x$cases, function(x) {x$level}), 1, mean, na.rm = TRUE), "\n")
-  cat("mean slope-effect: ", apply(sapply(x$cases, function(x) {x$slope}), 1, mean, na.rm = TRUE), "\n")
-  cat("sd trend-effect: ", apply(sapply(x$cases, function(x) {x$trend}), 1, sd, na.rm = TRUE)[1], "\n")
-  cat("sd level-effect: ", apply(sapply(x$cases, function(x) {x$level}), 1, sd, na.rm = TRUE), "\n")
-  cat("sd slope-effect: ", apply(sapply(x$cases, function(x) {x$slope}), 1, sd, na.rm = TRUE), "\n")
+  cat(
+    "mean trend-effect: ", 
+    apply(sapply(x$cases, function(x) {x$trend}), 1, mean, na.rm = TRUE)[1],"\n"
+  )
+  cat(
+    "mean level-effect: ", 
+    apply(sapply(x$cases, function(x) {x$level}), 1, mean, na.rm = TRUE), "\n"
+  )
+  cat(
+    "mean slope-effect: ", 
+    apply(sapply(x$cases, function(x) {x$slope}), 1, mean, na.rm = TRUE), "\n"
+  )
+  cat(
+    "sd trend-effect: ", 
+    apply(sapply(x$cases, function(x) {x$trend}), 1, sd, na.rm = TRUE)[1], "\n"
+  )
+  cat(
+    "sd level-effect: ", 
+    apply(sapply(x$cases, function(x) {x$level}), 1, sd, na.rm = TRUE), "\n"
+  )
+  cat(
+    "sd slope-effect: ", 
+    apply(sapply(x$cases, function(x) {x$slope}), 1, sd, na.rm = TRUE), "\n"
+  )
   cat("Distribution: ", x$distribution)
-
+  
 }
 
 #' @rdname print.sc

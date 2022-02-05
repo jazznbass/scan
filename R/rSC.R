@@ -6,17 +6,17 @@
 #'
 #'
 #' @param design A design matrix which is created by design_rSC and specifies
-#'   all paramters.
+#'   all parameters.
 #' @param round Rounds the scores to the defined decimal. To round to the second
 #'   decimal, set \code{round = 2}.
 #' @param random.names Is \code{FALSE} by default. If set \code{random.names =
-#'   TRUE} cases are assigned random first names. If set \code{"male" or
-#'   "female"} only male or female names are chosen. The names are drawn from
+#'   TRUE} cases are assigned random first names. If set \code{"neutral", "male" or
+#'   "female"} only gender neutral, male, or female names are chosen. The names are drawn from
 #'   the 2,000 most popular names for newborns in 2012 in the U.S. (1,000 male
 #'   and 1,000 female names).
 #' @param seed A seed number for the random generator.
-#' @param ... Paramteres that are directly passed from the rSC function to the design_rSC function for a more concise coding.
-#' @param n Number of cases to be created (Default is \code{n = 1}).
+#' @param ... arguments that are directly passed to the design_rSC function for a more concise coding.
+#' @param n Number of cases to be designed (Default is \code{n = 1}).
 #' @param phase.design A vector defining the length and label of each phase.
 #' E.g., \code{phase.length = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.
 #' @param MT Number of measurements (in each study). Default is \code{MT = 20}.
@@ -25,29 +25,32 @@
 #'   following scores to phase B. To assign different starting points for a set
 #'   of multiple single-cases, use a vector of starting values (e.g.
 #'   \code{B.start = c(6, 7, 8)}). If the number of cases exceeds the length of
-#'   the vector, values will be repeated.
-#' @param m Mean of the sample distribution the scores are drawn from. Default
-#'   is \code{m = 50}. To assign different means to several single-cases, use a
-#'   vector of values (e.g. \code{m = c(50, 42, 56)}). If the number of cases
-#'   exceeds the length of the vector, values are repeated.
-#' @param s Standard deviation of the sample distribution the scores are drawn
-#'   from. Set to \code{s = 10} by default. To assign different variances to
-#'   several single-cases, use a vector of values (e.g. \code{s = c(5, 10,
-#'   15)}). If the number of cases exceeds the length of the vector, values are
-#'   repeated.
+#'   the vector, values will be recycled.
+#' @param start_value Starting value at the first measurement. Default
+#'   is \code{50}. To assign different start values to several single-cases, use a
+#'   vector of values (e.g. \code{c(50, 42, 56)}). If the number of cases
+#'   exceeds the length of the vector, values are recycled.
+#' @param m Deprecated. Use start_value instead.
+#' @param s Standard deviation used to calculate absolute values from level,
+#'  slope, trend effects and to calculate and error distribution from the 
+#'  \code{rtt} values. Set to \code{10} by default. 
+#'  To assign different variances to several single-cases, use a vector 
+#'  of values (e.g. \code{s = c(5, 10, 15)}). If the number of cases 
+#'  exceeds the length of the vector, values are recycled.
 #' @param prob If \code{distribution} (see below) is set \code{"binomial"},
 #'   \code{prob} passes the probability of occurrence.
-#' @param trend Defines the effect size \emph{d} of a trend per MT added
-#'   across the whole data-set. To assign different trends to several
-#'   single-cases, use a vector of values (e.g. \code{trend = c(.1, .3, .5)}).
+#' @param trend Defines the effect size \emph{d} of a trend added incrementally 
+#'   to each measurement across the whole data-set. To assign different trends 
+#'   to several single-cases, use a vector of values 
+#'   (e.g. \code{trend = c(.1, .3, .5)}).
 #'   If the number of cases exceeds the length of the vector, values are
-#'   repeated. While using a binomial or poisson distribution, \code{d.trend}
+#'   recycled. While using a binomial or poisson distribution, \code{d.trend}
 #'   indicates an increase in points / counts per MT.
 #' @param level Defines the level increase (effect size \emph{d}) at the
 #'   beginning of phase B. To assign different level effects to several
 #'   single-cases, use a vector of values (e.g. \code{level = c(.2, .4, .6)}).
 #'   If the number of cases exceeds the length of the vector, values are
-#'   repeated. While using a binomial or poisson distribution, \code{level}
+#'   recycled. While using a binomial or poisson distribution, \code{level}
 #'   indicates an increase in points / counts with the onset of the B-phase.
 #' @param slope Defines the increase in scores - starting with phase B -
 #'   expressed as effect size \emph{d} per MT. \code{slope = .1} generates an
@@ -76,18 +79,9 @@
 #'   10\% of all values as missing). A vector of values assigns different
 #'   probabilities to multiple cases. If the number of cases exceeds the length
 #'   of the vector, values are repeated.
-#' @param distribution Distribution of the scores. Default is \code{distribution
-#'   = "normal"}. Possible values are \code{"normal"}, \code{"binomial"}, and
-#'   \code{"poisson"}. If set to \code{"normal"}, the sample of scores will be
-#'   normally distributed with the parameters \code{m} and \code{s} as mean and
-#'   standard deviation of the sample, including a measurement error defined by
-#'   \code{rtt}. If set to \code{"binomial"}, data are drawn from a binomial
-#'   distribution with the expectation value \code{m}. This setting is useful
-#'   for generating criterial data like correct answers in a test. If set to
-#'   \code{"poisson"}, data are drawn from a poisson distribution, which is very
-#'   common for count-data like behavioral observations. There's no measurement
-#'   error is included. \code{m} defines the expectation value of the poisson
-#'   distribution, lambda.
+#' @param distribution Erro distribution. Default is \code{"normal"}. 
+#'   Possible values are \code{"normal"}, \code{"binomial"}, 
+#'   and \code{"poisson"}.
 #' @return A single-case data frame. See \code{\link{scdf}} to learn about this format.
 #' @author Juergen Wibert
 #' @keywords datagen
@@ -104,7 +98,7 @@
 #'
 #' ## And now have a look at poisson-distributed data
 #' design <- design_rSC(
-#'   n = 3, B.start = c(6, 10, 14), MT = c(12, 20, 22), m = 10,
+#'   n = 3, B.start = c(6, 10, 14), MT = c(12, 20, 22), start_value = 10,
 #'   distribution = "poisson", level = -5, missing.p = 0.1
 #' )
 #' dat <- rSC(design, seed = 1234)
@@ -123,7 +117,9 @@ rSC <- function(design = NULL,
   
   if (!is.null(seed)) set.seed(seed)
   if (is.numeric(design)) {
-    warning("The first argument is expected to be a design matrix created by design_rSC. If you want to set n, please name the first argument with n = ...")
+    warning("The first argument is expected to be a design matrix created by ", 
+            "design_rSC. If you want to set n, please name the first ",
+            "argument with n = ...")
     n <- design
     design <- NULL
   }
@@ -131,102 +127,89 @@ rSC <- function(design = NULL,
 
   n <- length(design$cases)
 
-  cases <- design$cases
-  distribution <- design$distribution
-  prob <- design$prob
-
   dat <- list()
+  
   for (i in 1:n) {
-    if (distribution == "normal") {
-      start_values <- c(cases[[i]]$m[1], rep(0, cases[[i]]$mt[1] - 1))
-      trend_values <- c(
-        0, rep(cases[[i]]$trend[1] * cases[[i]]$s[1], cases[[i]]$mt[1] - 1)
-      )
+    
+    mt <- sum(design$cases[[i]]$length, na.rm = TRUE)
+    start_value <- design$cases[[i]]$start_value[1]
+    s <- design$cases[[i]]$s[1]
+    
+    .rtt <- design$cases[[i]]$rtt[1]
+    error <- sqrt(((1 - .rtt) / .rtt) * s^2)
+    
+    trend <- design$cases[[i]]$trend[1]
+    level <- design$cases[[i]]$level
+    slope <- design$cases[[i]]$slope
+    length <- design$cases[[i]]$length
+    missing.p <- design$cases[[i]]$missing.p
+    extreme.p <- design$cases[[i]]$extreme.p
+    extreme.low <- design$cases[[i]]$extreme.low
+    extreme.high <- design$cases[[i]]$extreme.high
+    
+    if (design$distribution == "normal") {
+      start_values <- c(start_value, rep(0, mt - 1))
+      trend_values <- c(0, rep(trend * s, mt - 1))
       slope_values <- c()
       level_values <- c()
-      for (j in 1:nrow(cases[[i]])) {
-        slope_values <- c(
-          slope_values, 
-          rep(cases[[i]]$slope[j] * cases[[i]]$s[j], cases[[i]]$length[j])
-        )
-        level_values <- c(
-          level_values, 
-          cases[[i]]$level[j] * cases[[i]]$s[j], 
-          rep(0, cases[[i]]$length[j] - 1)
-        )
+      
+      for (j in 1:length(length)) {
+        slope_values <- c(slope_values, rep(slope[j] * s, length[j]))
+        level_values <- c(level_values, level[j] * s, rep(0, length[j] - 1))
       }
 
       true_values <- start_values + trend_values + slope_values + level_values
       true_values <- cumsum(true_values)
-      error_values <- rnorm(
-        cases[[i]]$mt[1], 
-        mean = 0, 
-        sd = cases[[i]]$error[1]
-      )
+      error_values <- rnorm(mt, mean = 0, sd = error)
       measured_values <- true_values + error_values
     }
 
-    if (distribution == "poisson" || distribution == "binomial") {
-      start_values <- c(cases[[i]]$m[1], rep(0, cases[[i]]$mt[1] - 1))
-      trend_values <- c(0, rep(cases[[i]]$trend[1], cases[[i]]$mt[1] - 1))
+    if (design$distribution %in% c("binomial", "poisson")) {
+      trend_values <- c(0, rep(trend, mt - 1))
       slope_values <- c()
       level_values <- c()
 
-      for (j in 1:nrow(cases[[i]])) {
-        slope_values <- c(
-          slope_values, 
-          rep(cases[[i]]$slope[j], cases[[i]]$length[j])
-        )
-        level_values <- c(
-          level_values, 
-          cases[[i]]$level[j], 
-          rep(0, cases[[i]]$length[j] - 1)
-        )
+      for (j in 1:length(length)) {
+        slope_values <- c(slope_values, rep(slope[j], length[j]))
+        level_values <- c(level_values, level[j], rep(0, length[j] - 1))
       }
 
       true_values <- start_values + trend_values + slope_values + level_values
       true_values <- round(cumsum(true_values))
       true_values[true_values < 0] <- 0
 
-      if (distribution == "poisson") {
+      if (design$distribution == "poisson") {
         measured_values <- rpois(n = length(true_values), true_values)
       }
-      if (distribution == "binomial") {
+      if (design$distribution == "binomial") {
         measured_values <- rbinom(
           n = length(true_values), 
-          size = round(true_values * (1 / prob)), 
-          prob = prob
+          size = round(true_values * (1 / design$prob)), 
+          prob = design$prob
         )
       }
       
     }
 
-    if (cases[[i]]$extreme.p[1] > 0) {
-      ra <- runif(cases[[i]]$mt[1])
-      if (distribution == "normal") {
-        multiplier <- cases[[i]]$s[1]
+    if (extreme.p[1] > 0) {
+      ra <- runif(mt)
+      if (design$distribution == "normal") {
+        multiplier <- s
       }
-      if (distribution == "binomial" || distribution == "poisson") {
+      if (design$distribution %in% c("binomial", "poisson")) {
         multiplier <- 1
       }
-      for (k in 1:cases[[i]]$mt[1]) {
-        if (ra[k] <= cases[[i]]$extreme.p[1]) {
-          tmp_error <- runif(
-            n = 1, 
-            min = cases[[i]]$extreme.low[1], 
-            max = cases[[i]]$extreme.high[1] 
-          )
+      for (k in 1:mt) {
+        if (ra[k] <= extreme.p[1]) {
+          tmp_error <- runif(n = 1, min = extreme.low[1], max = extreme.high[1])
           tmp_error <- tmp_error * multiplier 
           measured_values[k] <- measured_values[k] + tmp_error
         }
       }
     }
 
-    if (cases[[i]]$missing.p[1] > 0) {
-      .indices <- sample(
-        1:cases[[i]]$mt[1], 
-        cases[[i]]$missing.p[1] * cases[[i]]$mt[1]
-      )
+    if (missing.p[1] > 0) {
+      .indices <- sample(1:mt, missing.p[1] * mt)
       measured_values[.indices] <- NA
     }
 
@@ -234,22 +217,22 @@ rSC <- function(design = NULL,
       measured_values <- round(measured_values, round)
     }
 
-    if (distribution == "binomial" || distribution == "poisson") {
+    if (design$distribution %in% c("binomial", "poisson")) {
       measured_values[measured_values < 0] <- 0
     }
 
-    condition <- rep(cases[[i]]$phase, cases[[i]]$length)
+    condition <- rep(design$cases[[i]]$phase, length)
 
     dat[[i]] <- data.frame(
       phase = condition, 
       values = measured_values, 
-      mt = 1:cases[[i]]$mt[1]
+      mt = 1:mt
     )
   }
 
   if (random.names == "male") names(dat) <- sample(.opt$male.names, n)
   if (random.names == "female") names(dat) <- sample(.opt$female.names, n)
-
+  if (random.names == "neutral") names(dat) <- sample(.opt$neutrals.names, n)
   if (isTRUE(random.names)) names(dat) <- sample(.opt$names, n)
 
   attributes(dat) <- .default_attributes(attributes(dat))
@@ -264,8 +247,9 @@ design_rSC <- function(n = 1,
                        level = list(0), 
                        slope = list(0),
                        rtt = list(0.80), 
-                       m = list(50), 
+                       m = NULL,
                        s = list(10),
+                       start_value = list(50),
                        extreme.p = list(0), 
                        extreme.d = c(-4, -3),
                        missing.p = list(0), 
@@ -283,7 +267,8 @@ design_rSC <- function(n = 1,
     }
 
     if (any(B.start < 1) && any(B.start >= 1)) {
-      stop("A B.start vector must not include values below and above 1 at the same time.")
+      stop("A B.start vector must not include values below and above 1 ", 
+           "at the same time.")
     }
     if (B.start[1] < 1 && B.start[1] > 0) B.start <- round(B.start * MT) + 1
     B.start <- rep(B.start, length.out = n)
@@ -295,7 +280,14 @@ design_rSC <- function(n = 1,
     }
   }
 
-  if (length(m) != n) m <- rep(m, length = n)
+  if (!is.null(m)) {
+    warning("The use of the 'm' argument is deprcated. ",
+            "Please use 'start_value' instead. ",
+            "'m' is used as 'start_value' in this operation.")
+    start_value <- m
+  }
+  
+  if (length(start_value) != n) start_value <- rep(start_value, length = n)
   if (length(s) != n) s <- rep(s, length = n)
   if (length(rtt) != n) rtt <- rep(rtt, length = n)
   if (is.list(trend)) trend <- unlist(trend)
@@ -308,7 +300,6 @@ design_rSC <- function(n = 1,
   if (length(extreme.p) != n) {
     extreme.p <- lapply(numeric(n), function(y) unlist(extreme.p))
   }
-  # or:        extreme.p <- rep(n, list(unlist(extreme.p)))
   if (length(extreme.d) != n) {
     extreme.d <- lapply(numeric(n), function(y) unlist(extreme.d))
   }
@@ -322,12 +313,9 @@ design_rSC <- function(n = 1,
   out$prob <- prob
 
   for (case in 1:n) {
-    error <- sqrt(((1 - rtt[[case]]) / rtt[[case]]) * s[[case]]^2)
     design <- data.frame(phase = names(phase.design))
     design$length <- unlist(lapply(phase.design, function(x) x[case]))
-    design$mt <- sum(design$length)
     design$rtt <- rtt[[case]]
-    design$error <- error
     design$missing.p <- missing.p[[case]]
     design$extreme.p <- extreme.p[[case]]
     design$extreme.low <- extreme.d[[case]][1]
@@ -337,7 +325,7 @@ design_rSC <- function(n = 1,
     design$level[1] <- 0
     design$slope <- unlist(lapply(slope, function(x) x[case]))
     design$slope[1] <- 0
-    design$m <- m[[case]]
+    design$start_value <- start_value[[case]]
     design$s <- s[[case]]
 
     design$start <- c(1, cumsum(design$length) + 1)[1:length(design$length)]

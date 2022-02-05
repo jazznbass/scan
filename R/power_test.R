@@ -39,9 +39,9 @@
 #' @export
 
 power_test <- function(design,
-                         stat = c("plm_level", "rand", "tauU"),  
-                         n_sim = 100, 
-                         alpha = 0.05) {
+                       stat = c("plm_level", "rand", "tauU"),  
+                       n_sim = 100, 
+                       alpha = 0.05) {
   
   mc_fun <- .opt$mc_fun[which(names(.opt$mc_fun) %in% stat)]
 
@@ -78,7 +78,10 @@ power_test <- function(design,
   out$"Alpha Error" <- res * 100
   out$"Alpha:Beta" <- sprintf("1:%.1f", (100 - out$Power) / out$Alpha, 1)
   out$Correct <- (out$Power + (100 - out$"Alpha Error")) / 2
-  res <- sapply(res, function(x) binom.test(round(x * n_sim * 2), n_sim * 2, p = 0.5)$p.value)
+  res <- sapply(
+    res, 
+    function(x) binom.test(round(x * n_sim * 2), n_sim * 2, p = 0.5)$p.value
+  )
   out$p <- round(res, 3)
 
   class(out) <- c("sc_power")
