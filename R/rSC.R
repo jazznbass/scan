@@ -165,6 +165,7 @@ rSC <- function(design = NULL,
     }
 
     if (design$distribution %in% c("binomial", "poisson")) {
+      start_values <- c(start_value, rep(0, mt - 1))
       trend_values <- c(0, rep(trend, mt - 1))
       slope_values <- c()
       level_values <- c()
