@@ -8,10 +8,12 @@
 #' @inheritParams .inheritParams
 #' @param design An object created by design_rSC
 #' @param stat Defines the tests the power analysis is based on. The
-#' default \code{stat = c("plm_level", "rand", "tauU")} computes a power analysis based on
-#' \code{\link{tau_u}}, \code{\link{randSC}} and \code{\link{plm}} analyses. Further
-#' possibilities are: "plm_slope", "plm_poisson_level", "plm_poisson_slope", "hplm_level", 
-#' "hplm_slope", "base_tau".
+#' default \code{stat = c("plm_level", "rand", "tauU")} computes a power 
+#' analysis based on \code{\link{tau_u}}, \code{\link{randSC}} and 
+#' \code{\link{plm}} analyses. Further possibilities are: "plm_slope", 
+#' "plm_poisson_level", "plm_poisson_slope", "hplm_level", "hplm_slope", 
+#' "base_tau".
+#' @param effect Either "level" or "slope".
 #' @param n_sim Number of sample studies created for the the Monte-Carlo study.
 #' Default is \code{n = 100}
 #' @param alpha Alpha level used to calculate the proportion of significant
@@ -39,31 +41,15 @@
 #' @export
 
 power_test <- function(design,
-                       stat = c("plm_level", "rand", "tauU"),  
+                       stat = c("plm_level", "rand", "tauU"), 
+                       effect = "level",
                        n_sim = 100, 
                        alpha = 0.05) {
   
   mc_fun <- .opt$mc_fun[which(names(.opt$mc_fun) %in% stat)]
 
-  design_no_level <- design
-  design_no_slope <- design
-  
-  design_no_level$cases <- lapply(design_no_level$cases, 
-    function(x) {
-      x$level <- 0
-      x
-    })
-  
-  design_no_slope$cases <- lapply(design_no_slope$cases, 
-    function(x) {
-      x$slope <- 0
-      x
-    })
-  
-  level <- any(sapply(design$cases, function(x) x$level) != 0)
-  slope <- any(sapply(design$cases, function(x) x$slope) != 0)
-
-  res <- .power_testSC(design = design, n_sim = n_sim, 
+  res <- .power_test(
+    design = design, n_sim = n_sim, 
     alpha = alpha, mc_fun = mc_fun
   )
   
@@ -71,12 +57,30 @@ power_test <- function(design,
   
   out$Power <- res * 100
 
-  res <- .power_testSC(
-    design = design_no_level, n_sim = n_sim, 
+  #level <- any(sapply(design$cases, function(x) x$level) != 0)
+  #slope <- any(sapply(design$cases, function(x) x$slope) != 0)
+  design_no_effect <- design
+  if (effect == "level") {
+    design_no_effect$cases <- lapply(
+      design_no_effect$cases, 
+      function(x) {x$level <- rep(0, length = length(x$length)); x}
+    )
+  }
+  
+  if (effect == "slope") {
+    design_no_effect$cases <- lapply(
+      design_no_effect$cases, 
+      function(x) {x$slope <- rep(0, length = length(x$length)); x}
+    )
+  }
+  
+  res <- .power_test(
+    design = design_no_effect, n_sim = n_sim, 
     alpha = alpha, mc_fun = mc_fun
   )
+  
   out$"Alpha Error" <- res * 100
-  out$"Alpha:Beta" <- sprintf("1:%.1f", (100 - out$Power) / out$Alpha, 1)
+  out$"Alpha:Beta" <- sprintf("1:%.1f", (100 - out$Power) / out$Alpha)
   out$Correct <- (out$Power + (100 - out$"Alpha Error")) / 2
   res <- sapply(
     res, 
@@ -88,17 +92,19 @@ power_test <- function(design,
   out
 }
 
-.power_testSC <- function(design, alpha = NA, n_sim, mc_fun) {
+.power_test <- function(design, alpha = NA, n_sim, mc_fun) {
 
-  # Genrate radom sample ----------------------------------------------------
+  # Genrate random sample ----------------------------------------------------
   rand.sample <- list()
   for(i in 1:n_sim) rand.sample[[i]] <- rSC(design = design)
   
   # analyse random sample ---------------------------------------------------
-  out <-  sapply(mc_fun, function(FUN) 
-    .prop_sig(rand.sample, alpha, function(x) FUN(x))
+  out <-  sapply(mc_fun, function(FUN) { 
+      p <- sapply(rand.sample, FUN)
+      mean(p <= alpha, na.rm = TRUE)
+    }
   )
-  
+
   out
 }
 
@@ -109,8 +115,3 @@ power_testSC <- function(...) {
   power_test(...)
 }
 
-
-.prop_sig <- function(rand.sample, alpha, FUN) {
-  p <- sapply(rand.sample, FUN)
-  mean(p <= alpha, na.rm = TRUE)
-}
