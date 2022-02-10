@@ -194,24 +194,24 @@ rSC <- function(design = NULL,
 
     if (extreme.p[1] > 0) {
       ra <- runif(mt)
-      if (design$distribution == "normal") {
-        multiplier <- s
-      }
-      if (design$distribution %in% c("binomial", "poisson")) {
-        multiplier <- 1
-      }
-      for (k in 1:mt) {
-        if (ra[k] <= extreme.p[1]) {
-          tmp_error <- runif(n = 1, min = extreme.low[1], max = extreme.high[1])
-          tmp_error <- tmp_error * multiplier 
-          measured_values[k] <- measured_values[k] + tmp_error
-        }
-      }
+      
+      if (design$distribution == "normal") multiplier <- s
+      if (design$distribution %in% c("binomial", "poisson")) multiplier <- 1
+      
+      .filter <- which(ra <= extreme.p[1])
+      .error <- runif(
+        n = length(.filter), 
+        min = extreme.low[1], 
+        max = extreme.high[1]
+      )
+      measured_values[.filter] <- measured_values[.filter] + 
+                                  .error * multiplier
+      
     }
 
     if (missing.p[1] > 0) {
-      .indices <- sample(1:mt, missing.p[1] * mt)
-      measured_values[.indices] <- NA
+      .filter <- sample(1:mt, missing.p[1] * mt)
+      measured_values[.filter] <- NA
     }
 
     if (!is.na(round)) {
@@ -221,11 +221,9 @@ rSC <- function(design = NULL,
     if (design$distribution %in% c("binomial", "poisson")) {
       measured_values[measured_values < 0] <- 0
     }
-
-    condition <- rep(design$cases[[i]]$phase, length)
-
+    
     dat[[i]] <- data.frame(
-      phase = condition, 
+      phase = rep(design$cases[[i]]$phase, length), 
       values = measured_values, 
       mt = 1:mt
     )
@@ -258,6 +256,9 @@ design_rSC <- function(n = 1,
                        prob = 0.5, 
                        MT = NULL, 
                        B.start = NULL) {
+  
+  out <- list()
+  attr(out, "call") <- mget(names(formals()), sys.frame(sys.nframe()))
   
   if (!is.null(B.start)) {
     MT <- rep(MT, length.out = n)
@@ -308,13 +309,15 @@ design_rSC <- function(n = 1,
     missing.p <- lapply(numeric(n), function(y) unlist(missing.p))
   }
 
-  out <- list()
+  
   out$cases <- vector("list", n)
   out$distribution <- distribution
   out$prob <- prob
 
+  
   for (case in 1:n) {
-    design <- data.frame(phase = names(phase.design))
+    design <- list()
+    design$phase <- names(phase.design)
     design$length <- unlist(lapply(phase.design, function(x) x[case]))
     design$rtt <- rtt[[case]]
     design$missing.p <- missing.p[[case]]
@@ -322,10 +325,8 @@ design_rSC <- function(n = 1,
     design$extreme.low <- extreme.d[[case]][1]
     design$extreme.high <- extreme.d[[case]][2]
     design$trend <- trend[[1]][case]
-    design$level <- unlist(lapply(level, function(x) x[case]))
-    design$level[1] <- 0
-    design$slope <- unlist(lapply(slope, function(x) x[case]))
-    design$slope[1] <- 0
+    design$level <- .design_effect(level, case, length(phase.design))
+    design$slope <- .design_effect(slope, case, length(phase.design))
     design$start_value <- start_value[[case]]
     design$s <- s[[case]]
 
@@ -334,11 +335,32 @@ design_rSC <- function(n = 1,
 
     out$cases[[case]] <- design
   }
-  attr(out, "call") <- mget(names(formals()), sys.frame(sys.nframe()))
+  
   
   class(out) <- c("sc_design")
   
   out
+}
+
+.design_effect <- function(effects, case, phase_length) {
+  
+  case_effects <- unlist(lapply(effects, function(x) x[case]))
+  
+  if (identical(case_effects, 0)) case_effects <- rep(0, phase_length)
+  
+  if (length(case_effects) == phase_length && case_effects[1] != 0) {
+    warning("Effect for first phase is not 0. Looks like a missspecification")
+  }  
+    
+  if (length(case_effects) == phase_length - 1) 
+    case_effects <- c(0, case_effects)
+  
+  if (length(case_effects) != phase_length) {
+    warning("The wrong number of phase effects defined. Looks like a missspecification")
+  }  
+  
+  case_effects
+  
 }
 
 .check_design <- function(data, n) {
