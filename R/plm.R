@@ -71,9 +71,12 @@ plm <- function(data, dvar, pvar, mvar,
                 slope = TRUE,
                 formula = NULL, 
                 update = NULL, 
-                na.action = na.omit, 
+                na.action = na.omit,
+                r_squared = TRUE,
                 ...) {
 
+  if (family != "gaussian") r_squared = FALSE
+  
   if (AR > 0 && !family == "gaussian") {
     stop("Autoregression models could only be applied if distribution ",
          "familiy = 'gaussian'.\n")
@@ -130,13 +133,17 @@ plm <- function(data, dvar, pvar, mvar,
     full <- glm(
       formula_full, data = data, family = family, na.action = na.action, ...
     )
-    restricted.models <- lapply(
-      formulas_restricted, 
-      function(x) 
-        glm(x, data = data, family = family, na.action = na.action, ...)
-    )
+    
     df_residuals <- full$df.residual
     df_intercept <- if (attr(full$terms, "intercept")) 1 else 0
+    
+    if (r_squared) {
+      restricted.models <- lapply(
+        formulas_restricted, 
+        function(x) 
+          glm(x, data = data, family = family, na.action = na.action, ...)
+      )
+    }
   }
 
   if(AR > 0) {
@@ -144,44 +151,61 @@ plm <- function(data, dvar, pvar, mvar,
       formula_full, data = data, correlation = corARMA(p = AR), 
       method = "ML", na.action = na.action
     )
-    restricted.models <- lapply(
-      formulas_restricted, 
-      function(x) 
-        gls(model = x, data = data, correlation = corARMA(p = AR), 
-            method = "ML", na.action = na.action
-      )
-    )
     df_residuals <- full$dims$N - full$dims$p
     df_intercept <- if ("(Intercept)" %in% names(full$parAssign)) 1 else 0
-  }
+    
+    if (r_squared) {
+      restricted.models <- lapply(
+        formulas_restricted, 
+        function(x) 
+          gls(model = x, data = data, correlation = corARMA(p = AR), 
+              method = "ML", na.action = na.action
+        )
+      )
+    }
+    
+   }
 
 # F and R-Squared ---------------------------------------------------------
 
-  n <- length(full$residuals)
-  df_effect <- n - 1 - df_residuals
+  if (family == "gaussian") {
+    n <- length(full$residuals)
+    df_effect <- n - 1 - df_residuals
+    
+    QSE <- sum(full$residuals^2, na.rm = TRUE)
+    QST <- sum((data[[dvar]] - mean(data[[dvar]]))^2)
+    MQSA <- (QST - QSE) / df_effect
+    MQSE <- QSE / df_residuals
+    F <- MQSA / MQSE
+    p <- pf(F, df_effect, df_residuals, lower.tail = FALSE)
+    
+    total_variance <- var(data[[dvar]])
+    r2 <- 1 - (var(full$residuals) / total_variance)
+    r2_adj <- 1 - (1 - r2) * ((n - df_intercept) / df_residuals)
+    
+    if (r_squared) {
+      r_squares <- lapply(restricted.models, function(x) 
+        r2 - (1 - (var(x$residuals, na.rm = TRUE) / total_variance))
+      )
+      r_squares <- unlist(r_squares)
+    } else r_squares <- NA
+    
+    F_test <- c(
+      F = F, df1 = df_effect, df2 = df_residuals, p = p, 
+      R2 = r2, R2.adj = r2_adj
+    )
+  }
   
-  QSE <- sum(full$residuals^2, na.rm = TRUE)
-  QST <- sum((data[[dvar]] - mean(data[[dvar]]))^2)
-  MQSA <- (QST - QSE) / df_effect
-  MQSE <- QSE / df_residuals
-  F <- MQSA / MQSE
-  p <- pf(F, df_effect, df_residuals, lower.tail = FALSE)
+  if (family != "gaussian") {
+    F_test <- NA
+    r_squares <- NA
+  }
   
-  total_variance <- var(data[[dvar]])
-  r2 <- 1 - (var(full$residuals) / total_variance)
-  r2_adj <- 1 - (1 - r2) * ((n - df_intercept) / df_residuals)
 
-  r_squares <- lapply(restricted.models, function(x) 
-    r2 - (1 - (var(x$residuals, na.rm = TRUE) / total_variance))
-  )
-  r_squares <- unlist(r_squares)
   
 # output ------------------------------------------------------------------
 
-  F_test <- c(
-    F = F, df1 = df_effect, df2 = df_residuals, p = p, 
-    R2 = r2, r2_adj = r2_adj
-  )
+
   
   out <- list(
     formula = formula_full, 
