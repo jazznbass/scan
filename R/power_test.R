@@ -15,7 +15,11 @@
 #' "base_tau".
 #' @param effect Either "level" or "slope".
 #' @param n_sim Number of sample studies created for the the Monte-Carlo study.
-#' Default is \code{n = 100}
+#' Default is \code{n = 100}. Ignored if design_is_one_study = FALSE.
+#' @param design_is_one_study If TRUE, the design is assumed to define all 
+#' cases of one study that is repeatedly randomly created \code{n_sim} times. If false, 
+#' the design is assumed to contain all cases that from which a ransom sample is 
+#' generated. This is useful for very specific complex MC simulation studies.
 #' @param alpha Alpha level used to calculate the proportion of significant
 #' tests. Default is \code{alpha = 0.05}.
 #' @author Juergen Wilbert
@@ -43,14 +47,15 @@
 power_test <- function(design,
                        stat = c("plm_level", "rand", "tauU"), 
                        effect = "level",
-                       n_sim = 100, 
+                       n_sim = 100,
+                       design_is_one_study = TRUE,
                        alpha = 0.05) {
   
   mc_fun <- .opt$mc_fun[which(names(.opt$mc_fun) %in% stat)]
 
   res <- .power_test(
     design = design, n_sim = n_sim, 
-    alpha = alpha, mc_fun = mc_fun
+    alpha = alpha, mc_fun = mc_fun, design_is_one_study = design_is_one_study
   )
   
   out <- data.frame(Method = names(mc_fun))
@@ -59,6 +64,7 @@ power_test <- function(design,
 
   #level <- any(sapply(design$cases, function(x) x$level) != 0)
   #slope <- any(sapply(design$cases, function(x) x$slope) != 0)
+  
   design_no_effect <- design
   if (effect == "level") {
     design_no_effect$cases <- lapply(
@@ -76,7 +82,7 @@ power_test <- function(design,
   
   res <- .power_test(
     design = design_no_effect, n_sim = n_sim, 
-    alpha = alpha, mc_fun = mc_fun
+    alpha = alpha, mc_fun = mc_fun, design_is_one_study = design_is_one_study
   )
   
   out$"Alpha Error" <- res * 100
@@ -92,11 +98,23 @@ power_test <- function(design,
   out
 }
 
-.power_test <- function(design, alpha = NA, n_sim, mc_fun) {
+.power_test <- function(design, 
+                        alpha = NA, 
+                        n_sim, 
+                        mc_fun, 
+                        design_is_one_study) {
 
   # Genrate random sample ----------------------------------------------------
   rand.sample <- list()
-  for(i in 1:n_sim) rand.sample[[i]] <- rSC(design = design)
+  
+  if (design_is_one_study) {
+    for(i in 1:n_sim) rand.sample[[i]] <- rSC(design = design)
+  }
+  
+  if (!design_is_one_study) {
+    tmp <- rSC(design = design)
+    for (i in seq_along(tmp)) rand.sample[[i]] <- tmp[i]
+  }
   
   # analyse random sample ---------------------------------------------------
   out <-  sapply(mc_fun, function(FUN) { 
