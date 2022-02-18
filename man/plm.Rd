@@ -18,6 +18,7 @@ plm(
   formula = NULL,
   update = NULL,
   na.action = na.omit,
+  r_squared = TRUE,
   ...
 )
 }

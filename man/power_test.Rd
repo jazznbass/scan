@@ -8,8 +8,13 @@
 power_test(
   design,
   stat = c("plm_level", "rand", "tauU"),
+  effect = "level",
   n_sim = 100,
-  alpha = 0.05
+  design_is_one_study = TRUE,
+  alpha_stat = TRUE,
+  power_stat = TRUE,
+  binom_test = 0.5,
+  alpha_level = 0.05
 )
 
 power_testSC(...)
@@ -18,16 +23,25 @@ power_testSC(...)
 \item{design}{An object created by design_rSC}
 
 \item{stat}{Defines the tests the power analysis is based on. The
-default \code{stat = c("plm_level", "rand", "tauU")} computes a power analysis based on
-\code{\link{tau_u}}, \code{\link{randSC}} and \code{\link{plm}} analyses. Further
-possibilities are: "plm_slope", "plm_poisson_level", "plm_poisson_slope", "hplm_level", 
-"hplm_slope", "base_tau".}
+default \code{stat = c("plm_level", "rand", "tauU")} computes a power 
+analysis based on \code{\link{tau_u}}, \code{\link{randSC}} and 
+\code{\link{plm}} analyses. Further possibilities are: "plm_slope", 
+"plm_poisson_level", "plm_poisson_slope", "hplm_level", "hplm_slope", 
+"base_tau".}
+
+\item{effect}{Either "level" or "slope".}
 
 \item{n_sim}{Number of sample studies created for the the Monte-Carlo study.
-Default is \code{n = 100}}
+Default is \code{n = 100}. Ignored if design_is_one_study = FALSE.}
 
-\item{alpha}{Alpha level used to calculate the proportion of significant
-tests. Default is \code{alpha = 0.05}.}
+\item{design_is_one_study}{If TRUE, the design is assumed to define all 
+cases of one study that is repeatedly randomly created \code{n_sim} times. 
+If false, the design is assumed to contain all cases that from which a 
+random sample is generated. This is useful for very specific complex 
+simulation studies.}
+
+\item{alpha_level}{Alpha level used to calculate the proportion of 
+significant tests. Default is \code{alpha_level = 0.05}.}
 
 \item{...}{Further arguments passed to the function.}
 }

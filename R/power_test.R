@@ -21,6 +21,9 @@
 #'   If false, the design is assumed to contain all cases that from which a 
 #'   random sample is generated. This is useful for very specific complex 
 #'   simulation studies.
+#' @param alpha_test Logical. If TRUE, alpha error is tested.
+#' @param power_test Logical. If TRUE, power is tested.
+#' @param binom_test Either FALSE or a value. If value is provided, a binomial test is calculated for the total correct identifications (alpha and power) against the provided value.
 #' @param alpha_level Alpha level used to calculate the proportion of 
 #'   significant tests. Default is \code{alpha_level = 0.05}.
 #' @author Juergen Wilbert

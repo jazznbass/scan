@@ -358,7 +358,6 @@ design_rSC <- function(n = 1,
     out$cases[[case]] <- design
   }
   
-  
   class(out) <- c("sc_design")
   
   out
@@ -378,7 +377,8 @@ design_rSC <- function(n = 1,
     case_effects <- c(0, case_effects)
   
   if (length(case_effects) != phase_length) {
-    warning("The wrong number of phase effects defined. Looks like a missspecification")
+    warning("The wrong number of phase effects defined. Looks like a ",
+            "missspecification")
   }  
   
   case_effects
