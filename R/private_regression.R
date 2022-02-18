@@ -109,19 +109,19 @@
   out
 }
 
-.plm.mt <- function(data, type = "level p", model = "B&L-B", dvar = "values", pvar = "phase", mvar = "mt", count.data = FALSE) {
-  N <- length(data)
-  if (N > 1) {
-    stop("Multiple single-cases are given. Calculations could only be applied to a single data set.\n")
+.plm.mt <- function(data, type = "level p", model = "B&L-B", 
+                    dvar = "values", pvar = "phase", mvar = "mt", 
+                    count.data = FALSE) {
+  
+  if (length(data) > 1) {
+    stop("Multiple single-cases are given. Calculations could only be applied ",
+         "to a single data set.\n")
   }
   
-  if ("list" %in% class(data)) data <- data[[1]]
-  if (ncol(data) < 3) data[, mvar] <- 1:nrow(data)
-  
-  y  <- data[, dvar]
-  n1 <- sum(data[, pvar] == "A")
-  n2 <- sum(data[, pvar] == "B")
-  MT <- data[, mvar]
+  y  <- data[[1]][[dvar]]
+  n1 <- sum(data[[1]][[pvar]] == "A")
+  n2 <- sum(data[[1]][[pvar]] == "B")
+  MT <- data[[1]][[mvar]]
   D  <- c(rep(0, n1), rep(1, n2))
   
   if (model == "H-M") {
@@ -138,7 +138,8 @@
   }	
   
   if (count.data) {
-    full <- glm(I(round(y)) ~ 1 + MT + D + inter, family = "poisson")
+    y <- round(y)
+    full <- glm(y  ~ 1 + MT + D + inter, family = "poisson")
   } else full <- lm(y ~ 1 + MT + D + inter)
   
   if (type == "1" || type == "level p")
