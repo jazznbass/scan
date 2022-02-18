@@ -2,7 +2,8 @@
 #'
 #' The \code{rSC} function generates random single-case data frames
 #' for monte-carlo studies and demonstration purposes.
-#' \code{design_rSC} is used to set up a design matrix with all parameters needed for the \code{rSC} function.
+#' \code{design_rSC} is used to set up a design matrix with all parameters 
+#' needed for the \code{rSC} function.
 #'
 #'
 #' @param design A design matrix which is created by design_rSC and specifies
@@ -10,15 +11,16 @@
 #' @param round Rounds the scores to the defined decimal. To round to the second
 #'   decimal, set \code{round = 2}.
 #' @param random.names Is \code{FALSE} by default. If set \code{random.names =
-#'   TRUE} cases are assigned random first names. If set \code{"neutral", "male" or
-#'   "female"} only gender neutral, male, or female names are chosen. The names are drawn from
-#'   the 2,000 most popular names for newborns in 2012 in the U.S. (1,000 male
-#'   and 1,000 female names).
+#'   TRUE} cases are assigned random first names. If set \code{"neutral", 
+#'   "male" or "female"} only gender neutral, male, or female names are chosen. 
+#'   The names are drawn from the 2,000 most popular names for newborns in 2012 
+#'   in the U.S. (1,000 male and 1,000 female names).
 #' @param seed A seed number for the random generator.
-#' @param ... arguments that are directly passed to the design_rSC function for a more concise coding.
+#' @param ... arguments that are directly passed to the design_rSC function 
+#'   for a more concise coding.
 #' @param n Number of cases to be designed (Default is \code{n = 1}).
 #' @param phase.design A vector defining the length and label of each phase.
-#' E.g., \code{phase.length = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.
+#'   E.g., \code{phase.length = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.
 #' @param MT Number of measurements (in each study). Default is \code{MT = 20}.
 #' @param B.start Phase B starting point. The default setting \code{B.start = 6}
 #'   would assign the first five scores (of each case) to phase A, and all
@@ -27,8 +29,8 @@
 #'   \code{B.start = c(6, 7, 8)}). If the number of cases exceeds the length of
 #'   the vector, values will be recycled.
 #' @param start_value Starting value at the first measurement. Default
-#'   is \code{50}. To assign different start values to several single-cases, use a
-#'   vector of values (e.g. \code{c(50, 42, 56)}). If the number of cases
+#'   is \code{50}. To assign different start values to several single-cases, 
+#'   use a vector of values (e.g. \code{c(50, 42, 56)}). If the number of cases
 #'   exceeds the length of the vector, values are recycled.
 #' @param m Deprecated. Use start_value instead.
 #' @param s Standard deviation used to calculate absolute values from level,
@@ -82,7 +84,8 @@
 #' @param distribution Erro distribution. Default is \code{"normal"}. 
 #'   Possible values are \code{"normal"}, \code{"binomial"}, 
 #'   and \code{"poisson"}.
-#' @return A single-case data frame. See \code{\link{scdf}} to learn about this format.
+#' @return A single-case data frame. See \code{\link{scdf}} to learn 
+#'   about this format.
 #' @author Juergen Wibert
 #' @keywords datagen
 #' @examples
@@ -127,7 +130,8 @@ rSC <- function(design = NULL,
 
   n <- length(design$cases)
 
-  dat <- list()
+  #dat <- list()
+  dat <- vector("list", n)
   
   for (i in 1:n) {
     
@@ -222,11 +226,21 @@ rSC <- function(design = NULL,
       measured_values[measured_values < 0] <- 0
     }
     
-    dat[[i]] <- data.frame(
+    # fast df assignment
+    tmp <- list(
       phase = rep(design$cases[[i]]$phase, length), 
       values = measured_values, 
       mt = 1:mt
     )
+    class(tmp) <- "data.frame"
+    attr(tmp, "row.names") <- .set_row_names(length(tmp[[1]]))
+  
+    dat[[i]] <- tmp
+    #dat[[i]] <- data.frame(
+    ##  phase = rep(design$cases[[i]]$phase, length), 
+    #  values = measured_values, 
+    #  mt = 1:mt
+    #)
   }
 
   if (random.names == "male") names(dat) <- sample(.opt$male.names, n)
