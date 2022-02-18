@@ -19,8 +19,9 @@
 #' @param ... arguments that are directly passed to the design_rSC function 
 #'   for a more concise coding.
 #' @param n Number of cases to be designed (Default is \code{n = 1}).
-#' @param phase.design A vector defining the length and label of each phase.
-#'   E.g., \code{phase.length = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.
+#' @param phase.design A list defining the length and label of each phase.
+#'   E.g., \code{phase.length = list(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.
+#'   Use vectors if you want to define different values for each case \code{phase.length = list(A = c(10, 15), B = c(10, 15)}.
 #' @param MT Number of measurements (in each study). Default is \code{MT = 20}.
 #' @param B.start Phase B starting point. The default setting \code{B.start = 6}
 #'   would assign the first five scores (of each case) to phase A, and all
@@ -48,30 +49,39 @@
 #'   If the number of cases exceeds the length of the vector, values are
 #'   recycled. While using a binomial or poisson distribution, \code{d.trend}
 #'   indicates an increase in points / counts per MT.
-#' @param level Defines the level increase (effect size \emph{d}) at the
-#'   beginning of phase B. To assign different level effects to several
-#'   single-cases, use a vector of values (e.g. \code{level = c(.2, .4, .6)}).
-#'   If the number of cases exceeds the length of the vector, values are
-#'   recycled. While using a binomial or poisson distribution, \code{level}
-#'   indicates an increase in points / counts with the onset of the B-phase.
-#' @param slope Defines the increase in scores - starting with phase B -
-#'   expressed as effect size \emph{d} per MT. \code{slope = .1} generates an
-#'   incremental increase of 0.1 standard deviations per MT for all phase B
-#'   measurements. To assign different slope effects to several single-cases,
-#'   use a vector of values (e.g. \code{slope = c(.1, .2, .3)}). If the number
-#'   of cases exceeds the length of the vector, values are repeated. While using
-#'   a binomial or poisson distribution, \code{d.slope} indicates an increase in
-#'   points / counts per MT.
+#' @param level A list that defines the level increase (effect size \emph{d}) 
+#'   at the beginning of each phase relative to the previous phase 
+#'   (e.g. \code{list(A = 0, B = 1)}). The first element must be zero as the 
+#'   first phase of a single-case has no level effect (if you have one less 
+#'   list element than the number of phases, scan will add a leading element 
+#'   with 0 values). Use vectors to define variable level effects for each case 
+#'   (e.g. \code{list(A = c(0, 0), B = c(1, 2)})). When using a 'gaussian' 
+#'   distribution, the \code{level} parameters indicate effect size \emph{d} 
+#'   changes. When using a binomial or poisson distribution, \code{level} 
+#'   indicates an increase in points / counts with the onset of each phase.
+#' @param slope A list that defines the increase per measurement for each phase 
+#'   compared to the previous 
+#'   phase. \code{slope = list(A = 0, B = .1} generates an incremental increase 
+#'   of 0.1 per measurement starting at the B phase. The 
+#'   first list element must be zero as the first phase of a single-case has no 
+#'   slope effect (if you have one less list element than the number of phases, 
+#'   scan will add a leading element with 0 values). Use vectors to define 
+#'   variable slope effects for each case (e.g. \code{list(A = c(0, 0), 
+#'   B = c(0.1, 0.2)})). If the number of cases exceeds the length of the 
+#'   vector, values are recycled. When using a 'gaussian' distribution, the 
+#'   \code{slope} parameters indicate effect size \emph{d} changes per 
+#'   measurement. When using a binomial or poisson distribution, \code{slope} 
+#'   indicates an increase in points / counts per measurement.
 #' @param rtt Reliability of the underlying simulated measurements. Set
 #'   \code{rtt = .8} by default. To assign different reliabilities to several
 #'   single-cases, use a vector of values (e.g. \code{rtt = c(.6, .7, .8)}). If
 #'   the number of cases exceeds the length of the vector, values are repeated.
-#'   \code{rtt} has no effect when you're using binomial or poisson distributed
-#'   scores.
+#'   \code{rtt} has no effect when you're using binomial or poisson 
+#'   distributions.
 #' @param extreme.p Probability of extreme values. \code{extreme.p = .05} gives
 #'   a five percent probability of an extreme value. A vector of values assigns
 #'   different probabilities to multiple cases. If the number of cases exceeds
-#'   the length of the vector, values are repeated.
+#'   the length of the vector, values are recycled.
 #' @param extreme.d Range for extreme values, expressed as effect size \emph{d}.
 #'   \code{extreme.d = c(-7,-6)} uses extreme values within a range of -7 and -6
 #'   standard deviations. In case of a binomial or poisson distribution,
@@ -130,8 +140,7 @@ rSC <- function(design = NULL,
 
   n <- length(design$cases)
 
-  #dat <- list()
-  dat <- vector("list", n)
+  out <- vector("list", n)
   
   for (i in 1:n) {
     
@@ -151,7 +160,7 @@ rSC <- function(design = NULL,
     extreme.low <- design$cases[[i]]$extreme.low
     extreme.high <- design$cases[[i]]$extreme.high
     
-    if (design$distribution == "normal") {
+    if (design$distribution %in% c("normal", "gaussian")) {
       start_values <- c(start_value, rep(0, mt - 1))
       trend_values <- c(0, rep(trend * s, mt - 1))
       slope_values <- c()
@@ -199,7 +208,7 @@ rSC <- function(design = NULL,
     if (extreme.p[1] > 0) {
       ra <- runif(mt)
       
-      if (design$distribution == "normal") multiplier <- s
+      if (design$distribution %in% c("normal", "gaussian")) multiplier <- s
       if (design$distribution %in% c("binomial", "poisson")) multiplier <- 1
       
       .filter <- which(ra <= extreme.p[1])
@@ -227,29 +236,29 @@ rSC <- function(design = NULL,
     }
     
     # fast df assignment
-    tmp <- list(
+    df <- list(
       phase = rep(design$cases[[i]]$phase, length), 
       values = measured_values, 
       mt = 1:mt
     )
-    class(tmp) <- "data.frame"
-    attr(tmp, "row.names") <- .set_row_names(length(tmp[[1]]))
+    class(df) <- "data.frame"
+    attr(df, "row.names") <- .set_row_names(length(df[[1]]))
   
-    dat[[i]] <- tmp
-    #dat[[i]] <- data.frame(
+    out[[i]] <- df
+    #out[[i]] <- data.frame(
     ##  phase = rep(design$cases[[i]]$phase, length), 
     #  values = measured_values, 
     #  mt = 1:mt
     #)
   }
 
-  if (random.names == "male") names(dat) <- sample(.opt$male.names, n)
-  if (random.names == "female") names(dat) <- sample(.opt$female.names, n)
-  if (random.names == "neutral") names(dat) <- sample(.opt$neutrals.names, n)
-  if (isTRUE(random.names)) names(dat) <- sample(.opt$names, n)
+  if (random.names == "male") names(out) <- sample(.opt$male.names, n)
+  if (random.names == "female") names(out) <- sample(.opt$female.names, n)
+  if (random.names == "neutral") names(out) <- sample(.opt$neutrals.names, n)
+  if (isTRUE(random.names)) names(out) <- sample(.opt$names, n)
 
-  attributes(dat) <- .default_attributes(attributes(dat))
-  dat
+  attributes(out) <- .default_attributes(attributes(out))
+  out
 }
 
 #' @rdname random
@@ -277,9 +286,9 @@ design_rSC <- function(n = 1,
   if (!is.null(B.start)) {
     MT <- rep(MT, length.out = n)
     if (B.start[1] == "rand") {
-      tmp.start <- round(as.numeric(B.start[2]) * MT)
-      tmp.end <- round(as.numeric(B.start[3]) * MT)
-      B.start <- round(runif(n, tmp.start, tmp.end))
+      tmp_start <- round(as.numeric(B.start[2]) * MT)
+      tmp_end <- round(as.numeric(B.start[3]) * MT)
+      B.start <- round(runif(n, tmp_start, tmp_end))
     }
 
     if (any(B.start < 1) && any(B.start >= 1)) {
@@ -327,7 +336,6 @@ design_rSC <- function(n = 1,
   out$cases <- vector("list", n)
   out$distribution <- distribution
   out$prob <- prob
-
   
   for (case in 1:n) {
     design <- list()
