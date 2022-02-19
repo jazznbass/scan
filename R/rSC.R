@@ -40,6 +40,7 @@
 #'  To assign different variances to several single-cases, use a vector 
 #'  of values (e.g. \code{s = c(5, 10, 15)}). If the number of cases 
 #'  exceeds the length of the vector, values are recycled.
+#'  if the distribution is 'poisson' or 'binomial' s is not applied.
 #' @param prob If \code{distribution} (see below) is set \code{"binomial"},
 #'   \code{prob} passes the probability of occurrence.
 #' @param trend Defines the effect size \emph{d} of a trend added incrementally 
@@ -161,39 +162,37 @@ rSC <- function(design = NULL,
     extreme.high <- design$cases[[i]]$extreme.high
     
     if (design$distribution %in% c("normal", "gaussian")) {
-      start_values <- c(start_value, rep(0, mt - 1))
-      trend_values <- c(0, rep(trend * s, mt - 1))
-      slope_values <- c()
-      level_values <- c()
-      
-      for (j in 1:length(length)) {
-        slope_values <- c(slope_values, rep(slope[j] * s, length[j]))
-        level_values <- c(level_values, level[j] * s, rep(0, length[j] - 1))
-      }
-
-      true_values <- start_values + trend_values + slope_values + level_values
-      true_values <- cumsum(true_values)
+      trend <- trend * s
+      slope <- slope * s
+      level <- level * s
+      extreme.low <- extreme.low * s
+      extreme.high <- extreme.high * s
+    }
+    
+    start_values <- c(start_value, rep(0, mt - 1))
+    trend_values <- c(0, rep(trend, mt - 1))
+    slope_values <- c()
+    level_values <- c()
+    
+    for (j in 1:length(length)) {
+      slope_values <- c(slope_values, rep(slope[j], length[j]))
+      level_values <- c(level_values, level[j], rep(0, length[j] - 1))
+    }
+    
+    true_values <- start_values + trend_values + slope_values + level_values
+    true_values <- cumsum(true_values)
+    
+    if (design$distribution %in% c("normal", "gaussian")) {
       error_values <- rnorm(mt, mean = 0, sd = error)
       measured_values <- true_values + error_values
     }
 
     if (design$distribution %in% c("binomial", "poisson")) {
-      start_values <- c(start_value, rep(0, mt - 1))
-      trend_values <- c(0, rep(trend, mt - 1))
-      slope_values <- c()
-      level_values <- c()
 
-      for (j in 1:length(length)) {
-        slope_values <- c(slope_values, rep(slope[j], length[j]))
-        level_values <- c(level_values, level[j], rep(0, length[j] - 1))
-      }
-
-      true_values <- start_values + trend_values + slope_values + level_values
-      true_values <- round(cumsum(true_values))
       true_values[true_values < 0] <- 0
 
       if (design$distribution == "poisson") {
-        measured_values <- rpois(n = length(true_values), true_values)
+        measured_values <- rpois(length(true_values), lambda = true_values)
       }
       if (design$distribution == "binomial") {
         measured_values <- rbinom(
@@ -205,26 +204,15 @@ rSC <- function(design = NULL,
       
     }
 
-    if (extreme.p[1] > 0) {
-      ra <- runif(mt)
-      
-      if (design$distribution %in% c("normal", "gaussian")) multiplier <- s
-      if (design$distribution %in% c("binomial", "poisson")) multiplier <- 1
-      
-      .filter <- which(ra <= extreme.p[1])
-      .error <- runif(
-        n = length(.filter), 
-        min = extreme.low[1], 
-        max = extreme.high[1]
-      )
-      measured_values[.filter] <- measured_values[.filter] + 
-                                  .error * multiplier
-      
+    if (extreme.p > 0) {
+      .ids <- which(runif(mt) <= extreme.p)
+      .error <- runif(length(.ids), min = extreme.low, max = extreme.high)
+      measured_values[.ids] <- measured_values[.ids] + .error
     }
 
-    if (missing.p[1] > 0) {
-      .filter <- sample(1:mt, missing.p[1] * mt)
-      measured_values[.filter] <- NA
+    if (missing.p > 0) {
+      .ids <- sample(1:mt, missing.p * mt)
+      measured_values[.ids] <- NA
     }
 
     if (!is.na(round)) {
