@@ -1,4 +1,14 @@
 
+
+# scan branch power
+
+## power_test and Monte-Carlo functions
+
+- rewrote `power_test()` with various extensions, optimizations, and solved various bugs.
+- speed optimized `rSC()`. Rerote the algorithm for 'poisson' distributed measures.
+- rewrote `design_rSC()` and its print method.
+- extended the help pages.
+
 # scan 0.53.5
 
 - solved wrong calculation of Hedges G when phase length differed.
