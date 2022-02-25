@@ -30,9 +30,12 @@
 #'   \code{B.start = c(6, 7, 8)}). If the number of cases exceeds the length of
 #'   the vector, values will be recycled.
 #' @param start_value Starting value at the first measurement. Default
-#'   is \code{50}. To assign different start values to several single-cases, 
+#'   is \code{50}. When \code{distribution = "poission"} the start_value 
+#'   represents frequency. When \code{distribution = "binomial"} start_value 
+#'   must range between 0 and 1 and they represent the probability of on event. 
+#'   To assign different start values to several single-cases, 
 #'   use a vector of values (e.g. \code{c(50, 42, 56)}). If the number of cases
-#'   exceeds the length of the vector, values are recycled.
+#'   exceeds the length of the vector, values are recycled. 
 #' @param m Deprecated. Use start_value instead.
 #' @param s Standard deviation used to calculate absolute values from level,
 #'  slope, trend effects and to calculate and error distribution from the 
@@ -41,15 +44,17 @@
 #'  of values (e.g. \code{s = c(5, 10, 15)}). If the number of cases 
 #'  exceeds the length of the vector, values are recycled.
 #'  if the distribution is 'poisson' or 'binomial' s is not applied.
-#' @param prob If \code{distribution} (see below) is set \code{"binomial"},
-#'   \code{prob} passes the probability of occurrence.
-#' @param trend Defines the effect size \emph{d} of a trend added incrementally 
-#'   to each measurement across the whole data-set. To assign different trends 
+#' @param n_trials If \code{distribution} (see below) is \code{"binomial"},
+#'   \code{n_trials} is the number of trials/observations/items.
+#' @param trend Defines the effect size of a trend added incrementally 
+#'   to each measurement across the whole data-set. To assign different trends
 #'   to several single-cases, use a vector of values 
 #'   (e.g. \code{trend = c(.1, .3, .5)}).
 #'   If the number of cases exceeds the length of the vector, values are
-#'   recycled. While using a binomial or poisson distribution, \code{d.trend}
-#'   indicates an increase in points / counts per MT.
+#'   recycled. When using a 'gaussian' 
+#'   distribution, the \code{trend} parameters indicate effect size \emph{d} 
+#'   changes.  When using a binomial or poisson distribution, \code{trend}
+#'   indicates an increase in points / counts per measurement.
 #' @param level A list that defines the level increase (effect size \emph{d}) 
 #'   at the beginning of each phase relative to the previous phase 
 #'   (e.g. \code{list(A = 0, B = 1)}). The first element must be zero as the 
@@ -187,23 +192,21 @@ rSC <- function(design = NULL,
       measured_values <- true_values + error_values
     }
 
-    if (design$distribution %in% c("binomial", "poisson")) {
-
+    if (design$distribution %in% c("poisson")) {
       true_values[true_values < 0] <- 0
-
-      if (design$distribution == "poisson") {
-        measured_values <- rpois(length(true_values), lambda = true_values)
-      }
-      if (design$distribution == "binomial") {
-        measured_values <- rbinom(
-          n = length(true_values), 
-          size = round(true_values * (1 / design$prob)), 
-          prob = design$prob
-        )
-      }
-      
+      measured_values <- rpois(length(true_values), lambda = true_values)
     }
 
+    if (design$distribution == "binomial") {
+      true_values[true_values < 0] <- 0
+      true_values[true_values > 1] <- 1
+      measured_values <- rbinom(
+          n = length(true_values), 
+          size = design$n_trials,
+          prob = true_values
+      )
+    }
+    
     if (extreme.p > 0) {
       .ids <- which(runif(mt) <= extreme.p)
       .error <- runif(length(.ids), min = extreme.low, max = extreme.high)
@@ -229,6 +232,10 @@ rSC <- function(design = NULL,
       values = measured_values, 
       mt = 1:mt
     )
+    
+    if (design$distribution == "binomial") 
+      df$trials <- rep(design$n_trials, mt)
+    
     class(df) <- "data.frame"
     attr(df, "row.names") <- .set_row_names(length(df[[1]]))
   
@@ -253,18 +260,18 @@ rSC <- function(design = NULL,
 #' @export
 design_rSC <- function(n = 1, 
                        phase.design = list(A = 5, B = 15),
-                       trend = list(0), 
+                       trend = 0, 
                        level = list(0), 
                        slope = list(0),
-                       rtt = list(0.80), 
+                       rtt = 0.80, 
                        m = NULL,
-                       s = list(10),
-                       start_value = list(50),
+                       s = 10,
+                       start_value = 50,
                        extreme.p = list(0), 
                        extreme.d = c(-4, -3),
-                       missing.p = list(0), 
+                       missing.p = 0, 
                        distribution = "normal",
-                       prob = 0.5, 
+                       n_trials = NULL, 
                        MT = NULL, 
                        B.start = NULL) {
   
@@ -300,6 +307,24 @@ design_rSC <- function(n = 1,
     start_value <- m
   }
   
+  if (is.list(start_value)) start_value <- unlist(start_value)
+  if (is.list(trend)) trend <- unlist(trend)
+  if (is.list(s)) s <- unlist(s)
+  if (is.list(rtt)) rtt <- unlist(rtt)
+  
+  if (!distribution %in% c("normal", "gaussian", "poisson", "binomial"))
+    stop("Wrong distribution.")
+  
+  if (distribution == "binomial") {
+    if (is.null(n_trials)) 
+      stop("For binomial distributions the number of trials must ",
+           "be assigned.")
+    if (any(start_value > 1) || any(start_value < 0))
+      stop("For binomial distributions start_values must range ",
+           "between 0 and 1.")
+    
+  }
+  
   if (length(start_value) != n) start_value <- rep(start_value, length = n)
   if (length(s) != n) s <- rep(s, length = n)
   if (length(rtt) != n) rtt <- rep(rtt, length = n)
@@ -323,7 +348,7 @@ design_rSC <- function(n = 1,
   
   out$cases <- vector("list", n)
   out$distribution <- distribution
-  out$prob <- prob
+  out$n_trials <- n_trials
   
   for (case in 1:n) {
     design <- list()

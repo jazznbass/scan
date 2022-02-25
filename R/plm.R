@@ -3,28 +3,41 @@
 #' The \code{plm} function computes a piecewise regression model (see Huitema &
 #' McKean, 2000).
 #' 
-#' 
 #' @inheritParams .inheritParams
 #' @param AR Maximal lag of autoregression. Modeled based on the
 #' Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
 #' argument must be set to \code{family = "gaussian"}.
-#' @param family Set the distributioin family. Defaults to a gaussian
-#' distribution. See the \code{family} function for more details.
+#' @param family Set the distribution family. Defaults to a gaussian
+#'   distribution. See the \code{family} function for more details.
 #' @param formula Defaults to the standard piecewise regression model. The
-#' parameter phase followed by the phase name (e.g., phaseB) indicates the level effect of the corresponding phase. The parameter 'inter' followed by the phase name (e.g., interB) adresses the slope effect based on the method
-#' provide in the model argument (e.g., "B&L-B"). The formula can be changed
-#' for example to include further variables into the regression model.
-#' @param update An easier way to change the regression formula (e.g., . ~ . + newvariable).
-#' @param na.action Defines how to deal with missing values
-#' @param r_squared Logical. If TRUE, delta r_squares will be calculated for each predictor.
+#'   parameter phase followed by the phase name (e.g., phaseB) indicates the 
+#'   level effect of the corresponding phase. The parameter 'inter' followed by 
+#'   the phase name (e.g., interB) adresses the slope effect based on the method
+#'   provide in the model argument (e.g., "B&L-B"). The formula can be changed
+#'   for example to include further variables into the regression model.
+#' @param update An easier way to change the regression formula 
+#'   (e.g., . ~ . + newvariable).
+#' @param na.action Defines how to deal with missing values.
+#' @param r_squared Logical. If TRUE, delta r_squares will be calculated for 
+#'   each predictor.
+#' @param var_trials Name of the variable containing the number of trials 
+#'   (only for binomial regressions). If a single integer is provided this is
+#'   considered to be a the constant number of trials across all measurements.
+#' @param dvar_percentage Only for binomial distribution. If set TRUE, the 
+#'   dependent variable is assumed to represent proportions [0,1]. Otherwise 
+#'   dvar is assumed to represent counts.
 #' @param ... Further arguments passed to the glm function.
 #' @return 
-#' \item{formula}{plm formula. Uselful if you want to use the update or formula argument and you don't know the names of the parameters.}
-#' \item{model}{Character string from function call (see \code{Arguments} above).} 
+#' \item{formula}{plm formula. Uselful if you want to use the update or 
+#'   formula argument and you don't know the names of the parameters.}
+#' \item{model}{Character string from function call (see \code{Arguments} 
+#'   above).} 
 #' \item{F.test}{F-test values of modelfit.}
 #' \item{r.squares}{Explained variance R squared for each model parameter.}
-#' \item{ar}{Autoregression lag from function call (see \code{Arguments} above).}
-#' \item{family}{Distribution family from function call (see \code{Arguments} above).}
+#' \item{ar}{Autoregression lag from function call (see \code{Arguments} 
+#'   above).}
+#' \item{family}{Distribution family from function call 
+#'   (see \code{Arguments} above).}
 #' \item{full.model}{Full regression model list from the gls or glm function.}
 #' @author Juergen Wilbert
 #' @family regression functions
@@ -74,6 +87,8 @@ plm <- function(data, dvar, pvar, mvar,
                 update = NULL, 
                 na.action = na.omit,
                 r_squared = TRUE,
+                var_trials = NULL,
+                dvar_percentage = FALSE,
                 ...) {
 
   if (family != "gaussian") r_squared = FALSE
@@ -82,6 +97,9 @@ plm <- function(data, dvar, pvar, mvar,
     stop("Autoregression models could only be applied if distribution ",
          "familiy = 'gaussian'.\n")
   }
+  if (family == "binomial" && is.null(var_trials)) {
+    stop("When family = 'binomial' a 'var_trials' must be defined.")
+  } 
   
   # set defaults attributes
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
@@ -131,9 +149,21 @@ plm <- function(data, dvar, pvar, mvar,
 # glm models --------------------------------------------------------------
   
   if(AR == 0) {
-    full <- glm(
-      formula_full, data = data, family = family, na.action = na.action, ...
-    )
+    
+    if (family != "binomial") {
+      full <- glm(
+        formula_full, data = data, family = family, na.action = na.action, ...
+      )
+    }
+    
+    if (family == "binomial") {
+      trials <- data[[var_trials]]  
+      if (!dvar_percentage) data[[dvar]] <- data[[dvar]] / trials
+      full <- glm(
+        formula_full, data = data, family = family, na.action = na.action, 
+        weights = trials, ...
+      )
+    }
     
     df_residuals <- full$df.residual
     df_intercept <- if (attr(full$terms, "intercept")) 1 else 0
@@ -215,6 +245,8 @@ plm <- function(data, dvar, pvar, mvar,
     r.squares = r_squares, 
     ar = AR, 
     family = family, 
+    var_trials = var_trials,
+    dvar_percentage = dvar_percentage,
     full.model = full, 
     data = data
   )

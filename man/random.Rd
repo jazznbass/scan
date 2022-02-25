@@ -11,18 +11,18 @@ rSC(design = NULL, round = NA, random.names = FALSE, seed = NULL, ...)
 design_rSC(
   n = 1,
   phase.design = list(A = 5, B = 15),
-  trend = list(0),
+  trend = 0,
   level = list(0),
   slope = list(0),
-  rtt = list(0.8),
+  rtt = 0.8,
   m = NULL,
-  s = list(10),
-  start_value = list(50),
+  s = 10,
+  start_value = 50,
   extreme.p = list(0),
   extreme.d = c(-4, -3),
-  missing.p = list(0),
+  missing.p = 0,
   distribution = "normal",
-  prob = 0.5,
+  n_trials = NULL,
   MT = NULL,
   B.start = NULL
 )
@@ -51,13 +51,15 @@ for a more concise coding.}
 E.g., \code{phase.length = list(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.
 Use vectors if you want to define different values for each case \code{phase.length = list(A = c(10, 15), B = c(10, 15)}.}
 
-\item{trend}{Defines the effect size \emph{d} of a trend added incrementally 
-to each measurement across the whole data-set. To assign different trends 
+\item{trend}{Defines the effect size of a trend added incrementally 
+to each measurement across the whole data-set. To assign different trends
 to several single-cases, use a vector of values 
 (e.g. \code{trend = c(.1, .3, .5)}).
 If the number of cases exceeds the length of the vector, values are
-recycled. While using a binomial or poisson distribution, \code{d.trend}
-indicates an increase in points / counts per MT.}
+recycled. When using a 'gaussian' 
+distribution, the \code{trend} parameters indicate effect size \emph{d} 
+changes.  When using a binomial or poisson distribution, \code{trend}
+indicates an increase in points / counts per measurement.}
 
 \item{level}{A list that defines the level increase (effect size \emph{d}) 
 at the beginning of each phase relative to the previous phase 
@@ -98,10 +100,14 @@ slope, trend effects and to calculate and error distribution from the
 \code{rtt} values. Set to \code{10} by default. 
 To assign different variances to several single-cases, use a vector 
 of values (e.g. \code{s = c(5, 10, 15)}). If the number of cases 
-exceeds the length of the vector, values are recycled.}
+exceeds the length of the vector, values are recycled.
+if the distribution is 'poisson' or 'binomial' s is not applied.}
 
 \item{start_value}{Starting value at the first measurement. Default
-is \code{50}. To assign different start values to several single-cases, 
+is \code{50}. When \code{distribution = "poission"} the start_value 
+represents frequency. When \code{distribution = "binomial"} start_value 
+must range between 0 and 1 and they represent the probability of on event. 
+To assign different start values to several single-cases, 
 use a vector of values (e.g. \code{c(50, 42, 56)}). If the number of cases
 exceeds the length of the vector, values are recycled.}
 
@@ -125,8 +131,8 @@ of the vector, values are repeated.}
 Possible values are \code{"normal"}, \code{"binomial"}, 
 and \code{"poisson"}.}
 
-\item{prob}{If \code{distribution} (see below) is set \code{"binomial"},
-\code{prob} passes the probability of occurrence.}
+\item{n_trials}{If \code{distribution} (see below) is \code{"binomial"},
+\code{n_trials} is the number of trials/observations/items.}
 
 \item{MT}{Number of measurements (in each study). Default is \code{MT = 20}.}
 
