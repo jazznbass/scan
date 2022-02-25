@@ -1,9 +1,9 @@
 #' Randomization Tests for single-case data
 #' 
-#' The \code{randSC} function computes a randomization test for single or
+#' The \code{rand_test} function computes a randomization test for single or
 #' multiple baseline single-case data.  The function is based on an algorithm
 #' from the \code{SCRT} package (Bulte & Onghena, 2009, 2012), but rewritten
-#' and extended for the use in AB designs.
+#' and extended.
 #' 
 #' 
 #' @inheritParams .inheritParams
@@ -42,13 +42,13 @@
 #' \code{exclude.equal} should be set to \code{TRUE} if you analyse one
 #' single-case design (not a multiple baseline data set) to reach a sufficient
 #' power. But be aware, that it increases the chance of an alpha-error.
-#' @param graph If \code{graph = TRUE}, a histogram of the resulting
-#' distribution is plotted. It's \code{FALSE} by default.
+#' @param graph (deprecated, use rand_test(...) %>% plot() instead) If \code{graph = TRUE}, a histogram of the resulting
+#' distribution is plotted. 
 #' @param output If set to the default \code{output = "C"}, detailed
 #' information is provided. Set \code{output = "p"}, to only return the
 #' resulting p value.
 #' @param phases A vector of two characters or numbers indicating the two
-#' phases that should be compared. E.g., \code{phases = c("A","C")} or
+#' phases that should be compared. E.g., \code{phases = c(1,2)} or
 #' \code{phases = c(2,4)} for comparing the second and the fourth phase. Phases
 #' could be combined by providing a list with two elements. E.g., \code{phases
 #' = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
@@ -97,7 +97,7 @@ rand_test <- function (data, dvar, pvar,
                        exclude.equal = FALSE, 
                        graph = FALSE, 
                        output = "c", 
-                       phases = c("A", "B"), 
+                       phases = c(1, 2), 
                        seed = NULL) {
 
   if(!is.null(seed)) set.seed(seed)
@@ -261,34 +261,33 @@ rand_test <- function (data, dvar, pvar,
   Z <- (obs.stat - mean(dist, na.rm = TRUE)) / sd(dist, na.rm = TRUE)
   p.Z.single <- 1 - pnorm(Z)
   
-  if (output == "c") {
-    possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[N]
-    
-    out <- list(
-      statistic = statistic, 
-      phases.A = keep$phases_A, 
-      phases.B = keep$phases_B, 
-      N = N, 
-      n1 = length(unlist(a)), 
-      n2 = length(unlist(b)), 
-      limit = limit, 
-      startpoints = startpoints, 
-      p.value = p.value, 
-      number = number, 
-      complete = complete, 
-      observed.statistic = obs.stat, 
-      Z = Z, 
-      p.Z.single = p.Z.single, 
-      distribution = dist, 
-      possible.combinations = possible.combinations, 
-      auto.corrected.number = auto.corrected.number
-    )
-    
-    class(out) <- c("sc_rand")
-    attr(out, .opt$phase) <- pvar
-    attr(out, .opt$dv) <- dvar
-    out
-  }
+  possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[N]
+  
+  out <- list(
+    statistic = statistic, 
+    phases.A = keep$phases_A, 
+    phases.B = keep$phases_B, 
+    N = N, 
+    n1 = length(unlist(a)), 
+    n2 = length(unlist(b)), 
+    limit = limit, 
+    startpoints = startpoints, 
+    p.value = p.value, 
+    number = number, 
+    complete = complete, 
+    observed.statistic = obs.stat, 
+    Z = Z, 
+    p.Z.single = p.Z.single, 
+    distribution = dist, 
+    possible.combinations = possible.combinations, 
+    auto.corrected.number = auto.corrected.number
+  )
+  
+  class(out) <- c("sc_rand")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$dv) <- dvar
+  out
+
 }
 
 #' @rdname rand_test

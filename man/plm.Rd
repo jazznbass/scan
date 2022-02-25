@@ -18,6 +18,9 @@ plm(
   formula = NULL,
   update = NULL,
   na.action = na.omit,
+  r_squared = TRUE,
+  var_trials = NULL,
+  dvar_percentage = FALSE,
   ...
 )
 }
@@ -39,7 +42,7 @@ McKean, 2000). Default is \code{model = "B&L-B"}. Possible values are:
 \code{"B&L-B"}, \code{"H-M"}, \code{"Mohr#1"}, \code{"Mohr#2"}, \code{"JW"}, \code{"JW2"}, and
 \code{"Manly"}.}
 
-\item{family}{Set the distributioin family. Defaults to a gaussian
+\item{family}{Set the distribution family. Defaults to a gaussian
 distribution. See the \code{family} function for more details.}
 
 \item{trend}{A logical indicating if a trend parameters is included in the model.}
@@ -49,23 +52,41 @@ distribution. See the \code{family} function for more details.}
 \item{slope}{A logical indicating if a slope parameters is included in the model.}
 
 \item{formula}{Defaults to the standard piecewise regression model. The
-parameter phase followed by the phase name (e.g., phaseB) indicates the level effect of the corresponding phase. The parameter 'inter' followed by the phase name (e.g., interB) adresses the slope effect based on the method
+parameter phase followed by the phase name (e.g., phaseB) indicates the 
+level effect of the corresponding phase. The parameter 'inter' followed by 
+the phase name (e.g., interB) adresses the slope effect based on the method
 provide in the model argument (e.g., "B&L-B"). The formula can be changed
 for example to include further variables into the regression model.}
 
-\item{update}{An easier way to change the regression formula (e.g., . ~ . + newvariable).}
+\item{update}{An easier way to change the regression formula 
+(e.g., . ~ . + newvariable).}
 
-\item{na.action}{Defines how to deal with missing values}
+\item{na.action}{Defines how to deal with missing values.}
+
+\item{r_squared}{Logical. If TRUE, delta r_squares will be calculated for 
+each predictor.}
+
+\item{var_trials}{Name of the variable containing the number of trials 
+(only for binomial regressions). If a single integer is provided this is
+considered to be a the constant number of trials across all measurements.}
+
+\item{dvar_percentage}{Only for binomial distribution. If set TRUE, the 
+dependent variable is assumed to represent proportions [0,1]. Otherwise 
+dvar is assumed to represent counts.}
 
 \item{...}{Further arguments passed to the glm function.}
 }
 \value{
-\item{formula}{plm formula. Uselful if you want to use the update or formula argument and you don't know the names of the parameters.}
-\item{model}{Character string from function call (see \code{Arguments} above).} 
+\item{formula}{plm formula. Uselful if you want to use the update or 
+  formula argument and you don't know the names of the parameters.}
+\item{model}{Character string from function call (see \code{Arguments} 
+  above).} 
 \item{F.test}{F-test values of modelfit.}
 \item{r.squares}{Explained variance R squared for each model parameter.}
-\item{ar}{Autoregression lag from function call (see \code{Arguments} above).}
-\item{family}{Distribution family from function call (see \code{Arguments} above).}
+\item{ar}{Autoregression lag from function call (see \code{Arguments} 
+  above).}
+\item{family}{Distribution family from function call 
+  (see \code{Arguments} above).}
 \item{full.model}{Full regression model list from the gls or glm function.}
 }
 \description{
@@ -79,7 +100,7 @@ set.seed(123)
 AB <- design_rSC(
   phase.design = list(A = 10, B = 20), 
   level = list(A = 0, B = 1), slope = list(A = 0, B = 0.05), 
-  trend = list(0.05)
+  trend = 0.05
 )
 dat <- rSC(design = AB)
 plm(dat, AR = 3)
@@ -88,8 +109,8 @@ plm(dat, AR = 3)
 A1B1A2B2 <- design_rSC(
   phase.design = list(A1 = 15, B1 = 20, A2 = 15, B2 = 20), 
   level = list(A1 = 0, B1 = 1, A2 = -1, B2 = 1),
-  slope = list(A1 = 0, B1 = 0.0, A1 = 0, B2 = 0.0),
-  trend = list(0.0))
+  slope = list(A1 = 0, B1 = 0.0, A2 = 0, B2 = 0.0),
+  trend = 0.0)
 dat <- rSC(design = A1B1A2B2, seed = 123)
 plm(dat, model = "JW")
 

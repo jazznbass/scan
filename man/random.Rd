@@ -11,88 +11,110 @@ rSC(design = NULL, round = NA, random.names = FALSE, seed = NULL, ...)
 design_rSC(
   n = 1,
   phase.design = list(A = 5, B = 15),
-  trend = list(0),
+  trend = 0,
   level = list(0),
   slope = list(0),
-  rtt = list(0.8),
-  m = list(50),
-  s = list(10),
+  rtt = 0.8,
+  m = NULL,
+  s = 10,
+  start_value = 50,
   extreme.p = list(0),
   extreme.d = c(-4, -3),
-  missing.p = list(0),
+  missing.p = 0,
   distribution = "normal",
-  prob = 0.5,
+  n_trials = NULL,
   MT = NULL,
   B.start = NULL
 )
 }
 \arguments{
 \item{design}{A design matrix which is created by design_rSC and specifies
-all paramters.}
+all parameters.}
 
 \item{round}{Rounds the scores to the defined decimal. To round to the second
 decimal, set \code{round = 2}.}
 
 \item{random.names}{Is \code{FALSE} by default. If set \code{random.names =
-TRUE} cases are assigned random first names. If set \code{"male" or
-"female"} only male or female names are chosen. The names are drawn from
-the 2,000 most popular names for newborns in 2012 in the U.S. (1,000 male
-and 1,000 female names).}
+TRUE} cases are assigned random first names. If set \code{"neutral", 
+"male" or "female"} only gender neutral, male, or female names are chosen. 
+The names are drawn from the 2,000 most popular names for newborns in 2012 
+in the U.S. (1,000 male and 1,000 female names).}
 
 \item{seed}{A seed number for the random generator.}
 
-\item{...}{Paramteres that are directly passed from the rSC function to the design_rSC function for a more concise coding.}
+\item{...}{arguments that are directly passed to the design_rSC function 
+for a more concise coding.}
 
-\item{n}{Number of cases to be created (Default is \code{n = 1}).}
+\item{n}{Number of cases to be designed (Default is \code{n = 1}).}
 
-\item{phase.design}{A vector defining the length and label of each phase.
-E.g., \code{phase.length = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.}
+\item{phase.design}{A list defining the length and label of each phase.
+E.g., \code{phase.length = list(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.
+Use vectors if you want to define different values for each case \code{phase.length = list(A = c(10, 15), B = c(10, 15)}.}
 
-\item{trend}{Defines the effect size \emph{d} of a trend per MT added
-across the whole data-set. To assign different trends to several
-single-cases, use a vector of values (e.g. \code{trend = c(.1, .3, .5)}).
+\item{trend}{Defines the effect size of a trend added incrementally 
+to each measurement across the whole data-set. To assign different trends
+to several single-cases, use a vector of values 
+(e.g. \code{trend = c(.1, .3, .5)}).
 If the number of cases exceeds the length of the vector, values are
-repeated. While using a binomial or poisson distribution, \code{d.trend}
-indicates an increase in points / counts per MT.}
+recycled. When using a 'gaussian' 
+distribution, the \code{trend} parameters indicate effect size \emph{d} 
+changes.  When using a binomial or poisson distribution, \code{trend}
+indicates an increase in points / counts per measurement.}
 
-\item{level}{Defines the level increase (effect size \emph{d}) at the
-beginning of phase B. To assign different level effects to several
-single-cases, use a vector of values (e.g. \code{level = c(.2, .4, .6)}).
-If the number of cases exceeds the length of the vector, values are
-repeated. While using a binomial or poisson distribution, \code{level}
-indicates an increase in points / counts with the onset of the B-phase.}
+\item{level}{A list that defines the level increase (effect size \emph{d}) 
+at the beginning of each phase relative to the previous phase 
+(e.g. \code{list(A = 0, B = 1)}). The first element must be zero as the 
+first phase of a single-case has no level effect (if you have one less 
+list element than the number of phases, scan will add a leading element 
+with 0 values). Use vectors to define variable level effects for each case 
+(e.g. \code{list(A = c(0, 0), B = c(1, 2)})). When using a 'gaussian' 
+distribution, the \code{level} parameters indicate effect size \emph{d} 
+changes. When using a binomial or poisson distribution, \code{level} 
+indicates an increase in points / counts with the onset of each phase.}
 
-\item{slope}{Defines the increase in scores - starting with phase B -
-expressed as effect size \emph{d} per MT. \code{slope = .1} generates an
-incremental increase of 0.1 standard deviations per MT for all phase B
-measurements. To assign different slope effects to several single-cases,
-use a vector of values (e.g. \code{slope = c(.1, .2, .3)}). If the number
-of cases exceeds the length of the vector, values are repeated. While using
-a binomial or poisson distribution, \code{d.slope} indicates an increase in
-points / counts per MT.}
+\item{slope}{A list that defines the increase per measurement for each phase 
+compared to the previous 
+phase. \code{slope = list(A = 0, B = .1} generates an incremental increase 
+of 0.1 per measurement starting at the B phase. The 
+first list element must be zero as the first phase of a single-case has no 
+slope effect (if you have one less list element than the number of phases, 
+scan will add a leading element with 0 values). Use vectors to define 
+variable slope effects for each case (e.g. \code{list(A = c(0, 0), 
+B = c(0.1, 0.2)})). If the number of cases exceeds the length of the 
+vector, values are recycled. When using a 'gaussian' distribution, the 
+\code{slope} parameters indicate effect size \emph{d} changes per 
+measurement. When using a binomial or poisson distribution, \code{slope} 
+indicates an increase in points / counts per measurement.}
 
 \item{rtt}{Reliability of the underlying simulated measurements. Set
 \code{rtt = .8} by default. To assign different reliabilities to several
 single-cases, use a vector of values (e.g. \code{rtt = c(.6, .7, .8)}). If
 the number of cases exceeds the length of the vector, values are repeated.
-\code{rtt} has no effect when you're using binomial or poisson distributed
-scores.}
+\code{rtt} has no effect when you're using binomial or poisson 
+distributions.}
 
-\item{m}{Mean of the sample distribution the scores are drawn from. Default
-is \code{m = 50}. To assign different means to several single-cases, use a
-vector of values (e.g. \code{m = c(50, 42, 56)}). If the number of cases
-exceeds the length of the vector, values are repeated.}
+\item{m}{Deprecated. Use start_value instead.}
 
-\item{s}{Standard deviation of the sample distribution the scores are drawn
-from. Set to \code{s = 10} by default. To assign different variances to
-several single-cases, use a vector of values (e.g. \code{s = c(5, 10,
-15)}). If the number of cases exceeds the length of the vector, values are
-repeated.}
+\item{s}{Standard deviation used to calculate absolute values from level,
+slope, trend effects and to calculate and error distribution from the 
+\code{rtt} values. Set to \code{10} by default. 
+To assign different variances to several single-cases, use a vector 
+of values (e.g. \code{s = c(5, 10, 15)}). If the number of cases 
+exceeds the length of the vector, values are recycled.
+if the distribution is 'poisson' or 'binomial' s is not applied.}
+
+\item{start_value}{Starting value at the first measurement. Default
+is \code{50}. When \code{distribution = "poission"} the start_value 
+represents frequency. When \code{distribution = "binomial"} start_value 
+must range between 0 and 1 and they represent the probability of on event. 
+To assign different start values to several single-cases, 
+use a vector of values (e.g. \code{c(50, 42, 56)}). If the number of cases
+exceeds the length of the vector, values are recycled.}
 
 \item{extreme.p}{Probability of extreme values. \code{extreme.p = .05} gives
 a five percent probability of an extreme value. A vector of values assigns
 different probabilities to multiple cases. If the number of cases exceeds
-the length of the vector, values are repeated.}
+the length of the vector, values are recycled.}
 
 \item{extreme.d}{Range for extreme values, expressed as effect size \emph{d}.
 \code{extreme.d = c(-7,-6)} uses extreme values within a range of -7 and -6
@@ -105,21 +127,12 @@ be smaller than the second, otherwise the procedure will fail.}
 probabilities to multiple cases. If the number of cases exceeds the length
 of the vector, values are repeated.}
 
-\item{distribution}{Distribution of the scores. Default is \code{distribution
-= "normal"}. Possible values are \code{"normal"}, \code{"binomial"}, and
-\code{"poisson"}. If set to \code{"normal"}, the sample of scores will be
-normally distributed with the parameters \code{m} and \code{s} as mean and
-standard deviation of the sample, including a measurement error defined by
-\code{rtt}. If set to \code{"binomial"}, data are drawn from a binomial
-distribution with the expectation value \code{m}. This setting is useful
-for generating criterial data like correct answers in a test. If set to
-\code{"poisson"}, data are drawn from a poisson distribution, which is very
-common for count-data like behavioral observations. There's no measurement
-error is included. \code{m} defines the expectation value of the poisson
-distribution, lambda.}
+\item{distribution}{Erro distribution. Default is \code{"normal"}. 
+Possible values are \code{"normal"}, \code{"binomial"}, 
+and \code{"poisson"}.}
 
-\item{prob}{If \code{distribution} (see below) is set \code{"binomial"},
-\code{prob} passes the probability of occurrence.}
+\item{n_trials}{If \code{distribution} (see below) is \code{"binomial"},
+\code{n_trials} is the number of trials/observations/items.}
 
 \item{MT}{Number of measurements (in each study). Default is \code{MT = 20}.}
 
@@ -128,15 +141,17 @@ would assign the first five scores (of each case) to phase A, and all
 following scores to phase B. To assign different starting points for a set
 of multiple single-cases, use a vector of starting values (e.g.
 \code{B.start = c(6, 7, 8)}). If the number of cases exceeds the length of
-the vector, values will be repeated.}
+the vector, values will be recycled.}
 }
 \value{
-A single-case data frame. See \code{\link{scdf}} to learn about this format.
+A single-case data frame. See \code{\link{scdf}} to learn 
+  about this format.
 }
 \description{
 The \code{rSC} function generates random single-case data frames
 for monte-carlo studies and demonstration purposes.
-\code{design_rSC} is used to set up a design matrix with all parameters needed for the \code{rSC} function.
+\code{design_rSC} is used to set up a design matrix with all parameters 
+needed for the \code{rSC} function.
 }
 \examples{
 
@@ -151,7 +166,7 @@ plotSC(dat)
 
 ## And now have a look at poisson-distributed data
 design <- design_rSC(
-  n = 3, B.start = c(6, 10, 14), MT = c(12, 20, 22), m = 10,
+  n = 3, B.start = c(6, 10, 14), MT = c(12, 20, 22), start_value = 10,
   distribution = "poisson", level = -5, missing.p = 0.1
 )
 dat <- rSC(design, seed = 1234)
