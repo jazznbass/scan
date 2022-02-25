@@ -352,7 +352,7 @@ export.sc_plm <- function(object, caption = NA, footnote = NA, filename = NA,
     colnames(out) <- c("B", "2.5%", "97.5%", "SE", "t", "p")
   }
   
-  if (object$family == "poisson" || object$family == "binomial") {
+  if (object$family == "poisson" || object$family == "nbinomial") {
     OR <- exp(out[, 1:3])
     Q <- (OR - 1) / (OR + 1)
     out <- cbind(out[, -7], round(OR, 3), round(Q, round))
