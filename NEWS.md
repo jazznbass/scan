@@ -4,10 +4,13 @@
 
 ## power_test and Monte-Carlo functions
 
-- rewrote `power_test()` with various extensions, optimizations, and solved various bugs.
-- speed optimized `rSC()`. Rerote the algorithm for 'poisson' distributed measures.
-- rewrote `design_rSC()` and its print method.
-- extended the help pages.
+- rewrote `power_test()` with various extensions, optimizations, and solved various bugs. rewrote the `print` method, added an argument `duration` to print the computation duration. Added the `'n_trials'` argument for binomial distributions. Extended the help page.  
+- speed optimized `rSC()`. Rewrote the algorithm for 'poisson' distributed measures. Rewrote the algorithm for the 'binomial' distribution. Extended the help page.  
+- rewrote `design_rSC()` and its print method. Extended the help page.  
+- new function `mc_function()` takes a character string and returns a function 
+for Monte Carlo analysis.  
+- `plm()`: rewrote the analysis function for binomial tests. These now need an argument `var_trials` to define the number of trials per measurement. The  `dvar_percentage` argument must be set TRUE when the dependent variables are percentages (and `family = 'binomal'`)
+
 
 # scan 0.53.5
 
