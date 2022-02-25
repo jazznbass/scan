@@ -1,7 +1,12 @@
 #' Plot random distirubtion
 #'
 #' @param object Object returned from rand_test() function
-#' @param ... 
+#' @param xlab Label for the x-axis.
+#' @param ylab Label for the y-axis.
+#' @param title Plot title.
+#' @param text_observed Text for marking the number of observed statistic.
+#' @param color Bar color.
+#' @param ... Further arguments passed to the plot function.
 #' @export
 plot.sc_rand <- function(object, 
                          xlab = NA, 

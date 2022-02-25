@@ -7,9 +7,14 @@
 \usage{
 power_test(
   design,
-  stat = c("plm_level", "rand", "tauU"),
+  method = c("plm_level", "rand", "tauU"),
+  effect = "level",
   n_sim = 100,
-  alpha = 0.05
+  design_is_one_study = TRUE,
+  alpha_test = TRUE,
+  power_test = TRUE,
+  binom_test = 0.5,
+  alpha_level = 0.05
 )
 
 power_testSC(...)
@@ -17,47 +22,67 @@ power_testSC(...)
 \arguments{
 \item{design}{An object created by design_rSC}
 
-\item{stat}{Defines the tests the power analysis is based on. The
-default \code{stat = c("plm_level", "rand", "tauU")} computes a power analysis based on
-\code{\link{tau_u}}, \code{\link{randSC}} and \code{\link{plm}} analyses. Further
-possibilities are: "plm_slope", "plm_poisson_level", "plm_poisson_slope", "hplm_level", 
+\item{method}{A (named) list that defines the methods the power analysis is 
+based on. Each element can contain a function (that takes an scdf file and 
+return a p value) or a character string (the name of predefined functions).
+default \code{method = list("plm_level", "rand", "tauU")} computes a power 
+analysis based on \code{\link{tau_u}}, \code{\link{rand_test}} and 
+\code{\link{plm}} analyses. (Further predefined functions are: 
+"plm_slope", "plm_poisson_level", "plm_poisson_slope", "hplm_level", 
 "hplm_slope", "base_tau".}
 
-\item{n_sim}{Number of sample studies created for the the Monte-Carlo study.
-Default is \code{n = 100}}
+\item{effect}{Either "level" or "slope". The respective effect of the 
+provided design is set to 0 when computing the alpha-error proportion.}
 
-\item{alpha}{Alpha level used to calculate the proportion of significant
-tests. Default is \code{alpha = 0.05}.}
+\item{n_sim}{Number of sample studies created for the the Monte-Carlo study.
+Default is \code{n = 100}. Ignored if design_is_one_study = FALSE.}
+
+\item{design_is_one_study}{If TRUE, the design is assumed to define all 
+cases of one study that is repeatedly randomly created \code{n_sim} times. 
+If false, the design is assumed to contain all cases from which a 
+random sample is generated. This is useful for very specific complex 
+simulation studies.}
+
+\item{alpha_test}{Logical. If TRUE, alpha error is calculated.}
+
+\item{power_test}{Logical. If TRUE, power is calculated.}
+
+\item{binom_test}{Either FALSE or a value. If a value is provided, a binomial
+test is calculated for the total correct identifications (alpha and power) 
+against the provided value.}
+
+\item{alpha_level}{Alpha level used to calculate the proportion of 
+significant tests. Default is \code{alpha_level = 0.05}.}
 
 \item{...}{Further arguments passed to the function.}
 }
 \description{
 The \code{power_test} command conducts a Monte-Carlo study on the
-test-power and alpha-error of a set of single-cases. The distribution 
-values of the Monte-Carlo sample are either specified by the user or 
-estimated based on actual data.
+test-power and alpha-error of a set of single-cases.
 }
 \examples{
 
-## Assume you want to conduct a single-case study with 15 MTs, using a highly reliable test,
-## an expected level effect of \eqn{d = 1.4}, and randomized start points between MTs 5
-## and 12 can you expect to identify the effect using plm or randomization test?
+## Assume you want to conduct a single-case study with 15 measurement 
+## (phases: A = 6 and B = 9) using a highly reliable test and
+## an expected level effect of \eqn{d = 1.4}. 
+## A (strong) trend effect is \eqn{trend = 0.05}. What is the power?
+## (Note: n_sims is set to 10. Set n_sims to 1000 for a serious calculation.)
 design <- design_rSC(
   n = 1, phase.design = list(A = 6, B = 9), 
-  rtt = 0.8, level = 1.4
+  rtt = 0.8, level = 1.4, trend = 0.05
 )
-res <- power_test(design, n_sim = 10)
+power_test(design, n_sim = 10)
 
 ## Would you achieve higher power by setting up a MBD with three cases?
 design <- design_rSC(
   n = 3, phase.design = list(A = 6, B = 9), 
-  rtt = 0.8, level = 1.4
+  rtt = 0.8, level = 1.4, trend = 0.05
 )
-res <- power_test(design, n_sim = 10, stat = c("hplm_level", "rand"))
+power_test(design, n_sim = 10, method = list("hplm_level", "rand", "tauU_meta"))
 
 }
 \seealso{
-\code{\link{plm}}, \code{\link{randSC}}
+\code{\link{rSC}}, \code{\link{design_rSC}}
 }
 \author{
 Juergen Wilbert

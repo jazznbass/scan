@@ -8,27 +8,21 @@
 NULL
 
 #' @rdname print.sc
+#' @param duration If TRUE the duration for computation is printed.
 #' @export
-print.sc_power <- function(x, digits = "auto", ...) {
+print.sc_power <- function(x, duration = FALSE, ...) {
 
-  cat("Test-Power in percent:\n")
-  ma <- matrix(
-    unlist(x[1:16]) * 100, byrow = FALSE, ncol = 2, 
-    dimnames = list(
-      c(
-        "tauU: A vs. B - Trend A", 
-        paste0("Rand-Test: ",x$rand.test.stat[1]),  
-        "PLM.Norm: Level", 
-        "PLM.Norm: Slope", 
-        "PLM.Poisson: Level", 
-        "PLM.Poisson: Slope", 
-        "HPLM: Level", 
-        "HPLM: Slope"
-      ), 
-      c("Power", "Alpha-error")
-    )
+  cat("Test-Power in percent:\n\n")
+  
+  class(x) <- "data.frame"
+  print(x,row.names = FALSE)
+  if (duration) 
+    cat(
+      "\nComputation duration is", 
+      round(attr(x, "computation_duration")[3], 1), 
+      "seconds.\n"
   )
-  ma
+  
 }
 
 
@@ -150,19 +144,33 @@ print.sc_desc <- function(x, digits = "auto", ...) {
 print.sc_design <- function(x, ...) {
   cat("A scdf design matrix\n\n")
   cat("Number of cases:", length(x$cases), "\n")
-  cat("Mean: ", x$cases[[1]]$m[1], "\n")
-  cat("SD = ", x$cases[[1]]$s[1], "\n")
-  cat("rtt = ", x$cases[[1]]$rtt[1], "\n")
-  cat("Phase design: ", as.character(x$cases[[1]]$phase), "\n")
+  cat("Distribution: ", x$distribution, "\n")
+  cat("Start values: ", unique(
+    sapply(x$cases, function(x) {x$start_value[1]})), "\n")
+  if (x$distribution %in% c("normal", "gaussian")) {
+    cat("SD = ", unique(sapply(x$cases, function(x) {x$s[1]})), "\n")
+    cat("rtt = ", unique(sapply(x$cases, function(x) {x$rtt[1]})), "\n")
+  }
+  cat("Phase design: ", unique(sapply(x$cases, function(x) {
+    paste0(x$phase, "=", x$length, collapse = " ")
+    })), "\n")
+  cat("Trend effect: ", unique(sapply(x$cases, function(x) {x$trend[1]})), "\n")
+  cat("Level effect: ", unique(sapply(x$cases, function(x) {
+    paste0(x$phase[-1], "=", x$level[-1], collapse = " ")
+  })), "\n")
+  cat("Slope effect: ", unique(sapply(x$cases, function(x) {
+    paste0(x$phase[-1], "=", x$slope[-1], collapse = " ")
+  })), "\n")
+  cat("Missing proportion: ", unique(sapply(x$cases, function(x) {x$missing})), "\n")
   
-  cat("mean trend-effect: ", apply(sapply(x$cases, function(x) {x$trend}), 1, mean, na.rm = TRUE)[1], "\n")
-  cat("mean level-effect: ", apply(sapply(x$cases, function(x) {x$level}), 1, mean, na.rm = TRUE), "\n")
-  cat("mean slope-effect: ", apply(sapply(x$cases, function(x) {x$slope}), 1, mean, na.rm = TRUE), "\n")
-  cat("sd trend-effect: ", apply(sapply(x$cases, function(x) {x$trend}), 1, sd, na.rm = TRUE)[1], "\n")
-  cat("sd level-effect: ", apply(sapply(x$cases, function(x) {x$level}), 1, sd, na.rm = TRUE), "\n")
-  cat("sd slope-effect: ", apply(sapply(x$cases, function(x) {x$slope}), 1, sd, na.rm = TRUE), "\n")
-  cat("Distribution: ", x$distribution)
-
+  ext_p <- unique(sapply(x$cases, function(x) {x$extreme.p}))
+  cat("Extreme proportion: ", ext_p, "\n")
+  if (ext_p != 0) {
+    cat("Extreme range: ", unique(sapply(x$cases, function(x) {
+      paste0(x$extreme.low, "/", x$extreme.high, collapse = " ")
+    })), "\n")
+  }
+  
 }
 
 #' @rdname print.sc
@@ -458,10 +466,13 @@ print.sc_tauu <- function(x, complete = FALSE, digits = "auto", ...) {
   cat("Tau-U\n")
   cat("Method:", x$method, "\n")
   cat("Applied Kendall's Tau-", x$tau_method, "\n", sep = "")
-  cat(x$ci * 100, "% CIs for tau are reported.\n\n", sep = "")
+  if (complete || (length(x$table) > 1 && x$meta_method != "none")) {
+    cat(x$ci * 100, "% CIs for tau are reported.\n\n", sep = "")
+  } else cat("\n")
+  
   out <- x$table
   
-  if (length(out) > 1) {
+  if (length(out) > 1 && x$meta_method != "none") {
     cat("Overall Tau-U\n")
     cat("Meta-anlysis model:", x$meta_method, "effect\n\n")
     print(x$Overall_tau_u, row.names = FALSE, digits = digits)
@@ -503,11 +514,11 @@ print.sc_plm <- function(x, ...) {
     cat("Correlated residuals up to autoregressions of lag",
         x$ar, "are modelled\n\n")
   
-  if (x$family == "poisson" || x$family == "nbinomial") {
+  if (x$family == "poisson" || x$family == "binomial") {
     Chi <- x$full$null.deviance - x$full$deviance
     DF <- x$full$df.null - x$full$df.residual
     cat(sprintf(
-      "\u0347\u00b2(%d) = %.2f; p = %0.3f; AIC = %.0f\n\n", 
+      "X\u00b2(%d) = %.2f; p = %0.3f; AIC = %.0f\n\n", 
       DF, Chi, 1 - pchisq(Chi, df = DF), x$full$aic)
     )	
   } else {
@@ -550,7 +561,7 @@ print.sc_plm <- function(x, ...) {
   if (is.null(x$r.squares))
     colnames(res) <- c("B", "2.5%", "97.5%", "SE", "t", "p")		
   
-  if (x$family == "poisson" || x$family == "nbinomial") {
+  if (x$family == "poisson" || x$family == "binomial") {
     OR <- exp(res[, 1:3])
     Q <- (OR - 1) / (OR + 1)
     res <- cbind(res[, -7], round(OR, 3), round(Q, 2))
@@ -561,14 +572,22 @@ print.sc_plm <- function(x, ...) {
   }
   print(res)
   cat("\n")
-  cat("Autocorrelations of the residuals\n")
-  lag.max = 3
-  cr <- acf(residuals(x$full.model), lag.max = lag.max,plot = FALSE)$acf[2:(1 + lag.max)]
-  cr <- round(cr, 2)
-  print(data.frame(lag = 1:lag.max, cr = cr), row.names = FALSE)
-  cat("\n")
+  if (x$family == "gaussian") {
+    cat("Autocorrelations of the residuals\n")
+    lag.max = 3
+    cr <- acf(residuals(x$full.model), lag.max = lag.max,plot = FALSE)$acf[2:(1 + lag.max)]
+    cr <- round(cr, 2)
+    print(data.frame(lag = 1:lag.max, cr = cr), row.names = FALSE)
+    cat("\n")
+  }
   cat("Formula: ")
+  if (x$family == "binomial") {
+    x$formula[2] <- str2expression(paste0(x$formula[2], "/", x$var_trials))
+  }
   print(x$formula, showEnv = FALSE)
+  if (x$family == "binomial") {
+    cat("weights = ", x$var_trials)
+  }
   cat("\n")
   .note_vars(x)
 }

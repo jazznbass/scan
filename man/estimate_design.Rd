@@ -26,16 +26,16 @@ estimate_design(
 
 \item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
 
-\item{m}{The mean depcting the overall distribution of which all cases are a random sample of.
+\item{m}{The mean depicting the overall distribution of which all cases are a random sample of.
 m is estimated when m = NULL.}
 
-\item{s}{The standard deviation depcting the between case variance of the overall performance.
+\item{s}{The standard deviation depicting the between case variance of the overall performance.
 If more than two single-cases are included in the scdf, the variance is estimated if s is set to NULL.}
 
 \item{rtt}{The reliability of the measurements. The reliability is estimated when rtt = NULL.}
 
 \item{between}{If FALSE trend, level, and slope effect estimations will be identical for each case.
-If TRUE effects are estimated for each case seperately.}
+If TRUE effects are estimated for each case separately.}
 
 \item{model}{Model used for calculating the slope parameter (see Huitema &
 McKean, 2000). Default is \code{model = "B&L-B"}. Possible values are:
@@ -46,12 +46,12 @@ McKean, 2000). Default is \code{model = "B&L-B"}. Possible values are:
 }
 \value{
 A list of parameters for each single-case. Parameters include name, length, and
-starting measurementtime of each phase, trend level, and slope effects for each phase, mean,
-standarddeviation, and reliability for each case.
+starting measurement time of each phase, trend level, and slope effects for each phase, mean,
+standard deviation, and reliability for each case.
 }
 \description{
 This functions takes an scdf and extracts design parameters. The resulting
-object can be unsed to randomly create new scdf files with the same
-underlying parameters. This is usefull for monte-carlo studies and
+object can be used to randomly create new scdf files with the same
+underlying parameters. This is useful for monte-carlo studies and
 bootstrapping procedures.
 }

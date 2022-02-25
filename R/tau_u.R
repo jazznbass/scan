@@ -9,7 +9,7 @@
 #' @param method \code{"complete"} (default) or \code{"parker"}. The latter
 #' calculates the number of possible pairs as described in Parker et al. (2011)
 #' which might lead to tau-U values greater than 1.
-#' @param meta_method Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated.
+#' @param meta_method Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated. If set "none", no meta-analysis is conducted (may be helpful to speed up analyses).
 #' @param ci Confidence interval for meta analyzes.
 #' @param continuity_correction If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.
 #' @return 
@@ -63,7 +63,7 @@ tau_u <- function(data, dvar, pvar,
     stop("tau_method muste be 'a' or 'b'.")
   if (!method %in% c("complete", "parker")) 
     stop("method muste be 'complete' or 'parker'.")
-  if (!meta_method %in% c("random", "fixed")) 
+  if (!meta_method %in% c("random", "fixed", "none")) 
     stop("meta_method muste be 'random' or 'fixed'.")
   
   # set attributes to arguments else set to defaults of scdf
@@ -323,7 +323,12 @@ tau_u <- function(data, dvar, pvar,
   
   # Overall Tau -------------------------------------------------------------
   
-  out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method, ci = ci)
+  if (meta_method != "none") {
+    out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method, ci = ci)    
+  } else {
+    out$Overall_tau_u <- NA
+  }
+
   out$meta_method <- meta_method 
   
   # return ------------------------------------------------------------------
