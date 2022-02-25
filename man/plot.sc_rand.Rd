@@ -17,7 +17,17 @@
 \arguments{
 \item{object}{Object returned from rand_test() function}
 
-\item{...}{}
+\item{xlab}{Label for the x-axis.}
+
+\item{ylab}{Label for the y-axis.}
+
+\item{title}{Plot title.}
+
+\item{text_observed}{Text for marking the number of observed statistic.}
+
+\item{color}{Bar color.}
+
+\item{...}{Further arguments passed to the plot function.}
 }
 \description{
 Plot random distirubtion
