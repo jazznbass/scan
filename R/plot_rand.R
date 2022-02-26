@@ -1,6 +1,9 @@
-#' Plot random distirubtion
+#' Plot random distribution
+#' 
+#' This function takes the return of the rand_test function and creates a 
+#' histogram with the distribution of the rand sample statistics.
 #'
-#' @param object Object returned from rand_test() function
+#' @param object Object returned from the rand_test() function
 #' @param xlab Label for the x-axis.
 #' @param ylab Label for the y-axis.
 #' @param title Plot title.
@@ -8,12 +11,12 @@
 #' @param color Bar color.
 #' @param ... Further arguments passed to the plot function.
 #' @export
-plot.sc_rand <- function(object, 
-                         xlab = NA, 
-                         ylab = "Frequency", 
-                         title = "Random distribution", 
-                         text_observed = "observed", 
-                         color = "lightgrey", ...) {
+plot_rand <- function(object, 
+                      xlab = NA, 
+                      ylab = "Frequency", 
+                      title = "Random distribution", 
+                      text_observed = "observed", 
+                      color = "lightgrey", ...) {
   
   h <- hist(object$distribution, plot = FALSE)
   lab <- paste0(round(h$counts / length(object$distribution) * 100, 0), "%")
