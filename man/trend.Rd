@@ -45,15 +45,15 @@ specific formula class.
 \examples{
 
 ## Compute the linear and squared regression for a random single-case
-design <- design_rSC(slope = 0.5)
-matthea <- rSC(design)
+design <- design(slope = 0.5)
+matthea <- random_scdf(design)
 trend(matthea)
 
 ## Besides the linear and squared regression models compute two custom models:
 ## a) a cubic model, and b) the values predicted by the natural logarithm of the
 ## measurement time.
-design <- design_rSC(slope = 0.3)
-ben <- rSC(design)
+design <- design(slope = 0.3)
+ben <- random_scdf(design)
 trend(ben, offset = 0, model = c("Cubic" = values ~ I(mt^3), "Log Time" = values ~ log(mt)))
 
 }

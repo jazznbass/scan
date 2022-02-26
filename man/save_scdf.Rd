@@ -23,7 +23,7 @@ This function restructures and saves single-case data into a .csv-file.
 \examples{
 ## Save single-case data to a .csv-file
 filename <- filename <- file.path(tempdir(), "test.csv")
-jessica <- rSC(design_rSC(level = .5))
+jessica <- random_scdf(design(level = .5))
 save_scdf(jessica, filename)
 
 ## Save multiple cases to a .csv-file with semicolon as field and comma as decimal separator

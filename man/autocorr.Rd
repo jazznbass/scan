@@ -5,7 +5,7 @@
 \alias{autocorrSC}
 \title{Autocorrelation for single-case data}
 \usage{
-autocorr(data, dvar, pvar, mvar, lag.max = 3, ...)
+autocorr(data, dvar, pvar, mvar, lag_max = 3, lag.max, ...)
 
 autocorrSC(...)
 }
@@ -18,15 +18,14 @@ autocorrSC(...)
 
 \item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
 
-\item{lag.max}{The lag up to which autocorrelations will be computed.
-Default is \code{lag.max = 3}.}
+\item{lag_max, lag.max}{The lag up to which autocorrelations will be computed.}
 
 \item{...}{Further arguments passed to the \code{\link{acf}} function}
 }
 \value{
-A data frame containing separate autocorrelations for each
-phase and for all phases (for each single-case). If \code{lag.max} exceeds
-the length of a phase minus one, NA is returned for this cell.
+A data frame containing separate autocorrelations for each phase and
+  for all phases (for each single-case). If \code{lag_max} exceeds the length
+  of a phase minus one, NA is returned for this cell.
 }
 \description{
 The autocorr function calculates autocorrelations within each phase and
@@ -34,7 +33,7 @@ across all phases.
 }
 \examples{
 ## Compute autocorrelations for a list of four single-cases up to lag 2.
-autocorr(Huber2014, lag.max = 2)
+autocorr(Huber2014, lag_max = 2)
 }
 \seealso{
 \code{\link{trend}}, \code{\link{plm}}, \code{\link{acf}}

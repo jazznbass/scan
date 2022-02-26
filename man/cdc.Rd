@@ -65,8 +65,8 @@ change".
 \examples{
 
 ## Apply the CDC method (standard OLS line)
-design <- design_rSC(n = 1, slope = 0.2)
-dat <- rSC(design, seed = 42)
+design <- design(n = 1, slope = 0.2)
+dat <- random_scdf(design, seed = 42)
 cdc(dat)
 
 ## Apply the CDC with Koenig's bi-split and an expected decrease in phase B.

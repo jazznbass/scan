@@ -1,6 +1,8 @@
 # scan (development version)
 
-
+- renamed functions: 
+`design_rSC()` -> `design()`  
+`rSC()` -> `random_scdf()`
 
 # scan 0.53.6
 

@@ -132,7 +132,7 @@ plot(Grosche2011$Georg, style = "sienna", ylim = c(0,NA),
        lines = list(type = "loreg", f = 0.2, lty = "solid", col = "black", lwd = 3))
 
 ## Plot a random MBD over three cases and mark interesting MTs
-dat <- rSC(design = design_rSC(3))
+dat <- random_scdf(design = design(3))
 plot(dat, marks = list(positions = list(c(2,4,5),c(1,2,3),c(7,8,9)), col = "blue",
        cex = 1.4), style = c("grid", "annotate", "tiny"))
 

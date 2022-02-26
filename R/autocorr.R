@@ -18,7 +18,7 @@
 #' @concept Serial correlation
 #' @export
 autocorr <- function(data, dvar, pvar, mvar, 
-                     lag_max = 3
+                     lag_max = 3,
                      lag.max, 
                      ...) {
   

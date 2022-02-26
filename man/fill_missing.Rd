@@ -51,7 +51,7 @@ names(study) <- c("Original", "Filled")
 plot(study)
 
 ## Fill missing values in a single-case dataset that are NA
-Maggie <- rSC(design_rSC(level = list(0,1)), seed = 123)
+Maggie <- random_scdf(design(level = list(0,1)), seed = 123)
 Maggie_n <- Maggie
 replace.positions <- c(10,16,18)
 Maggie_n[[1]][replace.positions,"values"] <- NA
