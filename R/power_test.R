@@ -1,56 +1,63 @@
 #' Empirical power analysis for single-case data
-#' 
-#' The \code{power_test} command conducts a Monte-Carlo study on the
-#' test-power and alpha-error of a set of single-cases.
-#' 
+#'
+#' Conducts a Monte-Carlo study on the test-power and alpha-error of a
+#' statistical function.
+#'
+#' Based on a \code{\link{design}} object, a large number of single-cases
+#' are generated and re-analyzed with a provided statistical function. The
+#' proportion of significant analyzes is the test power. In a second step, a
+#' specified effect of the design object is set to 0 and again single-cases are
+#' generated and reanalyzed. The proportion of significant analyzes is the alpha
+#' error probability.
+#'
 #' @inheritParams .inheritParams
-#' @param design An object created by design_rSC
-#' @param method A (named) list that defines the methods the power analysis is 
-#'   based on. Each element can contain a function (that takes an scdf file and 
+#' @param design An object returned from the `design` function.
+#' @param method A (named) list that defines the methods the power analysis is
+#'   based on. Each element can contain a function (that takes an scdf file and
 #'   return a p value) or a character string (the name of predefined functions).
-#'   default \code{method = list("plm_level", "rand", "tauU")} computes a power 
-#'   analysis based on \code{\link{tau_u}}, \code{\link{rand_test}} and 
-#'   \code{\link{plm}} analyses. (Further predefined functions are: 
-#'   "plm_slope", "plm_poisson_level", "plm_poisson_slope", "hplm_level", 
-#'   "hplm_slope", "base_tau".
-#' @param effect Either "level" or "slope". The respective effect of the 
+#'   default \code{method = list("plm_level", "rand", "tauU")} computes a power
+#'   analysis based on \code{\link{tau_u}}, \code{\link{rand_test}} and
+#'   \code{\link{plm}} analyses. (Further predefined functions are: "plm_slope",
+#'   "plm_poisson_level", "plm_poisson_slope", "hplm_level", "hplm_slope",
+#'   "base_tau".
+#' @param effect Either "level" or "slope". The respective effect of the
 #'   provided design is set to 0 when computing the alpha-error proportion.
 #' @param n_sim Number of sample studies created for the the Monte-Carlo study.
 #'   Default is \code{n = 100}. Ignored if design_is_one_study = FALSE.
-#' @param design_is_one_study If TRUE, the design is assumed to define all 
-#'   cases of one study that is repeatedly randomly created \code{n_sim} times. 
-#'   If false, the design is assumed to contain all cases from which a 
-#'   random sample is generated. This is useful for very specific complex 
-#'   simulation studies.
+#' @param design_is_one_study If TRUE, the design is assumed to define all cases
+#'   of one study that is repeatedly randomly created \code{n_sim} times. If
+#'   false, the design is assumed to contain all cases from which a random
+#'   sample is generated. This is useful for very specific complex simulation
+#'   studies.
 #' @param alpha_test Logical. If TRUE, alpha error is calculated.
 #' @param power_test Logical. If TRUE, power is calculated.
 #' @param binom_test Either FALSE or a value. If a value is provided, a binomial
-#'   test is calculated for the total correct identifications (alpha and power) 
+#'   test is calculated for the total correct identifications (alpha and power)
 #'   against the provided value.
-#' @param alpha_level Alpha level used to calculate the proportion of 
+#' @param alpha_level Alpha level used to calculate the proportion of
 #'   significant tests. Default is \code{alpha_level = 0.05}.
 #' @author Juergen Wilbert
-#' @seealso \code{\link{rSC}}, \code{\link{design_rSC}}
+#' @seealso \code{\link{random_scdf}}, \code{\link{design}}
 #' @examples
-#' 
-#' ## Assume you want to conduct a single-case study with 15 measurement 
+#'
+#' ## Assume you want to conduct a single-case study with 15 measurement
 #' ## (phases: A = 6 and B = 9) using a highly reliable test and
-#' ## an expected level effect of \eqn{d = 1.4}. 
-#' ## A (strong) trend effect is \eqn{trend = 0.05}. What is the power?
+#' ## an expected level effect of d = 1.4.
+#' ## A (strong) trend effect is trend = 0.05. What is the power?
 #' ## (Note: n_sims is set to 10. Set n_sims to 1000 for a serious calculation.)
-#' design <- design_rSC(
-#'   n = 1, phase.design = list(A = 6, B = 9), 
+#' design <- design(
+#'   n = 1, phase.design = list(A = 6, B = 9),
 #'   rtt = 0.8, level = 1.4, trend = 0.05
 #' )
 #' power_test(design, n_sim = 10)
-#' 
+#'
 #' ## Would you achieve higher power by setting up a MBD with three cases?
-#' design <- design_rSC(
-#'   n = 3, phase.design = list(A = 6, B = 9), 
+#' design <- design(
+#'   n = 3, phase.design = list(A = 6, B = 9),
 #'   rtt = 0.8, level = 1.4, trend = 0.05
 #' )
-#' power_test(design, n_sim = 10, method = list("hplm_level", "rand", "tauU_meta"))
-#' 
+#' power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"))
+#'
 #' @export
 
 power_test <- function(design,
@@ -143,11 +150,11 @@ power_test <- function(design,
   rand_sample <- list()
   
   if (design_is_one_study) {
-    for(i in 1:n_sim) rand_sample[[i]] <- rSC(design = design)
+    for(i in 1:n_sim) rand_sample[[i]] <- random_scdf(design = design)
   }
   
   if (!design_is_one_study) {
-    tmp <- rSC(design = design)
+    tmp <- random_scdf(design = design)
     for (i in seq_along(tmp)) rand_sample[[i]] <- tmp[i]
   }
   
