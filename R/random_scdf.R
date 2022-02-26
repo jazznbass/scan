@@ -127,7 +127,7 @@ random_scdf <- function(design = NULL,
       measured_values[.ids] <- measured_values[.ids] + .error
     }
 
-    if (missing_pop > 0) {
+    if (missing_prop > 0) {
       .ids <- sample(1:mt, missing_prop * mt)
       measured_values[.ids] <- NA
     }

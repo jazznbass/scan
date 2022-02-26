@@ -46,14 +46,14 @@
 #' ## A (strong) trend effect is trend = 0.05. What is the power?
 #' ## (Note: n_sims is set to 10. Set n_sims to 1000 for a serious calculation.)
 #' design <- design(
-#'   n = 1, phase.design = list(A = 6, B = 9),
+#'   n = 1, phase_design = list(A = 6, B = 9),
 #'   rtt = 0.8, level = 1.4, trend = 0.05
 #' )
 #' power_test(design, n_sim = 10)
 #'
 #' ## Would you achieve higher power by setting up a MBD with three cases?
 #' design <- design(
-#'   n = 3, phase.design = list(A = 6, B = 9),
+#'   n = 3, phase_design = list(A = 6, B = 9),
 #'   rtt = 0.8, level = 1.4, trend = 0.05
 #' )
 #' power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"))

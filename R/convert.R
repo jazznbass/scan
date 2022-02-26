@@ -22,7 +22,7 @@ convert <- function(scdf, file = "", study_name = "study") {
     dat <- scdf[[case]]
     design <- rle(as.character(scdf[[case]][, attr_scan[[.opt$phase]]]))
     phase_design <- paste0(design$values, " = ", design$lengths, collapse = ", ")
-    phase_design <- paste0("phase.design = c(", phase_design, ")")
+    phase_design <- paste0("phase_design = c(", phase_design, ")")
     
     var_names <- names(dat)[!names(dat) %in% attr_scan[[.opt$phase]]]
     vars <- c()
