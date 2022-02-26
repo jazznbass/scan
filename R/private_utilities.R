@@ -30,25 +30,6 @@
   return(x)
 }
 
-# .SCac <- function(x, lag = 1) {
-#   m <- mean(x, na.rm = TRUE)
-#   ax1 <- x[1:(length(x) - lag)] - m
-#   ax2 <- x[(lag + 1):length(x)] - m
-#   ac <- sum(ax1 * ax2, na.rm = TRUE) / sum((x - m)^2, na.rm = TRUE)
-#   ac
-# }
-
-# .SClm <- function(x = NULL, y) {
-#   if (is.null(x))
-#     x <- 1:length(y)
-#   mx <- mean(x)
-#   my <- mean(y)
-#   ss.xy <- sum( (x - mx) * (y - my) )
-#   ss.xx <- sum( (x - mx)^2 )
-#   b <- ss.xy / ss.xx
-#   b
-# }
-
 .beta_weights <- function(model) {
   b <- model$coefficients[-1]
   sx <- apply(model$model[-1], 2, sd)
