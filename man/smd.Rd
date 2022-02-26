@@ -25,6 +25,16 @@ and 4 (as B). Default is \code{phases = c("A","B")}.}
 \description{
 The \code{smd} function provides various standardized mean effect sizes for single-case data.
 }
+\details{
+'sd cohen' is the (unweigted) average of the variance of phase A and B.  
+'sd Hedges' is the weighted average of the variance of phase A and B (with a degrees of freedom correction). 
+'Hedges' g' is the mean difference divided by 'sd Hedges'.
+'Hedges' g correction' and 'Hedges' g durlak correction' are two approaches 
+of correcting Hedges' g for small sample sizes.
+'Glass' delta' is the mean difference divided by the standard deviation of the 
+A-phase.
+'Cohens d` is the mean difference divided by 'sd cohen'.
+}
 \seealso{
 \code{\link{overlap}}, \code{\link{describe}}
 }
