@@ -39,7 +39,7 @@ combined by providing a list with two elements. E.g., \code{phases = list(A
 = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
 (as B). Default is \code{phases = c("A","B")}.}
 
-\item{meta_method}{Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated.}
+\item{meta_method}{Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated. If set "none", no meta-analysis is conducted (may be helpful to speed up analyses).}
 
 \item{ci}{Confidence interval for meta analyzes.}
 

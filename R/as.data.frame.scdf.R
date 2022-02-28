@@ -52,9 +52,3 @@ as.data.frame.scdf <- function(x, ..., l2 = NULL, id = "case") {
   outdat
   
 }
-
-#' @rdname deprecated-functions
-#' @export
-longSCDF <- function(...) {
-  as.data.frame(...)
-}

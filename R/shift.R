@@ -23,7 +23,3 @@ shift <- function(data, value, var) {
   }
   data
 }
-
-#' @rdname deprecated-functions
-#' @export
-shiftSC <- function(...) shift(...)

@@ -65,7 +65,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">smd</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">pvar</span>, <span class="va">mvar</span>, phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">smd</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">pvar</span>, <span class="va">mvar</span>, decreasing <span class="op">=</span> <span class="cn">FALSE</span>, phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -82,6 +82,9 @@ the attributes in the scdf file.</p></dd>
 <dt>mvar</dt>
 <dd><p>Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.</p></dd>
+<dt>decreasing</dt>
+<dd><p>If you expect data to be lower in the B phase, set
+<code>decreasing = TRUE</code>. Default is <code>decreasing = FALSE</code>.</p></dd>
 <dt>phases</dt>
 <dd><p>A vector of two characters or numbers indicating the two phases
 that should be compared. E.g., <code>phases = c("A","C")</code> or <code>phases =
