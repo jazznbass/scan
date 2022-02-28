@@ -8,7 +8,7 @@
 #' @param method \code{"complete"} (default) or \code{"parker"}. The latter
 #' calculates the number of possible pairs as described in Parker et al. (2011)
 #' which might lead to tau-U values greater than 1.
-#' @param meta_method Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated.
+#' @param meta_method Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated. If set "none", no meta-analysis is conducted (may be helpful to speed up analyses).
 #' @param ci Confidence interval for meta analyzes.
 #' @param continuity_correction If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.
 #' @return 
@@ -62,8 +62,8 @@ tau_u <- function(data, dvar, pvar,
     stop("tau_method muste be 'a' or 'b'.")
   if (!method %in% c("complete", "parker")) 
     stop("method muste be 'complete' or 'parker'.")
-  if (!meta_method %in% c("random", "fixed")) 
-    stop("meta_method muste be 'random' or 'fixed'.")
+  if (!meta_method %in% c("random", "fixed", "none")) 
+    stop("meta_method muste be 'none', 'random' or 'fixed'.")
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
@@ -246,7 +246,7 @@ tau_u <- function(data, dvar, pvar,
     )
     
     # S -----------------------------------------------------------------
-
+    
     table_tau$S <- table_tau$pos - table_tau$neg
     
     # D ----------------------------------------------------------------------
@@ -261,7 +261,7 @@ tau_u <- function(data, dvar, pvar,
         AvB_B_AKen$D
       )
     }
-
+    
     if (tau_method == "a") {
       table_tau$D <- table_tau$pairs
     }
@@ -269,7 +269,7 @@ tau_u <- function(data, dvar, pvar,
     # tau -----------------------------------------------------------
     
     table_tau$Tau <- table_tau$S / table_tau$D
-
+    
     # SD and VAR --------------------------------------------------------------
     
     table_tau$SD_S <- c(
@@ -304,7 +304,7 @@ tau_u <- function(data, dvar, pvar,
     #   #table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
     #   #table_tau$Z2 <- (3 * table_tau$S) / sqrt(n * (n - 1) * (2 * n + 5) / 2)
     # }
-
+    
     table_tau$Z <- table_tau$S / table_tau$SD_S
     table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
     table_tau$p <- pnorm(abs(table_tau$Z), lower.tail = FALSE) * 2
@@ -322,7 +322,12 @@ tau_u <- function(data, dvar, pvar,
   
   # Overall Tau -------------------------------------------------------------
   
-  out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method, ci = ci)
+  if (meta_method != "none") {
+    out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method, ci = ci)    
+  } else {
+    out$Overall_tau_u <- NA
+  }
+  
   out$meta_method <- meta_method 
   
   # return ------------------------------------------------------------------
