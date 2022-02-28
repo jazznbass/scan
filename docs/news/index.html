@@ -66,17 +66,17 @@
 <ul><li>
 <code><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform()</a></code>: Takes a scdf and calculates or modifies variables for each case (<code>transform(exampleAB, z_values = scale(values), t_values = 50 + z_values * 10)</code>).</li>
 <li>
-<code><a href="../reference/mc_function.html">mc_function()</a></code> takes a character string and returns a function for Monte Carlo analysis.<br></li>
-<li>
 <code><a href="../reference/smd.html">smd()</a></code> reporting various types of standardized mean differences.</li>
+<li>
+<code><a href="../reference/mc_function.html">mc_function()</a></code> takes a character string and returns a predefined function for Monte Carlo analysis.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="reanmed-functions-old-functionnames-still-work-0-53-6-9003">reanmed functions (old functionnames still work)<a class="anchor" aria-label="anchor" href="#reanmed-functions-old-functionnames-still-work-0-53-6-9003"></a></h3>
 <ul><li>
-<code>readSC</code> -&gt; <code>load_scdf</code>
+<code>readSC</code> -&gt; <code>read_scdf</code>
 </li>
 <li>
-<code>writeSC</code> -&gt; <code><a href="../reference/save_scdf.html">save_scdf()</a></code>
+<code>writeSC</code> -&gt; <code><a href="../reference/write_scdf.html">write_scdf()</a></code>
 </li>
 <li>
 <code><a href="../reference/deprecated-functions.html">design_rSC()</a></code> -&gt; <code><a href="../reference/design.html">design()</a></code>
@@ -90,7 +90,7 @@
 <ul><li>
 <code><a href="../reference/power_test.html">power_test()</a></code> with various extensions, optimizations, and solved various bugs. rewrote the <code>print</code> method, added an argument <code>duration</code> to print the computation duration. Added the <code>'n_trials'</code> argument for binomial distributions. Extended the help page.<br></li>
 <li>
-<code><a href="../reference/deprecated-functions.html">design_rSC()</a></code> and its print method. Extended the help page. Rewrote the algorithm for the ‘binomial’ distribution.</li>
+<code><a href="../reference/design.html">design()</a></code> and its print method. Extended the help page. Rewrote the algorithm for the ‘binomial’ distribution.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="extended-functions-0-53-6-9003">Extended functions<a class="anchor" aria-label="anchor" href="#extended-functions-0-53-6-9003"></a></h3>
@@ -98,9 +98,9 @@
 <code><a href="../reference/plm.html">plm()</a></code>: rewrote the analysis function for binomial tests. These now need an argument <code>var_trials</code> to define the number of trials per measurement. The <code>dvar_percentage</code> argument must be set TRUE when the dependent variables are percentages (and <code>family = 'binomal'</code>).</li>
 <li>speed optimized <code><a href="../reference/random_scdf.html">random_scdf()</a></code>. Rewrote the algorithm for ‘poisson’ distributed measures. Rewrote the algorithm for the ‘binomial’ distribution. Extended the help page.<br></li>
 <li>
-<code>load_scdf</code>: extracts filetype from file extension.</li>
+<code>read_scdf</code>: extracts filetype from file extension.</li>
 <li>
-<code>load_scdf</code>: New <code>yaml</code> import options for scdf files</li>
+<code>read_scdf</code>: New <code>yaml</code> import options for scdf files</li>
 </ul><div class="sourceCode" id="cb1"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anna</span><span class="kw">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">values</span><span class="kw">:</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">A</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">1</span><span class="kw">,</span><span class="at"> </span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">4</span><span class="kw">,</span><span class="at"> </span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">6</span><span class="kw">,</span><span class="at"> </span><span class="dv">7</span><span class="kw">]</span></span>
