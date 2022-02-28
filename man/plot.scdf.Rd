@@ -29,13 +29,17 @@ plotSC(
 \arguments{
 \item{...}{Further arguments passed to the plot command.}
 
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
-\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
+\item{mvar}{Character string with the name of the measurement time variable.
+Defaults to the attributes in the scdf file.}
 
 \item{ylim}{Lower and upper limits of the y-axis (e.g., \code{ylim = c(0,
 20)} sets the y-axis to a scale from 0 to 20). With multiple single-cases
@@ -132,7 +136,7 @@ plot(Grosche2011$Georg, style = "sienna", ylim = c(0,NA),
        lines = list(type = "loreg", f = 0.2, lty = "solid", col = "black", lwd = 3))
 
 ## Plot a random MBD over three cases and mark interesting MTs
-dat <- rSC(design = design_rSC(3))
+dat <- random_scdf(design = design(3))
 plot(dat, marks = list(positions = list(c(2,4,5),c(1,2,3),c(7,8,9)), col = "blue",
        cex = 1.4), style = c("grid", "annotate", "tiny"))
 

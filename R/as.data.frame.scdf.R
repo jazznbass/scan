@@ -53,7 +53,7 @@ as.data.frame.scdf <- function(x, ..., l2 = NULL, id = "case") {
   
 }
 
-#' @rdname as.data.frame.scdf
+#' @rdname deprecated-functions
 #' @export
 longSCDF <- function(...) {
   as.data.frame(...)

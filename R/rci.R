@@ -4,9 +4,6 @@
 #' use!} The \code{rciSC} function computes three indices of reliable change
 #' (Wise, 2004) and corresponding descriptive statistics.
 #' 
-#' 
-#' @aliases rciSC rCi
-
 #' @inheritParams .inheritParams
 #' @param rel Reliability of the measure, used to compute the standard error.
 #' @param ci Width of confidence interval as a decimal. Default is \code{ci =
@@ -110,13 +107,13 @@ rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2
   out
 }
 
-#' @rdname rci
+#' @rdname deprecated-functions
 #' @export
 rciSC <- function(...) {
   rci(...)
 }
 
-#' @rdname rci
+#' @rdname deprecated-functions
 #' @export
 rCi <- function(...) {
   rci(...)

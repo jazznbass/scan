@@ -7,7 +7,8 @@
 add_l2(data, data_l2, cvar = "case")
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
 \item{data_l2}{A level 2 dataset.}
 

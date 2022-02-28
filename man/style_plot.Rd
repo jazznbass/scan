@@ -2,15 +2,9 @@
 % Please edit documentation in R/style_plot.R
 \name{style_plot}
 \alias{style_plot}
-\alias{style_plotSC}
-\alias{style.plotSC}
 \title{Create styles for single-case data plots}
 \usage{
 style_plot(style = "default", ...)
-
-style_plotSC(...)
-
-style.plotSC(...)
 }
 \arguments{
 \item{style}{A character string or a vector of character strings with predefined styles.}

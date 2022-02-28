@@ -69,7 +69,7 @@ truncate_phase <- function(data, dvar, pvar,
   data
 }
 
-#' @rdname truncate_phase
+#' @rdname deprecated-functions
 #' @export
 truncateSC <- function(...) {
   .deprecated_warning("truncate_phase", "truncateSC")

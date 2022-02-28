@@ -7,11 +7,14 @@
 pand(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases = c(1, 2))
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
 \item{decreasing}{If you expect data to be lower in the B phase, set
 \code{decreasing = TRUE}. Default is \code{decreasing = FALSE}.}
@@ -21,12 +24,12 @@ a frequency matrix, which is corrected for ties. A tie is counted as the
 half of a measurement in both phases. Set \code{correction = FALSE} to use
 the uncorrected matrix, which is not recommended.}
 
-\item{phases}{A vector of two characters or numbers indicating the two
-phases that should be compared. E.g., \code{phases = c("A","C")} or
-\code{phases = c(2,4)} for comparing the second to the fourth phase. Phases
-could be combined by providing a list with two elements. E.g., \code{phases
-= list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
-and 4 (as B). Default is \code{phases = c("A","B")}.}
+\item{phases}{A vector of two characters or numbers indicating the two phases
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
+c(2,4)} for comparing the second to the fourth phase. Phases could be
+combined by providing a list with two elements. E.g., \code{phases = list(A
+= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
+(as B). Default is \code{phases = c("A","B")}.}
 }
 \value{
 \item{pand}{Percentage of all non-overlapping data.}
@@ -63,15 +66,15 @@ problem and has better precision-power (Parker, Vannest, & Davis, 2014).
 \examples{
 
 ## Calculate the PAND for a MMBD over three cases
-gunnar <- scdf(c(2,3,1,5,3,4,2,6,4,7), B.start = 5)
-birgit <- scdf(c(3,3,2,4,7,4,2,1,4,7), B.start = 4)
-bodo   <- scdf(c(2,3,4,5,3,4,7,6,8,7), B.start = 6)
+gunnar <- scdf(c(2,3,1,5,3,4,2,6,4,7), B_start = 5)
+birgit <- scdf(c(3,3,2,4,7,4,2,1,4,7), B_start = 4)
+bodo   <- scdf(c(2,3,4,5,3,4,7,6,8,7), B_start = 6)
 mbd <- c(gunnar, birgit, bodo)
 pand(mbd)
 pand(bodo)
 
 ## Calculate the PAND with an expected decrease of phase B scores
-cubs <- scdf(c(20,22,24,17,21,13,10,9,20,9,18), B.start = 5)
+cubs <- scdf(c(20,22,24,17,21,13,10,9,20,9,18), B_start = 5)
 pand(cubs, decreasing = TRUE)
 
 }

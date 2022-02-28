@@ -2,7 +2,6 @@
 % Please edit documentation in R/tau_u.R
 \name{tau_u}
 \alias{tau_u}
-\alias{tauUSC}
 \title{Tau-U for single-case data}
 \usage{
 tau_u(
@@ -16,15 +15,16 @@ tau_u(
   ci = 0.95,
   continuity_correction = FALSE
 )
-
-tauUSC(...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
 \item{tau_method}{Character with values "a" or "b" (default) indicating whether Kendall Tau A or Kendall Tau B is applied.}
 
@@ -32,20 +32,18 @@ tauUSC(...)
 calculates the number of possible pairs as described in Parker et al. (2011)
 which might lead to tau-U values greater than 1.}
 
-\item{phases}{A vector of two characters or numbers indicating the two
-phases that should be compared. E.g., \code{phases = c("A","C")} or
-\code{phases = c(2,4)} for comparing the second to the fourth phase. Phases
-could be combined by providing a list with two elements. E.g., \code{phases
-= list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
-and 4 (as B). Default is \code{phases = c("A","B")}.}
+\item{phases}{A vector of two characters or numbers indicating the two phases
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
+c(2,4)} for comparing the second to the fourth phase. Phases could be
+combined by providing a list with two elements. E.g., \code{phases = list(A
+= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
+(as B). Default is \code{phases = c("A","B")}.}
 
 \item{meta_method}{Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated.}
 
 \item{ci}{Confidence interval for meta analyzes.}
 
 \item{continuity_correction}{If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 \item{table}{A data frame containing statistics from the Tau-U

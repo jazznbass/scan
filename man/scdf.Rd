@@ -8,77 +8,80 @@
 \usage{
 scdf(
   values,
-  B.start,
+  B_start,
   mt,
   phase,
-  phase.design,
-  name,
+  phase_design = NULL,
+  name = NULL,
   dvar = "values",
   pvar = "phase",
   mvar = "mt",
+  phase.design,
+  B.start,
   ...
 )
 }
 \arguments{
-\item{values}{A vector containing measurement values of the dependent variable.}
+\item{values}{A vector containing measurement values of the dependent
+variable.}
 
-\item{B.start}{The first measurement of phase B (simple coding if design is
-strictly AB).}
+\item{B_start, B.start}{The first measurement of phase B (simple coding if
+design is strictly AB).}
 
 \item{mt}{A vector defining measurement times. Default is \code{mt =
 (1,2,3,...,n)}.}
 
 \item{phase}{A vector defining phase assignments.}
 
-\item{phase.design}{A vector defining the length and label of each phase.
-E.g., \code{phase.length = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.}
+\item{phase_design, phase.design}{A vector defining the length and label of
+each phase. E.g., \code{phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 =
+10)}.}
 
 \item{name}{A name for the case.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
-\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
+\item{mvar}{Character string with the name of the measurement time variable.
+Defaults to the attributes in the scdf file.}
 
 \item{...}{Additional variables. E.g., \code{teacher = c(0,1,0,1,0,0,1),
 lesson = c(1,3,4,5,2,3)}.}
 }
 \value{
 Returns a single-case data frame \code{scdf} suitable for all
-functions of the \code{scan} package. Multiple data sets (e.g. from Multiple
-Baseline Designs) can be listed.
+  functions of the \code{scan} package. Multiple data sets (e.g. from
+  Multiple Baseline Designs) can be listed.
 }
 \description{
-The class \code{scdf} stores single-case study data with one or more
+The \code{scdf} class stores single-case study data with one or more
 single-cases.
 }
 \details{
-The \code{scdf} class is a wrapper for a list containing a dataframe for
-each case.
-
-If the dependent variable is a named vector then the names are extracted
-to create a phase design (e.g., values = c(A = 2,3,5,4,3, B = 6,5,4,3) will create
-an AB phase design with five and four measuresments).
-An scdf contains several attributes:
- \code{dvar} The name of the dependent variable.
- \code{phase} The name of the phase variable.
- \code{mt} The name of the measurement time variable.
- \code{author} Information on the author of the data.
- \code{info} Further information on the data. E.g., a publication.
- \code{dvar, phase, and mt} are the defaults most of the \code{scan} function
- use. You can change the values of the attributes with the \code{scdf_attr} function
- (e.g., \code{scdf_attr(exampleAB_add, "dvar") <- "depression"} defines depression
- as the dependent variable. Please notice that all \code{scan} functions
- have arguments to define \code{dvar, phase, and mt} for a given analysis.
+If the dependent variable is a named vector then the names are
+  extracted to create a phase design (e.g., values = c(A = 2,3,5,4,3, B =
+  6,5,4,3) will create an AB phase design with five and four measuresments).
+  An scdf contains several attributes: \code{dvar} The name of the dependent
+  variable. \code{phase} The name of the phase variable. \code{mt} The name
+  of the measurement time variable. \code{author} Information on the author
+  of the data. \code{info} Further information on the data. E.g., a
+  publication. \code{dvar, phase, and mt} are the defaults most of the
+  \code{scan} function use. You can change the values of the attributes with
+  the \code{scdf_attr} function (e.g., \code{scdf_attr(exampleAB_add, "dvar")
+  <- "depression"} defines depression as the dependent variable. Please
+  notice that all \code{scan} functions have arguments to define \code{dvar,
+  phase, and mt} for a given analysis.
 }
 \examples{
 
 ## Scores on a letter naming task were collected on eleven days in a row. The intervention
-## started after the fifth measurement, so the first B phase measurement was 6 (B.start = 6).
+## started after the fifth measurement, so the first B phase measurement was 6 (B_start = 6).
 klaas <- scdf(
   c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
-  B.start = 6, name = "Klaas"
+  B_start = 6, name = "Klaas"
 )
 plot(klaas)
 
@@ -91,44 +94,44 @@ klaas <- scdf(
 # Alternative coding 2:
 klaas <- scdf(
   c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
-  phase.design = c(A = 5, B = 6), name = "Klaas"
+  phase_design = c(A = 5, B = 6), name = "Klaas"
 )
 
-## Unfortunately in a similar SCDR there were no data collected on days 3 and 9. Use NA to
-## pass them to the package.
+## Unfortunately in a similar study there were no data collected on 
+## days 3 and 9. Use NA to pass them to the function:
 emmi <- scdf(c(5, 7, NA, 5, 7, 12, 16, 18, NA, 14, 19),
-  phase.design = c(A = 5, B = 6), name = "Emmi"
+  phase_design = c(A = 5, B = 6), name = "Emmi"
 )
-describeSC(emmi)
+describe(emmi)
 
-## In a MBD over three persons, data were again collected eleven days in a row. Intervention
-## starting points differ between subjects as they were randomly assigned. The three SCDFs
-## are then combined in a list for further conjoined analyses.
+## In a MBD over three cases, data were collected eleven days in a row. 
+## Intervention starting points differ between subjects as they were 
+## randomly assigned. The three SCDFs are then combined in a list for 
+## further conjoined analyses.
 charlotte <- scdf(c(A = 5, 7, 10, 5, 12, B = 7, 10, 18, 15, 14, 19))
 theresa <- scdf(c(A = 3, 4, 3, 5, B = 7, 4, 7, 9, 8, 10, 12))
 antonia <- scdf(c(A = 9, 8, 8, 7, 5, 7, B = 6, 14, 15, 12, 16))
 mbd <- c(charlotte, theresa, antonia)
 names(mbd) <- c("Charlotte", "Theresa", "Antonia")
-overlapSC(mbd)
+overlap(mbd)
 
-## In a classroom-based intervention it was not possible to measure outcomes every day, but
-## only on schooldays. The sequence of measurements is passed to the package by using a
-## vector of measurement times.
+## In a classroom-based intervention it was not possible to measure outcomes 
+## every day, but only on schooldays. The sequence of measurements is passed 
+## to the package by using a vector of measurement times.
 frida <- scdf(
   c(A = 3, 2, 4, 2, 2, 3, 5, 6, B = 8, 10, 8, 12, 14, 13, 12),
   mt = c(1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18)
 )
 summary(frida)
-plot(frida)
-describeSC(frida)
+describe(frida)
 
 ## example with two independent variables and four phases
 jim <- scdf(
   zvt = c(47, 58, 76, 63, 71, 59, 64, 69, 72, 77, 76, 73),
   d2 = c(131, 134, 141, 141, 140, 140, 138, 140, 141, 140, 138, 140),
-  phase.design = c(A1 = 3, B1 = 3, A2 = 3, B2 = 3), dvar = "zvt"
+  phase_design = c(A1 = 3, B1 = 3, A2 = 3, B2 = 3), dvar = "zvt"
 )
-overlapSC(jim, phases = list(c("A1", "A2"), c("B1", "B2")))
+overlap(jim, phases = list(c("A1", "A2"), c("B1", "B2")))
 }
 \author{
 Juergen Wilbert

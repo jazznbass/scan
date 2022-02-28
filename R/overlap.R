@@ -118,7 +118,7 @@ overlap <- function(data, dvar, pvar, mvar,
   out
 }
 
-#' @rdname overlap
+#' @rdname deprecated-functions
 #' @export
 overlapSC <- function(...) {
   .deprecated_warning("overlap", "overlapSC")

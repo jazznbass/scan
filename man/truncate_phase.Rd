@@ -2,7 +2,6 @@
 % Please edit documentation in R/truncate_phase.R
 \name{truncate_phase}
 \alias{truncate_phase}
-\alias{truncateSC}
 \title{Truncate single-case data}
 \usage{
 truncate_phase(
@@ -12,23 +11,22 @@ truncate_phase(
   truncate = list(A = c(0, 0), B = c(0, 0)),
   na = TRUE
 )
-
-truncateSC(...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
 \item{truncate}{A list with a vector of two (beginning and end) values for each phase defining the number of data points to be deleted.
 For lists of single-case data frames, the truncation is adapted to the length
 of each phase for each single case.}
 
 \item{na}{If FALSE, the truncated measurement times are deleted. If TRUE, NAs are set for the dependent variable.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 A truncated data frame (for each single-case).

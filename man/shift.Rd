@@ -2,22 +2,18 @@
 % Please edit documentation in R/shift.R
 \name{shift}
 \alias{shift}
-\alias{shiftSC}
 \title{Shift values in a single-case data file}
 \usage{
 shift(data, value, var)
-
-shiftSC(...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
 \item{value}{Number by which to shift the values}
 
 \item{var}{Character string with the name of the target variable.
 Defaults to the measurement time variable.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 A scdf with shifted data

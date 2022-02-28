@@ -3,7 +3,6 @@
 #' This function calculates indices of the Tau-U family as proposed by Parker
 #' et al. (2011).
 #'
-#' @aliases tau_u tauUSC
 #' @inheritParams .inheritParams
 #' @param tau_method Character with values "a" or "b" (default) indicating whether Kendall Tau A or Kendall Tau B is applied.
 #' @param method \code{"complete"} (default) or \code{"parker"}. The latter
@@ -340,7 +339,7 @@ tau_u <- function(data, dvar, pvar,
 
 
 
-#' @rdname tau_u
+#' @rdname deprecated-functions
 #' @export
 tauUSC <- function(...) {
   tau_u(...)

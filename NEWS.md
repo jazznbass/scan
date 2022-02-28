@@ -1,4 +1,23 @@
+# scan (development version)
 
+<<<<<<< HEAD
+# scan 0.53.6
+
+- new function `transform()`: Takes a scdf and calculates or modifies variables 
+for each case (`transform(exampleAB, z_values = scale(values), t_values = 50 + z_values * 10)`).
+
+- renamed functions: 
+`design_rSC()` -> `design()`  
+`rSC()` -> `random_scdf()`
+- rewrote `power_test()` with various extensions, optimizations, and solved various bugs. rewrote the `print` method, added an argument `duration` to print the computation duration. Added the `'n_trials'` argument for binomial distributions. Extended the help page.  
+- speed optimized `rSC()`. Rewrote the algorithm for 'poisson' distributed measures. Rewrote the algorithm for the 'binomial' distribution. Extended the help page.  
+- rewrote `design_rSC()` and its print method. Extended the help page. Rewrote the algorithm for the 'binomial' distribution.  
+- new function `mc_function()` takes a character string and returns a function for Monte Carlo analysis.  
+- `plm()`: rewrote the analysis function for binomial tests. These now need an argument `var_trials` to define the number of trials per measurement. The  `dvar_percentage` argument must be set TRUE when the dependent variables are percentages (and `family = 'binomal'`).
+
+
+=======
+>>>>>>> master
 # scan 0.53.5
 
 - solved wrong calculation of Hedges G when phase length differed.

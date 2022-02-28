@@ -1,9 +1,11 @@
-# scan - Single-Case Data Analyses for Single and Multiple Baseline Designs <img src='man/figures/logo.png' align="right" height = "135" />
+# scan - Single-Case Data Analyses for Single and Multiple Baseline Designs
 
 <!-- badges: start -->
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/scan?color=blue)](https://cran.r-project.org/package=scan)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/scan?color=orange)](https://cran.rstudio.com/package=scan)
 <!-- badges: end -->
+
+ <img src='man/figures/logo.png' align="right" height = "135" />
 
 This package provides a collection of procedures for analysing, visualising, 
 and managing single-case data. These include piecewise linear regression 
@@ -14,3 +16,7 @@ rank transformation, and smoothing. An exporting function helps to generate
 html and latex tables in a publication friendly style.  
 
 More details can be found at <https://jazznbass.github.io/scan-Book/>.
+
+
+
+

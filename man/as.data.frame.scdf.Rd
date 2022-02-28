@@ -2,13 +2,10 @@
 % Please edit documentation in R/as.data.frame.scdf.R
 \name{as.data.frame.scdf}
 \alias{as.data.frame.scdf}
-\alias{longSCDF}
 \title{Creating a long format data frame from several single-case data frames
 (scdf).}
 \usage{
 \method{as.data.frame}{scdf}(x, ..., l2 = NULL, id = "case")
-
-longSCDF(...)
 }
 \arguments{
 \item{x}{An scdf object}

@@ -38,21 +38,27 @@
 #' 
 #' ## Compute a piecewise regression model for a random single-case
 #' set.seed(123)
-#' AB <- design_rSC(
-#'   phase.design = list(A = 10, B = 20), 
+#' AB <- design(
+#'   phase_design = list(A = 10, B = 20), 
 #'   level = list(A = 0, B = 1), slope = list(A = 0, B = 0.05), 
 #'   trend = list(0.05)
 #' )
-#' dat <- rSC(design = AB)
+#' dat <- random_scdf(design = AB)
 #' plm(dat, AR = 3)
 #' 
 #' ## Another example with a more complex design
-#' A1B1A2B2 <- design_rSC(
-#'   phase.design = list(A1 = 15, B1 = 20, A2 = 15, B2 = 20), 
+#' A1B1A2B2 <- design(
+#'   phase_design = list(A1 = 15, B1 = 20, A2 = 15, B2 = 20), 
 #'   level = list(A1 = 0, B1 = 1, A2 = -1, B2 = 1),
+<<<<<<< HEAD
+#'   slope = list(A1 = 0, B1 = 0.0, A2 = 0, B2 = 0.0),
+#'   trend = 0.0)
+#' dat <- random_scdf(design = A1B1A2B2, seed = 123)
+=======
 #'   slope = list(A1 = 0, B1 = 0.0, A1 = 0, B2 = 0.0),
 #'   trend = list(0.0))
 #' dat <- rSC(design = A1B1A2B2, seed = 123)
+>>>>>>> master
 #' plm(dat, model = "JW")
 #' 
 #' ## no slope effects were found. Therefore you might want to drop slope estimation:

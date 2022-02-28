@@ -2,21 +2,22 @@
 % Please edit documentation in R/trend.R
 \name{trend}
 \alias{trend}
-\alias{trendSC}
 \title{Trend analysis for single-cases data}
 \usage{
 trend(data, dvar, pvar, mvar, offset = -1, model = NULL)
-
-trendSC(...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
-\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
+\item{mvar}{Character string with the name of the measurement time variable.
+Defaults to the attributes in the scdf file.}
 
 \item{offset}{An offset for the first measurement-time of each phase (MT). If
 \code{offset = 0}, the phase measurement is handled as MT 1.
@@ -25,8 +26,6 @@ Default is \code{offset = -1}, setting the first value of MT to 0.}
 \item{model}{A string or a list of (named) strings each depicting one
 regression model. This is a formula expression of the standard R class. The
 parameters of the model are \code{values}, \code{mt} and \code{phase}.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 \item{trend}{A matrix containing the results (Intercept, B and beta)
@@ -45,15 +44,15 @@ specific formula class.
 \examples{
 
 ## Compute the linear and squared regression for a random single-case
-design <- design_rSC(slope = 0.5)
-matthea <- rSC(design)
+design <- design(slope = 0.5)
+matthea <- random_scdf(design)
 trend(matthea)
 
 ## Besides the linear and squared regression models compute two custom models:
 ## a) a cubic model, and b) the values predicted by the natural logarithm of the
 ## measurement time.
-design <- design_rSC(slope = 0.3)
-ben <- rSC(design)
+design <- design(slope = 0.3)
+ben <- random_scdf(design)
 trend(ben, offset = 0, model = c("Cubic" = values ~ I(mt^3), "Log Time" = values ~ log(mt)))
 
 }

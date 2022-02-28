@@ -2,15 +2,13 @@
 % Please edit documentation in R/ranks.R
 \name{ranks}
 \alias{ranks}
-\alias{rankSC}
 \title{Rank-transformation of single-case data files}
 \usage{
 ranks(data, var, grand = TRUE, ...)
-
-rankSC(...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
 \item{var}{A string or string vector with the names of the variables to be ranked.}
 

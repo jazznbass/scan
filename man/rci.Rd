@@ -2,22 +2,19 @@
 % Please edit documentation in R/rci.R
 \name{rci}
 \alias{rci}
-\alias{rciSC}
-\alias{rCi}
 \title{Reliable change index}
 \usage{
 rci(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2))
-
-rciSC(...)
-
-rCi(...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
 \item{rel}{Reliability of the measure, used to compute the standard error.}
 
@@ -27,14 +24,12 @@ rCi(...)
 \item{graph}{If set \code{TRUE}, a box plot of phase A and B scores is
 displayed. \code{graph = FALSE} by default.}
 
-\item{phases}{A vector of two characters or numbers indicating the two
-phases that should be compared. E.g., \code{phases = c("A","C")} or
-\code{phases = c(2,4)} for comparing the second to the fourth phase. Phases
-could be combined by providing a list with two elements. E.g., \code{phases
-= list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
-and 4 (as B). Default is \code{phases = c("A","B")}.}
-
-\item{...}{Further arguments passed to the function.}
+\item{phases}{A vector of two characters or numbers indicating the two phases
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
+c(2,4)} for comparing the second to the fourth phase. Phases could be
+combined by providing a list with two elements. E.g., \code{phases = list(A
+= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
+(as B). Default is \code{phases = c("A","B")}.}
 }
 \description{
 \bold{CAUTION! This function is still under development and not ready for

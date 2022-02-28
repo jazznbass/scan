@@ -31,7 +31,7 @@
 #' plot(study)
 #' 
 #' ## Fill missing values in a single-case dataset that are NA
-#' Maggie <- rSC(design_rSC(level = list(0,1)), seed = 123)
+#' Maggie <- random_scdf(design(level = list(0,1)), seed = 123)
 #' Maggie_n <- Maggie
 #' replace.positions <- c(10,16,18)
 #' Maggie_n[[1]][replace.positions,"values"] <- NA
@@ -81,7 +81,7 @@ fill_missing <- function(data, dvar, mvar,
   data
 }
 
-#' @rdname fill_missing
+#' @rdname deprecated-functions
 #' @export
 fillmissingSC <- function(...) {
   .deprecated_warning("fill_missing", "fillmissingSC")

@@ -2,27 +2,25 @@
 % Please edit documentation in R/fill_missing.R
 \name{fill_missing}
 \alias{fill_missing}
-\alias{fillmissingSC}
 \title{Replacing missing measurement times in single-case data}
 \usage{
 fill_missing(data, dvar, mvar, interpolation = "linear", na.rm = TRUE)
-
-fillmissingSC(...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
+\item{mvar}{Character string with the name of the measurement time variable.
+Defaults to the attributes in the scdf file.}
 
 \item{interpolation}{Alternative options not yet included. Default is
 \code{interpolation = "linear"}.}
 
 \item{na.rm}{If set \code{TRUE}, \code{NA} values are also interpolated.
 Default is \code{na.rm = TRUE}.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 A single-case data frame (SCDF) with missing data points
@@ -51,7 +49,7 @@ names(study) <- c("Original", "Filled")
 plot(study)
 
 ## Fill missing values in a single-case dataset that are NA
-Maggie <- rSC(design_rSC(level = list(0,1)), seed = 123)
+Maggie <- random_scdf(design(level = list(0,1)), seed = 123)
 Maggie_n <- Maggie
 replace.positions <- c(10,16,18)
 Maggie_n[[1]][replace.positions,"values"] <- NA
