@@ -2,8 +2,6 @@
 % Please edit documentation in R/rand_test.R
 \name{rand_test}
 \alias{rand_test}
-\alias{randSC}
-\alias{rand.test}
 \title{Randomization Tests for single-case data}
 \usage{
 rand_test(
@@ -21,10 +19,6 @@ rand_test(
   phases = c(1, 2),
   seed = NULL
 )
-
-randSC(...)
-
-rand.test(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -89,8 +83,6 @@ could be combined by providing a list with two elements. E.g., \code{phases
 and 4 (as B). Default is \code{phases = c("A","B")}.}
 
 \item{seed}{A seed number for the random generator.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 \item{statistic}{Character string from function call (see

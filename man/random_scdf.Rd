@@ -2,12 +2,9 @@
 % Please edit documentation in R/random_scdf.R
 \name{random_scdf}
 \alias{random_scdf}
-\alias{rSC}
 \title{Single-case data generator}
 \usage{
 random_scdf(design = NULL, round = NA, random_names = FALSE, seed = NULL, ...)
-
-rSC(...)
 }
 \arguments{
 \item{design}{A design matrix which is created by \code{design} and specifies

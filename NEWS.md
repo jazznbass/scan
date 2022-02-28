@@ -1,11 +1,13 @@
 # scan (development version)
 
+# scan 0.53.6
+
+- new function `transform()`: Takes a scdf and calculates or modifies variables 
+for each case (`transform(exampleAB, z_values = scale(values), t_values = 50 + z_values * 10)`).
+
 - renamed functions: 
 `design_rSC()` -> `design()`  
 `rSC()` -> `random_scdf()`
-
-# scan 0.53.6
-
 - rewrote `power_test()` with various extensions, optimizations, and solved various bugs. rewrote the `print` method, added an argument `duration` to print the computation duration. Added the `'n_trials'` argument for binomial distributions. Extended the help page.  
 - speed optimized `rSC()`. Rewrote the algorithm for 'poisson' distributed measures. Rewrote the algorithm for the 'binomial' distribution. Extended the help page.  
 - rewrote `design_rSC()` and its print method. Extended the help page. Rewrote the algorithm for the 'binomial' distribution.  

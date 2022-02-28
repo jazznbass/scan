@@ -2,12 +2,9 @@
 % Please edit documentation in R/smooth_cases.R
 \name{smooth_cases}
 \alias{smooth_cases}
-\alias{smoothSC}
 \title{Smoothing single-case data}
 \usage{
 smooth_cases(data, dvar, mvar, FUN = "movingMedian", intensity = NULL)
-
-smoothSC(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -25,8 +22,6 @@ is the lag used for computing the average. Default is \code{intensity = 1}.
 In case of \code{FUN = "localRegression"} it is the proportion of
 surrounding data influencing each data point, which is \code{intensity =
 0.2} by default.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 Returns a data frame (for each single-case) with smoothed data

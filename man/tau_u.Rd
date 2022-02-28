@@ -2,7 +2,6 @@
 % Please edit documentation in R/tau_u.R
 \name{tau_u}
 \alias{tau_u}
-\alias{tauUSC}
 \title{Tau-U for single-case data}
 \usage{
 tau_u(
@@ -16,8 +15,6 @@ tau_u(
   ci = 0.95,
   continuity_correction = FALSE
 )
-
-tauUSC(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -44,8 +41,6 @@ and 4 (as B). Default is \code{phases = c("A","B")}.}
 \item{ci}{Confidence interval for meta analyzes.}
 
 \item{continuity_correction}{If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 \item{table}{A data frame containing statistics from the Tau-U

@@ -2,12 +2,9 @@
 % Please edit documentation in R/describe.R
 \name{describe}
 \alias{describe}
-\alias{describeSC}
 \title{Descriptive statistics for single-case data}
 \usage{
 describe(data, dvar, pvar, mvar)
-
-describeSC(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -17,8 +14,6 @@ describeSC(...)
 \item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
 
 \item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 A list containing a data frame of descriptive statistics (descriptives); the cse design (design); the number of cases (N)

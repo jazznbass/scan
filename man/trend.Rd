@@ -2,12 +2,9 @@
 % Please edit documentation in R/trend.R
 \name{trend}
 \alias{trend}
-\alias{trendSC}
 \title{Trend analysis for single-cases data}
 \usage{
 trend(data, dvar, pvar, mvar, offset = -1, model = NULL)
-
-trendSC(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -25,8 +22,6 @@ Default is \code{offset = -1}, setting the first value of MT to 0.}
 \item{model}{A string or a list of (named) strings each depicting one
 regression model. This is a formula expression of the standard R class. The
 parameters of the model are \code{values}, \code{mt} and \code{phase}.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 \item{trend}{A matrix containing the results (Intercept, B and beta)

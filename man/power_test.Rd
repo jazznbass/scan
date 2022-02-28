@@ -2,7 +2,6 @@
 % Please edit documentation in R/power_test.R
 \name{power_test}
 \alias{power_test}
-\alias{power_testSC}
 \title{Empirical power analysis for single-case data}
 \usage{
 power_test(
@@ -16,8 +15,6 @@ power_test(
   binom_test = 0.5,
   alpha_level = 0.05
 )
-
-power_testSC(...)
 }
 \arguments{
 \item{design}{An object returned from the `design` function.}
@@ -53,8 +50,6 @@ against the provided value.}
 
 \item{alpha_level}{Alpha level used to calculate the proportion of
 significant tests. Default is \code{alpha_level = 0.05}.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \description{
 Conducts a Monte-Carlo study on the test-power and alpha-error of a

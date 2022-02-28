@@ -2,15 +2,9 @@
 % Please edit documentation in R/rci.R
 \name{rci}
 \alias{rci}
-\alias{rciSC}
-\alias{rCi}
 \title{Reliable change index}
 \usage{
 rci(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2))
-
-rciSC(...)
-
-rCi(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -33,8 +27,6 @@ phases that should be compared. E.g., \code{phases = c("A","C")} or
 could be combined by providing a list with two elements. E.g., \code{phases
 = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
 and 4 (as B). Default is \code{phases = c("A","B")}.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \description{
 \bold{CAUTION! This function is still under development and not ready for

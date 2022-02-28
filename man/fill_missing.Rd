@@ -2,12 +2,9 @@
 % Please edit documentation in R/fill_missing.R
 \name{fill_missing}
 \alias{fill_missing}
-\alias{fillmissingSC}
 \title{Replacing missing measurement times in single-case data}
 \usage{
 fill_missing(data, dvar, mvar, interpolation = "linear", na.rm = TRUE)
-
-fillmissingSC(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -21,8 +18,6 @@ fillmissingSC(...)
 
 \item{na.rm}{If set \code{TRUE}, \code{NA} values are also interpolated.
 Default is \code{na.rm = TRUE}.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 A single-case data frame (SCDF) with missing data points

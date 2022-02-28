@@ -2,7 +2,6 @@
 % Please edit documentation in R/design.R
 \name{design}
 \alias{design}
-\alias{design_rSC}
 \title{Generate a single-case design matrix}
 \usage{
 design(
@@ -29,8 +28,6 @@ design(
   extreme.d,
   missing.p
 )
-
-design_rSC(...)
 }
 \arguments{
 \item{n}{Number of cases to be designed (Default is \code{n = 1}).}
@@ -128,8 +125,6 @@ phase A, and all following scores to phase B. To assign different starting
 points for a set of multiple single-cases, use a vector of starting values
 (e.g. \code{B_start = c(6, 7, 8)}). If the number of cases exceeds the
 length of the vector, values will be recycled.}
-
-\item{...}{Arguments passed to the design function.}
 }
 \value{
 An object of class sc_design.

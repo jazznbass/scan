@@ -2,12 +2,9 @@
 % Please edit documentation in R/autocorr.R
 \name{autocorr}
 \alias{autocorr}
-\alias{autocorrSC}
 \title{Autocorrelation for single-case data}
 \usage{
 autocorr(data, dvar, pvar, mvar, lag_max = 3, lag.max, ...)
-
-autocorrSC(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}

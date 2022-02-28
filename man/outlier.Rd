@@ -2,12 +2,9 @@
 % Please edit documentation in R/outlier.R
 \name{outlier}
 \alias{outlier}
-\alias{outlierSC}
 \title{Handling outliers in single-case data}
 \usage{
 outlier(data, dvar, pvar, mvar, criteria = c("MAD", "3.5"))
-
-outlierSC(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
@@ -24,8 +21,6 @@ This is also the default setting. To use the 99\% Confidence Interval use
 \code{criteria = c("CI", 0.99)}. Set \code{criteria = c("Cook", "4/n")} to
 define any data point with a Cook's Distance greater than 4/n as an
 outlier, based on the Piecewise Linear Regression Model.}
-
-\item{...}{Further arguments passed to the function.}
 }
 \value{
 \item{data}{A single-case data frame with substituted outliers.}
