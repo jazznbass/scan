@@ -290,14 +290,14 @@ rand_test <- function (data, dvar, pvar,
 
 }
 
-#' @rdname rand_test
+#' @rdname deprecated-functions
 #' @export
 randSC <- function(...) {
   .deprecated_warning("rand_test", "randSC")
   rand_test(...)
 }
 
-#' @rdname rand_test
+#' @rdname deprecated-functions
 #' @export
 rand.test <- function(...) {
   .deprecated_warning("rand_test", "rand.test")

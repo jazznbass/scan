@@ -170,7 +170,7 @@ random_scdf <- function(design = NULL,
   out
 }
 
-#' @rdname random_scdf
+#' @rdname deprecated-functions
 #' @export
 rSC <- function(...) {
   .deprecated_warning("random_scdf", "rSC")

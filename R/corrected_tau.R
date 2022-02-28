@@ -114,7 +114,7 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   out
 }
 
-#' @rdname corrected_tau
+#' @rdname deprecated-functions
 #' @export
 corrected_tauSC <- function(...) {
   .deprecated_warning("corrected_tau", "corrected_tauSC")

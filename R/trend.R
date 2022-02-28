@@ -116,7 +116,7 @@ trend <- function(data, dvar, pvar, mvar, offset = -1, model = NULL) {
   out
 }
 
-#' @rdname trend
+#' @rdname deprecated-functions
 #' @export
 trendSC <- function(...) {
   .deprecated_warning("trend", "trendSC")

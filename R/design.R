@@ -264,7 +264,7 @@ design <- function(n = 1,
   data
 }
 
-#' @rdname design
+#' @rdname deprecated-functions
 #' @param ... Arguments passed to the design function.
 #' @export
 design_rSC <- function(...) {

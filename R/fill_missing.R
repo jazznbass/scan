@@ -81,7 +81,7 @@ fill_missing <- function(data, dvar, mvar,
   data
 }
 
-#' @rdname fill_missing
+#' @rdname deprecated-functions
 #' @export
 fillmissingSC <- function(...) {
   .deprecated_warning("fill_missing", "fillmissingSC")
