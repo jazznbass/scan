@@ -8,7 +8,8 @@ Converts an scdf object to a text syntax}
 convert(scdf, file = "", study_name = "study")
 }
 \arguments{
-\item{scdf}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{scdf}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
 \item{file}{A filename for exporting the syntax.}
 

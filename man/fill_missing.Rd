@@ -7,11 +7,14 @@
 fill_missing(data, dvar, mvar, interpolation = "linear", na.rm = TRUE)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
+\item{mvar}{Character string with the name of the measurement time variable.
+Defaults to the attributes in the scdf file.}
 
 \item{interpolation}{Alternative options not yet included. Default is
 \code{interpolation = "linear"}.}

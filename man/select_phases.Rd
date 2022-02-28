@@ -7,7 +7,8 @@
 select_phases(data, A, B, ...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
 \item{A}{Selection of the A phase}
 

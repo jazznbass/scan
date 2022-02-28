@@ -39,11 +39,14 @@ each phase. E.g., \code{phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 =
 
 \item{name}{A name for the case.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
-\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
+\item{mvar}{Character string with the name of the measurement time variable.
+Defaults to the attributes in the scdf file.}
 
 \item{...}{Additional variables. E.g., \code{teacher = c(0,1,0,1,0,0,1),
 lesson = c(1,3,4,5,2,3)}.}

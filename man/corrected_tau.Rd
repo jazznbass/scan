@@ -16,20 +16,24 @@ corrected_tau(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
-\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
+\item{mvar}{Character string with the name of the measurement time variable.
+Defaults to the attributes in the scdf file.}
 
-\item{phases}{A vector of two characters or numbers indicating the two
-phases that should be compared. E.g., \code{phases = c("A","C")} or
-\code{phases = c(2,4)} for comparing the second to the fourth phase. Phases
-could be combined by providing a list with two elements. E.g., \code{phases
-= list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
-and 4 (as B). Default is \code{phases = c("A","B")}.}
+\item{phases}{A vector of two characters or numbers indicating the two phases
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
+c(2,4)} for comparing the second to the fourth phase. Phases could be
+combined by providing a list with two elements. E.g., \code{phases = list(A
+= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
+(as B). Default is \code{phases = c("A","B")}.}
 
 \item{alpha}{Sets the p-value at and below which a baseline correction is applied.}
 

@@ -10,7 +10,8 @@ save_scdf(data, filename = NULL, ...)
 writeSC(...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
 \item{filename}{A character string defining the output file name (e.g.
 \code{"SC_data.csv"}.}

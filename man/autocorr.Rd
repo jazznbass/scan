@@ -7,13 +7,17 @@
 autocorr(data, dvar, pvar, mvar, lag_max = 3, lag.max, ...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
-\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
+\item{mvar}{Character string with the name of the measurement time variable.
+Defaults to the attributes in the scdf file.}
 
 \item{lag_max, lag.max}{The lag up to which autocorrelations will be computed.}
 

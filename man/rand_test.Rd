@@ -21,11 +21,14 @@ rand_test(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
 \item{statistic}{Defines the statistic on which the comparison of phases A
 and B is based on. Default setting is \code{statistic = "Mean B-A"}). The

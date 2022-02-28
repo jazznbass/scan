@@ -13,11 +13,14 @@ truncate_phase(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
 \item{truncate}{A list with a vector of two (beginning and end) values for each phase defining the number of data points to be deleted.
 For lists of single-case data frames, the truncation is adapted to the length

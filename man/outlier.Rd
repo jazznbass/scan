@@ -7,13 +7,17 @@
 outlier(data, dvar, pvar, mvar, criteria = c("MAD", "3.5"))
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
-\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
+\item{mvar}{Character string with the name of the measurement time variable.
+Defaults to the attributes in the scdf file.}
 
 \item{criteria}{Specifies the criteria for outlier identification. Set
 \code{criteria = c("SD", 2)} to define two standard deviations as limit.

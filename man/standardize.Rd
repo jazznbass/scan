@@ -15,7 +15,8 @@ standardize(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
 \item{var}{A character string or a vector of character strings with variable
 names that should be scaled.}

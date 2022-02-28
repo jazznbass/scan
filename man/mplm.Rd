@@ -20,24 +20,31 @@ mplm(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about this format.}
+\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+this format.}
 
-\item{dvar}{Character string with the name of the dependent variable. Defaults to the attributes in the scdf file.}
+\item{dvar}{Character string with the name of the dependent variable.
+Defaults to the attributes in the scdf file.}
 
-\item{mvar}{Character string with the name of the measurement time variable. Defaults to the attributes in the scdf file.}
+\item{mvar}{Character string with the name of the measurement time variable.
+Defaults to the attributes in the scdf file.}
 
-\item{pvar}{Character string with the name of the phase variable. Defaults to the attributes in the scdf file.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
 
 \item{model}{Model used for calculating the slope parameter (see Huitema &
 McKean, 2000). Default is \code{model = "B&L-B"}. Possible values are:
-\code{"B&L-B"}, \code{"H-M"}, \code{"Mohr#1"}, \code{"Mohr#2"}, \code{"JW"}, \code{"JW2"}, and
-\code{"Manly"}.}
+\code{"B&L-B"}, \code{"H-M"}, \code{"Mohr#1"}, \code{"Mohr#2"},
+\code{"JW"}, \code{"JW2"}, and \code{"Manly"}.}
 
-\item{trend}{A logical indicating if a trend parameters is included in the model.}
+\item{trend}{A logical indicating if a trend parameters is included in the
+model.}
 
-\item{level}{A logical indicating if a level parameters is included in the model.}
+\item{level}{A logical indicating if a level parameters is included in the
+model.}
 
-\item{slope}{A logical indicating if a slope parameters is included in the model.}
+\item{slope}{A logical indicating if a slope parameters is included in the
+model.}
 
 \item{formula}{Defaults to the standard piecewise regression model. The
 parameter phase followed by the phase name (e.g., phaseB) indicates the level effect of the corresponding phase. The parameter 'inter' followed by the phase name (e.g., interB) adresses the slope effect based on the method
