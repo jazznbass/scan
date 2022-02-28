@@ -4,27 +4,27 @@
 
 - `transform()`: Takes a scdf and calculates or modifies variables 
 for each case (`transform(exampleAB, z_values = scale(values), t_values = 50 + z_values * 10)`).
-- `mc_function()` takes a character string and returns a function for Monte Carlo analysis.  
 - `smd()` reporting various types of standardized mean differences.
+- `mc_function()` takes a character string and returns a predefined function for Monte Carlo analysis.
 
 ## reanmed functions (old functionnames still work)
 
-- `readSC` -> `load_scdf` 
-- `writeSC` -> `save_scdf()`
+- `readSC` -> `read_scdf` 
+- `writeSC` -> `write_scdf()`
 - `design_rSC()` -> `design()`
 - `rSC()` -> `random_scdf()`
 
 ## Complete rework - as new
 
 - `power_test()` with various extensions, optimizations, and solved various bugs. rewrote the `print` method, added an argument `duration` to print the computation duration. Added the `'n_trials'` argument for binomial distributions. Extended the help page.  
-- `design_rSC()` and its print method. Extended the help page. Rewrote the algorithm for the 'binomial' distribution.  
+- `design()` and its print method. Extended the help page. Rewrote the algorithm for the 'binomial' distribution.  
 
 ## Extended functions
 
 - `plm()`: rewrote the analysis function for binomial tests. These now need an argument `var_trials` to define the number of trials per measurement. The  `dvar_percentage` argument must be set TRUE when the dependent variables are percentages (and `family = 'binomal'`).
 - speed optimized `random_scdf()`. Rewrote the algorithm for 'poisson' distributed measures. Rewrote the algorithm for the 'binomial' distribution. Extended the help page.  
-- `load_scdf`: extracts filetype from file extension.
-- `load_scdf`: New `yaml` import options for scdf files
+- `read_scdf`: extracts filetype from file extension.
+- `read_scdf`: New `yaml` import options for scdf files
 
 ```yml
 Anna:
