@@ -342,14 +342,6 @@ tau_u <- function(data, dvar, pvar,
   out
 }
 
-
-
-#' @rdname deprecated-functions
-#' @export
-tauUSC <- function(...) {
-  tau_u(...)
-}
-
 .meta_tau_u <- function(tau_matrix, method = NA, ci = 0.95) {
   
   ci_z <- qnorm((1 - ci) /2, lower.tail = FALSE)
@@ -404,4 +396,3 @@ tauUSC <- function(...) {
   
   out
 }
-

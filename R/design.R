@@ -263,11 +263,3 @@ design <- function(n = 1,
   }
   data
 }
-
-#' @rdname deprecated-functions
-#' @param ... Arguments passed to the design function.
-#' @export
-design_rSC <- function(...) {
-  .deprecated_warning("design", "design_rSC")
-  design(...)
-}

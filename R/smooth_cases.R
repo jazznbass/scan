@@ -68,9 +68,3 @@ smooth_cases <- function(data, dvar, mvar, FUN = "movingMedian", intensity = NUL
   names(out) <- copy_names
   out
 }
-
-#' @rdname deprecated-functions
-#' @export
-smoothSC <- function(...) {
-  smooth_cases(...)
-}

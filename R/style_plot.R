@@ -85,17 +85,3 @@ style_plot <- function(style = "default", ...) {
   }
   invisible(out)
 }
-
-#' @rdname deprecated-functions
-#' @export
-style_plotSC <- function(...) {
-  .deprecated_warning("style_plot", "style_plotSC")
-  style_plot(...)
-}
-
-#' @rdname deprecated-functions
-#' @export
-style.plotSC <- function(...) {
-  .deprecated_warning("style_plot", "style.plotSC")  
-  style_plot(...)
-}

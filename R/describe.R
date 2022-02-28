@@ -93,10 +93,3 @@ describe <- function(data, dvar, pvar, mvar) {
 
   out
 }
-
-#' @rdname deprecated-functions
-#' @export
-describeSC <- function(...) {
-  .deprecated_warning("describe", "describeSC")
-  describe(...)
-}
