@@ -1,29 +1,30 @@
-# scan (development version)
+# scan 0.53.6.9003
 
-# scan 0.53.6
+## new functions
 
-- new function `transform()`: Takes a scdf and calculates or modifies variables 
+- `transform()`: Takes a scdf and calculates or modifies variables 
 for each case (`transform(exampleAB, z_values = scale(values), t_values = 50 + z_values * 10)`).
+- `mc_function()` takes a character string and returns a function for Monte Carlo analysis.  
+- `smd()` reporting various types of standardized mean differences.
 
-- renamed functions: 
-`design_rSC()` -> `design()`  
-`rSC()` -> `random_scdf()`
-- rewrote `power_test()` with various extensions, optimizations, and solved various bugs. rewrote the `print` method, added an argument `duration` to print the computation duration. Added the `'n_trials'` argument for binomial distributions. Extended the help page.  
-- speed optimized `rSC()`. Rewrote the algorithm for 'poisson' distributed measures. Rewrote the algorithm for the 'binomial' distribution. Extended the help page.  
-- rewrote `design_rSC()` and its print method. Extended the help page. Rewrote the algorithm for the 'binomial' distribution.  
-- new function `mc_function()` takes a character string and returns a function for Monte Carlo analysis.  
+## reanmed functions (old functionnames still work)
+
+- `readSC` -> `load_scdf` 
+- `writeSC` -> `save_scdf()`
+- `design_rSC()` -> `design()`
+- `rSC()` -> `random_scdf()`
+
+## Complete rework - as new
+
+- `power_test()` with various extensions, optimizations, and solved various bugs. rewrote the `print` method, added an argument `duration` to print the computation duration. Added the `'n_trials'` argument for binomial distributions. Extended the help page.  
+- `design_rSC()` and its print method. Extended the help page. Rewrote the algorithm for the 'binomial' distribution.  
+
+## Extended functions
+
 - `plm()`: rewrote the analysis function for binomial tests. These now need an argument `var_trials` to define the number of trials per measurement. The  `dvar_percentage` argument must be set TRUE when the dependent variables are percentages (and `family = 'binomal'`).
-
-# scan 0.53.5
-
-- solved wrong calculation of Hedges G when phase length differed.
-- new function `smd()` reporting various types of standardized mean differences.
-
-# scan 0.53.4
-
-- `load_scdf` and `save_scdf` replace `readSC` and `writeSC`. The latter are kept working.
-- `load_scdf` extracts filetype from file extension.
-- New `yaml` import options for scdf files
+- speed optimized `random_scdf()`. Rewrote the algorithm for 'poisson' distributed measures. Rewrote the algorithm for the 'binomial' distribution. Extended the help page.  
+- `load_scdf`: extracts filetype from file extension.
+- `load_scdf`: New `yaml` import options for scdf files
 
 ```yml
 Anna:
@@ -36,15 +37,13 @@ Toni:
     A: [2, 3, 4, 5, 6, 7]
     B: [3, 9, 10, 10,11]
   control_var: [1,2,3,4,5,6,7,8,1,2,3]
-
 ```
 
-# scan 0.53.3
+- `tau_u()` #51: Added option for confidence intervals for tau_u output.
 
-- solved #51: Added option of CI for tau_u output.
+## Solved error in functions
 
-# scan 0.53.2
-
+- `describe()`: solved wrong calculation of Hedges G when phase length differed.
 - solved #46: `plm` throws no error, when a phase is of length 1.
 - solved #48: throws warning for `corrected_tau` when A phase has less than three rows.
 - solved #49: changes class from tibble to data.frame within scdf.
