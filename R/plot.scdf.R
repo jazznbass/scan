@@ -129,11 +129,11 @@ plotSC <- function(data, dvar, pvar, mvar,
   if (is.list(style)) {
     ref.style <- "default"
     if ("style" %in% names(style)) ref.style <- style$style
-    style <- c(style, style_plotSC(ref.style))
+    style <- c(style, style_plot(ref.style))
     style <- style[unique(names(style))]
   }
   
-  if (is.character(style)) style <- style_plotSC(style)
+  if (is.character(style)) style <- style_plot(style)
   
   #for pre style backwards compatibility
   sty_names <- c("fill", "fill.bg", "frame", "grid", "lwd", "pch", "text.ABlag", "type")

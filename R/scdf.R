@@ -2,7 +2,7 @@ methods::setOldClass(c("scdf", "list"))
 
 #' Single case data frame
 #'
-#' The class \code{scdf} class stores single-case study data with one or more
+#' The \code{scdf} class stores single-case study data with one or more
 #' single-cases.
 #'
 #' @aliases scdf scdf-class as.scdf
@@ -14,7 +14,7 @@ methods::setOldClass(c("scdf", "list"))
 #' @param mt A vector defining measurement times. Default is \code{mt =
 #'   (1,2,3,...,n)}.
 #' @param phase_design,phase.design A vector defining the length and label of
-#'   each phase. E.g., \code{phase.length = c(A1 = 10, B1 = 10, A2 = 10, B2 =
+#'   each phase. E.g., \code{phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 =
 #'   10)}.
 #' @param name A name for the case.
 #' @param phase A vector defining phase assignments.
@@ -60,16 +60,17 @@ methods::setOldClass(c("scdf", "list"))
 #'   phase_design = c(A = 5, B = 6), name = "Klaas"
 #' )
 #'
-#' ## Unfortunately in a similar SCDR there were no data collected on days 3 and 9. Use NA to
-#' ## pass them to the package.
+#' ## Unfortunately in a similar study there were no data collected on 
+#' ## days 3 and 9. Use NA to pass them to the function:
 #' emmi <- scdf(c(5, 7, NA, 5, 7, 12, 16, 18, NA, 14, 19),
 #'   phase_design = c(A = 5, B = 6), name = "Emmi"
 #' )
 #' describe(emmi)
 #'
-#' ## In a MBD over three persons, data were again collected eleven days in a row. Intervention
-#' ## starting points differ between subjects as they were randomly assigned. The three SCDFs
-#' ## are then combined in a list for further conjoined analyses.
+#' ## In a MBD over three cases, data were collected eleven days in a row. 
+#' ## Intervention starting points differ between subjects as they were 
+#' ## randomly assigned. The three SCDFs are then combined in a list for 
+#' ## further conjoined analyses.
 #' charlotte <- scdf(c(A = 5, 7, 10, 5, 12, B = 7, 10, 18, 15, 14, 19))
 #' theresa <- scdf(c(A = 3, 4, 3, 5, B = 7, 4, 7, 9, 8, 10, 12))
 #' antonia <- scdf(c(A = 9, 8, 8, 7, 5, 7, B = 6, 14, 15, 12, 16))
@@ -77,9 +78,9 @@ methods::setOldClass(c("scdf", "list"))
 #' names(mbd) <- c("Charlotte", "Theresa", "Antonia")
 #' overlap(mbd)
 #'
-#' ## In a classroom-based intervention it was not possible to measure outcomes every day, but
-#' ## only on schooldays. The sequence of measurements is passed to the package by using a
-#' ## vector of measurement times.
+#' ## In a classroom-based intervention it was not possible to measure outcomes 
+#' ## every day, but only on schooldays. The sequence of measurements is passed 
+#' ## to the package by using a vector of measurement times.
 #' frida <- scdf(
 #'   c(A = 3, 2, 4, 2, 2, 3, 5, 6, B = 8, 10, 8, 12, 14, 13, 12),
 #'   mt = c(1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18)
@@ -91,7 +92,7 @@ methods::setOldClass(c("scdf", "list"))
 #' jim <- scdf(
 #'   zvt = c(47, 58, 76, 63, 71, 59, 64, 69, 72, 77, 76, 73),
 #'   d2 = c(131, 134, 141, 141, 140, 140, 138, 140, 141, 140, 138, 140),
-#'   phase.design = c(A1 = 3, B1 = 3, A2 = 3, B2 = 3), dvar = "zvt"
+#'   phase_design = c(A1 = 3, B1 = 3, A2 = 3, B2 = 3), dvar = "zvt"
 #' )
 #' overlap(jim, phases = list(c("A1", "A2"), c("B1", "B2")))
 #' @export
