@@ -9,8 +9,8 @@ for each case (`transform(exampleAB, z_values = scale(values), t_values = 50 + z
 
 ## reanmed functions (old functionnames still work)
 
-- `readSC` -> `read_scdf` 
-- `writeSC` -> `write_scdf()`
+- `readSC()` -> `read_scdf()` 
+- `writeSC()` -> `write_scdf()`
 - `design_rSC()` -> `design()`
 - `rSC()` -> `random_scdf()`
 
@@ -23,8 +23,8 @@ for each case (`transform(exampleAB, z_values = scale(values), t_values = 50 + z
 
 - `plm()`: rewrote the analysis function for binomial tests. These now need an argument `var_trials` to define the number of trials per measurement. The  `dvar_percentage` argument must be set TRUE when the dependent variables are percentages (and `family = 'binomal'`).
 - speed optimized `random_scdf()`. Rewrote the algorithm for 'poisson' distributed measures. Rewrote the algorithm for the 'binomial' distribution. Extended the help page.  
-- `read_scdf`: extracts filetype from file extension.
-- `read_scdf`: New `yaml` import options for scdf files
+- `read_scdf()`: extracts filetype from file extension.
+- `read_scdf()`: New `yaml` import options for scdf files
 
 ```yml
 Anna:
@@ -44,8 +44,8 @@ Toni:
 ## Solved error in functions
 
 - `describe()`: solved wrong calculation of Hedges G when phase length differed.
-- solved #46: `plm` throws no error, when a phase is of length 1.
-- solved #48: throws warning for `corrected_tau` when A phase has less than three rows.
+- `plm()` solved #46: throws no error, when a phase is of length 1.
+- `corrected_tau()` solved #48: throws warning when A phase has less than three rows.
 - solved #49: changes class from tibble to data.frame within scdf.
 
 # scan 0.53
