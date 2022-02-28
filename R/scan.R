@@ -12,7 +12,7 @@
     scan.print.cases = "fit",
     scan.print.rows   = 15,
     scan.print.cols   = "all",
-    scan.print.digits = 1,
+    scan.print.digits = 2,
     scan.print.long   = FALSE,
     scan.print.scdf.name = TRUE,
     scan.plot.style = "grid",
