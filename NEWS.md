@@ -1,5 +1,6 @@
 # scan (development version)
 
+<<<<<<< HEAD
 # scan 0.53.6
 
 - new function `transform()`: Takes a scdf and calculates or modifies variables 
@@ -15,6 +16,8 @@ for each case (`transform(exampleAB, z_values = scale(values), t_values = 50 + z
 - `plm()`: rewrote the analysis function for binomial tests. These now need an argument `var_trials` to define the number of trials per measurement. The  `dvar_percentage` argument must be set TRUE when the dependent variables are percentages (and `family = 'binomal'`).
 
 
+=======
+>>>>>>> master
 # scan 0.53.5
 
 - solved wrong calculation of Hedges G when phase length differed.

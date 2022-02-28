@@ -16,7 +16,7 @@ rand_test(
   exclude.equal = FALSE,
   graph = FALSE,
   output = "c",
-  phases = c(1, 2),
+  phases = c("A", "B"),
   seed = NULL
 )
 }
@@ -71,15 +71,15 @@ of rejecting the null-hypothesis (increase the p-value).
 single-case design (not a multiple baseline data set) to reach a sufficient
 power. But be aware, that it increases the chance of an alpha-error.}
 
-\item{graph}{(deprecated, use rand_test(...) %>% plot() instead) If \code{graph = TRUE}, a histogram of the resulting
-distribution is plotted.}
+\item{graph}{If \code{graph = TRUE}, a histogram of the resulting
+distribution is plotted. It's \code{FALSE} by default.}
 
 \item{output}{If set to the default \code{output = "C"}, detailed
 information is provided. Set \code{output = "p"}, to only return the
 resulting p value.}
 
 \item{phases}{A vector of two characters or numbers indicating the two
-phases that should be compared. E.g., \code{phases = c(1,2)} or
+phases that should be compared. E.g., \code{phases = c("A","C")} or
 \code{phases = c(2,4)} for comparing the second and the fourth phase. Phases
 could be combined by providing a list with two elements. E.g., \code{phases
 = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
@@ -108,10 +108,10 @@ the number of possible combinations (under the given restrictions) undercuts
 the requested \code{number} of combinations.}
 }
 \description{
-The \code{rand_test} function computes a randomization test for single or
+The \code{randSC} function computes a randomization test for single or
 multiple baseline single-case data.  The function is based on an algorithm
 from the \code{SCRT} package (Bulte & Onghena, 2009, 2012), but rewritten
-and extended.
+and extended for the use in AB designs.
 }
 \examples{
 
