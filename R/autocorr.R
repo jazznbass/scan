@@ -63,7 +63,7 @@ autocorr <- function(data, dvar, pvar, mvar,
     y <- data[[case]][[dvar]]
     if (length(y) - 1 < lag_max) lag <- length(y) - 1 else lag <- lag_max
 
-    .tmp <- acf(y, lag_max = lag, plot = FALSE, ...)$acf[-1]
+    .tmp <- acf(y, lag.max = lag, plot = FALSE, ...)$acf[-1]
     df[length(phases$values) + 1, var_lag[1:lag]] <- .tmp
     
     ac[[case]] <- df
