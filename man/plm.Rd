@@ -127,6 +127,19 @@ plm(dat, slope = FALSE, model = "JW")
 ## and now drop the trend estimation as well
 plm(dat, slope = FALSE, trend = FALSE, model = "JW")
 
+## A poisson regression
+example_A24 \%>\% 
+  transform(year = year - year[1])  \%>\% 
+  plm(family = "poisson")
+
+## A binomial regression (frequencies as dependent variable)
+plm(exampleAB_score$Christiano, family = "binomial", var_trials = "trials")
+
+## A binomial regression (percentage as dependent variable)
+exampleAB_score$Christiano \%>\%
+  transform(percentage = values/trials) \%>\%
+  set_dvar("percentage") \%>\%
+  plm(family = "binomial", var_trials = "trials", dvar_percentage = TRUE)
 }
 \references{
 Beretvas, S., & Chung, H. (2008). An evaluation of modified

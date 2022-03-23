@@ -581,7 +581,7 @@ print.sc_plm <- function(x, ...) {
     cat("\n")
   }
   cat("Formula: ")
-  if (x$family == "binomial") {
+  if (x$family == "binomial" && !x$dvar_percentage) {
     x$formula[2] <- str2expression(paste0(x$formula[2], "/", x$var_trials))
   }
   print(x$formula, showEnv = FALSE)
@@ -589,7 +589,7 @@ print.sc_plm <- function(x, ...) {
     cat("weights = ", x$var_trials)
   }
   cat("\n")
-  .note_vars(x)
+  #.note_vars(x)
 }
 
 
