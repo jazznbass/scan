@@ -1,8 +1,8 @@
 # scan - Single-Case Data Analyses for Single and Multiple Baseline Designs
 
 <!-- badges: start -->
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/scan?color=blue)](https://cran.r-project.org/package=scan)
-[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/scan?color=orange)](https://cran.rstudio.com/package=scan)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/scan?color=blue)](https://CRAN.R-project.org/package=scan)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/scan?color=orange)](https://CRAN.R-project.org/package=scan)
 <!-- badges: end -->
 
  <img src='man/figures/logo.png' align="right" height = "135" />
