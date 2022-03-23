@@ -17,7 +17,7 @@ select_cases <- function(scdf, ...) {
   
   vars <- names(scdf)
   .eval <- function(x) {
-    if (class(x) == "character") {
+    if (inherits(x, "character")) {
       weight <- ifelse(substring(x, 1, 1) == "-", -1, 1)
       x <- ifelse(substring(x, 1, 1) == "-", substring(x, 2, nchar(x)), x)
       x <- sapply(x, function(y) which(vars %in% y))
@@ -31,8 +31,8 @@ select_cases <- function(scdf, ...) {
 
   select <- as.list(substitute(list(...)))[-1]
   select <- lapply(select, function(x) 
-    if (class(x) == "name") { as.character(x) 
-    } else if (class(x) == "call") { eval(x) 
+    if (inherits(x, "name")) { as.character(x) 
+    } else if (inherits(x, "call")) { eval(x) 
     } else x
   )
   

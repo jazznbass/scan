@@ -76,7 +76,7 @@ power_test <- function(design,
   mc_fun <- unlist(
     lapply(
       method, 
-      function(x) if (class(x) == "character") mc_function(x) else x
+      function(x) if (inherits(x, "character")) mc_function(x) else x
     ),
     recursive = FALSE
   )

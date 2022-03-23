@@ -8,7 +8,7 @@
   
   warning <- character(0)
   
-  if (class(phases) %in% c("character", "numeric", "integer")) {
+  if (inherits(phases, c("character", "numeric", "integer"))) {
     if (!length(phases) == 2) {
       stop("Phases argument not set correctly.")
     }    
@@ -16,7 +16,7 @@
     phases_B <- phases[2]
   }
   
-  if (class(phases) == "list") {
+  if (inherits(phases, "list")) {
     phases_A <- phases[[1]]
     phases_B <- phases[[2]]
   }
@@ -31,7 +31,7 @@
     
     design <- rle(as.character(data[[case]][[pvar]]))
     
-    if (class(phases_total) == "character") {
+    if (inherits(phases_total, "character")) {
       select_A <- which(design$values %in% phases_A)
       select_B <- which(design$values %in% phases_B)
     } else {
@@ -40,7 +40,7 @@
     }
     
     
-    if (class(phases_total) != "character") {
+    if (!inherits(phases_total, "character")) {
       if (any(phases_total > length(design$values))) {
         warning <- c(
           warning, 
@@ -51,7 +51,7 @@
       }
     }
     
-    if (class(phases_total) == "character") {
+    if (inherits(phases_total, "character")) {
       
       tmp <- sapply(phases_total, function(x) sum(x == design$values) > 1)
       if (any(tmp)) {

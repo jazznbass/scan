@@ -164,7 +164,7 @@ plotSC <- function(data, dvar, pvar, mvar,
   ### END: define style
   
   # Marks on the outliers from outlierandom_scdf
-  if (identical(class(marks), c("sc_outlier"))) 
+  if (inherits(marks, "sc_outlier")) 
     marks <- list(positions = marks$dropped.mt)
   
   # name cases
@@ -343,7 +343,7 @@ plotSC <- function(data, dvar, pvar, mvar,
     # styling ------------------------------------------------------------
     
     # fill bg
-    if(class(style$fill.bg) == "character") {
+    if(inherits(style$fill.bg, "character")) {
       style$col.fill.bg <- style$fill.bg
       style$fill.bg <- TRUE
     }
@@ -369,7 +369,7 @@ plotSC <- function(data, dvar, pvar, mvar,
     }
     
     # grid
-    if(class(style$grid) == "character") {
+    if(inherits(style$grid, "character")) {
       style$col.grid <- style$grid
       style$grid <- TRUE
     }
@@ -390,7 +390,7 @@ plotSC <- function(data, dvar, pvar, mvar,
     
     if (style$fill == "" || is.na(style$fill)) style$fill <- FALSE
     
-    if(class(style$fill) == "character") {
+    if(inherits(style$fill, "character")) {
       style$col.fill <- style$fill
       style$fill <- TRUE
     }
@@ -449,7 +449,7 @@ plotSC <- function(data, dvar, pvar, mvar,
         marks.pch <- marks[[which(names(marks) == "pch")]]
       }
       
-      if (class(marks.pos) == "numeric") {
+      if (inherits(marks.pos, "numeric")) {
         mks <- marks.pos
       } else {
         mks <- marks.pos[[case]]
@@ -806,7 +806,7 @@ plotSC <- function(data, dvar, pvar, mvar,
     "movingMedian"
   )
   
-  if (class(lines) != "list") {
+  if (!inherits(lines, "list")) {
     lines <- lapply(lines, function(x) x)
   }
   

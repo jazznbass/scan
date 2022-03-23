@@ -256,12 +256,12 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   }
   
   out[, ] <- lapply(out[, ], function(x)
-    if (class(x) == "numeric") as.character(round(x, round)) else x
+    if (inherits(x, "numeric")) as.character(round(x, round)) else x
   )
   out <- cbind(Parameter = rownames(out), out, stringsAsFactors = FALSE)
   rownames(out) <- NULL
   md[, ] <- lapply(md, function(x)
-    if (class(x) == "numeric") as.character(round(x, round)) else x
+    if (inherits(x, "numeric")) as.character(round(x, round)) else x
   )
   md <- cbind(" " = rownames(md), md, stringsAsFactors = FALSE)
   rownames(md) <- NULL
