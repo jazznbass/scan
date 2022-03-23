@@ -16,6 +16,7 @@
 \alias{exampleAB}
 \alias{exampleAB_add}
 \alias{exampleAB_decreasing}
+\alias{exampleAB_score}
 \alias{exampleABC}
 \alias{exampleABC_outlier}
 \alias{exampleABC_50}

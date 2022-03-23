@@ -19,6 +19,7 @@
 #' exampleAB 
 #' exampleAB_add 
 #' exampleAB_decreasing
+#' exampleAB_score
 #' exampleABC 
 #' exampleABC_outlier 
 #' exampleABC_50
