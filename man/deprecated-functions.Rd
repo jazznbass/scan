@@ -73,10 +73,10 @@ rciSC(...)
 rCi(...)
 }
 \arguments{
-\item{...}{Arguments passed to the design function.}
+\item{...}{Arguments passed through to the new function.}
 }
 \description{
 This is a list with functions names that have been replaced by new names
-which are in line with re R syntax guidelines. The old function names still 
+which are in line with R syntax guidelines. The old function names still 
 work. They are wrappers that call the new function.
 }

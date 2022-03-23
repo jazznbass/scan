@@ -166,6 +166,9 @@
     <loc>/reference/readSC.html</loc>
   </url>
   <url>
+    <loc>/reference/read_scdf.html</loc>
+  </url>
+  <url>
     <loc>/reference/sample_names.html</loc>
   </url>
   <url>
@@ -227,5 +230,8 @@
   </url>
   <url>
     <loc>/reference/writeSC.html</loc>
+  </url>
+  <url>
+    <loc>/reference/write_scdf.html</loc>
   </url>
 </urlset>

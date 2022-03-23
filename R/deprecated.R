@@ -1,7 +1,7 @@
 #' List of old deprecated function names
 #' 
 #' This is a list with functions names that have been replaced by new names
-#' which are in line with re R syntax guidelines. The old function names still 
+#' which are in line with R syntax guidelines. The old function names still 
 #' work. They are wrappers that call the new function.
 #' 
 #' @param ... Arguments passed through to the new function.
@@ -9,7 +9,6 @@
 NULL
 
 #' @rdname deprecated-functions
-#' @param ... Arguments passed to the design function.
 #' @export
 design_rSC <- function(...) {
   .deprecated_warning("design", "design_rSC")

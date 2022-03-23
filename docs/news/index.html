@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.53.6.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.53.6.9003</span>
       </span>
     </div>
 
@@ -60,30 +60,47 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="development version" id="scan-development-version">scan (development version)<a class="anchor" aria-label="anchor" href="#scan-development-version"></a></h2>
-</div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.53.6" id="scan-0536">scan 0.53.6<a class="anchor" aria-label="anchor" href="#scan-0536"></a></h2>
-<ul><li><p>new function <code><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform()</a></code>: Takes a scdf and calculates or modifies variables for each case (<code>transform(exampleAB, z_values = scale(values), t_values = 50 + z_values * 10)</code>).</p></li>
-<li><p>renamed functions: <code><a href="../reference/deprecated-functions.html">design_rSC()</a></code> -&gt; <code><a href="../reference/design.html">design()</a></code><br><code><a href="../reference/deprecated-functions.html">rSC()</a></code> -&gt; <code><a href="../reference/random_scdf.html">random_scdf()</a></code></p></li>
-<li><p>rewrote <code><a href="../reference/power_test.html">power_test()</a></code> with various extensions, optimizations, and solved various bugs. rewrote the <code>print</code> method, added an argument <code>duration</code> to print the computation duration. Added the <code>'n_trials'</code> argument for binomial distributions. Extended the help page.<br></p></li>
-<li><p>speed optimized <code><a href="../reference/deprecated-functions.html">rSC()</a></code>. Rewrote the algorithm for ‘poisson’ distributed measures. Rewrote the algorithm for the ‘binomial’ distribution. Extended the help page.<br></p></li>
-<li><p>rewrote <code><a href="../reference/deprecated-functions.html">design_rSC()</a></code> and its print method. Extended the help page. Rewrote the algorithm for the ‘binomial’ distribution.<br></p></li>
-<li><p>new function <code><a href="../reference/mc_function.html">mc_function()</a></code> takes a character string and returns a function for Monte Carlo analysis.<br></p></li>
-<li><p><code><a href="../reference/plm.html">plm()</a></code>: rewrote the analysis function for binomial tests. These now need an argument <code>var_trials</code> to define the number of trials per measurement. The <code>dvar_percentage</code> argument must be set TRUE when the dependent variables are percentages (and <code>family = 'binomal'</code>).</p></li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.53.5" id="scan-0535">scan 0.53.5<a class="anchor" aria-label="anchor" href="#scan-0535"></a></h2>
-<ul><li>solved wrong calculation of Hedges G when phase length differed.</li>
-<li>new function <code><a href="../reference/smd.html">smd()</a></code> reporting various types of standardized mean differences.</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.53.4" id="scan-0534">scan 0.53.4<a class="anchor" aria-label="anchor" href="#scan-0534"></a></h2>
+<h2 class="page-header" data-toc-text="0.53.6.9003" id="scan-05369003">scan 0.53.6.9003<a class="anchor" aria-label="anchor" href="#scan-05369003"></a></h2>
+<div class="section level3">
+<h3 id="new-functions-0-53-6-9003">new functions<a class="anchor" aria-label="anchor" href="#new-functions-0-53-6-9003"></a></h3>
 <ul><li>
-<code>load_scdf</code> and <code>save_scdf</code> replace <code>readSC</code> and <code>writeSC</code>. The latter are kept working.</li>
+<code><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform()</a></code>: Takes a scdf and calculates or modifies variables for each case (<code>transform(exampleAB, z_values = scale(values), t_values = 50 + z_values * 10)</code>).</li>
 <li>
-<code>load_scdf</code> extracts filetype from file extension.</li>
-<li>New <code>yaml</code> import options for scdf files</li>
+<code><a href="../reference/smd.html">smd()</a></code> reporting various types of standardized mean differences.</li>
+<li>
+<code><a href="../reference/mc_function.html">mc_function()</a></code> takes a character string and returns a predefined function for Monte Carlo analysis.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="reanmed-functions-old-functionnames-still-work-0-53-6-9003">reanmed functions (old functionnames still work)<a class="anchor" aria-label="anchor" href="#reanmed-functions-old-functionnames-still-work-0-53-6-9003"></a></h3>
+<ul><li>
+<code>readSC</code> -&gt; <code>read_scdf</code>
+</li>
+<li>
+<code>writeSC</code> -&gt; <code><a href="../reference/write_scdf.html">write_scdf()</a></code>
+</li>
+<li>
+<code><a href="../reference/deprecated-functions.html">design_rSC()</a></code> -&gt; <code><a href="../reference/design.html">design()</a></code>
+</li>
+<li>
+<code><a href="../reference/deprecated-functions.html">rSC()</a></code> -&gt; <code><a href="../reference/random_scdf.html">random_scdf()</a></code>
+</li>
+</ul></div>
+<div class="section level3">
+<h3 id="complete-rework---as-new-0-53-6-9003">Complete rework - as new<a class="anchor" aria-label="anchor" href="#complete-rework---as-new-0-53-6-9003"></a></h3>
+<ul><li>
+<code><a href="../reference/power_test.html">power_test()</a></code> with various extensions, optimizations, and solved various bugs. rewrote the <code>print</code> method, added an argument <code>duration</code> to print the computation duration. Added the <code>'n_trials'</code> argument for binomial distributions. Extended the help page.<br></li>
+<li>
+<code><a href="../reference/design.html">design()</a></code> and its print method. Extended the help page. Rewrote the algorithm for the ‘binomial’ distribution.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="extended-functions-0-53-6-9003">Extended functions<a class="anchor" aria-label="anchor" href="#extended-functions-0-53-6-9003"></a></h3>
+<ul><li>
+<code><a href="../reference/plm.html">plm()</a></code>: rewrote the analysis function for binomial tests. These now need an argument <code>var_trials</code> to define the number of trials per measurement. The <code>dvar_percentage</code> argument must be set TRUE when the dependent variables are percentages (and <code>family = 'binomal'</code>).</li>
+<li>speed optimized <code><a href="../reference/random_scdf.html">random_scdf()</a></code>. Rewrote the algorithm for ‘poisson’ distributed measures. Rewrote the algorithm for the ‘binomial’ distribution. Extended the help page.<br></li>
+<li>
+<code>read_scdf</code>: extracts filetype from file extension.</li>
+<li>
+<code>read_scdf</code>: New <code>yaml</code> import options for scdf files</li>
 </ul><div class="sourceCode" id="cb1"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anna</span><span class="kw">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">values</span><span class="kw">:</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">A</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">1</span><span class="kw">,</span><span class="at"> </span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">4</span><span class="kw">,</span><span class="at"> </span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">6</span><span class="kw">,</span><span class="at"> </span><span class="dv">7</span><span class="kw">]</span></span>
@@ -94,17 +111,18 @@
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">A</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">2</span><span class="kw">,</span><span class="at"> </span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">4</span><span class="kw">,</span><span class="at"> </span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">6</span><span class="kw">,</span><span class="at"> </span><span class="dv">7</span><span class="kw">]</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">B</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">9</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="dv">11</span><span class="kw">]</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">control_var</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="kw">,</span><span class="dv">4</span><span class="kw">,</span><span class="dv">5</span><span class="kw">,</span><span class="dv">6</span><span class="kw">,</span><span class="dv">7</span><span class="kw">,</span><span class="dv">8</span><span class="kw">,</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="kw">]</span></span></code></pre></div>
-</div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.53.3" id="scan-0533">scan 0.53.3<a class="anchor" aria-label="anchor" href="#scan-0533"></a></h2>
-<ul><li>solved <a href="https://github.com/jazznbass/scan/issues/51" class="external-link">#51</a>: Added option of CI for tau_u output.</li>
+<ul><li>
+<code><a href="../reference/tau_u.html">tau_u()</a></code> <a href="https://github.com/jazznbass/scan/issues/51" class="external-link">#51</a>: Added option for confidence intervals for tau_u output.</li>
 </ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.53.2" id="scan-0532">scan 0.53.2<a class="anchor" aria-label="anchor" href="#scan-0532"></a></h2>
-<ul><li>solved <a href="https://github.com/jazznbass/scan/issues/46" class="external-link">#46</a>: <code>plm</code> throws no error, when a phase is of length 1.</li>
+<div class="section level3">
+<h3 id="solved-error-in-functions-0-53-6-9003">Solved error in functions<a class="anchor" aria-label="anchor" href="#solved-error-in-functions-0-53-6-9003"></a></h3>
+<ul><li>
+<code><a href="../reference/describe.html">describe()</a></code>: solved wrong calculation of Hedges G when phase length differed.</li>
+<li>solved <a href="https://github.com/jazznbass/scan/issues/46" class="external-link">#46</a>: <code>plm</code> throws no error, when a phase is of length 1.</li>
 <li>solved <a href="https://github.com/jazznbass/scan/issues/48" class="external-link">#48</a>: throws warning for <code>corrected_tau</code> when A phase has less than three rows.</li>
 <li>solved <a href="https://github.com/jazznbass/scan/issues/49" class="external-link">#49</a>: changes class from tibble to data.frame within scdf.</li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.53" id="scan-053">scan 0.53<small>2021-09-22</small><a class="anchor" aria-label="anchor" href="#scan-053"></a></h2>
 <div class="section level3">
