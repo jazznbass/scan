@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.53.6.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">write_scdf</span><span class="op">(</span><span class="va">data</span>, filename <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">write_scdf</span><span class="op">(</span><span class="va">data</span>, filename <span class="op">=</span> <span class="cn">NULL</span>, sep <span class="op">=</span> <span class="st">","</span>, dec <span class="op">=</span> <span class="st">"."</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">writeSC</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
@@ -78,16 +78,23 @@ this format.</p></dd>
 <dt>filename</dt>
 <dd><p>A character string defining the output file name (e.g.
 <code>"SC_data.csv"</code>.</p></dd>
+<dt>sep</dt>
+<dd><p>The field separator string. Values within each row of x are 
+separated by this string.</p></dd>
+<dt>dec</dt>
+<dd><p>The string to use for decimal points in numeric or complex 
+columns: must be a single character.</p></dd>
 <dt>...</dt>
 <dd><p>Further arguments passed to write.table.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>This is just a simple wrapper for `write_csv(as.data.frame(data), filename, row.names = FALSE)`.</p>
+    <p>This is just a simple wrapper for 
+`write_csv(as.data.frame(data), filename, row.names = FALSE)`.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.table</a></code>, <code><a href="read_scdf.html">readSC</a></code>,
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.table</a></code>, <code><a href="read_scdf.html">read_scdf</a></code>,
 <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></code></p></div>
     </div>
     <div id="author">
@@ -98,18 +105,18 @@ this format.</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## write single-case data to a .csv-file</span></span>
-<span class="r-in"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"test.csv"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"test.csv"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">jessica</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="fu"><a href="design.html">design</a></span><span class="op">(</span>level <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">write_scdf</span><span class="op">(</span><span class="va">jessica</span>, <span class="va">filename</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">## write multiple cases to a .csv-file with semicolon as field and comma as decimal separator</span></span>
+<span class="r-in"><span class="co">## write multiple cases to a .csv-file with semicolon as field and comma as </span></span>
+<span class="r-in"><span class="co">## decimal separator</span></span>
 <span class="r-in"><span class="fu">write_scdf</span><span class="op">(</span><span class="va">Grosche2011</span>, <span class="va">filename</span>, sep <span class="op">=</span> <span class="st">";"</span>, dec <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>attempt to set 'sep' ignored</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>attempt to set 'dec' ignored</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## read_scdf and write_scdf</span></span>
 <span class="r-in"><span class="fu">write_scdf</span><span class="op">(</span><span class="va">exampleA1B1A2B2_zvt</span>, <span class="va">filename</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="read_scdf.html">read_scdf</a></span><span class="op">(</span><span class="va">filename</span>, cvar <span class="op">=</span> <span class="st">"case"</span>, pvar <span class="op">=</span> <span class="st">"part"</span>, dvar <span class="op">=</span> <span class="st">"zvt"</span>, mvar <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="read_scdf.html">read_scdf</a></span><span class="op">(</span><span class="va">filename</span>, cvar <span class="op">=</span> <span class="st">"case"</span>, pvar <span class="op">=</span> <span class="st">"part"</span>, </span>
+<span class="r-in">                 dvar <span class="op">=</span> <span class="st">"zvt"</span>, mvar <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Loaded 3 cases.</span>
 <span class="r-in"><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2_zvt</span><span class="op">)</span><span class="op">$</span><span class="va">descriptives</span></span>
 <span class="r-in"><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">$</span><span class="va">descriptives</span></span>

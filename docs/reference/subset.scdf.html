@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.53.6.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54</span>
       </span>
     </div>
 
@@ -92,22 +92,22 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleAB</span>, <span class="op">(</span><span class="va">values</span> <span class="op">&lt;</span> <span class="fl">60</span> <span class="op">&amp;</span> <span class="va">phase</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="va">values</span> <span class="op">&gt;=</span> <span class="fl">60</span> <span class="op">&amp;</span> <span class="va">phase</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 3 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Johanna: phase values mt | Karolina: phase values mt | Anja: phase values mt |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               A     54  1 |               A     41  1 |           A     55  1 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               A     53  2 |               A     59  2 |           A     58  2 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               A     56  3 |               A     56  3 |           A     53  3 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               A     58  4 |               A     51  4 |           A     50  4 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               A     52  5 |               A     52  5 |           A     52  5 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               B     61  6 |               B     67  8 |           B     68  7 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               B     62  7 |               B     75  9 |           B     68  8 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               B     71  8 |               B     66 10 |           B     81  9 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               B     66  9 |               B     69 11 |           B     67 10 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               B     64 10 |               B     68 12 |           B     78 11 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               B     78 11 |               B     73 13 |           B     73 12 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               B     70 12 |               B     77 14 |           B     72 13 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               B     74 13 |               B     79 15 |           B     78 14 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               B     82 14 |               B     86 16 |           B     81 15 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               B     77 15 |               B     82 17 |           B     78 16 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Johanna: values mt phase | Karolina: values mt phase | Anja: values mt phase |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               54  1     A |               41  1     A |           55  1     A |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               53  2     A |               59  2     A |           58  2     A |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               56  3     A |               56  3     A |           53  3     A |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               58  4     A |               51  4     A |           50  4     A |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               52  5     A |               52  5     A |           52  5     A |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               61  6     B |               67  8     B |           68  7     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               62  7     B |               75  9     B |           68  8     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               71  8     B |               66 10     B |           81  9     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               66  9     B |               69 11     B |           67 10     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               64 10     B |               68 12     B |           78 11     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               78 11     B |               73 13     B |           73 12     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               70 12     B |               77 14     B |           72 13     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               74 13     B |               79 15     B |           78 14     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               82 14     B |               86 16     B |           81 15     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               77 15     B |               82 17     B |           78 16     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 5 more rows</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleAB_add</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">cigarrets</span>, <span class="op">-</span><span class="va">depression</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with one case</span>
@@ -132,22 +132,22 @@
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleAB</span>, cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Karolina</span>, <span class="va">Johanna</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 2 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Karolina: phase values mt | Johanna: phase values mt |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                A     41  1 |              A     54  1 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                A     59  2 |              A     53  2 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                A     56  3 |              A     56  3 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                A     51  4 |              A     58  4 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                A     52  5 |              A     52  5 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                B     57  6 |              B     61  6 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                B     56  7 |              B     62  7 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                B     67  8 |              B     71  8 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                B     75  9 |              B     66  9 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                B     66 10 |              B     64 10 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                B     69 11 |              B     78 11 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                B     68 12 |              B     70 12 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                B     73 13 |              B     74 13 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                B     77 14 |              B     82 14 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                B     79 15 |              B     77 15 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Karolina: values mt phase | Johanna: values mt phase |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                41  1     A |              54  1     A |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                59  2     A |              53  2     A |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                56  3     A |              56  3     A |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                51  4     A |              58  4     A |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                52  5     A |              52  5     A |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                57  6     B |              61  6     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                56  7     B |              62  7     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                67  8     B |              71  8     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                75  9     B |              66  9     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                66 10     B |              64 10     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                69 11     B |              78 11     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                68 12     B |              70 12     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                73 13     B |              74 13     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                77 14     B |              82 14     B |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                79 15     B |              77 15     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 5 more rows</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2</span>, <span class="va">phase</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"B2"</span><span class="op">)</span>, cases <span class="op">=</span> <span class="va">Pawel</span><span class="op">:</span><span class="va">Moritz</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 2 cases</span>

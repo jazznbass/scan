@@ -24,8 +24,13 @@
 #' study <- random_scdf(design)
 #' transform(study, proportion = values/trials, percentage = proportion * 100)
 #' 
-#' ## Z standardize the dependent variable:
-#' transform(exampleAB, values = scale(values))
+#' ## Z standardize the dependent variable and add two new variables:
+#' exampleAB %>% 
+#'   transform(
+#'     values = scale(values), 
+#'     mean_values = mean(values), 
+#'     sd_values = sd(values)
+#'   )
 
 transform.scdf <- function(`_data`, ...) {
   f <- substitute(list(...))

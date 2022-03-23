@@ -14,6 +14,7 @@
     scan.print.cols   = "all",
     scan.print.digits = 2,
     scan.print.long   = FALSE,
+    scan.print.bar   = "|",
     scan.print.scdf.name = TRUE,
     scan.plot.style = "grid",
     scan.deprecated.warning = TRUE,

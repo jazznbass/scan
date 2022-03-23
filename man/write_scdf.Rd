@@ -5,7 +5,7 @@
 \alias{writeSC}
 \title{Write data into a .csv-file}
 \usage{
-write_scdf(data, filename = NULL, ...)
+write_scdf(data, filename = NULL, sep = ",", dec = ".", ...)
 
 writeSC(...)
 }
@@ -16,32 +16,41 @@ this format.}
 \item{filename}{A character string defining the output file name (e.g.
 \code{"SC_data.csv"}.}
 
+\item{sep}{The field separator string. Values within each row of x are 
+separated by this string.}
+
+\item{dec}{The string to use for decimal points in numeric or complex 
+columns: must be a single character.}
+
 \item{\dots}{Further arguments passed to write.table.}
 }
 \description{
 This function restructures and writes single-case data into a .csv-file.
 }
 \details{
-This is just a simple wrapper for `write_csv(as.data.frame(data), filename, row.names = FALSE)`.
+This is just a simple wrapper for 
+`write_csv(as.data.frame(data), filename, row.names = FALSE)`.
 }
 \examples{
 ## write single-case data to a .csv-file
-filename <- filename <- file.path(tempdir(), "test.csv")
+filename <- file.path(tempdir(), "test.csv")
 jessica <- random_scdf(design(level = .5))
 write_scdf(jessica, filename)
 
-## write multiple cases to a .csv-file with semicolon as field and comma as decimal separator
+## write multiple cases to a .csv-file with semicolon as field and comma as 
+## decimal separator
 write_scdf(Grosche2011, filename, sep = ";", dec = ",")
 
 ## read_scdf and write_scdf
 write_scdf(exampleA1B1A2B2_zvt, filename)
-dat <- read_scdf(filename, cvar = "case", pvar = "part", dvar = "zvt", mvar = "day")
+dat <- read_scdf(filename, cvar = "case", pvar = "part", 
+                 dvar = "zvt", mvar = "day")
 res1 <- describe(exampleA1B1A2B2_zvt)$descriptives
 res2 <- describe(dat)$descriptives
 all.equal(res1,res2)
 }
 \seealso{
-\code{\link{write.table}}, \code{\link{readSC}},
+\code{\link{write.table}}, \code{\link{read_scdf}},
 \code{\link{saveRDS}}
 }
 \author{

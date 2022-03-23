@@ -15,6 +15,8 @@ read_scdf(
   dvar = "values",
   mvar = "mt",
   phase.names = NULL,
+  sep = ",",
+  dec = ".",
   type = NA,
   ...
 )
@@ -47,6 +49,12 @@ opened.}
 
 \item{phase.names}{A character vector with phase names. Defaults to the phase
 names provided in the phase variable.}
+
+\item{sep}{The field separator string. Values within each row of x are 
+separated by this string.}
+
+\item{dec}{The string to use for decimal points in numeric or complex 
+columns: must be a single character.}
 
 \item{type}{Format of the file to be loaded. Either "csv", "xlsx", "xls",
 "excel", "yml" is possible. By default (NA) the type is extracted from the

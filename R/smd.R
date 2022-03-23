@@ -14,6 +14,8 @@
 #' 'Cohens d` is the mean difference divided by 'sd cohen'.
 #' @author Juergen Wilbert
 #' @seealso \code{\link{overlap}}, \code{\link{describe}}
+#' @examples
+#' smd(exampleAB)
 #' @export
 smd <- function(data, dvar, pvar, mvar, 
                 decreasing = FALSE, 

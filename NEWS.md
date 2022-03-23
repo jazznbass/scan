@@ -1,11 +1,10 @@
-# scan 0.53.6.9003
+# scan 0.54
 
 ## new functions
 
 - `transform()`: Takes a scdf and calculates or modifies variables 
 for each case (`transform(exampleAB, z_values = scale(values), t_values = 50 + z_values * 10)`).
 - `smd()` reporting various types of standardized mean differences.
-- `mc_function()` takes a character string and returns a predefined function for Monte Carlo analysis.
 
 ## reanmed functions (old functionnames still work)
 
@@ -75,7 +74,7 @@ Leidig2018 %>%
        slope = FALSE, random.slopes = FALSE, lr.test = FALSE)
 ```
 
-- `select_phases()`: selects and recombines phases into A and B phase (equivalent to th phases argument for various functions, but useful when using %>% operators).
+- `select_phases()`: selects and recombines phases into A and B phase (equivalent to the phases argument of various functions, but useful when using %>% operators).
 
 ```R
 exampleA1B1A2B2 %>% 
@@ -111,7 +110,6 @@ cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
 
 ### Changes in functions
 
-- `subset()`: Argument `subset` changed to `filter`.
 - `overlap()`: Added Hedges-g.
 - new trend lines added to `plot.scdf()`: Koenig's bi-split / quarter intersect (lines = "trendA_bisplit") and Tukey's tri-split / Wald's slope (lines = "trendA_trisplit").
 

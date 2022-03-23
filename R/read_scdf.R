@@ -8,6 +8,10 @@
 #' @param data A data frame. As an alternative to \code{filname}.
 #' @param sort.labels If set TRUE, the resulting list is sorted by label names
 #'   (alphabetically increasing).
+#' @param sep The field separator string. Values within each row of x are 
+#' separated by this string.
+#' @param dec The string to use for decimal points in numeric or complex 
+#' columns: must be a single character.
 #' @param type Format of the file to be loaded. Either "csv", "xlsx", "xls",
 #'   "excel", "yml" is possible. By default (NA) the type is extracted from the
 #'   file extension.
@@ -55,6 +59,8 @@ read_scdf <- function(filename,
                       dvar = "values", 
                       mvar = "mt", 
                       phase.names = NULL, 
+                      sep = ",",
+                      dec = ".",
                       type = NA, 
                       ...) {
   
@@ -73,10 +79,12 @@ read_scdf <- function(filename,
   }
   
   if (type == "csv") {
-    dat <- utils::read.csv(
+    dat <- utils::read.table(
       filename, 
       header = TRUE,
       stringsAsFactors = FALSE,
+      sep = sep,
+      dec = dec,
       ...
     )
   }

@@ -22,6 +22,8 @@ print.scdf <- function(x,
                        long   = getOption("scan.print.long"), 
                        digits = getOption("scan.print.digits"), ...) {
   
+  v_bar <- getOption("scan.print.bar")
+  
   row.names <- FALSE
   N <- length(x)
 
@@ -74,7 +76,8 @@ print.scdf <- function(x,
   if (!long) {
     if (max_row < rows) rows <- max_row
     out <- lapply(x[1:cases], function(x) x[1:rows, ])
-    if (cases > 1) out <- lapply(out, function(x) {x$"|" <- "|"; x})
+    #if (cases > 1) out <- lapply(out, function(x) {x$"|" <- "|"; x})
+    if (cases > 1) out <- lapply(out, function(x) {x[[v_bar]] <- v_bar; x})
 
     names <- lapply(out, names)
     out <- as.data.frame(out)

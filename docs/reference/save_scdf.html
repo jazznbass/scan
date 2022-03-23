@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.53.6.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ this format.</p></dd>
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.table</a></code>, <code><a href="load_scdf.html">readSC</a></code>,
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.table</a></code>, <code><a href="read_scdf.html">readSC</a></code>,
 <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></code></p></div>
     </div>
     <div id="author">
@@ -95,7 +95,9 @@ this format.</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Save single-case data to a .csv-file</span></span>
 <span class="r-in"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"test.csv"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">jessica</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="fu"><a href="design.html">design</a></span><span class="op">(</span>level <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">jessica</span> <span class="op">&lt;-</span> <span class="fu"><a href="deprecated-functions.html">rSC</a></span><span class="op">(</span><span class="fu"><a href="deprecated-functions.html">design_rSC</a></span><span class="op">(</span>level <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>This function is deprecated. It might be dropped without any further notice in a future update of scan. Please name function 'random_scdf' instead of 'rSC'.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>This function is deprecated. It might be dropped without any further notice in a future update of scan. Please name function 'design' instead of 'design_rSC'.</span>
 <span class="r-in"><span class="fu">save_scdf</span><span class="op">(</span><span class="va">jessica</span>, <span class="va">filename</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Save multiple cases to a .csv-file with semicolon as field and comma as decimal separator</span></span>
@@ -103,12 +105,13 @@ this format.</p></dd>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## save_scdf and load_scdf</span></span>
 <span class="r-in"><span class="fu">save_scdf</span><span class="op">(</span><span class="va">exampleA1B1A2B2_zvt</span>, <span class="va">filename</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_scdf.html">load_scdf</a></span><span class="op">(</span><span class="va">filename</span>, cvar <span class="op">=</span> <span class="st">"case"</span>, pvar <span class="op">=</span> <span class="st">"part"</span>, dvar <span class="op">=</span> <span class="st">"zvt"</span>, mvar <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Loaded 3 cases.</span>
+<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">load_scdf</span><span class="op">(</span><span class="va">filename</span>, cvar <span class="op">=</span> <span class="st">"case"</span>, pvar <span class="op">=</span> <span class="st">"part"</span>, dvar <span class="op">=</span> <span class="st">"zvt"</span>, mvar <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in load_scdf(filename, cvar = "case", pvar = "part", dvar = "zvt",     mvar = "day"):</span> could not find function "load_scdf"</span>
 <span class="r-in"><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2_zvt</span><span class="op">)</span><span class="op">$</span><span class="va">descriptives</span></span>
 <span class="r-in"><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">$</span><span class="va">descriptives</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scdf_attr(data, .opt$dv):</span> object 'dat' not found</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">res1</span>,<span class="va">res2</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in all.equal.default(res1, res2):</span> object 'res2' not found</span>
 </code></pre></div>
     </div>
   </div>

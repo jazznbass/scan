@@ -1,12 +1,6 @@
-#' Returns a function to use in Power analysis and Monte-Carlo studies
-#'
-#' @param name Character string. Identifier of function.
-#' 
-#' @details If 'name' is unknown, a list with valid names is provided.
-#' @return A function.
-#' @export
-
 mc_function <- function(name) {
+  
+  if(missing(name)) name <- ""
   id <- which(names(.opt$mc_fun) == name)
   
   if (length(id) == 1) {

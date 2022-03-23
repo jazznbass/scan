@@ -42,6 +42,9 @@ of correcting Hedges' g for small sample sizes.
 A-phase.
 'Cohens d` is the mean difference divided by 'sd cohen'.
 }
+\examples{
+smd(exampleAB)
+}
 \seealso{
 \code{\link{overlap}}, \code{\link{describe}}
 }
