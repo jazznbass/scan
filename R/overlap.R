@@ -40,7 +40,7 @@ overlap <- function(data, dvar, pvar, mvar,
   
   data_list <- .prepare_scdf(data)
   
-  keep <- .keep_phases(data_list, phases = phases, pvar = pvar)
+  keep <- .keep_phases(data_list, phases = phases)
   data_list <- keep$data
   
   designs <- lapply(keep$designs, function(x) x$values)

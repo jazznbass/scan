@@ -108,7 +108,7 @@ rand_test <- function (data, dvar, pvar,
 
   data <- .prepare_scdf(data)
   
-  keep <- .keep_phases(data, phases = phases, pvar = pvar)
+  keep <- .keep_phases(data, phases = phases)
   data <- keep$data
   
   a   <- lapply(data, function(x) x[x[, pvar] == "A", dvar])

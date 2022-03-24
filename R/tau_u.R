@@ -72,7 +72,7 @@ tau_u <- function(data, dvar, pvar,
   scdf_attr(data, .opt$dv) <- dvar
   
   data <- .prepare_scdf(data)
-  data <- .keep_phases(data, phases = phases, pvar = pvar)$data
+  data <- .keep_phases(data, phases = phases)$data
   
   # define "out" data structure
   N <- length(data)
