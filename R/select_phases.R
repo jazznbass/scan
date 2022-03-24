@@ -12,7 +12,7 @@
 #'   select_phases(A = c(1, 3), B = c(2, 4)) %>%
 #'   overlap()
 #' @export
-select_phases <- function(data, A, B, ...) {
+select_phases <- function(data, A, B) {
   data <- .prepare_scdf(data)
   keep <- .keep_phases(data, phases = list(A = A, B = B))
   data <- keep$data
