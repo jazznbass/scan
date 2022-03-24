@@ -1,8 +1,9 @@
 .keep_phases <- function(data, 
                          phases = c(1, 2), 
                          set.phases = TRUE, 
-                         pvar = "phase") {
+                         pvar) {
   
+  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase)
   
   source_attributes <- attributes(data)
   
