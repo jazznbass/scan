@@ -9,10 +9,10 @@ estimate_design(
   dvar,
   pvar,
   mvar,
-  m = NULL,
   s = NULL,
   rtt = NULL,
-  between = TRUE,
+  overall_effects = FALSE,
+  overall_rtt = TRUE,
   model = "JW",
   ...
 )
@@ -30,23 +30,23 @@ the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{m}{The mean depcting the overall distribution of which all cases are a random sample of.
-m is estimated when m = NULL.}
-
-\item{s}{The standard deviation depcting the between case variance of the overall performance.
+\item{s}{The standard deviation depicting the between case variance of the overall performance.
 If more than two single-cases are included in the scdf, the variance is estimated if s is set to NULL.}
 
 \item{rtt}{The reliability of the measurements. The reliability is estimated when rtt = NULL.}
 
-\item{between}{If FALSE trend, level, and slope effect estimations will be identical for each case.
-If TRUE effects are estimated for each case seperately.}
+\item{overall_effects}{If TRUE trend, level, and slope effect estimations will be identical for each case.
+If FALSE effects are estimated for each case separately.}
+
+\item{overall_rtt}{Ignored when `rtt` is set. If TRUE rtt estimations will be based on all cases and identical for each case.
+If FALSE rtt is estimated for each case separately.}
 
 \item{model}{Model used for calculating the slope parameter (see Huitema &
 McKean, 2000). Default is \code{model = "B&L-B"}. Possible values are:
 \code{"B&L-B"}, \code{"H-M"}, \code{"Mohr#1"}, \code{"Mohr#2"},
 \code{"JW"}, \code{"JW2"}, and \code{"Manly"}.}
 
-\item{...}{Further arguments passed to the lm function used for parameter estimation.}
+\item{...}{Further arguments passed to the plm function used for parameter estimation.}
 }
 \value{
 A list of parameters for each single-case. Parameters include name, length, and
@@ -55,7 +55,32 @@ standarddeviation, and reliability for each case.
 }
 \description{
 This functions takes an scdf and extracts design parameters. The resulting
-object can be unsed to randomly create new scdf files with the same
-underlying parameters. This is usefull for monte-carlo studies and
+object can be used to randomly create new scdf files with the same
+underlying parameters. This is useful for Monte-Carlo studies and
 bootstrapping procedures.
+}
+\examples{
+# create a random scdf with predefined parameters
+set.seed(1234)
+design <- design(
+  n = 10, trend = -0.02, 
+  level = list(0, 1), rtt = 0.8,
+  s = 1
+  )
+scdf<- random_scdf(design)
+
+# Estimate the parameters based on the scdf and create a new random scdf 
+# based on these estimations
+design_est <- estimate_design(scdf, rtt = 0.8)
+scdf_est <- random_scdf(design_est)
+
+# Analyze both datasets with an hplm model. See how similar the estimations are:
+hplm(scdf, slope = FALSE)
+hplm(scdf_est, slope = FALSE)
+
+# Also simar results for pand and randomization tests:
+pand(scdf)
+pand(scdf_est)
+rand_test(scdf)
+rand_test(scdf_est)
 }
