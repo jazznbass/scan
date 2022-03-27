@@ -6,18 +6,23 @@
 #' bootstrapping procedures.
 #'
 #' @inheritParams .inheritParams
-#' @param s The standard deviation depicting the between case variance of the overall performance.
-#' If more than two single-cases are included in the scdf, the variance is estimated if s is set to NULL.
-#' @param rtt The reliability of the measurements. The reliability is estimated when rtt = NULL.
-#' @param overall_rtt Ignored when `rtt` is set. If TRUE rtt estimations will be based on all cases and identical for each case.
+#' @param s The standard deviation depicting the between case variance of the 
+#' overall performance.
+#' If more than two single-cases are included in the scdf, the variance is 
+#' estimated if s is set to NULL.
+#' @param rtt The reliability of the measurements. The reliability is estimated 
+#' when rtt = NULL.
+#' @param overall_rtt Ignored when `rtt` is set. If TRUE, rtt estimations will be based on all cases and identical for each case.
 #' If FALSE rtt is estimated for each case separately.
-#' @param overall_effects If TRUE trend, level, and slope effect estimations will be identical for each case.
-#' If FALSE effects are estimated for each case separately.
-#' @param ... Further arguments passed to the plm function used for parameter estimation.
-#'
-#' @return A list of parameters for each single-case. Parameters include name, length, and
-#' starting measurementtime of each phase, trend level, and slope effects for each phase, mean,
-#' standarddeviation, and reliability for each case.
+#' @param overall_effects If TRUE, trend, level, and slope effect estimations 
+#' will be identical for each case.
+#' If FALSE, effects are estimated for each case separately.
+#' @param ... Further arguments passed to the plm function used for parameter 
+#' estimation.
+#' @return A list of parameters for each single-case. Parameters include name, 
+#' length, and starting measurement time of each phase, trend, level, and slope 
+#' effects for each phase, start value, standard deviation, and reliability for 
+#' each case.
 #' @examples 
 #' # create a random scdf with predefined parameters
 #' set.seed(1234)
@@ -25,7 +30,7 @@
 #'   n = 10, trend = -0.02, 
 #'   level = list(0, 1), rtt = 0.8,
 #'   s = 1
-#'   )
+#' )
 #' scdf<- random_scdf(design)
 #' 
 #' # Estimate the parameters based on the scdf and create a new random scdf 
@@ -33,11 +38,12 @@
 #' design_est <- estimate_design(scdf, rtt = 0.8)
 #' scdf_est <- random_scdf(design_est)
 #' 
-#' # Analyze both datasets with an hplm model. See how similar the estimations are:
+#' # Analyze both datasets with an hplm model. See how similar the estimations 
+#' # are:
 #' hplm(scdf, slope = FALSE)
 #' hplm(scdf_est, slope = FALSE)
 #' 
-#' # Also simar results for pand and randomization tests:
+#' # Also similar results for pand and randomization tests:
 #' pand(scdf)
 #' pand(scdf_est)
 #' rand_test(scdf)
@@ -108,7 +114,8 @@ estimate_design <- function(data, dvar, pvar, mvar,
     fitted <- c(fitted, plm_model$fitted.values)
   }
 
-  if (N > 2 && is.null(s)) s <- sd(sapply(cases, function(x) x$start_value[1]), na.rm = TRUE)
+  if (N > 2 && is.null(s)) 
+    s <- sd(sapply(cases, function(x) x$start_value[1]), na.rm = TRUE)
   
   if (overall_effects) {
     level <- rowMeans(sapply(cases, function(x) x$level))
@@ -123,8 +130,8 @@ estimate_design <- function(data, dvar, pvar, mvar,
   
   vars <- c(
     "phase", "length", "rtt", "missing_prop", "extreme_prop", 
-    "extreme_low", "extreme_high", "trend", "level", "slope", "start_value", "s", 
-    "start", "stop"
+    "extreme_low", "extreme_high", "trend", "level", "slope", "start_value", 
+    "s", "start", "stop"
   )
 
   for (i in 1:N) {

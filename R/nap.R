@@ -24,7 +24,7 @@
 #' gretchen <- scdf(c(A = 12,14,9,10, B = 10,6,4,5,3,4))
 #' nap(gretchen, decreasing = TRUE)
 #' 
-#' ## Request NAP for all cases from the Grosche2011 data
+#' ## Request NAP for all cases from the Grosche2011 scdf
 #' nap(Grosche2011)
 #' 
 #' @export
