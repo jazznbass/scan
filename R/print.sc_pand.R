@@ -22,11 +22,14 @@ print.sc_pand <- function(x, ...) {
   cat("\t% expected\n")
   
   cat("\tA\tB\ttotal\n")
-  cat("%    A",round(ma[1, ] * 100, 1), sum(round(ma[1, ] * 100, 1)), sep = "\t")
+  cat("%    A",round(ma[1, ] * 100, 1), sum(round(ma[1, ] * 100, 1)), 
+      sep = "\t")
   cat("\n")
-  cat("real B",round(ma[2, ] * 100, 1), sum(round(ma[2, ] * 100, 1)), sep = "\t")
+  cat("real B",round(ma[2, ] * 100, 1), sum(round(ma[2, ] * 100, 1)), 
+      sep = "\t")
   cat("\n")
-  cat(" total",sum(round(ma[, 1] * 100, 1)), sum(round(ma[, 2] * 100, 1)), sep = "\t")
+  cat(" total",sum(round(ma[, 1] * 100, 1)), sum(round(ma[, 2] * 100, 1)), 
+      sep = "\t")
   cat("\n")
   ma <- x$matrix_counts
   cat("\n")
