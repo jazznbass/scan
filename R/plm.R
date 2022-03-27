@@ -106,14 +106,6 @@ plm <- function(data, dvar, pvar, mvar,
   
   if (family != "gaussian") r_squared = FALSE
   
-  if (AR > 0 && !family == "gaussian") {
-    stop("Autoregression models could only be applied if distribution ",
-         "familiy = 'gaussian'.\n")
-  }
-  if (family == "binomial" && is.null(var_trials)) {
-    stop("When family = 'binomial' a 'var_trials' must be defined.")
-  } 
-  
   # set defaults attributes
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 
@@ -128,10 +120,16 @@ plm <- function(data, dvar, pvar, mvar,
   original_attr <- attributes(data)[[.opt$scdf]]
   
   N <- length(data)
-  if(N > 1) {
-    stop("Procedure could not be applied to more than one case.\n
-         Consider to use the hplm function.")
-  }
+  
+  .start_check() %>%
+    .check(N == 1, "Procedure could not be applied to more than one case ",
+                   "(use hplm instead).") %>%
+    .check(family == "gaussian" || AR == 0, 
+           "family is not 'gaussian' but AR is set.") %>%
+    .check_not(family == "binomial" && is.null(var_trials),
+               "family = 'binomial' but 'var_trials' not defined.") %>%
+    .check_in(model, c("H-M", "B&L-B", "JW", "JW2")) %>%
+    .end_check()
   
   # formula definition ------------------------------------------------------
   

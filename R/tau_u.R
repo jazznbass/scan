@@ -4,13 +4,18 @@
 #' et al. (2011).
 #'
 #' @inheritParams .inheritParams
-#' @param tau_method Character with values "a" or "b" (default) indicating whether Kendall Tau A or Kendall Tau B is applied.
+#' @param tau_method Character with values "a" or "b" (default) indicating 
+#' whether Kendall Tau A or Kendall Tau B is applied.
 #' @param method \code{"complete"} (default) or \code{"parker"}. The latter
 #' calculates the number of possible pairs as described in Parker et al. (2011)
 #' which might lead to tau-U values greater than 1.
-#' @param meta_method Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated. If set "none", no meta-analysis is conducted (may be helpful to speed up analyses).
+#' @param meta_method Character string. If set "random", a random-effect 
+#' meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is 
+#' calculated. If set "none", no meta-analysis is conducted (may be helpful to 
+#' speed up analyses).
 #' @param ci Confidence interval for meta analyzes.
-#' @param continuity_correction If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.
+#' @param continuity_correction If TRUE, a continuity correction is applied for 
+#' calculating p-values of correlations. This parameter is not yet implemented.
 #' @return 
 #' \item{table}{A data frame containing statistics from the Tau-U
 #' family, including: Pairs, positive and negative comparisons, S, and Tau}
@@ -31,7 +36,10 @@
 #' a fixed effect model ("fixed").
 #' @author Juergen Wilbert
 #' @family overlap functions
-#' @references Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018). Interpreting Kendall’s Tau and Tau-U for single-case experimental designs. \emph{Cogent Psychology, 5(1)}, 1–26. https://doi.org/10.1080/23311908.2018.1518687.
+#' @references Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018). 
+#' Interpreting Kendall’s Tau and Tau-U for single-case experimental designs. 
+#' \emph{Cogent Psychology, 5(1)}, 1–26. 
+#' https://doi.org/10.1080/23311908.2018.1518687.
 #' 
 #' Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B.
 #' (2011). Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
@@ -58,12 +66,12 @@ tau_u <- function(data, dvar, pvar,
                   continuity_correction = FALSE) {
   
   # validity check
-  if (!tau_method %in% c("a", "b")) 
-    stop("tau_method muste be 'a' or 'b'.")
-  if (!method %in% c("complete", "parker")) 
-    stop("method muste be 'complete' or 'parker'.")
-  if (!meta_method %in% c("random", "fixed", "none")) 
-    stop("meta_method muste be 'none', 'random' or 'fixed'.")
+  .start_check() %>%
+    .check_in(tau_method, c("a", "b")) %>%
+    .check_in(method, c("complete", "parker")) %>%
+    .check_in(meta_method, c("random", "fixed", "none")) %>%
+    .check_within(ci, 0, 1) %>%
+    .end_check()
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
@@ -162,7 +170,7 @@ tau_u <- function(data, dvar, pvar,
     #BvB_AKen <- .kendall(AB, c(nA:1, 1:nB), tau_method = tau_method)
     AvB_B_AKen <- .kendall(AB, c(nA:1, (nA + 1):nAB), tau_method = tau_method) 
     AvB_AKen <- .kendall(AB, c(nA:1, rep(nA + 1, nB)), tau_method = tau_method)
-    AvB_BKen <- .kendall(AB, c(rep(0, nA), (nA + 1):nAB), tau_method = tau_method)
+    AvB_BKen <- .kendall(AB, c(rep(0, nA), (nA + 1):nAB), tau_method=tau_method)
     
     # experimental ------------------------------------------------------------
     # table_tau$k_p <- c(
@@ -193,7 +201,7 @@ tau_u <- function(data, dvar, pvar,
     #   AvB_BKen$tau,
     #   AvB_B_AKen$tau
     # )
-    # ENDE experimental ------------------------------------------------------------
+    # ENDE experimental ------------------------------------------------------
     
     # pairs -------------------------------------------------------------------
     
@@ -316,14 +324,15 @@ tau_u <- function(data, dvar, pvar,
     out$table[[i]] <- table_tau
     out$matrix[[i]] <- tau_m
     out$tau_u[[i]] <- c(
-      "A vs. B + Trend B - Trend A" = table_tau["A vs. B + Trend B - Trend A", "Tau"]
+      "A vs. B + Trend B - Trend A" = 
+      table_tau["A vs. B + Trend B - Trend A", "Tau"]
     )
   }
   
   # Overall Tau -------------------------------------------------------------
   
   if (meta_method != "none") {
-    out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method, ci = ci)    
+    out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method, ci = ci)
   } else {
     out$Overall_tau_u <- NA
   }
