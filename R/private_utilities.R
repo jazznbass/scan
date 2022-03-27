@@ -135,8 +135,12 @@
     
     out$sdS <- out$S / (3 * out$S / sqrt( N * (N - 1) * (2* N + 5) / 2 ))
     out$varS <- out$sdS^2
-    if (!continuity_correction) out$z <- 3 * out$S / sqrt( N * (N - 1) * (2* N + 5) / 2 )
-    if (continuity_correction)  out$z <- 3 * (out$S - 1) / sqrt( N * (N - 1) * (2* N + 5) / 2 ) 
+    if (!continuity_correction) {
+      out$z <- 3 * out$S / sqrt( N * (N - 1) * (2* N + 5) / 2 )
+    }
+    if (continuity_correction)  {
+      out$z <- 3 * (out$S - 1) / sqrt( N * (N - 1) * (2* N + 5) / 2 ) 
+    }
     
   }
   
@@ -185,7 +189,9 @@
   coef <- coef(model)
   if (isTRUE(class(coef) == "numeric")) coef <- as.matrix(coef, ncol = 1)
   intercept <- attr(attr(model$model, "terms"), "intercept")
-  .sd <- function(x) sqrt(sum((x - mean(x, na.rm = TRUE) * intercept)^2, na.rm = TRUE))
+  .sd <- function(x) sqrt(
+    sum((x - mean(x, na.rm = TRUE) * intercept)^2, na.rm = TRUE)
+  )
   .sd_predictors <- apply(as.matrix(model.matrix(model)), 2, .sd)
   .sd_criteria <- apply(as.matrix(model.frame(model)[, 1]), 2, .sd)
   coef_std <- coef
@@ -195,3 +201,4 @@
   
   coef_std
 }
+

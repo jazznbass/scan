@@ -1,6 +1,7 @@
 #' Shift values in a single-case data file
 #'
-#' *This function has been replaced by the much more vresatile `transform`function.*
+#' *This function has been replaced by the much more versatile `transform`
+#' function.*
 #' Shifting the values might be helpful in cases where the measurement time
 #' is given as a time variable (see example below).
 #'
@@ -22,6 +23,7 @@
 #' ex <- transform(example_A24, year = year - 1996)
 #' plm(ex)
 shift <- function(data, value, var) {
+  .deprecated_warning("transform", "shift")
   if (missing(var)) var <- scdf_attr(data, .opt$mt)
   for (i in 1:length(data)) {
     data[[i]][[var]] <- data[[i]][[var]] + value

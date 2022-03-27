@@ -1,5 +1,7 @@
 
-.create_fixed_formula <- function(dvar, mvar, slope, level, trend, VAR_PHASE, VAR_INTER) {
+.create_fixed_formula <- function(dvar, mvar, 
+                                  slope, level, trend, 
+                                  VAR_PHASE, VAR_INTER) {
   INTER <- ""
   PHASE <- ""
   MT    <- ""
@@ -15,7 +17,9 @@
   paste0(dvar, " ~ 1", MT, PHASE, INTER)
 }
 
-.create_random_formula <- function(mvar, slope, level, trend, VAR_PHASE, VAR_INTER) {
+.create_random_formula <- function(mvar, 
+                                   slope, level, trend, 
+                                   VAR_PHASE, VAR_INTER) {
   INTER <- ""
   PHASE <- ""
   MT    <- ""
@@ -32,14 +36,18 @@
   paste0("~ 1", MT, PHASE, INTER, "|case")
 }
 
-.add_model_dummies <- function(data, model, dvar = scdf_attr(data, .opt$dv), pvar = scdf_attr(data, .opt$phase), mvar = scdf_attr(data, .opt$mt)) {
+.add_model_dummies <- function(data, model, 
+                               dvar = scdf_attr(data, .opt$dv), 
+                               pvar = scdf_attr(data, .opt$phase), 
+                               mvar = scdf_attr(data, .opt$mt)) {
   for(case in 1:length(data)) {
-    dat_inter    <- .plm.dummy(data[[case]], model = model, dvar = dvar, pvar = pvar, mvar = mvar)
+    dat_inter <- .plm.dummy(data[[case]], model = model, dvar = dvar, 
+                               pvar = pvar, mvar = mvar)
     data[[case]][, mvar] <- dat_inter$mt
-    data[[case]]         <- cbind(data[[case]], dat_inter[, -1])
-    n_Var        <- (ncol(dat_inter) - 1) / 2
-    VAR_INTER    <- names(dat_inter)[(ncol(dat_inter) - n_Var + 1):ncol(dat_inter)]
-    VAR_PHASE    <- names(dat_inter)[2:(n_Var + 1)]
+    data[[case]] <- cbind(data[[case]], dat_inter[, -1])
+    n_Var <- (ncol(dat_inter) - 1) / 2
+    VAR_INTER <- names(dat_inter)[(ncol(dat_inter) - n_Var + 1):ncol(dat_inter)]
+    VAR_PHASE <- names(dat_inter)[2:(n_Var + 1)]
   }
   out <- list(data = data, VAR_INTER = VAR_INTER, VAR_PHASE = VAR_PHASE)
   out
@@ -59,7 +67,9 @@
   out <- gsub("inter", paste0("Slope ", PHASE," "), out)
 }
 
-.plm.dummy <- function(data, model, phase.dummy = TRUE, dvar = "values", pvar = "phase", mvar = "mt") {
+.plm.dummy <- function(data, dvar = "values", pvar = "phase", mvar = "mt",
+                       model, 
+                       phase.dummy = TRUE) {
   
   if (!model %in% c("H-M", "B&L-B", "JW", "JW2")) {
     stop("Model ", model," unknown.\n")
@@ -96,9 +106,11 @@
     pre <- sum(design$lengths[1:(phase - 1)])
     
     if (model == "B&L-B") { 
-      inter[(pre +1):(pre + length.phase)] <- MT[(pre + 1):(pre + length.phase)] - MT[(pre)]
+      inter[(pre +1):(pre + length.phase)] <- 
+        MT[(pre + 1):(pre + length.phase)] - MT[(pre)]
     } else if (model == "H-M") {
-      inter[(pre +1):(pre + length.phase)] <- MT[(pre + 1):(pre + length.phase)] - MT[(pre + 1)]
+      inter[(pre +1):(pre + length.phase)] <- 
+        MT[(pre + 1):(pre + length.phase)] - MT[(pre + 1)]
     } else if (model == "JW" || model == "JW2") {
       inter[(pre +1):N] <- MT[(pre +1):N]- MT[(pre)]
     }
@@ -109,13 +121,18 @@
   out
 }
 
-.plm.mt <- function(data, type = "level p", model = "B&L-B", dvar = "values", pvar = "phase", mvar = "mt", count.data = FALSE) {
+.plm.mt <- function(data, 
+                    type = "level p", 
+                    model = "B&L-B", 
+                    dvar = "values", pvar = "phase", mvar = "mt", 
+                    count.data = FALSE) {
   N <- length(data)
   if (N > 1) {
-    stop("Multiple single-cases are given. Calculations could only be applied to a single data set.\n")
+    stop("Multiple single-cases are given. Calculations could only be applied ",
+         "to a single data set.\n")
   }
   
-  if ("list" %in% class(data)) data <- data[[1]]
+  if (inherits(data, "list")) data <- data[[1]]
   if (ncol(data) < 3) data[, mvar] <- 1:nrow(data)
   
   y  <- data[, dvar]
