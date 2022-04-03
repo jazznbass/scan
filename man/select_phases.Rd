@@ -21,7 +21,7 @@ An scdf with selected phases
 Useful when working with %>% operators.
 }
 \examples{
-exampleA1B1A2B2 \%>\% 
+exampleA1B1A2B2_zvt \%>\% 
   select_phases(A = c(1, 3), B = c(2, 4)) \%>\%
   overlap()
 }

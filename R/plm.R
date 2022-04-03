@@ -69,7 +69,8 @@
 #' dat <- random_scdf(design = A1B1A2B2, seed = 123)
 #' plm(dat, model = "JW")
 #' 
-#' ## no slope effects were found. Therefore you might want to drop slope estimation:
+#' ## no slope effects were found. Therefore, you might want to the drop slope 
+#' ## estimation:
 #' plm(dat, slope = FALSE, model = "JW")
 #' 
 #' ## and now drop the trend estimation as well
