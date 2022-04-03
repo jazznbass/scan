@@ -18,7 +18,7 @@ et al. (2011)."><meta property="og:image" content="/logo.png"><!-- mathjax --><s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
       </span>
     </div>
 
@@ -92,7 +92,8 @@ Defaults to the attributes in the scdf file.</p></dd>
 <dd><p>Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.</p></dd>
 <dt>tau_method</dt>
-<dd><p>Character with values "a" or "b" (default) indicating whether Kendall Tau A or Kendall Tau B is applied.</p></dd>
+<dd><p>Character with values "a" or "b" (default) indicating 
+whether Kendall Tau A or Kendall Tau B is applied.</p></dd>
 <dt>method</dt>
 <dd><p><code>"complete"</code> (default) or <code>"parker"</code>. The latter
 calculates the number of possible pairs as described in Parker et al. (2011)
@@ -105,11 +106,15 @@ combined by providing a list with two elements. E.g., <code>phases = list(A
 = c(1,3), B = c(2,4))</code> will compare phases 1 and 3 (as A) against 2 and 4
 (as B). Default is <code>phases = c("A","B")</code>.</p></dd>
 <dt>meta_method</dt>
-<dd><p>Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated. If set "none", no meta-analysis is conducted (may be helpful to speed up analyses).</p></dd>
+<dd><p>Character string. If set "random", a random-effect 
+meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is 
+calculated. If set "none", no meta-analysis is conducted (may be helpful to 
+speed up analyses).</p></dd>
 <dt>ci</dt>
 <dd><p>Confidence interval for meta analyzes.</p></dd>
 <dt>continuity_correction</dt>
-<dd><p>If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.</p></dd>
+<dd><p>If TRUE, a continuity correction is applied for 
+calculating p-values of correlations. This parameter is not yet implemented.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -140,7 +145,10 @@ a fixed effect model ("fixed").</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Brossart, D. F., Laird, V. C., &amp; Armstrong, T. W. (2018). Interpreting Kendall’s Tau and Tau-U for single-case experimental designs. <em>Cogent Psychology, 5(1)</em>, 1–26. https://doi.org/10.1080/23311908.2018.1518687.</p>
+    <p>Brossart, D. F., Laird, V. C., &amp; Armstrong, T. W. (2018). 
+Interpreting Kendall’s Tau and Tau-U for single-case experimental designs. 
+<em>Cogent Psychology, 5(1)</em>, 1–26. 
+https://doi.org/10.1080/23311908.2018.1518687.</p>
 <p>Parker, R. I., Vannest, K. J., Davis, J. L., &amp; Sauber, S. B.
 (2011). Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
 <em>Behavior Therapy, 42</em>, 284-299.</p>

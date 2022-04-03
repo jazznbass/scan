@@ -39,7 +39,7 @@ rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
 
   data <- .prepare_scdf(data, na.rm = TRUE)
-  data <- .keep_phases(data, phases = phases,pvar = pvar)$data
+  data <- .keep_phases(data, phases = phases)$data
   
   N <- length(data)
   

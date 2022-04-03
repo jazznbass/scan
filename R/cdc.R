@@ -62,7 +62,7 @@ cdc <- function(data,
   if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
   
   data  <- .prepare_scdf(data, na.rm = TRUE)
-  data  <- .keep_phases(data, phases = phases, pvar = pvar)$data
+  data  <- .keep_phases(data, phases = phases)$data
   
   N       <- length(data)
   cdc_na  <- rep(NA, N)  # total data points in phase A

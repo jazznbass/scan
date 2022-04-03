@@ -1,3 +1,11 @@
+# scan 0.54.1
+
+## Bug fixes
+
+- `select_phases()` now works when phase variable is not "phase"
+- `estimate_design()` was broken and is fixed now.
+- `print()` function for `sc_design`fixed.
+
 # scan 0.54
 
 ## new functions

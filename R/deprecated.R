@@ -79,3 +79,10 @@ describeSC <- function(...) {
   .deprecated_warning("describe", "describeSC")
   describe(...)
 }
+
+#' @rdname deprecated-functions
+#' @export
+rankSC <- function(...) {
+  .deprecated_warning("ranks", "rankSC")
+  ranks(...)
+}

@@ -32,7 +32,7 @@ smd <- function(data, dvar, pvar, mvar,
   
   data_list <- .prepare_scdf(data)
   
-  keep <- .keep_phases(data_list, phases = phases, pvar = pvar)
+  keep <- .keep_phases(data_list, phases = phases)
   data_list <- keep$data
   
   N <- length(data_list)

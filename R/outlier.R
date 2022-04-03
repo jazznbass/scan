@@ -40,10 +40,10 @@
 #' @export
 outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
   
-  if(!any(criteria[1] %in% c("MAD", "Cook", "SD", "CI"))) {
-    stop("Unknown criteria. Please check.")
-  }
-  
+  .start_check() %>%
+    .check_in(criteria[1], c("MAD", "Cook", "SD", "CI")) %>%
+    .end_check()
+
   # set defaults attributes
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 

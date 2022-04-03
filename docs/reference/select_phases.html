@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">select_phases</span><span class="op">(</span><span class="va">data</span>, <span class="va">A</span>, <span class="va">B</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">select_phases</span><span class="op">(</span><span class="va">data</span>, <span class="va">A</span>, <span class="va">B</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -77,8 +77,6 @@ this format.</p></dd>
 <dd><p>Selection of the A phase</p></dd>
 <dt>B</dt>
 <dd><p>Selection of the B phase</p></dd>
-<dt>...</dt>
-<dd><p>Further arguments passed to the function.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -87,27 +85,30 @@ this format.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">exampleA1B1A2B2</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">exampleA1B1A2B2_zvt</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
 <span class="r-in">  <span class="fu">select_phases</span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="overlap.html">overlap</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overlap Indices</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comparing phase 1 against phase 2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              Pawel Moritz Jannis</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Design         A-B    A-B    A-B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PND             55     78     71</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PEM            100    100    100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PET            100    100    100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NAP             94     97     98</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NAP rescaled    89     94     97</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PAND            82     85     90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tau_U         0.45   0.46   0.38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Base_Tau      0.65   0.68   0.68</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Diff_mean    12.25  13.58  15.27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Diff_trend   -0.05   0.00  -0.54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SMD           2.68   3.27   3.62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hedges_g      2.07   2.72   2.98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Tick Trick Track</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Design         A-B   A-B   A-B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PND             17     0    17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PEM             67    50    50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PET             67    33    33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NAP             68    51    58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NAP rescaled    36     3    17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PAND            67    50    54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tau_U         0.14  0.03 -0.03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Base_Tau      0.27  0.02  0.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Diff_mean     5.50  3.17  0.83</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Diff_trend   -0.31 -1.10 -0.74</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SMD           0.52  0.40  0.26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hedges_g      0.56  0.50  0.26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The following variables were used in this analysis:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'zvt' as dependent variable, 'part' as phase variable, and 'day' as measurement-time variable.</span>
 </code></pre></div>
     </div>
   </div>

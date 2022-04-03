@@ -26,7 +26,8 @@ Defaults to the attributes in the scdf file.}
 \item{pvar}{Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.}
 
-\item{tau_method}{Character with values "a" or "b" (default) indicating whether Kendall Tau A or Kendall Tau B is applied.}
+\item{tau_method}{Character with values "a" or "b" (default) indicating 
+whether Kendall Tau A or Kendall Tau B is applied.}
 
 \item{method}{\code{"complete"} (default) or \code{"parker"}. The latter
 calculates the number of possible pairs as described in Parker et al. (2011)
@@ -39,11 +40,15 @@ combined by providing a list with two elements. E.g., \code{phases = list(A
 = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
 (as B). Default is \code{phases = c("A","B")}.}
 
-\item{meta_method}{Character string. If set "random", a random-effect meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is calculated. If set "none", no meta-analysis is conducted (may be helpful to speed up analyses).}
+\item{meta_method}{Character string. If set "random", a random-effect 
+meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is 
+calculated. If set "none", no meta-analysis is conducted (may be helpful to 
+speed up analyses).}
 
 \item{ci}{Confidence interval for meta analyzes.}
 
-\item{continuity_correction}{If TRUE, a continuity correction is applied for calculating p-values of correlations. This parameter is not yet implemented.}
+\item{continuity_correction}{If TRUE, a continuity correction is applied for 
+calculating p-values of correlations. This parameter is not yet implemented.}
 }
 \value{
 \item{table}{A data frame containing statistics from the Tau-U
@@ -83,7 +88,10 @@ print(res, complete = TRUE)
 tau_u(Grosche2011)
 }
 \references{
-Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018). Interpreting Kendall’s Tau and Tau-U for single-case experimental designs. \emph{Cogent Psychology, 5(1)}, 1–26. https://doi.org/10.1080/23311908.2018.1518687.
+Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018). 
+Interpreting Kendall’s Tau and Tau-U for single-case experimental designs. 
+\emph{Cogent Psychology, 5(1)}, 1–26. 
+https://doi.org/10.1080/23311908.2018.1518687.
 
 Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B.
 (2011). Combining Nonoverlap and Trend for Single-Case Research: Tau-U.

@@ -22,7 +22,7 @@
   
   for(case in 1:length(data)) {
     
-    if ("tbl_df" %in% class(data[[case]])) {
+    if (inherits(data[[case]], "tbl_df")) {
       class(data[[case]]) <- "data.frame"
       message("Found tibble within scdf and changed it to data.frame.")
     }

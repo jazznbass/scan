@@ -141,6 +141,24 @@ design <- function(n = 1,
   out <- list()
   attr(out, "call") <- mget(names(formals()), sys.frame(sys.nframe()))
   
+  if (is.list(start_value)) start_value <- unlist(start_value)
+  if (is.list(trend)) trend <- unlist(trend)
+  if (is.list(s)) s <- unlist(s)
+  if (is.list(rtt)) rtt <- unlist(rtt)
+  
+  .start_check() %>%
+    .check_in(distribution, c("normal", "gaussian", "poisson", "binomial")) %>%
+    .check_not(distribution == "binomial" && is.null(n_trials),
+               "Binomial distributions but n_trials not defined.") %>%
+    .check_not(
+      distribution=="binomial" && (any(start_value>1) || any(start_value<0)), 
+      "Binomial distributions but start_values outside [0,1].") %>%
+    .check_not(any(B_start < 1) && any(B_start >= 1),
+               "B_start with values below and above 1.") %>%
+    
+    .end_check()
+  
+  
   if (!is.null(B_start)) {
     mt <- rep(mt, length.out = n)
     if (B_start[1] == "rand") {
@@ -149,10 +167,6 @@ design <- function(n = 1,
       B_start <- round(runif(n, tmp_start, tmp_end))
     }
 
-    if (any(B_start < 1) && any(B_start >= 1)) {
-      stop("A B_start vector must not include values below and above 1 ", 
-           "at the same time.")
-    }
     if (B_start[1] < 1 && B_start[1] > 0) B_start <- round(B_start * mt) + 1
     B_start <- rep(B_start, length.out = n)
 
@@ -162,25 +176,7 @@ design <- function(n = 1,
       phase_design$B[i] <- 1 + mt[i] - B_start[i]
     }
   }
-  
-  if (is.list(start_value)) start_value <- unlist(start_value)
-  if (is.list(trend)) trend <- unlist(trend)
-  if (is.list(s)) s <- unlist(s)
-  if (is.list(rtt)) rtt <- unlist(rtt)
-  
-  if (!distribution %in% c("normal", "gaussian", "poisson", "binomial"))
-    stop("Wrong distribution.")
-  
-  if (distribution == "binomial") {
-    if (is.null(n_trials)) 
-      stop("For binomial distributions the number of trials must ",
-           "be assigned.")
-    if (any(start_value > 1) || any(start_value < 0))
-      stop("For binomial distributions start_values must range ",
-           "between 0 and 1.")
-    
-  }
-  
+
   if (length(start_value) != n) start_value <- rep(start_value, length = n)
   if (length(s) != n) s <- rep(s, length = n)
   if (length(rtt) != n) rtt <- rep(rtt, length = n)
@@ -201,7 +197,6 @@ design <- function(n = 1,
     missing_prop <- lapply(numeric(n), function(y) unlist(missing_prop))
   }
 
-  
   out$cases <- vector("list", n)
   out$distribution <- distribution
   out$n_trials <- n_trials

@@ -23,7 +23,7 @@ pnd <- function(data, dvar, pvar, decreasing = FALSE, phases = c("A","B")) {
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
   
   data <- .prepare_scdf(data, na.rm = TRUE)
-  data <- .keep_phases(data, phases = phases, pvar = pvar)$data
+  data <- .keep_phases(data, phases = phases)$data
   
   pnd <- c()
   n.B <- c()

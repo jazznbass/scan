@@ -24,7 +24,7 @@
 #' gretchen <- scdf(c(A = 12,14,9,10, B = 10,6,4,5,3,4))
 #' nap(gretchen, decreasing = TRUE)
 #' 
-#' ## Request NAP for all cases from the Grosche2011 data
+#' ## Request NAP for all cases from the Grosche2011 scdf
 #' nap(Grosche2011)
 #' 
 #' @export
@@ -36,7 +36,7 @@ nap <- function(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2)) {
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
 
   data <- .prepare_scdf(data, na.rm = TRUE)
-  data <- .keep_phases(data, phases = phases, pvar = pvar)$data
+  data <- .keep_phases(data, phases = phases)$data
   
   N <- length(data)
   

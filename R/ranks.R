@@ -33,10 +33,3 @@ ranks <- function(data, var, grand = TRUE, ...) {
     
   data
 }
-
-#' @rdname deprecated-functions
-#' @export
-rankSC <- function(...) {
-  .deprecated_warning("ranks", "rankSC")
-  ranks(...)
-}
