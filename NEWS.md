@@ -1,3 +1,9 @@
+# scan 0.55
+
+## Bug fixes
+
+- `read_scdf()` now works when cvar is not the first column.
+
 # scan 0.54.1
 
 ## Bug fixes
