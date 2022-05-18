@@ -8,6 +8,7 @@
 
 - `corrected_tau()`: changed default setting of arguments to: `repeated = FALSE, continuity = FALSE`. Now the default results match the calculator developed by Tarlow.
 
+- `tau_u()`: Implemented a continuity_correction (S-1 for calculating Z)
 
 # scan 0.54.1
 
