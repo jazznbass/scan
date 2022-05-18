@@ -6,7 +6,8 @@
 
 ## Changes to functions
 
-- `corrected_tau()`: changed default setting of arguments to: `repeated = FALSE, continuity = FALSE`. Now the default results match the calculator developed by Tarlow,
+- `corrected_tau()`: changed default setting of arguments to: `repeated = FALSE, continuity = FALSE`. Now the default results match the calculator developed by Tarlow.
+
 
 # scan 0.54.1
 
