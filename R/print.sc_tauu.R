@@ -36,7 +36,7 @@ print.sc_tauu <- function(x, complete = FALSE, digits = "auto", ...) {
     out <- lapply(x$table, function(x) round(x[select_rows, select_vars], digits))
   }
   
-  out <- lapply(x$table, function(x) {x$p <- round(x$p, digits); x})
+  out <- lapply(out, function(x) {x$p <- round(x$p, digits); x})
   
   
   for(i in seq_along(out)) {
