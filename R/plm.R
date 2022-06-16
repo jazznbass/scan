@@ -129,7 +129,7 @@ plm <- function(data, dvar, pvar, mvar,
            "family is not 'gaussian' but AR is set.") %>%
     .check_not(family == "binomial" && is.null(var_trials),
                "family = 'binomial' but 'var_trials' not defined.") %>%
-    .check_in(model, c("H-M", "B&L-B", "JW", "JW2")) %>%
+    .check_in(model, c("H-M", "B&L-B", "JW", "JW2", "JW-H-M")) %>%
     .end_check()
   
   # formula definition ------------------------------------------------------

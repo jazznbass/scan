@@ -71,7 +71,7 @@
                        model, 
                        phase.dummy = TRUE) {
   
-  if (!model %in% c("H-M", "B&L-B", "JW", "JW2")) {
+  if (!model %in% c("H-M", "B&L-B", "JW", "JW2", "JW-H-M")) {
     stop("Model ", model," unknown.\n")
   }
   
@@ -113,7 +113,9 @@
         MT[(pre + 1):(pre + length.phase)] - MT[(pre + 1)]
     } else if (model == "JW" || model == "JW2") {
       inter[(pre +1):N] <- MT[(pre +1):N]- MT[(pre)]
-    }
+    } else if (model %in% "JW-H-M") {
+      inter[(pre +1):N] <- MT[(pre +1):N]- MT[(pre + 1)]
+    } 
     
     out[, paste0("inter",design$values[phase])] <- inter
   }

@@ -10,6 +10,10 @@
 
 - `tau_u()`: Implemented a continuity_correction (S-1 for calculating Z)
 
+## New features
+
+- `plm()`, `hplm()`: Added contrast model `"JW-H-M"` which has an offset for measuement times of -1 (as H-M has compared to B&L-B)
+
 # scan 0.54.1
 
 ## Bug fixes
