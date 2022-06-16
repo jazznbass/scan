@@ -71,10 +71,6 @@
                        model, 
                        phase.dummy = TRUE) {
   
-  if (!model %in% c("H-M", "B&L-B", "JW", "JW2", "JW-H-M")) {
-    stop("Model ", model," unknown.\n")
-  }
-  
   mt <- data[, mvar]
   D  <- data[, pvar]
   N  <- nrow(data)
