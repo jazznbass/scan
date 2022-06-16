@@ -2,38 +2,38 @@
 .create_fixed_formula <- function(dvar, mvar, 
                                   slope, level, trend, 
                                   VAR_PHASE, VAR_INTER) {
-  INTER <- ""
-  PHASE <- ""
-  MT    <- ""
+  inter <- ""
+  phase <- ""
+  mt    <- ""
   if (slope) {
-    INTER <- paste0(VAR_INTER, collapse = "+")
-    INTER <- paste0("+ ", INTER)
+    inter <- paste0(VAR_INTER, collapse = "+")
+    inter <- paste0("+ ", inter)
   }
   if (level) {
-    PHASE <- paste0(VAR_PHASE, collapse = "+")
-    PHASE <- paste0("+ ", PHASE)
+    phase <- paste0(VAR_PHASE, collapse = "+")
+    phase <- paste0("+ ", phase)
   }
-  if (trend) MT <- paste0("+ ", mvar, " ")
-  paste0(dvar, " ~ 1", MT, PHASE, INTER)
+  if (trend) mt <- paste0("+ ", mvar, " ")
+  paste0(dvar, " ~ 1", mt, phase, inter)
 }
 
 .create_random_formula <- function(mvar, 
                                    slope, level, trend, 
                                    VAR_PHASE, VAR_INTER) {
-  INTER <- ""
-  PHASE <- ""
-  MT    <- ""
+  inter <- ""
+  phase <- ""
+  mt    <- ""
   if (slope) {
-    INTER <- paste0(VAR_INTER, collapse = "+")
-    INTER <- paste0("+ ", INTER)
+    inter <- paste0(VAR_INTER, collapse = "+")
+    inter <- paste0("+ ", inter)
   }
   if (level) {
-    PHASE <- paste0(VAR_PHASE, collapse = "+")
-    PHASE <- paste0("+ ", PHASE)
+    phase <- paste0(VAR_PHASE, collapse = "+")
+    phase <- paste0("+ ", phase)
   }
   if (trend)
-    MT <- paste0("+ ", mvar, " ")
-  paste0("~ 1", MT, PHASE, INTER, "|case")
+    mt <- paste0("+ ", mvar, " ")
+  paste0("~ 1", mt, phase, inter, "|case")
 }
 
 .add_model_dummies <- function(data, model, 
@@ -46,10 +46,10 @@
     data[[case]][, mvar] <- dat_inter$mt
     data[[case]] <- cbind(data[[case]], dat_inter[, -1])
     n_Var <- (ncol(dat_inter) - 1) / 2
-    VAR_INTER <- names(dat_inter)[(ncol(dat_inter) - n_Var + 1):ncol(dat_inter)]
-    VAR_PHASE <- names(dat_inter)[2:(n_Var + 1)]
+    var_inter <- names(dat_inter)[(ncol(dat_inter) - n_Var + 1):ncol(dat_inter)]
+    var_phase <- names(dat_inter)[2:(n_Var + 1)]
   }
-  out <- list(data = data, VAR_INTER = VAR_INTER, VAR_PHASE = VAR_PHASE)
+  out <- list(data = data, VAR_INTER = var_inter, VAR_PHASE = var_phase)
   out
 }
 
@@ -62,9 +62,9 @@
   if (!is.na(match("(Intercept)", rn)))
     out[match("(Intercept)", rn)] <- "Intercept"
   
-  PHASE <- attr(x, .opt$phase)
-  out <- gsub(  PHASE, paste0("Level ", PHASE," "), out)
-  out <- gsub("inter", paste0("Slope ", PHASE," "), out)
+  phase <- attr(x, .opt$phase)
+  out <- gsub(  phase, paste0("Level ", phase," "), out)
+  out <- gsub("inter", paste0("Slope ", phase," "), out)
 }
 
 .plm.dummy <- function(data, dvar = "values", pvar = "phase", mvar = "mt",
@@ -75,47 +75,46 @@
     stop("Model ", model," unknown.\n")
   }
   
-  MT <- data[, mvar]
+  mt <- data[, mvar]
   D  <- data[, pvar]
   N  <- nrow(data)
   
-  out    <- data.frame(mt = MT)
+  out    <- data.frame(mt = mt)
   design <- rle(as.character(data[, pvar]))
   
   #dummy phases
   if (phase.dummy) {
     for(phase in 2:length(design$values)) {
-      length.phase <- design$lengths[phase]
+      n_phase <- design$lengths[phase]
       pre <- sum(design$lengths[1:(phase - 1)])
+      start <- pre + 1
+      end <- pre + n_phase
+      
       dummy <- rep(0, N)
       
-      if (model == "JW") {
-        dummy[(pre + 1):N] <- 1
+      if (model %in% c("JW", "JW-H-M")) {
+        dummy[start:N] <- 1
       } else {
-        dummy[(pre + 1):(pre + length.phase)] <- 1
+        dummy[start:end] <- 1
       }
       
       out[, paste0(pvar, design$values[phase])] <- dummy
     } 
   }
   
-  
+  #dummy slopes
   for(phase in 2:length(design$values)) {
     inter <- rep(0, N)
-    length.phase <- design$lengths[phase]
+    n_phase <- design$lengths[phase]
     pre <- sum(design$lengths[1:(phase - 1)])
+    start <- pre + 1
+    end <- pre + n_phase
     
-    if (model == "B&L-B") { 
-      inter[(pre +1):(pre + length.phase)] <- 
-        MT[(pre + 1):(pre + length.phase)] - MT[(pre)]
-    } else if (model == "H-M") {
-      inter[(pre +1):(pre + length.phase)] <- 
-        MT[(pre + 1):(pre + length.phase)] - MT[(pre + 1)]
-    } else if (model == "JW" || model == "JW2") {
-      inter[(pre +1):N] <- MT[(pre +1):N]- MT[(pre)]
-    } else if (model %in% "JW-H-M") {
-      inter[(pre +1):N] <- MT[(pre +1):N]- MT[(pre + 1)]
-    } 
+    if (model %in% "B&L-B") inter[start:end] <- mt[start:end] - mt[start - 1]
+    if (model %in% "H-M") inter[start:end] <- mt[start:end] - mt[start]
+    
+    if (model %in% c("JW", "JW2")) inter[start:N] <- mt[start:N] - mt[start - 1]
+    if (model %in% "JW-H-M") inter[start:N] <- mt[start:N] - mt[(start)]
     
     out[, paste0("inter",design$values[phase])] <- inter
   }
@@ -140,25 +139,25 @@
   y  <- data[, dvar]
   n1 <- sum(data[, pvar] == "A")
   n2 <- sum(data[, pvar] == "B")
-  MT <- data[, mvar]
+  mt <- data[, mvar]
   D  <- c(rep(0, n1), rep(1, n2))
   
   if (model == "H-M") {
-    inter <- (MT - MT[n1 + 1]) * D	
+    inter <- (mt - mt[n1 + 1]) * D	
   } else if (model == "B&L-B") {
-    inter <- (MT - MT[n1]) * D	
+    inter <- (mt - mt[n1]) * D	
   } else if (model == "Mohr#1") {
-    inter <- MT * D	
+    inter <- mt * D	
   } else if (model == "Mohr#2") {
-    inter <- (MT - MT[n1 + 1]) * D
-    MT <- MT - MT[n1 + 1]
+    inter <- (mt - mt[n1 + 1]) * D
+    mt <- mt - mt[n1 + 1]
   } else if (model == "Manly") {
-    inter <- MT * D
+    inter <- mt * D
   }	
   
   if (count.data) {
-    full <- glm(I(round(y)) ~ 1 + MT + D + inter, family = "poisson")
-  } else full <- lm(y ~ 1 + MT + D + inter)
+    full <- glm(I(round(y)) ~ 1 + mt + D + inter, family = "poisson")
+  } else full <- lm(y ~ 1 + mt + D + inter)
   
   if (type == "1" || type == "level p")
     return(summary(full)$coef[3, 4])
