@@ -82,9 +82,8 @@
   if (phase.dummy) {
     for(phase in 2:length(design$values)) {
       n_phase <- design$lengths[phase]
-      pre <- sum(design$lengths[1:(phase - 1)])
-      start <- pre + 1
-      end <- pre + n_phase
+      start <- sum(design$lengths[1:(phase - 1)]) + 1
+      end <- start + n_phase - 1
       
       dummy <- rep(0, N)
       
@@ -102,9 +101,8 @@
   for(phase in 2:length(design$values)) {
     inter <- rep(0, N)
     n_phase <- design$lengths[phase]
-    pre <- sum(design$lengths[1:(phase - 1)])
-    start <- pre + 1
-    end <- pre + n_phase
+    start <- sum(design$lengths[1:(phase - 1)]) + 1
+    end <- start + n_phase - 1
     
     if (model %in% "B&L-B") inter[start:end] <- mt[start:end] - mt[start - 1]
     if (model %in% "H-M") inter[start:end] <- mt[start:end] - mt[start]
