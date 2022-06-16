@@ -72,7 +72,6 @@
                        phase.dummy = TRUE) {
   
   mt <- data[, mvar]
-  D  <- data[, pvar]
   N  <- nrow(data)
   
   out    <- data.frame(mt = mt)
