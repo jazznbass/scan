@@ -98,18 +98,18 @@
   
   #dummy slopes
   for(phase in 2:length(design$values)) {
-    inter <- rep(0, N)
+    dummy <- rep(0, N)
     n_phase <- design$lengths[phase]
     start <- sum(design$lengths[1:(phase - 1)]) + 1
     end <- start + n_phase - 1
     
-    if (model %in% "B&L-B") inter[start:end] <- mt[start:end] - mt[start - 1]
-    if (model %in% "H-M") inter[start:end] <- mt[start:end] - mt[start]
+    if (model %in% "B&L-B") dummy[start:end] <- mt[start:end] - mt[start - 1]
+    if (model %in% "H-M") dummy[start:end] <- mt[start:end] - mt[start]
     
-    if (model %in% c("JW", "JW2")) inter[start:N] <- mt[start:N] - mt[start - 1]
-    if (model %in% "JW-H-M") inter[start:N] <- mt[start:N] - mt[(start)]
+    if (model %in% c("JW", "JW2")) dummy[start:N] <- mt[start:N] - mt[start - 1]
+    if (model %in% "JW-H-M") dummy[start:N] <- mt[start:N] - mt[(start)]
     
-    out[, paste0("inter",design$values[phase])] <- inter
+    out[, paste0("inter",design$values[phase])] <- dummy
   }
   
   out
