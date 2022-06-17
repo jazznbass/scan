@@ -47,7 +47,8 @@
 #' @export
 
 hplm <- function(data, dvar, pvar, mvar, 
-                 model = "B&L-B", 
+                 model = "W", 
+                 contrast = "first",
                  method = "ML", 
                  control = list(opt = "optim"), 
                  random.slopes = FALSE, 
@@ -62,8 +63,14 @@ hplm <- function(data, dvar, pvar, mvar,
                  data.l2 = NULL, 
                  ...) {
 
+  if (model == "JW") {
+    model <- "B&L-B"
+    contrast <- "preceding"
+  }
+  
   .start_check() %>%
-    .check_in(model, c("H-M", "B&L-B", "JW", "JW2")) %>%
+    .check_in(model, c("H-M", "B&L-B", "W")) %>%
+    .check_in(contrast, c("first", "preceding")) %>%
     .end_check()
   
   # set attributes to arguments else set to defaults of scdf
@@ -79,6 +86,7 @@ hplm <- function(data, dvar, pvar, mvar,
   N <- length(dat)
   out <- list()
   out$model$interaction.method  <- model
+  out$model$contrast.method     <- contrast
   out$model$estimation.method   <- method
   out$model$lr.test             <- lr.test
   out$model$random.slopes       <- random.slopes
@@ -87,7 +95,7 @@ hplm <- function(data, dvar, pvar, mvar,
 
 # interaction and dummy coding and L2 --------------------------------------
 
-  tmp_model <- .add_model_dummies(data = dat, model = model)
+  tmp_model <- .add_model_dummies(data = dat, model = model, contrast=contrast)
   dat <- tmp_model$data
 
   dat <- as.data.frame(dat, l2 = data.l2)

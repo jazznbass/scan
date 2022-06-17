@@ -10,11 +10,12 @@ plm(
   pvar,
   mvar,
   AR = 0,
-  model = "B&L-B",
+  model = "W",
   family = "gaussian",
   trend = TRUE,
   level = TRUE,
   slope = TRUE,
+  contrast = "first",
   formula = NULL,
   update = NULL,
   na.action = na.omit,
@@ -42,9 +43,8 @@ Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
 argument must be set to \code{family = "gaussian"}.}
 
 \item{model}{Model used for calculating the slope parameter (see Huitema &
-McKean, 2000). Default is \code{model = "B&L-B"}. Possible values are:
-\code{"B&L-B"}, \code{"H-M"}, \code{"Mohr#1"}, \code{"Mohr#2"},
-\code{"JW"}, \code{"JW2"}, and \code{"Manly"}.}
+McKean, 2000). Default is \code{model = "W"}. Possible values are:
+\code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
 \item{family}{Set the distribution family. Defaults to a gaussian
 distribution. See the \code{family} function for more details.}
@@ -57,6 +57,9 @@ model.}
 
 \item{slope}{A logical indicating if a slope parameters is included in the
 model.}
+
+\item{contrast}{Either "first" or "preceding". "first" contrasts all 
+phase-effects to the first phase and "preceding" to the preceding phase.}
 
 \item{formula}{Defaults to the standard piecewise regression model. The
 parameter phase followed by the phase name (e.g., phaseB) indicates the 
@@ -130,7 +133,6 @@ plm(dat, slope = FALSE, trend = FALSE, model = "JW")
 
 ## A poisson regression
 example_A24 \%>\% 
-  transform(year = year - year[1])  \%>\% 
   plm(family = "poisson")
 
 ## A binomial regression (frequencies as dependent variable)

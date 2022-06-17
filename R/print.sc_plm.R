@@ -3,7 +3,9 @@
 #' 
 print.sc_plm <- function(x, ...) {
   cat("Piecewise Regression Analysis\n\n")
-  cat("Dummy model: ", x$model,"\n\n")
+  cat("Dummy model: ", x$model, " ", x$contrast, "\n\n", sep = "")
+  
+  
   cat("Fitted a", x$family, "distribution.\n")		
   
   if (x$ar > 0)

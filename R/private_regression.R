@@ -39,10 +39,13 @@
 .add_model_dummies <- function(data, model, 
                                dvar = scdf_attr(data, .opt$dv), 
                                pvar = scdf_attr(data, .opt$phase), 
-                               mvar = scdf_attr(data, .opt$mt)) {
+                               mvar = scdf_attr(data, .opt$mt),
+                               contrast = "first") {
   for(case in 1:length(data)) {
-    dat_inter <- .plm.dummy(data[[case]], model = model, dvar = dvar, 
-                               pvar = pvar, mvar = mvar)
+    dat_inter <- .plm.dummy(
+      data[[case]], model = model, dvar = dvar, 
+      pvar = pvar, mvar = mvar, contrast = contrast
+    )
     data[[case]][, mvar] <- dat_inter$mt
     data[[case]] <- cbind(data[[case]], dat_inter[, -1])
     n_Var <- (ncol(dat_inter) - 1) / 2
@@ -67,48 +70,62 @@
   out <- gsub("inter", paste0("Slope ", phase," "), out)
 }
 
-.plm.dummy <- function(data, dvar = "values", pvar = "phase", mvar = "mt",
-                       model, 
-                       phase.dummy = TRUE) {
+.plm.dummy <- function(data, 
+                       dvar = "values", 
+                       pvar = "phase", 
+                       mvar = "mt",
+                       model,
+                       contrast = "first") {
   
-  mt <- data[, mvar]
-  N  <- nrow(data)
+  
+  if (model == "JW") {
+    contrast <- "preceding"
+    model <- "B&L-B"
+  }
+    
+  mt <- data[[mvar]]
+  n  <- nrow(data)
+  
+  if (model == "W") mt <- mt - mt[1]
   
   out    <- data.frame(mt = mt)
-  design <- rle(as.character(data[, pvar]))
+  design <- rle(as.character(data[[pvar]]))
   
   #dummy phases
-  if (phase.dummy) {
-    for(phase in 2:length(design$values)) {
-      n_phase <- design$lengths[phase]
-      start <- sum(design$lengths[1:(phase - 1)]) + 1
-      end <- start + n_phase - 1
-      
-      dummy <- rep(0, N)
-      
-      if (model %in% c("JW", "JW-H-M")) {
-        dummy[start:N] <- 1
-      } else {
-        dummy[start:end] <- 1
-      }
-      
-      out[, paste0(pvar, design$values[phase])] <- dummy
-    } 
-  }
-  
-  #dummy slopes
   for(phase in 2:length(design$values)) {
-    dummy <- rep(0, N)
     n_phase <- design$lengths[phase]
     start <- sum(design$lengths[1:(phase - 1)]) + 1
-    end <- start + n_phase - 1
     
-    if (model %in% "B&L-B") dummy[start:end] <- mt[start:end] - mt[start - 1]
-    if (model %in% "H-M") dummy[start:end] <- mt[start:end] - mt[start]
+    if (contrast %in% c("preceding")) {
+      end <- n
+    } else {
+      end <- start + n_phase - 1
+    }
     
-    if (model %in% c("JW", "JW2")) dummy[start:N] <- mt[start:N] - mt[start - 1]
-    if (model %in% "JW-H-M") dummy[start:N] <- mt[start:N] - mt[(start)]
+    dummy <- rep(0, n)
+    dummy[start:end] <- 1
     
+    out[, paste0(pvar, design$values[phase])] <- dummy
+  } 
+
+  #dummy slopes
+  for(phase in 2:length(design$values)) {
+    dummy <- rep(0, n)
+    n_phase <- design$lengths[phase]
+    start <- sum(design$lengths[1:(phase - 1)]) + 1
+    
+    if (contrast %in% c("preceding")) {
+      end <- n
+    } else {
+      end <- start + n_phase - 1
+    }
+    
+    if (model %in% c("B&L-B")) 
+      dummy[start:end] <- mt[start:end] - mt[start - 1]
+    
+    if (model %in% c("H-M", "W"))
+      dummy[start:end] <- mt[start:end] - mt[start]
+
     out[, paste0("inter",design$values[phase])] <- dummy
   }
   
@@ -120,8 +137,8 @@
                     model = "B&L-B", 
                     dvar = "values", pvar = "phase", mvar = "mt", 
                     count.data = FALSE) {
-  N <- length(data)
-  if (N > 1) {
+  n <- length(data)
+  if (n > 1) {
     stop("Multiple single-cases are given. Calculations could only be applied ",
          "to a single data set.\n")
   }

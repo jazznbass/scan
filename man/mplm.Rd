@@ -9,7 +9,8 @@ mplm(
   dvar,
   mvar,
   pvar,
-  model = "B&L-B",
+  model = "W",
+  contrast = "first",
   trend = TRUE,
   level = TRUE,
   slope = TRUE,
@@ -33,9 +34,11 @@ Defaults to the attributes in the scdf file.}
 the attributes in the scdf file.}
 
 \item{model}{Model used for calculating the slope parameter (see Huitema &
-McKean, 2000). Default is \code{model = "B&L-B"}. Possible values are:
-\code{"B&L-B"}, \code{"H-M"}, \code{"Mohr#1"}, \code{"Mohr#2"},
-\code{"JW"}, \code{"JW2"}, and \code{"Manly"}.}
+McKean, 2000). Default is \code{model = "W"}. Possible values are:
+\code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
+
+\item{contrast}{Either "first" or "preceding". "first" contrasts all 
+phase-effects to the first phase and "preceding" to the preceding phase.}
 
 \item{trend}{A logical indicating if a trend parameters is included in the
 model.}

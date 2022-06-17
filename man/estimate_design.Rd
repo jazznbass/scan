@@ -46,9 +46,8 @@ If FALSE, effects are estimated for each case separately.}
 If FALSE rtt is estimated for each case separately.}
 
 \item{model}{Model used for calculating the slope parameter (see Huitema &
-McKean, 2000). Default is \code{model = "B&L-B"}. Possible values are:
-\code{"B&L-B"}, \code{"H-M"}, \code{"Mohr#1"}, \code{"Mohr#2"},
-\code{"JW"}, \code{"JW2"}, and \code{"Manly"}.}
+McKean, 2000). Default is \code{model = "W"}. Possible values are:
+\code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
 \item{...}{Further arguments passed to the plm function used for parameter 
 estimation.}

@@ -78,7 +78,6 @@
 #' 
 #' ## A poisson regression
 #' example_A24 %>% 
-#'   transform(year = year - year[1])  %>% 
 #'   plm(family = "poisson")
 #'
 #' ## A binomial regression (frequencies as dependent variable)
@@ -92,11 +91,12 @@
 #' @export
 plm <- function(data, dvar, pvar, mvar, 
                 AR = 0, 
-                model = "B&L-B", 
+                model = "W", 
                 family = "gaussian", 
                 trend = TRUE, 
                 level = TRUE, 
                 slope = TRUE,
+                contrast = "first",
                 formula = NULL, 
                 update = NULL, 
                 na.action = na.omit,
@@ -122,6 +122,11 @@ plm <- function(data, dvar, pvar, mvar,
   
   N <- length(data)
   
+  if (model == "JW") {
+    model <- "B&L-B"
+    contrast <- "preceding"
+  }
+  
   .start_check() %>%
     .check(N == 1, "Procedure could not be applied to more than one case ",
                    "(use hplm instead).") %>%
@@ -129,12 +134,13 @@ plm <- function(data, dvar, pvar, mvar,
            "family is not 'gaussian' but AR is set.") %>%
     .check_not(family == "binomial" && is.null(var_trials),
                "family = 'binomial' but 'var_trials' not defined.") %>%
-    .check_in(model, c("H-M", "B&L-B", "JW", "JW2", "JW-H-M")) %>%
+    .check_in(model, c("H-M", "B&L-B", "W")) %>%
+    .check_in(contrast, c("first", "preceding")) %>%
     .end_check()
   
   # formula definition ------------------------------------------------------
   
-  tmp_model <- .add_model_dummies(data = data, model = model)
+  tmp_model <- .add_model_dummies(data = data, model = model, contrast=contrast)
   data  <- tmp_model$data[[1]]
   
   if(is.null(formula)) {
@@ -251,6 +257,7 @@ plm <- function(data, dvar, pvar, mvar,
   out <- list(
     formula = formula_full, 
     model = model, 
+    contrast = contrast,
     F.test = F_test, 
     r.squares = r_squares, 
     ar = AR, 
