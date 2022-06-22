@@ -1,4 +1,4 @@
-# scan 0.55
+# scan 0.54.4
 
 ## Bug fixes
 
@@ -13,7 +13,7 @@
 ## New features
 
 - `plm()`, `hplm()`: Added contrast argument with values `"first"` or "`preceding`". Now `model = "JW"` is deprecated and identical to `model = "B&L-B", contrast = "preceding"`.  
-- `plm()`, `hplm()`: Added now model `"W"`. Which shifts the mts to start with zero. This leads to a more sensible estimation of the intercept. `model = "W"` is now the default. Use `model = "B&L-B"` for previous defaults.
+- `plm()`, `hplm()`: Added model `"W"`. Which shifts the measurement-time variable to start with zero. This leads to a more sensible estimation of the intercept (where the intercept depicts the estimated score at the start). `model = "W"` is now the default. Use `model = "B&L-B"` for previous defaults.
 
 # scan 0.54.1
 
