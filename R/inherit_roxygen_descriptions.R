@@ -19,9 +19,10 @@
 #'   = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
 #'   (as B). Default is \code{phases = c("A","B")}.
 #' @param model Model used for calculating the slope parameter (see Huitema &
-#'   McKean, 2000). Default is \code{model = "B&L-B"}. Possible values are:
-#'   \code{"B&L-B"}, \code{"H-M"}, \code{"Mohr#1"}, \code{"Mohr#2"},
-#'   \code{"JW"}, \code{"JW2"}, and \code{"Manly"}.
+#'   McKean, 2000). Default is \code{model = "W"}. Possible values are:
+#'   \code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.
+#' @param contrast Either "first" or "preceding". "first" contrasts all 
+#'   phase-effects to the first phase and "preceding" to the preceding phase.
 #' @param trend A logical indicating if a trend parameters is included in the
 #'   model.
 #' @param level A logical indicating if a level parameters is included in the
@@ -30,6 +31,6 @@
 #'   model.
 #' @param ... Further arguments passed to the function.
 .inheritParams <- function(data, scdf, dvar, mvar, pvar, decreasing, 
-                           phases, model, trend, level, slope, ...) {
+                           phases, model, contrast, trend, level, slope, ...) {
   
 } 

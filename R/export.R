@@ -212,6 +212,7 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   footnote <- c(
     paste0("Estimation method ", object$model$estimation.method),
     paste0("Slope estimation method: ", object$model$interaction.method),
+    paste0(" ", object$model$contrast.method),
     paste0(object$N, " cases")
   )
   footnote <- paste0(footnote, collapse = "; ")

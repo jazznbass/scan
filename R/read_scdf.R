@@ -109,7 +109,7 @@ read_scdf <- function(filename,
 
   lab <- levels(dat[[cvar]])
   dat <- split(dat, dat[[cvar]])
-  dat <- lapply(dat, function(x) x[, 2:columns])
+  dat <- lapply(dat, function(x) x[, -which(names(x) == cvar)])
   for(i in 1:length(dat)) row.names(dat[[i]]) <- 1:nrow(dat[[i]])
   names(dat) <- lab
   cat("Loaded", length(dat), "cases.\n")

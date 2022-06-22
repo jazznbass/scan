@@ -9,7 +9,8 @@ hplm(
   dvar,
   pvar,
   mvar,
-  model = "B&L-B",
+  model = "W",
+  contrast = "first",
   method = "ML",
   control = list(opt = "optim"),
   random.slopes = FALSE,
@@ -39,9 +40,11 @@ the attributes in the scdf file.}
 Defaults to the attributes in the scdf file.}
 
 \item{model}{Model used for calculating the slope parameter (see Huitema &
-McKean, 2000). Default is \code{model = "B&L-B"}. Possible values are:
-\code{"B&L-B"}, \code{"H-M"}, \code{"Mohr#1"}, \code{"Mohr#2"},
-\code{"JW"}, \code{"JW2"}, and \code{"Manly"}.}
+McKean, 2000). Default is \code{model = "W"}. Possible values are:
+\code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
+
+\item{contrast}{Either "first" or "preceding". "first" contrasts all 
+phase-effects to the first phase and "preceding" to the preceding phase.}
 
 \item{method}{Method used to fit your model. Pass \code{"REML"} to maximize
 the restricted log-likelihood or \code{"ML"} for maximized log-likelihood.

@@ -1,3 +1,20 @@
+# scan 0.54.4
+
+## Bug fixes
+
+- `read_scdf()` now works when cvar is not the first column.
+
+## Changes to functions
+
+- `corrected_tau()`: changed default setting of arguments to: `repeated = FALSE, continuity = FALSE`. Now the default results match the calculator developed by Tarlow.
+
+- `tau_u()`: Implemented a continuity_correction (S-1 for calculating Z)
+
+## New features
+
+- `plm()`, `hplm()`: Added contrast argument with values `"first"` or "`preceding`". Now `model = "JW"` is deprecated and identical to `model = "B&L-B", contrast = "preceding"`.  
+- `plm()`, `hplm()`: Added model `"W"`. Which shifts the measurement-time variable to start with zero. This leads to a more sensible estimation of the intercept (where the intercept depicts the estimated score at the start). `model = "W"` is now the default. Use `model = "B&L-B"` for previous defaults.
+
 # scan 0.54.1
 
 ## Bug fixes

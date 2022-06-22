@@ -33,8 +33,11 @@ print.sc_tauu <- function(x, complete = FALSE, digits = "auto", ...) {
       ), row.names(x$table[[1]])
     )
     
-    out <- lapply(x$table, function(x) round(x[select_rows, select_vars], 3))
+    out <- lapply(x$table, function(x) round(x[select_rows, select_vars], digits))
   }
+  
+  out <- lapply(out, function(x) {x$p <- round(x$p, digits); x})
+  
   
   for(i in seq_along(out)) {
     cat("Case:", names(out)[i], "\n")

@@ -15,7 +15,7 @@
 #' speed up analyses).
 #' @param ci Confidence interval for meta analyzes.
 #' @param continuity_correction If TRUE, a continuity correction is applied for 
-#' calculating p-values of correlations. This parameter is not yet implemented.
+#' calculating p-values of correlations (here: S will be reduced by one before calculating Z)
 #' @return 
 #' \item{table}{A data frame containing statistics from the Tau-U
 #' family, including: Pairs, positive and negative comparisons, S, and Tau}
@@ -313,7 +313,12 @@ tau_u <- function(data, dvar, pvar,
     #   #table_tau$Z2 <- (3 * table_tau$S) / sqrt(n * (n - 1) * (2 * n + 5) / 2)
     # }
     
-    table_tau$Z <- table_tau$S / table_tau$SD_S
+    if (continuity_correction) {
+      table_tau$Z <- (table_tau$S - 1) / table_tau$SD_S
+    } else {
+      table_tau$Z <- table_tau$S / table_tau$SD_S
+    }  
+    
     table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
     table_tau$p <- pnorm(abs(table_tau$Z), lower.tail = FALSE) * 2
     

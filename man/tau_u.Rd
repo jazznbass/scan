@@ -48,7 +48,7 @@ speed up analyses).}
 \item{ci}{Confidence interval for meta analyzes.}
 
 \item{continuity_correction}{If TRUE, a continuity correction is applied for 
-calculating p-values of correlations. This parameter is not yet implemented.}
+calculating p-values of correlations (here: S will be reduced by one before calculating Z)}
 }
 \value{
 \item{table}{A data frame containing statistics from the Tau-U

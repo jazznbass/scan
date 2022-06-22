@@ -23,10 +23,26 @@
 #' print(res, std = TRUE)
 #' @export
 
-mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE, 
-                 level = TRUE, slope = TRUE, formula = NULL, update = NULL, 
+mplm <- function(data, dvar, mvar, pvar, 
+                 model = "W", 
+                 contrast = "first", 
+                 trend = TRUE, 
+                 level = TRUE, 
+                 slope = TRUE, 
+                 formula = NULL, 
+                 update = NULL, 
                  na.action = na.omit, ...) {
  
+  if (model == "JW") {
+    model <- "B&L-B"
+    contrast <- "preceding"
+  }
+  
+  .start_check() %>%
+    .check_in(model, c("H-M", "B&L-B", "W")) %>%
+    .check_in(contrast, c("first", "preceding")) %>%
+    .end_check()
+  
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
@@ -40,7 +56,7 @@ mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE,
   }
 
   ### model definition
-  tmp_model <- .add_model_dummies(data = data, model = model)
+  tmp_model <- .add_model_dummies(data = data, model = model, contrast = contrast)
   data <- tmp_model$data[[1]]
 
   if (is.null(formula)) {
@@ -57,7 +73,8 @@ mplm <- function(data, dvar, mvar, pvar, model = "B&L-B", trend = TRUE,
 
   full <- lm(formula, data = data, na.action = na.action, ...)
   full$coef_std <- .std_lm(full)
-  out <- list(model = model, full.model = full, formula = formula)
+  out <- list(model = model, contrast = contrast, 
+              full.model = full, formula = formula)
 
   class(out) <- c("sc_mplm")
   attr(out, .opt$phase) <- pvar
