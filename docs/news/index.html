@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.4</span>
       </span>
     </div>
 
@@ -60,7 +60,27 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.54.1" id="scan-0541">scan 0.54.1<a class="anchor" aria-label="anchor" href="#scan-0541"></a></h2>
+<h2 class="page-header" data-toc-text="0.54.4" id="scan-0544">scan 0.54.4<a class="anchor" aria-label="anchor" href="#scan-0544"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-54-4">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-54-4"></a></h3>
+<ul><li>
+<code><a href="../reference/read_scdf.html">read_scdf()</a></code> now works when cvar is not the first column.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="changes-to-functions-0-54-4">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-54-4"></a></h3>
+<ul><li><p><code><a href="../reference/corrected_tau.html">corrected_tau()</a></code>: changed default setting of arguments to: <code>repeated = FALSE, continuity = FALSE</code>. Now the default results match the calculator developed by Tarlow.</p></li>
+<li><p><code><a href="../reference/tau_u.html">tau_u()</a></code>: Implemented a continuity_correction (S-1 for calculating Z)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-0-54-4">New features<a class="anchor" aria-label="anchor" href="#new-features-0-54-4"></a></h3>
+<ul><li>
+<code><a href="../reference/plm.html">plm()</a></code>, <code><a href="../reference/hplm.html">hplm()</a></code>: Added contrast argument with values <code>"first"</code> or “<code>preceding</code>”. Now <code>model = "JW"</code> is deprecated and identical to <code>model = "B&amp;L-B", contrast = "preceding"</code>.<br></li>
+<li>
+<code><a href="../reference/plm.html">plm()</a></code>, <code><a href="../reference/hplm.html">hplm()</a></code>: Added model <code>"W"</code>. Which shifts the measurement-time variable to start with zero. This leads to a more sensible estimation of the intercept (where the intercept depicts the estimated score at the start). <code>model = "W"</code> is now the default. Use <code>model = "B&amp;L-B"</code> for previous defaults.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.54.1" id="scan-0541">scan 0.54.1<small>2022-04-03</small><a class="anchor" aria-label="anchor" href="#scan-0541"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-54-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-54-1"></a></h3>
 <ul><li>
@@ -318,7 +338,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

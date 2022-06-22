@@ -18,7 +18,7 @@ et al. (2011)."><meta property="og:image" content="/logo.png"><!-- mathjax --><s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.4</span>
       </span>
     </div>
 
@@ -114,7 +114,7 @@ speed up analyses).</p></dd>
 <dd><p>Confidence interval for meta analyzes.</p></dd>
 <dt>continuity_correction</dt>
 <dd><p>If TRUE, a continuity correction is applied for 
-calculating p-values of correlations. This parameter is not yet implemented.</p></dd>
+calculating p-values of correlations (here: S will be reduced by one before calculating Z)</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -202,13 +202,13 @@ https://doi.org/10.1080/23311908.2018.1518687.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B - Trend A              20  18   5    3 13 20 0.650 -0.289966     1.59</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B              30  25   2    3 23 30 0.767  0.140023     1.39</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B - Trend A    36  26   6    4 20 36 0.556  0.033352     1.08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             SD_S VAR_S SE_Tau    Z      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B                     8.16 66.67  0.408 1.96 0.0500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend A                     2.94  8.67  0.491 1.02 0.3082</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend B                     4.08 16.67  0.408 1.71 0.0864</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B - Trend A           9.59 92.00  0.480 1.36 0.1753</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B           9.59 92.00  0.320 2.40 0.0165</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B - Trend A 9.59 92.00  0.266 2.09 0.0371</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             SD_S VAR_S SE_Tau    Z     p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B                     8.16 66.67  0.408 1.96 0.050</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend A                     2.94  8.67  0.491 1.02 0.308</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend B                     4.08 16.67  0.408 1.71 0.086</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B - Trend A           9.59 92.00  0.480 1.36 0.175</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B           9.59 92.00  0.320 2.40 0.016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B - Trend A 9.59 92.00  0.266 2.09 0.037</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Request tau-U for all single-cases from the Grosche2011 data set</span></span>
@@ -262,7 +262,7 @@ https://doi.org/10.1080/23311908.2018.1518687.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

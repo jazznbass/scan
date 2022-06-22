@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.4</span>
       </span>
     </div>
 
@@ -70,7 +70,8 @@
   <span class="va">dvar</span>,
   <span class="va">pvar</span>,
   <span class="va">mvar</span>,
-  model <span class="op">=</span> <span class="st">"B&amp;L-B"</span>,
+  model <span class="op">=</span> <span class="st">"W"</span>,
+  contrast <span class="op">=</span> <span class="st">"first"</span>,
   method <span class="op">=</span> <span class="st">"ML"</span>,
   control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>opt <span class="op">=</span> <span class="st">"optim"</span><span class="op">)</span>,
   random.slopes <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -103,9 +104,11 @@ the attributes in the scdf file.</p></dd>
 Defaults to the attributes in the scdf file.</p></dd>
 <dt>model</dt>
 <dd><p>Model used for calculating the slope parameter (see Huitema &amp;
-McKean, 2000). Default is <code>model = "B&amp;L-B"</code>. Possible values are:
-<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"Mohr#1"</code>, <code>"Mohr#2"</code>,
-<code>"JW"</code>, <code>"JW2"</code>, and <code>"Manly"</code>.</p></dd>
+McKean, 2000). Default is <code>model = "W"</code>. Possible values are:
+<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"W"</code>, and deprecated <code>"JW"</code>.</p></dd>
+<dt>contrast</dt>
+<dd><p>Either "first" or "preceding". "first" contrasts all 
+phase-effects to the first phase and "preceding" to the preceding phase.</p></dd>
 <dt>method</dt>
 <dd><p>Method used to fit your model. Pass <code>"REML"</code> to maximize
 the restricted log-likelihood or <code>"ML"</code> for maximized log-likelihood.
@@ -184,7 +187,7 @@ variables belong to.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hierarchical Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimation method REML </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope estimation method: B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.292; L = 341.2; p = 0.000</span>
@@ -192,9 +195,9 @@ variables belong to.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects (values ~ 1 + mt + phaseB + interB)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    B    SE   df      t p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     47.819 1.528 1328 31.288 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     48.398 1.496 1328 32.351 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt       0.579 0.116 1328  5.007 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B 13.136 0.584 1328 22.496 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B 14.038 0.655 1328 21.442 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B  0.902 0.119 1328  7.589 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random effects (~1 | case)</span>
@@ -210,7 +213,7 @@ variables belong to.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hierarchical Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimation method ML </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope estimation method: B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 35 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.344; L = 875.4; p = 0.000</span>
@@ -218,7 +221,7 @@ variables belong to.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects (academic_engagement ~ mt + phaseB + gender + migration + ITRF_TOTAL +     phaseB:ITRF_TOTAL)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                               B    SE   df      t     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                 3.747 0.262 2376 14.285 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                 3.751 0.262 2376 14.302 0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt                  0.004 0.001 2376  6.019 0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B             0.667 0.098 2376  6.808 0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gender                   -0.020 0.301   31 -0.067 0.947</span>
@@ -246,7 +249,7 @@ variables belong to.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

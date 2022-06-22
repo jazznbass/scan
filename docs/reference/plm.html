@@ -18,7 +18,7 @@ McKean, 2000)."><meta property="og:image" content="/logo.png"><!-- mathjax --><s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.4</span>
       </span>
     </div>
 
@@ -73,11 +73,12 @@ McKean, 2000).</p>
   <span class="va">pvar</span>,
   <span class="va">mvar</span>,
   AR <span class="op">=</span> <span class="fl">0</span>,
-  model <span class="op">=</span> <span class="st">"B&amp;L-B"</span>,
+  model <span class="op">=</span> <span class="st">"W"</span>,
   family <span class="op">=</span> <span class="st">"gaussian"</span>,
   trend <span class="op">=</span> <span class="cn">TRUE</span>,
   level <span class="op">=</span> <span class="cn">TRUE</span>,
   slope <span class="op">=</span> <span class="cn">TRUE</span>,
+  contrast <span class="op">=</span> <span class="st">"first"</span>,
   formula <span class="op">=</span> <span class="cn">NULL</span>,
   update <span class="op">=</span> <span class="cn">NULL</span>,
   na.action <span class="op">=</span> <span class="va">na.omit</span>,
@@ -108,9 +109,8 @@ Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
 argument must be set to <code>family = "gaussian"</code>.</p></dd>
 <dt>model</dt>
 <dd><p>Model used for calculating the slope parameter (see Huitema &amp;
-McKean, 2000). Default is <code>model = "B&amp;L-B"</code>. Possible values are:
-<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"Mohr#1"</code>, <code>"Mohr#2"</code>,
-<code>"JW"</code>, <code>"JW2"</code>, and <code>"Manly"</code>.</p></dd>
+McKean, 2000). Default is <code>model = "W"</code>. Possible values are:
+<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"W"</code>, and deprecated <code>"JW"</code>.</p></dd>
 <dt>family</dt>
 <dd><p>Set the distribution family. Defaults to a gaussian
 distribution. See the <code>family</code> function for more details.</p></dd>
@@ -123,6 +123,9 @@ model.</p></dd>
 <dt>slope</dt>
 <dd><p>A logical indicating if a slope parameters is included in the
 model.</p></dd>
+<dt>contrast</dt>
+<dd><p>Either "first" or "preceding". "first" contrasts all 
+phase-effects to the first phase and "preceding" to the preceding phase.</p></dd>
 <dt>formula</dt>
 <dd><p>Defaults to the standard piecewise regression model. The
 parameter phase followed by the phase name (e.g., phaseB) indicates the 
@@ -205,7 +208,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-in"><span class="fu">plm</span><span class="op">(</span><span class="va">dat</span>, AR <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model:  B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Correlated residuals up to autoregressions of lag 3 are modelled</span>
@@ -213,9 +216,9 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 26) = 47.38; p = 0.000; R² = 0.845; Adjusted R² = 0.828</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    B   2.5%  97.5%    SE      t     p delta R²</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     53.234 47.630 58.838 2.859 18.618 0.000         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     53.068 48.188 57.948 2.490 21.315 0.000         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt      -0.166 -1.032  0.701 0.442 -0.374 0.711  -0.0012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B 15.353  9.550 21.156 2.961  5.185 0.000   0.0735</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B 16.266 10.061 22.470 3.166  5.138 0.000   0.0694</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B  0.913 -0.045  1.871 0.489  1.869 0.073   0.0162</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Autocorrelations of the residuals</span>
@@ -237,7 +240,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-in"><span class="fu">plm</span><span class="op">(</span><span class="va">dat</span>, model <span class="op">=</span> <span class="st">"JW"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model:  JW </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: B&amp;L-B preceding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F(7, 62) = 11.05; p = 0.000; R² = 0.555; Adjusted R² = 0.505</span>
@@ -267,7 +270,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-in"><span class="fu">plm</span><span class="op">(</span><span class="va">dat</span>, slope <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"JW"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model:  JW </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: B&amp;L-B preceding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F(4, 65) = 19.73; p = 0.000; R² = 0.548; Adjusted R² = 0.521</span>
@@ -292,7 +295,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-in"><span class="fu">plm</span><span class="op">(</span><span class="va">dat</span>, slope <span class="op">=</span> <span class="cn">FALSE</span>, trend <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"JW"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model:  JW </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: B&amp;L-B preceding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 66) = 26.34; p = 0.000; R² = 0.545; Adjusted R² = 0.524</span>
@@ -314,11 +317,10 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## A poisson regression</span></span>
 <span class="r-in"><span class="va">example_A24</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span>year <span class="op">=</span> <span class="va">year</span> <span class="op">-</span> <span class="va">year</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>  <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
 <span class="r-in">  <span class="fu">plm</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"poisson"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model:  B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a poisson distribution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X²(3) = 547.67; p = 0.000; AIC = 261</span>
@@ -326,12 +328,12 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    B   2.5%  97.5%    SE       t     p Odds Ratio    2.5%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept      5.556  5.472  5.638 0.042 131.693 0.000    258.786 237.936</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend year     0.007 -0.016  0.030 0.012   0.604 0.546      1.007   0.984</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B -0.801 -0.925 -0.677 0.063 -12.671 0.000      0.449   0.397</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B -0.806 -0.938 -0.674 0.067 -11.964 0.000      0.447   0.391</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B -0.006 -0.031  0.019 0.013  -0.472 0.637      0.994   0.969</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 97.5% Yule's Q  2.5% 97.5%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     280.900     0.99  0.99  0.99</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend year      1.030     0.00 -0.01  0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B   0.508    -0.38 -0.43 -0.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B   0.510    -0.38 -0.44 -0.32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B   1.019     0.00 -0.02  0.01</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: injuries ~ 1 + year + phaseB + interB</span>
@@ -341,20 +343,20 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-in"><span class="fu">plm</span><span class="op">(</span><span class="va">exampleAB_score</span><span class="op">$</span><span class="va">Christiano</span>, family <span class="op">=</span> <span class="st">"binomial"</span>, var_trials <span class="op">=</span> <span class="st">"trials"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model:  B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a binomial distribution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X²(3) = 240.66; p = 0.000; AIC = 120</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    B   2.5%  97.5%    SE      t     p Odds Ratio  2.5%  97.5%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     -1.988 -2.944 -1.142 0.456 -4.354 0.000      0.137 0.053  0.319</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     -1.964 -2.793 -1.239 0.394 -4.991 0.000      0.140 0.061  0.290</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt       0.023 -0.118  0.166 0.072  0.324 0.746      1.023 0.889  1.181</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B  2.338  1.502  3.244 0.442  5.284 0.000     10.360 4.491 25.636</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B  2.376  1.454  3.378 0.488  4.866 0.000     10.762 4.280 29.312</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B  0.038 -0.111  0.186 0.075  0.504 0.614      1.039 0.895  1.204</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Yule's Q  2.5% 97.5%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept        -0.76 -0.90 -0.52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept        -0.75 -0.88 -0.55</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt          0.01 -0.06  0.08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B     0.82  0.64  0.92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B     0.83  0.62  0.93</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B     0.02 -0.06  0.09</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: values/trials ~ 1 + mt + phaseB + interB</span>
@@ -367,20 +369,20 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-in">  <span class="fu">plm</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"binomial"</span>, var_trials <span class="op">=</span> <span class="st">"trials"</span>, dvar_percentage <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model:  B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a binomial distribution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X²(3) = 240.66; p = 0.000; AIC = 120</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    B   2.5%  97.5%    SE      t     p Odds Ratio  2.5%  97.5%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     -1.988 -2.944 -1.142 0.456 -4.354 0.000      0.137 0.053  0.319</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     -1.964 -2.793 -1.239 0.394 -4.991 0.000      0.140 0.061  0.290</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt       0.023 -0.118  0.166 0.072  0.324 0.746      1.023 0.889  1.181</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B  2.338  1.502  3.244 0.442  5.284 0.000     10.360 4.491 25.636</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B  2.376  1.454  3.378 0.488  4.866 0.000     10.762 4.280 29.312</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B  0.038 -0.111  0.186 0.075  0.504 0.614      1.039 0.895  1.204</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Yule's Q  2.5% 97.5%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept        -0.76 -0.90 -0.52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept        -0.75 -0.88 -0.55</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt          0.01 -0.06  0.08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B     0.82  0.64  0.92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B     0.83  0.62  0.93</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B     0.02 -0.06  0.09</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: percentage ~ 1 + mt + phaseB + interB</span>
@@ -399,7 +401,7 @@ Measurement, 60</em>, 38-58.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

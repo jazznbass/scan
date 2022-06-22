@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.4</span>
       </span>
     </div>
 
@@ -74,6 +74,7 @@
   <span class="va">decreasing</span>,
   <span class="va">phases</span>,
   <span class="va">model</span>,
+  <span class="va">contrast</span>,
   <span class="va">trend</span>,
   <span class="va">level</span>,
   <span class="va">slope</span>,
@@ -110,9 +111,11 @@ combined by providing a list with two elements. E.g., <code>phases = list(A
 (as B). Default is <code>phases = c("A","B")</code>.</p></dd>
 <dt>model</dt>
 <dd><p>Model used for calculating the slope parameter (see Huitema &amp;
-McKean, 2000). Default is <code>model = "B&amp;L-B"</code>. Possible values are:
-<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"Mohr#1"</code>, <code>"Mohr#2"</code>,
-<code>"JW"</code>, <code>"JW2"</code>, and <code>"Manly"</code>.</p></dd>
+McKean, 2000). Default is <code>model = "W"</code>. Possible values are:
+<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"W"</code>, and deprecated <code>"JW"</code>.</p></dd>
+<dt>contrast</dt>
+<dd><p>Either "first" or "preceding". "first" contrasts all 
+phase-effects to the first phase and "preceding" to the preceding phase.</p></dd>
 <dt>trend</dt>
 <dd><p>A logical indicating if a trend parameters is included in the
 model.</p></dd>
@@ -138,7 +141,7 @@ model.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>
