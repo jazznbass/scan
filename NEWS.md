@@ -1,3 +1,9 @@
+# scan 0.54.5
+
+## Bug fixes
+
+- solved #66: `set_vars()` working.
+
 # scan 0.54.4
 
 ## Bug fixes
