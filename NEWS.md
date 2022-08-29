@@ -1,3 +1,29 @@
+# scan 0.54.6
+
+## new functions
+
+- `coef()/ coefficients()`: Method for base R `coef` function for plm/hplm objects. Extracts coefficient tables from provided object.
+
+```.r
+coef(plm(exampleAB$Johanna))
+```
+
+## New features
+
+- `power_test()`: New argument `ci` provides confidence intervalls for power, alpha error, and correct proportions. New arguments `binom_test_alpha, binom_test_power, binom_test_correct` provide test against a provided proportion for alpha, power, and correct proportions.
+
+```.r
+design <- design(
+  n = 1, phase_design = list(A = 6, B = 9),
+  rtt = 0.8, level = 1.0, trend = 0.05
+)
+
+power_test(
+  design, ci = 0.95, binom_test = TRUE
+)
+```
+
+
 # scan 0.54.5
 
 ## Bug fixes
