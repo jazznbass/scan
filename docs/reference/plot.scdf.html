@@ -18,7 +18,7 @@ single-cases."><meta property="og:image" content="/logo.png"><!-- mathjax --><sc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
       </span>
     </div>
 
@@ -67,59 +67,75 @@ single-cases.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for scdf</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
-
-<span class="fu">plotSC</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">dvar</span>,
-  <span class="va">pvar</span>,
-  <span class="va">mvar</span>,
-  ylim <span class="op">=</span> <span class="cn">NULL</span>,
-  xlim <span class="op">=</span> <span class="cn">NULL</span>,
-  xinc <span class="op">=</span> <span class="fl">1</span>,
-  lines <span class="op">=</span> <span class="cn">NULL</span>,
-  marks <span class="op">=</span> <span class="cn">NULL</span>,
-  phase.names <span class="op">=</span> <span class="cn">NULL</span>,
-  xlab <span class="op">=</span> <span class="cn">NULL</span>,
-  ylab <span class="op">=</span> <span class="cn">NULL</span>,
-  main <span class="op">=</span> <span class="st">""</span>,
-  case.names <span class="op">=</span> <span class="cn">NULL</span>,
-  style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"scan.plot.style"</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for scdf</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">plotSC</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">dvar</span>,</span>
+<span>  <span class="va">pvar</span>,</span>
+<span>  <span class="va">mvar</span>,</span>
+<span>  ylim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  xlim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  xinc <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  lines <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  marks <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  phase.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ylab <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  main <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  case.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"scan.plot.style"</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>...</dt>
 <dd><p>Further arguments passed to the plot command.</p></dd>
+
+
 <dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
+
+
 <dt>dvar</dt>
 <dd><p>Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.</p></dd>
+
+
 <dt>pvar</dt>
 <dd><p>Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.</p></dd>
+
+
 <dt>mvar</dt>
 <dd><p>Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.</p></dd>
+
+
 <dt>ylim</dt>
 <dd><p>Lower and upper limits of the y-axis (e.g., <code>ylim = c(0,
 20)</code> sets the y-axis to a scale from 0 to 20). With multiple single-cases
 you can use <code>ylim = c(0, NA)</code> to scale the y-axis from 0 to the maximum
 of each case. <code>ylim</code> is not set by default, which makes <code>scan</code> set
 a proper scale based on the given data.</p></dd>
+
+
 <dt>xlim</dt>
 <dd><p>Lower and upper limits of the x-axis (e.g., <code>xlim = c(0,
 20)</code> sets the x-axis to a scale from 0 to 20). With multiple single-cases
 you can use <code>ylim = c(0, NA)</code> to scale the x-axis from 0 to the maximum
 of each case. <code>xlim</code> is not set by default, which makes <code>scan</code> set
 a proper scale based on the given data.</p></dd>
+
+
 <dt>xinc</dt>
 <dd><p>An integer. Increment of the x-axis. 1 :each mt value will be printed, 2 : every other value, 3 : every third values etc.</p></dd>
+
+
 <dt>lines</dt>
 <dd><p>A list defining one or multiple lines or curves to be
 plotted. The argument is passed as a list (e.g., <code>list(type = "median")</code>).
@@ -157,6 +173,8 @@ define the line's thickness, e.g., <code>lwd = 4</code>.</p></li>
 <li><p><code>"col"</code> Use
 this argument to define the line's color, e.g., <code>col = "red"</code>.</p></li>
 </ul></dd>
+
+
 <dt>marks</dt>
 <dd><p>A list of parameters defining markings of certain data points.</p><ul><li><p><code>"positions"</code> A vector or a list of vectors indicating
 measurement-times to be highlighted. In case of a vector, the marked
@@ -169,26 +187,41 @@ the marks.</p></li>
 </ul><p>Use for example
 <code>marks = list(positions = c(1, 8, 15), col = "red", cex = 3)</code> to make
 the MTs one, eight and 18 appear big and red.</p></dd>
+
+
 <dt>phase.names</dt>
 <dd><p>By default phases are labeled based on the levels of the phase variable. 
 Use this argument to specify different labels: <code>phase.names = c("Baseline",
 "Intervention")</code>.</p></dd>
+
+
 <dt>xlab</dt>
 <dd><p>The label of the x-axis. Default is <code>xlab = "Measurement
 time"</code>.</p></dd>
+
+
 <dt>ylab</dt>
 <dd><p>The labels of the y-axis. Default is <code>ylab = "Score"</code>.</p></dd>
+
+
 <dt>main</dt>
 <dd><p>Main title of the plot.</p></dd>
+
+
 <dt>case.names</dt>
 <dd><p>Case names. If not provided, names are taken from the scdf.
 Set <code>case.names = ""</code> if you don't like to include case names.</p></dd>
+
+
 <dt>style</dt>
 <dd><p>Either a character with the name of a pre-implemented style or a style object. See <code><a href="style_plot.html">style_plot</a></code> to learn about this format.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a plot of one or multiple single-cases.</p>
+    
+
+<p>Returns a plot of one or multiple single-cases.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -201,28 +234,28 @@ Set <code>case.names = ""</code> if you don't like to include case names.</p></d
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Request the default plot of the data from Borckhardt (2014)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Borckardt2014</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Request the default plot of the data from Borckhardt (2014)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Borckardt2014</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.scdf-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot the three cases from Grosche (2011) and visualize the phase A trend</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Grosche2011</span>, style <span class="op">=</span> <span class="st">"grid"</span>, lines <span class="op">=</span> <span class="st">"trendA"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot the three cases from Grosche (2011) and visualize the phase A trend</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Grosche2011</span>, style <span class="op">=</span> <span class="st">"grid"</span>, lines <span class="op">=</span> <span class="st">"trendA"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.scdf-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Request the local regression line for Georg from that data set and customize the plot</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">$</span><span class="va">Georg</span>, style <span class="op">=</span> <span class="st">"sienna"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">NA</span><span class="op">)</span>,</span>
-<span class="r-in">       xlab <span class="op">=</span> <span class="st">"Training session"</span>, ylab <span class="op">=</span> <span class="st">"Words per minute"</span>,</span>
-<span class="r-in">       phase.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Baseline"</span>, <span class="st">"Intervention"</span><span class="op">)</span>, xinc <span class="op">=</span> <span class="fl">5</span>,</span>
-<span class="r-in">       lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"loreg"</span>, f <span class="op">=</span> <span class="fl">0.2</span>, lty <span class="op">=</span> <span class="st">"solid"</span>, col <span class="op">=</span> <span class="st">"black"</span>, lwd <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Request the local regression line for Georg from that data set and customize the plot</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">$</span><span class="va">Georg</span>, style <span class="op">=</span> <span class="st">"sienna"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>       xlab <span class="op">=</span> <span class="st">"Training session"</span>, ylab <span class="op">=</span> <span class="st">"Words per minute"</span>,</span></span>
+<span class="r-in"><span>       phase.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Baseline"</span>, <span class="st">"Intervention"</span><span class="op">)</span>, xinc <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>       lines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"loreg"</span>, f <span class="op">=</span> <span class="fl">0.2</span>, lty <span class="op">=</span> <span class="st">"solid"</span>, col <span class="op">=</span> <span class="st">"black"</span>, lwd <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.scdf-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot a random MBD over three cases and mark interesting MTs</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span>design <span class="op">=</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">dat</span>, marks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>positions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>,</span>
-<span class="r-in">       cex <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span>, style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"grid"</span>, <span class="st">"annotate"</span>, <span class="st">"tiny"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot a random MBD over three cases and mark interesting MTs</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span>design <span class="op">=</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">dat</span>, marks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>positions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>,</span></span>
+<span class="r-in"><span>       cex <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span>, style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"grid"</span>, <span class="st">"annotate"</span>, <span class="st">"tiny"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.scdf-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -237,7 +270,7 @@ Set <code>case.names = ""</code> if you don't like to include case names.</p></d
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
       </span>
     </div>
 
@@ -65,31 +65,42 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for scdf</span>
-<span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">filter</span>, <span class="va">select</span>, <span class="va">cases</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for scdf</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">filter</span>, <span class="va">select</span>, <span class="va">cases</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>An scdf object.</p></dd>
+
+
 <dt>filter</dt>
 <dd><p>Logical expression indicating rows to keep: missing values are taken as false.</p></dd>
+
+
 <dt>select</dt>
 <dd><p>Expression, indicating columns to select from an scdf.</p></dd>
+
+
 <dt>cases</dt>
 <dd><p>Expression, indicating cases to keep from an scdf.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>[not implemented]</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An scdf.</p>
+    
+
+<p>An scdf.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleAB</span>, <span class="op">(</span><span class="va">values</span> <span class="op">&lt;</span> <span class="fl">60</span> <span class="op">&amp;</span> <span class="va">phase</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="va">values</span> <span class="op">&gt;=</span> <span class="fl">60</span> <span class="op">&amp;</span> <span class="va">phase</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleAB</span>, <span class="op">(</span><span class="va">values</span> <span class="op">&lt;</span> <span class="fl">60</span> <span class="op">&amp;</span> <span class="va">phase</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="va">values</span> <span class="op">&gt;=</span> <span class="fl">60</span> <span class="op">&amp;</span> <span class="va">phase</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 3 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Johanna: values mt phase | Karolina: values mt phase | Anja: values mt phase |</span>
@@ -109,7 +120,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>               82 14     B |               86 16     B |           81 15     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               77 15     B |               82 17     B |           78 16     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 5 more rows</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleAB_add</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">cigarrets</span>, <span class="op">-</span><span class="va">depression</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleAB_add</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">cigarrets</span>, <span class="op">-</span><span class="va">depression</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with one case</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Rolf: day wellbeing phase</span>
@@ -129,7 +140,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>         14        52  Base</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         15        55  Base</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 25 more rows</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleAB</span>, cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Karolina</span>, <span class="va">Johanna</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleAB</span>, cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Karolina</span>, <span class="va">Johanna</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 2 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Karolina: values mt phase | Johanna: values mt phase |</span>
@@ -149,7 +160,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                77 14     B |              82 14     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                79 15     B |              77 15     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 5 more rows</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2</span>, <span class="va">phase</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"B2"</span><span class="op">)</span>, cases <span class="op">=</span> <span class="va">Pawel</span><span class="op">:</span><span class="va">Moritz</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2</span>, <span class="va">phase</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"B2"</span><span class="op">)</span>, cases <span class="op">=</span> <span class="va">Pawel</span><span class="op">:</span><span class="va">Moritz</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 2 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Pawel: values mt phase | Moritz: values mt phase |</span>
@@ -183,7 +194,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

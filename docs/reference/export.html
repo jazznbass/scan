@@ -19,7 +19,7 @@ When applied in rmarkdown, tables can also be created for pdf/latex output."><me
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
       </span>
     </div>
 
@@ -69,127 +69,150 @@ When applied in rmarkdown, tables can also be created for pdf/latex output.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">export</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for scdf</span>
-<span class="fu">export</span><span class="op">(</span>
-  <span class="va">object</span>,
-  caption <span class="op">=</span> <span class="cn">NA</span>,
-  footnote <span class="op">=</span> <span class="cn">NA</span>,
-  filename <span class="op">=</span> <span class="cn">NA</span>,
-  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  <span class="va">cols</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for sc_desc</span>
-<span class="fu">export</span><span class="op">(</span>
-  <span class="va">object</span>,
-  caption <span class="op">=</span> <span class="cn">NA</span>,
-  footnote <span class="op">=</span> <span class="cn">NA</span>,
-  filename <span class="op">=</span> <span class="cn">NA</span>,
-  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  flip <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for sc_hplm</span>
-<span class="fu">export</span><span class="op">(</span>
-  <span class="va">object</span>,
-  caption <span class="op">=</span> <span class="cn">NA</span>,
-  footnote <span class="op">=</span> <span class="cn">NA</span>,
-  filename <span class="op">=</span> <span class="cn">NA</span>,
-  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  round <span class="op">=</span> <span class="fl">2</span>,
-  nice <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for sc_plm</span>
-<span class="fu">export</span><span class="op">(</span>
-  <span class="va">object</span>,
-  caption <span class="op">=</span> <span class="cn">NA</span>,
-  footnote <span class="op">=</span> <span class="cn">NA</span>,
-  filename <span class="op">=</span> <span class="cn">NA</span>,
-  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  round <span class="op">=</span> <span class="fl">2</span>,
-  nice <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for sc_overlap</span>
-<span class="fu">export</span><span class="op">(</span>
-  <span class="va">object</span>,
-  caption <span class="op">=</span> <span class="cn">NA</span>,
-  footnote <span class="op">=</span> <span class="cn">NA</span>,
-  filename <span class="op">=</span> <span class="cn">NA</span>,
-  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  round <span class="op">=</span> <span class="fl">2</span>,
-  flip <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for sc_trend</span>
-<span class="fu">export</span><span class="op">(</span>
-  <span class="va">object</span>,
-  caption <span class="op">=</span> <span class="cn">NA</span>,
-  footnote <span class="op">=</span> <span class="cn">NA</span>,
-  filename <span class="op">=</span> <span class="cn">NA</span>,
-  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  round <span class="op">=</span> <span class="fl">2</span>,
-  flip <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for sc_tauu</span>
-<span class="fu">export</span><span class="op">(</span>
-  <span class="va">object</span>,
-  caption <span class="op">=</span> <span class="cn">NA</span>,
-  footnote <span class="op">=</span> <span class="cn">NA</span>,
-  filename <span class="op">=</span> <span class="cn">NA</span>,
-  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">export</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for scdf</span></span>
+<span><span class="fu">export</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">cols</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_desc</span></span>
+<span><span class="fu">export</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_hplm</span></span>
+<span><span class="fu">export</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  nice <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_plm</span></span>
+<span><span class="fu">export</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  nice <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_overlap</span></span>
+<span><span class="fu">export</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_trend</span></span>
+<span><span class="fu">export</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  flip <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_tauu</span></span>
+<span><span class="fu">export</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>An scdf or an object exported from a scan function.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Further Arguments passed to internal functions.</p></dd>
+
+
 <dt>caption</dt>
 <dd><p>Character string with table caption. If left NA (default) a caption will be created based on the exported object.</p></dd>
+
+
 <dt>footnote</dt>
 <dd><p>Character string with table footnote. If left NA (default) a footnote will be created based on the exported object.</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>Character string with the filename. If a filename is provided
 the output will be written into this file.</p></dd>
+
+
 <dt>kable_styling_options</dt>
 <dd><p>list with arguments passed to the kable_styling function.</p></dd>
+
+
 <dt>kable_options</dt>
 <dd><p>list with arguments passed to the kable function.</p></dd>
+
+
 <dt>cols</dt>
 <dd><p>Defines which columns are included when a scdf is exported. It is either a vector
 with variable names or the string "main" will select the central variables.</p></dd>
+
+
 <dt>flip</dt>
 <dd><p>If TRUE, some objects are exported with rows and columns flipped.</p></dd>
+
+
 <dt>round</dt>
 <dd><p>value for the digits argument passed to the internally used round function.</p></dd>
+
+
 <dt>nice</dt>
 <dd><p>If set TRUE (default) output values are rounded and optimized for
 publication tables.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a specif formated html (or latex).</p>
+    
+
+<p>Returns a specif formated html (or latex).</p>
     </div>
 
   </div>
@@ -204,7 +227,7 @@ publication tables.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

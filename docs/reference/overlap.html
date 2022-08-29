@@ -18,7 +18,7 @@ single-case data and some additional statistics."><meta property="og:image" cont
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@ single-case data and some additional statistics.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">overlap</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">pvar</span>, <span class="va">mvar</span>, decreasing <span class="op">=</span> <span class="cn">FALSE</span>, phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">overlap</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">pvar</span>, <span class="va">mvar</span>, decreasing <span class="op">=</span> <span class="cn">FALSE</span>, phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -75,18 +75,28 @@ single-case data and some additional statistics.</p>
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
+
+
 <dt>dvar</dt>
 <dd><p>Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.</p></dd>
+
+
 <dt>pvar</dt>
 <dd><p>Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.</p></dd>
+
+
 <dt>mvar</dt>
 <dd><p>Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.</p></dd>
+
+
 <dt>decreasing</dt>
 <dd><p>If you expect data to be lower in the B phase, set
 <code>decreasing = TRUE</code>. Default is <code>decreasing = FALSE</code>.</p></dd>
+
+
 <dt>phases</dt>
 <dd><p>A vector of two characters or numbers indicating the two phases
 that should be compared. E.g., <code>phases = c("A","C")</code> or <code>phases =
@@ -94,6 +104,7 @@ c(2,4)</code> for comparing the second to the fourth phase. Phases could be
 combined by providing a list with two elements. E.g., <code>phases = list(A
 = c(1,3), B = c(2,4))</code> will compare phases 1 and 3 (as A) against 2 and 4
 (as B). Default is <code>phases = c("A","B")</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -101,12 +112,16 @@ combined by providing a list with two elements. E.g., <code>phases = list(A
 <dd><p>A data frame consisting of the following indices for
 each single-case for all cases: PND, PEM, PET, NAP, PAND, Tau-U (A vs. B -
 Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
+
 <dt>phases.A</dt>
 <dd><p>Selection for A phase.</p></dd>
+
 <dt>phases.B</dt>
 <dd><p>Selection for B phase.</p></dd>
+
 <dt>design</dt>
 <dd><p>Phase design.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -130,9 +145,9 @@ Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Display overlap indices for one single-case</span></span>
-<span class="r-in"><span class="fu">overlap</span><span class="op">(</span><span class="va">Huitema2000</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Display overlap indices for one single-case</span></span></span>
+<span class="r-in"><span><span class="fu">overlap</span><span class="op">(</span><span class="va">Huitema2000</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overlap Indices</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comparing phase 1 against phase 2 </span>
@@ -154,9 +169,9 @@ Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The following variables were used in this analysis:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'score' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Display overlap indices for six single-cases</span></span>
-<span class="r-in"><span class="fu">overlap</span><span class="op">(</span><span class="va">GruenkeWilbert2014</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Display overlap indices for six single-cases</span></span></span>
+<span class="r-in"><span><span class="fu">overlap</span><span class="op">(</span><span class="va">GruenkeWilbert2014</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overlap Indices</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comparing phase 1 against phase 2 </span>
@@ -170,7 +185,7 @@ Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NAP rescaled   100   100   100    100   100   100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PAND           100   100   100    100   100   100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tau_U         0.48  0.57  0.60   0.49  0.51  0.35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Base_Tau      0.67  0.77  0.75   0.77  0.72  0.60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Base_Tau      0.67  0.77  0.75   0.77  0.72  0.66</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Diff_mean     4.14  5.82  5.00   4.78  4.48  6.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Diff_trend    0.43  0.00  0.28  -0.08 -0.07  0.60</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SMD           5.07  7.13  6.64   5.72  8.17  7.35</span>
@@ -178,9 +193,9 @@ Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The following variables were used in this analysis:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'score' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Combining phases for analyszing designs with more than two phases   </span></span>
-<span class="r-in"><span class="fu">overlap</span><span class="op">(</span><span class="va">exampleA1B1A2B2</span>, phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A1"</span>,<span class="st">"A2"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B1"</span>,<span class="st">"B2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Combining phases for analyszing designs with more than two phases   </span></span></span>
+<span class="r-in"><span><span class="fu">overlap</span><span class="op">(</span><span class="va">exampleA1B1A2B2</span>, phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A1"</span>,<span class="st">"A2"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B1"</span>,<span class="st">"B2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overlap Indices</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comparing phases A1 + A2 against phases B1 + B2 </span>
@@ -199,7 +214,7 @@ Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Diff_trend         -0.05        0.00       -0.54</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SMD                 2.68        3.27        3.62</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hedges_g            2.07        2.72        2.98</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -214,7 +229,7 @@ Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

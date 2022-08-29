@@ -19,7 +19,7 @@ scaling across all cases included in an scdf."><meta property="og:image" content
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
       </span>
     </div>
 
@@ -69,15 +69,15 @@ scaling across all cases included in an scdf.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">standardize</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">var</span>,
-  center <span class="op">=</span> <span class="cn">TRUE</span>,
-  scale <span class="op">=</span> <span class="cn">FALSE</span>,
-  m <span class="op">=</span> <span class="fl">0</span>,
-  sd <span class="op">=</span> <span class="fl">1</span>,
-  grand <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">standardize</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">var</span>,</span>
+<span>  center <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  scale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  m <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  sd <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  grand <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -85,24 +85,39 @@ scaling across all cases included in an scdf.</p>
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
+
+
 <dt>var</dt>
 <dd><p>A character string or a vector of character strings with variable
 names that should be scaled.</p></dd>
+
+
 <dt>center</dt>
 <dd><p>If set TRUE, data are mean centered.</p></dd>
+
+
 <dt>scale</dt>
 <dd><p>If set TRUE, the standard deviation is set.</p></dd>
+
+
 <dt>m</dt>
 <dd><p>The target mean for centering.</p></dd>
+
+
 <dt>sd</dt>
 <dd><p>The target standard deviation for scaling</p></dd>
+
+
 <dt>grand</dt>
 <dd><p>If set TRUE, scaling is based on the mean and standard deviation
 of all values across all single-cases within the scdf.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An scdf with the scaled values.</p>
+    
+
+<p>An scdf with the scaled values.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -122,14 +137,14 @@ of all values across all single-cases within the scdf.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Standardize a multiple case scdf and compute an hplm</span></span>
-<span class="r-in"><span class="va">ex_sc</span> <span class="op">&lt;-</span> <span class="fu">standardize</span><span class="op">(</span><span class="va">exampleAB_50</span>, var <span class="op">=</span> <span class="st">"values"</span>, center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="hplm.html">hplm</a></span><span class="op">(</span><span class="va">ex_sc</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Standardize a multiple case scdf and compute an hplm</span></span></span>
+<span class="r-in"><span><span class="va">ex_sc</span> <span class="op">&lt;-</span> <span class="fu">standardize</span><span class="op">(</span><span class="va">exampleAB_50</span>, var <span class="op">=</span> <span class="st">"values"</span>, center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="hplm.html">hplm</a></span><span class="op">(</span><span class="va">ex_sc</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hierarchical Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimation method ML </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope estimation method: B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.287; L = 339.0; p = 0.000</span>
@@ -137,9 +152,9 @@ of all values across all single-cases within the scdf.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects (values ~ 1 + mt + phaseB + interB)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    B    SE   df       t p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     -1.280 0.076 1328 -16.738 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     -1.251 0.075 1328 -16.716 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt       0.029 0.006 1328   5.006 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B  0.662 0.029 1328  22.489 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B  0.708 0.033 1328  21.436 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B  0.046 0.006 1328   7.588 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random effects (~1 | case)</span>
@@ -161,7 +176,7 @@ of all values across all single-cases within the scdf.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

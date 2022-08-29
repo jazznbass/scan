@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">select_phases</span><span class="op">(</span><span class="va">data</span>, <span class="va">A</span>, <span class="va">B</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">select_phases</span><span class="op">(</span><span class="va">data</span>, <span class="va">A</span>, <span class="va">B</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -73,21 +73,28 @@
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
+
+
 <dt>A</dt>
 <dd><p>Selection of the A phase</p></dd>
+
+
 <dt>B</dt>
 <dd><p>Selection of the B phase</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An scdf with selected phases</p>
+    
+
+<p>An scdf with selected phases</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">exampleA1B1A2B2_zvt</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu">select_phases</span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="overlap.html">overlap</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">exampleA1B1A2B2_zvt</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu">select_phases</span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="overlap.html">overlap</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overlap Indices</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comparing phase 1 against phase 2 </span>
@@ -101,7 +108,7 @@ this format.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NAP rescaled    36     3    17</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PAND            67    50    54</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tau_U         0.14  0.03 -0.03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Base_Tau      0.27  0.02  0.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Base_Tau      0.27 -0.25  0.13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Diff_mean     5.50  3.17  0.83</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Diff_trend   -0.31 -1.10 -0.74</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SMD           0.52  0.40  0.26</span>
@@ -123,7 +130,7 @@ this format.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

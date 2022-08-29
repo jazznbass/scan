@@ -12,7 +12,11 @@ power_test(
   design_is_one_study = TRUE,
   alpha_test = TRUE,
   power_test = TRUE,
-  binom_test = 0.5,
+  binom_test = FALSE,
+  binom_test_alpha = FALSE,
+  binom_test_power = FALSE,
+  binom_test_correct = FALSE,
+  ci = FALSE,
   alpha_level = 0.05
 )
 }
@@ -21,12 +25,12 @@ power_test(
 
 \item{method}{A (named) list that defines the methods the power analysis is
 based on. Each element can contain a function (that takes an scdf file and
-return a p value) or a character string (the name of predefined functions).
-default \code{method = list("plm_level", "rand", "tauU")} computes a power
-analysis based on \code{\link{tau_u}}, \code{\link{rand_test}} and
-\code{\link{plm}} analyses. (Further predefined functions are: "plm_slope",
-"plm_poisson_level", "plm_poisson_slope", "hplm_level", "hplm_slope",
-"base_tau".}
+returns a p value) or a character string (the name of predefined
+functions). default \code{method = list("plm_level", "rand", "tauU")}
+computes a power analysis based on \code{\link{tau_u}},
+\code{\link{rand_test}} and \code{\link{plm}} analyses. (Further predefined
+functions are: "plm_slope", "plm_poisson_level", "plm_poisson_slope",
+"hplm_level", "hplm_slope", "base_tau".}
 
 \item{effect}{Either "level" or "slope". The respective effect of the
 provided design is set to 0 when computing the alpha-error proportion.}
@@ -44,20 +48,35 @@ studies.}
 
 \item{power_test}{Logical. If TRUE, power is calculated.}
 
-\item{binom_test}{Either FALSE or a value. If a value is provided, a binomial
-test is calculated for the total correct identifications (alpha and power)
-against the provided value.}
+\item{binom_test}{Shortcut. When set TRUE, binom_test_power is set to 0.80,
+binom_test_alpha is set to 0.05, and binom_test_correct is set to 0.875.}
+
+\item{binom_test_alpha}{Either FALSE or a value. If a value is provided, a
+binomial test is calculated testing if the alpha error proportion is less
+than the provided value.}
+
+\item{binom_test_power}{Either FALSE or a value. If a value is provided, a
+binomial test is calculated testing if the power is greater than the
+provided value.}
+
+\item{binom_test_correct}{Either FALSE or a value. If a value is provided, a
+binomial test is calculated testing if the correct proportion is greater
+than the provided value.}
+
+\item{ci}{Either FALSE or a value. If a value is provided, confidence
+intervalls at the provided level are calculated for power, alpha error, and
+correct proportions.}
 
 \item{alpha_level}{Alpha level used to calculate the proportion of
 significant tests. Default is \code{alpha_level = 0.05}.}
 }
 \description{
-Conducts a Monte-Carlo study on the test-power and alpha-error of a
-statistical function.
+Conducts a Monte-Carlo study on the test-power and alpha-error probability of
+a statistical function.
 }
 \details{
-Based on a \code{\link{design}} object, a large number of single-cases
-are generated and re-analyzed with a provided statistical function. The
+Based on a \code{\link{design}} object, a large number of single-cases are
+generated and re-analyzed with a provided statistical function. The
 proportion of significant analyzes is the test power. In a second step, a
 specified effect of the design object is set to 0 and again single-cases are
 generated and reanalyzed. The proportion of significant analyzes is the alpha
@@ -65,7 +84,7 @@ error probability.
 }
 \examples{
 
-## Assume you want to conduct a single-case study with 15 measurement
+## Assume you want to conduct a single-case study with 15 measurements
 ## (phases: A = 6 and B = 9) using a highly reliable test and
 ## an expected level effect of d = 1.4.
 ## A (strong) trend effect is trend = 0.05. What is the power?
@@ -83,6 +102,8 @@ design <- design(
 )
 power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"))
 
+# But the confidence intervalls are large:
+power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"), ci = 0.95)
 }
 \seealso{
 \code{\link{random_scdf}}, \code{\link{design}}

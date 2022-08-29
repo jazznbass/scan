@@ -19,7 +19,7 @@ power_test function and for other Monte-Carlo tasks."><meta property="og:image" 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
       </span>
     </div>
 
@@ -69,41 +69,45 @@ This is used within the  <code>random_scdf</code> function and the
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">design</span><span class="op">(</span>
-  n <span class="op">=</span> <span class="fl">1</span>,
-  phase_design <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">5</span>, B <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,
-  trend <span class="op">=</span> <span class="fl">0</span>,
-  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,
-  slope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,
-  start_value <span class="op">=</span> <span class="fl">50</span>,
-  s <span class="op">=</span> <span class="fl">10</span>,
-  rtt <span class="op">=</span> <span class="fl">0.8</span>,
-  extreme_prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,
-  extreme_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span>,
-  missing_prop <span class="op">=</span> <span class="fl">0</span>,
-  distribution <span class="op">=</span> <span class="st">"normal"</span>,
-  n_trials <span class="op">=</span> <span class="cn">NULL</span>,
-  mt <span class="op">=</span> <span class="cn">NULL</span>,
-  B_start <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">m</span>,
-  <span class="va">phase.design</span>,
-  <span class="va">MT</span>,
-  <span class="va">B.start</span>,
-  <span class="va">extreme.p</span>,
-  <span class="va">extreme.d</span>,
-  <span class="va">missing.p</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">design</span><span class="op">(</span></span>
+<span>  n <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  phase_design <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">5</span>, B <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
+<span>  trend <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>  slope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>  start_value <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  s <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  rtt <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>  extreme_prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>  extreme_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span>,</span>
+<span>  missing_prop <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  distribution <span class="op">=</span> <span class="st">"normal"</span>,</span>
+<span>  n_trials <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  mt <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  B_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">m</span>,</span>
+<span>  <span class="va">phase.design</span>,</span>
+<span>  <span class="va">MT</span>,</span>
+<span>  <span class="va">B.start</span>,</span>
+<span>  <span class="va">extreme.p</span>,</span>
+<span>  <span class="va">extreme.d</span>,</span>
+<span>  <span class="va">missing.p</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>n</dt>
 <dd><p>Number of cases to be designed (Default is <code>n = 1</code>).</p></dd>
+
+
 <dt>phase_design, phase.design</dt>
 <dd><p>A list defining the length and label of each
 phase. E.g., <code>phase.length = list(A1 = 10, B1 = 10, A2 = 10, B2 = 10)</code>.
 Use vectors if you want to define different values for each case
 <code>phase.length = list(A = c(10, 15), B = c(10, 15)</code>.</p></dd>
+
+
 <dt>trend</dt>
 <dd><p>Defines the effect size of a trend added incrementally to each
 measurement across the whole data-set. To assign different trends to several
@@ -113,6 +117,8 @@ When using a 'gaussian' distribution, the <code>trend</code> parameters indicate
 effect size <em>d</em> changes.  When using a binomial or poisson
 distribution, <code>trend</code> indicates an increase in points / counts per
 measurement.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>A list that defines the level increase (effect size <em>d</em>) at
 the beginning of each phase relative to the previous phase (e.g.
@@ -124,6 +130,8 @@ values). Use vectors to define variable level effects for each case (e.g.
 distribution, the <code>level</code> parameters indicate effect size <em>d</em>
 changes. When using a binomial or poisson distribution, <code>level</code>
 indicates an increase in points / counts with the onset of each phase.</p></dd>
+
+
 <dt>slope</dt>
 <dd><p>A list that defines the increase per measurement for each phase
 compared to the previous phase. <code>slope = list(A = 0, B = .1</code> generates
@@ -137,6 +145,8 @@ values are recycled. When using a 'gaussian' distribution, the <code>slope</code
 parameters indicate effect size <em>d</em> changes per measurement. When using
 a binomial or poisson distribution, <code>slope</code> indicates an increase in
 points / counts per measurement.</p></dd>
+
+
 <dt>start_value, m</dt>
 <dd><p>Starting value at the first measurement. Default is
 <code>50</code>. When <code>distribution = "poission"</code> the start_value represents
@@ -145,6 +155,8 @@ between 0 and 1 and they represent the probability of on event. To assign
 different start values to several single-cases, use a vector of values (e.g.
 <code>c(50, 42, 56)</code>). If the number of cases exceeds the length of the
 vector, values are recycled. The `m` argument is deprecated.</p></dd>
+
+
 <dt>s</dt>
 <dd><p>Standard deviation used to calculate absolute values from level,
 slope, trend effects and to calculate and error distribution from the
@@ -153,17 +165,23 @@ variances to several single-cases, use a vector of values (e.g. <code>s =
 c(5, 10, 15)</code>). If the number of cases exceeds the length of the vector,
 values are recycled. if the distribution is 'poisson' or 'binomial' s is not
 applied.</p></dd>
+
+
 <dt>rtt</dt>
 <dd><p>Reliability of the underlying simulated measurements. Set <code>rtt
 = .8</code> by default. To assign different reliabilities to several single-cases,
 use a vector of values (e.g. <code>rtt = c(.6, .7, .8)</code>). If the number of
 cases exceeds the length of the vector, values are repeated. <code>rtt</code> has
 no effect when you're using binomial or poisson distributions.</p></dd>
+
+
 <dt>extreme_prop, extreme.p</dt>
 <dd><p>Probability of extreme values. <code>extreme.p =
 .05</code> gives a five percent probability of an extreme value. A vector of
 values assigns different probabilities to multiple cases. If the number of
 cases exceeds the length of the vector, values are recycled.</p></dd>
+
+
 <dt>extreme_range, extreme.d</dt>
 <dd><p>Range for extreme values. <code>extreme_range =
 c(-7,-6)</code> uses extreme values within a range of -7 and -6 . In case of a
@@ -171,21 +189,31 @@ binomial or poisson distribution, <code>extreme_range</code> indicates
 frequencies. In case of a gaussian (or normal) distribution it indicates
 effect size d. Caution: the first value must be smaller than the second,
 otherwise the procedure will fail.</p></dd>
+
+
 <dt>missing_prop, missing.p</dt>
 <dd><p>Portion of missing values. <code>missing_prop =
 0.1</code> creates 10% of all values as missing). A vector of values assigns
 different probabilities to multiple cases. If the number of cases exceeds
 the length of the vector, values are repeated.</p></dd>
+
+
 <dt>distribution</dt>
 <dd><p>Distribution of the criteria varible. Default is
 <code>"normal"</code>. Possible values are <code>"normal"</code>, <code>"binomial"</code>, and
 <code>"poisson"</code>.</p></dd>
+
+
 <dt>n_trials</dt>
 <dd><p>If <code>distribution</code> (see below) is <code>"binomial"</code>,
 <code>n_trials</code> is the number of trials/observations/items.</p></dd>
+
+
 <dt>mt, MT</dt>
 <dd><p>Number of measurements (in each study). Default is <code>mt =
 20</code>.</p></dd>
+
+
 <dt>B_start, B.start</dt>
 <dd><p>Phase B starting point. The default setting
 <code>B_start = 6</code> would assign the first five scores (of each case) to
@@ -193,10 +221,13 @@ phase A, and all following scores to phase B. To assign different starting
 points for a set of multiple single-cases, use a vector of starting values
 (e.g. <code>B_start = c(6, 7, 8)</code>). If the number of cases exceeds the
 length of the vector, values will be recycled.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class sc_design.</p>
+    
+
+<p>An object of class sc_design.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -205,14 +236,14 @@ length of the vector, values will be recycled.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Create random single-case data and inspect it</span></span>
-<span class="r-in"><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu">design</span><span class="op">(</span></span>
-<span class="r-in">  n <span class="op">=</span> <span class="fl">3</span>, rtt <span class="op">=</span> <span class="fl">0.75</span>, slope <span class="op">=</span> <span class="fl">0.1</span>, extreme_prop <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span class="r-in">  missing_prop <span class="op">=</span> <span class="fl">0.1</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="va">design</span>, round <span class="op">=</span> <span class="fl">1</span>, random.names <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create random single-case data and inspect it</span></span></span>
+<span class="r-in"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu">design</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fl">3</span>, rtt <span class="op">=</span> <span class="fl">0.75</span>, slope <span class="op">=</span> <span class="fl">0.1</span>, extreme_prop <span class="op">=</span> <span class="fl">0.1</span>,</span></span>
+<span class="r-in"><span>  missing_prop <span class="op">=</span> <span class="fl">0.1</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="va">design</span>, round <span class="op">=</span> <span class="fl">1</span>, random.names <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Describe Single-Case Data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Case1 Case2 Case3</span>
@@ -237,14 +268,14 @@ length of the vector, values will be recycled.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> max.B     71.3   65.2   67.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> trend.A   0.95   1.36   2.27</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> trend.B  0.935  1.693  1.358</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## And now have a look at poisson-distributed data</span></span>
-<span class="r-in"><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu">design</span><span class="op">(</span></span>
-<span class="r-in">  n <span class="op">=</span> <span class="fl">3</span>, B_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">10</span>, <span class="fl">14</span><span class="op">)</span>, mt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">20</span>, <span class="fl">22</span><span class="op">)</span>, start_value <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">  distribution <span class="op">=</span> <span class="st">"poisson"</span>, level <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, missing_prop <span class="op">=</span> <span class="fl">0.1</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="va">design</span>, seed <span class="op">=</span> <span class="fl">1234</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="pand.html">pand</a></span><span class="op">(</span><span class="va">dat</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span>, correction <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## And now have a look at poisson-distributed data</span></span></span>
+<span class="r-in"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu">design</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fl">3</span>, B_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">10</span>, <span class="fl">14</span><span class="op">)</span>, mt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">20</span>, <span class="fl">22</span><span class="op">)</span>, start_value <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>  distribution <span class="op">=</span> <span class="st">"poisson"</span>, level <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, missing_prop <span class="op">=</span> <span class="fl">0.1</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="va">design</span>, seed <span class="op">=</span> <span class="fl">1234</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pand.html">pand</a></span><span class="op">(</span><span class="va">dat</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span>, correction <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Percentage of all non-overlapping data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PAND =  95.9 %</span>
@@ -287,7 +318,7 @@ length of the vector, values will be recycled.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

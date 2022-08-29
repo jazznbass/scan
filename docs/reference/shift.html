@@ -20,7 +20,7 @@ is given as a time variable (see example below)."><meta property="og:image" cont
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@ is given as a time variable (see example below).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">shift</span><span class="op">(</span><span class="va">data</span>, <span class="va">value</span>, <span class="va">var</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">shift</span><span class="op">(</span><span class="va">data</span>, <span class="va">value</span>, <span class="va">var</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -79,15 +79,22 @@ is given as a time variable (see example below).</p>
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
+
+
 <dt>value</dt>
 <dd><p>Number by which to shift the values</p></dd>
+
+
 <dt>var</dt>
 <dd><p>Character string with the name of the target variable.
 Defaults to the measurement time variable.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A scdf with shifted data</p>
+    
+
+<p>A scdf with shifted data</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -103,13 +110,13 @@ Defaults to the measurement time variable.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### Shift the measurement time for a better estimation of the intercept</span></span>
-<span class="r-in"><span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu">shift</span><span class="op">(</span><span class="va">example_A24</span>, value <span class="op">=</span> <span class="op">-</span><span class="fl">1996</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### Shift the measurement time for a better estimation of the intercept</span></span></span>
+<span class="r-in"><span><span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu">shift</span><span class="op">(</span><span class="va">example_A24</span>, value <span class="op">=</span> <span class="op">-</span><span class="fl">1996</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>This function is deprecated. It might be dropped without any further notice in a future update of scan. Please name function 'transform' instead of 'shift'.</span>
-<span class="r-in"><span class="fu"><a href="plm.html">plm</a></span><span class="op">(</span><span class="va">ex</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="plm.html">plm</a></span><span class="op">(</span><span class="va">ex</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model:  B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 19) = 46.74; p = 0.000; R² = 0.881; Adjusted R² = 0.862</span>
@@ -117,7 +124,7 @@ Defaults to the measurement time variable.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                      B     2.5%    97.5%     SE      t     p delta R²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept      258.714  223.364  294.065 18.036 14.344 0.000         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend year       1.857   -7.947   11.662  5.002  0.371 0.715   0.0009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B -148.657 -193.265 -104.050 22.759 -6.532 0.000   0.2679</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B -150.383 -200.743 -100.024 25.694 -5.853 0.000   0.2151</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B   -1.726  -11.926    8.474  5.204 -0.332 0.744   0.0007</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Autocorrelations of the residuals</span>
@@ -128,13 +135,13 @@ Defaults to the measurement time variable.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: injuries ~ 1 + year + phaseB + interB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Please use transform instead:</span></span>
-<span class="r-in"><span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">example_A24</span>, year <span class="op">=</span> <span class="va">year</span> <span class="op">-</span> <span class="fl">1996</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="plm.html">plm</a></span><span class="op">(</span><span class="va">ex</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Please use transform instead:</span></span></span>
+<span class="r-in"><span><span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">example_A24</span>, year <span class="op">=</span> <span class="va">year</span> <span class="op">-</span> <span class="fl">1996</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plm.html">plm</a></span><span class="op">(</span><span class="va">ex</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model:  B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 19) = 46.74; p = 0.000; R² = 0.881; Adjusted R² = 0.862</span>
@@ -142,7 +149,7 @@ Defaults to the measurement time variable.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                      B     2.5%    97.5%     SE      t     p delta R²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept      258.714  223.364  294.065 18.036 14.344 0.000         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend year       1.857   -7.947   11.662  5.002  0.371 0.715   0.0009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B -148.657 -193.265 -104.050 22.759 -6.532 0.000   0.2679</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B -150.383 -200.743 -100.024 25.694 -5.853 0.000   0.2151</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B   -1.726  -11.926    8.474  5.204 -0.332 0.744   0.0007</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Autocorrelations of the residuals</span>
@@ -167,7 +174,7 @@ Defaults to the measurement time variable.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

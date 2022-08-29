@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
       </span>
     </div>
 
@@ -65,20 +65,21 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">mplm</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">dvar</span>,
-  <span class="va">mvar</span>,
-  <span class="va">pvar</span>,
-  model <span class="op">=</span> <span class="st">"B&amp;L-B"</span>,
-  trend <span class="op">=</span> <span class="cn">TRUE</span>,
-  level <span class="op">=</span> <span class="cn">TRUE</span>,
-  slope <span class="op">=</span> <span class="cn">TRUE</span>,
-  formula <span class="op">=</span> <span class="cn">NULL</span>,
-  update <span class="op">=</span> <span class="cn">NULL</span>,
-  na.action <span class="op">=</span> <span class="va">na.omit</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mplm</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">dvar</span>,</span>
+<span>  <span class="va">mvar</span>,</span>
+<span>  <span class="va">pvar</span>,</span>
+<span>  model <span class="op">=</span> <span class="st">"W"</span>,</span>
+<span>  contrast <span class="op">=</span> <span class="st">"first"</span>,</span>
+<span>  trend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  level <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  slope <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  formula <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  update <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  na.action <span class="op">=</span> <span class="va">na.omit</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -86,48 +87,77 @@
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
+
+
 <dt>dvar</dt>
 <dd><p>Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.</p></dd>
+
+
 <dt>mvar</dt>
 <dd><p>Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.</p></dd>
+
+
 <dt>pvar</dt>
 <dd><p>Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.</p></dd>
+
+
 <dt>model</dt>
 <dd><p>Model used for calculating the slope parameter (see Huitema &amp;
-McKean, 2000). Default is <code>model = "B&amp;L-B"</code>. Possible values are:
-<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"Mohr#1"</code>, <code>"Mohr#2"</code>,
-<code>"JW"</code>, <code>"JW2"</code>, and <code>"Manly"</code>.</p></dd>
+McKean, 2000). Default is <code>model = "W"</code>. Possible values are:
+<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"W"</code>, and deprecated <code>"JW"</code>.</p></dd>
+
+
+<dt>contrast</dt>
+<dd><p>Either "first" or "preceding". "first" contrasts all 
+phase-effects to the first phase and "preceding" to the preceding phase.</p></dd>
+
+
 <dt>trend</dt>
 <dd><p>A logical indicating if a trend parameters is included in the
 model.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>A logical indicating if a level parameters is included in the
 model.</p></dd>
+
+
 <dt>slope</dt>
 <dd><p>A logical indicating if a slope parameters is included in the
 model.</p></dd>
+
+
 <dt>formula</dt>
 <dd><p>Defaults to the standard piecewise regression model. The
 parameter phase followed by the phase name (e.g., phaseB) indicates the level effect of the corresponding phase. The parameter 'inter' followed by the phase name (e.g., interB) adresses the slope effect based on the method
 provide in the model argument (e.g., "B&amp;L-B"). The formula can be changed
 for example to include further variables into the regression model.</p></dd>
+
+
 <dt>update</dt>
 <dd><p>An easier way to change the regression formula (e.g., . ~ . + newvariable).</p></dd>
+
+
 <dt>na.action</dt>
 <dd><p>Defines how to deal with missing values</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Further arguments passed to the lm function.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <dl><dt>model</dt>
 <dd><p>Character string from function call (see
 <code>Arguments</code> above).</p></dd>
+
 <dt>full.model</dt>
 <dd><p>Full regression model list</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -143,60 +173,60 @@ for example to include further variables into the regression model.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mplm</span><span class="op">(</span><span class="va">Leidig2018</span><span class="op">$</span><span class="va">`1a1`</span>, dvar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"academic_engagement"</span>, <span class="st">"disruptive_behavior"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mplm</span><span class="op">(</span><span class="va">Leidig2018</span><span class="op">$</span><span class="va">`1a1`</span>, dvar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"academic_engagement"</span>, <span class="st">"disruptive_behavior"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate piecewise linear model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               academic_engagement disruptive_behavior</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                 2.986              0.7671</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                 2.771              0.8493</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend                      -0.216              0.0822</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B               2.121             -1.3096</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B               2.340             -1.3898</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B               0.219             -0.0803</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: y ~ 1 + mt + phaseB + interB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Type III MANOVA Tests: Pillai test statistic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Df test stat approx F num Df den Df  Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)    1    0.2210    11.06      2     78 5.9e-05 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend          1    0.0317     1.28      2     78    0.29    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B  1    0.2217    11.11      2     78 5.7e-05 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B  1    0.0315     1.27      2     78    0.29    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)    1    0.2841    15.48      2     78 2.2e-06 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend          1    0.0317     1.28      2     78 0.28519    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B  1    0.1905     9.18      2     78 0.00026 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B  1    0.0315     1.27      2     78 0.28737    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The following variables were used in this analysis:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'academic_engagement/ disruptive_behavior' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</span>
-<span class="r-in"><span class="co">## also report standardized coefficients:</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span>, std <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co">## also report standardized coefficients:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span>, std <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate piecewise linear model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               academic_engagement disruptive_behavior</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                 2.986              0.7671</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                 2.771              0.8493</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend                      -0.216              0.0822</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B               2.121             -1.3096</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B               2.340             -1.3898</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B               0.219             -0.0803</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Standardized coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               academic_engagement disruptive_behavior</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                 0.000               0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend                      -5.979               5.107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B               0.522              -0.722</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B               5.974              -4.917</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B               0.576              -0.767</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B               5.950              -4.897</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: y ~ 1 + mt + phaseB + interB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Type III MANOVA Tests: Pillai test statistic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Df test stat approx F num Df den Df  Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)    1    0.2210    11.06      2     78 5.9e-05 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend          1    0.0317     1.28      2     78    0.29    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B  1    0.2217    11.11      2     78 5.7e-05 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B  1    0.0315     1.27      2     78    0.29    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)    1    0.2841    15.48      2     78 2.2e-06 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend          1    0.0317     1.28      2     78 0.28519    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B  1    0.1905     9.18      2     78 0.00026 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B  1    0.0315     1.27      2     78 0.28737    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -216,7 +246,7 @@ for example to include further variables into the regression model.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

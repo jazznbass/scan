@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
       </span>
     </div>
 
@@ -65,26 +65,27 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">hplm</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">dvar</span>,
-  <span class="va">pvar</span>,
-  <span class="va">mvar</span>,
-  model <span class="op">=</span> <span class="st">"B&amp;L-B"</span>,
-  method <span class="op">=</span> <span class="st">"ML"</span>,
-  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>opt <span class="op">=</span> <span class="st">"optim"</span><span class="op">)</span>,
-  random.slopes <span class="op">=</span> <span class="cn">FALSE</span>,
-  lr.test <span class="op">=</span> <span class="cn">FALSE</span>,
-  ICC <span class="op">=</span> <span class="cn">TRUE</span>,
-  trend <span class="op">=</span> <span class="cn">TRUE</span>,
-  level <span class="op">=</span> <span class="cn">TRUE</span>,
-  slope <span class="op">=</span> <span class="cn">TRUE</span>,
-  fixed <span class="op">=</span> <span class="cn">NULL</span>,
-  random <span class="op">=</span> <span class="cn">NULL</span>,
-  update.fixed <span class="op">=</span> <span class="cn">NULL</span>,
-  data.l2 <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">hplm</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">dvar</span>,</span>
+<span>  <span class="va">pvar</span>,</span>
+<span>  <span class="va">mvar</span>,</span>
+<span>  model <span class="op">=</span> <span class="st">"W"</span>,</span>
+<span>  contrast <span class="op">=</span> <span class="st">"first"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"ML"</span>,</span>
+<span>  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>opt <span class="op">=</span> <span class="st">"optim"</span><span class="op">)</span>,</span>
+<span>  random.slopes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  lr.test <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ICC <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  trend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  level <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  slope <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  fixed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  random <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  update.fixed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data.l2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -92,77 +93,123 @@
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
+
+
 <dt>dvar</dt>
 <dd><p>Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.</p></dd>
+
+
 <dt>pvar</dt>
 <dd><p>Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.</p></dd>
+
+
 <dt>mvar</dt>
 <dd><p>Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.</p></dd>
+
+
 <dt>model</dt>
 <dd><p>Model used for calculating the slope parameter (see Huitema &amp;
-McKean, 2000). Default is <code>model = "B&amp;L-B"</code>. Possible values are:
-<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"Mohr#1"</code>, <code>"Mohr#2"</code>,
-<code>"JW"</code>, <code>"JW2"</code>, and <code>"Manly"</code>.</p></dd>
+McKean, 2000). Default is <code>model = "W"</code>. Possible values are:
+<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"W"</code>, and deprecated <code>"JW"</code>.</p></dd>
+
+
+<dt>contrast</dt>
+<dd><p>Either "first" or "preceding". "first" contrasts all 
+phase-effects to the first phase and "preceding" to the preceding phase.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>Method used to fit your model. Pass <code>"REML"</code> to maximize
 the restricted log-likelihood or <code>"ML"</code> for maximized log-likelihood.
 Default is <code>"ML"</code>.</p></dd>
+
+
 <dt>control</dt>
 <dd><p>A list of settings for the estimation algorithm, replacing
 the default values passed to the function <code>lmeControl</code> of the
 <code>nlme</code> package.</p></dd>
+
+
 <dt>random.slopes</dt>
 <dd><p>If <code>random.slopes = TRUE</code> random slope effects of
 the level, trend, and treatment parameter are estimated.</p></dd>
+
+
 <dt>lr.test</dt>
 <dd><p>If set TRUE likelihood ratio tests are calculated comparing model with vs. without random slope parameters.</p></dd>
+
+
 <dt>ICC</dt>
 <dd><p>If <code>ICC = TRUE</code> an intraclass-correlation is estimated.</p></dd>
+
+
 <dt>trend</dt>
 <dd><p>A logical indicating if a trend parameters is included in the
 model.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>A logical indicating if a level parameters is included in the
 model.</p></dd>
+
+
 <dt>slope</dt>
 <dd><p>A logical indicating if a slope parameters is included in the
 model.</p></dd>
+
+
 <dt>fixed</dt>
 <dd><p>Defaults to the fixed part of the standard piecewise regression model. The
 parameter phase followed by the phase name (e.g., phaseB) indicates the level effect of the corresponding phase. The parameter 'inter' followed by the phase name (e.g., interB) adresses the slope effect based on the method
 provide in the model argument (e.g., "B&amp;L-B"). The formula can be changed
 for example to include further L1 or L2 variables into the regression model.</p></dd>
+
+
 <dt>random</dt>
 <dd><p>The random part of the model.</p></dd>
+
+
 <dt>update.fixed</dt>
 <dd><p>An easier way to change the fixed model part (e.g., . ~ . + newvariable).</p></dd>
+
+
 <dt>data.l2</dt>
 <dd><p>A dataframe providing additional variables at Level 2. The
 scdf File has to have names for all cases and the Level 2 dataframe has to
 have a column named 'cases' with the names of the cases the Level 2
 variables belong to.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Further arguments passed to the lme function.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <dl><dt>model</dt>
 <dd><p>List containing infromation about the applied model</p></dd>
+ 
 <dt>N</dt>
 <dd><p>Number of single-cases.</p></dd>
+
 <dt>formla</dt>
 <dd><p>A list containing the fixed and the random formulas of the hplm model.</p></dd>
+
 <dt>hplm</dt>
 <dd><p>Object of class lme contaning the multilevel model</p></dd>
+ 
 <dt>model.0</dt>
 <dd><p>Object of class lme containing the Zero Model.</p></dd>
+ 
 <dt>ICC</dt>
 <dd><p>List containing intraclass correlation and test parameters.</p></dd>
+
 <dt>model.without</dt>
 <dd><p>Object of class gls containing the fixed effect model.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -178,13 +225,13 @@ variables belong to.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Compute hplm model on a MBD over fifty cases (restricted log-likelihood)</span></span>
-<span class="r-in"><span class="fu">hplm</span><span class="op">(</span><span class="va">exampleAB_50</span>, method <span class="op">=</span> <span class="st">"REML"</span>, random.slopes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Compute hplm model on a MBD over fifty cases (restricted log-likelihood)</span></span></span>
+<span class="r-in"><span><span class="fu">hplm</span><span class="op">(</span><span class="va">exampleAB_50</span>, method <span class="op">=</span> <span class="st">"REML"</span>, random.slopes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hierarchical Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimation method REML </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope estimation method: B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.292; L = 341.2; p = 0.000</span>
@@ -192,9 +239,9 @@ variables belong to.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects (values ~ 1 + mt + phaseB + interB)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    B    SE   df      t p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     47.819 1.528 1328 31.288 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     48.398 1.496 1328 32.351 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt       0.579 0.116 1328  5.007 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B 13.136 0.584 1328 22.496 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B 14.038 0.655 1328 21.442 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B  0.902 0.119 1328  7.589 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random effects (~1 | case)</span>
@@ -202,15 +249,15 @@ variables belong to.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           EstimateSD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     10.073</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residual       5.290</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Analyzing with additional L2 variables</span></span>
-<span class="r-in"><span class="fu">hplm</span><span class="op">(</span><span class="va">Leidig2018</span>, data.l2 <span class="op">=</span> <span class="va">Leidig2018_l2</span>, </span>
-<span class="r-in">     update.fixed <span class="op">=</span> <span class="va">.</span><span class="op">~</span><span class="va">.</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">migration</span> <span class="op">+</span> <span class="va">ITRF_TOTAL</span><span class="op">*</span><span class="va">phaseB</span>, </span>
-<span class="r-in">     slope <span class="op">=</span> <span class="cn">FALSE</span>, random.slopes <span class="op">=</span> <span class="cn">FALSE</span>, lr.test <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Analyzing with additional L2 variables</span></span></span>
+<span class="r-in"><span><span class="fu">hplm</span><span class="op">(</span><span class="va">Leidig2018</span>, data.l2 <span class="op">=</span> <span class="va">Leidig2018_l2</span>, </span></span>
+<span class="r-in"><span>     update.fixed <span class="op">=</span> <span class="va">.</span><span class="op">~</span><span class="va">.</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">migration</span> <span class="op">+</span> <span class="va">ITRF_TOTAL</span><span class="op">*</span><span class="va">phaseB</span>, </span></span>
+<span class="r-in"><span>     slope <span class="op">=</span> <span class="cn">FALSE</span>, random.slopes <span class="op">=</span> <span class="cn">FALSE</span>, lr.test <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hierarchical Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimation method ML </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope estimation method: B&amp;L-B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 35 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.344; L = 875.4; p = 0.000</span>
@@ -218,7 +265,7 @@ variables belong to.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects (academic_engagement ~ mt + phaseB + gender + migration + ITRF_TOTAL +     phaseB:ITRF_TOTAL)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                               B    SE   df      t     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                 3.747 0.262 2376 14.285 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                 3.751 0.262 2376 14.302 0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt                  0.004 0.001 2376  6.019 0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B             0.667 0.098 2376  6.808 0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gender                   -0.020 0.301   31 -0.067 0.947</span>
@@ -231,7 +278,7 @@ variables belong to.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           EstimateSD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept      0.557</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residual       0.785</span>
-<span class="r-in">     </span>
+<span class="r-in"><span>     </span></span>
 </code></pre></div>
     </div>
   </div>
@@ -246,7 +293,7 @@ variables belong to.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

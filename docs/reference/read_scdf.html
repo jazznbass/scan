@@ -18,7 +18,7 @@ yaml files."><meta property="og:image" content="/logo.png"><!-- mathjax --><scri
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
       </span>
     </div>
 
@@ -67,24 +67,24 @@ yaml files.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">read_scdf</span><span class="op">(</span>
-  <span class="va">filename</span>,
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  sort.labels <span class="op">=</span> <span class="cn">FALSE</span>,
-  cvar <span class="op">=</span> <span class="st">"case"</span>,
-  pvar <span class="op">=</span> <span class="st">"phase"</span>,
-  dvar <span class="op">=</span> <span class="st">"values"</span>,
-  mvar <span class="op">=</span> <span class="st">"mt"</span>,
-  phase.names <span class="op">=</span> <span class="cn">NULL</span>,
-  sep <span class="op">=</span> <span class="st">","</span>,
-  dec <span class="op">=</span> <span class="st">"."</span>,
-  type <span class="op">=</span> <span class="cn">NA</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">readSC.excel</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
-
-<span class="fu">readSC</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_scdf</span><span class="op">(</span></span>
+<span>  <span class="va">filename</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sort.labels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  cvar <span class="op">=</span> <span class="st">"case"</span>,</span>
+<span>  pvar <span class="op">=</span> <span class="st">"phase"</span>,</span>
+<span>  dvar <span class="op">=</span> <span class="st">"values"</span>,</span>
+<span>  mvar <span class="op">=</span> <span class="st">"mt"</span>,</span>
+<span>  phase.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sep <span class="op">=</span> <span class="st">","</span>,</span>
+<span>  dec <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  type <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">readSC.excel</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">readSC</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -93,44 +93,69 @@ yaml files.</p>
 <dd><p>A character string defining the file to be loaded (e.g.
 <code>"SC_Anita.csv"</code>. If left empty a dialog box for choosing will be
 opened.</p></dd>
+
+
 <dt>data</dt>
 <dd><p>A data frame. As an alternative to <code>filname</code>.</p></dd>
+
+
 <dt>sort.labels</dt>
 <dd><p>If set TRUE, the resulting list is sorted by label names
 (alphabetically increasing).</p></dd>
+
+
 <dt>cvar</dt>
 <dd><p>Sets the variable name of the "case" variable. Defaults to
 <code>"case"</code>.</p></dd>
+
+
 <dt>pvar</dt>
 <dd><p>Sets the variable name of the "phase" variable. Defaults to
 <code>"phase"</code>.</p></dd>
+
+
 <dt>dvar</dt>
 <dd><p>Sets the variable name of the "values" variable. Defaults to
 <code>"values"</code>.</p></dd>
+
+
 <dt>mvar</dt>
 <dd><p>Sets the variable name of the "mt" variable. Defaults to
 <code>"mt"</code>.</p></dd>
+
+
 <dt>phase.names</dt>
 <dd><p>A character vector with phase names. Defaults to the phase
 names provided in the phase variable.</p></dd>
+
+
 <dt>sep</dt>
 <dd><p>The field separator string. Values within each row of x are 
 separated by this string.</p></dd>
+
+
 <dt>dec</dt>
 <dd><p>The string to use for decimal points in numeric or complex 
 columns: must be a single character.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>Format of the file to be loaded. Either "csv", "xlsx", "xls",
 "excel", "yml" is possible. By default (NA) the type is extracted from the
 file extension.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Further arguments passed to the repective read function
 (<code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></code>, <code>read_excel</code>,
 <code>read_yaml</code> command.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn
+    
+
+<p>Returns a single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn
   about the format of these data frames.</p>
     </div>
     <div id="see-also">
@@ -145,23 +170,23 @@ file extension.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Read SC-data from a file named "study1.csv" in your working directory</span></span>
-<span class="r-in"><span class="co"># study1 &lt;- read_scdf("study1.csv")</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Read SC-data from a .csv-file with semicolon as field and comma as decimal separator</span></span>
-<span class="r-in"><span class="co"># study2 &lt;- read_scdf("study2.csv", sep = ";", dec = ",")</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## write_scdf and read_scdf</span></span>
-<span class="r-in"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"test.csv"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="write_scdf.html">write_scdf</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2_zvt</span>, <span class="va">filename</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">read_scdf</span><span class="op">(</span><span class="va">filename</span>, cvar <span class="op">=</span> <span class="st">"case"</span>, pvar <span class="op">=</span> <span class="st">"part"</span>, dvar <span class="op">=</span> <span class="st">"zvt"</span>, mvar <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Read SC-data from a file named "study1.csv" in your working directory</span></span></span>
+<span class="r-in"><span><span class="co"># study1 &lt;- read_scdf("study1.csv")</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Read SC-data from a .csv-file with semicolon as field and comma as decimal separator</span></span></span>
+<span class="r-in"><span><span class="co"># study2 &lt;- read_scdf("study2.csv", sep = ";", dec = ",")</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## write_scdf and read_scdf</span></span></span>
+<span class="r-in"><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"test.csv"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="write_scdf.html">write_scdf</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2_zvt</span>, <span class="va">filename</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">read_scdf</span><span class="op">(</span><span class="va">filename</span>, cvar <span class="op">=</span> <span class="st">"case"</span>, pvar <span class="op">=</span> <span class="st">"part"</span>, dvar <span class="op">=</span> <span class="st">"zvt"</span>, mvar <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Loaded 3 cases.</span>
-<span class="r-in"><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2_zvt</span><span class="op">)</span><span class="op">$</span><span class="va">descriptives</span></span>
-<span class="r-in"><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">$</span><span class="va">descriptives</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">res1</span>,<span class="va">res2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2_zvt</span><span class="op">)</span><span class="op">$</span><span class="va">descriptives</span></span></span>
+<span class="r-in"><span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">$</span><span class="va">descriptives</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">res1</span>,<span class="va">res2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -176,7 +201,7 @@ file extension.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
