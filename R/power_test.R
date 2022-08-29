@@ -68,9 +68,6 @@
 #'   rtt = 0.8, level = 1.4, trend = 0.05
 #' )
 #' power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"))
-#'
-#' # But the confidence intervals are large:
-#' power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"), ci = 0.95)
 #' @export
 
 power_test <- function(design,
