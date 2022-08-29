@@ -1,4 +1,4 @@
-# scan 0.54.6
+# scan 0.55
 
 ## new functions
 
@@ -10,7 +10,7 @@ coef(plm(exampleAB$Johanna))
 
 ## New features
 
-- `power_test()`: New argument `ci` provides confidence intervalls for power, alpha error, and correct proportions. New arguments `binom_test_alpha, binom_test_power, binom_test_correct` provide test against a provided proportion for alpha, power, and correct proportions.
+- `power_test()`: New argument `ci` provides confidence intervals for power, alpha error, and correct proportions. New arguments `binom_test_alpha, binom_test_power, binom_test_correct` provide test against a provided proportion for alpha, power, and correct proportions.
 
 ```.r
 design <- design(
@@ -23,17 +23,12 @@ power_test(
 )
 ```
 
-
-# scan 0.54.5
+- `plm()`, `hplm()`: Added contrast argument with values `"first"` or "`preceding`". Now `model = "JW"` is deprecated and identical to `model = "B&L-B", contrast = "preceding"`.  
+- `plm()`, `hplm()`: Added model `"W"`. Which shifts the measurement-time variable to start with zero. This leads to a more sensible estimation of the intercept (where the intercept depicts the estimated score at the start). `model = "W"` is now the default. Use `model = "B&L-B"` for previous defaults.
 
 ## Bug fixes
 
 - solved #66: `set_vars()` working.
-
-# scan 0.54.4
-
-## Bug fixes
-
 - `read_scdf()` now works when cvar is not the first column.
 
 ## Changes to functions
@@ -41,11 +36,6 @@ power_test(
 - `corrected_tau()`: changed default setting of arguments to: `repeated = FALSE, continuity = FALSE`. Now the default results match the calculator developed by Tarlow.
 
 - `tau_u()`: Implemented a continuity_correction (S-1 for calculating Z)
-
-## New features
-
-- `plm()`, `hplm()`: Added contrast argument with values `"first"` or "`preceding`". Now `model = "JW"` is deprecated and identical to `model = "B&L-B", contrast = "preceding"`.  
-- `plm()`, `hplm()`: Added model `"W"`. Which shifts the measurement-time variable to start with zero. This leads to a more sensible estimation of the intercept (where the intercept depicts the estimated score at the start). `model = "W"` is now the default. Use `model = "B&L-B"` for previous defaults.
 
 # scan 0.54.1
 

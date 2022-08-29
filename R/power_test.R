@@ -43,7 +43,7 @@
 #'   binomial test is calculated testing if the correct proportion is greater
 #'   than the provided value.
 #' @param ci Either FALSE or a value. If a value is provided, confidence
-#'   intervalls at the provided level are calculated for power, alpha error, and
+#'   intervals at the provided level are calculated for power, alpha error, and
 #'   correct proportions.
 #' @param alpha_level Alpha level used to calculate the proportion of
 #'   significant tests. Default is \code{alpha_level = 0.05}.
@@ -69,7 +69,7 @@
 #' )
 #' power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"))
 #'
-#' # But the confidence intervalls are large:
+#' # But the confidence intervals are large:
 #' power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"), ci = 0.95)
 #' @export
 
