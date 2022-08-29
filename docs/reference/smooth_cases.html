@@ -21,7 +21,7 @@ is regressed by its surrounding data points."><meta property="og:image" content=
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
       </span>
     </div>
 
@@ -73,7 +73,7 @@ is regressed by its surrounding data points.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">smooth_cases</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">mvar</span>, FUN <span class="op">=</span> <span class="st">"movingMedian"</span>, intensity <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">smooth_cases</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">mvar</span>, FUN <span class="op">=</span> <span class="st">"movingMedian"</span>, intensity <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -81,37 +81,26 @@ is regressed by its surrounding data points.</p>
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
-
-
 <dt>dvar</dt>
 <dd><p>Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.</p></dd>
-
-
 <dt>mvar</dt>
 <dd><p>Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.</p></dd>
-
-
 <dt>FUN</dt>
 <dd><p>Function determining the smoothed scores. Default <code>FUN =
 "movingMedian"</code> is a moving Median function. Further possible values are:
 <code>"movingMean"</code> and a non-parametric <code>"localRegression"</code>.</p></dd>
-
-
 <dt>intensity</dt>
 <dd><p>For <code>FUN = "movingMedian"</code> and <code>"movingMean"</code> it
 is the lag used for computing the average. Default is <code>intensity = 1</code>.
 In case of <code>FUN = "localRegression"</code> it is the proportion of
 surrounding data influencing each data point, which is <code>intensity =
 0.2</code> by default.</p></dd>
-
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>Returns a data frame (for each single-case) with smoothed data
+    <p>Returns a data frame (for each single-case) with smoothed data
 points. See <code><a href="scdf.html">scdf</a></code> to learn about the format of these data
 frames.</p>
     </div>
@@ -133,15 +122,15 @@ frames.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Use the three different smoothing functions and compare the results</span></span></span>
-<span class="r-in"><span><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"Original"</span> <span class="op">=</span> <span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"Moving Median"</span> <span class="op">=</span> <span class="fu">smooth_cases</span><span class="op">(</span><span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span>, FUN <span class="op">=</span> <span class="st">"movingMedian"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"Moving Mean"</span> <span class="op">=</span> <span class="fu">smooth_cases</span><span class="op">(</span><span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span>, FUN <span class="op">=</span> <span class="st">"movingMean"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"Local Regression"</span> <span class="op">=</span> <span class="fu">smooth_cases</span><span class="op">(</span><span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span>, FUN <span class="op">=</span> <span class="st">"localRegression"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+<span class="r-in"><span class="co">## Use the three different smoothing functions and compare the results</span></span>
+<span class="r-in"><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="st">"Original"</span> <span class="op">=</span> <span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span>,</span>
+<span class="r-in">  <span class="st">"Moving Median"</span> <span class="op">=</span> <span class="fu">smooth_cases</span><span class="op">(</span><span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span>, FUN <span class="op">=</span> <span class="st">"movingMedian"</span><span class="op">)</span>,</span>
+<span class="r-in">  <span class="st">"Moving Mean"</span> <span class="op">=</span> <span class="fu">smooth_cases</span><span class="op">(</span><span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span>, FUN <span class="op">=</span> <span class="st">"movingMean"</span><span class="op">)</span>,</span>
+<span class="r-in">  <span class="st">"Local Regression"</span> <span class="op">=</span> <span class="fu">smooth_cases</span><span class="op">(</span><span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span>, FUN <span class="op">=</span> <span class="st">"localRegression"</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="smooth_cases-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -157,7 +146,7 @@ frames.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

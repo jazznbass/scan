@@ -18,7 +18,7 @@ across all phases."><meta property="og:image" content="/logo.png"><!-- mathjax -
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@ across all phases.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">autocorr</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">pvar</span>, <span class="va">mvar</span>, lag_max <span class="op">=</span> <span class="fl">3</span>, <span class="va">lag.max</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">autocorr</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">pvar</span>, <span class="va">mvar</span>, lag_max <span class="op">=</span> <span class="fl">3</span>, <span class="va">lag.max</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -75,36 +75,23 @@ across all phases.</p>
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
-
-
 <dt>dvar</dt>
 <dd><p>Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.</p></dd>
-
-
 <dt>pvar</dt>
 <dd><p>Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.</p></dd>
-
-
 <dt>mvar</dt>
 <dd><p>Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.</p></dd>
-
-
 <dt>lag_max, lag.max</dt>
 <dd><p>The lag up to which autocorrelations will be computed.</p></dd>
-
-
 <dt>...</dt>
 <dd><p>Further arguments passed to the <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></code> function</p></dd>
-
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>A data frame containing separate autocorrelations for each phase and
+    <p>A data frame containing separate autocorrelations for each phase and
   for all phases (for each single-case). If <code>lag_max</code> exceeds the length
   of a phase minus one, NA is returned for this cell.</p>
     </div>
@@ -119,8 +106,8 @@ Defaults to the attributes in the scdf file.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Compute autocorrelations for a list of four single-cases up to lag 2.</span></span></span>
-<span class="r-in"><span><span class="fu">autocorr</span><span class="op">(</span><span class="va">Huber2014</span>, lag_max <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Compute autocorrelations for a list of four single-cases up to lag 2.</span></span>
+<span class="r-in"><span class="fu">autocorr</span><span class="op">(</span><span class="va">Huber2014</span>, lag_max <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Autocorrelations</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Adam </span>
@@ -161,7 +148,7 @@ Defaults to the attributes in the scdf file.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

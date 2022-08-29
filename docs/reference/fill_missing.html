@@ -18,7 +18,7 @@ single-case data."><meta property="og:image" content="/logo.png"><!-- mathjax --
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@ single-case data.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fill_missing</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">mvar</span>, interpolation <span class="op">=</span> <span class="st">"linear"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fill_missing</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">mvar</span>, interpolation <span class="op">=</span> <span class="st">"linear"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -75,33 +75,22 @@ single-case data.</p>
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
-
-
 <dt>dvar</dt>
 <dd><p>Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.</p></dd>
-
-
 <dt>mvar</dt>
 <dd><p>Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.</p></dd>
-
-
 <dt>interpolation</dt>
 <dd><p>Alternative options not yet included. Default is
 <code>interpolation = "linear"</code>.</p></dd>
-
-
 <dt>na.rm</dt>
 <dd><p>If set <code>TRUE</code>, <code>NA</code> values are also interpolated.
 Default is <code>na.rm = TRUE</code>.</p></dd>
-
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>A single-case data frame (SCDF) with missing data points
+    <p>A single-case data frame (SCDF) with missing data points
 interpolated.  See <code><a href="scdf.html">scdf</a></code> to learn about the SCDF Format.</p>
     </div>
     <div id="details">
@@ -129,29 +118,29 @@ single-case data and you want to calculate overlap indices
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## In his study, Grosche (2011) could not realize measurements each single week for </span></span></span>
-<span class="r-in"><span><span class="co">## all participants. During the course of 100 weeks, about 20 measurements per person </span></span></span>
-<span class="r-in"><span><span class="co">## at different times were administered.</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Fill missing values in a single-case dataset with discontinuous measurement times</span></span></span>
-<span class="r-in"><span><span class="va">Grosche2011filled</span> <span class="op">&lt;-</span> <span class="fu">fill_missing</span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">Grosche2011filled</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Original"</span>, <span class="st">"Filled"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+<span class="r-in"><span class="co">## In his study, Grosche (2011) could not realize measurements each single week for </span></span>
+<span class="r-in"><span class="co">## all participants. During the course of 100 weeks, about 20 measurements per person </span></span>
+<span class="r-in"><span class="co">## at different times were administered.</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## Fill missing values in a single-case dataset with discontinuous measurement times</span></span>
+<span class="r-in"><span class="va">Grosche2011filled</span> <span class="op">&lt;-</span> <span class="fu">fill_missing</span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">Grosche2011filled</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Original"</span>, <span class="st">"Filled"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="fill_missing-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Fill missing values in a single-case dataset that are NA</span></span></span>
-<span class="r-in"><span><span class="va">Maggie</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="fu"><a href="design.html">design</a></span><span class="op">(</span>level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">Maggie_n</span> <span class="op">&lt;-</span> <span class="va">Maggie</span></span></span>
-<span class="r-in"><span><span class="va">replace.positions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">16</span>,<span class="fl">18</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">Maggie_n</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">replace.positions</span>,<span class="st">"values"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
-<span class="r-in"><span><span class="va">Maggie_f</span> <span class="op">&lt;-</span> <span class="fu">fill_missing</span><span class="op">(</span><span class="va">Maggie_n</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Maggie</span>, <span class="va">Maggie_n</span>, <span class="va">Maggie_f</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"missing"</span>, <span class="st">"interpolated"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">study</span>, marks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>positions <span class="op">=</span> <span class="va">replace.positions</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"grid2"</span><span class="op">)</span></span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## Fill missing values in a single-case dataset that are NA</span></span>
+<span class="r-in"><span class="va">Maggie</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="fu"><a href="design.html">design</a></span><span class="op">(</span>level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">Maggie_n</span> <span class="op">&lt;-</span> <span class="va">Maggie</span></span>
+<span class="r-in"><span class="va">replace.positions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">16</span>,<span class="fl">18</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">Maggie_n</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">replace.positions</span>,<span class="st">"values"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span class="r-in"><span class="va">Maggie_f</span> <span class="op">&lt;-</span> <span class="fu">fill_missing</span><span class="op">(</span><span class="va">Maggie_n</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Maggie</span>, <span class="va">Maggie_n</span>, <span class="va">Maggie_f</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"missing"</span>, <span class="st">"interpolated"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">study</span>, marks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>positions <span class="op">=</span> <span class="va">replace.positions</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"grid2"</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="fill_missing-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>
@@ -166,7 +155,7 @@ single-case data and you want to calculate overlap indices
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

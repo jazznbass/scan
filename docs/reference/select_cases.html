@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">select_cases</span><span class="op">(</span><span class="va">scdf</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">select_cases</span><span class="op">(</span><span class="va">scdf</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -73,22 +73,17 @@
     <dl><dt>scdf</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
-
-
 <dt>...</dt>
 <dd><p>Selection criteria. Either numeric or as characters.</p></dd>
-
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>An scdf with a subset of cases</p>
+    <p>An scdf with a subset of cases</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">select_cases</span><span class="op">(</span><span class="va">exampleAB</span>, <span class="st">"Johanna"</span>, <span class="st">"Karolina"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">select_cases</span><span class="op">(</span><span class="va">exampleAB</span>, <span class="st">"Johanna"</span>, <span class="st">"Karolina"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 2 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Johanna: values mt phase | Karolina: values mt phase |</span>
@@ -108,8 +103,8 @@ this format.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               82 14     B |               77 14     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               77 15     B |               79 15     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 5 more rows</span>
-<span class="r-in"><span><span class="co"># or: select_cases(exampleAB, c("Johanna", "Karolina"))</span></span></span>
-<span class="r-in"><span><span class="fu">select_cases</span><span class="op">(</span><span class="va">exampleAB</span>, <span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span class="co"># or: select_cases(exampleAB, c("Johanna", "Karolina"))</span></span>
+<span class="r-in"><span class="fu">select_cases</span><span class="op">(</span><span class="va">exampleAB</span>, <span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 2 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Johanna: values mt phase | Karolina: values mt phase |</span>
@@ -129,8 +124,8 @@ this format.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               82 14     B |               77 14     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               77 15     B |               79 15     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 5 more rows</span>
-<span class="r-in"><span><span class="co"># or: select_cases(exampleAB, 1:2)</span></span></span>
-<span class="r-in"><span><span class="fu">select_cases</span><span class="op">(</span><span class="va">exampleAB</span>, <span class="st">"-Johanna"</span><span class="op">)</span></span></span>
+<span class="r-in"><span class="co"># or: select_cases(exampleAB, 1:2)</span></span>
+<span class="r-in"><span class="fu">select_cases</span><span class="op">(</span><span class="va">exampleAB</span>, <span class="st">"-Johanna"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 2 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Karolina: values mt phase | Anja: values mt phase |</span>
@@ -150,7 +145,7 @@ this format.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                77 14     B |           78 14     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                79 15     B |           81 15     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 5 more rows</span>
-<span class="r-in"><span><span class="co"># or: select_cases(exampleAB, c("-Johanna", "-Karolina"))</span></span></span>
+<span class="r-in"><span class="co"># or: select_cases(exampleAB, c("-Johanna", "-Karolina"))</span></span>
 </code></pre></div>
     </div>
   </div>
@@ -165,7 +160,7 @@ this format.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

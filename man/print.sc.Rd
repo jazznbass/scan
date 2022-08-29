@@ -61,7 +61,7 @@
 
 \method{print}{sc_pnd}(x, ...)
 
-\method{print}{sc_power}(x, duration = FALSE, digits = 1, ...)
+\method{print}{sc_power}(x, duration = FALSE, digits = 3, ...)
 
 \method{print}{sc_rand}(x, ...)
 

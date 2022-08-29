@@ -18,7 +18,7 @@ useful to calculate or modify new variables."><meta property="og:image" content=
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
       </span>
     </div>
 
@@ -67,25 +67,20 @@ useful to calculate or modify new variables.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for scdf</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">`_data`</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for scdf</span>
+<span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">`_data`</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>_data</dt>
 <dd><p>A scdf.</p></dd>
-
-
 <dt>...</dt>
 <dd><p>Expressions.</p></dd>
-
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>A scdf.</p>
+    <p>A scdf.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -96,17 +91,17 @@ calculation of an expression are the basis for the following calculations.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Creates a single-case with frequency distributions. The proportion and</span></span></span>
-<span class="r-in"><span><span class="co">## percentage of the frequencies are calculated with transform:</span></span></span>
-<span class="r-in"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span> n <span class="op">=</span> <span class="fl">3</span>,</span></span>
-<span class="r-in"><span> level <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span> distribution <span class="op">=</span> <span class="st">"binomial"</span>,</span></span>
-<span class="r-in"><span> n_trials <span class="op">=</span> <span class="fl">20</span>,</span></span>
-<span class="r-in"><span> start_value <span class="op">=</span> <span class="fl">0.5</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">study</span>, proportion <span class="op">=</span> <span class="va">values</span><span class="op">/</span><span class="va">trials</span>, percentage <span class="op">=</span> <span class="va">proportion</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Creates a single-case with frequency distributions. The proportion and</span></span>
+<span class="r-in"><span class="co">## percentage of the frequencies are calculated with transform:</span></span>
+<span class="r-in"><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span></span>
+<span class="r-in"> n <span class="op">=</span> <span class="fl">3</span>,</span>
+<span class="r-in"> level <span class="op">=</span> <span class="fl">5</span>,</span>
+<span class="r-in"> distribution <span class="op">=</span> <span class="st">"binomial"</span>,</span>
+<span class="r-in"> n_trials <span class="op">=</span> <span class="fl">20</span>,</span>
+<span class="r-in"> start_value <span class="op">=</span> <span class="fl">0.5</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">study</span>, proportion <span class="op">=</span> <span class="va">values</span><span class="op">/</span><span class="va">trials</span>, percentage <span class="op">=</span> <span class="va">proportion</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 3 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Case1: phase values mt trials proportion percentage</span>
@@ -127,14 +122,14 @@ calculation of an expression are the basis for the following calculations.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             B     20 15     20          1        100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 5 more rows</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #  2 more cases</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Z standardize the dependent variable and add two new variables:</span></span></span>
-<span class="r-in"><span><span class="va">exampleAB</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">values</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>    mean_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">values</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>    sd_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">values</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## Z standardize the dependent variable and add two new variables:</span></span>
+<span class="r-in"><span class="va">exampleAB</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span></span>
+<span class="r-in">    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">values</span><span class="op">)</span>, </span>
+<span class="r-in">    mean_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">values</span><span class="op">)</span>, </span>
+<span class="r-in">    sd_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">values</span><span class="op">)</span></span>
+<span class="r-in">  <span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 3 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Johanna: values mt phase mean_values sd_values</span>
@@ -169,7 +164,7 @@ calculation of an expression are the basis for the following calculations.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

@@ -21,7 +21,7 @@ This might be helpful to prepare data to be used with other packages than scan."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
       </span>
     </div>
 
@@ -72,36 +72,27 @@ This might be helpful to prepare data to be used with other packages than scan.<
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for scdf</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, l2 <span class="op">=</span> <span class="cn">NULL</span>, id <span class="op">=</span> <span class="st">"case"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for scdf</span>
+<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, l2 <span class="op">=</span> <span class="cn">NULL</span>, id <span class="op">=</span> <span class="st">"case"</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>An scdf object</p></dd>
-
-
 <dt>...</dt>
 <dd><p>Not implemented</p></dd>
-
-
 <dt>l2</dt>
 <dd><p>A data frame providing additional variables at Level 2. The scdf
 has to have names for all cases and the Level 2 data frame has to have a
 column with corresponding case names.</p></dd>
-
-
 <dt>id</dt>
 <dd><p>Variable name of the Level 2 data frame that contains the case
 names.</p></dd>
-
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>Returns one data frame with data of all single-cases structured by
+    <p>Returns one data frame with data of all single-cases structured by
 the case variable.</p>
     </div>
     <div id="see-also">
@@ -122,9 +113,9 @@ the case variable.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Convert the list of three single-case data frames from Grosche (2011) into one long data frame</span></span></span>
-<span class="r-in"><span><span class="va">Grosche2011</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+<span class="r-in"><span class="co">## Convert the list of three single-case data frames from Grosche (2011) into one long data frame</span></span>
+<span class="r-in"><span class="va">Grosche2011</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 3 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Eva: values mt phase | Georg: values mt phase | Olaf: values mt phase |</span>
@@ -144,8 +135,8 @@ the case variable.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         2.69 64     B |         10.71 59     B |         4.86 63     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         4.27 70     B |          7.61 62     B |         6.71 64     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 9 more rows</span>
-<span class="r-in"><span><span class="va">Grosche2011_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">Grosche2011_long</span></span></span>
+<span class="r-in"><span class="va">Grosche2011_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">Grosche2011_long</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     case values  mt phase</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    Eva   3.39   0     A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2    Eva   2.09   1     A</span>
@@ -210,17 +201,17 @@ the case variable.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 61  Olaf   6.14  80     B</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 62  Olaf   8.14  91     B</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 63  Olaf   4.53  97     B</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Combine an scdf with data for l2</span></span></span>
-<span class="r-in"><span><span class="va">Leidig2018_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Leidig2018</span>, l2 <span class="op">=</span> <span class="va">Leidig2018_l2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">Leidig2018_long</span><span class="op">)</span></span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## Combine an scdf with data for l2</span></span>
+<span class="r-in"><span class="va">Leidig2018_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">Leidig2018</span>, l2 <span class="op">=</span> <span class="va">Leidig2018_l2</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">Leidig2018_long</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "case"                  "mt"                    "academic_engagement"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "classID"               "weekday"               "disruptive_behavior"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "phase"                 "class"                 "gender"               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10] "migration"             "first_language_german" "SDQ_TOTAL"            </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13] "SDQ_EXTERNALIZING"     "SDQ_INTERNALIZING"     "ITRF_TOTAL"           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16] "ITRF_ACADEMIC"         "ITRF_BEHAVIOR"        </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">Leidig2018_long</span><span class="op">)</span></span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">Leidig2018_long</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      case                 mt         academic_engagement   classID         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Length:3780        Min.   :  1.00   Min.   :0.0         Length:3780       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Class :character   1st Qu.: 27.75   1st Qu.:3.0         Class :character  </span>
@@ -261,7 +252,7 @@ the case variable.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:11.000  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :20.000  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  </span>
-<span class="r-in"><span></span></span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>
@@ -276,7 +267,7 @@ the case variable.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

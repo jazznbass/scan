@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.1</span>
       </span>
     </div>
 
@@ -65,13 +65,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">set_vars</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">mvar</span>, <span class="va">pvar</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">set_dvar</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">set_mvar</span><span class="op">(</span><span class="va">data</span>, <span class="va">mvar</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">set_pvar</span><span class="op">(</span><span class="va">data</span>, <span class="va">pvar</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">set_vars</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">mvar</span>, <span class="va">pvar</span><span class="op">)</span>
+
+<span class="fu">set_dvar</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span><span class="op">)</span>
+
+<span class="fu">set_mvar</span><span class="op">(</span><span class="va">data</span>, <span class="va">mvar</span><span class="op">)</span>
+
+<span class="fu">set_pvar</span><span class="op">(</span><span class="va">data</span>, <span class="va">pvar</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -79,26 +79,19 @@
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
-
-
 <dt>dvar</dt>
 <dd><p>Character string. Name of the dependent variable.</p></dd>
-
-
 <dt>mvar</dt>
 <dd><p>Character string. Name of the measurement-time variable.</p></dd>
-
-
 <dt>pvar</dt>
 <dd><p>Character string. Name of the phase variable.</p></dd>
-
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">exampleAB_add</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu">set_dvar</span><span class="op">(</span><span class="st">"depression"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">exampleAB_add</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
+<span class="r-in">  <span class="fu">set_dvar</span><span class="op">(</span><span class="st">"depression"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Describe Single-Case Data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           Rolf</span>
@@ -140,7 +133,7 @@ this format.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>
