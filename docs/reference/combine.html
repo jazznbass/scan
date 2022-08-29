@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55</span>
       </span>
     </div>
 
@@ -65,26 +65,35 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">combine</span><span class="op">(</span><span class="va">...</span>, dvar <span class="op">=</span> <span class="cn">NULL</span>, pvar <span class="op">=</span> <span class="cn">NULL</span>, mvar <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="co"># S3 method for scdf</span>
-<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">combine</span><span class="op">(</span><span class="va">...</span>, dvar <span class="op">=</span> <span class="cn">NULL</span>, pvar <span class="op">=</span> <span class="cn">NULL</span>, mvar <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for scdf</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>...</dt>
 <dd><p>scdf objects</p></dd>
+
+
 <dt>dvar</dt>
 <dd><p>Character string. Name of the dependent variable. Defaults to the dependent variable of the first case provided.</p></dd>
+
+
 <dt>pvar</dt>
 <dd><p>Character string. Name of the phase variable. Defaults to the phase variable of the first case provided.</p></dd>
+
+
 <dt>mvar</dt>
 <dd><p>Character string. Name of the measurement-time variable. Defaults to the measurement-time variable of the first case provided.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A scdf. If not set differently, the attributes of this scdf are copied from the first scdf provided (i.e the first argument of the function).</p>
+    
+
+<p>A scdf. If not set differently, the attributes of this scdf are copied from the first scdf provided (i.e the first argument of the function).</p>
     </div>
 
   </div>
@@ -99,7 +108,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

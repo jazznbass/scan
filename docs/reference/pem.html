@@ -20,7 +20,7 @@ addressed for alternative analyses."><meta property="og:image" content="/logo.pn
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55</span>
       </span>
     </div>
 
@@ -71,17 +71,17 @@ addressed for alternative analyses.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pem</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">dvar</span>,
-  <span class="va">pvar</span>,
-  decreasing <span class="op">=</span> <span class="cn">FALSE</span>,
-  binom.test <span class="op">=</span> <span class="cn">TRUE</span>,
-  chi.test <span class="op">=</span> <span class="cn">FALSE</span>,
-  FUN <span class="op">=</span> <span class="va">median</span>,
-  phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pem</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">dvar</span>,</span>
+<span>  <span class="va">pvar</span>,</span>
+<span>  decreasing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  binom.test <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  chi.test <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  FUN <span class="op">=</span> <span class="va">median</span>,</span>
+<span>  phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -89,25 +89,39 @@ addressed for alternative analyses.</p>
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
+
+
 <dt>dvar</dt>
 <dd><p>Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.</p></dd>
+
+
 <dt>pvar</dt>
 <dd><p>Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.</p></dd>
+
+
 <dt>decreasing</dt>
 <dd><p>If you expect data to be lower in the B phase, set
 <code>decreasing = TRUE</code>. Default is <code>decreasing = FALSE</code>.</p></dd>
+
+
 <dt>binom.test</dt>
 <dd><p>Computes a binomial test for a 50/50 distribution. Default
 is <code>binom.test = TRUE</code>.</p></dd>
+
+
 <dt>chi.test</dt>
 <dd><p>Computes a Chi-square test. The default setting
 <code>chi.test = FALSE</code> skips the Chi-square test.</p></dd>
+
+
 <dt>FUN</dt>
 <dd><p>Data points are compared with the phase A median. Use this
 argument to implement alternative measures of central tendency. Default is
 <code>FUN = median</code></p></dd>
+
+
 <dt>phases</dt>
 <dd><p>A vector of two characters or numbers indicating the two phases
 that should be compared. E.g., <code>phases = c("A","C")</code> or <code>phases =
@@ -115,11 +129,14 @@ c(2,4)</code> for comparing the second to the fourth phase. Phases could be
 combined by providing a list with two elements. E.g., <code>phases = list(A
 = c(1,3), B = c(2,4))</code> will compare phases 1 and 3 (as A) against 2 and 4
 (as B). Default is <code>phases = c("A","B")</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments for the <code>FUN</code> parameter (e.g.
 <code>FUN = mean, trim = 0.1</code> will use the 10 percent trimmed arithmetic
 mean instead of the median for comparisons). The function must take a vector
 of numeric values and the <code>na.rm</code> argument and return a numeric value.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -139,18 +156,18 @@ of numeric values and the <code>na.rm</code> argument and return a numeric value
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Calculate the PEM including the Binomial and Chi-square tests for a single-case</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="fl">5</span>, level <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Calculate the PEM including the Binomial and Chi-square tests for a single-case</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="fl">5</span>, level <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The first argument is expected to be a design matrix created by design(). If you want to set n, please name the first argument with n = ...</span>
-<span class="r-in"><span class="fu">pem</span><span class="op">(</span><span class="va">dat</span>, chi.test <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">pem</span><span class="op">(</span><span class="va">dat</span>, chi.test <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Percent Exceeding the Median</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          PEM positives total binom.p    Chi DF     p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Case1 93.333        14    15       0 11.267  1 0.001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Alternative hypothesis: true probability &gt; 50%</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -165,7 +182,7 @@ of numeric values and the <code>na.rm</code> argument and return a numeric value
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

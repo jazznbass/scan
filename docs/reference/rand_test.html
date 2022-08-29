@@ -20,7 +20,7 @@ and extended for the use in AB designs."><meta property="og:image" content="/log
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55</span>
       </span>
     </div>
 
@@ -71,21 +71,21 @@ and extended for the use in AB designs.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rand_test</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">dvar</span>,
-  <span class="va">pvar</span>,
-  statistic <span class="op">=</span> <span class="st">"Mean B-A"</span>,
-  number <span class="op">=</span> <span class="fl">500</span>,
-  complete <span class="op">=</span> <span class="cn">FALSE</span>,
-  limit <span class="op">=</span> <span class="fl">5</span>,
-  startpoints <span class="op">=</span> <span class="cn">NA</span>,
-  exclude.equal <span class="op">=</span> <span class="cn">FALSE</span>,
-  graph <span class="op">=</span> <span class="cn">FALSE</span>,
-  output <span class="op">=</span> <span class="st">"c"</span>,
-  phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rand_test</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">dvar</span>,</span>
+<span>  <span class="va">pvar</span>,</span>
+<span>  statistic <span class="op">=</span> <span class="st">"Mean B-A"</span>,</span>
+<span>  number <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  complete <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  limit <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  startpoints <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  exclude.equal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  graph <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  output <span class="op">=</span> <span class="st">"c"</span>,</span>
+<span>  phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -93,12 +93,18 @@ and extended for the use in AB designs.</p>
     <dl><dt>data</dt>
 <dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
 this format.</p></dd>
+
+
 <dt>dvar</dt>
 <dd><p>Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.</p></dd>
+
+
 <dt>pvar</dt>
 <dd><p>Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.</p></dd>
+
+
 <dt>statistic</dt>
 <dd><p>Defines the statistic on which the comparison of phases A
 and B is based on. Default setting is <code>statistic = "Mean B-A"</code>). The
@@ -115,26 +121,36 @@ A-B"</code>: The same as <code>"Mean A-B"</code>, but based on the median.</p></
 <li><p><code>"Median B-A"</code>: The same as <code>"Mean B-A"</code>, but based on the
 median.</p></li>
 </ul></dd>
+
+
 <dt>number</dt>
 <dd><p>Sample size of the randomization distribution. The exactness
 of the p-value can not exceed \(1/number\) (i.e., <code>number = 100</code>
 results in p-values with an exactness of one percent). Default is
 <code>number = 500</code>. For faster processing use <code>number = 100</code>. For more
 precise p-values set <code>number = 1000</code>.</p></dd>
+
+
 <dt>complete</dt>
 <dd><p>If TRUE, the distribution is based on a complete permutation
 of all possible starting combinations. This setting overwrites the number
 Argument. The default setting is FALSE.</p></dd>
+
+
 <dt>limit</dt>
 <dd><p>Minimal number of data points per phase in the sample. The
 first number refers to the A-phase and the second to the B-phase (e.g.,
 <code>limit = c(5,3)</code>). If only one number is given, this number is applied
 to both phases. Default is <code>limit = 5</code>.</p></dd>
+
+
 <dt>startpoints</dt>
 <dd><p>Alternative to the <code>limit</code>-parameter
 <code>startpoints</code> exactly defines the possible start points of phase B
 (e.g., <code>startpoints = 4:9</code> restricts the phase B start points to
 measurements 4 to 9. <code>startpoints</code> overruns the <code>limit</code>-parameter.</p></dd>
+
+
 <dt>exclude.equal</dt>
 <dd><p>If set to <code>exclude.equal = FALSE</code>, which is the
 default, random distribution values equal to the observed distribution are
@@ -143,13 +159,19 @@ of rejecting the null-hypothesis (increase the p-value).
 <code>exclude.equal</code> should be set to <code>TRUE</code> if you analyse one
 single-case design (not a multiple baseline data set) to reach a sufficient
 power. But be aware, that it increases the chance of an alpha-error.</p></dd>
+
+
 <dt>graph</dt>
 <dd><p>If <code>graph = TRUE</code>, a histogram of the resulting
 distribution is plotted. It's <code>FALSE</code> by default.</p></dd>
+
+
 <dt>output</dt>
 <dd><p>If set to the default <code>output = "C"</code>, detailed
 information is provided. Set <code>output = "p"</code>, to only return the
 resulting p value.</p></dd>
+
+
 <dt>phases</dt>
 <dd><p>A vector of two characters or numbers indicating the two
 phases that should be compared. E.g., <code>phases = c("A","C")</code> or
@@ -157,54 +179,62 @@ phases that should be compared. E.g., <code>phases = c("A","C")</code> or
 could be combined by providing a list with two elements. E.g., <code>phases
 = list(A = c(1,3), B = c(2,4))</code> will compare phases 1 and 3 (as A) against 2
 and 4 (as B). Default is <code>phases = c("A","B")</code>.</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>A seed number for the random generator.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <dl><dt>statistic</dt>
 <dd><p>Character string from function call (see
 <code>Arguments</code> above).</p></dd>
-<dt>N</dt>
+ <dt>N</dt>
 <dd><p>Number of single-cases.</p></dd>
-<dt>n1</dt>
+ <dt>n1</dt>
 <dd><p>Number
 of data points in phase A.</p></dd>
-<dt>n2</dt>
+ <dt>n2</dt>
 <dd><p>Number of data points in phase B.</p></dd>
+
 <dt>limit</dt>
 <dd><p>Numeric from function call (see <code>Arguments</code> above).</p></dd>
+
 <dt>startpoints</dt>
 <dd><p>A vector defining the start points passed from the
 function call (see <code>Arguments</code> above).</p></dd>
-<dt>p.value</dt>
+ <dt>p.value</dt>
 <dd><p>P-value of the
 randomization test for the given data.</p></dd>
-<dt>number</dt>
+ <dt>number</dt>
 <dd><p>Sample size of
 randomization distribution from function call (see <code>Arguments</code> above).</p></dd>
+
 <dt>complete</dt>
 <dd><p>Logical argument from function call (see <code>Arguments</code>
 above).</p></dd>
-<dt>observed.statistic</dt>
+ <dt>observed.statistic</dt>
 <dd><p>Test statistic observed for the given
 single-case data. (see <code>statistic</code> in the <code>Arguments</code> above.)</p></dd>
+
 <dt>Z</dt>
 <dd><p>Z-value of observed test statistic.</p></dd>
-<dt>p.z.single</dt>
+ <dt>p.z.single</dt>
 <dd><p>Probability
 of z-value.</p></dd>
-<dt>distribution</dt>
+ <dt>distribution</dt>
 <dd><p>Test statistic distribution from randomized
 data sets.</p></dd>
-<dt>possible.combinations</dt>
+ <dt>possible.combinations</dt>
 <dd><p>Number of possible combinations
 under the given restrictions.</p></dd>
-<dt>auto.corrected.number</dt>
+ <dt>auto.corrected.number</dt>
 <dd><p><code>TRUE</code>
 indicates that a corrected number of combinations was used. This happens, if
 the number of possible combinations (under the given restrictions) undercuts
 the requested <code>number</code> of combinations.</p></dd>
+
 </dl></div>
     <div id="references">
     <h2>References</h2>
@@ -221,9 +251,9 @@ Tests</em>. Available from: <a href="https://CRAN.R-project.org/package=SCRT" cl
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Compute a randomization test on the first case of the byHeart2011 data and include a graph</span></span>
-<span class="r-in"><span class="fu">rand_test</span><span class="op">(</span><span class="va">byHeart2011</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, statistic <span class="op">=</span> <span class="st">"Median B-A"</span>, graph <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Compute a randomization test on the first case of the byHeart2011 data and include a graph</span></span></span>
+<span class="r-in"><span><span class="fu">rand_test</span><span class="op">(</span><span class="va">byHeart2011</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, statistic <span class="op">=</span> <span class="st">"Median B-A"</span>, graph <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="rand_test-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Randomization Test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -250,9 +280,9 @@ Tests</em>. Available from: <a href="https://CRAN.R-project.org/package=SCRT" cl
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probabilty of observed statistic based on the assumption of normality:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> z = 0.4416, p = 0.3294 (single sided)</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Compute a randomization test on the Grosche2011 data using complete permutation</span></span>
-<span class="r-in"><span class="fu">rand_test</span><span class="op">(</span><span class="va">Grosche2011</span>, statistic <span class="op">=</span> <span class="st">"Median B-A"</span>, complete <span class="op">=</span> <span class="cn">TRUE</span>, limit <span class="op">=</span> <span class="fl">4</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Compute a randomization test on the Grosche2011 data using complete permutation</span></span></span>
+<span class="r-in"><span><span class="fu">rand_test</span><span class="op">(</span><span class="va">Grosche2011</span>, statistic <span class="op">=</span> <span class="st">"Median B-A"</span>, complete <span class="op">=</span> <span class="cn">TRUE</span>, limit <span class="op">=</span> <span class="fl">4</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Randomization Test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for 3 cases.</span>
@@ -277,7 +307,7 @@ Tests</em>. Available from: <a href="https://CRAN.R-project.org/package=SCRT" cl
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probabilty of observed statistic based on the assumption of normality:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> z = -0.8198, p = 0.7938 (single sided)</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -292,7 +322,7 @@ Tests</em>. Available from: <a href="https://CRAN.R-project.org/package=SCRT" cl
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -20,7 +20,7 @@ function."><meta property="og:image" content="/logo.png"><!-- mathjax --><script
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.54.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@ function.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">random_scdf</span><span class="op">(</span>design <span class="op">=</span> <span class="cn">NULL</span>, round <span class="op">=</span> <span class="cn">NA</span>, random_names <span class="op">=</span> <span class="cn">FALSE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">random_scdf</span><span class="op">(</span>design <span class="op">=</span> <span class="cn">NULL</span>, round <span class="op">=</span> <span class="cn">NA</span>, random_names <span class="op">=</span> <span class="cn">FALSE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -79,24 +79,35 @@ function.</p>
     <dl><dt>design</dt>
 <dd><p>A design matrix which is created by <code>design</code> and specifies
 all parameters.</p></dd>
+
+
 <dt>round</dt>
 <dd><p>Rounds the scores to the defined decimal. To round to the second
 decimal, set <code>round = 2</code>.</p></dd>
+
+
 <dt>random_names</dt>
 <dd><p>Is <code>FALSE</code> by default. If set <code>random_names =
 TRUE</code> cases are assigned random first names. If set <code>"neutral", "male"
 or "female"</code> only gender neutral, male, or female names are chosen. The
 names are drawn from the 2,000 most popular names for newborns in 2012 in
 the U.S. (1,000 male and 1,000 female names).</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>A seed number for the random generator.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>arguments that are directly passed to the <code>design</code> function
 for a more concise coding.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about this
+    
+
+<p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about this
   format.</p>
     </div>
     <div id="author">
@@ -106,14 +117,14 @@ for a more concise coding.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Create random single-case data and inspect it</span></span>
-<span class="r-in"><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span></span>
-<span class="r-in">  n <span class="op">=</span> <span class="fl">3</span>, rtt <span class="op">=</span> <span class="fl">0.75</span>, slope <span class="op">=</span> <span class="fl">0.1</span>, extreme_prop <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span class="r-in">  missing_prop <span class="op">=</span> <span class="fl">0.1</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">random_scdf</span><span class="op">(</span><span class="va">design</span>, round <span class="op">=</span> <span class="fl">1</span>, random_names <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create random single-case data and inspect it</span></span></span>
+<span class="r-in"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fl">3</span>, rtt <span class="op">=</span> <span class="fl">0.75</span>, slope <span class="op">=</span> <span class="fl">0.1</span>, extreme_prop <span class="op">=</span> <span class="fl">0.1</span>,</span></span>
+<span class="r-in"><span>  missing_prop <span class="op">=</span> <span class="fl">0.1</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">random_scdf</span><span class="op">(</span><span class="va">design</span>, round <span class="op">=</span> <span class="fl">1</span>, random_names <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Describe Single-Case Data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Vanessa Bryn Tia</span>
@@ -138,14 +149,14 @@ for a more concise coding.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> max.B      71.3   65.2   67.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> trend.A    0.95   1.36   2.27</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> trend.B   0.935  1.693  1.358</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## And now have a look at poisson-distributed data</span></span>
-<span class="r-in"><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span></span>
-<span class="r-in">  n <span class="op">=</span> <span class="fl">3</span>, B_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">10</span>, <span class="fl">14</span><span class="op">)</span>, mt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">20</span>, <span class="fl">22</span><span class="op">)</span>, start_value <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">  distribution <span class="op">=</span> <span class="st">"poisson"</span>, level <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, missing_prop <span class="op">=</span> <span class="fl">0.1</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">random_scdf</span><span class="op">(</span><span class="va">design</span>, seed <span class="op">=</span> <span class="fl">1234</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="pand.html">pand</a></span><span class="op">(</span><span class="va">dat</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span>, correction <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## And now have a look at poisson-distributed data</span></span></span>
+<span class="r-in"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fl">3</span>, B_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">10</span>, <span class="fl">14</span><span class="op">)</span>, mt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">20</span>, <span class="fl">22</span><span class="op">)</span>, start_value <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>  distribution <span class="op">=</span> <span class="st">"poisson"</span>, level <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, missing_prop <span class="op">=</span> <span class="fl">0.1</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">random_scdf</span><span class="op">(</span><span class="va">design</span>, seed <span class="op">=</span> <span class="fl">1234</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pand.html">pand</a></span><span class="op">(</span><span class="va">dat</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span>, correction <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Percentage of all non-overlapping data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PAND =  95.9 %</span>
@@ -188,7 +199,7 @@ for a more concise coding.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
