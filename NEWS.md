@@ -1,3 +1,7 @@
+# scan 0.55.x
+
+- Speed-up `tau_u()` by 20%.
+
 # scan 0.55
 
 ## new functions

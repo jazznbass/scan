@@ -86,7 +86,6 @@ tau_u <- function(data, dvar, pvar,
   N <- length(data)
   out <- list(
     table = list(),
-    matrix = list(),
     tau_u = list(),
     method = method,
     tau_method = tau_method,
@@ -108,7 +107,7 @@ tau_u <- function(data, dvar, pvar,
   )
   
   # tau-U for each case
-  for (i in 1:N) {
+  for (case in 1:N) {
     table_tau <- matrix(
       NA, length(row_names), length(col_names), 
       dimnames = list(row_names, col_names)
@@ -116,10 +115,10 @@ tau_u <- function(data, dvar, pvar,
     table_tau <- as.data.frame(table_tau)
     
     # Extract A and B phase values
-    .isA <- data[[i]][[pvar]] == "A"
-    .isB <- data[[i]][[pvar]] == "B"
-    A <- data[[i]][.isA, dvar]
-    B <- data[[i]][.isB, dvar]
+    .isA <- data[[case]][[pvar]] == "A"
+    .isB <- data[[case]][[pvar]] == "B"
+    A <- data[[case]][.isA, dvar]
+    B <- data[[case]][.isB, dvar]
     
     # drop NA
     A <- A[!is.na(A)]
@@ -132,35 +131,31 @@ tau_u <- function(data, dvar, pvar,
     nAB <- nA + nB
     
     # create tau matrix -----------------------------------------------------
+    AvApos <- 0
+    AvAneg <- 0
+    AvAtie <- 0
+    BvBpos <- 0
+    BvBneg <- 0
+    BvBtie <- 0
+    AvBpos <- 0
+    AvBneg <- 0
+    AvBtie <- 0
     
-    pos_sign <- c("+")
-    neg_sign <- c("-")
-    tie_sign <- c("T")
+    for(i in 1:(nA-1)) {
+      AvApos <- AvApos + sum(A[i] < A[(i+1):nA])
+      AvAneg <- AvAneg + sum(A[i] > A[(i+1):nA])
+      AvAtie <- AvAtie + sum(A[i] == A[(i+1):nA])
+    }
     
-    tau_m <- matrix(NA, nrow = nAB, ncol = nAB, dimnames = list(AB, AB))
-    tau_m[t(sapply(AB, function(x) x > AB))] <- neg_sign
-    tau_m[t(sapply(AB, function(x) x < AB))] <- pos_sign
-    tau_m[t(sapply(AB, function(x) x == AB))] <- tie_sign
+    for(i in 1:(nB-1)) {
+      BvBpos <- BvBpos + sum(B[i] < B[(i+1):nB])
+      BvBneg <- BvBneg + sum(B[i] > B[(i+1):nB])
+      BvBtie <- BvBtie + sum(B[i] == B[(i+1):nB])
+    }
     
-    diag(tau_m) <- 0
-    tau_m[lower.tri(tau_m)] <- ""
-    
-    # count pos/neg/tie in sub-matrixes ---------------------------------------
-    
-    AvB_m <- tau_m[1:nA, (nA + 1):nAB]
-    AvBpos <- sum(AvB_m %in% pos_sign)
-    AvBneg <- sum(AvB_m %in% neg_sign)
-    AvBtie <- sum(AvB_m %in% tie_sign)
-    
-    AvA_m <- tau_m[1:nA, 1:nA]
-    AvApos <- sum(AvA_m %in% pos_sign)
-    AvAneg <- sum(AvA_m %in% neg_sign)
-    AvAtie <- sum(AvA_m %in% tie_sign)
-    
-    BvB_m <- tau_m[(nA + 1):nAB, (nA + 1):nAB]
-    BvBpos <- sum(BvB_m %in% pos_sign)
-    BvBneg <- sum(BvB_m %in% neg_sign)
-    BvBtie <- sum(BvB_m %in% tie_sign)
+    AvBpos <- sum(vapply(A, function(x) x < B, FUN.VALUE = logical(nB)))
+    AvBneg <- sum(vapply(A, function(x) x > B, FUN.VALUE = logical(nB)))
+    AvBtie <- sum(vapply(A, function(x) x == B, FUN.VALUE = logical(nB)))
     
     # Kendall tau analyses ----------------------------------------------------
     
@@ -169,39 +164,9 @@ tau_u <- function(data, dvar, pvar,
     BvBKen <- .kendall(B, 1:nB, tau_method = tau_method)
     #BvB_AKen <- .kendall(AB, c(nA:1, 1:nB), tau_method = tau_method)
     AvB_B_AKen <- .kendall(AB, c(nA:1, (nA + 1):nAB), tau_method = tau_method) 
+    #
     AvB_AKen <- .kendall(AB, c(nA:1, rep(nA + 1, nB)), tau_method = tau_method)
     AvB_BKen <- .kendall(AB, c(rep(0, nA), (nA + 1):nAB), tau_method=tau_method)
-    
-    # experimental ------------------------------------------------------------
-    # table_tau$k_p <- c(
-    #   AvBKen$p,
-    #   AvAKen$p,
-    #   BvBKen$p,
-    #   #BvB_AKen$p,
-    #   AvB_AKen$p,
-    #   AvB_BKen$p,
-    #   AvB_B_AKen$p
-    # )
-    
-    # table_tau$n <- c(
-    #   AvBKen$N,
-    #   AvAKen$N,
-    #   BvBKen$N,
-    #   #BvB_AKen$N,
-    #   AvB_AKen$N,
-    #   AvB_BKen$N,
-    #   AvB_B_AKen$N
-    # )
-    # table_tau$kendall <- c(
-    #   AvBKen$tau,
-    #   AvAKen$tau,
-    #   BvBKen$tau,
-    #   #BvB_AKen$tau,
-    #   AvB_AKen$tau,
-    #   AvB_BKen$tau,
-    #   AvB_B_AKen$tau
-    # )
-    # ENDE experimental ------------------------------------------------------
     
     # pairs -------------------------------------------------------------------
     
@@ -290,29 +255,6 @@ tau_u <- function(data, dvar, pvar,
     )
     table_tau$VAR_S <- table_tau$SD_S^2
     
-    # SE, Z, and p ------------------------------------------------------------
-    
-    # if (tau_method == "b") {
-    #   #table_tau$SE_Tau <- table_tau$SD_S / table_tau$D
-    #   #table_tau$Z <- table_tau$Tau / table_tau$SE_Tau
-    # }
-    # 
-    # if (tau_method == "a") {
-    #   #n <- table_tau$n
-    #   # n <- c(
-    #   #   AvBKen$N,
-    #   #   AvAKen$N,
-    #   #   BvBKen$N,
-    #   #   AvB_AKen$N,
-    #   #   AvB_BKen$N,
-    #   #   AvB_B_AKen$N
-    #   # )
-    #   #table_tau$SE_Tau <- sqrt( (2 * n + 5) / choose(n, 2)) / 3
-    #   #table_tau$Z <- table_tau$S / table_tau$SD_S
-    #   #table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
-    #   #table_tau$Z2 <- (3 * table_tau$S) / sqrt(n * (n - 1) * (2 * n + 5) / 2)
-    # }
-    
     if (continuity_correction) {
       table_tau$Z <- (table_tau$S - 1) / table_tau$SD_S
     } else {
@@ -326,11 +268,10 @@ tau_u <- function(data, dvar, pvar,
     table_tau$`CI lower` <-  table_tau$Tau - ci_z * table_tau$SE_Tau
     table_tau$`CI upper` <-  table_tau$Tau + ci_z * table_tau$SE_Tau
     
-    out$table[[i]] <- table_tau
-    out$matrix[[i]] <- tau_m
-    out$tau_u[[i]] <- c(
+    out$table[[case]] <- table_tau
+    out$tau_u[[case]] <- c(
       "A vs. B + Trend B - Trend A" = 
-      table_tau["A vs. B + Trend B - Trend A", "Tau"]
+        table_tau["A vs. B + Trend B - Trend A", "Tau"]
     )
   }
   
