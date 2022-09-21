@@ -59,7 +59,7 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   A_data <- data[rowsA, ]
   B_data <- data[rowsB, ]
   
-  auto_tau <- .kendall(
+  auto_tau <- .kendall_full(
     A_data[[dvar]], 
     A_data[[mvar]], 
     continuity_correction = continuity
@@ -70,10 +70,10 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   data$fit <- predict(fit_mblm, data, se.fit = FALSE)
   x <- data[[dvar]] - data$fit
   y <- as.numeric(factor(data[[pvar]]))
-  base_corr_tau <- .kendall(x, y, continuity_correction = continuity)
+  base_corr_tau <- .kendall_full(x, y, continuity_correction = continuity)
   
   x <- data[[dvar]]
-  uncorrected_tau <- .kendall(x, y, continuity_correction = continuity)
+  uncorrected_tau <- .kendall_full(x, y, continuity_correction = continuity)
   
   if (is.na(auto_tau$p)) {
     corr_applied <- FALSE

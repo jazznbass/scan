@@ -65,7 +65,7 @@ tau_u <- function(data, dvar, pvar,
                   ci = 0.95,
                   continuity_correction = FALSE) {
   
-  # validity check
+  # validity check ----
   .start_check() %>%
     .check_in(tau_method, c("a", "b")) %>%
     .check_in(method, c("complete", "parker")) %>%
@@ -73,7 +73,7 @@ tau_u <- function(data, dvar, pvar,
     .check_within(ci, 0, 1) %>%
     .end_check()
   
-  # set attributes to arguments else set to defaults of scdf
+  # prepare scdf ----
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase)
   scdf_attr(data, .opt$phase) <- pvar
@@ -82,7 +82,7 @@ tau_u <- function(data, dvar, pvar,
   data <- .prepare_scdf(data)
   data <- .keep_phases(data, phases = phases)$data
   
-  # define "out" data structure
+  # define "out" data structure ----
   N <- length(data)
   out <- list(
     table = list(),
@@ -91,8 +91,13 @@ tau_u <- function(data, dvar, pvar,
     tau_method = tau_method,
     phases = phases,
     n_cases = N,
-    continuity_correction = continuity_correction
+    continuity_correction = continuity_correction,
+    meta_method = meta_method,
+    Overall_tau_u = NA,
+    ci = ci
   )
+  
+  # define tau table data structure -----
   row_names <- c(
     "A vs. B", 
     "Trend A", 
@@ -106,13 +111,15 @@ tau_u <- function(data, dvar, pvar,
     "SD_S", "VAR_S", "SE_Tau", "Z", "p"
   )
   
-  # tau-U for each case
+  template_table_tau <- as.data.frame(matrix(
+    NA, length(row_names), length(col_names), 
+    dimnames = list(row_names, col_names)
+  ))
+  
+  # tau-U for each case -----
   for (case in 1:N) {
-    table_tau <- matrix(
-      NA, length(row_names), length(col_names), 
-      dimnames = list(row_names, col_names)
-    )
-    table_tau <- as.data.frame(table_tau)
+    
+    table_tau <- template_table_tau
     
     # Extract A and B phase values
     .isA <- data[[case]][[pvar]] == "A"
@@ -283,11 +290,8 @@ tau_u <- function(data, dvar, pvar,
     out$Overall_tau_u <- NA
   }
   
-  out$meta_method <- meta_method 
-  
   # return ------------------------------------------------------------------
   
-  out$ci <- ci
   names(out$table) <- names(data)
   names(out$tau_u) <- names(data)
   
