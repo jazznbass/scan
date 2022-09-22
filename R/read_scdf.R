@@ -2,19 +2,9 @@
 #'
 #' Use the \code{read_scdf} function to load single-case data csv, excel, or
 #' yaml files.
-#' @param filename A character string defining the file to be loaded (e.g.
-#'   \code{"SC_Anita.csv"}. If left empty a dialog box for choosing will be
-#'   opened.
-#' @param data A data frame. As an alternative to \code{filname}.
-#' @param sort.labels If set TRUE, the resulting list is sorted by label names
-#'   (alphabetically increasing).
-#' @param sep The field separator string. Values within each row of x are 
-#' separated by this string.
-#' @param dec The string to use for decimal points in numeric or complex 
-#' columns: must be a single character.
-#' @param type Format of the file to be loaded. Either "csv", "xlsx", "xls",
-#'   "excel", "yml" is possible. By default (NA) the type is extracted from the
-#'   file extension.
+#' @param file Either a character string defining the file to be loaded (e.g.
+#'   \code{"SC_Anita.csv"} (if left empty a dialog box for choosing will be
+#'   opened) or a data.frame.
 #' @param cvar Sets the variable name of the "case" variable. Defaults to
 #'   \code{"case"}.
 #' @param pvar Sets the variable name of the "phase" variable. Defaults to
@@ -23,9 +13,14 @@
 #'   \code{"values"}.
 #' @param mvar Sets the variable name of the "mt" variable. Defaults to
 #'   \code{"mt"}.
-#' @param phase.names A character vector with phase names. Defaults to the phase
+#' @param sort_cases,sort.labels If set TRUE, the resulting list is sorted by label names
+#'   (alphabetically increasing).
+#' @param phase_names,phase.names A character vector with phase names. Defaults to the phase
 #'   names provided in the phase variable.
-#' @param \dots Further arguments passed to the repective read function
+#' @param type Format of the file to be loaded. Either "csv", "xlsx", "xls",
+#'   "excel", "yml" is possible. By default (NA) the type is extracted from the
+#'   file extension.
+#' @param \dots Further arguments passed to the respective read function
 #'   (\code{\link{read.table}}, \code{\link{read_excel}},
 #'   \code{\link{read_yaml}} command.
 #' @return Returns a single-case data frame. See \code{\link{scdf}} to learn
@@ -51,76 +46,66 @@
 #' all.equal(res1,res2)
 #'
 #' @export
-read_scdf <- function(filename, 
-                      data = NULL, 
-                      sort.labels = FALSE, 
+read_scdf <- function(file, 
                       cvar = "case", 
                       pvar = "phase", 
                       dvar = "values", 
-                      mvar = "mt", 
-                      phase.names = NULL, 
-                      sep = ",",
-                      dec = ".",
+                      mvar = "mt",
+                      sort_cases = FALSE,
+                      phase_names = NULL, 
                       type = NA, 
+                      sort.labels = NULL, 
+                      phase.names = NULL, 
                       ...) {
   
-  if (missing(filename) && is.null(data)) {
-    filename <- file.choose()
-    cat("Load file", filename, "\n\n")
+  if (missing(file)) {
+    file <- file.choose()
+    cat("Load file", file, "\n\n")
+  }
+  
+  if(!is.null(phase.names)) phase_names <- phase.names
+  if(!is.null(sort.labels)) sort_cases <- sort.labels
+  
+  if (!inherits(file, "character")) {
+    type <- "data"
   }
   
   if (is.na(type)) {
-    type <- substring(filename, regexpr("\\.([[:alnum:]]+)$", filename) + 1)
-  }
-  
-  if (!is.null(data)) {
-    type <- "data"
-    dat <- as.data.frame(data)
+    type <- substring(file, regexpr("\\.([[:alnum:]]+)$", file) + 1)
   }
   
   if (type == "csv") {
-    dat <- utils::read.table(
-      filename, 
+    dat <- utils::read.csv(
+      file, 
       header = TRUE,
       stringsAsFactors = FALSE,
-      sep = sep,
-      dec = dec,
       ...
     )
+    #dat <- utils::read.table(
   }
   
-  if (type %in% c("yml", "yaml")) return(.load_yml(filename, ...))
+  if (type %in% c("yml", "yaml")) return(.load_yml(file, ...))
   
   if (type %in% c("excel", "xlsx", "xls")) {
-    dat <- as.data.frame(readxl::read_excel(filename, ...))
+    dat <- as.data.frame(readxl::read_excel(file, ...))
   }
 
-  columns <- ncol(dat)
-
-  if (!sort.labels) {
-    dat[[cvar]] <- factor(dat[[cvar]], levels = unique(dat[[cvar]]))
-  } else {
-    dat[[cvar]] <- factor(dat[[cvar]])
+  if (type == "data") {
+    dat <- as.data.frame(file)
   }
   
-  dat[[pvar]] <- factor(dat[[pvar]], levels = unique(dat[[pvar]]))
+  out <- as_scdf(
+    dat, 
+    sort_cases = sort_cases, 
+    cvar = cvar, 
+    pvar = pvar, 
+    dvar = dvar, 
+    mvar = mvar, 
+    phase_names = phase_names   
+  )
   
-  if (!is.null(phase.names)) levels(dat[[pvar]]) <- phase.names
-
-  lab <- levels(dat[[cvar]])
-  dat <- split(dat, dat[[cvar]])
-  dat <- lapply(dat, function(x) x[, -which(names(x) == cvar)])
-  for(i in 1:length(dat)) row.names(dat[[i]]) <- 1:nrow(dat[[i]])
-  names(dat) <- lab
-  cat("Loaded", length(dat), "cases.\n")
-
-  class(dat) <- c("scdf", "list")
-  scdf_attr(dat, .opt$phase) <- pvar
-  scdf_attr(dat, .opt$dv)    <- dvar
-  scdf_attr(dat, .opt$mt)    <- mvar
-  
-  
-  dat
+  message("Imported ", length(out), " cases")
+  out
 }
 
 #' @rdname read_scdf

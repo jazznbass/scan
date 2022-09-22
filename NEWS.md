@@ -1,6 +1,24 @@
 # scan 0.55.x
 
 - Speed-up `tau_u()` by 20%.
+- rewrote `as_scdf()`, `read_scdf()`. Now it is easier to import data from any file format.
+
+``` {.r}
+readODS::read_ods("filename.ods") |> as.scdf()
+openxlsx::read.xlsx("filename.xlsx") |> as.scdf()
+
+
+readODS::read_ods("filename.ods") |> 
+  as.scdf(
+    cvar = "id", 
+    pvar = "section", 
+    mvar = "day", 
+    phase_names = c("baseline", "intervention")
+  )
+  
+as.data.frame(exampleABC) |> readODS::write_ods("filename.xlsx")
+as.data.frame(exampleABC) |> openxlsx::write.xlsx("filename.xlsx")
+```
 
 # scan 0.55
 
