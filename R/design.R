@@ -155,7 +155,8 @@ design <- function(n = 1,
       "Binomial distributions but start_values outside [0,1].") %>%
     .check_not(any(B_start < 1) && any(B_start >= 1),
                "B_start with values below and above 1.") %>%
-    
+    .check_within(extreme_prop, 0, 1) %>%
+    .check_within(missing_prop, 0, 1) %>%
     .end_check()
   
   
