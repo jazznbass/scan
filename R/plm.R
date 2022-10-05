@@ -67,14 +67,14 @@
 #'   slope = list(A1 = 0, B1 = 0.0, A2 = 0, B2 = 0.0),
 #'   trend = 0.0)
 #' dat <- random_scdf(design = A1B1A2B2, seed = 123)
-#' plm(dat, model = "JW")
+#' plm(dat, contrast = "preceding")
 #' 
 #' ## no slope effects were found. Therefore, you might want to the drop slope 
 #' ## estimation:
-#' plm(dat, slope = FALSE, model = "JW")
+#' plm(dat, slope = FALSE, contrast = "preceding")
 #' 
 #' ## and now drop the trend estimation as well
-#' plm(dat, slope = FALSE, trend = FALSE, model = "JW")
+#' plm(dat, slope = FALSE, trend = FALSE, contrast = "preceding")
 #' 
 #' ## A poisson regression
 #' example_A24 %>% 
@@ -120,12 +120,19 @@ plm <- function(data, dvar, pvar, mvar,
   
   original_attr <- attributes(data)[[.opt$scdf]]
   
-  N <- length(data)
+  if (inherits(contrast, "list") && is.null(names(contrast)))
+    names(contrast) <- c("level", "slope")
+  
+  if (length(contrast) == 1 && inherits(contrast, "character")) 
+    contrast <- list(level = contrast, slope = contrast)
   
   if (model == "JW") {
+    contrast <- list(level = "preceding", slope = "preceding")
     model <- "B&L-B"
-    contrast <- "preceding"
   }
+  
+  
+  N <- length(data)
   
   .start_check() %>%
     .check(N == 1, "Procedure could not be applied to more than one case ",
@@ -135,7 +142,7 @@ plm <- function(data, dvar, pvar, mvar,
     .check_not(family == "binomial" && is.null(var_trials),
                "family = 'binomial' but 'var_trials' not defined.") %>%
     .check_in(model, c("H-M", "B&L-B", "W")) %>%
-    .check_in(contrast, c("first", "preceding")) %>%
+    #.check_in(contrast, c("first", "preceding")) %>%
     .end_check()
   
   # formula definition ------------------------------------------------------
@@ -146,7 +153,7 @@ plm <- function(data, dvar, pvar, mvar,
   if(is.null(formula)) {
     tmp <- .create_fixed_formula(
       dvar, mvar, slope, level, trend, 
-      tmp_model$VAR_PHASE, tmp_model$VAR_INTER
+      tmp_model$var_phase, tmp_model$var_inter
     ) 
     formula <- as.formula(tmp)
   } 

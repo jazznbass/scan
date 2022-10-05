@@ -3,9 +3,9 @@
 print.sc_hplm <- function(x, ...) {
   cat("Hierarchical Piecewise Linear Regression\n\n")
   cat("Estimation method", x$model$estimation.method,"\n")
-  cat("Dummy model: ", 
-      x$model$interaction.method, " ", 
-      x$model$contrast.method, 
+  cat("Contrast model: ", 
+      x$model$interaction.method, " / ", 
+      paste0(names(x$model$contrast.method), ": ",x$model$contrast.method, collapse = ", "), 
       "\n", sep = "")
 
   cat(x$N, "Cases\n\n")

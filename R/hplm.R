@@ -68,9 +68,14 @@ hplm <- function(data, dvar, pvar, mvar,
     contrast <- "preceding"
   }
   
+  if (inherits(contrast, "list") && is.null(names(contrast)))
+    names(contrast) <- c("level", "slope")
+  
+  if (length(contrast) == 1 && inherits(contrast, "character")) 
+    contrast <- list(level = contrast, slope = contrast)
+  
   .start_check() %>%
     .check_in(model, c("H-M", "B&L-B", "W")) %>%
-    .check_in(contrast, c("first", "preceding")) %>%
     .end_check()
   
   # set attributes to arguments else set to defaults of scdf
@@ -104,7 +109,7 @@ hplm <- function(data, dvar, pvar, mvar,
 
   if (is.null(fixed))
     fixed <- as.formula(.create_fixed_formula(
-      dvar, mvar, slope, level, trend, tmp_model$VAR_PHASE, tmp_model$VAR_INTER
+      dvar, mvar, slope, level, trend, tmp_model$var_phase, tmp_model$var_inter
     ))
   
   if (!is.null(update.fixed)) fixed <- update(fixed, update.fixed)
@@ -113,7 +118,7 @@ hplm <- function(data, dvar, pvar, mvar,
   
   if (is.null(random))
     random <- as.formula(.create_random_formula(
-      mvar, slope, level, trend, tmp_model$VAR_PHASE, tmp_model$VAR_INTER
+      mvar, slope, level, trend, tmp_model$var_phase, tmp_model$var_inter
     ))
 
   out$formula <- list(fixed = fixed, random = random)
