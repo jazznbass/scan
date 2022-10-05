@@ -1,5 +1,6 @@
 # scan 0.55.x
 
+- `plm()`, `hplm()`: contrasts argument now is a list that takes two elements: `level` and `slope`. Both elements can either be "first" or "preceding".
 - Speed-up `tau_u()` by 20%.
 - rewrote `as_scdf()`, `read_scdf()`. Now it is easier to import data from any file format.
 

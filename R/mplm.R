@@ -62,7 +62,7 @@ mplm <- function(data, dvar, mvar, pvar,
   if (is.null(formula)) {
     formula <- .create_fixed_formula(
       dvar = "y", mvar = mvar, slope = slope, level = level,
-      trend = trend, VAR_PHASE = tmp_model$VAR_PHASE, VAR_INTER = tmp_model$VAR_INTER
+      trend = trend, var_phase = tmp_model$var_phase, var_inter = tmp_model$var_inter
     )
     formula <- as.formula(formula)
   }
