@@ -24,11 +24,11 @@
 .check_within <- function(x, arg, lower, upper) {
   if (!missing(lower))
     x <- .check_not(
-      x, any(arg < lower), as.character(match.call()[3]), " < ", lower
+      x, any(unlist(arg) < lower), as.character(match.call()[3]), " < ", lower
     ) 
   if (!missing(upper))
     x <- .check_not(
-      x, any(arg > upper), as.character(match.call()[3]), " > ", upper
+      x, any(unlist(arg) > upper), as.character(match.call()[3]), " > ", upper
     ) 
   x
 }
