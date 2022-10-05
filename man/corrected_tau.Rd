@@ -33,7 +33,7 @@ that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
 c(2,4)} for comparing the second to the fourth phase. Phases could be
 combined by providing a list with two elements. E.g., \code{phases = list(A
 = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
-(as B). Default is \code{phases = c("A","B")}.}
+(as B). Default is \code{phases = c(1,2)}.}
 
 \item{alpha}{Sets the p-value at and below which a baseline correction is 
 applied.}

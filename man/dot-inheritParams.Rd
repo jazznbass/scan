@@ -44,14 +44,16 @@ that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
 c(2,4)} for comparing the second to the fourth phase. Phases could be
 combined by providing a list with two elements. E.g., \code{phases = list(A
 = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
-(as B). Default is \code{phases = c("A","B")}.}
+(as B). Default is \code{phases = c(1,2)}.}
 
-\item{model}{Model used for calculating the slope parameter (see Huitema &
+\item{model}{Model used for calculating the dummy parameters (see Huitema &
 McKean, 2000). Default is \code{model = "W"}. Possible values are:
 \code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
-\item{contrast}{Either "first" or "preceding". "first" contrasts all 
-phase-effects to the first phase and "preceding" to the preceding phase.}
+\item{contrast}{A list with two elements "first" and "preceding". Both can
+either be "first" or "preceding". "first" contrasts all 
+  phase effects ("level" or "slope") to the first phase and "preceding" to 
+  the preceding phase.}
 
 \item{trend}{A logical indicating if a trend parameters is included in the
 model.}

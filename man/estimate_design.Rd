@@ -45,7 +45,7 @@ If FALSE, effects are estimated for each case separately.}
 \item{overall_rtt}{Ignored when `rtt` is set. If TRUE, rtt estimations will be based on all cases and identical for each case.
 If FALSE rtt is estimated for each case separately.}
 
-\item{model}{Model used for calculating the slope parameter (see Huitema &
+\item{model}{Model used for calculating the dummy parameters (see Huitema &
 McKean, 2000). Default is \code{model = "W"}. Possible values are:
 \code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 

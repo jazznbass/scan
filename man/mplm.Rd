@@ -33,12 +33,14 @@ Defaults to the attributes in the scdf file.}
 \item{pvar}{Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.}
 
-\item{model}{Model used for calculating the slope parameter (see Huitema &
+\item{model}{Model used for calculating the dummy parameters (see Huitema &
 McKean, 2000). Default is \code{model = "W"}. Possible values are:
 \code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
-\item{contrast}{Either "first" or "preceding". "first" contrasts all 
-phase-effects to the first phase and "preceding" to the preceding phase.}
+\item{contrast}{A list with two elements "first" and "preceding". Both can
+either be "first" or "preceding". "first" contrasts all 
+  phase effects ("level" or "slope") to the first phase and "preceding" to 
+  the preceding phase.}
 
 \item{trend}{A logical indicating if a trend parameters is included in the
 model.}
