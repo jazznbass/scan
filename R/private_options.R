@@ -217,5 +217,5 @@
   },
   base_tau = function(x) corrected_tau(x)$p,
   
-  rand = function(x) rand_test(x, number = 100, exclude.equal = "auto", output = "p")
+  rand = function(x) rand_test(x, number = 100, exclude.equal = "auto")$p.value
 )
