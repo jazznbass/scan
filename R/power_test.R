@@ -10,7 +10,6 @@
 #' generated and reanalyzed. The proportion of significant analyzes is the alpha
 #' error probability.
 #'
-#' @inheritParams .inheritParams
 #' @param design An object returned from the `design` function.
 #' @param method A (named) list that defines the methods the power analysis is
 #'   based on. Each element can contain a function (that takes an scdf file and
