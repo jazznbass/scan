@@ -21,6 +21,7 @@ convert <- function(scdf, file = "", study_name = "study") {
     
     dat <- scdf[[case]]
     design <- rle(as.character(scdf[[case]][, attr_scan[[.opt$phase]]]))
+    
     phase_design <- paste0(design$values, " = ", design$lengths, collapse = ", ")
     phase_design <- paste0("phase_design = c(", phase_design, ")")
     
@@ -39,6 +40,14 @@ convert <- function(scdf, file = "", study_name = "study") {
         values_string <- paste0('\"', values, '\"', collapse = ", ")
       
       vars[i] <- paste0(var_names[i], " = c(", values_string, ")")
+      vars[i] <- paste0(
+        strwrap(
+          vars[i], 
+          initial = "", 
+          prefix = paste0(rep("",nchar(var_names[i])+9), collapse = " ")
+        ), 
+        collapse = "\n"
+      )
     }
     vars <- vars[!is.na(vars)]
     
