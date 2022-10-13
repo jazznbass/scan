@@ -49,6 +49,8 @@ as.data.frame.scdf <- function(x, ..., l2 = NULL, id = "case") {
   
   if(!is.null(l2)) outdat <- merge(outdat, l2, by = id)
   
+  outdat[[1]] <- factor(outdat[[1]],levels = label, labels = label)
+  
   outdat
   
 }
