@@ -1,5 +1,14 @@
 # scan 0.55.x
 
+- `select_cases()`: Allow for a selection based on object names (like in substitute).
+
+```r
+select_cases(exampleAB, -c(Johanna, Karolina))
+select_cases(exampleAB, Johanna, Karolina)
+v <- c("Moritz", "Jannis")
+select_cases(exampleA1B1A2B2, v)
+```
+
 - `plm()`, `hplm()`: contrasts argument now is a list that takes two elements: `level` and `slope`. Both elements can either be "first" or "preceding".
 - Speed-up `tau_u()` by 20%.
 - rewrote `as_scdf()`, `read_scdf()`. Now it is easier to import data from any file format.
