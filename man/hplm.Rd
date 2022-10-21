@@ -11,6 +11,8 @@ hplm(
   mvar,
   model = "W",
   contrast = "first",
+  contrast_level = NA,
+  contrast_slope = NA,
   method = "ML",
   control = list(opt = "optim"),
   random.slopes = FALSE,
@@ -43,10 +45,13 @@ Defaults to the attributes in the scdf file.}
 McKean, 2000). Default is \code{model = "W"}. Possible values are:
 \code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
-\item{contrast}{A list with two elements "first" and "preceding". Both can
-either be "first" or "preceding". "first" contrasts all 
-  phase effects ("level" or "slope") to the first phase and "preceding" to 
-  the preceding phase.}
+\item{contrast}{Sets contrast_level and contrast_slope. Either "first", "preceding" or a contrast matrix.}
+
+\item{contrast_level}{Either "first", "preceding" or a contrast matrix. If NA
+contrast_level is a copy of contrast.}
+
+\item{contrast_slope}{Either "first", "preceding" or a contrast matrix. If NA
+contrast_level is a copy of contrast.}
 
 \item{method}{Method used to fit your model. Pass \code{"REML"} to maximize
 the restricted log-likelihood or \code{"ML"} for maximized log-likelihood.

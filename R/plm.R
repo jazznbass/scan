@@ -97,6 +97,8 @@ plm <- function(data, dvar, pvar, mvar,
                 level = TRUE, 
                 slope = TRUE,
                 contrast = "first",
+                contrast_level = NA,
+                contrast_slope = NA,
                 formula = NULL, 
                 update = NULL, 
                 na.action = na.omit,
@@ -105,7 +107,6 @@ plm <- function(data, dvar, pvar, mvar,
                 dvar_percentage = FALSE,
                 ...) {
   
-  if (family != "gaussian") r_squared = FALSE
   
   # set defaults attributes
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
@@ -117,37 +118,41 @@ plm <- function(data, dvar, pvar, mvar,
   scdf_attr(data, .opt$mt) <- mvar
   
   data <- .prepare_scdf(data, na.rm = TRUE)
-  
-  original_attr <- attributes(data)[[.opt$scdf]]
-  
-  if (inherits(contrast, "list") && is.null(names(contrast)))
-    names(contrast) <- c("level", "slope")
-  
-  if (length(contrast) == 1 && inherits(contrast, "character")) 
-    contrast <- list(level = contrast, slope = contrast)
+
+  if (is.na(contrast_level)) contrast_level <- contrast
+  if (is.na(contrast_slope)) contrast_slope <- contrast
   
   if (model == "JW") {
-    contrast <- list(level = "preceding", slope = "preceding")
+    contrast_level <- "preceding"
+    contrast_slope <- "preceding"
     model <- "B&L-B"
   }
   
+  if (family != "gaussian") r_squared = FALSE
   
+  original_attr <- attributes(data)[[.opt$scdf]]
+  
+
   N <- length(data)
   
-  .start_check() %>%
-    .check(N == 1, "Procedure could not be applied to more than one case ",
-                   "(use hplm instead).") %>%
-    .check(family == "gaussian" || AR == 0, 
+  start_check() %>%
+    check(N == 1, "Procedure could not be applied to more than one case ",
+                  "(use hplm instead).") %>%
+    check(family == "gaussian" || AR == 0, 
            "family is not 'gaussian' but AR is set.") %>%
-    .check_not(family == "binomial" && is.null(var_trials),
+    check_not(family == "binomial" && is.null(var_trials),
                "family = 'binomial' but 'var_trials' not defined.") %>%
-    .check_in(model, c("H-M", "B&L-B", "W")) %>%
+    check_in(model, c("H-M", "B&L-B", "W")) %>%
     #.check_in(contrast, c("first", "preceding")) %>%
-    .end_check()
+    end_check()
   
   # formula definition ------------------------------------------------------
   
-  tmp_model <- .add_model_dummies(data = data, model = model, contrast=contrast)
+  tmp_model <- .add_model_dummies(
+    data = data, model = model, 
+    contrast_level = contrast_level, contrast_slope = contrast_slope
+  )
+
   data  <- tmp_model$data[[1]]
   
   if(is.null(formula)) {

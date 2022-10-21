@@ -21,10 +21,11 @@
 #' @param model Model used for calculating the dummy parameters (see Huitema &
 #'   McKean, 2000). Default is \code{model = "W"}. Possible values are:
 #'   \code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.
-#' @param contrast A list with two elements "first" and "preceding". Both can
-#' either be "first" or "preceding". "first" contrasts all 
-#'   phase effects ("level" or "slope") to the first phase and "preceding" to 
-#'   the preceding phase.
+#' @param contrast Sets contrast_level and contrast_slope. Either "first", "preceding" or a contrast matrix.
+#' @param contrast_level Either "first", "preceding" or a contrast matrix. If NA
+#' contrast_level is a copy of contrast.
+#' @param contrast_slope Either "first", "preceding" or a contrast matrix. If NA
+#' contrast_level is a copy of contrast.
 #' @param trend A logical indicating if a trend parameters is included in the
 #'   model.
 #' @param level A logical indicating if a level parameters is included in the
@@ -33,6 +34,7 @@
 #'   model.
 #' @param ... Further arguments passed to the function.
 .inheritParams <- function(data, scdf, dvar, mvar, pvar, decreasing, 
-                           phases, model, contrast, trend, level, slope, ...) {
+                           phases, model, contrast, contrast_level, contrast_slope,
+                           trend, level, slope, ...) {
   
 } 

@@ -49,6 +49,8 @@
 hplm <- function(data, dvar, pvar, mvar, 
                  model = "W", 
                  contrast = "first",
+                 contrast_level = NA,
+                 contrast_slope = NA,
                  method = "ML", 
                  control = list(opt = "optim"), 
                  random.slopes = FALSE, 
@@ -63,20 +65,19 @@ hplm <- function(data, dvar, pvar, mvar,
                  data.l2 = NULL, 
                  ...) {
 
+  if (is.na(contrast_level)) contrast_level <- contrast
+  if (is.na(contrast_slope)) contrast_slope <- contrast
+  
   if (model == "JW") {
+    contrast_level <- "preceding"
+    contrast_slope <- "preceding"
     model <- "B&L-B"
-    contrast <- "preceding"
   }
   
-  if (inherits(contrast, "list") && is.null(names(contrast)))
-    names(contrast) <- c("level", "slope")
-  
-  if (length(contrast) == 1 && inherits(contrast, "character")) 
-    contrast <- list(level = contrast, slope = contrast)
-  
-  .start_check() %>%
-    .check_in(model, c("H-M", "B&L-B", "W")) %>%
-    .end_check()
+
+  start_check() %>%
+    check_in(model, c("H-M", "B&L-B", "W")) %>%
+    end_check()
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
@@ -100,7 +101,11 @@ hplm <- function(data, dvar, pvar, mvar,
 
 # interaction and dummy coding and L2 --------------------------------------
 
-  tmp_model <- .add_model_dummies(data = dat, model = model, contrast=contrast)
+  tmp_model <- .add_model_dummies(
+    data = dat, model = model, 
+    contrast_level = contrast_level, contrast_slope = contrast_slope
+  )
+  
   dat <- tmp_model$data
 
   dat <- as.data.frame(dat, l2 = data.l2)

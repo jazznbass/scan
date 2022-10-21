@@ -16,6 +16,8 @@ plm(
   level = TRUE,
   slope = TRUE,
   contrast = "first",
+  contrast_level = NA,
+  contrast_slope = NA,
   formula = NULL,
   update = NULL,
   na.action = na.omit,
@@ -58,10 +60,13 @@ model.}
 \item{slope}{A logical indicating if a slope parameters is included in the
 model.}
 
-\item{contrast}{A list with two elements "first" and "preceding". Both can
-either be "first" or "preceding". "first" contrasts all 
-  phase effects ("level" or "slope") to the first phase and "preceding" to 
-  the preceding phase.}
+\item{contrast}{Sets contrast_level and contrast_slope. Either "first", "preceding" or a contrast matrix.}
+
+\item{contrast_level}{Either "first", "preceding" or a contrast matrix. If NA
+contrast_level is a copy of contrast.}
+
+\item{contrast_slope}{Either "first", "preceding" or a contrast matrix. If NA
+contrast_level is a copy of contrast.}
 
 \item{formula}{Defaults to the standard piecewise regression model. The
 parameter phase followed by the phase name (e.g., phaseB) indicates the 

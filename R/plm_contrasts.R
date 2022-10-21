@@ -1,15 +1,16 @@
 .add_model_dummies <- function(data, model, 
-                          dvar = scdf_attr(data, .opt$dv), 
-                          pvar = scdf_attr(data, .opt$phase), 
-                          mvar = scdf_attr(data, .opt$mt),
-                          contrast = c(level = "first", slope = "first")) {
-  
-  #if (length(contrast) == 1) contrast <- list(level = contrast, slope = contrast)
-  
+                               dvar = scdf_attr(data, .opt$dv), 
+                               pvar = scdf_attr(data, .opt$phase), 
+                               mvar = scdf_attr(data, .opt$mt),
+                               contrast_level,
+                               contrast_slope) {
+      
+
   for(case in 1:length(data)) {
-    dat_inter <- .plm.dummy(
+    dat_inter <- .plm_dummy(
       data[[case]], model = model, dvar = dvar, 
-      pvar = pvar, mvar = mvar, contrast = contrast
+      pvar = pvar, mvar = mvar, 
+      contrast_level = contrast_level, contrast_slope = contrast_slope
     )
     data[[case]][, mvar] <- dat_inter$mt
     data[[case]] <- cbind(data[[case]], dat_inter[, -1])
@@ -21,22 +22,17 @@
   out
 }
 
-.plm.dummy <- function(data, 
+.plm_dummy <- function(data, 
                        dvar = "values", 
                        pvar = "phase", 
                        mvar = "mt",
                        model,
-                       contrast = list(level = "first", slope = "first")) {
-  
-  
-  if (inherits(contrast, "list") && is.null(names(contrast)))
-    names(contrast) <- c("level", "slope")
-  
-  if (length(contrast) == 1 && inherits(contrast, "character")) 
-    contrast <- list(level = contrast, slope = contrast)
-  
+                       contrast_level,
+                       contrast_slope) {
+
   if (model == "JW") {
-    contrast <- list(level = "preceding", slope = "preceding")
+    contrast_level <- "preceding"
+    contrast_slope <- "preceding"
     model <- "B&L-B"
   }
   
@@ -50,10 +46,10 @@
   
   #dummy phases
   
-  if (contrast$level == "first")
+  if (identical(contrast_level, "first"))
     contr <- contr.treatment(nlevels(data[[pvar]]))
 
-  if (contrast$level == "preceding") 
+  if (identical(contrast_level, "preceding")) 
     contr <- contr.cum(nlevels(data[[pvar]]))
   
   row.names(contr) <- levels(data[[pvar]])
@@ -65,10 +61,10 @@
 
   #dummy slopes
   
-  if (contrast$slope == "first")
+  if (identical(contrast_slope, "first"))
     contr <- contr.treatment(nlevels(data[[pvar]]))
   
-  if (contrast$slope == "preceding") 
+  if (identical(contrast_slope, "preceding")) 
     contr <- contr.cum(nlevels(data[[pvar]]))
   
   row.names(contr) <- levels(data[[pvar]])
