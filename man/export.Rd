@@ -9,6 +9,7 @@
 \alias{export.sc_overlap}
 \alias{export.sc_trend}
 \alias{export.sc_tauu}
+\alias{export.sc_power}
 \title{Export scan objects to html or latex}
 \usage{
 export(object, ...)
@@ -84,6 +85,16 @@ export(object, ...)
 )
 
 \method{export}{sc_tauu}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  ...
+)
+
+\method{export}{sc_power}(
   object,
   caption = NA,
   footnote = NA,

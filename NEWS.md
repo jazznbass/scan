@@ -1,5 +1,8 @@
 # scan 0.55.x
 
+- `export()`: New export for power analysis output.
+
+
 - `select_cases()`: Allow for a selection based on object names (like in substitute).
 
 ```r
