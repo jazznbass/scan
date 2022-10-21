@@ -200,6 +200,7 @@ hplm <- function(data, dvar, pvar, mvar,
   
   out$model$fixed  <- fixed
   out$model$random <- random
+  out$contrast <- list(level = contrast_level, slope = contrast_slope)
   
   class(out) <- c("sc_hplm")
   attr(out, .opt$phase) <- pvar

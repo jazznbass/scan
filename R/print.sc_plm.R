@@ -6,7 +6,7 @@ print.sc_plm <- function(x, ...) {
   cat(
     "Contrast model: ", 
     x$model, " / ", 
-    paste0(names(x$contrast), ": " ,x$contrast, collapse = ", "), 
+    paste0("level = ", x$contrast$level, ", slope = " ,x$contrast$slope),
     "\n\n", sep = ""
   )
   

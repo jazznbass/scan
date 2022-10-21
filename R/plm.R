@@ -269,7 +269,7 @@ plm <- function(data, dvar, pvar, mvar,
   out <- list(
     formula = formula_full, 
     model = model, 
-    contrast = contrast,
+    contrast = list(level = contrast_level, slope = contrast_slope),
     F.test = F_test, 
     r.squares = r_squares, 
     ar = AR, 

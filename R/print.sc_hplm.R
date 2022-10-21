@@ -5,7 +5,7 @@ print.sc_hplm <- function(x, ...) {
   cat("Estimation method", x$model$estimation.method,"\n")
   cat("Contrast model: ", 
       x$model$interaction.method, " / ", 
-      paste0(names(x$model$contrast.method), ": ",x$model$contrast.method, collapse = ", "), 
+      paste0(names(x$contrast), ": ",x$contrast, collapse = ", "), 
       "\n", sep = "")
 
   cat(x$N, "Cases\n\n")

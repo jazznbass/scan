@@ -83,7 +83,8 @@ mplm <- function(data, dvar, mvar, pvar,
 
   full <- lm(formula, data = data, na.action = na.action, ...)
   full$coef_std <- .std_lm(full)
-  out <- list(model = model, contrast = contrast, 
+  out <- list(model = model, 
+              contrast = list(level = contrast_level, slope = contrast_slope), 
               full.model = full, formula = formula)
 
   class(out) <- c("sc_mplm")
