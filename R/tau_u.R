@@ -66,12 +66,12 @@ tau_u <- function(data, dvar, pvar,
                   continuity_correction = FALSE) {
   
   # validity check ----
-  .start_check() %>%
-    .check_in(tau_method, c("a", "b")) %>%
-    .check_in(method, c("complete", "parker")) %>%
-    .check_in(meta_method, c("random", "fixed", "none")) %>%
-    .check_within(ci, 0, 1) %>%
-    .end_check()
+  start_check() %>%
+    check_in(tau_method, "a", "b") %>%
+    check_in(method, "complete", "parker") %>%
+    check_in(meta_method, "random", "fixed", "none") %>%
+    check_within(ci, 0, 1) %>%
+    end_check()
   
   # prepare scdf ----
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
