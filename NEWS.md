@@ -1,5 +1,8 @@
 # scan 0.55.x
 
+
+- `tau_u(), correted_tau()`: corrected a wrong calculation of the cotinuity correction when values where lower in phase B.
+
 - `export()`: New export for power analysis output.
 
 
