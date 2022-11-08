@@ -58,11 +58,11 @@ statistics.} \item{tau_u}{Tau-U value.}
 }
 \description{
 This function calculates indices of the Tau-U family as proposed by Parker
-et al. (2011).
+et al. (2011a).
 }
 \details{
 Tau-U is an inconsistently operationalized construct. Parker et al.
-(2011) describe a method which may result in Tau-U lager than 1. 
+(2011b) describe a method which may result in Tau-U lager than 1. 
 A different implementation of the method 
 (provided at http://www.singlecaseresearch.org/calculators/tau-u) uses 
 tau-b (instead of tau-a as in the original formulation by Parker). 
@@ -93,8 +93,11 @@ Interpreting Kendall’s Tau and Tau-U for single-case experimental designs.
 \emph{Cogent Psychology, 5(1)}, 1–26. 
 https://doi.org/10.1080/23311908.2018.1518687.
 
+Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in 
+Single-Case Research: A Review of Nine Nonoverlap Techniques. 
+\emph{Behavior Modification}, 35(4), 303–322. https://doi.org/10/dsdfs4
 Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B.
-(2011). Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
+(2011b). Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
 \emph{Behavior Therapy, 42}, 284-299.
 }
 \seealso{
