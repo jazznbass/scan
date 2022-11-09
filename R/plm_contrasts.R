@@ -46,12 +46,13 @@
   
   #dummy phases
   
-  if (identical(contrast_level, "first"))
+  if (identical(contrast_level, "first")) {
     contr <- contr.treatment(nlevels(data[[pvar]]))
-
-  if (identical(contrast_level, "preceding")) 
+  } else if (identical(contrast_level, "preceding")) {
     contr <- contr.cum(nlevels(data[[pvar]]))
-  
+  } else {
+    stop("Wrong declaration of level contrast: ", contrast_level)
+  }
   row.names(contr) <- levels(data[[pvar]])
   colnames(contr) <- levels(data[[pvar]])[-1]
   contrasts(data[[pvar]])<- contr 
@@ -61,11 +62,13 @@
 
   #dummy slopes
   
-  if (identical(contrast_slope, "first"))
+  if (identical(contrast_slope, "first")){
     contr <- contr.treatment(nlevels(data[[pvar]]))
-  
-  if (identical(contrast_slope, "preceding")) 
+  } else if (identical(contrast_slope, "preceding")) {
     contr <- contr.cum(nlevels(data[[pvar]]))
+  } else {
+    stop("Wrong declaration of slope contrast: ", contrast_slope)
+  }
   
   row.names(contr) <- levels(data[[pvar]])
   colnames(contr) <- levels(data[[pvar]])[-1]
