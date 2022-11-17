@@ -1,25 +1,38 @@
+library(scan)
 
+
+# 2022-14-09 ------------------------------
+
+overlap(Parker2011b)
+cdc(Parker2011b) |> str()
+nap(Parker2011b)
 
 # 2022-10-09 09:24:09 ------------------------------
 
 
-library(scan)
 des <- design(
   start_value = 50,
   s = 10,
   level = 1,
-  trend = 0,
+  trend = 0.1,
   slope = 0,
-  phase_design = list(A = 5, B = 10),
+  phase_design = list(A = 15, B = 45),
   distribution = "gaussian"
 )
 
-data <- random_scdf(des)
+data <- random_scdf(des, round = 0)
 
 
-tau_u(data, tau_method = "a") |> print(complete = TRUE)
+tau_u(data, tau_method = "a", method = "parker") |> print(complete = TRUE)
 tau_u(data, tau_method = "b") |> print(complete = TRUE)
 corrected_tau(data)
+
+
+res <- tau_u(data, method = "parker", tau_method = "a", meta_method = "none")$table[[1]]
+list(
+  p = res[which(row.names(res) == "A vs. B"), which(names(res) == "p")],
+  es = res[which(row.names(res) == "A vs. B"), which(names(res) == "Tau")]
+)
 
 
 data2 <- data[[1]] 
@@ -73,3 +86,6 @@ scplot(Tarlow2016a)
 
 # is continuity wrong???
 
+res <- corrected_tau(data, continuity = FALSE, repeated = FALSE)
+list(p = res$p, es = res$tau)
+res
