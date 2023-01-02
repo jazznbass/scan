@@ -1,3 +1,9 @@
+# 2023-02-01
+library(scan)
+case <- scdf(c(6,5,5,4,3,3, 7,7,7,6,7,6), phase_design = c(A = 6, B = 6))
+tau_u(case, method = "parker", tau_method = "a")
+tau_u(case, method = "complete", tau_method = "a")
+
 # 2023-01-01
 
 
