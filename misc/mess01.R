@@ -1,3 +1,39 @@
+# 2023-01-01
+
+
+
+tau_z <- function(tau) {
+  0.5 * log((1 + tau)/(1 - tau))
+}
+
+inv_tau_z <- function(tau) {
+  (exp(2 * tau) - 1) / (exp(2 * tau) + 1)
+}
+
+tau_ci <- function(tau, n, ci = 0.95) {
+  z <- qnorm((1 - ci) /2, lower.tail = FALSE)
+  se_tau_z <- sqrt(0.437/(n-4))
+  tau_z <- tau_z(tau)
+  tau_z_ci <- c(
+    lower = tau_z - z * se_tau_z, 
+    upper = tau_z + z * se_tau_z
+  )
+  
+  list(
+    tau = inv_tau_z(tau_z),
+    tau_ci = c(lower = inv_tau_z(tau_z_ci[1]), upper = inv_tau_z(tau_z_ci[2])),
+    tau_z = tau_z,
+    tau_z_ci = tau_z_ci,
+    se = se_tau_z,
+    z = z
+  )
+  
+}
+
+tau_ci(0.6, 20)
+tau_z(0.6)
+
+
 library(scan)
 
 

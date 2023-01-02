@@ -1,56 +1,56 @@
 #' Tau-U for single-case data
 #'
-#' This function calculates indices of the Tau-U family as proposed by Parker
-#' et al. (2011a).
+#' This function calculates indices of the Tau-U family as proposed by Parker et
+#' al. (2011a).
 #'
 #' @inheritParams .inheritParams
-#' @param tau_method Character with values "a" or "b" (default) indicating 
-#' whether Kendall Tau A or Kendall Tau B is applied.
+#' @param tau_method Character with values "a" or "b" (default) indicating
+#'   whether Kendall Tau A or Kendall Tau B is applied.
 #' @param method \code{"complete"} (default) or \code{"parker"}. The latter
-#' calculates the number of possible pairs as described in Parker et al. (2011)
-#' which might lead to tau-U values greater than 1.
-#' @param meta_method Character string. If set "random", a random-effect 
-#' meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis is 
-#' calculated. If set "none", no meta-analysis is conducted (may be helpful to 
-#' speed up analyses).
+#'   calculates the number of possible pairs as described in Parker et al.
+#'   (2011) which might lead to tau-U values greater than 1.
+#' @param meta_method Character string. If set "random", a random-effect
+#'   meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis
+#'   is calculated. If set "none", no meta-analysis is conducted (may be helpful
+#'   to speed up analyses).
 #' @param ci Confidence interval for meta analyzes.
-#' @param continuity_correction If TRUE, a continuity correction is applied for 
-#' calculating p-values of correlations (here: S will be reduced by one before calculating Z)
-#' @return 
+#' @param continuity_correction If TRUE, a continuity correction is applied for
+#'   calculating p-values of correlations (here: S will be reduced by one before
+#'   calculating Z)
+#' @return
 #' \item{table}{A data frame containing statistics from the Tau-U
 #' family, including: Pairs, positive and negative comparisons, S, and Tau}
 #' \item{matrix}{The matrix of comparisons used for calculating the
 #' statistics.} \item{tau_u}{Tau-U value.}
 #' @details Tau-U is an inconsistently operationalized construct. Parker et al.
-#' (2011b) describe a method which may result in Tau-U lager than 1. 
-#' A different implementation of the method 
-#' (provided at http://www.singlecaseresearch.org/calculators/tau-u) uses 
-#' tau-b (instead of tau-a as in the original formulation by Parker). 
-#' Bossart et. al (2018) describe inconsistencies in the results from this
-#' implementation as well. Another problems lies in the calculation in overall 
-#' Tau-U values from several single cases. The function presented here 
-#' applies a metaanalyzes to gain the overall values. Each tau value is 
-#' weighted by the inverse of the variance (ie. the tau standard error). 
-#' Tau values are not converted to Pearson r values. The argument 
-#' \code{"meta_method"} calculates a random-effect model ("random") or 
-#' a fixed effect model ("fixed").
+#'   (2011b) describe a method which may result in Tau-U lager than 1. A
+#'   different implementation of the method (provided at
+#'   http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of
+#'   tau-a as in the original formulation by Parker). Bossart et. al (2018)
+#'   describe inconsistencies in the results from this implementation as well.
+#'   Another problems lies in the calculation in overall Tau-U values from
+#'   several single cases. The function presented here applies a metaanalyzes to
+#'   gain the overall values. Each tau value is weighted by the inverse of the
+#'   variance (ie. the tau standard error). Tau values are not converted to
+#'   Pearson r values. The argument \code{"meta_method"} calculates a
+#'   random-effect model ("random") or a fixed effect model ("fixed").
 #' @author Juergen Wilbert
 #' @family overlap functions
-#' @references Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018). 
-#' Interpreting Kendall’s Tau and Tau-U for single-case experimental designs. 
-#' \emph{Cogent Psychology, 5(1)}, 1–26. 
-#' https://doi.org/10.1080/23311908.2018.1518687.
-#' 
-#' Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in 
-#' Single-Case Research: A Review of Nine Nonoverlap Techniques. 
-#' \emph{Behavior Modification}, 35(4), 303–322. https://doi.org/10/dsdfs4
-#' Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B.
-#' (2011b). Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
-#' \emph{Behavior Therapy, 42}, 284-299.
+#' @references Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018).
+#'   Interpreting Kendall’s Tau and Tau-U for single-case experimental designs.
+#'   \emph{Cogent Psychology, 5(1)}, 1–26.
+#'   https://doi.org/10.1080/23311908.2018.1518687.
+#'
+#'   Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in
+#'   Single-Case Research: A Review of Nine Nonoverlap Techniques.
+#'   \emph{Behavior Modification}, 35(4), 303–322. https://doi.org/10/dsdfs4
+#'   Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011b).
+#'   Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
+#'   \emph{Behavior Therapy, 42}, 284-299.
 #' @examples
 #'
 #' tau_u(Grosche2011$Eva)
-#' 
+#'
 #' ## Replicate  tau-U calculation from Parker et al. (2011)
 #' bob <- scdf(c(A = 2, 3, 5, 3, B = 4, 5, 5, 7, 6), name = "Bob")
 #' res <- tau_u(bob, method = "parker", tau_method = "a")
