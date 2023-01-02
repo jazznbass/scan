@@ -13,7 +13,7 @@
 #'   meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis
 #'   is calculated. If set "none", no meta-analysis is conducted (may be helpful
 #'   to speed up analyses).
-#' @param ci Confidence interval for meta analyzes.
+#' @param ci Confidence intervals
 #' @param continuity_correction If TRUE, a continuity correction is applied for
 #'   calculating p-values of correlations (here: S will be reduced by one before
 #'   calculating Z)
@@ -34,12 +34,19 @@
 #'   variance (ie. the tau standard error). Tau values are not converted to
 #'   Pearson r values. The argument \code{"meta_method"} calculates a
 #'   random-effect model ("random") or a fixed effect model ("fixed").
+#'   The confidence intervals for single cases are calculated by Fisher-Z 
+#'   transforming tau, calculating the confidence intervals, and inverse transform
+#'   them back to tau (see Long & Cliff, 1997).
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @references Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018).
 #'   Interpreting Kendall’s Tau and Tau-U for single-case experimental designs.
 #'   \emph{Cogent Psychology, 5(1)}, 1–26.
 #'   https://doi.org/10.1080/23311908.2018.1518687.
+#'   
+#'   Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall’s tau. 
+#'   \emph{British Journal of Mathematical and Statistical Psychology}, 50(1), 
+#'   31–41. https://doi.org/10.1111/j.2044-8317.1997.tb01100.x
 #'
 #'   Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in
 #'   Single-Case Research: A Review of Nine Nonoverlap Techniques.
@@ -65,6 +72,7 @@ tau_u <- function(data, dvar, pvar,
                   method = "complete", 
                   phases = c(1, 2), 
                   meta_method = "random",
+                  meta_method_2 = "pearson",
                   ci = 0.95,
                   continuity_correction = FALSE) {
   
@@ -73,6 +81,7 @@ tau_u <- function(data, dvar, pvar,
     check_in(tau_method, "a", "b") %>%
     check_in(method, "complete", "parker") %>%
     check_in(meta_method, "random", "fixed", "none") %>%
+    check_in(meta_method_2, "pearson", "none") %>%
     check_within(ci, 0, 1) %>%
     end_check()
   
@@ -178,6 +187,17 @@ tau_u <- function(data, dvar, pvar,
     AvB_AKen <- .kendall(AB, c(nA:1, rep(nA + 1, nB)), tau_method = tau_method)
     AvB_BKen <- .kendall(AB, c(rep(0, nA), (nA + 1):nAB), tau_method=tau_method)
     
+    # n -----------------------------------------------------------------------
+    
+    table_tau$n <- c(
+      AvBKen$N,
+      AvAKen$N,
+      BvBKen$N,
+      AvB_AKen$N,
+      AvB_BKen$N,
+      AvB_B_AKen$N
+    )
+    
     # pairs -------------------------------------------------------------------
     
     AvB_pair <- nA * nB
@@ -274,10 +294,19 @@ tau_u <- function(data, dvar, pvar,
     table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
     table_tau$p <- pnorm(abs(table_tau$Z), lower.tail = FALSE) * 2
     
-    ci_z <- qnorm((1 - ci) /2, lower.tail = FALSE)
-    table_tau$`CI lower` <-  table_tau$Tau - ci_z * table_tau$SE_Tau
-    table_tau$`CI upper` <-  table_tau$Tau + ci_z * table_tau$SE_Tau
+    #ci_z <- qnorm((1 - ci) /2, lower.tail = FALSE)
+    #table_tau$`CI lower` <-  table_tau$Tau - ci_z * table_tau$SE_Tau
+    #table_tau$`CI upper` <-  table_tau$Tau + ci_z * table_tau$SE_Tau
+
+    if (!is.na(ci)) {
+      cis <- .tau_ci(table_tau$Tau, table_tau$n, ci)
+    } else {
+      cis <- list(tau_ci_lower = NA, tau_ci_upper = NA)
+    }
     
+    table_tau$`CI lower` <-  cis$tau_ci_lower
+    table_tau$`CI upper` <-  cis$tau_ci_upper
+
     out$table[[case]] <- table_tau
     out$tau_u[[case]] <- c(
       "A vs. B + Trend B - Trend A" = 
@@ -288,7 +317,7 @@ tau_u <- function(data, dvar, pvar,
   # Overall Tau -------------------------------------------------------------
   
   if (meta_method != "none") {
-    out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method, ci = ci)
+    out$Overall_tau_u <- .meta_tau_u_2(out$table, method = meta_method, ci = ci)
   } else {
     out$Overall_tau_u <- NA
   }
@@ -338,6 +367,61 @@ tau_u <- function(data, dvar, pvar,
     
     if (method == "random") return(data.frame(Model = model, .random(tau, se)))
     if (method == "fixed") return(data.frame(Model = model, .fixed(tau, se)))
+  }
+  
+  out <- data.frame(
+    Model = character(4), 
+    Tau_U = numeric(4),
+    se = numeric(4),
+    'CI lower' = numeric(4),
+    'CI upper' = numeric(4),
+    z = numeric(4),
+    p = numeric(4),
+    check.names = FALSE
+  )
+  
+  out[1,] <- .ot("A vs. B") 
+  out[2,] <- .ot("A vs. B - Trend A") 
+  out[3,] <- .ot("A vs. B + Trend B")
+  out[4,] <- .ot("A vs. B + Trend B - Trend A") 
+  
+  out
+}
+
+.meta_tau_u_2 <- function(tau_matrix, method = NA, ci = 0.95) {
+  
+  ci_z <- qnorm((1 - ci) /2, lower.tail = FALSE)
+  
+  .random <- function(tau, n) {
+    res <- metacor(tau, n)
+    ret <- list()
+    ret$Tau_U <- .inv_tau_z(res$TE.random)
+    ret$se <- res$seTE.random
+    ret$'CI lower' <- .inv_tau_z(res$TE.random - ci_z * res$seTE.random)
+    ret$'CI upper' <- .inv_tau_z(res$TE.random + ci_z * res$seTE.random)
+    ret$z <- res$zval.random
+    ret$p <- res$pval.random
+    ret
+  }
+  
+  .fixed <- function(tau, n) {
+    res <- metacor(tau, n)
+    ret <- list()
+    ret$Tau_U <- .inv_tau_z(res$TE.fixed)
+    ret$se <- res$seTE.fixed
+    ret$'CI lower' <- .inv_tau_z(res$TE.fixed - ci_z * res$seTE.fixed)
+    ret$'CI upper' <- .inv_tau_z(res$TE.fixed + ci_z * res$seTE.fixed)
+    ret$z <- res$zval.fixed
+    ret$p <- res$pval.fixed
+    ret
+  }
+  
+  .ot <- function(model) {
+    tau <- sapply(tau_matrix, function(x) x[model, "Tau"])
+    n <- sapply(tau_matrix, function(x) x[model, "n"])
+    
+    if (method == "random") return(data.frame(Model = model, .random(tau, n)))
+    if (method == "fixed") return(data.frame(Model = model, .fixed(tau, n)))
   }
   
   out <- data.frame(

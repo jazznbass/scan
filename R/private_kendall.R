@@ -57,7 +57,8 @@
   
   list(
     D = Den,
-    sdS = sdS
+    sdS = sdS,
+    N = N
   )
   
 }
@@ -170,3 +171,33 @@
   )
   
 }
+
+.tau_z <- function(tau) {
+  0.5 * log((1 + tau)/(1 - tau))
+}
+
+.inv_tau_z <- function(tau) {
+  (exp(2 * tau) - 1) / (exp(2 * tau) + 1)
+}
+
+.tau_ci <- function(tau, n, ci = 0.95) {
+  z <- qnorm((1 - ci) /2, lower.tail = FALSE)
+  var_tau_z <- sqrt(0.437/(n-4))
+  tau_z <- .tau_z(tau)
+  tau_z_ci_lower <- tau_z - z * var_tau_z
+  tau_z_ci_upper <- tau_z + z * var_tau_z
+
+  list(
+    tau = .inv_tau_z(tau_z),
+    n = n,
+    tau_ci_lower = .inv_tau_z(tau_z_ci_lower),
+    tau_ci_upper = .inv_tau_z(tau_z_ci_upper),
+    tau_z = tau_z,
+    tau_z_ci_lower = tau_z_ci_lower,
+    tau_z_ci_upper = tau_z_ci_upper,
+    var_tau_z = var_tau_z
+  )
+  
+}
+
+
