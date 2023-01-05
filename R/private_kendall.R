@@ -177,6 +177,12 @@
 }
 
 .inv_tau_z <- function(tau) {
+  if (identical(tau, Inf)) {
+    return(1)
+  }
+  if (identical(tau, -Inf)) {
+    return(-1)
+  }
   (exp(2 * tau) - 1) / (exp(2 * tau) + 1)
 }
 

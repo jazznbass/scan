@@ -12,6 +12,7 @@ tau_u(
   method = "complete",
   phases = c(1, 2),
   meta_method = "random",
+  meta_method_2 = "pearson",
   ci = 0.95,
   continuity_correction = FALSE
 )
