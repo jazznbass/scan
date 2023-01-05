@@ -32,6 +32,7 @@
     if (!is.factor(data[[case]][[pvar]])) {
       data[[case]][[pvar]] <- as.factor(data[[case]][[pvar]])
     }
+    data[[case]][[pvar]] <- droplevels(data[[case]][[pvar]])
   }
   data
 }
