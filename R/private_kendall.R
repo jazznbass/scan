@@ -35,14 +35,26 @@
     tie_x <- rle(x)$lengths
     tie_y <- rle(sort(y))$lengths
     
-    ti <- sum(vapply(tie_x, FUN = function(x) x * (x - 1) / 2, FUN.VALUE = numeric(1)))
-    ui <- sum(vapply(tie_y, FUN = function(x) x * (x - 1) / 2, FUN.VALUE = numeric(1)))
+    ti <- sum(
+      vapply(tie_x, FUN = function(x) x * (x - 1) / 2, FUN.VALUE = numeric(1))
+    )
+    ui <- sum(
+      vapply(tie_y, FUN = function(x) x * (x - 1) / 2, FUN.VALUE = numeric(1))
+    )
     
     Den <- sqrt( (n0 - ti) * (n0 - ui) )
     
     v0 <- N * (N - 1) * (2 * N + 5)
-    vt <- sum(vapply(tie_x, function(x) (x * (x - 1)) * (2 * x + 5), FUN.VALUE = numeric(1)))
-    vu <- sum(vapply(tie_y, function(x) (x * (x - 1)) * (2 * x + 5), FUN.VALUE = numeric(1)))
+    vt <- sum(
+      vapply(
+        tie_x, function(x) (x * (x - 1)) * (2 * x + 5), FUN.VALUE = numeric(1)
+      )
+    )
+    vu <- sum(
+      vapply(
+        tie_y, function(x) (x * (x - 1)) * (2 * x + 5), FUN.VALUE = numeric(1)
+      )
+    )
     v1 <- sum(vapply(tie_x, function(x) (x * (x - 1)), FUN.VALUE = numeric(1))) * 
       sum(vapply(tie_y, function(x) (x * (x - 1)), FUN.VALUE = numeric(1)))
     v2 <- sum(vapply(tie_x, function(x) (x * (x - 1)) * (x - 2), FUN.VALUE = numeric(1))) * 
@@ -171,39 +183,3 @@
   )
   
 }
-
-.tau_z <- function(tau) {
-  0.5 * log((1 + tau)/(1 - tau))
-}
-
-.inv_tau_z <- function(tau) {
-  if (identical(tau, Inf)) {
-    return(1)
-  }
-  if (identical(tau, -Inf)) {
-    return(-1)
-  }
-  (exp(2 * tau) - 1) / (exp(2 * tau) + 1)
-}
-
-.tau_ci <- function(tau, n, ci = 0.95) {
-  z <- qnorm((1 - ci) /2, lower.tail = FALSE)
-  var_tau_z <- sqrt(0.437/(n-4))
-  tau_z <- .tau_z(tau)
-  tau_z_ci_lower <- tau_z - z * var_tau_z
-  tau_z_ci_upper <- tau_z + z * var_tau_z
-
-  list(
-    tau = .inv_tau_z(tau_z),
-    n = n,
-    tau_ci_lower = .inv_tau_z(tau_z_ci_lower),
-    tau_ci_upper = .inv_tau_z(tau_z_ci_upper),
-    tau_z = tau_z,
-    tau_z_ci_lower = tau_z_ci_lower,
-    tau_z_ci_upper = tau_z_ci_upper,
-    var_tau_z = var_tau_z
-  )
-  
-}
-
-
