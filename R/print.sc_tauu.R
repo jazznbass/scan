@@ -9,15 +9,15 @@ print.sc_tauu <- function(x, complete = FALSE, digits = "auto", ...) {
   cat("Tau-U\n")
   cat("Method:", x$method, "\n")
   cat("Applied Kendall's Tau-", x$tau_method, "\n", sep = "")
-  if (complete || (length(x$table) > 1 && x$meta_method != "none")) {
+  if (complete || (length(x$table) > 1 && x$meta_analyses)) {
     cat(x$ci * 100, "% CIs for tau are reported.\n\n", sep = "")
   } else cat("\n")
   
   out <- x$table
   
-  if (length(out) > 1 && x$meta_method != "none") {
-    cat("Overall Tau-U\n")
-    cat("Meta-anlysis model:", x$meta_method, "effect\n\n")
+  if (length(out) > 1 && x$meta_analyses) {
+    cat("Tau-U meta analyses:\n")
+    #cat("Meta-anlysis model:", x$meta_method, "effect\n\n")
     print(x$Overall_tau_u, row.names = FALSE, digits = digits)
     cat("\n")
   }

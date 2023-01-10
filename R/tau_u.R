@@ -9,15 +9,15 @@
 #' @param method \code{"complete"} (default) or \code{"parker"}. The latter
 #'   calculates the number of possible pairs as described in Parker et al.
 #'   (2011) which might lead to tau-U values greater than 1.
-#' @param meta_method Character string. If set "random", a random-effect
-#'   meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis
-#'   is calculated. If set "none", no meta-analysis is conducted (may be helpful
-#'   to speed up analyses).
-#' @param meta_method_2 Character string either "pearson" or "none".
+#' @param meta_analyses If TRUE, a meta analysis is conducted.
 #' @param ci Confidence intervals
+#' @param ci_se_method String to specify the method for calculating the 
+#'   standard error for tau. Either "tau" or "z". This influences the 
+#'   confidence intervals and the meta-analyses.
 #' @param continuity_correction If TRUE, a continuity correction is applied for
 #'   calculating p-values of correlations (here: S will be reduced by one before
 #'   calculating Z)
+#' @param meta_method (not implemented) All meta analyses are based on a fixed model. 
 #' @return
 #' \item{table}{A data frame containing statistics from the Tau-U
 #' family, including: Pairs, positive and negative comparisons, S, and Tau}
@@ -32,9 +32,7 @@
 #'   Another problems lies in the calculation in overall Tau-U values from
 #'   several single cases. The function presented here applies a metaanalyzes to
 #'   gain the overall values. Each tau value is weighted by the inverse of the
-#'   variance (ie. the tau standard error). Tau values are not converted to
-#'   Pearson r values. The argument \code{"meta_method"} calculates a
-#'   random-effect model ("random") or a fixed effect model ("fixed").
+#'   variance (ie. the tau standard error). 
 #'   The confidence intervals for single cases are calculated by Fisher-Z 
 #'   transforming tau, calculating the confidence intervals, and inverse transform
 #'   them back to tau (see Long & Cliff, 1997).
@@ -72,15 +70,16 @@ tau_u <- function(data, dvar, pvar,
                   tau_method = "b", 
                   method = "complete", 
                   phases = c(1, 2), 
-                  meta_method = "random",
+                  meta_analyses = TRUE,
                   ci = 0.95,
-                  continuity_correction = FALSE) {
+                  ci_se_method = "z",
+                  continuity_correction = FALSE,
+                  meta_method = NULL) {
   
   # validity check ----
   start_check() %>%
     check_in(tau_method, "a", "b") %>%
     check_in(method, "complete", "parker") %>%
-    check_in(meta_method, "random", "fixed", "none") %>%
     check_within(ci, 0, 1) %>%
     end_check()
   
@@ -103,9 +102,10 @@ tau_u <- function(data, dvar, pvar,
     phases = phases,
     n_cases = N,
     continuity_correction = continuity_correction,
-    meta_method = meta_method,
     Overall_tau_u = NA,
-    ci = ci
+    meta_analyses = meta_analyses,
+    ci = ci,
+    ci_se_method = ci_se_method
   )
   
   # define tau table data structure -----
@@ -284,6 +284,7 @@ tau_u <- function(data, dvar, pvar,
     )
     table_tau$VAR_S <- table_tau$SD_S^2
     
+    # Z, p, se ----------------------------------------
     if (continuity_correction) {
       table_tau$Z <- (table_tau$S - 1) / table_tau$SD_S
     } else {
@@ -293,12 +294,11 @@ tau_u <- function(data, dvar, pvar,
     table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
     table_tau$p <- pnorm(abs(table_tau$Z), lower.tail = FALSE) * 2
     
-    #ci_z <- qnorm((1 - ci) /2, lower.tail = FALSE)
-    #table_tau$`CI lower` <-  table_tau$Tau - ci_z * table_tau$SE_Tau
-    #table_tau$`CI upper` <-  table_tau$Tau + ci_z * table_tau$SE_Tau
-
+    # confidence intervalls --------------------
     if (!is.na(ci)) {
-      cis <- .tau_ci(table_tau$Tau, table_tau$n, ci)
+      cis <- .tau_ci(
+        table_tau$Tau, table_tau$n, ci = ci, se_method = ci_se_method
+      )
     } else {
       cis <- list(tau_ci_lower = NA, tau_ci_upper = NA)
     }
@@ -313,10 +313,12 @@ tau_u <- function(data, dvar, pvar,
     )
   }
   
-  # Overall Tau -------------------------------------------------------------
+  # Meta analysis ----------------------------------------------------
   
-  if (meta_method != "none") {
-    out$Overall_tau_u <- .meta_tau_u(out$table, method = meta_method, ci = ci)
+  if (meta_analyses) {
+    out$Overall_tau_u <- .meta_tau_u(
+      out$table, ci = ci, se_method = ci_se_method
+    )
   } else {
     out$Overall_tau_u <- NA
   }
@@ -333,69 +335,25 @@ tau_u <- function(data, dvar, pvar,
 }
 
 
-.meta_tau_u <- function(tau_matrix, method, ci) {
+.meta_tau_u <- function(tau_matrix, ci, se_method = "z") {
   
-  ci_z <- qnorm((1 - ci) /2, lower.tail = FALSE)
-  
-  .random <- function(tau, n) {
-    res <- metacor(tau, n)
-    ret <- list()
-    ret$Tau_U <- .inv_tau_z(res$TE.random)
-    ret$se <- res$seTE.random
-    ret$'CI lower' <- .inv_tau_z(res$TE.random - ci_z * res$seTE.random)
-    ret$'CI upper' <- .inv_tau_z(res$TE.random + ci_z * res$seTE.random)
-    ret$z <- res$zval.random
-    ret$p <- res$pval.random
-    ret
-  }
-  
-  .fixed <- function(tau, n) {
-    res <- metacor(tau, n)
-    ret <- list()
-    ret$Tau_U <- .inv_tau_z(res$TE.fixed)
-    ret$se <- res$seTE.fixed
-    ret$'CI lower' <- .inv_tau_z(res$TE.fixed - ci_z * res$seTE.fixed)
-    ret$'CI upper' <- .inv_tau_z(res$TE.fixed + ci_z * res$seTE.fixed)
-    ret$z <- res$zval.fixed
-    ret$p <- res$pval.fixed
-    ret
-  }
+  ci_z <- qnorm((1 - ci) / 2, lower.tail = FALSE)
   
   .meta <- function(model) {
     tau <- sapply(tau_matrix, function(x) x[model, "Tau"])
     n <- sapply(tau_matrix, function(x) x[model, "n"])
-    
     out <- data.frame(Model = model)
-    
-    res <- metacor(tau, n)
-
-    if (method == "random") {
-      TE <- res$TE.random
-      seTE <- res$seTE.random
-    }
-    
-    if (method == "fixed") {
-      TE <- res$TE.fixed
-      seTE <- res$seTE.fixed
-    }
-    
-    if (identical(TE, Inf)) {
-      warning("One of the Tau values is 1. Therefore, the ci = [1;1] and p = 0.")
-    }
-    if (identical(TE, -Inf)) {
-      warning("One of the Tau values is -1. Therefore, the ci = [-1;-1] and p = 0.")
-    }
-    
-    out$Tau_U <- .inv_tau_z(TE)
-    out$se <- seTE
-    out$'CI lower' <- .inv_tau_z(TE - ci_z * seTE)
-    out$'CI upper' <- .inv_tau_z(TE + ci_z * seTE)
-    out$z <- res$zval.random
-    out$p <- res$pval.random
+ 
+    res <- .meta_tau(tau, n, ci = ci, se_method = se_method)
+  
+    out$Tau_U <- res$tau
+    out$se <- res$se
+    out$'CI lower' <- res$lower
+    out$'CI upper' <- res$upper
+    out$z <- res$z
+    out$p <- res$p
     
     out
-    #if (method == "random") return(data.frame(Model = model, .random(tau, n)))
-    #if (method == "fixed") return(data.frame(Model = model, .fixed(tau, n)))
   }
   
   out <- data.frame(
@@ -417,57 +375,3 @@ tau_u <- function(data, dvar, pvar,
   out
 }
 
-# .meta_tau_u_old <- function(tau_matrix, method = NA, ci = 0.95) {
-#   
-#   ci_z <- qnorm((1 - ci) /2, lower.tail = FALSE)
-#   
-#   .random <- function(tau, se) {
-#     res <- metagen(tau, se)
-#     ret <- list()
-#     ret$Tau_U <- res$TE.random
-#     ret$se <- res$seTE.random
-#     ret$'CI lower' <- ret$Tau_U - ci_z * ret$se
-#     ret$'CI upper' <- ret$Tau_U + ci_z * ret$se
-#     ret$z <- res$zval.random
-#     ret$p <- res$pval.random
-#     ret
-#   }
-#   
-#   .fixed <- function(tau, se) {
-#     res <- metagen(tau, se)
-#     ret <- list()
-#     ret$Tau_U <- res$TE.fixed
-#     ret$se <- res$seTE.fixed
-#     ret$'CI lower' <- ret$Tau_U - ci_z * ret$se
-#     ret$'CI upper' <- ret$Tau_U + ci_z * ret$se
-#     ret$z <- res$zval.fixed
-#     ret$p <- res$pval.fixed
-#     ret
-#   }
-#   
-#   .ot <- function(model) {
-#     tau <- sapply(tau_matrix, function(x) x[model, "Tau"])
-#     se <- sapply(tau_matrix, function(x) x[model, "SE_Tau"])
-#     
-#     if (method == "random") return(data.frame(Model = model, .random(tau, se)))
-#     if (method == "fixed") return(data.frame(Model = model, .fixed(tau, se)))
-#   }
-#   
-#   out <- data.frame(
-#     Model = character(4), 
-#     Tau_U = numeric(4),
-#     se = numeric(4),
-#     'CI lower' = numeric(4),
-#     'CI upper' = numeric(4),
-#     z = numeric(4),
-#     p = numeric(4),
-#     check.names = FALSE
-#   )
-#   
-#   out[1,] <- .ot("A vs. B") 
-#   out[2,] <- .ot("A vs. B - Trend A") 
-#   out[3,] <- .ot("A vs. B + Trend B")
-#   out[4,] <- .ot("A vs. B + Trend B - Trend A") 
-#   
-#   out
-# }

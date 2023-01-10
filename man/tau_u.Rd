@@ -11,9 +11,11 @@ tau_u(
   tau_method = "b",
   method = "complete",
   phases = c(1, 2),
-  meta_method = "random",
+  meta_analyses = TRUE,
   ci = 0.95,
-  continuity_correction = FALSE
+  ci_se_method = "z",
+  continuity_correction = FALSE,
+  meta_method = NULL
 )
 }
 \arguments{
@@ -40,18 +42,19 @@ combined by providing a list with two elements. E.g., \code{phases = list(A
 = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
 (as B). Default is \code{phases = c(1,2)}.}
 
-\item{meta_method}{Character string. If set "random", a random-effect
-meta-analysis is calculated. If set "fixed", a fixed-effect meta-analysis
-is calculated. If set "none", no meta-analysis is conducted (may be helpful
-to speed up analyses).}
+\item{meta_analyses}{If TRUE, a meta analysis is conducted.}
 
 \item{ci}{Confidence intervals}
+
+\item{ci_se_method}{String to specify the method for calculating the 
+standard error for tau. Either "tau" or "z". This influences the 
+confidence intervals and the meta-analyses.}
 
 \item{continuity_correction}{If TRUE, a continuity correction is applied for
 calculating p-values of correlations (here: S will be reduced by one before
 calculating Z)}
 
-\item{meta_method_2}{Character string either "pearson" or "none".}
+\item{meta_method}{(not implemented) All meta analyses are based on a fixed model.}
 }
 \value{
 \item{table}{A data frame containing statistics from the Tau-U
@@ -73,9 +76,7 @@ Tau-U is an inconsistently operationalized construct. Parker et al.
   Another problems lies in the calculation in overall Tau-U values from
   several single cases. The function presented here applies a metaanalyzes to
   gain the overall values. Each tau value is weighted by the inverse of the
-  variance (ie. the tau standard error). Tau values are not converted to
-  Pearson r values. The argument \code{"meta_method"} calculates a
-  random-effect model ("random") or a fixed effect model ("fixed").
+  variance (ie. the tau standard error). 
   The confidence intervals for single cases are calculated by Fisher-Z 
   transforming tau, calculating the confidence intervals, and inverse transform
   them back to tau (see Long & Cliff, 1997).
