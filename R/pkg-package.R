@@ -13,7 +13,6 @@
 #' @import knitr
 #' @import kableExtra
 #' @import mblm
-#' @importFrom meta metacor
 #' @import methods
 #' @importFrom car Anova
 NULL
