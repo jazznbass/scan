@@ -11,13 +11,14 @@
 #'   (2011) which might lead to tau-U values greater than 1.
 #' @param meta_analyses If TRUE, a meta analysis is conducted.
 #' @param ci Confidence intervals
-#' @param ci_se_method String to specify the method for calculating the 
-#'   standard error for tau. Either "tau" or "z". This influences the 
-#'   confidence intervals and the meta-analyses.
+#' @param ci_se_method String to specify the method for calculating the standard
+#'   error for tau. Either "tau" or "z". This influences the confidence
+#'   intervals and the meta-analyses.
 #' @param continuity_correction If TRUE, a continuity correction is applied for
 #'   calculating p-values of correlations (here: S will be reduced by one before
 #'   calculating Z)
-#' @param meta_method (not implemented) All meta analyses are based on a fixed model. 
+#' @param meta_method (not implemented) All meta analyses are based on a fixed
+#'   model.
 #' @return
 #' \item{table}{A data frame containing statistics from the Tau-U
 #' family, including: Pairs, positive and negative comparisons, S, and Tau}
@@ -32,19 +33,19 @@
 #'   Another problems lies in the calculation in overall Tau-U values from
 #'   several single cases. The function presented here applies a metaanalyzes to
 #'   gain the overall values. Each tau value is weighted by the inverse of the
-#'   variance (ie. the tau standard error). 
-#'   The confidence intervals for single cases are calculated by Fisher-Z 
-#'   transforming tau, calculating the confidence intervals, and inverse transform
-#'   them back to tau (see Long & Cliff, 1997).
+#'   variance (ie. the tau standard error). The confidence intervals for single
+#'   cases are calculated by Fisher-Z transforming tau, calculating the
+#'   confidence intervals, and inverse transform them back to tau (see Long &
+#'   Cliff, 1997).
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @references Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018).
 #'   Interpreting Kendall’s Tau and Tau-U for single-case experimental designs.
 #'   \emph{Cogent Psychology, 5(1)}, 1–26.
 #'   https://doi.org/10.1080/23311908.2018.1518687.
-#'   
-#'   Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall’s tau. 
-#'   \emph{British Journal of Mathematical and Statistical Psychology}, 50(1), 
+#'
+#'   Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall’s tau.
+#'   \emph{British Journal of Mathematical and Statistical Psychology}, 50(1),
 #'   31–41. https://doi.org/10.1111/j.2044-8317.1997.tb01100.x
 #'
 #'   Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in
@@ -367,10 +368,13 @@ tau_u <- function(data, dvar, pvar,
     check.names = FALSE
   )
   
-  out[1,] <- .meta("A vs. B") 
-  out[2,] <- .meta("A vs. B - Trend A") 
-  out[3,] <- .meta("A vs. B + Trend B")
-  out[4,] <- .meta("A vs. B + Trend B - Trend A") 
+  models <- c("A vs. B", 
+              "A vs. B - Trend A", 
+              "A vs. B + Trend B", 
+              "A vs. B + Trend B - Trend A"
+            )
+  
+  for(i in 1:length(models)) out[i,] <- .meta(models[i])
   
   out
 }

@@ -46,15 +46,16 @@ combined by providing a list with two elements. E.g., \code{phases = list(A
 
 \item{ci}{Confidence intervals}
 
-\item{ci_se_method}{String to specify the method for calculating the 
-standard error for tau. Either "tau" or "z". This influences the 
-confidence intervals and the meta-analyses.}
+\item{ci_se_method}{String to specify the method for calculating the standard
+error for tau. Either "tau" or "z". This influences the confidence
+intervals and the meta-analyses.}
 
 \item{continuity_correction}{If TRUE, a continuity correction is applied for
 calculating p-values of correlations (here: S will be reduced by one before
 calculating Z)}
 
-\item{meta_method}{(not implemented) All meta analyses are based on a fixed model.}
+\item{meta_method}{(not implemented) All meta analyses are based on a fixed
+model.}
 }
 \value{
 \item{table}{A data frame containing statistics from the Tau-U
@@ -76,10 +77,10 @@ Tau-U is an inconsistently operationalized construct. Parker et al.
   Another problems lies in the calculation in overall Tau-U values from
   several single cases. The function presented here applies a metaanalyzes to
   gain the overall values. Each tau value is weighted by the inverse of the
-  variance (ie. the tau standard error). 
-  The confidence intervals for single cases are calculated by Fisher-Z 
-  transforming tau, calculating the confidence intervals, and inverse transform
-  them back to tau (see Long & Cliff, 1997).
+  variance (ie. the tau standard error). The confidence intervals for single
+  cases are calculated by Fisher-Z transforming tau, calculating the
+  confidence intervals, and inverse transform them back to tau (see Long &
+  Cliff, 1997).
 }
 \examples{
 
@@ -98,9 +99,9 @@ Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018).
   Interpreting Kendall’s Tau and Tau-U for single-case experimental designs.
   \emph{Cogent Psychology, 5(1)}, 1–26.
   https://doi.org/10.1080/23311908.2018.1518687.
-  
-  Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall’s tau. 
-  \emph{British Journal of Mathematical and Statistical Psychology}, 50(1), 
+
+  Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall’s tau.
+  \emph{British Journal of Mathematical and Statistical Psychology}, 50(1),
   31–41. https://doi.org/10.1111/j.2044-8317.1997.tb01100.x
 
   Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in

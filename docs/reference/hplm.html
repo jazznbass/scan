@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55.8</span>
       </span>
     </div>
 
@@ -72,6 +72,8 @@
 <span>  <span class="va">mvar</span>,</span>
 <span>  model <span class="op">=</span> <span class="st">"W"</span>,</span>
 <span>  contrast <span class="op">=</span> <span class="st">"first"</span>,</span>
+<span>  contrast_level <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  contrast_slope <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"ML"</span>,</span>
 <span>  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>opt <span class="op">=</span> <span class="st">"optim"</span><span class="op">)</span>,</span>
 <span>  random.slopes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -111,14 +113,23 @@ Defaults to the attributes in the scdf file.</p></dd>
 
 
 <dt>model</dt>
-<dd><p>Model used for calculating the slope parameter (see Huitema &amp;
+<dd><p>Model used for calculating the dummy parameters (see Huitema &amp;
 McKean, 2000). Default is <code>model = "W"</code>. Possible values are:
 <code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"W"</code>, and deprecated <code>"JW"</code>.</p></dd>
 
 
 <dt>contrast</dt>
-<dd><p>Either "first" or "preceding". "first" contrasts all 
-phase-effects to the first phase and "preceding" to the preceding phase.</p></dd>
+<dd><p>Sets contrast_level and contrast_slope. Either "first", "preceding" or a contrast matrix.</p></dd>
+
+
+<dt>contrast_level</dt>
+<dd><p>Either "first", "preceding" or a contrast matrix. If NA
+contrast_level is a copy of contrast.</p></dd>
+
+
+<dt>contrast_slope</dt>
+<dd><p>Either "first", "preceding" or a contrast matrix. If NA
+contrast_level is a copy of contrast.</p></dd>
 
 
 <dt>method</dt>
@@ -231,7 +242,7 @@ variables belong to.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hierarchical Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimation method REML </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level: first, slope: first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.292; L = 341.2; p = 0.000</span>
@@ -257,7 +268,7 @@ variables belong to.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hierarchical Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimation method ML </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level: first, slope: first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 35 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.344; L = 875.4; p = 0.000</span>
@@ -293,7 +304,7 @@ variables belong to.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
