@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55.8</span>
       </span>
     </div>
 
@@ -60,32 +60,76 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.55" id="scan-055">scan 0.55<a class="anchor" aria-label="anchor" href="#scan-055"></a></h2>
+<h2 class="page-header" data-toc-text="0.55" id="scan-055x">scan 0.55.x<small>2022-08-29</small><a class="anchor" aria-label="anchor" href="#scan-055x"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-55">New features<a class="anchor" aria-label="anchor" href="#new-features-0-55"></a></h3>
+<ul><li><p><code><a href="../reference/export.html">export()</a></code>: New export for <code><a href="../reference/power_test.html">power_test()</a></code> and <code><a href="../reference/smd.html">smd()</a></code> output.</p></li>
+<li><p><code><a href="../reference/export.html">export()</a></code>: <code><a href="../reference/tau_u.html">tau_u()</a></code> export with new argument <code>case</code> which takes the values <code>"meta"</code> or <code>"all"</code></p></li>
+<li><p><code><a href="../reference/select_cases.html">select_cases()</a></code>: Allow for a selection based on object names (like in substitute).</p></li>
+</ul><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/select_cases.html">select_cases</a></span><span class="op">(</span><span class="va">exampleAB</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Johanna</span>, <span class="va">Karolina</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/select_cases.html">select_cases</a></span><span class="op">(</span><span class="va">exampleAB</span>, <span class="va">Johanna</span>, <span class="va">Karolina</span><span class="op">)</span></span>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Moritz"</span>, <span class="st">"Jannis"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/select_cases.html">select_cases</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2</span>, <span class="va">v</span><span class="op">)</span></span></code></pre></div>
+<ul><li>
+<code><a href="../reference/plm.html">plm()</a></code>, <code><a href="../reference/hplm.html">hplm()</a></code>: contrasts argument now is a list that takes two elements: <code>level</code> and <code>slope</code>. Both elements can either be “first” or “preceding”.</li>
+<li>Speed-up <code><a href="../reference/tau_u.html">tau_u()</a></code> by 20%.</li>
+<li>rewrote <code><a href="../reference/as_scdf.html">as_scdf()</a></code>, <code><a href="../reference/read_scdf.html">read_scdf()</a></code>. Now it is easier to import data from any file format.</li>
+</ul><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/readODS/man/read_ods.html" class="external-link">read_ods</a></span><span class="op">(</span><span class="st">"filename.ods"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/scdf.html">as.scdf</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">openxlsx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html" class="external-link">read.xlsx</a></span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/scdf.html">as.scdf</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/readODS/man/read_ods.html" class="external-link">read_ods</a></span><span class="op">(</span><span class="st">"filename.ods"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/scdf.html">as.scdf</a></span><span class="op">(</span></span>
+<span>    cvar <span class="op">=</span> <span class="st">"id"</span>, </span>
+<span>    pvar <span class="op">=</span> <span class="st">"section"</span>, </span>
+<span>    mvar <span class="op">=</span> <span class="st">"day"</span>, </span>
+<span>    phase_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"baseline"</span>, <span class="st">"intervention"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span>  </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">exampleABC</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/readODS/man/write_ods.html" class="external-link">write_ods</a></span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">exampleABC</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">openxlsx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/write.xlsx.html" class="external-link">write.xlsx</a></span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="bug-fixes-0-55">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-55"></a></h3>
+<ul><li>
+<code><a href="../reference/tau_u.html">tau_u()</a></code>: Rewrote the calculation of meta analyses and confidence intervals.</li>
+<li>
+<code>tau_u(), correted_tau()</code>: corrected a wrong calculation of the continuity correction when values where lower in phase B.</li>
+<li>
+<code><a href="../reference/tau_u.html">tau_u()</a></code>: Implemented a new method for calculating confidence intervals based on Fisher-Z transformations (see Long, J. D., &amp; Cliff, N. (1997). Confidence intervals for Kendall’s tau. British Journal of Mathematical and Statistical Psychology, 50(1), 31–41. <a href="https://doi.org/10.1111/j.2044-8317.1997.tb01100.x" class="external-link uri">https://doi.org/10.1111/j.2044-8317.1997.tb01100.x</a>)</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.55" id="scan-055">scan 0.55<small>2022-08-29</small><a class="anchor" aria-label="anchor" href="#scan-055"></a></h2>
 <div class="section level3">
 <h3 id="new-functions-0-55">new functions<a class="anchor" aria-label="anchor" href="#new-functions-0-55"></a></h3>
 <ul><li>
 <code>coef()/ coefficients()</code>: Method for base R <code>coef</code> function for plm/hplm objects. Extracts coefficient tables from provided object.</li>
-</ul><div class="sourceCode" id="cb1"><pre class="sourceCode .r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">plm</span>(exampleAB<span class="sc">$</span>Johanna))</span></code></pre></div>
+</ul><div class="sourceCode" id="cb3"><pre class="sourceCode .r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">plm</span>(exampleAB<span class="sc">$</span>Johanna))</span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="new-features-0-55">New features<a class="anchor" aria-label="anchor" href="#new-features-0-55"></a></h3>
+<h3 id="new-features-0-55-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-55-1"></a></h3>
 <ul><li>
 <code><a href="../reference/power_test.html">power_test()</a></code>: New argument <code>ci</code> provides confidence intervals for power, alpha error, and correct proportions. New arguments <code>binom_test_alpha, binom_test_power, binom_test_correct</code> provide test against a provided proportion for alpha, power, and correct proportions.</li>
-</ul><div class="sourceCode" id="cb2"><pre class="sourceCode .r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">design</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">1</span>, <span class="at">phase_design =</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="dv">6</span>, <span class="at">B =</span> <span class="dv">9</span>),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rtt =</span> <span class="fl">0.8</span>, <span class="at">level =</span> <span class="fl">1.0</span>, <span class="at">trend =</span> <span class="fl">0.05</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">power_test</span>(</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  design, <span class="at">ci =</span> <span class="fl">0.95</span>, <span class="at">binom_test =</span> <span class="cn">TRUE</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+</ul><div class="sourceCode" id="cb4"><pre class="sourceCode .r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">design</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">1</span>, <span class="at">phase_design =</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="dv">6</span>, <span class="at">B =</span> <span class="dv">9</span>),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rtt =</span> <span class="fl">0.8</span>, <span class="at">level =</span> <span class="fl">1.0</span>, <span class="at">trend =</span> <span class="fl">0.05</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">power_test</span>(</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  design, <span class="at">ci =</span> <span class="fl">0.95</span>, <span class="at">binom_test =</span> <span class="cn">TRUE</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ul><li>
 <code><a href="../reference/plm.html">plm()</a></code>, <code><a href="../reference/hplm.html">hplm()</a></code>: Added contrast argument with values <code>"first"</code> or “<code>preceding</code>”. Now <code>model = "JW"</code> is deprecated and identical to <code>model = "B&amp;L-B", contrast = "preceding"</code>.<br></li>
 <li>
 <code><a href="../reference/plm.html">plm()</a></code>, <code><a href="../reference/hplm.html">hplm()</a></code>: Added model <code>"W"</code>. Which shifts the measurement-time variable to start with zero. This leads to a more sensible estimation of the intercept (where the intercept depicts the estimated score at the start). <code>model = "W"</code> is now the default. Use <code>model = "B&amp;L-B"</code> for previous defaults.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-55">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-55"></a></h3>
+<h3 id="bug-fixes-0-55-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-55-1"></a></h3>
 <ul><li>solved <a href="https://github.com/jazznbass/scan/issues/66" class="external-link">#66</a>: <code><a href="../reference/set_vars.html">set_vars()</a></code> working.</li>
 <li>
 <code><a href="../reference/read_scdf.html">read_scdf()</a></code> now works when cvar is not the first column.</li>
@@ -148,16 +192,16 @@
 <code><a href="../reference/read_scdf.html">read_scdf()</a></code>: extracts filetype from file extension.</li>
 <li>
 <code><a href="../reference/read_scdf.html">read_scdf()</a></code>: New <code>yaml</code> import options for scdf files</li>
-</ul><div class="sourceCode" id="cb3"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anna</span><span class="kw">:</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">values</span><span class="kw">:</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">A</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">1</span><span class="kw">,</span><span class="at"> </span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">4</span><span class="kw">,</span><span class="at"> </span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">6</span><span class="kw">,</span><span class="at"> </span><span class="dv">7</span><span class="kw">]</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">B</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">8</span><span class="kw">,</span><span class="at"> </span><span class="dv">9</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">11</span><span class="kw">]</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Toni</span><span class="kw">:</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">values</span><span class="kw">:</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">A</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">2</span><span class="kw">,</span><span class="at"> </span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">4</span><span class="kw">,</span><span class="at"> </span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">6</span><span class="kw">,</span><span class="at"> </span><span class="dv">7</span><span class="kw">]</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">B</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">9</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="dv">11</span><span class="kw">]</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">control_var</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="kw">,</span><span class="dv">4</span><span class="kw">,</span><span class="dv">5</span><span class="kw">,</span><span class="dv">6</span><span class="kw">,</span><span class="dv">7</span><span class="kw">,</span><span class="dv">8</span><span class="kw">,</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="kw">]</span></span></code></pre></div>
+</ul><div class="sourceCode" id="cb5"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anna</span><span class="kw">:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">values</span><span class="kw">:</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">A</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">1</span><span class="kw">,</span><span class="at"> </span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">4</span><span class="kw">,</span><span class="at"> </span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">6</span><span class="kw">,</span><span class="at"> </span><span class="dv">7</span><span class="kw">]</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">B</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">8</span><span class="kw">,</span><span class="at"> </span><span class="dv">9</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">11</span><span class="kw">]</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Toni</span><span class="kw">:</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">values</span><span class="kw">:</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">A</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">2</span><span class="kw">,</span><span class="at"> </span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">4</span><span class="kw">,</span><span class="at"> </span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">6</span><span class="kw">,</span><span class="at"> </span><span class="dv">7</span><span class="kw">]</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">B</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">9</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="dv">11</span><span class="kw">]</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">control_var</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="kw">,</span><span class="dv">4</span><span class="kw">,</span><span class="dv">5</span><span class="kw">,</span><span class="dv">6</span><span class="kw">,</span><span class="dv">7</span><span class="kw">,</span><span class="dv">8</span><span class="kw">,</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="kw">]</span></span></code></pre></div>
 <ul><li>
 <code><a href="../reference/tau_u.html">tau_u()</a></code> <a href="https://github.com/jazznbass/scan/issues/51" class="external-link">#51</a>: Added option for confidence intervals for tau_u output.</li>
 </ul></div>
@@ -183,11 +227,11 @@
 <h4 id="new-functions-0-53">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-53"></a></h4>
 <ul><li>
 <code><a href="../reference/sample_names.html">sample_names()</a></code>: Returns a character vector of length <code>n</code> with names by randomly drawing from a name list: type = {“neutral”, “female”, “male”, “mixed”}. Useful to anonymize scdf files</li>
-</ul><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+</ul><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">exampleAB</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_names.html">sample_names</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p>-<code><a href="../reference/add_l2.html">add_l2()</a></code>: Adds the variables from a second level 2 data frame to an scdf matched by an id variable (default is <code>case</code>).</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">Leidig2018</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_l2.html">add_l2</a></span><span class="op">(</span><span class="va">Leidig2018_l2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -195,14 +239,14 @@
 <span>       slope <span class="op">=</span> <span class="cn">FALSE</span>, random.slopes <span class="op">=</span> <span class="cn">FALSE</span>, lr.test <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <ul><li>
 <code><a href="../reference/select_phases.html">select_phases()</a></code>: selects and recombines phases into A and B phase (equivalent to the phases argument of various functions, but useful when using %&gt;% operators).</li>
-</ul><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+</ul><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">exampleA1B1A2B2</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/select_phases.html">select_phases</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/overlap.html">overlap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <ul><li><p><code><a href="../reference/set_vars.html">set_vars()</a></code>: change the core variables of an scdf (arguments <code>dvar</code> for dependent variable, <code>pvar</code> for phase variable, and <code>mvar</code> for measurement-time variable).</p></li>
 <li><p><code><a href="../reference/set_vars.html">set_dvar()</a></code>, <code><a href="../reference/set_vars.html">set_mvar()</a></code>, <code><a href="../reference/set_vars.html">set_pvar()</a></code>: Shortcuts to set dvar, mvar, or pvar in a piping script e.g. <code>exmpleAB_add %&gt;% set_dvar("depression") %&gt;% describe()</code></p></li>
-</ul><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+</ul><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">exampleAB_add</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/set_vars.html">set_vars</a></span><span class="op">(</span>dv <span class="op">=</span> <span class="st">"depression"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -213,13 +257,13 @@
 <code><a href="../reference/check_scdf.html">check_scdf()</a></code>: Checks for the validity of an scdf object (mainly used for internal tests)</li>
 <li>
 <code><a href="../reference/convert.html">convert()</a></code>: Creates an scdf syntax file from an scdf object.</li>
-</ul><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+</ul><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Create a syntax to code the scdf exampleAB and write it into an R file</span></span>
 <span><span class="fu"><a href="../reference/convert.html">convert</a></span><span class="op">(</span><span class="va">exampleAB</span>, file <span class="op">=</span> <span class="st">"cases.R"</span><span class="op">)</span></span></code></pre></div>
 <ul><li>
 <code>cdc</code>: Applies the Conservative Dual-Criterion Method (CDC; Fisher, Kelley, &amp; Lomas, 2003) to scdf objects.</li>
-</ul><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+</ul><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/cdc.html">cdc</a></span><span class="op">(</span><span class="va">Beretvas2008</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cdc.html">cdc</a></span><span class="op">(</span><span class="va">exampleAB_decreasing</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span>, trend.method <span class="op">=</span> <span class="st">"bisplit"</span><span class="op">)</span></span></code></pre></div>
@@ -229,13 +273,13 @@
 <ul><li>
 <code><a href="../reference/overlap.html">overlap()</a></code>: Added Hedges-g.</li>
 <li>new trend lines added to <code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>: Koenig’s bi-split / quarter intersect (lines = “trendA_bisplit”) and Tukey’s tri-split / Wald’s slope (lines = “trendA_trisplit”).</li>
-</ul><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+</ul><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">exampleAB_50</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span>, lines <span class="op">=</span> <span class="st">"trendA_bisplit"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">example_A24</span>, lines <span class="op">=</span> <span class="st">"trendA_trisplit"</span><span class="op">)</span></span></code></pre></div>
 <ul><li>
 <code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>: Now allows for multiple lines with different line styles.</li>
-</ul><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+</ul><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
 <span>  <span class="va">exampleAB</span>, </span>
@@ -277,7 +321,7 @@
 </li>
 <li>
 <code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>, <code><a href="../reference/style_plot.html">style_plot()</a></code>: New options to style casenames: <code>names</code> which takes a list with tag = value structure. Example:</li>
-</ul><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+</ul><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">new_style</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/style_plot.html">style_plot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">new_style</span><span class="op">$</span><span class="va">names</span><span class="op">$</span><span class="va">side</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
@@ -290,13 +334,13 @@
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">exampleAB_decreasing</span>, style <span class="op">=</span> <span class="va">new_style</span><span class="op">)</span></span></code></pre></div>
 <ul><li>
 <code><a href="../reference/plot.scdf.html">plot.scdf()</a></code>, <code><a href="../reference/style_plot.html">style_plot()</a></code>: Different background colors for different phases:</li>
-</ul><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+</ul><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">new_style</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/style_plot.html">style_plot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">new_style</span><span class="op">$</span><span class="va">fill.bg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aliceblue"</span>, <span class="st">"mistyrose1"</span>, <span class="st">"honeydew"</span><span class="op">)</span></span>
 <span><span class="va">new_style</span><span class="op">$</span><span class="va">lty.seperators</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">exampleABC</span>, style <span class="op">=</span> <span class="va">new_style</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">exampleABAB</span>, style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"default"</span>, <span class="st">"phase_shade"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -313,7 +357,7 @@
 <div class="section level3">
 <h3 id="major-changes-0-50-4">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-50-4"></a></h3>
 <ul><li>New <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> function (method from base <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> for selecting variables, rows, and cases. It takes the arguments <code>subset</code>, <code>select</code>, and <code>cases</code>.</li>
-</ul><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+</ul><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleAB</span>, <span class="op">(</span><span class="va">values</span> <span class="op">&lt;</span> <span class="fl">60</span> <span class="op">&amp;</span> <span class="va">phase</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="va">values</span> <span class="op">&gt;=</span> <span class="fl">60</span> <span class="op">&amp;</span> <span class="va">phase</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">exampleAB_add</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">cigarrets</span>, <span class="op">-</span><span class="va">depression</span><span class="op">)</span><span class="op">)</span></span>
@@ -325,7 +369,7 @@
 <div class="section level3">
 <h3 id="major-changes-0-50-2">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-50-2"></a></h3>
 <ul><li>New <code><a href="../reference/select_cases.html">select_cases()</a></code> function.</li>
-</ul><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+</ul><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/select_cases.html">select_cases</a></span><span class="op">(</span><span class="va">exampleAB</span>, <span class="st">"Johanna"</span>, <span class="st">"Karolina"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/select_cases.html">select_cases</a></span><span class="op">(</span><span class="va">exampleAB</span>, <span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span></span>
@@ -341,6 +385,14 @@
 </ul><p>see: <a href="https://jazznbass.github.io/scan-Book/the-scan-package.html#changes-with-version-0.50" class="external-link uri">https://jazznbass.github.io/scan-Book/the-scan-package.html#changes-with-version-0.50</a></p>
 </div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.40" id="scan-040">scan 0.40<small>2019-08-05</small><a class="anchor" aria-label="anchor" href="#scan-040"></a></h2>
+<p>CRAN release 2019-08-11</p>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.20" id="scan-020">scan 0.20<small>2016-10-14</small><a class="anchor" aria-label="anchor" href="#scan-020"></a></h2>
+<p>CRAN release 2016-10-15</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -355,7 +407,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

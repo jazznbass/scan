@@ -18,7 +18,7 @@ yaml files."><meta property="og:image" content="/logo.png"><!-- mathjax --><scri
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55.8</span>
       </span>
     </div>
 
@@ -68,17 +68,16 @@ yaml files.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_scdf</span><span class="op">(</span></span>
-<span>  <span class="va">filename</span>,</span>
-<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  sort.labels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">file</span>,</span>
 <span>  cvar <span class="op">=</span> <span class="st">"case"</span>,</span>
 <span>  pvar <span class="op">=</span> <span class="st">"phase"</span>,</span>
 <span>  dvar <span class="op">=</span> <span class="st">"values"</span>,</span>
 <span>  mvar <span class="op">=</span> <span class="st">"mt"</span>,</span>
-<span>  phase.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  sep <span class="op">=</span> <span class="st">","</span>,</span>
-<span>  dec <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  sort_cases <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  phase_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  sort.labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  phase.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -89,19 +88,10 @@ yaml files.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>filename</dt>
-<dd><p>A character string defining the file to be loaded (e.g.
-<code>"SC_Anita.csv"</code>. If left empty a dialog box for choosing will be
-opened.</p></dd>
-
-
-<dt>data</dt>
-<dd><p>A data frame. As an alternative to <code>filname</code>.</p></dd>
-
-
-<dt>sort.labels</dt>
-<dd><p>If set TRUE, the resulting list is sorted by label names
-(alphabetically increasing).</p></dd>
+    <dl><dt>file</dt>
+<dd><p>Either a character string defining the file to be loaded (e.g.
+<code>"SC_Anita.csv"</code> (if left empty a dialog box for choosing will be
+opened) or a data.frame.</p></dd>
 
 
 <dt>cvar</dt>
@@ -124,19 +114,14 @@ opened.</p></dd>
 <code>"mt"</code>.</p></dd>
 
 
-<dt>phase.names</dt>
+<dt>sort_cases, sort.labels</dt>
+<dd><p>If set TRUE, the resulting list is sorted by label names
+(alphabetically increasing).</p></dd>
+
+
+<dt>phase_names, phase.names</dt>
 <dd><p>A character vector with phase names. Defaults to the phase
 names provided in the phase variable.</p></dd>
-
-
-<dt>sep</dt>
-<dd><p>The field separator string. Values within each row of x are 
-separated by this string.</p></dd>
-
-
-<dt>dec</dt>
-<dd><p>The string to use for decimal points in numeric or complex 
-columns: must be a single character.</p></dd>
 
 
 <dt>type</dt>
@@ -146,7 +131,7 @@ file extension.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Further arguments passed to the repective read function
+<dd><p>Further arguments passed to the respective read function
 (<code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></code>, <code>read_excel</code>,
 <code>read_yaml</code> command.</p></dd>
 
@@ -181,7 +166,7 @@ file extension.</p></dd>
 <span class="r-in"><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"test.csv"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="write_scdf.html">write_scdf</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2_zvt</span>, <span class="va">filename</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">read_scdf</span><span class="op">(</span><span class="va">filename</span>, cvar <span class="op">=</span> <span class="st">"case"</span>, pvar <span class="op">=</span> <span class="st">"part"</span>, dvar <span class="op">=</span> <span class="st">"zvt"</span>, mvar <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Loaded 3 cases.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Imported 3 cases</span>
 <span class="r-in"><span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">exampleA1B1A2B2_zvt</span><span class="op">)</span><span class="op">$</span><span class="va">descriptives</span></span></span>
 <span class="r-in"><span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">$</span><span class="va">descriptives</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">res1</span>,<span class="va">res2</span><span class="op">)</span></span></span>
@@ -201,7 +186,7 @@ file extension.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

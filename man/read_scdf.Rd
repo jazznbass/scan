@@ -7,17 +7,16 @@
 \title{Load single-case data from files}
 \usage{
 read_scdf(
-  filename,
-  data = NULL,
-  sort.labels = FALSE,
+  file,
   cvar = "case",
   pvar = "phase",
   dvar = "values",
   mvar = "mt",
-  phase.names = NULL,
-  sep = ",",
-  dec = ".",
+  sort_cases = FALSE,
+  phase_names = NULL,
   type = NA,
+  sort.labels = NULL,
+  phase.names = NULL,
   ...
 )
 
@@ -26,14 +25,9 @@ readSC.excel(...)
 readSC(...)
 }
 \arguments{
-\item{filename}{A character string defining the file to be loaded (e.g.
-\code{"SC_Anita.csv"}. If left empty a dialog box for choosing will be
-opened.}
-
-\item{data}{A data frame. As an alternative to \code{filname}.}
-
-\item{sort.labels}{If set TRUE, the resulting list is sorted by label names
-(alphabetically increasing).}
+\item{file}{Either a character string defining the file to be loaded (e.g.
+\code{"SC_Anita.csv"} (if left empty a dialog box for choosing will be
+opened) or a data.frame.}
 
 \item{cvar}{Sets the variable name of the "case" variable. Defaults to
 \code{"case"}.}
@@ -47,20 +41,17 @@ opened.}
 \item{mvar}{Sets the variable name of the "mt" variable. Defaults to
 \code{"mt"}.}
 
-\item{phase.names}{A character vector with phase names. Defaults to the phase
+\item{sort_cases, sort.labels}{If set TRUE, the resulting list is sorted by label names
+(alphabetically increasing).}
+
+\item{phase_names, phase.names}{A character vector with phase names. Defaults to the phase
 names provided in the phase variable.}
-
-\item{sep}{The field separator string. Values within each row of x are 
-separated by this string.}
-
-\item{dec}{The string to use for decimal points in numeric or complex 
-columns: must be a single character.}
 
 \item{type}{Format of the file to be loaded. Either "csv", "xlsx", "xls",
 "excel", "yml" is possible. By default (NA) the type is extracted from the
 file extension.}
 
-\item{\dots}{Further arguments passed to the repective read function
+\item{\dots}{Further arguments passed to the respective read function
 (\code{\link{read.table}}, \code{\link{read_excel}},
 \code{\link{read_yaml}} command.}
 }

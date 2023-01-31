@@ -20,7 +20,7 @@ bootstrapping procedures."><meta property="og:image" content="/logo.png"><!-- ma
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55.8</span>
       </span>
     </div>
 
@@ -131,7 +131,7 @@ If FALSE rtt is estimated for each case separately.</p></dd>
 
 
 <dt>model</dt>
-<dd><p>Model used for calculating the slope parameter (see Huitema &amp;
+<dd><p>Model used for calculating the dummy parameters (see Huitema &amp;
 McKean, 2000). Default is <code>model = "W"</code>. Possible values are:
 <code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"W"</code>, and deprecated <code>"JW"</code>.</p></dd>
 
@@ -173,7 +173,7 @@ each case.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hierarchical Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimation method ML </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level: first, slope: first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.004; L = 0.0; p = 0.870</span>
@@ -194,7 +194,7 @@ each case.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hierarchical Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimation method ML </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W first</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level: first, slope: first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.071; L = 5.4; p = 0.020</span>
@@ -280,7 +280,7 @@ each case.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for 10 cases.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Comparing phase A against phase B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comparing phase 1 against phase 2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistic:  Mean B-A </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Minimal length of each phase: A = 5 , B = 5 </span>
@@ -305,7 +305,7 @@ each case.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for 10 cases.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Comparing phase A against phase B </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comparing phase 1 against phase 2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Statistic:  Mean B-A </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Minimal length of each phase: A = 5 , B = 5 </span>
@@ -339,7 +339,7 @@ each case.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

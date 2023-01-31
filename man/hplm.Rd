@@ -11,6 +11,8 @@ hplm(
   mvar,
   model = "W",
   contrast = "first",
+  contrast_level = NA,
+  contrast_slope = NA,
   method = "ML",
   control = list(opt = "optim"),
   random.slopes = FALSE,
@@ -39,12 +41,17 @@ the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{model}{Model used for calculating the slope parameter (see Huitema &
+\item{model}{Model used for calculating the dummy parameters (see Huitema &
 McKean, 2000). Default is \code{model = "W"}. Possible values are:
 \code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
-\item{contrast}{Either "first" or "preceding". "first" contrasts all 
-phase-effects to the first phase and "preceding" to the preceding phase.}
+\item{contrast}{Sets contrast_level and contrast_slope. Either "first", "preceding" or a contrast matrix.}
+
+\item{contrast_level}{Either "first", "preceding" or a contrast matrix. If NA
+contrast_level is a copy of contrast.}
+
+\item{contrast_slope}{Either "first", "preceding" or a contrast matrix. If NA
+contrast_level is a copy of contrast.}
 
 \item{method}{Method used to fit your model. Pass \code{"REML"} to maximize
 the restricted log-likelihood or \code{"ML"} for maximized log-likelihood.

@@ -6,9 +6,15 @@ print.sc_mplm <- function(x, digits = "auto", std = FALSE, ...) {
   if (digits == "auto") digits <- 3
   
   cat("Multivariate piecewise linear model\n\n")
-  cat("Dummy model: ", x$model, " ", x$contrast, "\n\n", sep = "")
-  
+  cat(
+    "Dummy model: ", x$model, " ", 
+    paste0("level = ", x$contrast_level, ", slope = " ,x$contrast_slope),
+    "\n\n", 
+    sep = ""
+  )
+   
   coef <- x$full.model$coefficients
+  
   rownames(coef) <- gsub("(Intercept)", "Intercept", rownames(coef))
   rownames(coef) <- gsub("mt", "Trend", rownames(coef))
   rownames(coef) <- gsub("phase", "Level Phase ", rownames(coef))

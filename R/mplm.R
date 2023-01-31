@@ -26,6 +26,8 @@
 mplm <- function(data, dvar, mvar, pvar, 
                  model = "W", 
                  contrast = "first", 
+                 contrast_level = NA,
+                 contrast_slope = NA,
                  trend = TRUE, 
                  level = TRUE, 
                  slope = TRUE, 
@@ -33,15 +35,19 @@ mplm <- function(data, dvar, mvar, pvar,
                  update = NULL, 
                  na.action = na.omit, ...) {
  
+  if (is.na(contrast_level)) contrast_level <- contrast
+  if (is.na(contrast_slope)) contrast_slope <- contrast
+  
   if (model == "JW") {
+    contrast_level <- "preceding"
+    contrast_slope <- "preceding"
     model <- "B&L-B"
-    contrast <- "preceding"
   }
   
-  .start_check() %>%
-    .check_in(model, c("H-M", "B&L-B", "W")) %>%
-    .check_in(contrast, c("first", "preceding")) %>%
-    .end_check()
+  start_check() %>%
+    check_in(model, c("H-M", "B&L-B", "W")) %>%
+    check_in(contrast, c("first", "preceding")) %>%
+    end_check()
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
@@ -56,13 +62,17 @@ mplm <- function(data, dvar, mvar, pvar,
   }
 
   ### model definition
-  tmp_model <- .add_model_dummies(data = data, model = model, contrast = contrast)
+  tmp_model <- .add_model_dummies(
+    data = data, model = model, 
+    contrast_level = contrast_level, contrast_slope = contrast_slope
+  )
+  
   data <- tmp_model$data[[1]]
 
   if (is.null(formula)) {
     formula <- .create_fixed_formula(
       dvar = "y", mvar = mvar, slope = slope, level = level,
-      trend = trend, VAR_PHASE = tmp_model$VAR_PHASE, VAR_INTER = tmp_model$VAR_INTER
+      trend = trend, var_phase = tmp_model$var_phase, var_inter = tmp_model$var_inter
     )
     formula <- as.formula(formula)
   }
@@ -73,7 +83,8 @@ mplm <- function(data, dvar, mvar, pvar,
 
   full <- lm(formula, data = data, na.action = na.action, ...)
   full$coef_std <- .std_lm(full)
-  out <- list(model = model, contrast = contrast, 
+  out <- list(model = model, 
+              contrast = list(level = contrast_level, slope = contrast_slope), 
               full.model = full, formula = formula)
 
   class(out) <- c("sc_mplm")

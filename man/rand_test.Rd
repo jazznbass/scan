@@ -14,9 +14,9 @@ rand_test(
   limit = 5,
   startpoints = NA,
   exclude.equal = FALSE,
+  phases = c(1, 2),
   graph = FALSE,
-  output = "c",
-  phases = c("A", "B"),
+  output = NULL,
   seed = NULL
 )
 }
@@ -71,19 +71,18 @@ of rejecting the null-hypothesis (increase the p-value).
 single-case design (not a multiple baseline data set) to reach a sufficient
 power. But be aware, that it increases the chance of an alpha-error.}
 
+\item{phases}{A vector of two characters or numbers indicating the two phases
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
+c(2,4)} for comparing the second to the fourth phase. Phases could be
+combined by providing a list with two elements. E.g., \code{phases = list(A
+= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
+(as B). Default is \code{phases = c(1,2)}.}
+
 \item{graph}{If \code{graph = TRUE}, a histogram of the resulting
-distribution is plotted. It's \code{FALSE} by default.}
+distribution is plotted. It is \code{FALSE} by default. \emph{Note: use the more
+versatile \code{\link{plot_rand}} function instead.}}
 
-\item{output}{If set to the default \code{output = "C"}, detailed
-information is provided. Set \code{output = "p"}, to only return the
-resulting p value.}
-
-\item{phases}{A vector of two characters or numbers indicating the two
-phases that should be compared. E.g., \code{phases = c("A","C")} or
-\code{phases = c(2,4)} for comparing the second and the fourth phase. Phases
-could be combined by providing a list with two elements. E.g., \code{phases
-= list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
-and 4 (as B). Default is \code{phases = c("A","B")}.}
+\item{output}{(deprecated and not implemented)}
 
 \item{seed}{A seed number for the random generator.}
 }

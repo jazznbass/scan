@@ -9,6 +9,8 @@
 \alias{export.sc_overlap}
 \alias{export.sc_trend}
 \alias{export.sc_tauu}
+\alias{export.sc_power}
+\alias{export.sc_smd}
 \title{Export scan objects to html or latex}
 \usage{
 export(object, ...)
@@ -90,6 +92,29 @@ export(object, ...)
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
+  case = "meta",
+  ...
+)
+
+\method{export}{sc_power}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  ...
+)
+
+\method{export}{sc_smd}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  round = 2,
+  flip = FALSE,
   ...
 )
 }
@@ -118,6 +143,8 @@ with variable names or the string "main" will select the central variables.}
 
 \item{nice}{If set TRUE (default) output values are rounded and optimized for
 publication tables.}
+
+\item{case}{For tau_u(): Either "meta" for exporting the results of the meta analyses or "all" exporting tau-u for each single-case.}
 }
 \value{
 Returns a specif formated html (or latex).

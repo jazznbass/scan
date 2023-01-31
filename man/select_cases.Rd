@@ -10,7 +10,7 @@ select_cases(scdf, ...)
 \item{scdf}{A single-case data frame. See \code{\link{scdf}} to learn about
 this format.}
 
-\item{...}{Selection criteria. Either numeric or as characters.}
+\item{...}{Selection criteria. Either numeric, objectnames, or as characters.}
 }
 \value{
 An scdf with a subset of cases
@@ -19,10 +19,12 @@ An scdf with a subset of cases
 Select a subset of cases
 }
 \examples{
-select_cases(exampleAB, "Johanna", "Karolina")
-# or: select_cases(exampleAB, c("Johanna", "Karolina"))
+select_cases(exampleAB, Johanna, Karolina)
+select_cases(exampleAB, c(Johanna, Karolina))
 select_cases(exampleAB, 1,2)
-# or: select_cases(exampleAB, 1:2)
-select_cases(exampleAB, "-Johanna")
-# or: select_cases(exampleAB, c("-Johanna", "-Karolina"))
+select_cases(exampleAB, 1:2)
+select_cases(exampleAB, -Johanna)
+select_cases(exampleAB, -c(Johanna, Karolina))
+v <- c("Moritz", "Jannis")
+select_cases(exampleA1B1A2B2, v)
 }

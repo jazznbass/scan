@@ -43,16 +43,9 @@
 #' single-case design (not a multiple baseline data set) to reach a sufficient
 #' power. But be aware, that it increases the chance of an alpha-error.
 #' @param graph If \code{graph = TRUE}, a histogram of the resulting
-#' distribution is plotted. It's \code{FALSE} by default.
-#' @param output If set to the default \code{output = "C"}, detailed
-#' information is provided. Set \code{output = "p"}, to only return the
-#' resulting p value.
-#' @param phases A vector of two characters or numbers indicating the two
-#' phases that should be compared. E.g., \code{phases = c("A","C")} or
-#' \code{phases = c(2,4)} for comparing the second and the fourth phase. Phases
-#' could be combined by providing a list with two elements. E.g., \code{phases
-#' = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2
-#' and 4 (as B). Default is \code{phases = c("A","B")}.
+#' distribution is plotted. It is \code{FALSE} by default. \emph{Note: use the more
+#' versatile \code{\link{plot_rand}} function instead.}
+#' @param output (deprecated and not implemented)
 #' @param seed A seed number for the random generator.
 #' @return \item{statistic}{Character string from function call (see
 #' \code{Arguments} above).} \item{N}{Number of single-cases.} \item{n1}{Number
@@ -95,9 +88,9 @@ rand_test <- function (data, dvar, pvar,
                        limit = 5, 
                        startpoints = NA, 
                        exclude.equal = FALSE, 
+                       phases = c(1, 2), 
                        graph = FALSE, 
-                       output = "c", 
-                       phases = c("A", "B"), 
+                       output = NULL, 
                        seed = NULL) {
 
   if(!is.null(seed)) set.seed(seed)
@@ -239,9 +232,6 @@ rand_test <- function (data, dvar, pvar,
   
 # return ------------------------------------------------------------------
 
-  if (output == "p") 
-    return(p.value)
-  
   if (graph){
     h <- hist(dist, plot = FALSE)
     lab <- paste0(round(h$counts / length(dist) * 100, 0), "%")
@@ -260,35 +250,33 @@ rand_test <- function (data, dvar, pvar,
   
   Z <- (obs.stat - mean(dist, na.rm = TRUE)) / sd(dist, na.rm = TRUE)
   p.Z.single <- 1 - pnorm(Z)
+  possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[N]
+
+  out <- list(
+    statistic = statistic, 
+    phases.A = keep$phases_A, 
+    phases.B = keep$phases_B, 
+    N = N, 
+    n1 = length(unlist(a)), 
+    n2 = length(unlist(b)), 
+    limit = limit, 
+    startpoints = startpoints, 
+    p.value = p.value, 
+    number = number, 
+    complete = complete, 
+    observed.statistic = obs.stat, 
+    Z = Z, 
+    p.Z.single = p.Z.single, 
+    distribution = dist, 
+    possible.combinations = possible.combinations, 
+    auto.corrected.number = auto.corrected.number
+  )
   
-  if (output == "c") {
-    possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[N]
-    
-    out <- list(
-      statistic = statistic, 
-      phases.A = keep$phases_A, 
-      phases.B = keep$phases_B, 
-      N = N, 
-      n1 = length(unlist(a)), 
-      n2 = length(unlist(b)), 
-      limit = limit, 
-      startpoints = startpoints, 
-      p.value = p.value, 
-      number = number, 
-      complete = complete, 
-      observed.statistic = obs.stat, 
-      Z = Z, 
-      p.Z.single = p.Z.single, 
-      distribution = dist, 
-      possible.combinations = possible.combinations, 
-      auto.corrected.number = auto.corrected.number
-    )
-    
-    class(out) <- c("sc_rand")
-    attr(out, .opt$phase) <- pvar
-    attr(out, .opt$dv) <- dvar
-    out
-  }
+  class(out) <- c("sc_rand")
+  attr(out, .opt$phase) <- pvar
+  attr(out, .opt$dv) <- dvar
+  out
+
 }
 
 #' @rdname deprecated-functions

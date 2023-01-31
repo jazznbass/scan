@@ -49,6 +49,8 @@
 hplm <- function(data, dvar, pvar, mvar, 
                  model = "W", 
                  contrast = "first",
+                 contrast_level = NA,
+                 contrast_slope = NA,
                  method = "ML", 
                  control = list(opt = "optim"), 
                  random.slopes = FALSE, 
@@ -63,15 +65,19 @@ hplm <- function(data, dvar, pvar, mvar,
                  data.l2 = NULL, 
                  ...) {
 
+  if (is.na(contrast_level)) contrast_level <- contrast
+  if (is.na(contrast_slope)) contrast_slope <- contrast
+  
   if (model == "JW") {
+    contrast_level <- "preceding"
+    contrast_slope <- "preceding"
     model <- "B&L-B"
-    contrast <- "preceding"
   }
   
-  .start_check() %>%
-    .check_in(model, c("H-M", "B&L-B", "W")) %>%
-    .check_in(contrast, c("first", "preceding")) %>%
-    .end_check()
+
+  start_check() %>%
+    check_in(model, c("H-M", "B&L-B", "W")) %>%
+    end_check()
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
@@ -95,7 +101,11 @@ hplm <- function(data, dvar, pvar, mvar,
 
 # interaction and dummy coding and L2 --------------------------------------
 
-  tmp_model <- .add_model_dummies(data = dat, model = model, contrast=contrast)
+  tmp_model <- .add_model_dummies(
+    data = dat, model = model, 
+    contrast_level = contrast_level, contrast_slope = contrast_slope
+  )
+  
   dat <- tmp_model$data
 
   dat <- as.data.frame(dat, l2 = data.l2)
@@ -104,7 +114,7 @@ hplm <- function(data, dvar, pvar, mvar,
 
   if (is.null(fixed))
     fixed <- as.formula(.create_fixed_formula(
-      dvar, mvar, slope, level, trend, tmp_model$VAR_PHASE, tmp_model$VAR_INTER
+      dvar, mvar, slope, level, trend, tmp_model$var_phase, tmp_model$var_inter
     ))
   
   if (!is.null(update.fixed)) fixed <- update(fixed, update.fixed)
@@ -113,7 +123,7 @@ hplm <- function(data, dvar, pvar, mvar,
   
   if (is.null(random))
     random <- as.formula(.create_random_formula(
-      mvar, slope, level, trend, tmp_model$VAR_PHASE, tmp_model$VAR_INTER
+      mvar, slope, level, trend, tmp_model$var_phase, tmp_model$var_inter
     ))
 
   out$formula <- list(fixed = fixed, random = random)
@@ -190,6 +200,7 @@ hplm <- function(data, dvar, pvar, mvar,
   
   out$model$fixed  <- fixed
   out$model$random <- random
+  out$contrast <- list(level = contrast_level, slope = contrast_slope)
   
   class(out) <- c("sc_hplm")
   attr(out, .opt$phase) <- pvar

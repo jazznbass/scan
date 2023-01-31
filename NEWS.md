@@ -1,3 +1,47 @@
+# scan 0.55.x
+
+
+## New features
+
+- `export()`: New export for `power_test()` and `smd()` output.
+- `export()`: `tau_u()` export with new argument `case` which takes the values `"meta"` or `"all"` 
+
+- `select_cases()`: Allow for a selection based on object names (like in substitute).
+
+```r
+select_cases(exampleAB, -c(Johanna, Karolina))
+select_cases(exampleAB, Johanna, Karolina)
+v <- c("Moritz", "Jannis")
+select_cases(exampleA1B1A2B2, v)
+```
+
+- `plm()`, `hplm()`: contrasts argument now is a list that takes two elements: `level` and `slope`. Both elements can either be "first" or "preceding".
+- Speed-up `tau_u()` by 20%.
+- rewrote `as_scdf()`, `read_scdf()`. Now it is easier to import data from any file format.
+
+``` {.r}
+readODS::read_ods("filename.ods") |> as.scdf()
+openxlsx::read.xlsx("filename.xlsx") |> as.scdf()
+
+
+readODS::read_ods("filename.ods") |> 
+  as.scdf(
+    cvar = "id", 
+    pvar = "section", 
+    mvar = "day", 
+    phase_names = c("baseline", "intervention")
+  )
+  
+as.data.frame(exampleABC) |> readODS::write_ods("filename.xlsx")
+as.data.frame(exampleABC) |> openxlsx::write.xlsx("filename.xlsx")
+```
+
+## Bug fixes
+
+- `tau_u()`: Rewrote the calculation of meta analyses and confidence intervals.
+- `tau_u(), correted_tau()`: corrected a wrong calculation of the continuity correction when values where lower in phase B.
+- `tau_u()`: Implemented a new method for calculating confidence intervals based on Fisher-Z transformations (see Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall’s tau. British Journal of Mathematical and Statistical Psychology, 50(1), 31–41. <https://doi.org/10.1111/j.2044-8317.1997.tb01100.x>)
+
 # scan 0.55
 
 ## new functions

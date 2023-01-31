@@ -16,6 +16,8 @@ plm(
   level = TRUE,
   slope = TRUE,
   contrast = "first",
+  contrast_level = NA,
+  contrast_slope = NA,
   formula = NULL,
   update = NULL,
   na.action = na.omit,
@@ -42,7 +44,7 @@ Defaults to the attributes in the scdf file.}
 Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
 argument must be set to \code{family = "gaussian"}.}
 
-\item{model}{Model used for calculating the slope parameter (see Huitema &
+\item{model}{Model used for calculating the dummy parameters (see Huitema &
 McKean, 2000). Default is \code{model = "W"}. Possible values are:
 \code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
@@ -58,8 +60,13 @@ model.}
 \item{slope}{A logical indicating if a slope parameters is included in the
 model.}
 
-\item{contrast}{Either "first" or "preceding". "first" contrasts all 
-phase-effects to the first phase and "preceding" to the preceding phase.}
+\item{contrast}{Sets contrast_level and contrast_slope. Either "first", "preceding" or a contrast matrix.}
+
+\item{contrast_level}{Either "first", "preceding" or a contrast matrix. If NA
+contrast_level is a copy of contrast.}
+
+\item{contrast_slope}{Either "first", "preceding" or a contrast matrix. If NA
+contrast_level is a copy of contrast.}
 
 \item{formula}{Defaults to the standard piecewise regression model. The
 parameter phase followed by the phase name (e.g., phaseB) indicates the 
@@ -122,14 +129,14 @@ A1B1A2B2 <- design(
   slope = list(A1 = 0, B1 = 0.0, A2 = 0, B2 = 0.0),
   trend = 0.0)
 dat <- random_scdf(design = A1B1A2B2, seed = 123)
-plm(dat, model = "JW")
+plm(dat, contrast = "preceding")
 
 ## no slope effects were found. Therefore, you might want to the drop slope 
 ## estimation:
-plm(dat, slope = FALSE, model = "JW")
+plm(dat, slope = FALSE, contrast = "preceding")
 
 ## and now drop the trend estimation as well
-plm(dat, slope = FALSE, trend = FALSE, model = "JW")
+plm(dat, slope = FALSE, trend = FALSE, contrast = "preceding")
 
 ## A poisson regression
 example_A24 \%>\% 

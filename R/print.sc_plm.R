@@ -3,8 +3,12 @@
 #' 
 print.sc_plm <- function(x, ...) {
   cat("Piecewise Regression Analysis\n\n")
-  cat("Dummy model: ", x$model, " ", x$contrast, "\n\n", sep = "")
-  
+  cat(
+    "Contrast model: ", 
+    x$model, " / ", 
+    paste0("level = ", x$contrast$level, ", slope = " ,x$contrast$slope),
+    "\n\n", sep = ""
+  )
   
   cat("Fitted a", x$family, "distribution.\n")		
   
@@ -30,6 +34,13 @@ print.sc_plm <- function(x, ...) {
   if (x$ar == 0) res <- summary(x$full.model)$coefficients
   if (x$ar  > 0) res <- summary(x$full.model)$tTable
   
+  #if ("(Intercept)" %in% row.names(res)) {
+  if (attr(x$full.model$terms, "intercept")) {
+    intercept_included <- TRUE 
+  } else{ 
+    intercept_included <- FALSE
+  }
+  
   ci <- suppressMessages(confint(x$full))
   parameter_filter <- apply(ci, 1, function(x) if(!all(is.na(x))) TRUE else FALSE)
   ci <- ci[parameter_filter, ]
@@ -50,7 +61,7 @@ print.sc_plm <- function(x, ...) {
   res <- as.data.frame(res)
   if (!is.null(x$r.squares)) {
     x$r.squares <- x$r.squares[c(parameter_filter[-1])]
-    res$R2 <- c("", format(round(x$r.squares, 4)))
+    res$R2 <- c(rep("", intercept_included), format(round(x$r.squares, 4)))
   }
   row.names(res) <- .plm.row.names(row.names(res), x)
   

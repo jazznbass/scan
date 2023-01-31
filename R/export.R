@@ -424,12 +424,13 @@ export.sc_plm <- function(object, caption = NA, footnote = NA, filename = NA,
 
 #' @rdname export
 #' @export
-export.sc_overlap <- function(object, caption = NA, footnote = NA, filename = NA,
-                           kable_styling_options = list(), 
-                           kable_options = list(), 
-                           round = 2,
-                           flip = FALSE,
-                           ...) {
+export.sc_overlap <- function(object, caption = NA, footnote = NA, 
+                              filename = NA,
+                              kable_styling_options = list(), 
+                              kable_options = list(), 
+                              round = 2,
+                              flip = FALSE,
+                              ...) {
   
   kable_options <- .join_kabel(kable_options)
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
@@ -536,11 +537,16 @@ export.sc_trend <- function(object, caption = NA, footnote = NA, filename = NA,
 
 
 #' @rdname export
+#' @param case For tau_u(): Either "meta" for exporting the results of the meta analyses or "all" exporting tau-u for each single-case.
 #' @export
-export.sc_tauu <- function(object, caption = NA, footnote = NA, filename = NA,
-                            kable_styling_options = list(), 
-                            kable_options = list(), 
-                            ...) {
+export.sc_tauu <- function(object, 
+                           caption = NA, 
+                           footnote = NA, 
+                           filename = NA,
+                           kable_styling_options = list(), 
+                           kable_options = list(),
+                           case = "meta",
+                           ...) {
   
   kable_options <- .join_kabel(kable_options)
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
@@ -548,24 +554,102 @@ export.sc_tauu <- function(object, caption = NA, footnote = NA, filename = NA,
   if (is.na(caption)) {
     #A <- object$design[object$phases.A]
     #B <- object$design[object$phases.B]
-    caption <- c("Overall Tau-U")#, .phases_string(A, B))
+    if (case == "meta") 
+      caption <- c("Overall Tau-U") 
+    else 
+      caption <- "Tau-U analyses"
+    #, .phases_string(A, B))
   }
   kable_options$caption <- caption
   
   if (is.na(footnote)) {
     footnote <- paste(
       "Method is '", object$method, 
-      "'. Analyses based on Kendall's Tau ", object$tau_method, 
-      ". ", object$ci * 100, "% CIs for tau are reported. ",
-      object$meta_method, " effect model applied for meta-analyzes.",
+      "'. Analyses based on Kendall's Tau ", object$tau_method, ". ",
+      object$ci * 100, "% CIs for tau are reported. ",
       collapse = ""
     )
   }
   
-  out <- object$Overall_tau_u
-  column_names <- c("Model", "Tau", "SE", "CI lower", "CI upper", "z", "p")
-  colnames(out) <- column_names
-  out$p <- .nice_p(out$p)
+  if (case == "meta") {
+    out <- object$Overall_tau_u
+    column_names <- c("Model", "Tau", "SE", "CI lower", "CI upper", "z", "p")
+    colnames(out) <- column_names
+    out$p <- .nice_p(out$p)
+  }
+  
+  if (case == "all") {
+    tables <- object$table
+    names_models <- c(" ", row.names(tables[[1]]))
+    n_cases <- length(tables)
+    out <- rbind(tables[[1]])
+    out <- rbind(NA, out)
+    
+    for(i in 2:n_cases) {
+      out <- rbind(out, NA, tables[[i]])
+    }
+    row.names(out) <- NULL
+    Model <- rep(names_models, length = nrow(out)) 
+    Case <- lapply(
+      names(tables), function(x) 
+      c(x, rep(" ", length(names_models) - 1))
+    ) |> unlist()
+    
+    out <- cbind(Case, Model, out)
+    #column_names <- c("Model", "Tau", "SE", "CI lower", "CI upper", "z", "p")
+    #colnames(out) <- column_names
+    out$p <- .nice_p(out$p)
+  }  
+  
+  opts <- options(knitr.kable.NA = "")
+  
+  kable_options$x <- out
+  kable_options$align <- c("l", rep("r", ncol(out) - 1))
+  table <- do.call(kable, kable_options)
+  kable_styling_options$kable_input <- table
+  table <- do.call(kable_styling, kable_styling_options)
+  if (!is.na(footnote) && footnote != "") 
+    table <- footnote(table, general = footnote, threeparttable = TRUE)
+  
+  options(opts)
+  # finish ------------------------------------------------------------------
+  
+  if (!is.na(filename)) cat(table, file = filename)
+  table
+}
+
+#' @rdname export
+#' @export
+export.sc_power <- function(object, caption = NA, footnote = NA, filename = NA,
+                           kable_styling_options = list(), 
+                           kable_options = list(), 
+                           ...) {
+  
+  kable_options <- .join_kabel(kable_options)
+  kable_styling_options <- .join_kabel_styling(kable_styling_options)
+  
+  if (is.na(caption)) {
+    #A <- object$design[object$phases.A]
+    #B <- object$design[object$phases.B]
+    caption <- c("Test power in percent")#, .phases_string(A, B))
+  }
+  kable_options$caption <- caption
+  
+  if (is.na(footnote)) {
+    #footnote <- paste(
+    #  "Method is '", object$method, 
+    #  "'. Analyses based on Kendall's Tau ", object$tau_method, 
+    #  ". ", object$ci * 100, "% CIs for tau are reported. ",
+    #  object$meta_method, " effect model applied for meta-analyzes.",
+    #  collapse = ""
+    #)
+  }
+  
+  out <- object
+  class(out) <- "data.frame"
+  #column_names <- c("Model", "Tau", "SE", "CI lower", "CI upper", "z", "p")
+  #colnames(out) <- column_names
+  #out$p <- .nice_p(out$p)
   
   
   kable_options$x <- out
@@ -579,6 +663,62 @@ export.sc_tauu <- function(object, caption = NA, footnote = NA, filename = NA,
   # finish ------------------------------------------------------------------
   
   if (!is.na(filename)) cat(table, file = filename)
+  table
+}
+
+#' @rdname export
+#' @export
+export.sc_smd <- function(object, caption = NA, footnote = NA, 
+                          filename = NA,
+                          kable_styling_options = list(), 
+                          kable_options = list(), 
+                          round = 2,
+                          flip = FALSE,
+                          ...) {
+  
+  kable_options <- .join_kabel(kable_options)
+  kable_styling_options <- .join_kabel_styling(kable_styling_options)
+  
+  if (is.na(caption)) caption <- c(
+    "Standardizes mean differences. ",
+    .phases_string(
+      object$phases.A, 
+      object$phases.B
+    )
+  )
+  
+  footnote <- c(
+    'SD Cohen = unweigted average of the variance of both phases; ',
+    'SD Hedges = weighted average of the variance of both phases with a degrees of freedom correction; ',
+    "Glass' delta = mean difference divided by the standard deviation of the A-phase; ",
+    "Hedges' g = mean difference divided by SD Hedges; ",
+    "Hedges' g (durlak) correction = approaches for correcting Hedges' g for small sample sizes; ",
+    "Cohens d = mean difference divided by SD Cohen",
+    "."
+  )
+  footnote <- paste0(footnote, collapse = "")
+  caption <- paste0(caption, collapse = "")
+  
+  kable_options$caption <- caption
+  
+  out <- object$smd
+  colnames(out)[2:7] <- c(
+    "Mean A", "Mean B", "SD A", "SD B", "SD Cohen", "SD Hedges"
+  )
+
+  if (isTRUE(flip)) {
+    cases <- out$Case
+    out[-2:-1] <- round(out[-2:-1], round)
+    out <- t(out[-1])
+    colnames(out) <- cases
+  }
+  
+  kable_options$x <- out
+  table <- do.call(kable, kable_options)
+  kable_styling_options$kable_input <- table
+  table <- do.call(kable_styling, kable_styling_options)
+  if (!is.na(footnote) && footnote != "") 
+    table <- footnote(table, general = footnote, threeparttable = TRUE)
   table
 }
 

@@ -1,43 +1,32 @@
 #' Select a subset of cases
 #'
 #' @inheritParams .inheritParams
-#' @param ... Selection criteria. Either numeric or as characters.
+#' @param ... Selection criteria. Either numeric, objectnames, or as characters.
 #'
 #' @return An scdf with a subset of cases
 #' @export
 #'
 #' @examples
-#' select_cases(exampleAB, "Johanna", "Karolina")
-#' # or: select_cases(exampleAB, c("Johanna", "Karolina"))
+#' select_cases(exampleAB, Johanna, Karolina)
+#' select_cases(exampleAB, c(Johanna, Karolina))
 #' select_cases(exampleAB, 1,2)
-#' # or: select_cases(exampleAB, 1:2)
-#' select_cases(exampleAB, "-Johanna")
-#' # or: select_cases(exampleAB, c("-Johanna", "-Karolina"))
+#' select_cases(exampleAB, 1:2)
+#' select_cases(exampleAB, -Johanna)
+#' select_cases(exampleAB, -c(Johanna, Karolina))
+#' v <- c("Moritz", "Jannis")
+#' select_cases(exampleA1B1A2B2, v)
+#' @export
 select_cases <- function(scdf, ...) {
+  cases <- as.list(substitute(list(...)))[-1]
   
-  vars <- names(scdf)
-  .eval <- function(x) {
-    if (inherits(x, "character")) {
-      weight <- ifelse(substring(x, 1, 1) == "-", -1, 1)
-      x <- ifelse(substring(x, 1, 1) == "-", substring(x, 2, nchar(x)), x)
-      x <- sapply(x, function(y) which(vars %in% y))
-      x <- as.numeric(x)
-      x <- x * weight
-    }
-    if (any(sapply(x, is.na))) stop("Unknown case name.")
-    x
-
-  }
-
-  select <- as.list(substitute(list(...)))[-1]
-  select <- lapply(select, function(x) 
-    if (inherits(x, "name")) { as.character(x) 
-    } else if (inherits(x, "call")) { eval(x) 
-    } else x
-  )
+  nl <- as.list(seq_along(scdf))
+  names(nl) <- names(scdf)
   
-  select <- lapply(select, .eval)
-  select <- unlist(select)
-  scdf[select]
+  selection <- lapply(cases, function(x) scdf[eval(x, envir = nl, enclos = parent.frame())])
+  
+  out <- selection[[1]]
+  if (length(selection) > 1) 
+    for(i in 2:length(selection)) out <- c(out, selection[[i]])
+  out
 }
 
