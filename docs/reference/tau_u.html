@@ -18,7 +18,7 @@ al. (2011a)."><meta property="og:image" content="/logo.png"><!-- mathjax --><scr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55.10</span>
       </span>
     </div>
 
@@ -76,7 +76,8 @@ al. (2011a).</p>
 <span>  phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  meta_analyses <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  ci_se_method <span class="op">=</span> <span class="st">"z"</span>,</span>
+<span>  ci_method <span class="op">=</span> <span class="st">"z"</span>,</span>
+<span>  meta_weight_method <span class="op">=</span> <span class="st">"z"</span>,</span>
 <span>  continuity_correction <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  meta_method <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -127,10 +128,14 @@ combined by providing a list with two elements. E.g., <code>phases = list(A
 <dd><p>Confidence intervals</p></dd>
 
 
-<dt>ci_se_method</dt>
+<dt>ci_method</dt>
 <dd><p>String to specify the method for calculating the standard
-error for tau. Either "tau" or "z". This influences the confidence
-intervals and the meta-analyses.</p></dd>
+error of tau. Either "tau", "z", or "s" (not recommended).</p></dd>
+
+
+<dt>meta_weight_method</dt>
+<dd><p>String to specify the method for calculating the weights of the studies. 
+Either "tau" or "z".</p></dd>
 
 
 <dt>continuity_correction</dt>
@@ -212,6 +217,8 @@ statistics.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tau-U</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Method: complete </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Applied Kendall's Tau-b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95% CIs for tau are reported.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CI method: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Case: Eva </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                              Tau CI lower CI upper  SD_S    Z     p</span>
@@ -229,6 +236,7 @@ statistics.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Method: parker </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Applied Kendall's Tau-a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 95% CIs for tau are reported.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CI method: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Case: Bob </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             pairs pos neg ties  S  D  Tau CI lower CI upper</span>
@@ -253,8 +261,12 @@ statistics.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Method: complete </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Applied Kendall's Tau-b</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 95% CIs for tau are reported.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CI method: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tau-U meta analyses:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Weight method: z</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95% CIs are reported.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        Model Tau_U   se CI lower CI upper    z    p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                      A vs. B 0.071 0.14   -0.193     0.33 0.52 0.60</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            A vs. B - Trend A 0.083 0.14   -0.181     0.34 0.61 0.54</span>
