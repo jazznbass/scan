@@ -19,7 +19,7 @@ When applied in rmarkdown, tables can also be created for pdf/latex output."><me
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.55.9</span>
       </span>
     </div>
 
@@ -153,6 +153,7 @@ When applied in rmarkdown, tables can also be created for pdf/latex output.</p>
 <span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Tau"</span>, <span class="st">"CI lower"</span>, <span class="st">"CI upper"</span>, <span class="st">"Z"</span>, <span class="st">"p"</span><span class="op">)</span>,</span>
 <span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  case <span class="op">=</span> <span class="st">"meta"</span>,</span>
@@ -231,6 +232,10 @@ with variable names or the string "main" will select the central variables.</p><
 <dt>nice</dt>
 <dd><p>If set TRUE (default) output values are rounded and optimized for
 publication tables.</p></dd>
+
+
+<dt>select</dt>
+<dd><p>Character vector with name of variables to be included. When the vector is named, variables are renamed appropriately.</p></dd>
 
 
 <dt>case</dt>
