@@ -13,7 +13,7 @@
   (exp(2 * tau) - 1) / (exp(2 * tau) + 1)
 }
 
-.tau_ci <- function(tau, n, ci = 0.95, se_method = "tau") {
+.tau_ci <- function(tau, n, ci, se_method) {
   z <- qnorm((1 - ci) /2, lower.tail = FALSE)
   
   if (se_method == "tau") se_z <- sqrt(0.437 / (n - 4))
@@ -37,7 +37,7 @@
   
 }
 
-.meta_tau <- function(tau, n, ci = 0.95, se_method = "z") {
+.meta_tau <- function(tau, n, ci, se_method) {
   ci_z <- qnorm((1 - ci) / 2, lower.tail = FALSE)
   tau_z <- .tau_z(tau)
   

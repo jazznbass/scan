@@ -18,14 +18,20 @@ print.sc_tauu <- function(x,
   cat("Tau-U\n")
   cat("Method:", x$method, "\n")
   cat("Applied Kendall's Tau-", x$tau_method, "\n", sep = "")
-  if (complete || (length(x$table) > 1 && x$meta_analyses)) {
-    cat(x$ci * 100, "% CIs for tau are reported.\n\n", sep = "")
+ 
+  if (!is.na(x$ci)) {
+    cat(x$ci * 100, "% CIs for tau are reported.\n", sep = "")
+    cat("CI method: ", x$ci_se_method, "\n\n", sep = "")
   } else cat("\n")
   
   out <- x$table
   
   if (length(out) > 1 && x$meta_analyses) {
     cat("Tau-U meta analyses:\n")
+    
+    cat("Weight method: ", x$meta_weight_method, "\n", sep = "")
+    if (!is.na(x$ci)) cat(x$ci * 100, "% CIs are reported.\n", sep = "")
+    cat("\n")
     #cat("Meta-anlysis model:", x$meta_method, "effect\n\n")
     print(x$Overall_tau_u, row.names = FALSE, digits = digits)
     cat("\n")

@@ -13,7 +13,8 @@ tau_u(
   phases = c(1, 2),
   meta_analyses = TRUE,
   ci = 0.95,
-  ci_se_method = "z",
+  ci_method = "z",
+  meta_weight_method = "z",
   continuity_correction = FALSE,
   meta_method = NULL
 )
@@ -46,9 +47,11 @@ combined by providing a list with two elements. E.g., \code{phases = list(A
 
 \item{ci}{Confidence intervals}
 
-\item{ci_se_method}{String to specify the method for calculating the standard
-error for tau. Either "tau" or "z". This influences the confidence
-intervals and the meta-analyses.}
+\item{ci_method}{String to specify the method for calculating the standard
+error of tau. Either "tau", "z", or "s" (not recommended).}
+
+\item{meta_weight_method}{String to specify the method for calculating the weights of the studies. 
+Either "tau" or "z".}
 
 \item{continuity_correction}{If TRUE, a continuity correction is applied for
 calculating p-values of correlations (here: S will be reduced by one before

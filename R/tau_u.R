@@ -10,10 +10,11 @@
 #'   calculates the number of possible pairs as described in Parker et al.
 #'   (2011) which might lead to tau-U values greater than 1.
 #' @param meta_analyses If TRUE, a meta analysis is conducted.
+#' @param meta_weight_method String to specify the method for calculating the weights of the studies. 
+#'   Either "tau" or "z".
 #' @param ci Confidence intervals
-#' @param ci_se_method String to specify the method for calculating the standard
-#'   error for tau. Either "tau" or "z". This influences the confidence
-#'   intervals and the meta-analyses.
+#' @param ci_method String to specify the method for calculating the standard
+#'   error of tau. Either "tau", "z", or "s" (not recommended).
 #' @param continuity_correction If TRUE, a continuity correction is applied for
 #'   calculating p-values of correlations (here: S will be reduced by one before
 #'   calculating Z)
@@ -73,7 +74,8 @@ tau_u <- function(data, dvar, pvar,
                   phases = c(1, 2), 
                   meta_analyses = TRUE,
                   ci = 0.95,
-                  ci_se_method = "z",
+                  ci_method = "z",
+                  meta_weight_method = "z",
                   continuity_correction = FALSE,
                   meta_method = NULL) {
   
@@ -105,8 +107,9 @@ tau_u <- function(data, dvar, pvar,
     continuity_correction = continuity_correction,
     Overall_tau_u = NA,
     meta_analyses = meta_analyses,
+    meta_weight_method = meta_weight_method,
     ci = ci,
-    ci_se_method = ci_se_method
+    ci_method = ci_method
   )
   
   # define tau table data structure -----
@@ -297,9 +300,19 @@ tau_u <- function(data, dvar, pvar,
     
     # confidence intervalls --------------------
     if (!is.na(ci)) {
-      cis <- .tau_ci(
-        table_tau$Tau, table_tau$n, ci = ci, se_method = ci_se_method
-      )
+      if (ci_method == "s") {
+        see <- qnorm((1-ci)/2, lower.tail = FALSE)
+        S <- table_tau$S
+        if (continuity_correction) S <- S - 1
+        cis <- list(
+          tau_ci_lower = (S - table_tau$SD_S * see) / table_tau$D, 
+          tau_ci_upper = (S + table_tau$SD_S * see) / table_tau$D
+        )
+      } else {
+        cis <- .tau_ci(
+          table_tau$Tau, table_tau$n, ci = ci, se_method = ci_method
+        )
+      }
     } else {
       cis <- list(tau_ci_lower = NA, tau_ci_upper = NA)
     }
@@ -318,7 +331,7 @@ tau_u <- function(data, dvar, pvar,
   
   if (meta_analyses) {
     out$Overall_tau_u <- .meta_tau_u(
-      out$table, ci = ci, se_method = ci_se_method
+      out$table, ci = ci, se_method = meta_weight_method
     )
   } else {
     out$Overall_tau_u <- NA
@@ -336,7 +349,7 @@ tau_u <- function(data, dvar, pvar,
 }
 
 
-.meta_tau_u <- function(tau_matrix, ci, se_method = "z") {
+.meta_tau_u <- function(tau_matrix, ci, se_method) {
   
   ci_z <- qnorm((1 - ci) / 2, lower.tail = FALSE)
   
@@ -344,9 +357,9 @@ tau_u <- function(data, dvar, pvar,
     tau <- sapply(tau_matrix, function(x) x[model, "Tau"])
     n <- sapply(tau_matrix, function(x) x[model, "n"])
     out <- data.frame(Model = model)
- 
-    res <- .meta_tau(tau, n, ci = ci, se_method = se_method)
   
+    res <- .meta_tau(tau, n, ci = ci, se_method = se_method)      
+
     out$Tau_U <- res$tau
     out$se <- res$se
     out$'CI lower' <- res$lower
