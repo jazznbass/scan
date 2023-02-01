@@ -538,11 +538,13 @@ export.sc_trend <- function(object, caption = NA, footnote = NA, filename = NA,
 
 #' @rdname export
 #' @param case For tau_u(): Either "meta" for exporting the results of the meta analyses or "all" exporting tau-u for each single-case.
+#' @param select Character vector with name of variables to be included. When the vector is named, variables are renamed appropriately.
 #' @export
 export.sc_tauu <- function(object, 
                            caption = NA, 
                            footnote = NA, 
                            filename = NA,
+                           select = c("Tau", "CI lower", "CI upper", "Z", "p"), 
                            kable_styling_options = list(), 
                            kable_options = list(),
                            case = "meta",
@@ -591,9 +593,13 @@ export.sc_tauu <- function(object,
     row.names(out) <- NULL
     Model <- rep(names_models, length = nrow(out)) 
     Case <- lapply(
-      names(tables), function(x) 
-      c(x, rep(" ", length(names_models) - 1))
-    ) |> unlist()
+      names(tables), 
+      function(x) c(x, rep(" ", length(names_models) - 1))
+    )
+    Case <- unlist(Case)
+    
+    out <- out[, select]
+    if (!is.null(names(select))) names(out) <- names(select) 
     
     out <- cbind(Case, Model, out)
     #column_names <- c("Model", "Tau", "SE", "CI lower", "CI upper", "z", "p")

@@ -16,12 +16,12 @@
 .tau_ci <- function(tau, n, ci = 0.95, se_method = "tau") {
   z <- qnorm((1 - ci) /2, lower.tail = FALSE)
   
-  if (se_method == "tau") var_tau_z <- sqrt(0.437 / (n - 4))
-  if (se_method == "z") var_tau_z <- 1 / sqrt(n - 3)
+  if (se_method == "tau") se_z <- sqrt(0.437 / (n - 4))
+  if (se_method == "z") se_z <- 1 / sqrt(n - 3)
   
   tau_z <- .tau_z(tau)
-  tau_z_ci_lower <- tau_z - z * var_tau_z
-  tau_z_ci_upper <- tau_z + z * var_tau_z
+  tau_z_ci_lower <- tau_z - z * se_z
+  tau_z_ci_upper <- tau_z + z * se_z
   
   list(
     tau = .inv_tau_z(tau_z),
@@ -31,7 +31,7 @@
     tau_z = tau_z,
     tau_z_ci_lower = tau_z_ci_lower,
     tau_z_ci_upper = tau_z_ci_upper,
-    var_tau_z = var_tau_z,
+    se_z = se_z,
     se_method = se_method
   )
   

@@ -69,7 +69,14 @@
 
 \method{print}{sc_smd}(x, digits = "auto", ...)
 
-\method{print}{sc_tauu}(x, complete = FALSE, digits = "auto", ...)
+\method{print}{sc_tauu}(
+  x,
+  complete = FALSE,
+  digits = "auto",
+  select = c("Tau", "CI lower", "CI upper", "SD_S", "Z", "p"),
+  nice_p = TRUE,
+  ...
+)
 
 \method{print}{sc_trend}(x, digits = 3, ...)
 }
@@ -88,7 +95,11 @@ publication tables.}
 
 \item{duration}{If TRUE the duration for computation is printed.}
 
-\item{complete}{Print further parameters.}
+\item{complete}{Print all parameters.}
+
+\item{select}{Character vector with name of variables to be included. When the vector is named, variables are renamed appropriately.}
+
+\item{nice_p}{If TRUE, p-values are printed in publication friendly form.}
 }
 \description{
 Print methods for scan objects
