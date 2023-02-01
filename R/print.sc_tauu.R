@@ -1,10 +1,19 @@
 #' @rdname print.sc
-#' @param complete Print further parameters.
+#' @param complete Print all parameters.
+#' @param select Character vector with name of variables to be included. When the vector is named, variables are renamed appropriately.
+#' @param nice_p If TRUE, p-values are printed in publication friendly form.
 #' @export
 #' 
-print.sc_tauu <- function(x, complete = FALSE, digits = "auto", ...) {
+print.sc_tauu <- function(x, 
+                          complete = FALSE, 
+                          digits = "auto", 
+                          select = c(
+                            "Tau", "CI lower", "CI upper", "SD_S", "Z", "p"
+                          ), 
+                          nice_p = TRUE,
+                          ...) {
   
-  if (digits == "auto") digits <- 3
+  if (digits == "auto") digits <- 2
   
   cat("Tau-U\n")
   cat("Method:", x$method, "\n")
@@ -23,7 +32,7 @@ print.sc_tauu <- function(x, complete = FALSE, digits = "auto", ...) {
   }
   
   if (!complete) {
-    select_vars <- c("Tau", "SE_Tau", "Z", "p")
+    select_vars <- select
     select_rows <- match(
       c(
         "A vs. B", 
@@ -33,15 +42,24 @@ print.sc_tauu <- function(x, complete = FALSE, digits = "auto", ...) {
       ), row.names(x$table[[1]])
     )
     
-    out <- lapply(x$table, function(x) round(x[select_rows, select_vars], digits))
+    out <- lapply(x$table, function(x) {
+      x <- round(x[select_rows, select_vars], digits)
+      if (nice_p) x$p <- .nice_p(x$p)
+      if (!is.null(names(select))) names(x) <- names(select)
+      x
+    })
+    
+  } else {
+    out <- lapply(out, function(x) {
+      x <- round(x, digits)
+      if (nice_p) x$p <- .nice_p(x$p) else x$p <- round(x$p, digits)
+      x
+    })
   }
-  
-  out <- lapply(out, function(x) {x$p <- round(x$p, digits); x})
-  
   
   for(i in seq_along(out)) {
     cat("Case:", names(out)[i], "\n")
-    print(out[[i]], digits = digits)
+    print(out[[i]], ...)
     cat("\n")
   }
   

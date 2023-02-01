@@ -90,6 +90,7 @@ export(object, ...)
   caption = NA,
   footnote = NA,
   filename = NA,
+  select = c("Tau", "CI lower", "CI upper", "Z", "p"),
   kable_styling_options = list(),
   kable_options = list(),
   case = "meta",
@@ -143,6 +144,8 @@ with variable names or the string "main" will select the central variables.}
 
 \item{nice}{If set TRUE (default) output values are rounded and optimized for
 publication tables.}
+
+\item{select}{Character vector with name of variables to be included. When the vector is named, variables are renamed appropriately.}
 
 \item{case}{For tau_u(): Either "meta" for exporting the results of the meta analyses or "all" exporting tau-u for each single-case.}
 }
