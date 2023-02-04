@@ -39,12 +39,19 @@ An scdf with the scaled values.
 This function scales the measured values of an scdf file. It allows for mean
 centering and standardization based on each single-case data set or a
 scaling across all cases included in an scdf.
+This function is superseded by the `all` helper function of the `transform`
+function (see example below).
 }
 \examples{
 
 ## Standardize a multiple case scdf and compute an hplm
 ex_sc <- standardize(exampleAB_50, var = "values", center = TRUE, scale = TRUE)
 hplm(ex_sc)
+
+## The more versatile transform function superseds standardize:
+exampleAB_50 \%>\%
+  tansform(values = (values - mean(all(values))) / sd(all(values))) \%>\%
+  hplm()
 }
 \seealso{
 Other data manipulation functions: 

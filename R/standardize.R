@@ -1,8 +1,11 @@
 #' Standardize values of an scdf file
 #'
+#' *This function is superseded by the much more versatile `transform` function 
+#' (see example below).*
 #' This function scales the measured values of an scdf file. It allows for mean
 #' centering and standardization based on each single-case data set or a
 #' scaling across all cases included in an scdf.
+
 #'
 #' @inheritParams .inheritParams
 #' @param var A character string or a vector of character strings with variable
@@ -19,8 +22,14 @@
 #' @examples
 #'
 #' ## Standardize a multiple case scdf and compute an hplm
-#' ex_sc <- standardize(exampleAB_50, var = "values", center = TRUE, scale = TRUE)
-#' hplm(ex_sc)
+#' exampleAB_50 %>%
+#'   standardize("values", center = TRUE, scale = TRUE) %>%
+#'   hplm(ex_sc)
+#' 
+#' ## The more versatile transform function supersedes standardize:
+#' exampleAB_50 %>%
+#'   tansform(values = (values - mean(all(values))) / sd(all(values))) %>%
+#'   hplm()
 #' @export
 
 standardize <- function(data, 
