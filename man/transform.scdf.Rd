@@ -22,6 +22,11 @@ useful to calculate or modify new variables.
 This function is a method of the generic transformation function. Unlike this
 one, expressions are calculated serially. This means that the results of the
 calculation of an expression are the basis for the following calculations.
+The `all` function is a helper function to calculate values across all 
+cases. It also takes an expression as an argument. 
+E.g., `mean(all(values))` will calculate the mean of values across all 
+cases. `mean(all(values[phase == "A"]))` will calculate the mean of 
+values where phase is A across all cases.
 }
 \examples{
 ## Creates a single-case with frequency distributions. The proportion and
@@ -43,4 +48,16 @@ exampleAB \%>\%
     mean_values = mean(values), 
     sd_values = sd(values)
   )
+
+## Use `all` to calculate global variables.   
+exampleAB \%>\% 
+  transform(
+    values_center_case = values - mean(values[phase == "A"]), 
+    values_center_global = values - mean(all(values[phase == "A"])),
+    value_dif = values_center_case - values_center_global
+  )
+
+## Standardize the values by the overall mean and standarddeviation
+exampleABC \%>\%
+  transform(values = (values - mean(all(values))) / sd(all(values)))
 }
