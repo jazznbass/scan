@@ -1,7 +1,7 @@
 #' Standardize values of an scdf file
 #'
-#' *This function is superseded by the much more versatile `transform` function 
-#' (see example below).*
+#' *This function is superseded by the much more versatile 
+#' \code{\link{transform.scdf}} function (see example below).*
 #' This function scales the measured values of an scdf file. It allows for mean
 #' centering and standardization based on each single-case data set or a
 #' scaling across all cases included in an scdf.
@@ -24,11 +24,11 @@
 #' ## Standardize a multiple case scdf and compute an hplm
 #' exampleAB_50 %>%
 #'   standardize("values", center = TRUE, scale = TRUE) %>%
-#'   hplm(ex_sc)
+#'   hplm()
 #' 
 #' ## The more versatile transform function supersedes standardize:
 #' exampleAB_50 %>%
-#'   tansform(values = (values - mean(all(values))) / sd(all(values))) %>%
+#'   transform(values = (values - mean(all(values))) / sd(all(values))) %>%
 #'   hplm()
 #' @export
 

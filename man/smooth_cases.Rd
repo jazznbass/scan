@@ -4,7 +4,7 @@
 \alias{smooth_cases}
 \title{Smoothing single-case data}
 \usage{
-smooth_cases(data, dvar, mvar, FUN = "movingMedian", intensity = NULL)
+smooth_cases(data, dvar, mvar, method = "mean", intensity = NULL, FUN = NULL)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
@@ -16,13 +16,13 @@ Defaults to the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{FUN}{Function determining the smoothed scores. Default \code{FUN =
-"movingMedian"} is a moving Median function. Further possible values are:
-\code{"movingMean"} and a non-parametric \code{"localRegression"}.}
+\item{method, FUN}{Method determining the smoothed scores. Default \code{method =
+"median"} is a moving median function. Further possible values are:
+\code{"mean"} and a non-parametric \code{"regression"}.}
 
-\item{intensity}{For \code{FUN = "movingMedian"} and \code{"movingMean"} it
+\item{intensity}{For \code{method = "median"} and \code{"mean"} it
 is the lag used for computing the average. Default is \code{intensity = 1}.
-In case of \code{FUN = "localRegression"} it is the proportion of
+In case of \code{method = "regression"} it is the proportion of
 surrounding data influencing each data point, which is \code{intensity =
 0.2} by default.}
 }
@@ -32,22 +32,37 @@ points. See \code{\link{scdf}} to learn about the format of these data
 frames.
 }
 \description{
-The \code{smooth_cases} function provides procedures to smooth single-case data
-(i.e., to eliminate noise). A moving average function (mean- or
+*This function is superseded by the more versatile 
+\code{\link{transform.scdf}} function. The example below.*
+The \code{smooth_cases} function provides procedures to smooth single-case 
+data (i.e., to eliminate noise). A moving average function (mean- or
 median-based) replaces each data point by the average of the surrounding
 data points step-by-step. With a local regression function, each data point
 is regressed by its surrounding data points.
+}
+\details{
+\code{moving_median}, \code{moving_mean}, and \code{local_regression} are 
+helper function for \code{\link{transform.scdf}} returning the smoothed 
+values of a numeric vector.
 }
 \examples{
 
 ## Use the three different smoothing functions and compare the results
 study <- c(
   "Original" = Huber2014$Berta,
-  "Moving Median" = smooth_cases(Huber2014$Berta, FUN = "movingMedian"),
-  "Moving Mean" = smooth_cases(Huber2014$Berta, FUN = "movingMean"),
-  "Local Regression" = smooth_cases(Huber2014$Berta, FUN = "localRegression")
+  "Moving median" = smooth_cases(Huber2014$Berta, method = "median"),
+  "Moving mean" = smooth_cases(Huber2014$Berta, method = "mean"),
+  "Local regression" = smooth_cases(Huber2014$Berta, method = "regression")
 )
 plot(study)
+
+Huber2014$Berta \%>\% 
+transform(
+  "compliance (moving median)" = moving_median(compliance),
+  "compliance (moving mean)" = moving_mean(compliance),
+  "compliance (local regression)" = local_regression(compliance, mt)
+)
+
 }
 \seealso{
 Other data manipulation functions: 

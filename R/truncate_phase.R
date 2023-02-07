@@ -1,22 +1,28 @@
 #' Truncate single-case data
 #'
-#' This function truncates data points at the beginning and / or end of each phase in each case.
+#' This function truncates data points at the beginning and / or end of each
+#' phase in each case.
 #'
 #' @inheritParams .inheritParams
-#' @param truncate A list with a vector of two (beginning and end) values for each phase defining the number of data points to be deleted.
-#' For lists of single-case data frames, the truncation is adapted to the length
-#' of each phase for each single case.
-#' @param na If FALSE, the truncated measurement times are deleted. If TRUE, NAs are set for the dependent variable.
+#' @param truncate A list with a vector of two (beginning and end) values for
+#'   each phase defining the number of data points to be deleted. For lists of
+#'   single-case data frames, the truncation is adapted to the length of each
+#'   phase for each single case.
+#' @param na If FALSE, the truncated measurement times are deleted. If TRUE, NAs
+#'   are set for the dependent variable.
 #' @return A truncated data frame (for each single-case).
 #' @author Juergen Wilbert
 #' @family data manipulation functions
 #' @keywords manip
 #' @examples
 #'
-#' # Truncate the first two data points of both phases and compare the two data sets
+#' ## Truncate the first two data points of both phases and compare the two 
+#' ## data sets
 #' study <- c(
 #'   "Original" = byHeart2011[1],
-#'   "Selected" = truncate_phase(byHeart2011[1], truncate = list(A = c(2, 0), B = c(2, 0)))
+#'   "Selected" = truncate_phase(
+#'     byHeart2011[1], truncate = list(A = c(2, 0), B = c(2, 0))
+#'   )
 #' )
 #' plot(study)
 #' @export
@@ -68,3 +74,5 @@ truncate_phase <- function(data, dvar, pvar,
   
   data
 }
+
+

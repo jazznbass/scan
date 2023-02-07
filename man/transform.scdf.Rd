@@ -2,14 +2,40 @@
 % Please edit documentation in R/transform.scdf.R
 \name{transform.scdf}
 \alias{transform.scdf}
+\alias{invalidate}
+\alias{moving_median}
+\alias{moving_mean}
+\alias{local_regression}
 \title{Transform variables in every single case of a single case data frame}
 \usage{
 \method{transform}{scdf}(`_data`, ...)
+
+invalidate(x, first_of, positions)
+
+moving_median(x, lag = 1)
+
+moving_mean(x, lag = 1)
+
+local_regression(x, f = 0.2, mt = 1:length(x))
 }
 \arguments{
 \item{_data}{A scdf.}
 
 \item{...}{Expressions.}
+
+\item{x}{A vector.}
+
+\item{first_of}{A logical vector. The first appearance of a TRUE value is the 
+reference position.}
+
+\item{positions}{A numeric vector with relative positions to the first 
+appearance of a TRUE value in filter.}
+
+\item{lag}{Number of values surrounding a value to calculate the average}
+
+\item{f}{the proportion of surrounding data influencing each data point.}
+
+\item{mt}{A vector with measurement times.}
 }
 \value{
 A scdf.
@@ -19,14 +45,14 @@ Takes a scdf and applies transformations to each individual case. This is
 useful to calculate or modify new variables.
 }
 \details{
-This function is a method of the generic transformation function. Unlike this
-one, expressions are calculated serially. This means that the results of the
-calculation of an expression are the basis for the following calculations.
-The `all` function is a helper function to calculate values across all 
-cases. It also takes an expression as an argument. 
-E.g., `mean(all(values))` will calculate the mean of values across all 
-cases. `mean(all(values[phase == "A"]))` will calculate the mean of 
-values where phase is A across all cases.
+This function is a method of the generic transform function. Unlike the
+generic function, it calculates expressions serially. This means that the
+results of the calculation of one expression are the basis for the following
+computations. The 'all' function is a helper function that calculates values
+across all cases. It also takes an expression as an argument. For example,
+\code{mean(all(values))} calculates the mean of the values across all cases.
+\code{mean(all(values[phase == "A"]))} will calculate the mean of all values
+where phase is A.
 }
 \examples{
 ## Creates a single-case with frequency distributions. The proportion and
@@ -42,17 +68,17 @@ study <- random_scdf(design)
 transform(study, proportion = values/trials, percentage = proportion * 100)
 
 ## Z standardize the dependent variable and add two new variables:
-exampleAB \%>\% 
+exampleAB \%>\%
   transform(
-    values = scale(values), 
-    mean_values = mean(values), 
+    values = scale(values),
+    mean_values = mean(values),
     sd_values = sd(values)
   )
 
-## Use `all` to calculate global variables.   
-exampleAB \%>\% 
+## Use `all` to calculate global variables.
+exampleAB \%>\%
   transform(
-    values_center_case = values - mean(values[phase == "A"]), 
+    values_center_case = values - mean(values[phase == "A"]),
     values_center_global = values - mean(all(values[phase == "A"])),
     value_dif = values_center_case - values_center_global
   )
@@ -60,4 +86,22 @@ exampleAB \%>\%
 ## Standardize the values by the overall mean and standarddeviation
 exampleABC \%>\%
   transform(values = (values - mean(all(values))) / sd(all(values)))
+
+## Three helper functions to smooth the data
+Huber2014$Berta \%>\%
+transform(
+  "compliance (moving median)" = moving_median(compliance),
+  "compliance (moving mean)" = moving_mean(compliance),
+  "compliance (local regression)" = local_regression(compliance, mt)
+)
+
+## Function invalidate() helps to set NAs for specific phases.
+## E.g., you want to delete the first two values of phase A and the first
+## value of phase B and its preceding value.
+
+byHeart2011 \%>\%
+  transform(
+    values = invalidate(values, phase == "A", 0:1),
+    values = invalidate(values, phase == "B", -1:0)
+  )
 }

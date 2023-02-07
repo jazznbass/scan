@@ -10,14 +10,17 @@ ranks(data, var, grand = TRUE, ...)
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
 this format.}
 
-\item{var}{A string or string vector with the names of the variables to be ranked.}
+\item{var}{A string or string vector with the names of the variables to be
+ranked.}
 
-\item{grand}{If TRUE, ranks will be calculated across all cases. If FALSE ranks are calculated within each case.}
+\item{grand}{If TRUE, ranks will be calculated across all cases. If FALSE
+ranks are calculated within each case.}
 
-\item{...}{Additional paramters passed to the \code{\link{rank}} function.}
+\item{...}{Additional parameters passed to the \code{\link{rank}} function.}
 }
 \value{
-An \code{scdf} object where the values of the variable(s) are replaced with ranks.
+An \code{scdf} object where the values of the variable(s) are
+  replaced with ranks.
 }
 \description{
 Rank-transformation of single-case data files
