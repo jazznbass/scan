@@ -24,10 +24,10 @@
 } 
 
 
-.moving_average <- function(x, xLag, FUN = mean) {
-  for(i in (xLag + 1):(length(x) - xLag))
-    x[i] <- FUN(x[(i - xLag):(i + xLag)], na.rm = TRUE)
-  return(x)
+.moving_average <- function(x, lag = 1, FUN = mean) {
+  for(i in (lag + 1):(length(x) - lag))
+    x[i] <- FUN(x[(i - lag):(i + lag)], na.rm = TRUE)
+  x
 }
 
 .beta_weights <- function(model) {
