@@ -23,11 +23,11 @@ An \code{scdf} object where the values of the variable(s) are
   replaced with ranks.
 }
 \description{
-Rank-transformation of single-case data files
+*This function is superseded by the more versatile 
+\code{\link{transform.scdf}} function.*
 }
 \examples{
-Huber2014_rank <- ranks(Huber2014, var = "compliance")
-plot(Huber2014_rank, style = "grid2")
+ranks(Huber2014, var = "compliance")
 }
 \seealso{
 Other data manipulation functions: 

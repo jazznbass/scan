@@ -1,3 +1,98 @@
+
+
+# 2023-02-08
+
+tran <- function(...) {
+  expressions <- substitute(list(...))
+  
+  print(names(expressions[3]))
+  print(typeof(expressions[3]))
+  
+  #df <- as.data.frame(`_scdf`)
+  print(expressions[c(1,2)])
+  
+  env <- new.env()
+  env$a <- 5
+  new <- eval(expressions[c(1,2)], env)
+  env[[names(new)]] <- new[[1]]
+  env$f <- eval(expressions[c(1,3)], env)
+  print(new)
+  ls(env)
+  env
+}  
+
+
+
+tran(b = a + 1, mean(1:10)) 
+
+e$f
+
+
+
+for(i_expression in 2:length(expressions)) {
+    
+    deparse_ch <- deparse(expressions[i_expression])
+
+
+
+trans <- function(`_scdf`, ...) {
+  expressions <- substitute(list(...))
+  df <- as.data.frame(`_scdf`)
+  
+  for(i_expression in 2:length(expressions)) {
+    
+    if(startsWith(deparse(expressions[i_expression]), "across_cases(")) {
+      new <- eval(eval(expressions[c(1,i_expression)], df, parent.frame(3)))
+      df <- new[[1]]
+      `_scdf` <- as_scdf(df)
+    } else {
+      for(i_case in seq_along(`_scdf`)) {
+        .list_env <- as.list(`_scdf`[[i_case]])
+        .list_env$all_cases <- .list_env$all <- function(x) {
+          x <- substitute(x)
+          eval(x, df)
+        }
+        new <- eval(expressions[c(1,i_expression)], .list_env, parent.frame())
+        `_scdf`[[i_case]][[names(new)]] <- new[[1]]
+      }
+    }
+  }
+  `_scdf`
+}
+
+across_cases <- function(...) {
+  print(environment())
+  expressions <- substitute(list(...))
+  for (i in 2:length(expressions)) {
+    new <- eval(expressions[c(1,i)], df, parent.env(parent.env(environment())))
+    df[[names(new)]] <- new[[1]]
+  }
+  df
+}
+
+#across_cases(df, values = 1, mt = 14)
+
+#df <- as.data.frame(exampleAB)
+
+ a <- exampleABC %>%
+   transform(
+     across_cases(values = 1:90, mt = 90:1),
+     values = values + mt
+    )
+
+b <-  exampleABC %>%
+   transform(values = (values - mean(all_cases(values))) / sd(all_cases(values)))
+ 
+c <-  exampleABC %>%
+  transform(
+    across_cases(values = (values - mean(values)) / sd(values))
+  )
+
+b$Rosalind[[1]]
+c$Rosalind[[1]]
+all.equal(b,c)
+describe(c(a,c))
+ 
 # 2023-02-01
 library(scan)
 case <- scdf(c(6,5,5,4,3,3, 7,7,7,6,7,6), phase_design = c(A = 6, B = 6))

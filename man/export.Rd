@@ -154,7 +154,7 @@ publication tables.}
 
 \item{case}{For tau_u(): Either "meta" for exporting the results of the meta analyses or "all" exporting tau-u for each single-case.}
 
-\item{cols}{Defines which columns are included when exporting a scdf. It is
+\item{cols}{Defines which columns are included when exporting an scdf. It is
 either a vector of variable names or the string "main" will select the
 central variables.}
 }

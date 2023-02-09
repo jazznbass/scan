@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.scdf.R
 \name{summary.scdf}
 \alias{summary.scdf}
-\title{Summary functio for a scdf}
+\title{Summary function for an scdf}
 \usage{
 \method{summary}{scdf}(object, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{not in use}
 }
 \description{
-Summary functio for a scdf
+Summary function for an scdf
 }
