@@ -33,24 +33,19 @@
 #' @export
 as.data.frame.scdf <- function(x, ..., l2 = NULL, id = "case") {
   
-  data <- x
-  
-  label <- .case_names(names(data), length(data))
-
+  label <- .case_names(names(x), length(x))
   outdat <- vector()
   
-  for (case in 1:length(data)) {
-    data[[case]]$case <- label[case]
-    outdat <- rbind(outdat, data[[case]])
+  for (case in 1:length(x)) {
+    x[[case]]$case <- label[case]
+    outdat <- rbind(outdat, x[[case]])
   }
   
   outdat <- cbind(outdat[, ncol(outdat)], outdat[, -ncol(outdat)])
   colnames(outdat)[1] <- id
-  
   if(!is.null(l2)) outdat <- merge(outdat, l2, by = id)
-  
   outdat[[1]] <- factor(outdat[[1]],levels = label, labels = label)
-  
+  attr(outdat, "scdf") <- attr(x, "scdf")
   outdat
   
 }
