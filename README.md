@@ -5,8 +5,6 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/scan?color=orange)](https://CRAN.R-project.org/package=scan)
 <!-- badges: end -->
 
- <img src='man/figures/logo.png' align="right" height = "135" />
-
 This package provides a collection of procedures for analysing, visualising, 
 and managing single-case data. These include piecewise linear regression 
 models, multilevel models, overlap indices (PND, PEM, PAND, PET, tauU, 
