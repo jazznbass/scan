@@ -32,6 +32,13 @@ as_scdf <- function(object,
     object[[cvar]] <- "unnamed"
   }
   
+  if (!is.null(attr(object, .opt$scdf))) {
+    pvar <- attr(object, .opt$scdf)[[.opt$phase]] 
+    dvar <- attr(object, .opt$scdf)[[.opt$dv]] 
+    mvar <- attr(object, .opt$scdf)[[.opt$mt]] 
+    message("Found scdf attributes and replaced function arguments.")
+  }
+  
   if (!sort_cases) {
     object[[cvar]] <- factor(object[[cvar]], levels = unique(object[[cvar]]))
   } else {
@@ -43,7 +50,9 @@ as_scdf <- function(object,
   
   case_names <- levels(object[[cvar]])
   object <- split(object, object[[cvar]])
-  object <- lapply(object, function(x) x[, -which(names(x) == cvar)])
+  object <- lapply(object, function(x) {
+    x[, -which(names(x) == cvar)]
+  })
   names(object) <- case_names
   
   class(object) <- c("scdf", "list")
