@@ -3,7 +3,7 @@
 \name{$.scdf}
 \alias{$.scdf}
 \alias{[.scdf}
-\title{Select a scdf}
+\title{Select an scdf}
 \usage{
 \method{$}{scdf}(x, i)
 
@@ -18,5 +18,5 @@
 A scdf
 }
 \description{
-Select a scdf
+Select an scdf
 }

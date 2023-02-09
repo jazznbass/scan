@@ -22,24 +22,32 @@ Defaults to the attributes in the scdf file.}
 \item{pvar}{Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.}
 
-\item{truncate}{A list with a vector of two (beginning and end) values for each phase defining the number of data points to be deleted.
-For lists of single-case data frames, the truncation is adapted to the length
-of each phase for each single case.}
+\item{truncate}{A list with a vector of two (beginning and end) values for
+each phase defining the number of data points to be deleted. For lists of
+single-case data frames, the truncation is adapted to the length of each
+phase for each single case.}
 
-\item{na}{If FALSE, the truncated measurement times are deleted. If TRUE, NAs are set for the dependent variable.}
+\item{na}{If FALSE, the truncated measurement times are deleted. If TRUE, NAs
+are set for the dependent variable.}
 }
 \value{
 A truncated data frame (for each single-case).
 }
 \description{
-This function truncates data points at the beginning and / or end of each phase in each case.
+#' *This function is superseded by the more versatile 
+\code{\link{transform.scdf}} function.*
+This function truncates data points at the beginning and / or end of each
+phase in each case.
 }
 \examples{
 
-# Truncate the first two data points of both phases and compare the two data sets
+## Truncate the first two data points of both phases and compare the two 
+## data sets
 study <- c(
   "Original" = byHeart2011[1],
-  "Selected" = truncate_phase(byHeart2011[1], truncate = list(A = c(2, 0), B = c(2, 0)))
+  "Selected" = truncate_phase(
+    byHeart2011[1], truncate = list(A = c(2, 0), B = c(2, 0))
+  )
 )
 plot(study)
 }

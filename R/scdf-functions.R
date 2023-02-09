@@ -61,7 +61,7 @@ c.scdf <- function(...) {
   combine(...)
 }
 
-#' Select a scdf
+#' Select an scdf
 #'
 #' @param x A scdf object
 #' @param i A case name from x 

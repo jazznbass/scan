@@ -1,3 +1,7 @@
+template:
+  bootstrap: 5
+  bootswatch: lumen
+
 destination: docs
 
 navbar:

@@ -19,8 +19,8 @@ Defaults to the measurement time variable.}
 A scdf with shifted data
 }
 \description{
-*This function has been replaced by the much more versatile `transform`
-function.*
+*This function has been superseded by the much more versatile 
+\code{\link{transform.scdf}} function.*
 Shifting the values might be helpful in cases where the measurement time
 is given as a time variable (see example below).
 }
@@ -30,8 +30,9 @@ ex <- shift(example_A24, value = -1996)
 plm(ex)
 
 # Please use transform instead:
-ex <- transform(example_A24, year = year - 1996)
-plm(ex)
+example_A24 \%>\%
+  transform(year = year - 1996) \%>\%
+  plm()
 }
 \seealso{
 Other data manipulation functions: 
