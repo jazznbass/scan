@@ -14,7 +14,7 @@
 #' @param kable_options list with arguments passed to the kable function.
 #' @param kable_styling_options list with arguments passed to the kable_styling
 #'   function.
-#' @param cols Defines which columns are included when exporting a scdf. It is
+#' @param cols Defines which columns are included when exporting an scdf. It is
 #'   either a vector of variable names or the string "main" will select the
 #'   central variables.
 #' @param flip If TRUE, some objects are exported with rows and columns flipped.
