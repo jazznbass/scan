@@ -1,7 +1,7 @@
 #' Smoothing single-case data
 #'
 #' *This function is superseded by the more versatile 
-#' \code{\link{transform.scdf}} function. The example below.*
+#' \code{\link{transform.scdf}} function.*
 #' The \code{smooth_cases} function provides procedures to smooth single-case 
 #' data (i.e., to eliminate noise). A moving average function (mean- or
 #' median-based) replaces each data point by the average of the surrounding

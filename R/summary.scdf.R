@@ -1,4 +1,4 @@
-#' Summary functio for a scdf
+#' Summary function for an scdf
 #'
 #' @param object scdf
 #' @param ... not in use

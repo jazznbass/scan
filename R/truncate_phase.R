@@ -1,5 +1,7 @@
 #' Truncate single-case data
 #'
+#' #' *This function is superseded by the more versatile 
+#' \code{\link{transform.scdf}} function.*
 #' This function truncates data points at the beginning and / or end of each
 #' phase in each case.
 #'

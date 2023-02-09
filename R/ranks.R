@@ -1,5 +1,8 @@
 #' Rank-transformation of single-case data files
 #'
+#' *This function is superseded by the more versatile 
+#' \code{\link{transform.scdf}} function.*
+#'
 #' @inheritParams .inheritParams
 #' @param var A string or string vector with the names of the variables to be
 #'   ranked.
@@ -11,8 +14,7 @@
 #' @author Juergen Wilbert
 #' @family data manipulation functions
 #' @examples
-#' Huber2014_rank <- ranks(Huber2014, var = "compliance")
-#' plot(Huber2014_rank, style = "grid2")
+#' ranks(Huber2014, var = "compliance")
 #' @export
 
 ranks <- function(data, var, grand = TRUE, ...) {
