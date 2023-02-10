@@ -4,7 +4,15 @@
 \alias{trend}
 \title{Trend analysis for single-cases data}
 \usage{
-trend(data, dvar, pvar, mvar, offset = -1, model = NULL)
+trend(
+  data,
+  dvar,
+  pvar,
+  mvar,
+  offset = "deprecated",
+  first_mt = 0,
+  model = NULL
+)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
@@ -19,9 +27,13 @@ the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{offset}{An offset for the first measurement-time of each phase (MT). If
-\code{offset = 0}, the phase measurement is handled as MT 1.
-Default is \code{offset = -1}, setting the first value of MT to 0.}
+\item{offset}{(Deprecated. Please use first_mt). An offset for the first
+measurement-time of each phase. If \code{offset = 0}, the phase measurement
+is handled as MT 1. Default is \code{offset = -1}, setting the first value
+of MT to 0.}
+
+\item{first_mt}{A numeric setting the value for the first measurement-time.
+Default = 0.}
 
 \item{model}{A string or a list of (named) strings each depicting one
 regression model. This is a formula expression of the standard R class. The
@@ -29,17 +41,16 @@ parameters of the model are \code{values}, \code{mt} and \code{phase}.}
 }
 \value{
 \item{trend}{A matrix containing the results (Intercept, B and beta)
-of separate regression models for phase A, phase B, and the whole data.}
+  of separate regression models for phase A, phase B, and the whole data.}
 \item{offset}{Numeric argument from function call (see \code{Arguments}
 section).}
 }
 \description{
-The \code{trend} function provides an overview of linear trends in
-single-case data.  By default, it gives you the intercept and slope of a
-linear and a squared regression of measurement-time on scores.  Models are
-computed separately for each phase and across all phases. For a
-more advanced application, you can add regression models using the R
-specific formula class.
+The \code{trend} function provides an overview of linear trends in single
+case data. By default, it provides the intercept and slope of a linear and
+quadratic regression of measurement time on scores. Models are calculated
+separately for each phase and across all phases. For more advanced use, you
+can add regression models using the R-specific formula class.
 }
 \examples{
 
@@ -57,8 +68,7 @@ trend(ben, offset = 0, model = c("Cubic" = values ~ I(mt^3), "Log Time" = values
 
 }
 \seealso{
-\code{\link{describe}}, \code{\link{autocorr}},
-\code{\link{plm}}
+\code{\link{describe}}, \code{\link{autocorr}}, \code{\link{plm}}
 }
 \author{
 Juergen Wilbert
