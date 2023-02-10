@@ -7,7 +7,6 @@ export.sc_trend <- function(object,
                             kable_styling_options = list(), 
                             kable_options = list(), 
                             round = 2,
-                            flip = FALSE,
                             ...) {
   
   kable_options <- .join_kabel(kable_options)
@@ -17,7 +16,7 @@ export.sc_trend <- function(object,
   kable_options$caption <- caption
   
   out <- object$trend
-  if (isTRUE(flip)) out <- t(out)
+  #if (isTRUE(flip)) out <- t(out)
   
   tmp.rownames <- rownames(out)
   rownames(out) <- NULL
