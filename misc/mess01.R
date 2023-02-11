@@ -1,4 +1,28 @@
 
+# 2023-02-10
+
+library(scan)
+trend(exampleABC$Marie)
+
+
+# 2023-02-09
+
+#How many overall downloads
+library(ggplot2)
+mls <- cranlogs::cran_downloads(packages="scan", from = "2016-06-1", to = Sys.Date()-1)
+
+sum(mls[,2])
+
+#Cumulative
+cumulative <- cumsum(mls[,2])
+mls2 <- cbind(mls,cumulative)
+
+
+#Plot
+gr1 <- ggplot(mls2, aes(mls2$date, mls2$cumulative)) + 
+  geom_line(colour = "blue",size=1) 
+gr1 + xlab("Time") + ylab("Nr. of downloads") + 
+  labs(title = paste0("scan cumulative downloads until ", Sys.Date()-1)) 
 
 # 2023-02-08
 
