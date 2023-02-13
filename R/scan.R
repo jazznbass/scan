@@ -1,7 +1,4 @@
 .onAttach <- function(lib, pkg, ...) {
-	#out <- paste0("scan ", utils::packageVersion("scan"), 
-	#              " - Experimental (", utils::packageDate('scan'), ")\n",
-	#              "Single-Case Data Analysis for Single and Multiple Baseline Designs\n")
   packageStartupMessage(.opt$startup_message)
 }	
 
