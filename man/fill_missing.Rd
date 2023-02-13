@@ -4,7 +4,7 @@
 \alias{fill_missing}
 \title{Replacing missing measurement times in single-case data}
 \usage{
-fill_missing(data, dvar, mvar, interpolation = "linear", na.rm = TRUE)
+fill_missing(data, dvar, mvar, na.rm = TRUE)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
@@ -16,15 +16,12 @@ Defaults to the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{interpolation}{Alternative options not yet included. Default is
-\code{interpolation = "linear"}.}
-
 \item{na.rm}{If set \code{TRUE}, \code{NA} values are also interpolated.
 Default is \code{na.rm = TRUE}.}
 }
 \value{
-A single-case data frame (SCDF) with missing data points
-interpolated.  See \code{\link{scdf}} to learn about the SCDF Format.
+A single-case data frame with interpolated missing data
+  points.  See \code{\link{scdf}} to learn about the SCDF Format.
 }
 \description{
 The \code{fillmissingSC} function replaces missing measurements in
@@ -38,8 +35,8 @@ single-case data and you want to calculate overlap indices
 }
 \examples{
 
-## In his study, Grosche (2011) could not realize measurements each single week for 
-## all participants. During the course of 100 weeks, about 20 measurements per person 
+## In his study, Grosche (2011) could not realize measurements each single week for
+## all participants. During the course of 100 weeks, about 20 measurements per person
 ## at different times were administered.
 
 ## Fill missing values in a single-case dataset with discontinuous measurement times

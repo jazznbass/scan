@@ -1,6 +1,8 @@
 #' @rdname export
-#' @param case For tau_u(): Either "meta" for exporting the results of the meta analyses or "all" exporting tau-u for each single-case.
-#' @param select Character vector with name of variables to be included. When the vector is named, variables are renamed appropriately.
+#' @param meta If TRUE, the results of the meta analysis will be exported. If
+#'   FALSE, each single-case is exported.
+#' @param select Character vector with name of variables to be included. When
+#'   the vector is named, variables are renamed appropriately.
 #' @export
 export.sc_tauu <- function(object, 
                            caption = NA, 
@@ -9,7 +11,7 @@ export.sc_tauu <- function(object,
                            select = "auto", 
                            kable_styling_options = list(), 
                            kable_options = list(),
-                           case = "meta",
+                           meta = TRUE,
                            ...) {
   
   kable_options <- .join_kabel(kable_options)
@@ -18,7 +20,7 @@ export.sc_tauu <- function(object,
   if (is.na(caption)) {
     #A <- object$design[object$phases.A]
     #B <- object$design[object$phases.B]
-    if (case == "meta") 
+    if (meta) 
       caption <- c("Overall Tau-U") 
     else 
       caption <- "Tau-U analyses"
@@ -35,9 +37,9 @@ export.sc_tauu <- function(object,
     )
   }
   
-  if (case == "meta") out <- object$Overall_tau_u
+  if (meta) out <- object$Overall_tau_u
   
-  if (case == "all") {
+  if (!meta) {
     tables <- object$table
     names_models <- c(" ", row.names(tables[[1]]))
     n_cases <- length(tables)
@@ -60,9 +62,9 @@ export.sc_tauu <- function(object,
   out$p <- .nice_p(out$p)
   
   if (identical(select, "auto")) {
-    if (case == "all") 
+    if (!meta) 
       select <- c("Case", "Tau", "CI lower", "CI upper", "Z", "p")
-    if (case == "meta") 
+    if (meta) 
       select <- c(
         "Model", "Tau U" = "Tau_U", "se", "CI lower", "CI upper", "z", "p"
       )

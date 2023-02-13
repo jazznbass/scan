@@ -1,6 +1,4 @@
 #' @rdname print.sc
-#' @param nice If set TRUE (default) output values are rounded and optimized for
-#' publication tables.
 #' @export
 print.sc_desc <- function(x, digits = "auto", ...) {
   
@@ -11,9 +9,15 @@ print.sc_desc <- function(x, digits = "auto", ...) {
   out <- as.data.frame(t(x$descriptives[-1]))
   colnames(out) <- x$descriptives$Case
   
-  print(out[1:(2 * length(x$design) + 1), , drop = FALSE], digits = digits, ...)
+  print(
+    out[1:(2 * length(x$design) + 1), , drop = FALSE], 
+    digits = digits, ...
+  )
   cat("\n")
-  print(out[-(1:(2 * length(x$design) + 1)),, drop = FALSE], digits = digits, ...)
+  print(
+    out[-(1:(2 * length(x$design) + 1)), , drop = FALSE], 
+    digits = digits, ...
+  )
   .note_vars(x)
   
 }
