@@ -96,7 +96,7 @@ export(object, ...)
   select = "auto",
   kable_styling_options = list(),
   kable_options = list(),
-  case = "meta",
+  meta = TRUE,
   ...
 )
 
@@ -149,9 +149,11 @@ publication tables.}
 
 \item{flip}{If TRUE, some objects are exported with rows and columns flipped.}
 
-\item{select}{Character vector with name of variables to be included. When the vector is named, variables are renamed appropriately.}
+\item{select}{Character vector with name of variables to be included. When
+the vector is named, variables are renamed appropriately.}
 
-\item{case}{For tau_u(): Either "meta" for exporting the results of the meta analyses or "all" exporting tau-u for each single-case.}
+\item{meta}{If TRUE, the results of the meta analysis will be exported. If
+FALSE, each single-case is exported.}
 
 \item{cols}{Defines which columns are included when exporting an scdf. It is
 either a vector of variable names or the string "main" will select the
