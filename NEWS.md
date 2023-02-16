@@ -1,4 +1,4 @@
-# scan 0.55.x
+# scan 0.56
 
 
 ## New features
@@ -42,11 +42,11 @@ as.data.frame(exampleABC) |> openxlsx::write.xlsx("filename.xlsx")
 - `tau_u(), correted_tau()`: corrected a wrong calculation of the continuity correction when values where lower in phase B.
 - `tau_u()`: Implemented a new method for calculating confidence intervals based on Fisher-Z transformations (see Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall’s tau. British Journal of Mathematical and Statistical Psychology, 50(1), 31–41. <https://doi.org/10.1111/j.2044-8317.1997.tb01100.x>)
 
-# superseded function
+## superseded function
 
 - `smooth_caes()`, `shift()`, `standardise()`, `ranks()`, `truncate_phases()`: All superseded by `transform()` and its helper functions. See details in the help files of transform and in the scan-book.
 
-# minor changes
+## minor changes
 
 - `as.data.frane.scdf()`/`as_scdf()`: keep and retrieve scdf attributes.
 
