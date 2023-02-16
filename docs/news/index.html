@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.55.14</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.56</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,9 +57,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.55" id="scan-055x">scan 0.55.x<a class="anchor" aria-label="anchor" href="#scan-055x"></a></h2><p class="text-muted">CRAN release: 2022-08-29</p>
+<h2 class="pkg-version" data-toc-text="0.56" id="scan-056">scan 0.56<a class="anchor" aria-label="anchor" href="#scan-056"></a></h2>
 <div class="section level3">
-<h3 id="new-features-0-55">New features<a class="anchor" aria-label="anchor" href="#new-features-0-55"></a></h3>
+<h3 id="new-features-0-56">New features<a class="anchor" aria-label="anchor" href="#new-features-0-56"></a></h3>
 <ul><li><p><code><a href="../reference/export.html">export()</a></code>: New export for <code><a href="../reference/power_test.html">power_test()</a></code> and <code><a href="../reference/smd.html">smd()</a></code> output.</p></li>
 <li><p><code><a href="../reference/export.html">export()</a></code>: <code><a href="../reference/tau_u.html">tau_u()</a></code> export with new argument <code>case</code> which takes the values <code>"meta"</code> or <code>"all"</code> and new argument <code>select</code> allowing to select, reorder, and rename specific variables.</p></li>
 <li><p><code><a href="../reference/select_cases.html">select_cases()</a></code>: Allow for a selection based on object names (like in substitute).</p></li>
@@ -91,13 +91,23 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">exampleABC</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">openxlsx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/write.xlsx.html" class="external-link">write.xlsx</a></span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="bug-fixes-0-55">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-55"></a></h3>
+<h3 id="bug-fixes-0-56">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-56"></a></h3>
 <ul><li>
 <code><a href="../reference/tau_u.html">tau_u()</a></code>: Rewrote the calculation of meta analyses and confidence intervals.</li>
 <li>
 <code>tau_u(), correted_tau()</code>: corrected a wrong calculation of the continuity correction when values where lower in phase B.</li>
 <li>
 <code><a href="../reference/tau_u.html">tau_u()</a></code>: Implemented a new method for calculating confidence intervals based on Fisher-Z transformations (see Long, J. D., &amp; Cliff, N. (1997). Confidence intervals for Kendall’s tau. British Journal of Mathematical and Statistical Psychology, 50(1), 31–41. <a href="https://doi.org/10.1111/j.2044-8317.1997.tb01100.x" class="external-link uri">https://doi.org/10.1111/j.2044-8317.1997.tb01100.x</a>)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="superseded-function-0-56">superseded function<a class="anchor" aria-label="anchor" href="#superseded-function-0-56"></a></h3>
+<ul><li>
+<code>smooth_caes()</code>, <code><a href="../reference/shift.html">shift()</a></code>, <code>standardise()</code>, <code><a href="../reference/ranks.html">ranks()</a></code>, <code>truncate_phases()</code>: All superseded by <code><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform()</a></code> and its helper functions. See details in the help files of transform and in the scan-book.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-changes-0-56">minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-56"></a></h3>
+<ul><li>
+<code>as.data.frane.scdf()</code>/<code><a href="../reference/as_scdf.html">as_scdf()</a></code>: keep and retrieve scdf attributes.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -109,7 +119,7 @@
 </ul><div class="sourceCode" id="cb3"><pre class="sourceCode .r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">plm</span>(exampleAB<span class="sc">$</span>Johanna))</span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="new-features-0-55-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-55-1"></a></h3>
+<h3 id="new-features-0-55">New features<a class="anchor" aria-label="anchor" href="#new-features-0-55"></a></h3>
 <ul><li>
 <code><a href="../reference/power_test.html">power_test()</a></code>: New argument <code>ci</code> provides confidence intervals for power, alpha error, and correct proportions. New arguments <code>binom_test_alpha, binom_test_power, binom_test_correct</code> provide test against a provided proportion for alpha, power, and correct proportions.</li>
 </ul><div class="sourceCode" id="cb4"><pre class="sourceCode .r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">design</span>(</span>
@@ -126,7 +136,7 @@
 <code><a href="../reference/plm.html">plm()</a></code>, <code><a href="../reference/hplm.html">hplm()</a></code>: Added model <code>"W"</code>. Which shifts the measurement-time variable to start with zero. This leads to a more sensible estimation of the intercept (where the intercept depicts the estimated score at the start). <code>model = "W"</code> is now the default. Use <code>model = "B&amp;L-B"</code> for previous defaults.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-55-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-55-1"></a></h3>
+<h3 id="bug-fixes-0-55">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-55"></a></h3>
 <ul><li>solved <a href="https://github.com/jazznbass/scan/issues/66" class="external-link">#66</a>: <code><a href="../reference/set_vars.html">set_vars()</a></code> working.</li>
 <li>
 <code><a href="../reference/read_scdf.html">read_scdf()</a></code> now works when cvar is not the first column.</li>
