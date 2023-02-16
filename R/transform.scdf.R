@@ -86,8 +86,11 @@ transform.scdf <- function(`_data`, ...) {
   .df <- as.data.frame(`_data`)
   
   for(i_expression in 2:length(expressions)) {
+    
     if(startsWith(deparse(expressions[[i_expression]]), "across_cases(")) {
       .list_env <- as.list(.df)
+      
+      # across cases
       .list_env$across_cases <- function(...) {
         exp_across <- substitute(list(...))
         for (i in 2:length(exp_across)) {
@@ -97,10 +100,12 @@ transform.scdf <- function(`_data`, ...) {
         }
         .df
       }
-      new <- eval(expressions[c(1,2)], .list_env, parent.frame())
+      
+      new <- eval(expressions[c(1,i_expression)], .list_env, parent.frame())
       .df <- new[[1]]
       `_data` <- suppressMessages(as_scdf(.df))
     } else {
+      .df <- as.data.frame(`_data`)
       for(i_case in seq_along(`_data`)) {
         .list_env <- as.list(`_data`[[i_case]])
         .list_env$all_cases <- .list_env$all <- function(x) {
@@ -110,6 +115,7 @@ transform.scdf <- function(`_data`, ...) {
         new <- eval(expressions[c(1,i_expression)], .list_env, parent.frame())
         `_data`[[i_case]][[names(new)]] <- new[[1]]
       }
+      .df <- as.data.frame(`_data`)
     }
   }
   `_data`
