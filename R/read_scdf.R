@@ -122,8 +122,6 @@ readSC <- function(...) {
   read_scdf(...)
 }
 
-
-#' @export
 .load_yml <- function(filename, ...) {
   
   out <- yaml::read_yaml(filename, ...)
