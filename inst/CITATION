@@ -1,7 +1,7 @@
 citHeader("To cite scan in publications use:")
 
 citEntry(entry = "Misc",
-  title        = "scan: Single-Case Data Analyses for Single and Multiple Baseline Designs",
+  title        = "Scan: Single-Case Data Analyses for Single and Multiple Baseline Designs",
   shorttitle   = "scan",
   publisher    = "CRAN",
   author       = personList(as.person("Jürgen Wilbert"), as.person("Timo Lüke")),
@@ -9,7 +9,7 @@ citEntry(entry = "Misc",
   url          = "https://CRAN.R-project.org/package=scan",
 
   textVersion  =
-  paste0("APA style:\n", 
+  paste0( 
     "Wilbert, J. & Lüke, T. (2023). ",
     "Scan: Single-Case Data Analyses for Single and Multiple Baseline Designs. ",
     "(0.56) [English]. CRAN. ",
