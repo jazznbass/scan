@@ -4,7 +4,7 @@
 \alias{check_scdf}
 \title{Validity check for an scdf object}
 \usage{
-check_scdf(object)
+check_scdf(object, message = FALSE)
 }
 \arguments{
 \item{object}{An scdf object}

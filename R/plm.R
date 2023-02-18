@@ -135,16 +135,14 @@ plm <- function(data, dvar, pvar, mvar,
 
   N <- length(data)
   
-  start_check() %>%
-    check(N == 1, "Procedure could not be applied to more than one case ",
-                  "(use hplm instead).") %>%
-    check(family == "gaussian" || AR == 0, 
-           "family is not 'gaussian' but AR is set.") %>%
-    check_not(family == "binomial" && is.null(var_trials),
-               "family = 'binomial' but 'var_trials' not defined.") %>%
-    check_in(model, c("H-M", "B&L-B", "W")) %>%
-    #.check_in(contrast, c("first", "preceding")) %>%
-    end_check()
+  check_args(
+    equal(N == 1, "plm can not be applied to more than one case (use hplm)."),
+    not(family != "gaussian" && AR != 0, 
+        "family is not 'gaussian' but AR is set."),
+    not(family == "binomial" && is.null(var_trials),
+        "family is 'binomial' but 'var_trials' is not defined."),
+    one_of(model, c("H-M", "B&L-B", "W"))
+  )
   
   # formula definition ------------------------------------------------------
   

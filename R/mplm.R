@@ -44,10 +44,14 @@ mplm <- function(data, dvar, mvar, pvar,
     model <- "B&L-B"
   }
   
-  start_check() %>%
-    check_in(model, c("H-M", "B&L-B", "W")) %>%
-    check_in(contrast, c("first", "preceding")) %>%
-    end_check()
+  check_args(
+    one_of(model, c("H-M", "B&L-B", "W")),
+    one_of(contrast, c("first", "preceding"))
+  )
+  #start_check() %>%
+  #  check_in(model, c("H-M", "B&L-B", "W")) %>%
+  #  check_in(contrast, c("first", "preceding")) %>%
+  #  end_check()
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
