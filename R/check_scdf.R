@@ -10,10 +10,10 @@
 #' 
 #' @export
 
-check_scdf <- function(object) {
+check_scdf <- function(object, message = FALSE) {
   results <- .check_scdf(object)
   if (isTRUE(results)) {
-    message("No errors or warnings.")
+    if (message) message("No errors or warnings.")
     return(invisible(TRUE))
   }
   if(length(results$warnings) > 0) {
@@ -31,8 +31,8 @@ check_scdf <- function(object) {
   warnings <- character()
   
   # check class
-  if (!identical(class(object), c("scdf", "list"))) {
-    msg <- paste0("Class is not c('scdf', 'list').")
+  if (!inherits(object, "scdf")) {
+    msg <- paste0("Class is not 'scdf'.")
     errors <- c(errors, msg)
   }
   

@@ -86,3 +86,11 @@ rankSC <- function(...) {
   .deprecated_warning("ranks", "rankSC")
   ranks(...)
 }
+
+#' @rdname code
+#' @export
+convert <- function(...) {
+  .deprecated_warning("code", "convert")
+  code(...)
+}
+

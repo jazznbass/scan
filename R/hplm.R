@@ -74,11 +74,10 @@ hplm <- function(data, dvar, pvar, mvar,
     model <- "B&L-B"
   }
   
+  check_args(
+    one_of(model, c("H-M", "B&L-B", "W"))
+  )
 
-  start_check() %>%
-    check_in(model, c("H-M", "B&L-B", "W")) %>%
-    end_check()
-  
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 
