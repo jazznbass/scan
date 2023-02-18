@@ -20,8 +20,8 @@ summary.scdf <- function(object, ...) {
 
   out <- data.frame(
     " " = format(.case_names(names(object), length(object)), justify = "left"),
-    Measurements = unlist(rows), 
-    Design = unlist(designs),
+    Measurements = unname(unlist(rows)), 
+    Design = unname(unlist(designs)),
     check.names = FALSE
   )
 
@@ -42,7 +42,7 @@ summary.scdf <- function(object, ...) {
   }
   
   if(!is.null(scdf_attr(object, "info"))) {
-    cat("\nNote: ", scdf_attr(object, "info"))
+    cat("\nNote: ", scdf_attr(object, "info"), "\n")
   }
   
   if(!is.null(scdf_attr(object,"author"))) {
