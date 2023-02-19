@@ -1,3 +1,13 @@
+# scan 0.56.x
+
+## Bug fixes
+
+- solved: `summary()` failed when one of the cases had no name
+
+## minor
+
+- `code()`: new arguments. indent sets the indentation. When the scdf contains only one case, no study is combined.
+
 # scan 0.56
 
 

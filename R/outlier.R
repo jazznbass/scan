@@ -40,9 +40,9 @@
 #' @export
 outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
   
-  start_check() %>%
-    check_in(criteria[1], c("MAD", "Cook", "SD", "CI")) %>%
-    end_check()
+  check_args(
+    one_of(criteria[1], c("MAD", "Cook", "SD", "CI"))
+  )
 
   # set defaults attributes
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
