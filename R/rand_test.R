@@ -82,7 +82,8 @@
 #' 
 #' @export
 rand_test <- function (data, dvar, pvar, 
-                       statistic = "Mean B-A", 
+                       statistic = c("Mean B-A", "Mean A-B", "Median B-A", 
+                                     "Median A-B", "Mean |A-B|"), 
                        number = 500, 
                        complete = FALSE, 
                        limit = 5, 
@@ -93,6 +94,8 @@ rand_test <- function (data, dvar, pvar,
                        output = NULL, 
                        seed = NULL) {
 
+  statistic <- match.arg(statistic)
+  
   if(!is.null(seed)) set.seed(seed)
   
   # set attributes to arguments else set to defaults of scdf

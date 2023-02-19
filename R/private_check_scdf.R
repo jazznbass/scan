@@ -1,14 +1,3 @@
-#' Validity check for an scdf object
-#'
-#' @param object An scdf object
-#'
-#' @return TRUE or list with error and warning messages.
-#' @examples 
-#' check_scdf(exampleAB)
-#' 
-#' check_scdf(c(exampleAB, exampleABC))
-#' 
-#' @export
 
 check_scdf <- function(object, message = FALSE) {
   results <- .check_scdf(object)

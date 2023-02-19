@@ -10,7 +10,7 @@ cdc(
   pvar,
   mvar,
   decreasing = FALSE,
-  trend_method = "OLS",
+  trend_method = c("OLS", "bisplit", "trisplit"),
   conservative = 0.25,
   phases = c(1, 2)
 )

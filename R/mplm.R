@@ -24,10 +24,10 @@
 #' @export
 
 mplm <- function(data, dvar, mvar, pvar, 
-                 model = "W", 
-                 contrast = "first", 
-                 contrast_level = NA,
-                 contrast_slope = NA,
+                 model = c("W", "H-M", "B&L-B", "JW"),
+                 contrast = c("first", "preceding"),
+                 contrast_level = c(NA, "first", "preceding"),
+                 contrast_slope = c(NA, "first", "preceding"),
                  trend = TRUE, 
                  level = TRUE, 
                  slope = TRUE, 
@@ -35,6 +35,11 @@ mplm <- function(data, dvar, mvar, pvar,
                  update = NULL, 
                  na.action = na.omit, ...) {
  
+  model <- match.arg(model)
+  contrast <- match.arg(contrast)
+  contrast_level <- match.arg(contrast_level)
+  contrast_slope <- match.arg(contrast_slope)
+  
   if (is.na(contrast_level)) contrast_level <- contrast
   if (is.na(contrast_slope)) contrast_slope <- contrast
   

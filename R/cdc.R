@@ -52,10 +52,13 @@ cdc <- function(data,
                 pvar, 
                 mvar, 
                 decreasing = FALSE, 
-                trend_method = "OLS", 
+                trend_method = c("OLS", "bisplit", "trisplit"), 
                 conservative = .25, 
                 phases = c(1, 2)) {
 
+  
+  trend_method <- match.arg(trend_method)
+  
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
   if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
