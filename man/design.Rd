@@ -16,7 +16,7 @@ design(
   extreme_prop = list(0),
   extreme_range = c(-4, -3),
   missing_prop = 0,
-  distribution = "normal",
+  distribution = c("normal", "gaussian", "poisson", "binomial"),
   n_trials = NULL,
   mt = NULL,
   B_start = NULL,

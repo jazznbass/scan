@@ -47,11 +47,11 @@
 #' @export
 
 hplm <- function(data, dvar, pvar, mvar, 
-                 model = "W", 
-                 contrast = "first",
+                 model = c("W", "H-M", "B&L-B", "JW"),
+                 contrast = c("first", "preceding"),
                  contrast_level = NA,
                  contrast_slope = NA,
-                 method = "ML", 
+                 method = c("ML", "REML"), 
                  control = list(opt = "optim"), 
                  random.slopes = FALSE, 
                  lr.test = FALSE, 
@@ -64,6 +64,10 @@ hplm <- function(data, dvar, pvar, mvar,
                  update.fixed = NULL, 
                  data.l2 = NULL, 
                  ...) {
+
+  model <- match.arg(model)
+  method <- match.arg(method)
+  contrast <- match.arg(contrast)
 
   if (is.na(contrast_level)) contrast_level <- contrast
   if (is.na(contrast_slope)) contrast_slope <- contrast

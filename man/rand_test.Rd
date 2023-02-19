@@ -8,7 +8,7 @@ rand_test(
   data,
   dvar,
   pvar,
-  statistic = "Mean B-A",
+  statistic = c("Mean B-A", "Mean A-B", "Median B-A", "Median A-B", "Mean |A-B|"),
   number = 500,
   complete = FALSE,
   limit = 5,

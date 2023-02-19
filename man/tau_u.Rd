@@ -8,13 +8,13 @@ tau_u(
   data,
   dvar,
   pvar,
-  tau_method = "b",
-  method = "complete",
+  tau_method = c("b", "a"),
+  method = c("complete", "parker"),
   phases = c(1, 2),
   meta_analyses = TRUE,
   ci = 0.95,
-  ci_method = "z",
-  meta_weight_method = "z",
+  ci_method = c("z", "tau"),
+  meta_weight_method = c("z", "tau"),
   continuity_correction = FALSE,
   meta_method = NULL
 )

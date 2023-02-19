@@ -69,15 +69,21 @@
 #' @export
 
 tau_u <- function(data, dvar, pvar, 
-                  tau_method = "b", 
-                  method = "complete", 
+                  tau_method = c("b", "a"), 
+                  method = c("complete", "parker"), 
                   phases = c(1, 2), 
                   meta_analyses = TRUE,
                   ci = 0.95,
-                  ci_method = "z",
-                  meta_weight_method = "z",
+                  ci_method = c("z", "tau"),
+                  meta_weight_method = c("z", "tau"),
                   continuity_correction = FALSE,
                   meta_method = NULL) {
+  
+  
+  method <- match.arg(method)
+  tau_method <- match.arg(tau_method)
+  meta_weight_method <- match.arg(meta_weight_method)
+  ci_method <- match.arg(ci_method)
   
   # validity check ----
   check_args(

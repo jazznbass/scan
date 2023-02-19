@@ -91,14 +91,14 @@
 #' @export
 plm <- function(data, dvar, pvar, mvar, 
                 AR = 0, 
-                model = "W", 
+                model = c("W", "H-M", "B&L-B", "JW"),
                 family = "gaussian", 
                 trend = TRUE, 
                 level = TRUE, 
                 slope = TRUE,
-                contrast = "first",
-                contrast_level = NA,
-                contrast_slope = NA,
+                contrast = c("first", "preceding"),
+                contrast_level = c(NA, "first", "preceding"),
+                contrast_slope = c(NA, "first", "preceding"),
                 formula = NULL, 
                 update = NULL, 
                 na.action = na.omit,
@@ -107,6 +107,11 @@ plm <- function(data, dvar, pvar, mvar,
                 dvar_percentage = FALSE,
                 ...) {
   
+  
+  model <- match.arg(model)
+  contrast <- match.arg(contrast)
+  contrast_level <- match.arg(contrast_level)
+  contrast_slope <- match.arg(contrast_slope)
   
   # set defaults attributes
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
