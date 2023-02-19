@@ -4,7 +4,14 @@
 \alias{outlier}
 \title{Handling outliers in single-case data}
 \usage{
-outlier(data, dvar, pvar, mvar, criteria = c("MAD", "3.5"))
+outlier(
+  data,
+  dvar,
+  pvar,
+  mvar,
+  method = c("MAD", "Cook", "SD", "CI"),
+  criteria = 3.5
+)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
@@ -19,12 +26,14 @@ the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{criteria}{Specifies the criteria for outlier identification. Set
-\code{criteria = c("SD", 2)} to define two standard deviations as limit.
-This is also the default setting. To use the 99\% Confidence Interval use
-\code{criteria = c("CI", 0.99)}. Set \code{criteria = c("Cook", "4/n")} to
-define any data point with a Cook's Distance greater than 4/n as an
-outlier, based on the Piecewise Linear Regression Model.}
+\item{method}{Specifies the method for outlier identification. Set
+\code{method = "MAD"} for mean average deiviation, \code{method = "SD"} for
+standard deviations, \code{method = "CI"} for confidence intervals,
+\code{method = "Cook"} for Cook's Distance based on the Piecewise Linear
+Regression Model.}
+
+\item{criteria}{Specifies the criteria for outlier identification. Based on
+the \code{method} setting.}
 }
 \value{
 \item{data}{A single-case data frame with substituted outliers.}
@@ -43,16 +52,24 @@ identifier.}
 \description{
 Identifies and drops outliers within a single-case data frame (scdf).
 }
+\details{
+For \code{method = "SD"}, \code{criteria = 2} would refer t0 two
+  standard deviations. For \code{method = "MAD"}, \code{criteria = 3.5} would
+  refer to 3.5 times the mean average deviation. For \code{method = "CI"},
+  \code{criteria = 0.99} would refer to a 99 percent confidence interval. For
+  \code{method = "cook"}, \code{criteria = "4/n"} would refer to a Cook's
+  Distance greater than 4/n.
+}
 \examples{
 
 ## Identify outliers using 1.5 standard deviations as criterion
 susanne <- random_scdf(level = 1.0)
-res_outlier <- outlier(susanne, criteria = c("SD", 1.5))
+res_outlier <- outlier(susanne, method = "SD", criteria = 1.5)
 plot(susanne, marks = res_outlier)
 
-## Identify outliers in the original data from Grosche (2011) using Cook's Distance
-## greater than 4/n as criterion
-res_outlier <- outlier(Grosche2011, criteria = c("Cook", "4/n"))
+## Identify outliers in the original data from Grosche (2011) 
+## using Cook's Distance greater than 4/n as criterion
+res_outlier <- outlier(Grosche2011, method = "Cook", criteria = "4/n")
 plot(Grosche2011, marks = res_outlier)
 
 }

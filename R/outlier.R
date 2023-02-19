@@ -4,12 +4,14 @@
 #'
 #'
 #' @inheritParams .inheritParams
-#' @param criteria Specifies the criteria for outlier identification. Set
-#'   \code{criteria = c("SD", 2)} to define two standard deviations as limit.
-#'   This is also the default setting. To use the 99\% Confidence Interval use
-#'   \code{criteria = c("CI", 0.99)}. Set \code{criteria = c("Cook", "4/n")} to
-#'   define any data point with a Cook's Distance greater than 4/n as an
-#'   outlier, based on the Piecewise Linear Regression Model.
+#' @param method Specifies the method for outlier identification. Set
+#'   \code{method = "MAD"} for mean average deiviation, \code{method = "SD"} for
+#'   standard deviations, \code{method = "CI"} for confidence intervals,
+#'   \code{method = "Cook"} for Cook's Distance based on the Piecewise Linear
+#'   Regression Model.
+#'
+#' @param criteria Specifies the criteria for outlier identification. Based on
+#'   the \code{method} setting.
 #' @return \item{data}{A single-case data frame with substituted outliers.}
 #' \item{dropped.n}{A list with the number of dropped data points for each
 #' single-case.} \item{dropped.mt}{A list with the measurement-times of dropped
@@ -22,6 +24,12 @@
 #' measurement of each single-case.} \item{criteria}{Criteria used for outlier
 #' analysis.} \item{N}{Number of single-cases.} \item{case.names}{Case
 #' identifier.}
+#' @details For \code{method = "SD"}, \code{criteria = 2} would refer t0 two
+#'   standard deviations. For \code{method = "MAD"}, \code{criteria = 3.5} would
+#'   refer to 3.5 times the mean average deviation. For \code{method = "CI"},
+#'   \code{criteria = 0.99} would refer to a 99 percent confidence interval. For
+#'   \code{method = "cook"}, \code{criteria = "4/n"} would refer to a Cook's
+#'   Distance greater than 4/n.
 #' @author Juergen Wilbert
 #' @family data manipulation functions
 #' @keywords manip
@@ -29,19 +37,28 @@
 #'
 #' ## Identify outliers using 1.5 standard deviations as criterion
 #' susanne <- random_scdf(level = 1.0)
-#' res_outlier <- outlier(susanne, criteria = c("SD", 1.5))
+#' res_outlier <- outlier(susanne, method = "SD", criteria = 1.5)
 #' plot(susanne, marks = res_outlier)
 #'
-#' ## Identify outliers in the original data from Grosche (2011) using Cook's Distance
-#' ## greater than 4/n as criterion
-#' res_outlier <- outlier(Grosche2011, criteria = c("Cook", "4/n"))
+#' ## Identify outliers in the original data from Grosche (2011) 
+#' ## using Cook's Distance greater than 4/n as criterion
+#' res_outlier <- outlier(Grosche2011, method = "Cook", criteria = "4/n")
 #' plot(Grosche2011, marks = res_outlier)
 #'
 #' @export
-outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
+outlier <- function(data, dvar, pvar, mvar, 
+                    method = c("MAD", "Cook", "SD", "CI"),
+                    criteria = 3.5) {
+  
+  if (length(criteria) == 2) {
+    method <- criteria[1]
+    criteria <- criteria[2]
+  }
+  
+  method <- match.arg(method)
   
   check_args(
-    one_of(criteria[1], c("MAD", "Cook", "SD", "CI"))
+    one_of(method, c("MAD", "Cook", "SD", "CI"))
   )
 
   # set defaults attributes
@@ -74,13 +91,13 @@ outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
 
 # CI ----------------------------------------------------------------------
     
-    if (identical(criteria[1], "CI")) {
-      cut.off <- as.numeric(criteria[2])
+    if (identical(method, "CI")) {
+      cut_off <- as.numeric(criteria)
       mat <- matrix(NA, length(values), ncol = 5)
       colnames(mat) <- c("phase","m","se","lower", "upper")
       rownames(mat) <- names(values)
       filter <- c()
-      fac <- qnorm((1 - cut.off) / 2, lower.tail = FALSE)
+      fac <- qnorm((1 - cut_off) / 2, lower.tail = FALSE)
       
       for(p in 1:length(values)) {
         x <- values[[p]]
@@ -97,8 +114,8 @@ outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
 
 # MAD ---------------------------------------------------------------------
 
-    if (identical(criteria[1], "MAD")) {
-      fac <- as.numeric(criteria[2])
+    if (identical(method, "MAD")) {
+      fac <- as.numeric(criteria)
       mat <- matrix(NA, length(values), ncol = 5)
       colnames(mat) <- c("phase", "md", "mad", "lower", "upper")
       filter <- c()
@@ -117,8 +134,8 @@ outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
 
 # SD ----------------------------------------------------------------------
 
-    if (identical(criteria[1], "SD")) {
-      SD <- as.numeric(criteria[2])
+    if (identical(method, "SD")) {
+      SD <- as.numeric(criteria)
       mat <- matrix(NA, length(values), ncol = 5)
       colnames(mat) <- c("phase", "m", "sd", "lower", "upper")
       filter <- c()
@@ -137,17 +154,17 @@ outlier <- function(data, dvar, pvar, mvar, criteria = c("MAD", "3.5")) {
 
 # Cook --------------------------------------------------------------------
 
-    if (identical(criteria[1], "Cook")) {
+    if (identical(method, "Cook")) {
       
-      if (criteria[2] == "4/n") 
-        cut.off <- 4/nrow(data)
+      if (criteria == "4/n") 
+        cut_off <- 4/nrow(data)
       else 
-        cut.off <- as.numeric(criteria[2])
+        cut_off <- as.numeric(criteria)
 
       reg <- plm(data_list[i], dvar = dvar, pvar = pvar, mvar = mvar)$full.model
       
       cd <- cooks.distance(reg)
-      filter <- cd >= cut.off
+      filter <- cd >= cut_off
       cook[[i]] <- data.frame(Cook = round(cd, 2), MT = data_list[[i]][, mvar])
     }		
     
