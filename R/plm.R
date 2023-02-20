@@ -107,11 +107,23 @@ plm <- function(data, dvar, pvar, mvar,
                 dvar_percentage = FALSE,
                 ...) {
   
+  check_args(
+    has_length(data, 1, 
+               "plm can not be applied to more than one case (use hplm)."),
+    not(family != "gaussian" && AR != 0, 
+        "family is not 'gaussian' but AR is set."),
+    not(family == "binomial" && is.null(var_trials),
+        "family is 'binomial' but 'var_trials' is not defined."),
+    by_call(model, "plm"),
+    by_call(contrast_level, "plm"),
+    by_call(contrast_slope, "plm"),
+    by_call(contrast, "plm")
+  )
   
-  model <- match.arg(model)
-  contrast <- match.arg(contrast)
-  contrast_level <- match.arg(contrast_level)
-  contrast_slope <- match.arg(contrast_slope)
+  model <- model[1]
+  contrast <- contrast[1]
+  contrast_level <- contrast_level[1]
+  contrast_slope <- contrast_slope[1]
   
   # set defaults attributes
   if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
@@ -136,18 +148,17 @@ plm <- function(data, dvar, pvar, mvar,
   if (family != "gaussian") r_squared = FALSE
   
   original_attr <- attributes(data)[[.opt$scdf]]
+  #check_args(
+  #  equal(N == 1, "plm can not be applied to more than one case (use hplm)."),
+  #  not(family != "gaussian" && AR != 0, 
+  #      "family is not 'gaussian' but AR is set."),
+  #  not(family == "binomial" && is.null(var_trials),
+  #      "family is 'binomial' but 'var_trials' is not defined."),
+  #  by_call(model, "plm")
+  #  #one_of(model, c("H-M", "B&L-B", "W"))
+  #)
   
-
-  N <- length(data)
-  
-  check_args(
-    equal(N == 1, "plm can not be applied to more than one case (use hplm)."),
-    not(family != "gaussian" && AR != 0, 
-        "family is not 'gaussian' but AR is set."),
-    not(family == "binomial" && is.null(var_trials),
-        "family is 'binomial' but 'var_trials' is not defined."),
-    one_of(model, c("H-M", "B&L-B", "W"))
-  )
+  #model <- model[1]
   
   # formula definition ------------------------------------------------------
   

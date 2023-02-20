@@ -1,12 +1,16 @@
 # scan 0.56.x
 
+## New fucntions
+
+- `install_shinyscan()`/`install_scplot()` give instructions how to install `shinyscan` and `scplot`.
+
 ## Bug fixes
 
 - solved: `summary()` failed when one of the cases had no name
 
 ## minor
 
-- `code()`: new arguments. indent sets the indentation. When the scdf contains only one case, no study is combined.
+- `convert()`: new arguments. indent sets the indentation. When the scdf contains only one case, no study is combined.
 
 # scan 0.56
 
