@@ -1,4 +1,4 @@
-#' Code
+#' Convert
 #' Converts an scdf object into R code
 #'
 #' @inheritParams .inheritParams
@@ -8,21 +8,19 @@
 #' @param indent Integer. Indentation.
 #' @examples 
 #' filename <- tempfile()
-#' code(exampleABC, file = filename)
+#' convert(exampleABC, file = filename)
 #' source(filename)
 #' all.equal(study, exampleABC)
 #' unlink(filename)
 #' @export
-code <- function(scdf, 
-                 file = "", 
-                 study_name = "study", 
-                 case_name = "case",
-                 indent = 3) {
+convert <- function(scdf, 
+                    file = "", 
+                    study_name = "study", 
+                    case_name = "case",
+                    indent = 3) {
   
 
-  check_args(
-    class(scdf, "scdf")
-  )
+  check_args(by_class(scdf, "scdf"))
   
   scdf_string <- c()
   attr_scan <- attributes(scdf)[[.opt$scdf]]
