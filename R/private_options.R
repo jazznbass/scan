@@ -13,6 +13,7 @@
   female.names = .female.names,
   male.names   = .male.names,
   names        = .names,
+  names_default = paste0("Case", 1:500),
   function_experimental_warning  = "This function is in an experimental state. The syntax and behaviour will probably change in a future version.",
   function_deprecated_warning = "This function is deprecated. It might be dropped without any further notice in a future update of scan.",
   #startup_message = paste0(

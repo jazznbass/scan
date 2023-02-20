@@ -36,7 +36,7 @@ autocorr <- function(data, dvar, pvar, mvar,
   data <- .prepare_scdf(data)
 
   N <- length(data)
-  case_names <- .case_names(names(data), length(data))
+  case_names <- .case_names(data)
   var_lag <- paste0("Lag ", 1:lag_max)
   
   ac <- list()

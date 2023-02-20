@@ -29,29 +29,31 @@
 #' 
 #' @export
 
-nap <- function(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2)) {
+nap <- function(data, dvar, pvar, 
+                decreasing = FALSE, 
+                phases = c(1, 2)) {
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-
+  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
+  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase)
+  scdf_attr(data, .opt$dv) <- dvar
+  scdf_attr(data, .opt$phase) <- pvar
+  
   data <- .prepare_scdf(data, na.rm = TRUE)
   data <- .keep_phases(data, phases = phases)$data
   
   N <- length(data)
   
-  NAP   <- rep(NA, N)
+  nap <- rep(NA, N)
   pairs <- rep(NA, N)
-  pos   <- rep(NA, N)
-  ties  <- rep(NA, N)
-  W     <- rep(NA, N)
-  p     <- rep(NA, N)
+  pos <- rep(NA, N)
+  ties <- rep(NA, N)
+  w <- rep(NA, N)
+  p <- rep(NA, N)
   
   for(case in 1:N) {
-    df <- data[[case]]
-    
-    A     <- df[df[, pvar] == "A", dvar]
-    B     <- df[df[, pvar] == "B", dvar]
+    A <- data[[1]][data[[1]][pvar] == "A", dvar]
+    B <- data[[1]][data[[1]][pvar] == "B", dvar]
     pairs[case] <- length(A) * length(B)
     
     if (!decreasing)
@@ -59,17 +61,27 @@ nap <- function(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2)) {
     if (decreasing)
       pos[case] <- pairs[case] - sum(sapply(A, function(x) x <= B))
     
-    test <- wilcox.test(A, B, alternative = ifelse(decreasing, "greater", "less"), exact = FALSE)
+    test <- wilcox.test(
+      A, B, 
+      alternative = if (decreasing) "greater" else "less", 
+      exact = FALSE
+    )
     
-    W[case] <- test$statistic
+    w[case] <- test$statistic
     p[case] <- test$p.value
     ties[case] <- sum(sapply(A, function(x) x == B))
-    NAP[case]  <- (pos[case] + (0.5 * ties[case])) / pairs[case]
-    
+    nap[case]  <- (pos[case] + (0.5 * ties[case])) / pairs[case]
   }  
+  
   nap <- data.frame(
-    Case = names(data), NAP = NAP * 100, Rescaled = 2 * (NAP * 100) - 100, 
-    Pairs = pairs, Positives = pos, Ties = ties, W = W, p = p
+    Case = .case_names(data), 
+    NAP = nap * 100, 
+    Rescaled = 2 * (nap * 100) - 100, 
+    Pairs = pairs, 
+    Positives = pos, 
+    Ties = ties, 
+    W = w, 
+    p = p
   )
 
   out <- list(nap = nap, N = N)
