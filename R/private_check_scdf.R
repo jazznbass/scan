@@ -97,5 +97,3 @@ check_scdf <- function(object, message = FALSE) {
 
 }
 
-
-
