@@ -33,7 +33,7 @@
 #' @export
 as.data.frame.scdf <- function(x, ..., l2 = NULL, id = "case") {
   
-  label <- .case_names(names(x), length(x))
+  label <- .case_names(x)
   outdat <- vector()
   
   for (i_case in 1:length(x)) {

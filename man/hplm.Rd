@@ -57,14 +57,15 @@ contrast_level is a copy of contrast.}
 the restricted log-likelihood or \code{"ML"} for maximized log-likelihood.
 Default is \code{"ML"}.}
 
-\item{control}{A list of settings for the estimation algorithm, replacing
-the default values passed to the function \code{lmeControl} of the
-\code{nlme} package.}
+\item{control}{A list of settings for the estimation algorithm, replacing the
+default values passed to the function \code{lmeControl} of the \code{nlme}
+package.}
 
 \item{random.slopes}{If \code{random.slopes = TRUE} random slope effects of
 the level, trend, and treatment parameter are estimated.}
 
-\item{lr.test}{If set TRUE likelihood ratio tests are calculated comparing model with vs. without random slope parameters.}
+\item{lr.test}{If set TRUE likelihood ratio tests are calculated comparing
+model with vs. without random slope parameters.}
 
 \item{ICC}{If \code{ICC = TRUE} an intraclass-correlation is estimated.}
 
@@ -77,14 +78,18 @@ model.}
 \item{slope}{A logical indicating if a slope parameters is included in the
 model.}
 
-\item{fixed}{Defaults to the fixed part of the standard piecewise regression model. The
-parameter phase followed by the phase name (e.g., phaseB) indicates the level effect of the corresponding phase. The parameter 'inter' followed by the phase name (e.g., interB) adresses the slope effect based on the method
-provide in the model argument (e.g., "B&L-B"). The formula can be changed
-for example to include further L1 or L2 variables into the regression model.}
+\item{fixed}{Defaults to the fixed part of the standard piecewise regression
+model. The parameter phase followed by the phase name (e.g., phaseB)
+indicates the level effect of the corresponding phase. The parameter
+'inter' followed by the phase name (e.g., interB) adresses the slope effect
+based on the method provide in the model argument (e.g., "B&L-B"). The
+formula can be changed for example to include further L1 or L2 variables
+into the regression model.}
 
 \item{random}{The random part of the model.}
 
-\item{update.fixed}{An easier way to change the fixed model part (e.g., . ~ . + newvariable).}
+\item{update.fixed}{An easier way to change the fixed model part (e.g., . ~ .
++ newvariable).}
 
 \item{data.l2}{A dataframe providing additional variables at Level 2. The
 scdf File has to have names for all cases and the Level 2 dataframe has to
@@ -94,13 +99,13 @@ variables belong to.}
 \item{...}{Further arguments passed to the lme function.}
 }
 \value{
-\item{model}{List containing infromation about the applied model} 
-\item{N}{Number of single-cases.}
-\item{formla}{A list containing the fixed and the random formulas of the hplm model.}
-\item{hplm}{Object of class lme contaning the multilevel model} 
-\item{model.0}{Object of class lme containing the Zero Model.} 
-\item{ICC}{List containing intraclass correlation and test parameters.}
-\item{model.without}{Object of class gls containing the fixed effect model.}
+\item{model}{List containing infromation about the applied model}
+\item{N}{Number of single-cases.} \item{formla}{A list containing the fixed
+and the random formulas of the hplm model.} \item{hplm}{Object of class lme
+contaning the multilevel model} \item{model.0}{Object of class lme containing
+the Zero Model.} \item{ICC}{List containing intraclass correlation and test
+parameters.} \item{model.without}{Object of class gls containing the fixed
+effect model.}
 }
 \description{
 The \code{hplm} function computes a hierarchical piecewise regression model.
@@ -111,10 +116,12 @@ The \code{hplm} function computes a hierarchical piecewise regression model.
 hplm(exampleAB_50, method = "REML", random.slopes = FALSE)
 
 ## Analyzing with additional L2 variables
-hplm(Leidig2018, data.l2 = Leidig2018_l2, 
-     update.fixed = .~. + gender + migration + ITRF_TOTAL*phaseB, 
-     slope = FALSE, random.slopes = FALSE, lr.test = FALSE)
-     
+Leidig2018 \%>\% 
+  add_l2(Leidig2018_l2) \%>\% 
+  hplm(update.fixed = .~. + gender + migration + ITRF_TOTAL*phaseB,
+       slope = FALSE, random.slopes = FALSE, lr.test = FALSE
+  )    
+
 }
 \seealso{
 Other regression functions: 

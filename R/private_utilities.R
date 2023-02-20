@@ -82,9 +82,17 @@
 } 
 
 .case_names <- function(x, n) {
-  if (is.null(x)) x <- paste0("Case", 1:n)
-  nonames <- which(is.na(x))
-  x[nonames] <- paste0("Case", nonames)
+  if (missing(n)) {
+    n <- length(x)
+    x <- names(x)
+  }
+  if (is.null(x)) {
+    x <- .opt$names_default[1:n]
+  } else {
+    nonames <- which(is.na(x))
+    x[nonames] <- .opt$names_default[nonames]
+  }
+  
   x
 }
 
