@@ -4,10 +4,12 @@
 \alias{summary.scdf}
 \title{Summary function for an scdf}
 \usage{
-\method{summary}{scdf}(object, ...)
+\method{summary}{scdf}(object, all_cases = FALSE, ...)
 }
 \arguments{
 \item{object}{scdf}
+
+\item{all_cases}{IF TRUE, more that 10 cases are summarized}
 
 \item{...}{not in use}
 }

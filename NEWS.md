@@ -2,6 +2,7 @@
 
 ## New fucntions
 
+- `show()`: Opens each case with in scdf in a separate viewer tab.
 - `install_shinyscan()`/`install_scplot()` give instructions how to install `shinyscan` and `scplot`.
 
 ## Bug fixes
