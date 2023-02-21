@@ -96,7 +96,7 @@ rand_test <- function (data, dvar, pvar,
 
   
   check_args(
-    by_call(statistic, "rand_test"),
+    by_call(statistic, "rand_test")
   )
   statistic <- statistic[1]
   
