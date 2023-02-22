@@ -52,24 +52,25 @@ nap <- function(data, dvar, pvar,
   p <- rep(NA, N)
   
   for(case in 1:N) {
-    A <- data[[1]][data[[1]][pvar] == "A", dvar]
-    B <- data[[1]][data[[1]][pvar] == "B", dvar]
-    pairs[case] <- length(A) * length(B)
+    values <- split(data[[case]][[dvar]], data[[case]][[pvar]])
+    pairs[case] <- length(values$A) * length(values$B)
     
     if (!decreasing)
-      pos[case] <- pairs[case] - sum(sapply(A, function(x) x >= B))
+      pos[case] <- pairs[case] - sum(sapply(values$A, function(x) x >= values$B))
     if (decreasing)
-      pos[case] <- pairs[case] - sum(sapply(A, function(x) x <= B))
+      pos[case] <- pairs[case] - sum(sapply(values$A, function(x) x <= values$B))
+    
+    ties[case] <- sum(sapply(values$A, function(x) x == values$B))
     
     test <- wilcox.test(
-      A, B, 
+      values$A, values$B, 
       alternative = if (decreasing) "greater" else "less", 
       exact = FALSE
     )
     
     w[case] <- test$statistic
     p[case] <- test$p.value
-    ties[case] <- sum(sapply(A, function(x) x == B))
+    
     nap[case]  <- (pos[case] + (0.5 * ties[case])) / pairs[case]
   }  
   
