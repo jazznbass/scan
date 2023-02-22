@@ -52,7 +52,7 @@ useful to calculate or modify new variables.
 This function is a method of the generic transform function. Unlike the
 generic function, it calculates expressions serially. This means that the
 results of the calculation of one expression are the basis for the following
-computations. The \code{all_cases} function is a helper function that
+computations. The \code{n} function returns the number of measurements in a case. The \code{all_cases} function is a helper function that
 extracts the values of a variable from all cases. It takes an expression as
 an argument. For example, \code{mean(all_cases(values))} calculates the mean
 of the values from all cases. \code{mean(all_cases(values[phase == "A"]))}

@@ -2,12 +2,17 @@
 
 ## New fucntions
 
-- `show()`: Opens each case with in scdf in a separate viewer tab.
+- `show()`: Opens each case within an scdf in a separate viewer tab.
 - `install_shinyscan()`/`install_scplot()` give instructions how to install `shinyscan` and `scplot`.
+- Helper functions for `transform()`: `n()`, `all_cases()`, `across_cases()`, `first_of`
+- Helper functions for `transform()`: `moving_mean()`, `moving_median()`, `local_regression()`
+- `corrected_tau()`: returns multiple cases
+- `export()`: new for `nap(), pen()`
 
 ## Bug fixes
 
 - solved: `summary()` failed when one of the cases had no name
+- solved: `nap()` only report values for the first case with multiple cases.
 
 ## minor
 

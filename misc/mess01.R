@@ -1,4 +1,43 @@
 
+# 2023-02-21
+
+## interpolate
+
+interpolate_missing <- function(values, 
+                                mt, 
+                                phase = NULL,
+                                method = c("linear", "regression"),
+                                model = NULL){
+  
+  method <- method[1]
+  ids <- which(is.na(values))
+  
+  if (method == "regression") {
+    values[ids] <- predict(model, data.frame(values, mt, phase))[ids]
+  }
+
+  if (method == "linear") {
+    values[ids] <- approx(mt, values, xout = mt[ids])$y
+  }
+
+  values
+}
+
+data <- exampleAB$Anja[[1]]
+plot(data$mt, data$values, type = "l")
+
+data$values[sample(1:20, 5)] <- NA
+plot(data$mt, data$values, type = "l")
+
+plot(data$mt, interpolate_missing(data$values, data$mt, method = "linear"), type = "l")
+
+model <- plm(exampleAB$Anja)$full
+
+plot(mt, interpolate_missing(values, mt, phase, method = "regression", model = model), type = "l")
+
+
+
+
 # 2023-02-10
 
 library(scan)
