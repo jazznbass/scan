@@ -6,7 +6,7 @@
 #' This function is a method of the generic transform function. Unlike the
 #' generic function, it calculates expressions serially. This means that the
 #' results of the calculation of one expression are the basis for the following
-#' computations. The \code{all_cases} function is a helper function that
+#' computations. The \code{n} function returns the number of measurements in a case. The \code{all_cases} function is a helper function that
 #' extracts the values of a variable from all cases. It takes an expression as
 #' an argument. For example, \code{mean(all_cases(values))} calculates the mean
 #' of the values from all cases. \code{mean(all_cases(values[phase == "A"]))}
@@ -112,6 +112,7 @@ transform.scdf <- function(`_data`, ...) {
           x <- substitute(x)
           eval(x, .df)
         }
+        .list_env$n <- function() {nrow(`_data`[[i_case]])}
         new <- eval(expressions[c(1,i_expression)], .list_env, parent.frame())
         `_data`[[i_case]][[names(new)]] <- new[[1]]
       }
