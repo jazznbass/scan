@@ -39,19 +39,20 @@ summary.scdf <- function(object, all_cases = FALSE, ...) {
   if (N > max_cases) cat("... [skipped", N - max_cases, "cases]\n")
   
   cat("\n", sep = "")
-  var_names <- TRUE
-  if(var_names) {
-    cat("Variable names:\n")
-    name.tmp <- names(object[[1]])
-    n.tmp <- which(name.tmp == scdf_attr(object, .opt$dv))
-    name.tmp[n.tmp] <- paste0(name.tmp[n.tmp], " <dependent variable>")
-    n.tmp <- which(name.tmp == scdf_attr(object, .opt$phase))
-    name.tmp[n.tmp] <- paste0(name.tmp[n.tmp], " <phase variable>")
-    n.tmp <- which(name.tmp == scdf_attr(object, .opt$mt))
-    name.tmp[n.tmp] <- paste0(name.tmp[n.tmp], " <measurement-time variable>")
-    cat(name.tmp, sep = "\n")
-    cat("\n")
-  }
+  
+  cat("Variable names:\n")
+  names <- names(object[[1]])
+  id_dv <- which(names == scdf_attr(object, .opt$dv))
+  id_phase <- which(names == scdf_attr(object, .opt$phase))
+  id_mt <- which(names == scdf_attr(object, .opt$mt))
+  names[id_phase] <- paste(names[id_phase], "<phase variable>")
+  names[id_mt] <- paste(names[id_mt], "<measurement-time variable>")
+  names[id_dv] <- paste(names[id_dv], "<dependent variable>")
+  cat(names[c(
+    id_dv, id_phase, id_mt, (1:length(names))[-c(id_dv, id_phase, id_mt)]
+  )], sep = "\n")
+  cat("\n")
+  
   
   if(!is.null(scdf_attr(object, "info"))) {
     cat("Note:", scdf_attr(object, "info"), "\n")
