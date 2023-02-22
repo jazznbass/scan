@@ -4,8 +4,6 @@
 #'
 #' @param scdf A scdf object
 #' @param max Maximum number of cases opened
-#'
-#' @return
 #' @export
 #'
 #' @examples
