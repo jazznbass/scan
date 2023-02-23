@@ -10,3 +10,4 @@ This pipe function is directly imported from magrittr.
 \details{
 Since R 4.1 a pipe operator |> is included in base R. This pipe operator can be used along with scan perfectly fine.
 }
+\keyword{internal}

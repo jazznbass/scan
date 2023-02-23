@@ -11,3 +11,4 @@ shinyscan is a graphical user interface for scan based on shiny.
 It is not yet implemented into scan or available on cran and must be 
 installed from github along with the scplot package.
 }
+\keyword{internal}

@@ -30,3 +30,10 @@ source(filename)
 all.equal(study, exampleABC)
 unlink(filename)
 }
+\seealso{
+Other io-functions: 
+\code{\link{read_scdf}()},
+\code{\link{write_scdf}()}
+}
+\concept{io-functions}
+\keyword{io}

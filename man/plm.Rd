@@ -162,9 +162,11 @@ Measurement, 60}, 38-58.
 }
 \seealso{
 Other regression functions: 
+\code{\link{autocorr}()},
 \code{\link{corrected_tau}()},
 \code{\link{hplm}()},
-\code{\link{mplm}()}
+\code{\link{mplm}()},
+\code{\link{trend}()}
 }
 \author{
 Juergen Wilbert

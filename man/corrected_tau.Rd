@@ -73,9 +73,11 @@ Modification, 41(4), 427–467. https://doi.org/10.1177/0145445516676750
 }
 \seealso{
 Other regression functions: 
+\code{\link{autocorr}()},
 \code{\link{hplm}()},
 \code{\link{mplm}()},
-\code{\link{plm}()}
+\code{\link{plm}()},
+\code{\link{trend}()}
 
 Other overlap functions: 
 \code{\link{nap}()},

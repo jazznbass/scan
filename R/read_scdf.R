@@ -2,6 +2,7 @@
 #'
 #' Use the \code{read_scdf} function to load single-case data csv, excel, or
 #' yaml files.
+#'
 #' @param file Either a character string defining the file to be loaded (e.g.
 #'   \code{"SC_Anita.csv"} (if left empty a dialog box for choosing will be
 #'   opened) or a data.frame.
@@ -13,10 +14,10 @@
 #'   \code{"values"}.
 #' @param mvar Sets the variable name of the "mt" variable. Defaults to
 #'   \code{"mt"}.
-#' @param sort_cases,sort.labels If set TRUE, the resulting list is sorted by label names
-#'   (alphabetically increasing).
-#' @param phase_names,phase.names A character vector with phase names. Defaults to the phase
-#'   names provided in the phase variable.
+#' @param sort_cases,sort.labels If set TRUE, the resulting list is sorted by
+#'   label names (alphabetically increasing).
+#' @param phase_names,phase.names A character vector with phase names. Defaults
+#'   to the phase names provided in the phase variable.
 #' @param type Format of the file to be loaded. Either "csv", "xlsx", "xls",
 #'   "excel", "yml" is possible. By default (NA) the type is extracted from the
 #'   file extension.
@@ -26,9 +27,10 @@
 #' @return Returns a single-case data frame. See \code{\link{scdf}} to learn
 #'   about the format of these data frames.
 #' @author Juergen Wilbert
-#' @seealso \code{\link{read.table}}, \code{\link{writeSC}}, \code{\link{scdf}},
-#'   \code{\link{readRDS}}
-#' @keywords manip
+#' @seealso \code{\link{read.table}}, \code{\link{readRDS}},
+#'   \code{\link{read_excel}}
+#' @family io-functions
+#' @keywords io
 #' @examples
 #'
 #' ## Read SC-data from a file named "study1.csv" in your working directory
@@ -108,7 +110,7 @@ read_scdf <- function(file,
   out
 }
 
-#' @rdname read_scdf
+#' @rdname deprecated-functions
 #' @export
 readSC.excel <- function(...) {
   
@@ -116,7 +118,7 @@ readSC.excel <- function(...) {
   
 }
 
-#' @rdname read_scdf
+#' @rdname deprecated-functions
 #' @export
 readSC <- function(...) {
   read_scdf(...)

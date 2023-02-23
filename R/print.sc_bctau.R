@@ -18,25 +18,35 @@ print.sc_bctau <- function(x, nice = TRUE, digits = "auto", ...) {
     cat("Continuity correction not applied.\n")
   }
   cat("\n")
-  if (digits == "auto") {
-    x$parameters$p <- round(x$parameters$p, 3)
-    x$parameters$z <- sprintf("%.2f", x$parameters$z)
-    x$parameters$tau <- sprintf("%.2f", x$parameters$tau)
-  } else {
-    x$parameters$p <- round(x$parameters$p, digits)
-    x$parameters$z <- round(x$parameters$z, digits)
-    x$parameters$tau <- round(x$parameters$tau, digits)
+  
+  for(i in seq_along(x$corrected_tau)) {
+    if (digits == "auto") {
+      if (x$corrected_tau[[i]]$p[1] <= 0.05) 
+        correction <- TRUE else correction <- FALSE
+      x$corrected_tau[[i]]$p <- round(x$corrected_tau[[i]]$p, 3)
+      x$corrected_tau[[i]]$z <- sprintf("%.2f", x$corrected_tau[[i]]$z)
+      x$corrected_tau[[i]]$tau <- sprintf("%.2f", x$corrected_tau[[i]]$tau)
+    } else {
+      x$corrected_tau[[i]]$p <- round(x$corrected_tau[[i]]$p, digits)
+      x$corrected_tau[[i]]$z <- round(x$corrected_tau[[i]]$z, digits)
+      x$corrected_tau[[i]]$tau <- round(x$corrected_tau[[i]]$tau, digits)
+    }
+    
+    if (nice) {
+      x$corrected_tau[[i]]$p <- .nice_p(x$corrected_tau[[i]]$p)
+    }
+    
+    rownames(x$corrected_tau[[i]]) <- x$corrected_tau[[i]]$Model
+    cat(names(x$corrected_tau)[i], ":\n")
+    print(x$corrected_tau[[i]][,-1], ...)
+    cat("\n")
+    if (correction) cat("Baseline correction should be applied.\n\n")
+    if (!correction) cat("Baseline correction should not be applied.\n\n")
   }
   
-  if (nice) {
-    x$parameters$p <- .nice_p(x$parameters$p)
-  }
-  
-  rownames(x$parameters) <- x$parameters$Model
-  print(x$parameters[,-1], ...)
+
   
   cat("\n")
-  if (x$correction)  cat("Baseline correction should be applied.\n\n")
-  if (!x$correction) cat("Baseline correction should not be applied.\n\n")
+
   
 }

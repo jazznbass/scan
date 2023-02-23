@@ -15,7 +15,7 @@
 #' @return A truncated data frame (for each single-case).
 #' @author Juergen Wilbert
 #' @family data manipulation functions
-#' @keywords manip
+#' @keywords internal
 #' @examples
 #'
 #' ## Truncate the first two data points of both phases and compare the two 

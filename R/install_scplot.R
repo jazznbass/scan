@@ -5,6 +5,7 @@
 #' installed from github. This functions gives instructions how to do this.
 #' 
 #' @export
+#' @keywords internal
 install_scplot <- function() {
   devtools <- .is_installed("devtools")
   scplot <- .is_installed("scplot")

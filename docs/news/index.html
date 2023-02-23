@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.56</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.56.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,36 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.56" id="scan-056">scan 0.56<a class="anchor" aria-label="anchor" href="#scan-056"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.56" id="scan-056x">scan 0.56.x<a class="anchor" aria-label="anchor" href="#scan-056x"></a></h2><p class="text-muted">CRAN release: 2023-02-16</p>
+<div class="section level3">
+<h3 id="new-fucntions-0-56">New fucntions<a class="anchor" aria-label="anchor" href="#new-fucntions-0-56"></a></h3>
+<ul><li>
+<code><a href="../reference/show.html">show()</a></code>: Opens each case within an scdf in a separate viewer tab.</li>
+<li>
+<code><a href="../reference/install_shinyscan.html">install_shinyscan()</a></code>/<code><a href="../reference/install_scplot.html">install_scplot()</a></code> give instructions how to install <code>shinyscan</code> and <code>scplot</code>.</li>
+<li>Helper functions for <code><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform()</a></code>: <code>n()</code>, <code><a href="../reference/transform.scdf.html">all_cases()</a></code>, <code><a href="../reference/transform.scdf.html">across_cases()</a></code>, <code>first_of</code>
+</li>
+<li>Helper functions for <code><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform()</a></code>: <code><a href="../reference/transform.scdf.html">moving_mean()</a></code>, <code><a href="../reference/transform.scdf.html">moving_median()</a></code>, <code><a href="../reference/transform.scdf.html">local_regression()</a></code>
+</li>
+<li>
+<code><a href="../reference/corrected_tau.html">corrected_tau()</a></code>: returns multiple cases</li>
+<li>
+<code><a href="../reference/export.html">export()</a></code>: new for <code>nap(), pen()</code>
+</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-56">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-56"></a></h3>
+<ul><li>solved: <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> failed when one of the cases had no name</li>
+<li>solved: <code><a href="../reference/nap.html">nap()</a></code> only report values for the first case with multiple cases.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-0-56">minor<a class="anchor" aria-label="anchor" href="#minor-0-56"></a></h3>
+<ul><li>
+<code><a href="../reference/convert.html">convert()</a></code>: new arguments. indent sets the indentation. When the scdf contains only one case, no study is combined.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.56" id="scan-056">scan 0.56<a class="anchor" aria-label="anchor" href="#scan-056"></a></h2><p class="text-muted">CRAN release: 2023-02-16</p>
 <div class="section level3">
 <h3 id="new-features-0-56">New features<a class="anchor" aria-label="anchor" href="#new-features-0-56"></a></h3>
 <ul><li><p><code><a href="../reference/export.html">export()</a></code>: New export for <code><a href="../reference/power_test.html">power_test()</a></code> and <code><a href="../reference/smd.html">smd()</a></code> output.</p></li>
@@ -75,11 +104,11 @@
 <li>rewrote <code><a href="../reference/as_scdf.html">as_scdf()</a></code>, <code><a href="../reference/read_scdf.html">read_scdf()</a></code>. Now it is easier to import data from any file format.</li>
 </ul><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/readODS/man/read_ods.html" class="external-link">read_ods</a></span><span class="op">(</span><span class="st">"filename.ods"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/scdf.html">as.scdf</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/readODS/reference/read_ods.html" class="external-link">read_ods</a></span><span class="op">(</span><span class="st">"filename.ods"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/scdf.html">as.scdf</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">openxlsx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html" class="external-link">read.xlsx</a></span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/scdf.html">as.scdf</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/readODS/man/read_ods.html" class="external-link">read_ods</a></span><span class="op">(</span><span class="st">"filename.ods"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/readODS/reference/read_ods.html" class="external-link">read_ods</a></span><span class="op">(</span><span class="st">"filename.ods"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/scdf.html">as.scdf</a></span><span class="op">(</span></span>
 <span>    cvar <span class="op">=</span> <span class="st">"id"</span>, </span>
 <span>    pvar <span class="op">=</span> <span class="st">"section"</span>, </span>
@@ -87,11 +116,11 @@
 <span>    phase_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"baseline"</span>, <span class="st">"intervention"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span>  </span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">exampleABC</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/readODS/man/write_ods.html" class="external-link">write_ods</a></span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">exampleABC</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/readODS/reference/write_ods.html" class="external-link">write_ods</a></span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">exampleABC</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">openxlsx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/write.xlsx.html" class="external-link">write.xlsx</a></span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="bug-fixes-0-56">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-56"></a></h3>
+<h3 id="bug-fixes-0-56-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-56-1"></a></h3>
 <ul><li>
 <code><a href="../reference/tau_u.html">tau_u()</a></code>: Rewrote the calculation of meta analyses and confidence intervals.</li>
 <li>
@@ -171,10 +200,10 @@
 <div class="section level3">
 <h3 id="reanmed-functions-old-functionnames-still-work-0-54">reanmed functions (old functionnames still work)<a class="anchor" aria-label="anchor" href="#reanmed-functions-old-functionnames-still-work-0-54"></a></h3>
 <ul><li>
-<code><a href="../reference/read_scdf.html">readSC()</a></code> -&gt; <code><a href="../reference/read_scdf.html">read_scdf()</a></code>
+<code><a href="../reference/deprecated-functions.html">readSC()</a></code> -&gt; <code><a href="../reference/read_scdf.html">read_scdf()</a></code>
 </li>
 <li>
-<code><a href="../reference/write_scdf.html">writeSC()</a></code> -&gt; <code><a href="../reference/write_scdf.html">write_scdf()</a></code>
+<code><a href="../reference/deprecated-functions.html">writeSC()</a></code> -&gt; <code><a href="../reference/write_scdf.html">write_scdf()</a></code>
 </li>
 <li>
 <code><a href="../reference/deprecated-functions.html">design_rSC()</a></code> -&gt; <code><a href="../reference/design.html">design()</a></code>
@@ -261,7 +290,7 @@
 <ul><li>
 <code><a href="../reference/is.scdf.html">is.scdf()</a></code>: Tests if an object is of type “scdf” or not.</li>
 <li>
-<code><a href="../reference/check_scdf.html">check_scdf()</a></code>: Checks for the validity of an scdf object (mainly used for internal tests)</li>
+<code>check_scdf()</code>: Checks for the validity of an scdf object (mainly used for internal tests)</li>
 <li>
 <code><a href="../reference/convert.html">convert()</a></code>: Creates an scdf syntax file from an scdf object.</li>
 </ul><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">

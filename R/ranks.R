@@ -16,6 +16,7 @@
 #' @examples
 #' ranks(Huber2014, var = "compliance")
 #' @export
+#' @keywords internal
 
 ranks <- function(data, var, grand = TRUE, ...) {
   

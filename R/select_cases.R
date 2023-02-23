@@ -5,7 +5,7 @@
 #'
 #' @return An scdf with a subset of cases
 #' @export
-#'
+#' @family data manipulation functions
 #' @examples
 #' select_cases(exampleAB, Johanna, Karolina)
 #' select_cases(exampleAB, c(Johanna, Karolina))

@@ -48,68 +48,72 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   
   data <- .prepare_scdf(data, na.rm = TRUE)
   data <- .keep_phases(data, phases = phases)$data
-  
-  if (length(data) > 1) {
-    stop("Baseline corrected tau is not applicable for multiple cases.")
-  }
-  data <- data[[1]] 
 
-  rowsA <- which(data[[pvar]] == "A")
-  rowsB <- which(data[[pvar]] == "B")
-  A_data <- data[rowsA, ]
-  B_data <- data[rowsB, ]
-  
-  auto_tau <- .kendall_full(
-    A_data[[dvar]], 
-    A_data[[mvar]], 
-    continuity_correction = continuity
-  )
-  
-  formula  <- as.formula(paste0(dvar, "~", mvar))
-  fit_mblm <- mblm(formula, dataframe = A_data, repeated = repeated)
-  data$fit <- predict(fit_mblm, data, se.fit = FALSE)
-  x <- data[[dvar]] - data$fit
-  y <- as.numeric(factor(data[[pvar]]))
-  base_corr_tau <- .kendall_full(x, y, continuity_correction = continuity)
-  
-  x <- data[[dvar]]
-  uncorrected_tau <- .kendall_full(x, y, continuity_correction = continuity)
-  
-  if (is.na(auto_tau$p)) {
-    corr_applied <- FALSE
-  } else {
-    if (auto_tau$p <= alpha) {
-      corr_applied <- TRUE
-    } else {
+  corr_tau <- function(data) {
+    
+    rowsA <- which(data[[pvar]] == "A")
+    rowsB <- which(data[[pvar]] == "B")
+    A_data <- data[rowsA, ]
+    B_data <- data[rowsB, ]
+    
+    auto_tau <- .kendall_full(
+      A_data[[dvar]], 
+      A_data[[mvar]], 
+      continuity_correction = continuity
+    )
+    
+    formula  <- as.formula(paste0(dvar, "~", mvar))
+    fit_mblm <- mblm(formula, dataframe = A_data, repeated = repeated)
+    data$fit <- predict(fit_mblm, data, se.fit = FALSE)
+    x <- data[[dvar]] - data$fit
+    y <- as.numeric(factor(data[[pvar]]))
+    base_corr_tau <- .kendall_full(x, y, continuity_correction = continuity)
+    
+    x <- data[[dvar]]
+    uncorrected_tau <- .kendall_full(x, y, continuity_correction = continuity)
+    
+    if (is.na(auto_tau$p)) {
       corr_applied <- FALSE
+    } else {
+      if (auto_tau$p <= alpha) {
+        corr_applied <- TRUE
+      } else {
+        corr_applied <- FALSE
+      }
     }
+    
+    if (corr_applied) tau <- base_corr_tau else tau <- uncorrected_tau
+    
+    df <- data.frame(
+      Model = c("Baseline autocorrelation", 
+                "Uncorrected tau", 
+                "Baseline corrected tau"),
+      tau = c(auto_tau$tau, uncorrected_tau$tau, base_corr_tau$tau),
+      z = c(auto_tau$z, uncorrected_tau$z, base_corr_tau$z),
+      p = c(auto_tau$p, uncorrected_tau$p, base_corr_tau$p),
+      check.names = FALSE
+    )
+    
+    df
+    
   }
   
-  if (corr_applied) tau <- base_corr_tau else tau <- uncorrected_tau
-
-  df <- data.frame(
-    Model = c("Baseline autocorrelation", 
-              "Uncorrected tau", 
-              "Baseline corrected tau"),
-    tau = c(auto_tau$tau, uncorrected_tau$tau, base_corr_tau$tau),
-    z = c(auto_tau$z, uncorrected_tau$z, base_corr_tau$z),
-    p = c(auto_tau$p, uncorrected_tau$p, base_corr_tau$p),
-    check.names = FALSE
-  )
+  x <- lapply(data, corr_tau)
   
   out <- list(
-    tau = tau$tau, 
-    p = tau$p,
-    parameters = df,
-    auto_tau = auto_tau,
-    tau_corrected = base_corr_tau,
-    tau_uncorrected = uncorrected_tau,    
-    correction = corr_applied,
+    tau = sapply(x, function(x) if (x$p[1] <= 0.05) x$tau[3] else x$tau[2]), 
+    p = sapply(x, function(x) if (x$p[1] <= 0.05) x$p[3] else x$p[2]), 
+    corrected_tau = x,
+    auto_tau = sapply(x, function(x) x$tau[1]),
+    tau_corrected = sapply(x, function(x) x$tau[3]),
+    tau_uncorrected = sapply(x, function(x) x$tau[2]),    
+    correction = sapply(x, function(x) if (x$p[1] <= 0.05) TRUE else FALSE),
     alpha = alpha,
     continuity = continuity,
     repeated   = repeated,
     data = data
   )
+  
   class(out) <- c("sc_bctau")
   attr(out, .opt$phase) <- pvar
   attr(out, .opt$mt) <- mvar

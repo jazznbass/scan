@@ -12,7 +12,7 @@ yaml files."><meta property="og:image" content="/logo.png"><!-- mathjax --><scri
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.56</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.56.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,11 +78,7 @@ yaml files.</p>
 <span>  sort.labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  phase.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">readSC.excel</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">readSC</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -114,13 +110,13 @@ opened) or a data.frame.</p></dd>
 
 
 <dt>sort_cases, sort.labels</dt>
-<dd><p>If set TRUE, the resulting list is sorted by label names
-(alphabetically increasing).</p></dd>
+<dd><p>If set TRUE, the resulting list is sorted by
+label names (alphabetically increasing).</p></dd>
 
 
 <dt>phase_names, phase.names</dt>
-<dd><p>A character vector with phase names. Defaults to the phase
-names provided in the phase variable.</p></dd>
+<dd><p>A character vector with phase names. Defaults
+to the phase names provided in the phase variable.</p></dd>
 
 
 <dt>type</dt>
@@ -144,8 +140,11 @@ file extension.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></code>, <code><a href="write_scdf.html">writeSC</a></code>, <code><a href="scdf.html">scdf</a></code>,
-  <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></code>, <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></code>,
+  <code>read_excel</code></p>
+<p>Other io-functions: 
+<code><a href="convert.html">convert</a>()</code>,
+<code><a href="write_scdf.html">write_scdf</a>()</code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

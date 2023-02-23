@@ -26,7 +26,7 @@
 #' frames.
 #' @author Juergen Wilbert
 #' @family data manipulation functions
-#' @keywords manip
+#' @keywords internal
 #' @examples
 #'
 #' ## Use the three different smoothing functions and compare the results

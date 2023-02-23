@@ -6,6 +6,8 @@
 #' @param study_name Character string. Name of the study object.
 #' @param case_name Character string. Name of the scdf objects.
 #' @param indent Integer. Indentation.
+#' @keywords io
+#' @family io-functions
 #' @examples 
 #' filename <- tempfile()
 #' convert(exampleABC, file = filename)

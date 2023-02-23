@@ -37,10 +37,18 @@ across all phases.
 autocorr(Huber2014, lag_max = 2)
 }
 \seealso{
-\code{\link{trend}}, \code{\link{plm}}, \code{\link{acf}}
+\code{\link{acf}}
+
+Other regression functions: 
+\code{\link{corrected_tau}()},
+\code{\link{hplm}()},
+\code{\link{mplm}()},
+\code{\link{plm}()},
+\code{\link{trend}()}
 }
 \author{
 Juergen Wilbert
 }
 \concept{Autocorrelation}
 \concept{Serial correlation}
+\concept{regression functions}

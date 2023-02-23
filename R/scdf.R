@@ -37,11 +37,12 @@ methods::setOldClass(c("scdf", "list"))
 #'   notice that all \code{scan} functions have arguments to define \code{dvar,
 #'   phase, and mt} for a given analysis.
 #' @author Juergen Wilbert
-#' @family data manipulation function
+#' @family data manipulation functions
 #' @examples
 #'
-#' ## Scores on a letter naming task were collected on eleven days in a row. The intervention
-#' ## started after the fifth measurement, so the first B phase measurement was 6 (B_start = 6).
+#' ## Scores on a letter naming task were collected on eleven days in a row. 
+#' ## The intervention started after the fifth measurement, 
+#' ## so the first B phase measurement was 6 (B_start = 6).
 #' klaas <- scdf(
 #'   c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
 #'   B_start = 6, name = "Klaas"

@@ -85,6 +85,12 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
+    <loc>/reference/install_scplot.html</loc>
+  </url>
+  <url>
+    <loc>/reference/install_shinyscan.html</loc>
+  </url>
+  <url>
     <loc>/reference/is.scdf.html</loc>
   </url>
   <url>
@@ -200,6 +206,9 @@
   </url>
   <url>
     <loc>/reference/shift.html</loc>
+  </url>
+  <url>
+    <loc>/reference/show.html</loc>
   </url>
   <url>
     <loc>/reference/smd.html</loc>

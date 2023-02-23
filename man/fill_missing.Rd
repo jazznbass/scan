@@ -58,9 +58,15 @@ plot(study, marks = list(positions = replace.positions), style = "grid2")
 }
 \seealso{
 Other data manipulation functions: 
+\code{\link{add_l2}()},
 \code{\link{as.data.frame.scdf}()},
+\code{\link{as_scdf}()},
+\code{\link{moving_median}()},
 \code{\link{outlier}()},
 \code{\link{ranks}()},
+\code{\link{scdf}},
+\code{\link{select_cases}()},
+\code{\link{set_vars}()},
 \code{\link{shift}()},
 \code{\link{smooth_cases}()},
 \code{\link{standardize}()},

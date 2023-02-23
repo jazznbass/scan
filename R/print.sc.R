@@ -5,6 +5,7 @@
 #' If set to "auto" (default), values are predefined.
 #' @param ... Further parameters passed to the print function
 #' @name print.sc
+#' @keywords internal
 NULL
 
 

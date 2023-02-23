@@ -125,9 +125,11 @@ Leidig2018 \%>\%
 }
 \seealso{
 Other regression functions: 
+\code{\link{autocorr}()},
 \code{\link{corrected_tau}()},
 \code{\link{mplm}()},
-\code{\link{plm}()}
+\code{\link{plm}()},
+\code{\link{trend}()}
 }
 \author{
 Juergen Wilbert

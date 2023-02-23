@@ -2,12 +2,9 @@
 % Please edit documentation in R/write_scdf.R
 \name{write_scdf}
 \alias{write_scdf}
-\alias{writeSC}
-\title{Write data into a .csv-file}
+\title{Data output}
 \usage{
 write_scdf(data, filename = NULL, sep = ",", dec = ".", ...)
-
-writeSC(...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
@@ -16,10 +13,10 @@ this format.}
 \item{filename}{A character string defining the output file name (e.g.
 \code{"SC_data.csv"}.}
 
-\item{sep}{The field separator string. Values within each row of x are 
+\item{sep}{The field separator string. Values within each row of x are
 separated by this string.}
 
-\item{dec}{The string to use for decimal points in numeric or complex 
+\item{dec}{The string to use for decimal points in numeric or complex
 columns: must be a single character.}
 
 \item{\dots}{Further arguments passed to write.table.}
@@ -28,32 +25,36 @@ columns: must be a single character.}
 This function restructures and writes single-case data into a .csv-file.
 }
 \details{
-This is just a simple wrapper for 
-`write_csv(as.data.frame(data), filename, row.names = FALSE)`.
+This is a wrapper for the write.table function with predefined
+parameters.
 }
 \examples{
 ## write single-case data to a .csv-file
-filename <- file.path(tempdir(), "test.csv")
+filename <- tempfile(fileext = ".csv")
 jessica <- random_scdf(design(level = .5))
-write_scdf(jessica, filename)
+write_scdf(jessica, tempfile())
 
-## write multiple cases to a .csv-file with semicolon as field and comma as 
+## write multiple cases to a .csv-file with semicolon as field and comma as
 ## decimal separator
 write_scdf(Grosche2011, filename, sep = ";", dec = ",")
 
 ## read_scdf and write_scdf
 write_scdf(exampleA1B1A2B2_zvt, filename)
-dat <- read_scdf(filename, cvar = "case", pvar = "part", 
+dat <- read_scdf(filename, cvar = "case", pvar = "part",
                  dvar = "zvt", mvar = "day")
 res1 <- describe(exampleA1B1A2B2_zvt)$descriptives
 res2 <- describe(dat)$descriptives
 all.equal(res1,res2)
 }
 \seealso{
-\code{\link{write.table}}, \code{\link{read_scdf}},
-\code{\link{saveRDS}}
+\code{\link{write.table}}, \code{\link{saveRDS}}
+
+Other io-functions: 
+\code{\link{convert}()},
+\code{\link{read_scdf}()}
 }
 \author{
 Juergen Wilbert
 }
-\keyword{manip}
+\concept{io-functions}
+\keyword{io}

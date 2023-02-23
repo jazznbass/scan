@@ -4,6 +4,7 @@
 #' @param dvar Character string. Name of the dependent variable.
 #' @param mvar Character string. Name of the measurement-time variable.
 #' @param pvar Character string. Name of the phase variable.
+#' @family data manipulation functions
 #' @examples 
 #' exampleAB_add %>% 
 #'   set_dvar("depression") %>%
