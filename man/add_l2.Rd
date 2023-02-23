@@ -2,12 +2,12 @@
 % Please edit documentation in R/add_l2.R
 \name{add_l2}
 \alias{add_l2}
-\title{Add level 2}
+\title{Add level-2 data}
 \usage{
-add_l2(data, data_l2, cvar = "case")
+add_l2(scdf, data_l2, cvar = "case")
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
+\item{scdf}{A single-case data frame. See \code{\link{scdf}} to learn about
 this format.}
 
 \item{data_l2}{A level 2 dataset.}
@@ -24,3 +24,20 @@ Add level 2 variables from a level 2 dataset to an scdf file
 \examples{
 Leidig2018 \%>\% add_l2(Leidig2018_l2)
 }
+\seealso{
+Other data manipulation functions: 
+\code{\link{as.data.frame.scdf}()},
+\code{\link{as_scdf}()},
+\code{\link{fill_missing}()},
+\code{\link{moving_median}()},
+\code{\link{outlier}()},
+\code{\link{ranks}()},
+\code{\link{scdf}},
+\code{\link{select_cases}()},
+\code{\link{set_vars}()},
+\code{\link{shift}()},
+\code{\link{smooth_cases}()},
+\code{\link{standardize}()},
+\code{\link{truncate_phase}()}
+}
+\concept{data manipulation functions}

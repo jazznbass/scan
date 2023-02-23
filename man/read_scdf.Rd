@@ -2,8 +2,6 @@
 % Please edit documentation in R/read_scdf.R
 \name{read_scdf}
 \alias{read_scdf}
-\alias{readSC.excel}
-\alias{readSC}
 \title{Load single-case data from files}
 \usage{
 read_scdf(
@@ -19,10 +17,6 @@ read_scdf(
   phase.names = NULL,
   ...
 )
-
-readSC.excel(...)
-
-readSC(...)
 }
 \arguments{
 \item{file}{Either a character string defining the file to be loaded (e.g.
@@ -41,11 +35,11 @@ opened) or a data.frame.}
 \item{mvar}{Sets the variable name of the "mt" variable. Defaults to
 \code{"mt"}.}
 
-\item{sort_cases, sort.labels}{If set TRUE, the resulting list is sorted by label names
-(alphabetically increasing).}
+\item{sort_cases, sort.labels}{If set TRUE, the resulting list is sorted by
+label names (alphabetically increasing).}
 
-\item{phase_names, phase.names}{A character vector with phase names. Defaults to the phase
-names provided in the phase variable.}
+\item{phase_names, phase.names}{A character vector with phase names. Defaults
+to the phase names provided in the phase variable.}
 
 \item{type}{Format of the file to be loaded. Either "csv", "xlsx", "xls",
 "excel", "yml" is possible. By default (NA) the type is extracted from the
@@ -81,10 +75,15 @@ all.equal(res1,res2)
 
 }
 \seealso{
-\code{\link{read.table}}, \code{\link{writeSC}}, \code{\link{scdf}},
-  \code{\link{readRDS}}
+\code{\link{read.table}}, \code{\link{readRDS}},
+  \code{\link{read_excel}}
+
+Other io-functions: 
+\code{\link{convert}()},
+\code{\link{write_scdf}()}
 }
 \author{
 Juergen Wilbert
 }
-\keyword{manip}
+\concept{io-functions}
+\keyword{io}

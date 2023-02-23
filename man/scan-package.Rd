@@ -11,4 +11,5 @@ A collection of procedures for analysing, visualising, and managing single-case 
 \author{
 Juergen Wilbert [aut, cre]
 }
+\keyword{internal}
 \keyword{package}

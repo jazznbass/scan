@@ -83,9 +83,11 @@ print(res, std = TRUE)
 }
 \seealso{
 Other regression functions: 
+\code{\link{autocorr}()},
 \code{\link{corrected_tau}()},
 \code{\link{hplm}()},
-\code{\link{plm}()}
+\code{\link{plm}()},
+\code{\link{trend}()}
 }
 \author{
 Juergen Wilbert

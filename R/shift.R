@@ -12,6 +12,7 @@
 #'
 #' @return A scdf with shifted data
 #' @family data manipulation functions
+#' @keywords internal
 #' @export
 #'
 #' @examples

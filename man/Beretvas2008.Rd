@@ -88,4 +88,4 @@ single-case study data, by courtesy of the particular authors.
 \author{
 Juergen Wilbert
 }
-\keyword{datasets}
+\keyword{internal}

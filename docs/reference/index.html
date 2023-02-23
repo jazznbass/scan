@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.56</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.56.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,8 +56,8 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
       
+      <h3 id="coding-and-manipulation-of-single-case-data-frames">Coding and manipulation of single-case data frames<a class="anchor" aria-label="anchor" href="#coding-and-manipulation-of-single-case-data-frames"></a></h3>
       
 
       
@@ -68,19 +68,19 @@
 
       <dl><dt>
           
-          <code><a href="Beretvas2008.html">Beretvas2008</a></code> 
+          <code><a href="scdf.html">scdf()</a></code> 
         </dt>
-        <dd>Single-case example data</dd>
-      </dl><dl><dt>
-          
-          <code><a href="Subsetting.html">`$`(<i>&lt;scdf&gt;</i>)</a></code> <code><a href="Subsetting.html">`[`(<i>&lt;scdf&gt;</i>)</a></code> 
-        </dt>
-        <dd>Select an scdf</dd>
+        <dd>Single case data frame</dd>
       </dl><dl><dt>
           
           <code><a href="add_l2.html">add_l2()</a></code> 
         </dt>
-        <dd>Add level 2</dd>
+        <dd>Add level-2 data</dd>
+      </dl><dl><dt>
+          
+          <code><a href="as_scdf.html">as_scdf()</a></code> 
+        </dt>
+        <dd>as_scdf</dd>
       </dl><dl><dt>
           
           <code><a href="as.data.frame.scdf.html">as.data.frame(<i>&lt;scdf&gt;</i>)</a></code> 
@@ -89,11 +89,94 @@
 (scdf).</dd>
       </dl><dl><dt>
           
-          <code><a href="as_scdf.html">as_scdf()</a></code> 
+          <code><a href="combine.html">combine()</a></code> <code><a href="combine.html">c(<i>&lt;scdf&gt;</i>)</a></code> 
         </dt>
-        <dd>as_scdf
-Converts a data frame to an scdf object.</dd>
+        <dd>Combine single-case data frames</dd>
       </dl><dl><dt>
+          
+          <code><a href="coef.sc_plm.html">coef(<i>&lt;sc_plm&gt;</i>)</a></code> <code><a href="coef.sc_plm.html">coef(<i>&lt;sc_hplm&gt;</i>)</a></code> 
+        </dt>
+        <dd>Extract coefficents from plm/hplm objects</dd>
+      </dl><dl><dt>
+          
+          <code><a href="fill_missing.html">fill_missing()</a></code> 
+        </dt>
+        <dd>Replacing missing measurement times in single-case data</dd>
+      </dl><dl><dt>
+          
+          <code><a href="sample_names.html">sample_names()</a></code> 
+        </dt>
+        <dd>Samples random names</dd>
+      </dl><dl><dt>
+          
+          <code><a href="select_cases.html">select_cases()</a></code> 
+        </dt>
+        <dd>Select a subset of cases</dd>
+      </dl><dl><dt>
+          
+          <code><a href="select_phases.html">select_phases()</a></code> 
+        </dt>
+        <dd>Select and combine phases for overlap analyses</dd>
+      </dl><dl><dt>
+          
+          <code><a href="set_vars.html">set_vars()</a></code> <code><a href="set_vars.html">set_dvar()</a></code> <code><a href="set_vars.html">set_mvar()</a></code> <code><a href="set_vars.html">set_pvar()</a></code> 
+        </dt>
+        <dd>Set analysis variables in an scdf</dd>
+      </dl><dl><dt>
+          
+          <code><a href="subset.scdf.html">subset(<i>&lt;scdf&gt;</i>)</a></code> 
+        </dt>
+        <dd>Subset cases, rows, and variables</dd>
+      </dl><dl><dt>
+          
+          <code><a href="transform.scdf.html">moving_median()</a></code> <code><a href="transform.scdf.html">moving_mean()</a></code> <code><a href="transform.scdf.html">local_regression()</a></code> <code><a href="transform.scdf.html">first_of()</a></code> <code><a href="transform.scdf.html">across_cases()</a></code> <code><a href="transform.scdf.html">all_cases()</a></code> <code><a href="transform.scdf.html">transform(<i>&lt;scdf&gt;</i>)</a></code> 
+        </dt>
+        <dd>Transform every single case of a single case data frame</dd>
+      </dl><dl><dt>
+          
+          <code><a href="is.scdf.html">is.scdf()</a></code> 
+        </dt>
+        <dd>scdf objects
+Tests for objects of type "scdf"</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="export-and-import">Export and import<a class="anchor" aria-label="anchor" href="#export-and-import"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="convert.html">convert()</a></code> 
+        </dt>
+        <dd>Convert
+Converts an scdf object into R code</dd>
+      </dl><dl><dt>
+          
+          <code><a href="read_scdf.html">read_scdf()</a></code> 
+        </dt>
+        <dd>Load single-case data from files</dd>
+      </dl><dl><dt>
+          
+          <code><a href="write_scdf.html">write_scdf()</a></code> 
+        </dt>
+        <dd>Data output</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="single-case-data-analysis">Single-case data analysis<a class="anchor" aria-label="anchor" href="#single-case-data-analysis"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="autocorr.html">autocorr()</a></code> 
         </dt>
@@ -105,35 +188,9 @@ Converts a data frame to an scdf object.</dd>
         <dd>Conservative Dual-Criterion Method</dd>
       </dl><dl><dt>
           
-          <code><a href="check_scdf.html">check_scdf()</a></code> 
-        </dt>
-        <dd>Validity check for an scdf object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="coef.sc_plm.html">coef(<i>&lt;sc_plm&gt;</i>)</a></code> <code><a href="coef.sc_plm.html">coef(<i>&lt;sc_hplm&gt;</i>)</a></code> 
-        </dt>
-        <dd>Extract coefficents from plm/hplm objects</dd>
-      </dl><dl><dt>
-          
-          <code><a href="combine.html">combine()</a></code> <code><a href="combine.html">c(<i>&lt;scdf&gt;</i>)</a></code> 
-        </dt>
-        <dd>Combine single-case data frames</dd>
-      </dl><dl><dt>
-          
-          <code><a href="convert.html">convert()</a></code> 
-        </dt>
-        <dd>Covert
-Converts an scdf object to a text syntax</dd>
-      </dl><dl><dt>
-          
           <code><a href="corrected_tau.html">corrected_tau()</a></code> 
         </dt>
         <dd>Baseline corrected tau</dd>
-      </dl><dl><dt>
-          
-          <code><a href="deprecated-functions.html">autocorrSC()</a></code> <code><a href="deprecated-functions.html">design_rSC()</a></code> <code><a href="deprecated-functions.html">longSCDF()</a></code> <code><a href="deprecated-functions.html">corrected_tauSC()</a></code> <code><a href="deprecated-functions.html">trendSC()</a></code> <code><a href="deprecated-functions.html">truncateSC()</a></code> <code><a href="deprecated-functions.html">style_plotSC()</a></code> <code><a href="deprecated-functions.html">style.plotSC()</a></code> <code><a href="deprecated-functions.html">smoothSC()</a></code> <code><a href="deprecated-functions.html">shiftSC()</a></code> <code><a href="deprecated-functions.html">tauUSC()</a></code> <code><a href="deprecated-functions.html">describeSC()</a></code> <code><a href="deprecated-functions.html">rankSC()</a></code> <code><a href="deprecated-functions.html">fillmissingSC()</a></code> <code><a href="deprecated-functions.html">outlierSC()</a></code> <code><a href="deprecated-functions.html">overlapSC()</a></code> <code><a href="deprecated-functions.html">power_testSC()</a></code> <code><a href="deprecated-functions.html">randSC()</a></code> <code><a href="deprecated-functions.html">rand.test()</a></code> <code><a href="deprecated-functions.html">rSC()</a></code> <code><a href="deprecated-functions.html">rciSC()</a></code> <code><a href="deprecated-functions.html">rCi()</a></code> 
-        </dt>
-        <dd>List of old deprecated function names</dd>
       </dl><dl><dt>
           
           <code><a href="describe.html">describe()</a></code> 
@@ -141,40 +198,9 @@ Converts an scdf object to a text syntax</dd>
         <dd>Descriptive statistics for single-case data</dd>
       </dl><dl><dt>
           
-          <code><a href="design.html">design()</a></code> 
-        </dt>
-        <dd>Generate a single-case design matrix</dd>
-      </dl><dl><dt>
-          
-          <code><a href="dot-inheritParams.html">.inheritParams()</a></code> 
-        </dt>
-        <dd>Dummy function to inherit global descriptions of parameters</dd>
-      </dl><dl><dt>
-          
-          <code><a href="estimate_design.html">estimate_design()</a></code> 
-        </dt>
-        <dd>Estimate single-case design</dd>
-      </dl><dl><dt>
-          
-          <code><a href="export.html">export()</a></code> 
-        </dt>
-        <dd>Export scan objects to html or latex</dd>
-      </dl><dl><dt>
-          
-          <code><a href="fill_missing.html">fill_missing()</a></code> 
-        </dt>
-        <dd>Replacing missing measurement times in single-case data</dd>
-      </dl><dl><dt>
-          
           <code><a href="hplm.html">hplm()</a></code> 
         </dt>
         <dd>Hierarchical piecewise linear model / piecewise regression</dd>
-      </dl><dl><dt>
-          
-          <code><a href="is.scdf.html">is.scdf()</a></code> 
-        </dt>
-        <dd>scdf objects
-Tests for objects of type "scdf"</dd>
       </dl><dl><dt>
           
           <code><a href="mplm.html">mplm()</a></code> 
@@ -212,24 +238,9 @@ Tests for objects of type "scdf"</dd>
         <dd>Percent exceeding the trend</dd>
       </dl><dl><dt>
           
-          <code><a href="pipe.html">%&gt;%</a></code> 
-        </dt>
-        <dd>Pipe</dd>
-      </dl><dl><dt>
-          
           <code><a href="plm.html">plm()</a></code> 
         </dt>
         <dd>Piecewise linear model / piecewise regression</dd>
-      </dl><dl><dt>
-          
-          <code><a href="plot.scdf.html">plot(<i>&lt;scdf&gt;</i>)</a></code> <code><a href="plot.scdf.html">plotSC()</a></code> 
-        </dt>
-        <dd>Plot single-case data</dd>
-      </dl><dl><dt>
-          
-          <code><a href="plot_rand.html">plot_rand()</a></code> 
-        </dt>
-        <dd>Plot random distribution</dd>
       </dl><dl><dt>
           
           <code><a href="pnd.html">pnd()</a></code> 
@@ -242,29 +253,9 @@ Tests for objects of type "scdf"</dd>
         <dd>Empirical power analysis for single-case data</dd>
       </dl><dl><dt>
           
-          <code><a href="print.sc.html">print(<i>&lt;sc_ac&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_bctau&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_cdc&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_desc&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_design&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_hplm&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_mplm&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_nap&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_outlier&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_overlap&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_pand&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_pem&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_pet&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_plm&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_pnd&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_power&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_rand&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_rci&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_smd&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_tauu&gt;</i>)</a></code> <code><a href="print.sc.html">print(<i>&lt;sc_trend&gt;</i>)</a></code> 
-        </dt>
-        <dd>Print methods for scan objects</dd>
-      </dl><dl><dt>
-          
-          <code><a href="print.scdf.html">print(<i>&lt;scdf&gt;</i>)</a></code> 
-        </dt>
-        <dd>Print an scdf</dd>
-      </dl><dl><dt>
-          
           <code><a href="rand_test.html">rand_test()</a></code> 
         </dt>
         <dd>Randomization Tests for single-case data</dd>
-      </dl><dl><dt>
-          
-          <code><a href="random_scdf.html">random_scdf()</a></code> 
-        </dt>
-        <dd>Single-case data generator</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ranks.html">ranks()</a></code> 
-        </dt>
-        <dd>Rank-transformation of single-case data files</dd>
       </dl><dl><dt>
           
           <code><a href="rci.html">rci()</a></code> 
@@ -272,79 +263,9 @@ Tests for objects of type "scdf"</dd>
         <dd>Reliable change index</dd>
       </dl><dl><dt>
           
-          <code><a href="read_scdf.html">read_scdf()</a></code> <code><a href="read_scdf.html">readSC.excel()</a></code> <code><a href="read_scdf.html">readSC()</a></code> 
-        </dt>
-        <dd>Load single-case data from files</dd>
-      </dl><dl><dt>
-          
-          <code><a href="sample_names.html">sample_names()</a></code> 
-        </dt>
-        <dd>Samples random names</dd>
-      </dl><dl><dt>
-          
-          <code><a href="scan-package.html">scan-package</a></code> <code><a href="scan-package.html">scan</a></code> 
-        </dt>
-        <dd>Single-Case Data Analyses</dd>
-      </dl><dl><dt>
-          
-          <code><a href="scdf.html">scdf()</a></code> 
-        </dt>
-        <dd>Single case data frame</dd>
-      </dl><dl><dt>
-          
-          <code><a href="scdf_attr.html">scdf_attr()</a></code> <code><a href="scdf_attr.html">`scdf_attr&lt;-`()</a></code> 
-        </dt>
-        <dd>Set and get scdf attributes</dd>
-      </dl><dl><dt>
-          
-          <code><a href="select_cases.html">select_cases()</a></code> 
-        </dt>
-        <dd>Select a subset of cases</dd>
-      </dl><dl><dt>
-          
-          <code><a href="select_phases.html">select_phases()</a></code> 
-        </dt>
-        <dd>Select and combine phases for overlap analyses</dd>
-      </dl><dl><dt>
-          
-          <code><a href="set_vars.html">set_vars()</a></code> <code><a href="set_vars.html">set_dvar()</a></code> <code><a href="set_vars.html">set_mvar()</a></code> <code><a href="set_vars.html">set_pvar()</a></code> 
-        </dt>
-        <dd>Set analysis variables in an scdf</dd>
-      </dl><dl><dt>
-          
-          <code><a href="shift.html">shift()</a></code> 
-        </dt>
-        <dd>Shift values in a single-case data file</dd>
-      </dl><dl><dt>
-          
           <code><a href="smd.html">smd()</a></code> 
         </dt>
         <dd>Standardized mean differences</dd>
-      </dl><dl><dt>
-          
-          <code><a href="smooth_cases.html">smooth_cases()</a></code> 
-        </dt>
-        <dd>Smoothing single-case data</dd>
-      </dl><dl><dt>
-          
-          <code><a href="standardize.html">standardize()</a></code> 
-        </dt>
-        <dd>Standardize values of an scdf file</dd>
-      </dl><dl><dt>
-          
-          <code><a href="style_plot.html">style_plot()</a></code> 
-        </dt>
-        <dd>Create styles for single-case data plots</dd>
-      </dl><dl><dt>
-          
-          <code><a href="subset.scdf.html">subset(<i>&lt;scdf&gt;</i>)</a></code> 
-        </dt>
-        <dd>Subset cases, rows, and variables</dd>
-      </dl><dl><dt>
-          
-          <code><a href="summary.scdf.html">summary(<i>&lt;scdf&gt;</i>)</a></code> 
-        </dt>
-        <dd>Summary function for an scdf</dd>
       </dl><dl><dt>
           
           <code><a href="tau_u.html">tau_u()</a></code> 
@@ -352,26 +273,84 @@ Tests for objects of type "scdf"</dd>
         <dd>Tau-U for single-case data</dd>
       </dl><dl><dt>
           
-          <code><a href="transform.scdf.html">moving_median()</a></code> <code><a href="transform.scdf.html">moving_mean()</a></code> <code><a href="transform.scdf.html">local_regression()</a></code> <code><a href="transform.scdf.html">first_of()</a></code> <code><a href="transform.scdf.html">across_cases()</a></code> <code><a href="transform.scdf.html">all_cases()</a></code> <code><a href="transform.scdf.html">transform(<i>&lt;scdf&gt;</i>)</a></code> 
-        </dt>
-        <dd>Transform variables in every single case of a single case data frame</dd>
-      </dl><dl><dt>
-          
           <code><a href="trend.html">trend()</a></code> 
         </dt>
         <dd>Trend analysis for single-cases data</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="building-graphs-tables-etc-">Building graphs, tables etc.<a class="anchor" aria-label="anchor" href="#building-graphs-tables-etc-"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="export.html">export()</a></code> 
+        </dt>
+        <dd>Export scan objects to html or latex</dd>
       </dl><dl><dt>
           
-          <code><a href="truncate_phase.html">truncate_phase()</a></code> 
+          <code><a href="print.scdf.html">print(<i>&lt;scdf&gt;</i>)</a></code> 
         </dt>
-        <dd>Truncate single-case data</dd>
+        <dd>Print an scdf</dd>
       </dl><dl><dt>
           
-          <code><a href="write_scdf.html">write_scdf()</a></code> <code><a href="write_scdf.html">writeSC()</a></code> 
+          <code><a href="plot.scdf.html">plot(<i>&lt;scdf&gt;</i>)</a></code> <code><a href="plot.scdf.html">plotSC()</a></code> 
         </dt>
-        <dd>Write data into a .csv-file</dd>
+        <dd>Plot single-case data</dd>
+      </dl><dl><dt>
+          
+          <code><a href="style_plot.html">style_plot()</a></code> 
+        </dt>
+        <dd>Create styles for single-case data plots</dd>
+      </dl><dl><dt>
+          
+          <code><a href="plot_rand.html">plot_rand()</a></code> 
+        </dt>
+        <dd>Plot random distribution</dd>
+      </dl><dl><dt>
+          
+          <code><a href="show.html">show()</a></code> 
+        </dt>
+        <dd>Show scdf cases in viewer</dd>
+      </dl><dl><dt>
+          
+          <code><a href="summary.scdf.html">summary(<i>&lt;scdf&gt;</i>)</a></code> 
+        </dt>
+        <dd>Summary function for an scdf</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="simulating-data">Simulating data<a class="anchor" aria-label="anchor" href="#simulating-data"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="design.html">design()</a></code> 
+        </dt>
+        <dd>Generate a single-case design matrix</dd>
+      </dl><dl><dt>
+          
+          <code><a href="estimate_design.html">estimate_design()</a></code> 
+        </dt>
+        <dd>Estimate single-case design</dd>
+      </dl><dl><dt>
+          
+          <code><a href="random_scdf.html">random_scdf()</a></code> 
+        </dt>
+        <dd>Single-case data generator</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

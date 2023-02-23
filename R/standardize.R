@@ -19,6 +19,7 @@
 #' @return An scdf with the scaled values.
 #' @author Juergen Wilbert
 #' @family data manipulation functions
+#' @keywords internal
 #' @examples
 #'
 #' ## Standardize a multiple case scdf and compute an hplm

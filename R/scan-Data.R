@@ -78,6 +78,7 @@
 #' \item{SSDforR2017}{Example from the R package SSDforR.}
 #' \item{Parker2011}{Example from Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011). Combining Nonoverlap and Trend for Single-Case Research: Tau-U. Behavior Therapy, 42(2), 284–299. https://doi.org/10.1016/j.beth.2010.08.006}
 #' @author Juergen Wilbert
+#' @keywords internal
 "Beretvas2008"
 
 

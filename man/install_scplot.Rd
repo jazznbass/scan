@@ -11,3 +11,4 @@ scplot is a new extended plotting interface for scan based on ggplot2.
 It is not yet implemented into scan or available on cran and must be 
 installed from github. This functions gives instructions how to do this.
 }
+\keyword{internal}

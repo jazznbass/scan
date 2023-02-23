@@ -2,8 +2,7 @@
 % Please edit documentation in R/as_scdf.R
 \name{as_scdf}
 \alias{as_scdf}
-\title{as_scdf
-Converts a data frame to an scdf object.}
+\title{as_scdf}
 \usage{
 as_scdf(
   object,
@@ -36,7 +35,26 @@ names provided in the phase variable.}
 \item{sort_cases}{If set TRUE, the resulting list is sorted by label names
 (alphabetically increasing).}
 }
+\value{
+An scdf.
+}
 \description{
-as_scdf
 Converts a data frame to an scdf object.
 }
+\seealso{
+Other data manipulation functions: 
+\code{\link{add_l2}()},
+\code{\link{as.data.frame.scdf}()},
+\code{\link{fill_missing}()},
+\code{\link{moving_median}()},
+\code{\link{outlier}()},
+\code{\link{ranks}()},
+\code{\link{scdf}},
+\code{\link{select_cases}()},
+\code{\link{set_vars}()},
+\code{\link{shift}()},
+\code{\link{smooth_cases}()},
+\code{\link{standardize}()},
+\code{\link{truncate_phase}()}
+}
+\concept{data manipulation functions}

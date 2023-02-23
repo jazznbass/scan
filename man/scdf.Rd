@@ -77,8 +77,9 @@ If the dependent variable is a named vector then the names are
 }
 \examples{
 
-## Scores on a letter naming task were collected on eleven days in a row. The intervention
-## started after the fifth measurement, so the first B phase measurement was 6 (B_start = 6).
+## Scores on a letter naming task were collected on eleven days in a row. 
+## The intervention started after the fifth measurement, 
+## so the first B phase measurement was 6 (B_start = 6).
 klaas <- scdf(
   c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
   B_start = 6, name = "Klaas"
@@ -133,7 +134,23 @@ jim <- scdf(
 )
 overlap(jim, phases = list(c("A1", "A2"), c("B1", "B2")))
 }
+\seealso{
+Other data manipulation functions: 
+\code{\link{add_l2}()},
+\code{\link{as.data.frame.scdf}()},
+\code{\link{as_scdf}()},
+\code{\link{fill_missing}()},
+\code{\link{moving_median}()},
+\code{\link{outlier}()},
+\code{\link{ranks}()},
+\code{\link{select_cases}()},
+\code{\link{set_vars}()},
+\code{\link{shift}()},
+\code{\link{smooth_cases}()},
+\code{\link{standardize}()},
+\code{\link{truncate_phase}()}
+}
 \author{
 Juergen Wilbert
 }
-\concept{data manipulation function}
+\concept{data manipulation functions}

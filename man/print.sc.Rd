@@ -104,3 +104,4 @@ publication tables.}
 \description{
 Print methods for scan objects
 }
+\keyword{internal}

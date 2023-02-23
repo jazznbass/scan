@@ -8,4 +8,5 @@
 #' @name %>%
 #' @rdname pipe
 #' @export
+#' @keywords internal
 NULL

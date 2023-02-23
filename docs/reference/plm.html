@@ -12,7 +12,7 @@ McKean, 2000)."><meta property="og:image" content="/logo.png"><!-- mathjax --><s
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.56</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.56.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,14 +72,14 @@ McKean, 2000).</p>
 <span>  <span class="va">pvar</span>,</span>
 <span>  <span class="va">mvar</span>,</span>
 <span>  AR <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  model <span class="op">=</span> <span class="st">"W"</span>,</span>
+<span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"W"</span>, <span class="st">"H-M"</span>, <span class="st">"B&amp;L-B"</span>, <span class="st">"JW"</span><span class="op">)</span>,</span>
 <span>  family <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
 <span>  trend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  level <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  slope <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  contrast <span class="op">=</span> <span class="st">"first"</span>,</span>
-<span>  contrast_level <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  contrast_slope <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  contrast <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"preceding"</span><span class="op">)</span>,</span>
+<span>  contrast_level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"first"</span>, <span class="st">"preceding"</span><span class="op">)</span>,</span>
+<span>  contrast_slope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"first"</span>, <span class="st">"preceding"</span><span class="op">)</span>,</span>
 <span>  formula <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  update <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  na.action <span class="op">=</span> <span class="va">na.omit</span>,</span>
@@ -237,9 +237,11 @@ Measurement, 60</em>, 38-58.</p>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other regression functions: 
+<code><a href="autocorr.html">autocorr</a>()</code>,
 <code><a href="corrected_tau.html">corrected_tau</a>()</code>,
 <code><a href="hplm.html">hplm</a>()</code>,
-<code><a href="mplm.html">mplm</a>()</code></p></div>
+<code><a href="mplm.html">mplm</a>()</code>,
+<code><a href="trend.html">trend</a>()</code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

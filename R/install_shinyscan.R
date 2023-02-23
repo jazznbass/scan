@@ -5,6 +5,7 @@
 #' installed from github along with the scplot package.
 #' 
 #' @export
+#' @keywords internal
 install_shinyscan <- function() {
   shiny <- .is_installed("shinyscan")
   devtools <- .is_installed("devtools")

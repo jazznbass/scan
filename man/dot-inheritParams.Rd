@@ -74,3 +74,4 @@ model.}
 \description{
 Dummy function to inherit global descriptions of parameters
 }
+\keyword{internal}

@@ -1,4 +1,5 @@
 #' as_scdf
+#' 
 #' Converts a data frame to an scdf object. 
 #'
 #' @param object A data.frame
@@ -14,7 +15,8 @@
 #'   names provided in the phase variable.
 #' @param sort_cases If set TRUE, the resulting list is sorted by label names
 #'   (alphabetically increasing).
-#'
+#' @return An scdf.
+#' @family data manipulation functions
 #' @export
 
 as_scdf <- function(object,                       
@@ -24,7 +26,6 @@ as_scdf <- function(object,
                     mvar = "mt", 
                     phase_names = NULL,
                     sort_cases = FALSE) {
-  
   
   
   if (!cvar %in% names(object)) {

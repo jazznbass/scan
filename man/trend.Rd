@@ -68,8 +68,16 @@ trend(ben, offset = 0, model = c("Cubic" = values ~ I(mt^3), "Log Time" = values
 
 }
 \seealso{
-\code{\link{describe}}, \code{\link{autocorr}}, \code{\link{plm}}
+\code{\link{describe}}
+
+Other regression functions: 
+\code{\link{autocorr}()},
+\code{\link{corrected_tau}()},
+\code{\link{hplm}()},
+\code{\link{mplm}()},
+\code{\link{plm}()}
 }
 \author{
 Juergen Wilbert
 }
+\concept{regression functions}

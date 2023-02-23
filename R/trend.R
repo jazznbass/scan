@@ -21,7 +21,8 @@
 #' \item{offset}{Numeric argument from function call (see \code{Arguments}
 #' section).}
 #' @author Juergen Wilbert
-#' @seealso \code{\link{describe}}, \code{\link{autocorr}}, \code{\link{plm}}
+#' @seealso \code{\link{describe}}
+#' @family regression functions
 #' @examples
 #'
 #' ## Compute the linear and squared regression for a random single-case

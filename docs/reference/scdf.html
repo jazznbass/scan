@@ -12,7 +12,7 @@ single-cases."><meta property="og:image" content="/logo.png"><!-- mathjax --><sc
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.56</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.56.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -158,6 +158,23 @@ lesson = c(1,3,4,5,2,3)</code>.</p></dd>
   phase, and mt</code> for a given analysis.</p>
     </div>
     <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>Other data manipulation functions: 
+<code><a href="add_l2.html">add_l2</a>()</code>,
+<code><a href="as.data.frame.scdf.html">as.data.frame.scdf</a>()</code>,
+<code><a href="as_scdf.html">as_scdf</a>()</code>,
+<code><a href="fill_missing.html">fill_missing</a>()</code>,
+<code><a href="transform.scdf.html">moving_median</a>()</code>,
+<code><a href="outlier.html">outlier</a>()</code>,
+<code><a href="ranks.html">ranks</a>()</code>,
+<code><a href="select_cases.html">select_cases</a>()</code>,
+<code><a href="set_vars.html">set_vars</a>()</code>,
+<code><a href="shift.html">shift</a>()</code>,
+<code><a href="smooth_cases.html">smooth_cases</a>()</code>,
+<code><a href="standardize.html">standardize</a>()</code>,
+<code><a href="truncate_phase.html">truncate_phase</a>()</code></p></div>
+    </div>
+    <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Juergen Wilbert</p>
     </div>
@@ -165,8 +182,9 @@ lesson = c(1,3,4,5,2,3)</code>.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Scores on a letter naming task were collected on eleven days in a row. The intervention</span></span></span>
-<span class="r-in"><span><span class="co">## started after the fifth measurement, so the first B phase measurement was 6 (B_start = 6).</span></span></span>
+<span class="r-in"><span><span class="co">## Scores on a letter naming task were collected on eleven days in a row. </span></span></span>
+<span class="r-in"><span><span class="co">## The intervention started after the fifth measurement, </span></span></span>
+<span class="r-in"><span><span class="co">## so the first B phase measurement was 6 (B_start = 6).</span></span></span>
 <span class="r-in"><span><span class="va">klaas</span> <span class="op">&lt;-</span> <span class="fu">scdf</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">12</span>, <span class="fl">16</span>, <span class="fl">18</span>, <span class="fl">15</span>, <span class="fl">14</span>, <span class="fl">19</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  B_start <span class="op">=</span> <span class="fl">6</span>, name <span class="op">=</span> <span class="st">"Klaas"</span></span></span>
@@ -261,8 +279,8 @@ lesson = c(1,3,4,5,2,3)</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable names:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> values &lt;dependent variable&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mt &lt;measurement-time variable&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> phase &lt;phase variable&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mt &lt;measurement-time variable&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">frida</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Describe Single-Case Data</span>

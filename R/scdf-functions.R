@@ -68,6 +68,7 @@ c.scdf <- function(...) {
 #'
 #' @return A scdf
 #' @rdname Subsetting
+#' @keywords internal
 #' @export
 `$.scdf`<- function(x, i) {
   if (is.character(i) && !(i %in% names(x))) {

@@ -35,4 +35,63 @@ navbar:
     scplot:
       text: scplot
       href: https://jazznbass.github.io/scplot/
-      
+
+reference:
+- subtitle: Coding and manipulation of single-case data frames
+  contents:
+  - scdf
+  - add_l2
+  - as_scdf
+  - as.data.frame.scdf
+  - combine
+  - starts_with("coef")
+  - fill_missing
+  - sample_names
+  - select_cases
+  - select_phases
+  - set_vars
+  - subset.scdf
+  - transform.scdf
+  - is.scdf
+- subtitle: Export and import
+  contents:
+  - convert
+  - read_scdf
+  - write_scdf
+- subtitle: Single-case data analysis
+- contents:
+  - autocorr
+  - cdc
+  - corrected_tau
+  - describe
+  - hplm
+  - mplm
+  - nap
+  - outlier
+  - overlap
+  - pand
+  - pem
+  - pet
+  - plm
+  - pnd
+  - power_test
+  - rand_test
+  - rci
+  - smd
+  - tau_u
+  - trend
+- subtitle: Building graphs, tables etc.
+  contents:
+  - starts_with("export")
+  - starts_with("print")
+  - plot.scdf
+  - style_plot
+  - plot_rand
+  - show
+  - summary.scdf
+- subtitle: Simulating data
+  contents:
+  - design
+  - estimate_design
+  - random_scdf
+
