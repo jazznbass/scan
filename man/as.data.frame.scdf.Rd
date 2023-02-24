@@ -21,16 +21,18 @@ names.}
 }
 \value{
 Returns one data frame with data of all single-cases structured by
-the case variable.
+  the case variable.
 }
 \description{
 The as.data.frame function transposes an scdf into one long data frame.
-Additionally, a data frame can be merged that includes level 2 data of the subjects.
-This might be helpful to prepare data to be used with other packages than scan.
+Additionally, a data frame can be merged that includes level 2 data of the
+subjects. This might be helpful to prepare data to be used with other
+packages than scan.
 }
 \examples{
 
-## Convert the list of three single-case data frames from Grosche (2011) into one long data frame
+## Convert the list of three single-case data frames from Grosche (2011)
+### into one long data frame
 Grosche2011
 Grosche2011_long <- as.data.frame(Grosche2011)
 Grosche2011_long
