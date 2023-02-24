@@ -12,19 +12,26 @@ this format.}
 
 \item{data_l2}{A level 2 dataset.}
 
-\item{cvar}{Character string with the name of the "case" variable in the 
-L2 dataset (default is 'case').}
+\item{cvar}{Character string with the name of the "case" variable in the L2
+dataset (default is 'case').}
 }
 \value{
 An scdf
 }
 \description{
-Add level 2 variables from a level 2 dataset to an scdf file
+Merges variables with corresponding case names from a data.frame with an scdf
+file
+}
+\details{
+This function is mostly used in combination with the \code{\link{hplm}}
+function.
 }
 \examples{
 Leidig2018 \%>\% add_l2(Leidig2018_l2)
 }
 \seealso{
+\code{\link{hplm}}
+
 Other data manipulation functions: 
 \code{\link{as.data.frame.scdf}()},
 \code{\link{as_scdf}()},
@@ -41,3 +48,4 @@ Other data manipulation functions:
 \code{\link{truncate_phase}()}
 }
 \concept{data manipulation functions}
+\keyword{transform}
