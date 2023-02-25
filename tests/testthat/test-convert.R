@@ -3,7 +3,7 @@ test_that("main", {
   fx <- tempfile()
   fy <- tempfile()
   convert(exampleABC, file = fx)
-  convert(exampleABC, phase_definition= "inline", file = fy)
+  convert(exampleABC, inline = TRUE, file = fy)
   
   source(fx)
   x <- study

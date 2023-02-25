@@ -42,6 +42,7 @@ pnd(GruenkeWilbert2014)
 }
 \seealso{
 Other overlap functions: 
+\code{\link{cdc}()},
 \code{\link{corrected_tau}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},

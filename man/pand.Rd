@@ -88,6 +88,7 @@ Research: Nonoverlap of All Pairs. \emph{Behavior Therapy, 40}, 357-367.
 }
 \seealso{
 Other overlap functions: 
+\code{\link{cdc}()},
 \code{\link{corrected_tau}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
