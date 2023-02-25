@@ -1,34 +1,34 @@
 errors <- c()
 
-suppressPackageStartupMessages({
-  if (!requireNamespace("scplot", quietly = TRUE)) {
-    errors <- c(errors, paste0("- You need to install the 'scplot' package to ",
-    "run this app with devtools::install_github('jazznbass/scplot')\n"))
-  } 
-  
-  if (!requireNamespace("shinyjs", quietly = TRUE)) {
-    errors <- c(errors, paste0("- You need to install the 'shinyjs' package ",
-      "to run this app with install_packages('shinyjs')\n"))
-  }
-  
-  if (!requireNamespace("htmltools", quietly = TRUE)) {
-    errors <- c(errors, paste0("- You need to install the 'shinyjs' package ",
-          "to run this app with install_packages('htmltools')\n"))
-  }
-  
-  if (!requireNamespace("markdown", quietly = TRUE)) {
-    errors <- c(errors, paste0("- You need to install the 'shinyjs' package ",
-        "to run this app with install_packages('markdown')\n"))
-  }
-  #library(shinyjs)
-  #library(htmltools)
-  #library(markdown)
-  #library(scplot)
-  #library(shiny)
+if (!requireNamespace("scplot", quietly = TRUE)) {
+  errors <- c(errors, paste0("- You need to install the 'scplot' package to ",
+  "run this app with devtools::install_github('jazznbass/scplot')\n"))
+} 
 
-})
+if (!requireNamespace("shinyjs", quietly = TRUE)) {
+  errors <- c(errors, paste0("- You need to install the 'shinyjs' package ",
+    "to run this app with install.packages('shinyjs')\n"))
+}
+
+if (!requireNamespace("htmltools", quietly = TRUE)) {
+  errors <- c(errors, paste0("- You need to install the 'htmltools' package ",
+        "to run this app with install.packages('htmltools')\n"))
+}
+
+if (!requireNamespace("markdown", quietly = TRUE)) {
+  errors <- c(errors, paste0("- You need to install the 'markdown' package ",
+      "to run this app with install.packages('markdown')\n"))
+}
 
 if (length(errors) > 0) stop(errors)
+
+suppressPackageStartupMessages({
+library(shinyjs)
+library(htmltools)
+library(markdown)
+library(scplot)
+library(shiny)
+})
 
 res <- list()
 

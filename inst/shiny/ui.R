@@ -80,8 +80,8 @@ tab_transform <- tabPanel(
 # Stats -----
 tab_stats <- tabPanel(
   "Stats",
-  useShinyjs(),
-  extendShinyjs(text = res$java$window.open, functions = 'openURL'),
+  shinyjs::useShinyjs(),
+  shinyjs::extendShinyjs(text = res$java$window.open, functions = 'openURL'),
   sidebarLayout(
     sidebarPanel(
       selectInput(
@@ -130,8 +130,8 @@ tab_stats <- tabPanel(
 ## Plot -----
 tab_plot <- tabPanel(
   "Plot",
-  useShinyjs(),
-  extendShinyjs(text = res$java$window.open, functions = 'openURL'),
+  shinyjs::useShinyjs(),
+  shinyjs::extendShinyjs(text = res$java$window.open, functions = 'openURL'),
   sidebarLayout(
     sidebarPanel(
       selectInput("plot", "Plot engine", choices = res$choices$fn_plot),

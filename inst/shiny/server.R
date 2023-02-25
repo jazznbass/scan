@@ -218,7 +218,7 @@ server <- function(input, output, session) {
     link <- paste0(
       "https://jazznbass.github.io/scan/reference/", input$func, ".html"
     )
-    js$openURL(link)
+    shinyjs::js$openURL(link)
   })
 
   output$stats_syntax <- renderPrint({
@@ -328,7 +328,7 @@ server <- function(input, output, session) {
     } else if (input$plot == "plot.scdf") {
       link <- "https://jazznbass.github.io/scan/reference/plot.scdf.html"
     }
-    js$openURL(link)
+    shinyjs::js$openURL(link)
   })
 
   render_plot <- reactive({
