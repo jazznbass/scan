@@ -24,7 +24,10 @@ Imports:
   yaml
 Suggests:
   testthat (>= 3.0.0),
-  shiny
+  shiny,
+  scplot,
+  shinyjs,
+  markdown
 Description: A collection of procedures for analysing, visualising, 
   and managing single-case data. These include piecewise linear regression 
   models, multilevel models, overlap indices (PND, PEM, PAND, PET, tau-u, 

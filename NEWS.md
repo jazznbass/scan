@@ -1,5 +1,12 @@
 # scan 0.56.x
 
+## Shiny app added (experimentally)
+
+- start the app with `scan_app()`
+- you need the following packages to run the app:
+  - `shiny`, `shinyjs`, `scplot`, `markdown`
+  - install scplot with `devtools::install_github("jazznbass/scplot")`
+
 ## New fucntions
 
 - `show()`: Opens each case within an scdf in a separate viewer tab.
