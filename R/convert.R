@@ -150,6 +150,10 @@ convert <- function(scdf,
   if (length(scdf) > 1) {
     con_string <- paste0(case_name, seq_along(scdf), collapse = ", ")
     con_string <- paste0(study_name, " <- c(", con_string, ")")
+    con_string <- paste0(
+      strwrap(con_string, exdent = indent, width = 80, simplify = TRUE), 
+      collapse = "\n"
+    )
   } else {
     con_string <- NULL
   }
@@ -157,23 +161,29 @@ convert <- function(scdf,
   # info
   attr_string <- character(0)
   if (!is.null(attr_scan$info)) {
-    info <- attr_scan[[.opt$info]]
-    attr_string <-paste0(
-      "scdf_attr(", study_name, ", \"info\") <- \"", info, "\""
-    ) 
+    info <- paste0(
+      "scdf_attr(", study_name, ", \"info\") <- \"", 
+      attr_scan[[.opt$info]], "\""
+    )
+    info <- strwrap(info, width = 80)
+    attr_string <- info
   }
   
   # author
   if (!is.null(attr_scan$author)) {
-    author <- attr_scan[[.opt$author]]
+    author <- paste0(
+      "scdf_attr(", study_name, ", \"author\") <- \"", 
+      attr_scan[[.opt$author]], "\""
+    )
+    author <- strwrap(author, width = 80)
     attr_string <- c(
       attr_string, 
-      paste0("scdf_attr(", study_name, ", \"author\") <- \"", author, "\"")
+      author
     )
   }
   
   attr_string <- paste(attr_string, collapse = "\n")
-  
+
   if (!is.null(con_string)) {
     complete_string <- paste(
       scdf_string,
@@ -192,5 +202,3 @@ convert <- function(scdf,
   if(!silent) cat(complete_string, file = file)
   invisible(complete_string)
 }
-
-
