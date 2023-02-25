@@ -7,7 +7,7 @@
 #' @param case_name Character string. Name of the scdf objects.
 #' @param inline If TRUE, phase definition is in an online version.
 #' @param indent Integer. Indentation.
-#' @param silen If TRUE, syntax is not printed to the console
+#' @param silent If TRUE, syntax is not printed to the console
 #' @return Returns a string (invisible).
 #' @keywords io
 #' @family io-functions
@@ -23,7 +23,7 @@ convert <- function(scdf,
                     study_name = "study", 
                     case_name = "case",
                     inline = FALSE,
-                    indent = 3,
+                    indent = 2,
                     silent = FALSE) {
   
 
@@ -40,7 +40,7 @@ convert <- function(scdf,
     design <- rle(as.character(scdf[[case]][, attr_scan[[.opt$phase]]]))
     
     # phase_design
-    if (phase_definition == "design") {
+    if (!inline) {
       phase_design <- paste0(design$values," = ",design$lengths, collapse=", ")
       phase_design <- paste0("phase_design = c(", phase_design, ")")
     } else phase_design <- NULL
@@ -59,7 +59,7 @@ convert <- function(scdf,
       if (!is.numeric(values)) 
         values_string <- paste0('\"', values, '\"', collapse = ", ")
 
-      if (var_names[i]==attr_scan[[.opt$dv]] && phase_definition=="inline"){
+      if (var_names[i]==attr_scan[[.opt$dv]] && inline){
         
         x <- split(dat[[attr_scan[[.opt$dv]]]], dat[[attr_scan[[.opt$phase]]]])
         x <- mapply(function(x, n) {
@@ -119,7 +119,7 @@ convert <- function(scdf,
     
     def_string <- paste0(def_string, collapse =", \n")
     
-    if (phase_definition == "inline") {
+    if (inline) {
       phase_design <- paste0(",\n")
     } else {
       if (def_string != "") def_string <- paste0(",\n", def_string)
