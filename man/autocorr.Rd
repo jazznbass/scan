@@ -52,3 +52,4 @@ Juergen Wilbert
 \concept{Autocorrelation}
 \concept{Serial correlation}
 \concept{regression functions}
+\keyword{regression}

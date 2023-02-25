@@ -12,6 +12,7 @@
 #' @author Juergen Wilbert
 #' @seealso \code{\link{acf}}
 #' @family regression functions
+#' @keywords regression
 #' @examples
 #' ## Compute autocorrelations for a list of four single-cases up to lag 2.
 #' autocorr(Huber2014, lag_max = 2)

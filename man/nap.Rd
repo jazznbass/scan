@@ -57,6 +57,7 @@ Parker, R. I., & Vannest, K. (2009). An improved effect size for
 }
 \seealso{
 Other overlap functions: 
+\code{\link{cdc}()},
 \code{\link{corrected_tau}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},

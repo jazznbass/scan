@@ -10,7 +10,7 @@ bibentry(
   textVersion  = paste0( 
     "Wilbert, J. & Lüke, T. (2023). ",
     "Scan: Single-Case Data Analyses for Single and Multiple Baseline Designs. ",
-    "(0.56) [English]. CRAN. ",
+    "(0.57) [English]. CRAN. ",
     "https://CRAN.R-project.org/package=scan."
   )
 )
