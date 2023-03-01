@@ -29,8 +29,8 @@ plotSC(
 \arguments{
 \item{...}{Further arguments passed to the plot command.}
 
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -58,20 +58,20 @@ a proper scale based on the given data.}
 \item{lines}{A list defining one or multiple lines or curves to be
 plotted. The argument is passed as a list (e.g., \code{list(type = "median")}).
 Some of the procedures can be refined with an additional argument (e.g.,
-\code{lines = list(type = "mean", trim = 0.2)} adds a 20\% trimmed mean line.
-For multiple lines, provide a list element for each line (e.g., \code{list( list(type = "median", col = "red"), list(type = "trend", col = "blue"))}. 
+\code{lines = list(type = "mean", trim = 0.2)} adds a 20\\% trimmed mean line.
+For multiple lines, provide a list element for each line (e.g., \code{list( list(type = "median", col = "red"), list(type = "trend", col = "blue"))}.
 Possible lines are: \itemize{
 \item\code{"median"} Separate lines for phase A and B medians.
 \item\code{"mean"} Separate lines for phase A and B means. By default it is
-10\%-trimmed. Other trims can be set, using a trim parameter (e.g.,
-\code{lines = list(type = "mean", trim = 0.2)} draws a 20\%-trimmed mean line).
+10\\%-trimmed. Other trims can be set, using a trim parameter (e.g.,
+\code{lines = list(type = "mean", trim = 0.2)} draws a 20\\%-trimmed mean line).
 \item\code{"trend"} Separate lines for phase A and B trends.
 \item\code{"trendA"} OLS trend line for phase A, extrapolated throughout phase B.
 \item\code{"trendA_bisplit"} Split middle (bi-split) trend line for phase A, extrapolated throughout phase B.
 \item\code{"trendA_trisplit"} Tukey tri-split trend line for phase A, extrapolated throughout phase B.
 \item\code{"maxA/minA"} Line at the level of the highest or lowest phase A score.
 \item\code{"medianA"} Line at the phase A median score.  \item\code{"meanA"}
-Line at the phase A 10\%-trimmed mean score. Apply a different trim, by
+Line at the phase A 10\\%-trimmed mean score. Apply a different trim, by
 using the additional argument (e.g., \code{lines = list(type = "meanA", trim = 0.2)}).
 \item\code{"plm"} Regression lines for piecewise linear regression model.
 \item\code{"plm.ar"} Regression lines for piecewise autoregression model.
@@ -98,7 +98,7 @@ the marks.  \item\code{"cex"} Size of the marks.  } Use for example
 \code{marks = list(positions = c(1, 8, 15), col = "red", cex = 3)} to make
 the MTs one, eight and 18 appear big and red.}
 
-\item{phase.names}{By default phases are labeled based on the levels of the phase variable. 
+\item{phase.names}{By default phases are labeled based on the levels of the phase variable.
 Use this argument to specify different labels: \code{phase.names = c("Baseline",
 "Intervention")}.}
 

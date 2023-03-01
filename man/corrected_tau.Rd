@@ -16,8 +16,8 @@ corrected_tau(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -29,11 +29,10 @@ the attributes in the scdf file.}
 Defaults to the attributes in the scdf file.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
-that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
-c(2,4)} for comparing the second to the fourth phase. Phases could be
-combined by providing a list with two elements. E.g., \code{phases = list(A
-= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
-(as B). Default is \code{phases = c(1,2)}.}
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
+for comparing the second to the fourth phase. Phases could be combined by
+providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4 (as B). Default
+is \code{phases = c(1,2)}.}
 
 \item{alpha}{Sets the p-value at and below which a baseline correction is
 applied.}
@@ -41,7 +40,7 @@ applied.}
 \item{continuity}{If TRUE applies a continuity correction for calculating p}
 
 \item{repeated}{If TRUE applies the repeated median method for calculating
-slope and intercept (\code{\link{mblm}})}
+slope and intercept (\code{\link[=mblm]{mblm()}})}
 }
 \description{
 Kendall's tau correlation for the dependent variable and the phase variable
@@ -49,17 +48,17 @@ is calculated after correcting for a baseline trend.
 }
 \details{
 This method has been proposed by Tarlow (2016). The baseline data
-  are checked for a significant autocorrelation (based on Kendall's Tau). If
-  so, a non-parametric Theil-Sen regression is applied for the baseline data
-  where the dependent values are regressed on the measurement time. The
-  resulting slope information is then used to predict data of the B-phase.
-  The dependent variable is now corrected for this baseline trend and the
-  residuals of the Theil-Sen regression are taken for further calculations.
-  Finally, Kendall's tau is calculated for the dependent variable and the
-  dichotomous phase variable. The function here provides two extensions to
-  this procedure: The more accurate Siegel repeated median regression is
-  applied when \code{repeated = TRUE} and a continuity correction is applied
-  when \code{continuity = TRUE}.
+are checked for a significant autocorrelation (based on Kendall's Tau). If
+so, a non-parametric Theil-Sen regression is applied for the baseline data
+where the dependent values are regressed on the measurement time. The
+resulting slope information is then used to predict data of the B-phase.
+The dependent variable is now corrected for this baseline trend and the
+residuals of the Theil-Sen regression are taken for further calculations.
+Finally, Kendall's tau is calculated for the dependent variable and the
+dichotomous phase variable. The function here provides two extensions to
+this procedure: The more accurate Siegel repeated median regression is
+applied when \code{repeated = TRUE} and a continuity correction is applied when
+\code{continuity = TRUE}.
 }
 \examples{
 dat <- scdf(c(A = 33,25,17,25,14,13,15, B = 15,16,16,5,7,9,6,5,3,3,8,11,7))
@@ -67,8 +66,8 @@ corrected_tau(dat)
 }
 \references{
 Tarlow, K. R. (2016). An Improved Rank Correlation Effect Size
-  Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior
-  Modification, 41(4), 427–467. https://doi.org/10.1177/0145445516676750
+Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior
+Modification, 41(4), 427–467. https://doi.org/10.1177/0145445516676750
 }
 \seealso{
 Other regression functions: 

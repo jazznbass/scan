@@ -26,18 +26,18 @@ export.scdf <- function(object, caption = NA, footnote = NA, filename = NA,
   }
   if (identical(cols, "main")) {
     cols <- c(
-      scdf_attr(object, .opt$phase), 
-      scdf_attr(object, .opt$dv), 
-      scdf_attr(object, .opt$mt)
+      scdf_attr(object, opt("phase")), 
+      scdf_attr(object, opt("dv")), 
+      scdf_attr(object, opt("mt"))
     )
   }
   
-  names(object) <- .case_names(names(object), length(object))
+  names(object) <- revise_names(object)
   
   max_row <- max(unlist(lapply(object, nrow)))
   for (i in 1:cases) {
     n_row <- nrow(object[[i]])
-    object[[i]][, scdf_attr(object, .opt$phase)] <- as.character(object[[i]][, scdf_attr(object, .opt$phase)])
+    object[[i]][, scdf_attr(object, opt("phase"))] <- as.character(object[[i]][, scdf_attr(object, opt("phase"))])
     if (n_row < max_row) {
       object[[i]][(n_row + 1):max_row, names(object[[i]])] <- ""
     }

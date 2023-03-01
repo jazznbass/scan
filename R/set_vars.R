@@ -12,9 +12,9 @@
 #' @export
 
 set_vars <- function(data, dvar, mvar, pvar) {
-  if (!missing(dvar)) scdf_attr(data, .opt$dv) <- dvar
-  if (!missing(mvar)) scdf_attr(data, .opt$mt) <- mvar
-  if (!missing(pvar)) scdf_attr(data, .opt$phase) <- pvar
+  if (!missing(dvar)) scdf_attr(data, opt("dv")) <- dvar
+  if (!missing(mvar)) scdf_attr(data, opt("mt")) <- mvar
+  if (!missing(pvar)) scdf_attr(data, opt("phase")) <- pvar
   
   data
 }
@@ -22,20 +22,20 @@ set_vars <- function(data, dvar, mvar, pvar) {
 #'@rdname set_vars
 #'@export
 set_dvar <- function(data, dvar) {
-  scdf_attr(data, .opt$dv) <- dvar
+  scdf_attr(data, opt("dv")) <- dvar
   data
 }
 
 #'@rdname set_vars
 #'@export
 set_mvar <- function(data, mvar) {
-  scdf_attr(data, .opt$mt) <- mvar
+  scdf_attr(data, opt("mt")) <- mvar
   data
 }
 
 #'@rdname set_vars
 #'@export
 set_pvar <- function(data, pvar) {
-  scdf_attr(data, .opt$phase) <- pvar
+  scdf_attr(data, opt("phase")) <- pvar
   data
 }

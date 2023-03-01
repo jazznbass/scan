@@ -14,7 +14,7 @@
 #' @export
 select_phases <- function(data, A, B) {
   data <- .prepare_scdf(data)
-  keep <- .keep_phases(data, phases = list(A = A, B = B))
+  keep <- recombine_phases(data, phases = list(A = A, B = B))
   data <- keep$data
   scdf_attr(data, "phase_selection") <- list(A = keep$phases_A, B = keep$phases_B)
   data

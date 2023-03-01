@@ -4,18 +4,17 @@
 #'
 #'
 #' @inheritParams .inheritParams
-#' @param method Specifies the method for outlier identification. Set
-#'   \code{method = "MAD"} for mean average deiviation, \code{method = "SD"} for
-#'   standard deviations, \code{method = "CI"} for confidence intervals,
-#'   \code{method = "Cook"} for Cook's Distance based on the Piecewise Linear
-#'   Regression Model.
+#' @param method Specifies the method for outlier identification. Set `method =
+#'   "MAD"` for mean average deiviation, `method = "SD"` for standard
+#'   deviations, `method = "CI"` for confidence intervals, `method = "Cook"` for
+#'   Cook's Distance based on the Piecewise Linear Regression Model.
 #'
 #' @param criteria Specifies the criteria for outlier identification. Based on
-#'   the \code{method} setting.
+#'   the `method` setting.
 #' @return \item{data}{A single-case data frame with substituted outliers.}
 #' \item{dropped.n}{A list with the number of dropped data points for each
 #' single-case.} \item{dropped.mt}{A list with the measurement-times of dropped
-#' data points for each single-case (values are based on the \code{mt} variable
+#' data points for each single-case (values are based on the `mt` variable
 #' of each single-case data frame).} \item{sd.matrix}{A list with a matrix for
 #' each case with values for the upper and lower boundaries based on the
 #' standard deviation.} \item{ci.matrix}{A list with a matrix for each
@@ -40,7 +39,7 @@
 #' res_outlier <- outlier(susanne, method = "SD", criteria = 1.5)
 #' plot(susanne, marks = res_outlier)
 #'
-#' ## Identify outliers in the original data from Grosche (2011) 
+#' ## Identify outliers in the original data from Grosche (2011)
 #' ## using Cook's Distance greater than 4/n as criterion
 #' res_outlier <- outlier(Grosche2011, method = "Cook", criteria = "4/n")
 #' plot(Grosche2011, marks = res_outlier)
@@ -62,13 +61,13 @@ outlier <- function(data, dvar, pvar, mvar,
   )
 
   # set defaults attributes
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) 
+  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv")) 
+  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase")) 
+  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt")) 
   
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
-  scdf_attr(data, .opt$mt) <- mvar
+  scdf_attr(data, opt("dv")) <- dvar
+  scdf_attr(data, opt("phase")) <- pvar
+  scdf_attr(data, opt("mt")) <- mvar
   
   data_list <- .prepare_scdf(data)
  
@@ -186,9 +185,9 @@ outlier <- function(data, dvar, pvar, mvar,
   out$case.names <- case.names
   
   class(out) <- c("sc_outlier")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$mt) <- mvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("mt")) <- mvar
+  attr(out, opt("dv")) <- dvar
   out
 }
 

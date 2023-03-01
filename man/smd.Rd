@@ -7,8 +7,8 @@
 smd(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2))
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -23,22 +23,21 @@ Defaults to the attributes in the scdf file.}
 \code{decreasing = TRUE}. Default is \code{decreasing = FALSE}.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
-that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
-c(2,4)} for comparing the second to the fourth phase. Phases could be
-combined by providing a list with two elements. E.g., \code{phases = list(A
-= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
-(as B). Default is \code{phases = c(1,2)}.}
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
+for comparing the second to the fourth phase. Phases could be combined by
+providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4 (as B). Default
+is \code{phases = c(1,2)}.}
 }
 \description{
 The \code{smd} function provides various standardized mean effect sizes for single-case data.
 }
 \details{
-'sd cohen' is the (unweigted) average of the variance of phase A and B.  
-'sd Hedges' is the weighted average of the variance of phase A and B (with a degrees of freedom correction). 
+'sd cohen' is the (unweigted) average of the variance of phase A and B.
+'sd Hedges' is the weighted average of the variance of phase A and B (with a degrees of freedom correction).
 'Hedges' g' is the mean difference divided by 'sd Hedges'.
-'Hedges' g correction' and 'Hedges' g durlak correction' are two approaches 
+'Hedges' g correction' and 'Hedges' g durlak correction' are two approaches
 of correcting Hedges' g for small sample sizes.
-'Glass' delta' is the mean difference divided by the standard deviation of the 
+'Glass' delta' is the mean difference divided by the standard deviation of the
 A-phase.
 'Cohens d` is the mean difference divided by 'sd cohen'.
 }

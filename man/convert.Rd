@@ -16,8 +16,8 @@ convert(
 )
 }
 \arguments{
-\item{scdf}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{scdf}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{file}{A filename for exporting the syntax.}
 

@@ -7,7 +7,7 @@
 #' @export
 #' @keywords internal
 scdf_attr <- function(x, var) {
-  out <- attr(x, .opt$scdf)
+  out <- attr(x, opt("scdf"))
   out[[var]]
 }
 
@@ -15,11 +15,11 @@ scdf_attr <- function(x, var) {
 #' @param value set value
 #' @export
 "scdf_attr<-" <- function(x, var, value) {
-  scdf_attr <- attr(x, .opt$scdf)
+  scdf_attr <- attr(x, opt("scdf"))
   if (is.null(scdf_attr)) scdf_attr <- list()
   
   scdf_attr[[var]] <- value
-  attr(x, .opt$scdf) <- scdf_attr
+  attr(x, opt("scdf")) <- scdf_attr
   x
 }
 

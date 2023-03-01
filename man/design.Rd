@@ -33,124 +33,110 @@ design(
 \item{n}{Number of cases to be designed (Default is \code{n = 1}).}
 
 \item{phase_design, phase.design}{A list defining the length and label of each
-phase. E.g., \code{phase.length = list(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.
-Use vectors if you want to define different values for each case
-\code{phase.length = list(A = c(10, 15), B = c(10, 15)}.}
+phase. E.g., \code{phase.length = list(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}. Use
+vectors if you want to define different values for each case \verb{phase.length = list(A = c(10, 15), B = c(10, 15)}.}
 
 \item{trend}{Defines the effect size of a trend added incrementally to each
-measurement across the whole data-set. To assign different trends to several
-single-cases, use a vector of values (e.g. \code{trend = c(.1, .3, .5)}). If
-the number of cases exceeds the length of the vector, values are recycled.
-When using a 'gaussian' distribution, the \code{trend} parameters indicate
-effect size \emph{d} changes.  When using a binomial or poisson
-distribution, \code{trend} indicates an increase in points / counts per
-measurement.}
+measurement across the whole data-set. To assign different trends to
+several single-cases, use a vector of values (e.g. \code{trend = c(.1, .3, .5)}). If the number of cases exceeds the length of the vector, values are
+recycled. When using a 'gaussian' distribution, the \code{trend} parameters
+indicate effect size
+\emph{d} changes.  When using a binomial or poisson distribution, \code{trend}
+indicates an increase in points / counts per measurement.}
 
-\item{level}{A list that defines the level increase (effect size \emph{d}) at
-the beginning of each phase relative to the previous phase (e.g.
-\code{list(A = 0, B = 1)}). The first element must be zero as the first
-phase of a single-case has no level effect (if you have one less list
-element than the number of phases, scan will add a leading element with 0
-values). Use vectors to define variable level effects for each case (e.g.
-\code{list(A = c(0, 0), B = c(1, 2)})). When using a 'gaussian'
-distribution, the \code{level} parameters indicate effect size \emph{d}
-changes. When using a binomial or poisson distribution, \code{level}
-indicates an increase in points / counts with the onset of each phase.}
+\item{level}{A list that defines the level increase (effect size \emph{d}) at the
+beginning of each phase relative to the previous phase (e.g. \code{list(A = 0, B = 1)}). The first element must be zero as the first phase of a single-case
+has no level effect (if you have one less list element than the number of
+phases, scan will add a leading element with 0 values). Use vectors to
+define variable level effects for each case (e.g. \code{list(A = c(0, 0), B = c(1, 2))}). When using a 'gaussian' distribution, the \code{level} parameters
+indicate effect size \emph{d} changes. When using a binomial or poisson
+distribution, \code{level} indicates an increase in points / counts with the
+onset of each phase.}
 
 \item{slope}{A list that defines the increase per measurement for each phase
-compared to the previous phase. \code{slope = list(A = 0, B = .1} generates
-an incremental increase of 0.1 per measurement starting at the B phase. The
+compared to the previous phase. \code{slope = list(A = 0, B = .1)} generates an
+incremental increase of 0.1 per measurement starting at the B phase. The
 first list element must be zero as the first phase of a single-case has no
 slope effect (if you have one less list element than the number of phases,
 scan will add a leading element with 0 values). Use vectors to define
-variable slope effects for each case (e.g. \code{list(A = c(0, 0), B =
-c(0.1, 0.2)})). If the number of cases exceeds the length of the vector,
-values are recycled. When using a 'gaussian' distribution, the \code{slope}
-parameters indicate effect size \emph{d} changes per measurement. When using
-a binomial or poisson distribution, \code{slope} indicates an increase in
-points / counts per measurement.}
+variable slope effects for each case (e.g. \code{list(A = c(0, 0), B = c(0.1, 0.2))}). If the number of cases exceeds the length of the vector, values
+are recycled. When using a 'gaussian' distribution, the \code{slope} parameters
+indicate effect size \emph{d} changes per measurement. When using a binomial or
+poisson distribution, \code{slope} indicates an increase in points / counts per
+measurement.}
 
 \item{start_value, m}{Starting value at the first measurement. Default is
 \code{50}. When \code{distribution = "poission"} the start_value represents
-frequency. When \code{distribution = "binomial"} start_value must range
-between 0 and 1 and they represent the probability of on event. To assign
-different start values to several single-cases, use a vector of values (e.g.
-\code{c(50, 42, 56)}). If the number of cases exceeds the length of the
-vector, values are recycled. The `m` argument is deprecated.}
+frequency. When \code{distribution = "binomial"} start_value must range between
+0 and 1 and they represent the probability of on event. To assign different
+start values to several single-cases, use a vector of values (e.g. \code{c(50, 42, 56)}). If the number of cases exceeds the length of the vector, values
+are recycled. The \code{m} argument is deprecated.}
 
 \item{s}{Standard deviation used to calculate absolute values from level,
-slope, trend effects and to calculate and error distribution from the
-\code{rtt} values. Set to \code{10} by default. To assign different
-variances to several single-cases, use a vector of values (e.g. \code{s =
-c(5, 10, 15)}). If the number of cases exceeds the length of the vector,
-values are recycled. if the distribution is 'poisson' or 'binomial' s is not
-applied.}
+slope, trend effects and to calculate and error distribution from the \code{rtt}
+values. Set to \code{10} by default. To assign different variances to several
+single-cases, use a vector of values (e.g. \code{s = c(5, 10, 15)}). If the
+number of cases exceeds the length of the vector, values are recycled. if
+the distribution is 'poisson' or 'binomial' s is not applied.}
 
-\item{rtt}{Reliability of the underlying simulated measurements. Set \code{rtt
-= .8} by default. To assign different reliabilities to several single-cases,
-use a vector of values (e.g. \code{rtt = c(.6, .7, .8)}). If the number of
-cases exceeds the length of the vector, values are repeated. \code{rtt} has
-no effect when you're using binomial or poisson distributions.}
+\item{rtt}{Reliability of the underlying simulated measurements. Set \code{rtt = .8} by default. To assign different reliabilities to several single-cases,
+use a vector of values (e.g. \code{rtt = c(.6, .7, .8)}). If the number of cases
+exceeds the length of the vector, values are repeated. \code{rtt} has no effect
+when you're using binomial or poisson distributions.}
 
-\item{extreme_prop, extreme.p}{Probability of extreme values. \code{extreme.p =
-.05} gives a five percent probability of an extreme value. A vector of
+\item{extreme_prop, extreme.p}{Probability of extreme values. \code{extreme.p = .05} gives a five percent probability of an extreme value. A vector of
 values assigns different probabilities to multiple cases. If the number of
 cases exceeds the length of the vector, values are recycled.}
 
-\item{extreme_range, extreme.d}{Range for extreme values. \code{extreme_range =
-c(-7,-6)} uses extreme values within a range of -7 and -6 . In case of a
-binomial or poisson distribution, \code{extreme_range} indicates
-frequencies. In case of a gaussian (or normal) distribution it indicates
-effect size d. Caution: the first value must be smaller than the second,
-otherwise the procedure will fail.}
+\item{extreme_range, extreme.d}{Range for extreme values. \code{extreme_range = c(-7,-6)} uses extreme values within a range of -7 and -6 . In case of a
+binomial or poisson distribution, \code{extreme_range} indicates frequencies. In
+case of a gaussian (or normal) distribution it indicates effect size d.
+Caution: the first value must be smaller than the second, otherwise the
+procedure will fail.}
 
-\item{missing_prop, missing.p}{Portion of missing values. \code{missing_prop =
-0.1} creates 10\% of all values as missing). A vector of values assigns
+\item{missing_prop, missing.p}{Portion of missing values. \code{missing_prop = 0.1}
+creates 10\\% of all values as missing). A vector of values assigns
 different probabilities to multiple cases. If the number of cases exceeds
 the length of the vector, values are repeated.}
 
 \item{distribution}{Distribution of the criteria varible. Default is
-\code{"normal"}. Possible values are \code{"normal"}, \code{"binomial"}, and
-\code{"poisson"}.}
+\code{"normal"}. Possible values are \code{"normal"}, \code{"binomial"}, and \code{"poisson"}.}
 
 \item{n_trials}{If \code{distribution} (see below) is \code{"binomial"},
 \code{n_trials} is the number of trials/observations/items.}
 
-\item{mt, MT}{Number of measurements (in each study). Default is \code{mt =
-20}.}
+\item{mt, MT}{Number of measurements (in each study). Default is \code{mt = 20}.}
 
-\item{B_start, B.start}{Phase B starting point. The default setting
-\code{B_start = 6} would assign the first five scores (of each case) to
-phase A, and all following scores to phase B. To assign different starting
-points for a set of multiple single-cases, use a vector of starting values
-(e.g. \code{B_start = c(6, 7, 8)}). If the number of cases exceeds the
-length of the vector, values will be recycled.}
+\item{B_start, B.start}{Phase B starting point. The default setting \code{B_start = 6} would assign the first five scores (of each case) to phase A, and all
+following scores to phase B. To assign different starting points for a set
+of multiple single-cases, use a vector of starting values (e.g., \code{B_start = c(6, 7, 8)}). If the number of cases exceeds the length of the vector,
+values will be recycled.}
 }
 \value{
 An object of class sc_design.
 }
 \description{
 Generates a parameter list used for generating multiple random single-cases.
-This is used within the  \code{random_scdf} function and the
-\code{power_test} function and for other Monte-Carlo tasks.
+This is used within the \code{random_scdf} function and the \code{power_test} function
+and for other Monte-Carlo tasks.
 }
 \examples{
 
-## Create random single-case data and inspect it
-design <- design(
-  n = 3, rtt = 0.75, slope = 0.1, extreme_prop = 0.1,
-  missing_prop = 0.1
-)
-dat <- random_scdf(design, round = 1, random.names = TRUE, seed = 123)
-describe(dat)
+ ## Create random single-case data and inspect it
+ design <- design(
+   n = 3, rtt = 0.75, slope = 0.1, extreme_prop = 0.1,
+   missing_prop = 0.1
+ )
+ dat <- random_scdf(design, round = 1, random.names = TRUE, seed = 123)
+ describe(dat)
 
-## And now have a look at poisson-distributed data
-design <- design(
-  n = 3, B_start = c(6, 10, 14), mt = c(12, 20, 22), start_value = 10,
-  distribution = "poisson", level = -5, missing_prop = 0.1
-)
-dat <- random_scdf(design, seed = 1234)
-pand(dat, decreasing = TRUE, correction = FALSE)
+ ## And now have a look at poisson-distributed data
+ design <- design(
+   n = 3, B_start = c(6, 10, 14), mt = c(12, 20, 22), start_value = 10,
+   distribution = "poisson", level = -5, missing_prop = 0.1
+ )
+ dat <- random_scdf(design, seed = 1234)
+ pand(dat, decreasing = TRUE, correction = FALSE)
 }
 \author{
 Juergen Wibert

@@ -114,9 +114,9 @@ plotSC <- function(data, dvar, pvar, mvar,
   on.exit(par(op))
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
+  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv")) else scdf_attr(data, opt("dv")) <- dvar
+  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase")) else scdf_attr(data, opt("phase")) <- pvar
+  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt")) else scdf_attr(data, opt("mt")) <- mvar
   
   data_list <- .prepare_scdf(data)
   

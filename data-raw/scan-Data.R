@@ -5,7 +5,6 @@ library(scan)
 
 filenames <- c()
 
-
 # example A24 -------------------------------------------------------------
 
 example_A24 <- scdf(
@@ -1236,11 +1235,18 @@ filenames <- c(filenames, "exampleAB_score")
 
 
 .createDataFileScan <- function(filenames) {
-  save(
-    list = filenames, 
-    file = file.path("..", "data", "scan-Data.RData"), 
-    version = 2
-  )
+  library(usethis)
+  for(i in 1:length(filenames)) {
+    
+    do.call("use_data", list(as.name(filenames[i])))
+    #usethis::use_data(str2lang(filenames[i]), overwrite = TRUE)    
+  }
+
+  #save(
+  #  list = filenames, 
+  #  file = file.path("..", "data", "scan-Data.RData"), 
+  #  version = 2
+  #)
   rm(list = filenames, envir = .GlobalEnv)
 }
 
@@ -1248,5 +1254,5 @@ filenames <- c(filenames, "exampleAB_score")
 
 rm(list = "design", envir = .GlobalEnv)
 rm(list = paste0("case", 1:35), envir = .GlobalEnv)
-rm(list = c("A", "B", "C", "dat", "l", "n", "filenames"), envir = .GlobalEnv)
-rm(list = c("male", "female", "study"), envir = .GlobalEnv)
+rm(list = c("A", "B", "C", "dat", "n", "filenames"), envir = .GlobalEnv)
+rm(list = c("male", "female"), envir = .GlobalEnv)

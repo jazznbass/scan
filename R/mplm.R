@@ -1,23 +1,26 @@
 #' Multivariate Piecewise linear model / piecewise regression
 #'
-#' The \code{mplm} function computes a multivariate piecewise regression model.
-#'
+#' The [mplm()] function computes a multivariate piecewise regression model.
 #'
 #' @inheritParams .inheritParams
 #' @param formula Defaults to the standard piecewise regression model. The
-#' parameter phase followed by the phase name (e.g., phaseB) indicates the level effect of the corresponding phase. The parameter 'inter' followed by the phase name (e.g., interB) adresses the slope effect based on the method
-#' provide in the model argument (e.g., "B&L-B"). The formula can be changed
-#' for example to include further variables into the regression model.
-#' @param update An easier way to change the regression formula (e.g., . ~ . + newvariable).
+#'   parameter phase followed by the phase name (e.g., phaseB) indicates the
+#'   level effect of the corresponding phase. The parameter 'inter' followed by
+#'   the phase name (e.g., interB) adresses the slope effect based on the method
+#'   provide in the model argument (e.g., "B&L-B"). The formula can be changed
+#'   for example to include further variables into the regression model.
+#' @param update An easier way to change the regression formula (e.g., . ~ . +
+#'   newvariable).
 #' @param na.action Defines how to deal with missing values
 #' @param ... Further arguments passed to the lm function.
 #' @return \item{model}{Character string from function call (see
-#' \code{Arguments} above).}
-#' \item{full.model}{Full regression model list}
+#'   \code{Arguments} above).} \item{full.model}{Full regression model list}
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @examples
-#' res <- mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
+#' res <- mplm(Leidig2018$`1a1`, 
+#'   dvar = c("academic_engagement", "disruptive_behavior")
+#' )
 #' print(res)
 #' ## also report standardized coefficients:
 #' print(res, std = TRUE)
@@ -59,9 +62,9 @@ mplm <- function(data, dvar, mvar, pvar,
   #  end_check()
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
+  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv")) else scdf_attr(data, opt("dv")) <- dvar
+  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase")) else scdf_attr(data, opt("phase")) <- pvar
+  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt")) else scdf_attr(data, opt("mt")) <- mvar
 
   data <- .prepare_scdf(data)
 
@@ -97,8 +100,8 @@ mplm <- function(data, dvar, mvar, pvar,
               full.model = full, formula = formula)
 
   class(out) <- c("sc_mplm")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$mt) <- mvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("mt")) <- mvar
+  attr(out, opt("dv")) <- dvar
   out
 }

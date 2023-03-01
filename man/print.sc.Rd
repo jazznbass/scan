@@ -83,7 +83,7 @@
 \arguments{
 \item{x}{Object}
 
-\item{digits}{The minimum number of significant digits to be use. 
+\item{digits}{The minimum number of significant digits to be use.
 If set to "auto" (default), values are predefined.}
 
 \item{...}{Further parameters passed to the print function}

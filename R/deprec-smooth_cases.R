@@ -54,11 +54,11 @@ smooth_cases <- function(data, dvar, mvar,
   if (!is.null(FUN)) method <- FUN
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) 
+  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv"))
+  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt")) 
 
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$mt) <- mvar
+  scdf_attr(data, opt("dv")) <- dvar
+  scdf_attr(data, opt("mt")) <- mvar
   
   data <- .prepare_scdf(data)
   copy_attributes <- attributes(data)

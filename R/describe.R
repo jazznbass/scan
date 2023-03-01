@@ -1,14 +1,18 @@
 #' Descriptive statistics for single-case data
 #'
-#' The \code{describe} function provides common descriptive statistics for
+#' The `describe()` function provides common descriptive statistics for
 #' single-case data.
 #'
 #'
 #' @inheritParams .inheritParams
-#' @details n = number of measurements; mis = number of missing vaues; m = mean; md = median; sd = standard deviation; mad = median average deviation; min = minimum; max = maximum; trend = weight of depended variable regressed on time (values ~ mt). 
-#' @return A list containing a data frame of descriptive statistics (descriptives); the cse design (design); the number of cases (N)
+#' @details n = number of measurements; mis = number of missing vaues; m = mean;
+#'   md = median; sd = standard deviation; mad = median average deviation; min =
+#'   minimum; max = maximum; trend = weight of depended variable regressed on
+#'   time (values ~ mt).
+#' @return A list containing a data frame of descriptive statistics
+#'   (descriptives); the cse design (design); the number of cases (N)
 #' @author Juergen Wilbert
-#' @seealso \code{\link{overlap}}, \code{\link{plot.scdf}}
+#' @seealso [overlap()], [plot.scdf()]
 #' @examples
 #'
 #' ## Descriptive statistics for a study of three single-cases
@@ -24,19 +28,19 @@
 describe <- function(data, dvar, pvar, mvar) {
 
   # set defaults attributes
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) 
+  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv")) 
+  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase")) 
+  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt")) 
   
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
-  scdf_attr(data, .opt$mt) <- mvar
+  scdf_attr(data, opt("dv")) <- dvar
+  scdf_attr(data, opt("phase")) <- pvar
+  scdf_attr(data, opt("mt")) <- mvar
   
   data_list <- .prepare_scdf(data)
 
   N <- length(data_list)
   
-  case_names <- .case_names(names(data_list), length(data_list))
+  case_names <- revise_names(data_list)
 
   designs <- lapply(
     data_list, 
@@ -87,9 +91,9 @@ describe <- function(data, dvar, pvar, mvar) {
     N = N
   )
   class(out) <- c("sc_desc")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$mt) <- mvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("mt")) <- mvar
+  attr(out, opt("dv")) <- dvar
 
   out
 }

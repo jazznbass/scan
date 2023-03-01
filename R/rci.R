@@ -35,11 +35,11 @@
 rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2)) {
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
+  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv")) else scdf_attr(data, opt("dv")) <- dvar
+  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase")) else scdf_attr(data, opt("phase")) <- pvar
 
   data <- .prepare_scdf(data, na.rm = TRUE)
-  data <- .keep_phases(data, phases = phases)$data
+  data <- recombine_phases(data, phases = phases)$data
   
   N <- length(data)
   
@@ -102,8 +102,8 @@ rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2
     descriptives = descriptives.ma
   ) 
   class(out) <- c("sc_rci")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("dv")) <- dvar
   out
 }
 

@@ -15,8 +15,8 @@ trend(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -41,7 +41,7 @@ parameters of the model are \code{values}, \code{mt} and \code{phase}.}
 }
 \value{
 \item{trend}{A matrix containing the results (Intercept, B and beta)
-  of separate regression models for phase A, phase B, and the whole data.}
+of separate regression models for phase A, phase B, and the whole data.}
 \item{offset}{Numeric argument from function call (see \code{Arguments}
 section).}
 }

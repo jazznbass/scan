@@ -16,8 +16,8 @@ cdc(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -32,42 +32,39 @@ Defaults to the attributes in the scdf file.}
 \code{decreasing = TRUE}. Default is \code{decreasing = FALSE}.}
 
 \item{trend_method}{Method used to calculate the trend line. Default is
-\code{trend_method = "OLS"}. Possible values are: \code{"OLS"},
-\code{"bisplit"}, and \code{"trisplit"}. \code{"bisplit"}, and
-\code{"trisplit"} should only be used for cases with at least five
-data-points in both relevant phases.}
+\code{trend_method = "OLS"}. Possible values are: \code{"OLS"}, \code{"bisplit"}, and
+\code{"trisplit"}. \code{"bisplit"}, and \code{"trisplit"} should only be used for cases
+with at least five data-points in both relevant phases.}
 
 \item{conservative}{The CDC method adjusts the original mean and trend lines
 by adding (expected increase) or subtracting (expected decrease) an
 additional .25 SD before evaluating phase B data. Default is the CDC method
-with \code{conservative = .25}. To apply the Dual-Criterion (DC) method,
-set \code{conservative = 0}.}
+with \code{conservative = .25}. To apply the Dual-Criterion (DC) method, set
+\code{conservative = 0}.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
-that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
-c(2,4)} for comparing the second to the fourth phase. Phases could be
-combined by providing a list with two elements. E.g., \code{phases = list(A
-= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
-(as B). Default is \code{phases = c(1,2)}.}
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
+for comparing the second to the fourth phase. Phases could be combined by
+providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4 (as B). Default
+is \code{phases = c(1,2)}.}
 }
 \value{
 \item{cdc}{CDC Evaluation based on a p-value below .05.}
-  \item{cdc_exc}{Number of phase B datapoints indicating expected change.}
+\item{cdc_exc}{Number of phase B datapoints indicating expected change.}
 \item{cdc_nb}{Number of phase B datapoints.} \item{cdc_p}{P value of Binomial
 Test.} \item{cdc_all}{Overall CDC Evaluation based on all instances/cases of
 a Multiple Baseline Design.} \item{N}{Number of cases.}
- \item{decreasing}{Logical argument from function call (see \code{Arguments}
-  above).}
+\item{decreasing}{Logical argument from function call (see \code{Arguments}
+above).}
 \item{conservative}{Numeric argument from function call (see \code{Arguments}
 above).} \item{case_names}{Assigned name of single-case.} \item{phases}{-}
 }
 \description{
-The \code{cdc} function applies the Conservative Dual-Criterion Method
-(Fisher, Kelley, & Lomas, 2003) to scdf objects. It compares phase B data
-points to both phase A mean and trend (OLS, bi-split, tri-split) with an
-additional increase/decrease of .25 SD. A binomial test against a 50/50
-distribution is computed and p-values below .05 are labeled "systematic
-change".
+The \code{cdc()} function applies the Conservative Dual-Criterion Method (Fisher,
+Kelley, & Lomas, 2003) to scdf objects. It compares phase B data points to
+both phase A mean and trend (OLS, bi-split, tri-split) with an additional
+increase/decrease of .25 SD. A binomial test against a 50/50 distribution is
+computed and p-values below .05 are labeled "systematic change".
 }
 \examples{
 
@@ -82,7 +79,7 @@ cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit")
 ## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.
 cdc(exampleABAB, trend_method = "trisplit", phases = c(1,4))
 
-## Apply the Dual-Criterion (DC) method (i.e., mean and trend without 
+## Apply the Dual-Criterion (DC) method (i.e., mean and trend without
 ##shifting).
 cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit", conservative = 0)
 
@@ -90,9 +87,9 @@ cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit", conservat
 }
 \references{
 Fisher, W. W., Kelley, M. E., & Lomas, J. E. (2003). Visual Aids
-  and Structured Criteria for Improving Visual Inspection and Interpretation
-  of Single-Case Designs. \emph{Journal of Applied Behavior Analysis, 36},
-  387-406. https://doi.org/10.1901/jaba.2003.36-387
+and Structured Criteria for Improving Visual Inspection and Interpretation
+of Single-Case Designs. \emph{Journal of Applied Behavior Analysis, 36},
+387-406. https://doi.org/10.1901/jaba.2003.36-387
 }
 \seealso{
 Other overlap functions: 

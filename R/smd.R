@@ -22,22 +22,22 @@ smd <- function(data, dvar, pvar, mvar,
                 phases = c(1, 2)) {
   
   # set defaults attributes
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) 
+  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv")) 
+  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase")) 
+  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt")) 
   
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
-  scdf_attr(data, .opt$mt) <- mvar
+  scdf_attr(data, opt("dv")) <- dvar
+  scdf_attr(data, opt("phase")) <- pvar
+  scdf_attr(data, opt("mt")) <- mvar
   
   data_list <- .prepare_scdf(data)
   
-  keep <- .keep_phases(data_list, phases = phases)
+  keep <- recombine_phases(data_list, phases = phases)
   data_list <- keep$data
   
   N <- length(data_list)
   
-  case_names <- .case_names(names(data_list), length(data_list))
+  case_names <- revise_names(names(data_list), length(data_list))
   
   vars <- c(
     "mA", "mB", "sdA", "sdB", "sd cohen", "sd hedges", "Glass' delta",  "Hedges' g", "Hedges' g correction",
@@ -95,10 +95,10 @@ smd <- function(data, dvar, pvar, mvar,
   
   class(out) <- c("sc_smd")
   
-  source_attributes <- attributes(data_list)[[.opt$scdf]]
-  attr(out, .opt$phase) <- source_attributes[[.opt$phase]]
-  attr(out, .opt$mt)    <- source_attributes[[.opt$mt]]
-  attr(out, .opt$dv)    <- source_attributes[[.opt$dv]]
+  source_attributes <- attributes(data_list)[[opt("scdf")]]
+  attr(out, opt("phase")) <- source_attributes[[opt("phase")]]
+  attr(out, opt("mt"))    <- source_attributes[[opt("mt")]]
+  attr(out, opt("dv"))    <- source_attributes[[opt("dv")]]
   
   out
   

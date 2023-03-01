@@ -6,10 +6,10 @@
   out$class <- c("scdf", "list")
   
   scdf <- list()
-  scdf[[.opt$phase]]   <- "phase"
-  scdf[[.opt$dv]]      <- "values"
-  scdf[[.opt$mt]]      <- "mt"
-  out[[.opt$scdf]]     <- scdf
+  scdf[[opt("phase")]]   <- "phase"
+  scdf[[opt("dv")]]      <- "values"
+  scdf[[opt("mt")]]      <- "mt"
+  out[[opt("scdf")]]     <- scdf
   
   out
 }  
@@ -17,7 +17,7 @@
 .deprecated_warning <- function(new, old) {
   if (isTRUE(getOption("scan.deprecated.warning"))) {
     warning(
-      .opt$function_deprecated_warning, 
+      opt("function_deprecated_warning"), 
       " Please name function '", new, "' instead of '", old, "'."
     )
   }   
@@ -81,16 +81,16 @@
   out
 } 
 
-.case_names <- function(x, n) {
+revise_names <- function(x, n) {
   if (missing(n)) {
     n <- length(x)
     x <- names(x)
   }
   if (is.null(x)) {
-    x <- .opt$names_default[1:n]
+    x <- opt("names_default")[1:n]
   } else {
     nonames <- which(is.na(x))
-    x[nonames] <- .opt$names_default[nonames]
+    x[nonames] <- opt("names_default")[nonames]
   }
   
   x

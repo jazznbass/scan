@@ -37,7 +37,7 @@ as.data.frame.scdf <- function(x, ..., l2 = NULL, id = "case") {
   
   if(!is.null(l2)) x <- add_l2(x, l2)
   
-  label <- .case_names(x)
+  label <- revise_names(x)
   outdat <- vector()
   
   for (i_case in 1:length(x)) {

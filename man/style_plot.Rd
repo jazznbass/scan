@@ -14,23 +14,23 @@ style_plot(style = "default", ...)
 \value{
 Returns a list to be provided for the style argument of the \code{\link{plot.scdf}} function.
 
-\itemize{ 
+\itemize{
 \item\code{fill} If set, the area under the line is
 filled with the given color (e.g., \code{fill = "tomato"}). Use the standard
 R command colors() to get a list of all possible colours. \code{fill} is
-empty by default.  
+empty by default.
 \item\code{annotations} A list of parameters defining
 annotations to each data point. This adds the score of each MT to your plot.
-\itemize{ 
+\itemize{
 \item\code{"pos"} Position of the annotations: 1 = below, 2 =
-left, 3 = above, 4 = right.  
+left, 3 = above, 4 = right.
 \item\code{"col"} Color of the annotations.
 \item\code{"cex"} Size of the annotations.
-\item\code{"round"} Rounds the values to the specified decimal.} 
+\item\code{"round"} Rounds the values to the specified decimal.}
 \item\code{annotations = list(pos = 3, col =
 "brown", round = 1)} adds scores rounded to one decimal above the data point
 in brown color to the plot.
-\item\code{"names"} A list of parameters defining the depiction of phase names (e.g. \code{names = list(cex = 0.8, col = "red", side = 1)}: cex for size, col for color, and side for position). See \code{\link{mtext}} for more details. 
+\item\code{"names"} A list of parameters defining the depiction of phase names (e.g. \code{names = list(cex = 0.8, col = "red", side = 1)}: cex for size, col for color, and side for position). See \code{\link{mtext}} for more details.
 \item\code{"lwd"} Width of the plot line. Default is \code{lwd = 2}.
 \item\code{"pch"} Point type. Default is \code{pch = 17} (triangles). Other options
 are for example: 16 (filled circles) or "A" (uses the letter A).
@@ -38,7 +38,7 @@ are for example: 16 (filled circles) or "A" (uses the letter A).
 \item\code{"mai"} Sets the margins of the plot.
 \item\code{"bty"} Shape of the frame surrounding the inner plot
 \item\code{"fill.bg"} Background color of the plot.
-If a vector is provided, these colors will be assigned to phases 
+If a vector is provided, these colors will be assigned to phases
 (each phase name becomes a color).
 \item\code{"grid"} Color of a grid.
 \item\code{"text.ABlag"} Text displayed between phases.
@@ -57,7 +57,7 @@ The \code{style_plot} function is used to create graphical styles for a single-c
 }
 \details{
 \code{style_plot("")} will return a list of predefined styles.
-Predefined styles can be combined \code{style_plot(style = c("grid2", "tiny"))} 
+Predefined styles can be combined \code{style_plot(style = c("grid2", "tiny"))}
 where settings of a latter style overwrite settings of the former.
 Additional style paramters are set following the style argument and can be combined with those:
 \code{style_plot(style = "grid2", fill = "grey50", pch = 18)}.

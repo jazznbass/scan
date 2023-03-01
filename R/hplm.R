@@ -1,19 +1,18 @@
 #' Hierarchical piecewise linear model / piecewise regression
 #'
-#' The \code{hplm} function computes a hierarchical piecewise regression model.
+#' The [hplm()] function computes a hierarchical piecewise regression model.
 #'
 #' @inheritParams .inheritParams
-#' @param method Method used to fit your model. Pass \code{"REML"} to maximize
-#'   the restricted log-likelihood or \code{"ML"} for maximized log-likelihood.
-#'   Default is \code{"ML"}.
+#' @param method Method used to fit your model. Pass `"REML"` to maximize the
+#'   restricted log-likelihood or `"ML"` for maximized log-likelihood. Default
+#'   is `"ML"`.
 #' @param control A list of settings for the estimation algorithm, replacing the
-#'   default values passed to the function \code{lmeControl} of the \code{nlme}
-#'   package.
-#' @param random.slopes If \code{random.slopes = TRUE} random slope effects of
-#'   the level, trend, and treatment parameter are estimated.
+#'   default values passed to the function `lmeControl` of the `nlme` package.
+#' @param random.slopes If `random.slopes = TRUE` random slope effects of the
+#'   level, trend, and treatment parameter are estimated.
 #' @param lr.test If set TRUE likelihood ratio tests are calculated comparing
 #'   model with vs. without random slope parameters.
-#' @param ICC If \code{ICC = TRUE} an intraclass-correlation is estimated.
+#' @param ICC If `ICC = TRUE` an intraclass-correlation is estimated.
 #' @param fixed Defaults to the fixed part of the standard piecewise regression
 #'   model. The parameter phase followed by the phase name (e.g., phaseB)
 #'   indicates the level effect of the corresponding phase. The parameter
@@ -22,8 +21,8 @@
 #'   formula can be changed for example to include further L1 or L2 variables
 #'   into the regression model.
 #' @param random The random part of the model.
-#' @param update.fixed An easier way to change the fixed model part (e.g., . ~ .
-#'   + newvariable).
+#' @param update.fixed An easier way to change the fixed model part
+#'   (e.g., `. ~ . + newvariable`).
 #' @param data.l2 A dataframe providing additional variables at Level 2. The
 #'   scdf File has to have names for all cases and the Level 2 dataframe has to
 #'   have a column named 'cases' with the names of the cases the Level 2
@@ -44,11 +43,11 @@
 #' hplm(exampleAB_50, method = "REML", random.slopes = FALSE)
 #'
 #' ## Analyzing with additional L2 variables
-#' Leidig2018 %>% 
-#'   add_l2(Leidig2018_l2) %>% 
+#' Leidig2018 %>%
+#'   add_l2(Leidig2018_l2) %>%
 #'   hplm(update.fixed = .~. + gender + migration + ITRF_TOTAL*phaseB,
 #'        slope = FALSE, random.slopes = FALSE, lr.test = FALSE
-#'   )    
+#'   )
 #'
 #' @export
 
@@ -90,12 +89,12 @@ hplm <- function(data, dvar, pvar, mvar,
   }
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) 
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
-  scdf_attr(data, .opt$mt) <- mvar
+  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv"))
+  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase")) 
+  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt")) 
+  scdf_attr(data, opt("dv")) <- dvar
+  scdf_attr(data, opt("phase")) <- pvar
+  scdf_attr(data, opt("mt")) <- mvar
   
   dat <- .prepare_scdf(data)
   
@@ -213,9 +212,9 @@ hplm <- function(data, dvar, pvar, mvar,
   out$contrast <- list(level = contrast_level, slope = contrast_slope)
   
   class(out) <- c("sc_hplm")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$mt)    <- mvar
-  attr(out, .opt$dv)    <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("mt"))    <- mvar
+  attr(out, opt("dv"))    <- dvar
   
   out
 }

@@ -32,15 +32,15 @@ overlap <- function(data, dvar, pvar, mvar,
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) 
-    dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
+    dvar <- scdf_attr(data, opt("dv")) else scdf_attr(data, opt("dv")) <- dvar
   if (missing(pvar)) 
-    pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
+    pvar <- scdf_attr(data, opt("phase")) else scdf_attr(data, opt("phase")) <- pvar
   if (missing(mvar)) 
-    mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
+    mvar <- scdf_attr(data, opt("mt")) else scdf_attr(data, opt("mt")) <- mvar
   
   data_list <- .prepare_scdf(data)
   
-  keep <- .keep_phases(data_list, phases = phases)
+  keep <- recombine_phases(data_list, phases = phases)
   data_list <- keep$data
   
   designs <- lapply(keep$designs, function(x) x$values)
@@ -48,7 +48,7 @@ overlap <- function(data, dvar, pvar, mvar,
   
   N <- length(data_list)
 
-  case_names <- .case_names(names(data_list), length(data_list))
+  case_names <- revise_names(data_list)
 
   vars <- c(
     "PND", "PEM", "PET", "NAP", "NAP rescaled", "PAND", "Tau_U", 
@@ -110,10 +110,10 @@ overlap <- function(data, dvar, pvar, mvar,
   
   class(out) <- c("sc_overlap")
   
-  source_attributes <- attributes(data_list)[[.opt$scdf]]
-  attr(out, .opt$phase) <- source_attributes[[.opt$phase]]
-  attr(out, .opt$mt)    <- source_attributes[[.opt$mt]]
-  attr(out, .opt$dv)    <- source_attributes[[.opt$dv]]
+  source_attributes <- attributes(data_list)[[opt("scdf")]]
+  attr(out, opt("phase")) <- source_attributes[[opt("phase")]]
+  attr(out, opt("mt"))    <- source_attributes[[opt("mt")]]
+  attr(out, opt("dv"))    <- source_attributes[[opt("dv")]]
   
   out
 }

@@ -9,7 +9,7 @@
 A collection of procedures for analysing, visualising, and managing single-case data.
 }
 \author{
-Juergen Wilbert [aut, cre]
+Juergen Wilbert \link{aut, cre}
 }
 \keyword{internal}
 \keyword{package}

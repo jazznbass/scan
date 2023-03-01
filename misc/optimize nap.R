@@ -5,13 +5,13 @@ nap_optim <- function(data, dvar, pvar,
                 phases = c(1, 2)) {
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, scan:::.opt$dv)
-  if (missing(pvar)) pvar <- scdf_attr(data, scan:::.opt$phase)
-  scdf_attr(data, scan:::.opt$dv) <- dvar
-  scdf_attr(data, scan:::.opt$phase) <- pvar
+  if (missing(dvar)) dvar <- scdf_attr(data, scan:::opt("dv"))
+  if (missing(pvar)) pvar <- scdf_attr(data, scan:::opt("phase"))
+  scdf_attr(data, scan:::opt("dv")) <- dvar
+  scdf_attr(data, scan:::opt("phase")) <- pvar
   
   data <- scan:::.prepare_scdf(data, na.rm = TRUE)
-  data <- scan:::.keep_phases(data, phases = phases)$data
+  data <- scan:::recombine_phases(data, phases = phases)$data
   
   nap_case <- function(case) {
     values <- split(case[[dvar]], case[[pvar]])
@@ -45,7 +45,7 @@ nap_optim <- function(data, dvar, pvar,
   nap <- lapply(data, nap_case)
   
   #nap <- list(
-  #  Case = .case_names(data), 
+  #  Case = revise_names(data), 
   #  NAP = nap * 100, 
   #  Rescaled = 2 * (nap * 100) - 100, 
   #  Pairs = pairs, 
@@ -57,8 +57,8 @@ nap_optim <- function(data, dvar, pvar,
   
   out <- list(nap = nap)
   class(out) <- c("sc_nap")
-  attr(out, scan:::.opt$phase) <- pvar
-  attr(out, scan:::.opt$dv) <- dvar
+  attr(out, scan:::opt("phase")) <- pvar
+  attr(out, scan:::opt("dv")) <- dvar
   out
 }
 

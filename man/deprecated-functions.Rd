@@ -86,7 +86,7 @@ writeSC(...)
 }
 \description{
 This is a list with functions names that have been replaced by new names
-which are in line with R syntax guidelines. The old function names still 
+which are in line with R syntax guidelines. The old function names still
 work. They are wrappers that call the new function.
 }
 \keyword{internal}

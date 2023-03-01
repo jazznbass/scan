@@ -35,7 +35,7 @@ design is strictly AB).}
 
 \item{phase_design, phase.design}{A vector defining the length and label of
 each phase. E.g., \code{phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 =
-10)}.}
+  10)}.}
 
 \item{name}{A name for the case.}
 
@@ -53,8 +53,8 @@ lesson = c(1,3,4,5,2,3)}.}
 }
 \value{
 Returns a single-case data frame \code{scdf} suitable for all
-  functions of the \code{scan} package. Multiple data sets (e.g. from
-  Multiple Baseline Designs) can be listed.
+functions of the \code{scan} package. Multiple data sets (e.g. from
+Multiple Baseline Designs) can be listed.
 }
 \description{
 The \code{scdf} class stores single-case study data with one or more
@@ -62,17 +62,17 @@ single-cases.
 }
 \details{
 If the dependent variable is a named vector then the names are
-  extracted to create a phase design (e.g., values = c(A = 2,3,5,4,3, B =
-  6,5,4,3) will create an AB phase design with five and four measuresments).
-  An scdf contains several attributes: \code{dvar} The name of the dependent
-  variable. \code{phase} The name of the phase variable. \code{mt} The name
-  of the measurement time variable. \code{author} Information on the author
-  of the data. \code{info} Further information on the data. E.g., a
-  publication. \code{dvar, phase, and mt} are the defaults most of the
-  \code{scan} function use. You can change the values of the attributes with
-  the \code{scdf_attr} function (e.g., \code{scdf_attr(exampleAB_add, "dvar")
+extracted to create a phase design (e.g., values = c(A = 2,3,5,4,3, B =
+6,5,4,3) will create an AB phase design with five and four measuresments).
+An scdf contains several attributes: \code{dvar} The name of the dependent
+variable. \code{phase} The name of the phase variable. \code{mt} The name
+of the measurement time variable. \code{author} Information on the author
+of the data. \code{info} Further information on the data. E.g., a
+publication. \code{dvar, phase, and mt} are the defaults most of the
+\code{scan} function use. You can change the values of the attributes with
+the \code{scdf_attr} function (e.g., \code{scdf_attr(exampleAB_add, "dvar")
   <- "depression"} defines depression as the dependent variable. Please
-  notice that all \code{scan} functions have arguments to define \code{dvar,
+notice that all \code{scan} functions have arguments to define \code{dvar,
   phase, and mt} for a given analysis.
 }
 \examples{

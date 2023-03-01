@@ -1,88 +1,89 @@
 #' Piecewise linear model / piecewise regression
-#' 
-#' The \code{plm} function computes a piecewise regression model (see Huitema &
+#'
+#' The `plm` function computes a piecewise regression model (see Huitema &
 #' McKean, 2000).
-#' 
+#'
 #' @inheritParams .inheritParams
 #' @param AR Maximal lag of autoregression. Modeled based on the
-#' Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
-#' argument must be set to \code{family = "gaussian"}.
+#'   Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
+#'   argument must be set to `family = "gaussian"`.
 #' @param family Set the distribution family. Defaults to a gaussian
-#'   distribution. See the \code{family} function for more details.
+#'   distribution. See the `family` function for more details.
 #' @param formula Defaults to the standard piecewise regression model. The
-#'   parameter phase followed by the phase name (e.g., phaseB) indicates the 
-#'   level effect of the corresponding phase. The parameter 'inter' followed by 
+#'   parameter phase followed by the phase name (e.g., phaseB) indicates the
+#'   level effect of the corresponding phase. The parameter 'inter' followed by
 #'   the phase name (e.g., interB) adresses the slope effect based on the method
 #'   provide in the model argument (e.g., "B&L-B"). The formula can be changed
 #'   for example to include further variables into the regression model.
-#' @param update An easier way to change the regression formula 
-#'   (e.g., . ~ . + newvariable).
+#' @param update An easier way to change the regression formula (e.g., `. ~ . +
+#'   newvariable`).
 #' @param na.action Defines how to deal with missing values.
-#' @param r_squared Logical. If TRUE, delta r_squares will be calculated for 
+#' @param r_squared Logical. If TRUE, delta r_squares will be calculated for
 #'   each predictor.
-#' @param var_trials Name of the variable containing the number of trials 
-#'   (only for binomial regressions). If a single integer is provided this is
+#' @param var_trials Name of the variable containing the number of trials (only
+#'   for binomial regressions). If a single integer is provided this is
 #'   considered to be a the constant number of trials across all measurements.
-#' @param dvar_percentage Only for binomial distribution. If set TRUE, the 
-#'   dependent variable is assumed to represent proportions [0,1]. Otherwise 
+#' @param dvar_percentage Only for binomial distribution. If set TRUE, the
+#'   dependent variable is assumed to represent proportions `[0,1]`. Otherwise
 #'   dvar is assumed to represent counts.
 #' @param ... Further arguments passed to the glm function.
-#' @return 
-#' \item{formula}{plm formula. Uselful if you want to use the update or 
+#' @return
+#' \item{formula}{plm formula. Uselful if you want to use the update or
 #'   formula argument and you don't know the names of the parameters.}
-#' \item{model}{Character string from function call (see \code{Arguments} 
-#'   above).} 
-#' \item{F.test}{F-test values of modelfit.}
-#' \item{r.squares}{Explained variance R squared for each model parameter.}
-#' \item{ar}{Autoregression lag from function call (see \code{Arguments} 
+#' \item{model}{Character string from function call (see `Arguments`
 #'   above).}
-#' \item{family}{Distribution family from function call 
+#' \item{F.test}{F-test values of modelfit.} \item{r.squares}{Explained variance
+#' R squared for each model parameter.}
+#' \item{ar}{Autoregression lag from function call (see \code{Arguments}
+#'   above).}
+#' \item{family}{Distribution family from function call
 #'   (see \code{Arguments} above).}
 #' \item{full.model}{Full regression model list from the gls or glm function.}
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @references Beretvas, S., & Chung, H. (2008). An evaluation of modified
-#' R2-change effect size indices for single-subject experimental designs.
-#' \emph{Evidence-Based Communication Assessment and Intervention, 2}, 120-128.
-#' 
-#' Huitema, B. E., & McKean, J. W. (2000). Design specification issues in
+#'   R2-change effect size indices for single-subject experimental designs.
+#'   \emph{Evidence-Based Communication Assessment and Intervention, 2},
+#'   120-128.
+#'
+#'   Huitema, B. E., & McKean, J. W. (2000). Design specification issues in
 #' time-series intervention models. \emph{Educational and Psychological
 #' Measurement, 60}, 38-58.
 #' @examples
-#' 
+#'
 #' ## Compute a piecewise regression model for a random single-case
 #' set.seed(123)
 #' AB <- design(
-#'   phase_design = list(A = 10, B = 20), 
-#'   level = list(A = 0, B = 1), slope = list(A = 0, B = 0.05), 
+#'   phase_design = list(A = 10, B = 20),
+#'   level = list(A = 0, B = 1), slope = list(A = 0, B = 0.05),
 #'   trend = 0.05
 #' )
 #' dat <- random_scdf(design = AB)
 #' plm(dat, AR = 3)
-#' 
+#'
 #' ## Another example with a more complex design
 #' A1B1A2B2 <- design(
-#'   phase_design = list(A1 = 15, B1 = 20, A2 = 15, B2 = 20), 
+#'   phase_design = list(A1 = 15, B1 = 20, A2 = 15, B2 = 20),
 #'   level = list(A1 = 0, B1 = 1, A2 = -1, B2 = 1),
 #'   slope = list(A1 = 0, B1 = 0.0, A2 = 0, B2 = 0.0),
 #'   trend = 0.0)
 #' dat <- random_scdf(design = A1B1A2B2, seed = 123)
 #' plm(dat, contrast = "preceding")
-#' 
-#' ## no slope effects were found. Therefore, you might want to the drop slope 
+#'
+#' ## no slope effects were found. Therefore, you might want to the drop slope
 #' ## estimation:
 #' plm(dat, slope = FALSE, contrast = "preceding")
-#' 
+#'
 #' ## and now drop the trend estimation as well
 #' plm(dat, slope = FALSE, trend = FALSE, contrast = "preceding")
-#' 
+#'
 #' ## A poisson regression
-#' example_A24 %>% 
+#' example_A24 %>%
 #'   plm(family = "poisson")
 #'
 #' ## A binomial regression (frequencies as dependent variable)
 #' plm(exampleAB_score$Christiano, family = "binomial", var_trials = "trials")
-#' 
+#'
 #' ## A binomial regression (percentage as dependent variable)
 #' exampleAB_score$Christiano %>%
 #'   transform(percentage = values/trials) %>%
@@ -126,13 +127,13 @@ plm <- function(data, dvar, pvar, mvar,
   contrast_slope <- contrast_slope[1]
   
   # set defaults attributes
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) 
+  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv")) 
+  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase")) 
+  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt")) 
   
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
-  scdf_attr(data, .opt$mt) <- mvar
+  scdf_attr(data, opt("dv")) <- dvar
+  scdf_attr(data, opt("phase")) <- pvar
+  scdf_attr(data, opt("mt")) <- mvar
   
   data <- .prepare_scdf(data, na.rm = TRUE)
 
@@ -147,7 +148,7 @@ plm <- function(data, dvar, pvar, mvar,
   
   if (family != "gaussian") r_squared = FALSE
   
-  original_attr <- attributes(data)[[.opt$scdf]]
+  original_attr <- attributes(data)[[opt("scdf")]]
   #check_args(
   #  equal(N == 1, "plm can not be applied to more than one case (use hplm)."),
   #  not(family != "gaussian" && AR != 0, 
@@ -295,8 +296,8 @@ plm <- function(data, dvar, pvar, mvar,
   )
   
   class(out) <- c("sc_plm")
-  attr(out, .opt$phase)  <- original_attr[.opt$phase]
-  attr(out, .opt$mt)     <- original_attr[.opt$mt]
-  attr(out, .opt$dv)     <- original_attr[.opt$dv]
+  attr(out, opt("phase"))  <- original_attr[opt("phase")]
+  attr(out, opt("mt"))     <- original_attr[opt("mt")]
+  attr(out, opt("dv"))     <- original_attr[opt("dv")]
   out
 }

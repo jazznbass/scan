@@ -7,8 +7,8 @@
 add_l2(scdf, data_l2, cvar = "case")
 }
 \arguments{
-\item{scdf}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{scdf}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{data_l2}{A level 2 dataset.}
 
@@ -23,14 +23,13 @@ Merges variables with corresponding case names from a data.frame with an scdf
 file
 }
 \details{
-This function is mostly used in combination with the \code{\link{hplm}}
-function.
+This function is mostly used in combination with the \code{\link[=hplm]{hplm()}} function.
 }
 \examples{
 Leidig2018 \%>\% add_l2(Leidig2018_l2)
 }
 \seealso{
-\code{\link{hplm}}
+\code{\link[=hplm]{hplm()}}
 
 Other data manipulation functions: 
 \code{\link{as.data.frame.scdf}()},

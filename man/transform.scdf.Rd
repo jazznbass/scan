@@ -34,7 +34,7 @@ all_cases(...)
 
 \item{f}{the proportion of surrounding data influencing each data point.}
 
-\item{positions}{A numeric vector with relative positions to the first 
+\item{positions}{A numeric vector with relative positions to the first
 appearance of a TRUE value in x.}
 
 \item{...}{Expressions.}

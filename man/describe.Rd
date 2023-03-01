@@ -7,8 +7,8 @@
 describe(data, dvar, pvar, mvar)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -20,14 +20,18 @@ the attributes in the scdf file.}
 Defaults to the attributes in the scdf file.}
 }
 \value{
-A list containing a data frame of descriptive statistics (descriptives); the cse design (design); the number of cases (N)
+A list containing a data frame of descriptive statistics
+(descriptives); the cse design (design); the number of cases (N)
 }
 \description{
-The \code{describe} function provides common descriptive statistics for
+The \code{describe()} function provides common descriptive statistics for
 single-case data.
 }
 \details{
-n = number of measurements; mis = number of missing vaues; m = mean; md = median; sd = standard deviation; mad = median average deviation; min = minimum; max = maximum; trend = weight of depended variable regressed on time (values ~ mt).
+n = number of measurements; mis = number of missing vaues; m = mean;
+md = median; sd = standard deviation; mad = median average deviation; min =
+minimum; max = maximum; trend = weight of depended variable regressed on
+time (values ~ mt).
 }
 \examples{
 
@@ -42,7 +46,7 @@ study <- describe(Waddell2011)
 write.csv(study$descriptives, file = tempfile())
 }
 \seealso{
-\code{\link{overlap}}, \code{\link{plot.scdf}}
+\code{\link[=overlap]{overlap()}}, \code{\link[=plot.scdf]{plot.scdf()}}
 }
 \author{
 Juergen Wilbert

@@ -64,20 +64,20 @@ style_plot <- function(style = "default", ...) {
   new <- list(...)
   if (identical(style, "")) {
     cat("Available styles: \n")
-    cat(paste(names(.opt$style), collapse = ", "), "\n")
+    cat(paste(names(opt("style")), collapse = ", "), "\n")
     return(invisible(NULL))
   }
-  if (!(all(style %in% names(.opt$style)))) {
+  if (!(all(style %in% names(opt("style"))))) {
     cat("Style '", paste(style), "' is unknown.\n", sep = "")
     cat("Available styles: \n")
-    cat(paste(names(.opt$style), collapse = ", "), "\n")
+    cat(paste(names(opt("style")), collapse = ", "), "\n")
     return(invisible(NULL))
   }
   
   styles <- list()
-  for(i in rev(style)) styles <- c(styles, .opt$style[[i]])
+  for(i in rev(style)) styles <- c(styles, opt("style")[[i]])
 
-  out <- c(styles, .opt$style$default)
+  out <- c(styles, opt("style")$default)
   out <- out[unique(names(out))]
   if(is.list(new)) {
     out <- c(new, out)

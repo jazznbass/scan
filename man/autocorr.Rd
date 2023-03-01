@@ -7,8 +7,8 @@
 autocorr(data, dvar, pvar, mvar, lag_max = 3, lag.max, ...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -21,12 +21,12 @@ Defaults to the attributes in the scdf file.}
 
 \item{lag_max, lag.max}{The lag up to which autocorrelations will be computed.}
 
-\item{...}{Further arguments passed to the \code{\link{acf}} function}
+\item{...}{Further arguments passed to the \code{\link[=acf]{acf()}} function}
 }
 \value{
 A data frame containing separate autocorrelations for each phase and
-  for all phases (for each single-case). If \code{lag_max} exceeds the length
-  of a phase minus one, NA is returned for this cell.
+for all phases (for each single-case). If \code{lag_max} exceeds the length
+of a phase minus one, NA is returned for this cell.
 }
 \description{
 The autocorr function calculates autocorrelations within each phase and
@@ -37,7 +37,7 @@ across all phases.
 autocorr(Huber2014, lag_max = 2)
 }
 \seealso{
-\code{\link{acf}}
+\code{\link[=acf]{acf()}}
 
 Other regression functions: 
 \code{\link{corrected_tau}()},

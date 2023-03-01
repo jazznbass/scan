@@ -21,7 +21,7 @@ power_test(
 )
 }
 \arguments{
-\item{design}{An object returned from the `design` function.}
+\item{design}{An object returned from the \code{design} function.}
 
 \item{method}{A (named) list that defines the methods the power analysis is
 based on. Each element can contain a function (that takes an scdf file and

@@ -19,13 +19,13 @@ combine <- function(..., dvar = NULL, pvar = NULL, mvar = NULL) {
   
   #attributes(data) <- .default_attributes()
 
-  #if (!is.null(source_attr[[.opt$scdf]])) attr(data, .opt$scdf) <- source_attr[[.opt$scdf]]
+  #if (!is.null(source_attr[[opt("scdf")]])) attr(data, opt("scdf")) <- source_attr[[opt("scdf")]]
   attributes(data) <- source_attr
-  #attr(data, .opt$scdf) <- source_attr[[.opt$scdf]]
+  #attr(data, opt("scdf")) <- source_attr[[opt("scdf")]]
   
-  if (!is.null(dvar)) scdf_attr(data, .opt$dv) <- dvar
-  if (!is.null(mvar)) scdf_attr(data, .opt$mt) <- mvar
-  if (!is.null(pvar)) scdf_attr(data, .opt$phase) <- pvar
+  if (!is.null(dvar)) scdf_attr(data, opt("dv")) <- dvar
+  if (!is.null(mvar)) scdf_attr(data, opt("mt")) <- mvar
+  if (!is.null(pvar)) scdf_attr(data, opt("phase")) <- pvar
   
   
   names(data) <- case_names
@@ -35,12 +35,12 @@ combine <- function(..., dvar = NULL, pvar = NULL, mvar = NULL) {
     
   }
   
-  if (!is.null(dvar)) source_attr[[.opt$dv]] <- dvar
-  if (!is.null(mvar)) source_attr[[.opt$mt]] <- mvar
-  if (!is.null(pvar)) source_attr[[.opt$phase]] <- pvar
+  if (!is.null(dvar)) source_attr[[opt("dv")]] <- dvar
+  if (!is.null(mvar)) source_attr[[opt("mt")]] <- mvar
+  if (!is.null(pvar)) source_attr[[opt("phase")]] <- pvar
   
   # check class scdf validity
-  if (.opt$rigorous_class_check) {
+  if (opt("rigorous_class_check")) {
     results <- .check_scdf(data)
     if (!isTRUE(results)) {
       if(length(results$warnings) > 0) {
@@ -75,7 +75,7 @@ c.scdf <- function(...) {
     warning("Unknown case: '", i, "'.")
   }
   out <- x[i]
-  attr(out, .opt$scdf) <- attr(x, .opt$scdf)
+  attr(out, opt("scdf")) <- attr(x, opt("scdf"))
   class(out) <- c("scdf", "list")
   out
 }
@@ -85,7 +85,7 @@ c.scdf <- function(...) {
 `[.scdf`<- function(x, i) {
   class(x) <- "list"
   out <- x[i]
-  attr(out, .opt$scdf) <- attr(x, .opt$scdf)
+  attr(out, opt("scdf")) <- attr(x, opt("scdf"))
   class(out) <- c("scdf", "list")
   out
 }

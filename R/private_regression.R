@@ -42,12 +42,12 @@
   out <- rn
   if (!is.na(match("mt", rn)))
     out[match("mt", rn)] <- "Trend"
-  if (!is.na(match(attr(x, .opt$mt), rn)))
-    out[match(attr(x, .opt$mt), rn)] <- paste0("Trend ", attr(x, .opt$mt))
+  if (!is.na(match(attr(x, opt("mt")), rn)))
+    out[match(attr(x, opt("mt")), rn)] <- paste0("Trend ", attr(x, opt("mt")))
   if (!is.na(match("(Intercept)", rn)))
     out[match("(Intercept)", rn)] <- "Intercept"
   
-  phase <- attr(x, .opt$phase)
+  phase <- attr(x, opt("phase"))
   out <- gsub(  phase, paste0("Level ", phase," "), out)
   out <- gsub("inter", paste0("Slope ", phase," "), out)
 }

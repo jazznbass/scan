@@ -20,7 +20,7 @@ summary.scdf <- function(object, all_cases = FALSE, ...) {
   designs <- lapply(
     object, function(x) 
     paste0(
-      rle(as.character(x[[scdf_attr(object, .opt$phase)]]))$values, 
+      rle(as.character(x[[scdf_attr(object, opt("phase"))]]))$values, 
       collapse = "-"
     )
   )
@@ -28,7 +28,7 @@ summary.scdf <- function(object, all_cases = FALSE, ...) {
   rows <- lapply(object, nrow)
 
   out <- data.frame(
-    " " = format(.case_names(object), justify = "left")[1:max_cases],
+    " " = format(revise_names(object), justify = "left")[1:max_cases],
     Measurements = unname(unlist(rows))[1:max_cases], 
     Design = unname(unlist(designs))[1:max_cases],
     check.names = FALSE
@@ -42,9 +42,9 @@ summary.scdf <- function(object, all_cases = FALSE, ...) {
   
   cat("Variable names:\n")
   names <- names(object[[1]])
-  id_dv <- which(names == scdf_attr(object, .opt$dv))
-  id_phase <- which(names == scdf_attr(object, .opt$phase))
-  id_mt <- which(names == scdf_attr(object, .opt$mt))
+  id_dv <- which(names == scdf_attr(object, opt("dv")))
+  id_phase <- which(names == scdf_attr(object, opt("phase")))
+  id_mt <- which(names == scdf_attr(object, opt("mt")))
   names[id_phase] <- paste(names[id_phase], "<phase variable>")
   names[id_mt] <- paste(names[id_mt], "<measurement-time variable>")
   names[id_dv] <- paste(names[id_dv], "<dependent variable>")

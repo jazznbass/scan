@@ -7,8 +7,8 @@
 select_phases(data, A, B)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{A}{Selection of the A phase}
 
@@ -18,7 +18,7 @@ this format.}
 An scdf with selected phases
 }
 \description{
-Useful when working with %>% operators.
+Useful when working with \%>\% operators.
 }
 \examples{
 exampleA1B1A2B2_zvt \%>\% 

@@ -62,14 +62,14 @@ pand <- function(data, dvar, pvar,
                  phases = c(1, 2)) {
   
   # set default attirubtes
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase)
+  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv"))
+  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase"))
   
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
+  scdf_attr(data, opt("dv")) <- dvar
+  scdf_attr(data, opt("phase")) <- pvar
   
   data <- .prepare_scdf(data, na.rm = TRUE)
-  data <- .keep_phases(data, phases = phases)$data
+  data <- recombine_phases(data, phases = phases)$data
 
   N <- length(data)
   
@@ -150,8 +150,8 @@ pand <- function(data, dvar, pvar,
   )
   
   class(out) <- c("sc_pand")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("dv")) <- dvar
   out
 }
 
