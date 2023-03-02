@@ -38,10 +38,16 @@ mplm <- function(data, dvar, mvar, pvar,
                  update = NULL, 
                  na.action = na.omit, ...) {
  
-  model <- match.arg(model)
-  contrast <- match.arg(contrast)
-  contrast_level <- match.arg(contrast_level)
-  contrast_slope <- match.arg(contrast_slope)
+  check_args(
+    by_call(model, "mplm"),
+    by_call(contrast, "mplm"),
+    by_call(contrast_level, "mplm"),
+    by_call(contrast_slope, "mplm")
+  )
+  model <- model[1]
+  contrast <- contrast[1]
+  contrast_level <- contrast_level[1]
+  contrast_slope <- contrast_slope[1]
   
   if (is.na(contrast_level)) contrast_level <- contrast
   if (is.na(contrast_slope)) contrast_slope <- contrast
@@ -51,16 +57,7 @@ mplm <- function(data, dvar, mvar, pvar,
     contrast_slope <- "preceding"
     model <- "B&L-B"
   }
-  
-  check_args(
-    one_of(model, c("H-M", "B&L-B", "W")),
-    one_of(contrast, c("first", "preceding"))
-  )
-  #start_check() %>%
-  #  check_in(model, c("H-M", "B&L-B", "W")) %>%
-  #  check_in(contrast, c("first", "preceding")) %>%
-  #  end_check()
-  
+
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
