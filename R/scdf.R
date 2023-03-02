@@ -179,9 +179,9 @@ scdf <- function(values,
 
   attributes(data) <- .default_attributes()
 
-  scdf_attr(data, opt("dv")) <- dvar
-  scdf_attr(data, opt("phase")) <- pvar
-  scdf_attr(data, opt("mt")) <- mvar
+  dv(data) <- dvar
+  phase(data) <- pvar
+  mt(data) <- mvar
 
   if (!is.null(name)) names(data) <- name
 

@@ -34,9 +34,9 @@ truncate_phase <- function(data, dvar, pvar,
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(pvar)) 
-    pvar <- scdf_attr(data, opt("phase")) else scdf_attr(data, opt("phase")) <- pvar
+    pvar <- phase(data) else phase(data) <- pvar
   if (missing(dvar)) 
-    dvar <- scdf_attr(data, opt("dv")) else scdf_attr(data, opt("dv")) <- dvar
+    dvar <- dv(data) else dv(data) <- dvar
 
   data <- .prepare_scdf(data)
 

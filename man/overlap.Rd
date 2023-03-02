@@ -58,7 +58,6 @@ overlap(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 \seealso{
 Other overlap functions: 
 \code{\link{cdc}()},
-\code{\link{corrected_tau}()},
 \code{\link{nap}()},
 \code{\link{pand}()},
 \code{\link{pem}()},

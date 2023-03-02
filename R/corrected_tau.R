@@ -24,9 +24,8 @@
 #'
 #' @family regression functions
 #' @references Tarlow, K. R. (2016). An Improved Rank Correlation Effect Size
-#'   Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior
-#'   Modification, 41(4), 427–467. https://doi.org/10.1177/0145445516676750
-#' @family overlap functions
+#'   Statistic for Single-Case Designs: Baseline Corrected Tau. *Behavior
+#'   Modification, 41(4)*, 427–467. https://doi.org/10.1177/0145445516676750
 #' @export
 #'
 #' @examples
@@ -38,13 +37,10 @@ corrected_tau <- function(data, dvar, pvar, mvar,
                           continuity = FALSE, 
                           repeated = FALSE) {
   
-  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv"))
-  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase"))
-  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt"))
-  scdf_attr(data, opt("dv"))    <- dvar
-  scdf_attr(data, opt("phase")) <- pvar
-  scdf_attr(data, opt("mt"))    <- mvar
-  
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
+
   data <- .prepare_scdf(data, na.rm = TRUE)
   data <- recombine_phases(data, phases = phases)$data
 

@@ -23,9 +23,9 @@ combine <- function(..., dvar = NULL, pvar = NULL, mvar = NULL) {
   attributes(data) <- source_attr
   #attr(data, opt("scdf")) <- source_attr[[opt("scdf")]]
   
-  if (!is.null(dvar)) scdf_attr(data, opt("dv")) <- dvar
-  if (!is.null(mvar)) scdf_attr(data, opt("mt")) <- mvar
-  if (!is.null(pvar)) scdf_attr(data, opt("phase")) <- pvar
+  if (!is.null(dvar)) dv(data) <- dvar
+  if (!is.null(mvar)) mt(data) <- mvar
+  if (!is.null(pvar)) phase(data) <- pvar
   
   
   names(data) <- case_names

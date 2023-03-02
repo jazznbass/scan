@@ -44,10 +44,10 @@ fill_missing <- function(data, dvar, mvar,
                          na.rm = TRUE) {
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv")) 
-  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt"))
-  scdf_attr(data, opt("dv")) <- dvar
-  scdf_attr(data, opt("mt")) <- mvar
+  if (missing(dvar)) dvar <- dv(data) 
+  if (missing(mvar)) mvar <- mt(data)
+  dv(data) <- dvar
+  mt(data) <- mvar
   
   source_attributes <- attributes(data)
   

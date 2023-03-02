@@ -32,11 +32,11 @@ overlap <- function(data, dvar, pvar, mvar,
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) 
-    dvar <- scdf_attr(data, opt("dv")) else scdf_attr(data, opt("dv")) <- dvar
+    dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) 
-    pvar <- scdf_attr(data, opt("phase")) else scdf_attr(data, opt("phase")) <- pvar
+    pvar <- phase(data) else phase(data) <- pvar
   if (missing(mvar)) 
-    mvar <- scdf_attr(data, opt("mt")) else scdf_attr(data, opt("mt")) <- mvar
+    mvar <- mt(data) else mt(data) <- mvar
   
   data_list <- .prepare_scdf(data)
   

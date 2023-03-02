@@ -64,12 +64,9 @@ cdc <- function(data,
   trend_method <- match.arg(trend_method)
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv"))
-  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase"))
-  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt"))
-  scdf_attr(data, opt("dv")) <- dvar
-  scdf_attr(data, opt("phase")) <- pvar
-  scdf_attr(data, opt("mt")) <- mvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
   
   data  <- .prepare_scdf(data, na.rm = TRUE)
   data  <- recombine_phases(data, phases = phases)$data

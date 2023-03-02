@@ -15,9 +15,9 @@
   #   } 
   # }
 
-  pvar <- scdf_attr(data, opt("phase"))
-  mvar <- scdf_attr(data, opt("mt"))
-  dvar <- scdf_attr(data, opt("dv"))
+  pvar <- phase(data)
+  mvar <- mt(data)
+  dvar <- dv(data)
   
   names(data) <- revise_names(names(data), length(data))
   

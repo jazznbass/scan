@@ -26,11 +26,10 @@ power_test(
 \item{method}{A (named) list that defines the methods the power analysis is
 based on. Each element can contain a function (that takes an scdf file and
 returns a p value) or a character string (the name of predefined
-functions). default \code{method = list("plm_level", "rand", "tauU")}
-computes a power analysis based on \code{\link{tau_u}},
-\code{\link{rand_test}} and \code{\link{plm}} analyses. (Further predefined
-functions are: "plm_slope", "plm_poisson_level", "plm_poisson_slope",
-"hplm_level", "hplm_slope", "base_tau".}
+functions). default \code{method = list("plm_level", "rand", "tauU")} computes a
+power analysis based on \code{\link[=tau_u]{tau_u()}}, \code{\link[=rand_test]{rand_test()}} and \code{\link[=plm]{plm()}} analyses.
+(Further predefined functions are: "plm_slope", "plm_poisson_level",
+"plm_poisson_slope", "hplm_level", "hplm_slope", "base_tau".}
 
 \item{effect}{Either "level" or "slope". The respective effect of the
 provided design is set to 0 when computing the alpha-error proportion.}
@@ -39,10 +38,9 @@ provided design is set to 0 when computing the alpha-error proportion.}
 Default is \code{n = 100}. Ignored if design_is_one_study = FALSE.}
 
 \item{design_is_one_study}{If TRUE, the design is assumed to define all cases
-of one study that is repeatedly randomly created \code{n_sim} times. If
-false, the design is assumed to contain all cases from which a random
-sample is generated. This is useful for very specific complex simulation
-studies.}
+of one study that is repeatedly randomly created \code{n_sim} times. If false,
+the design is assumed to contain all cases from which a random sample is
+generated. This is useful for very specific complex simulation studies.}
 
 \item{alpha_test}{Logical. If TRUE, alpha error is calculated.}
 
@@ -75,12 +73,12 @@ Conducts a Monte-Carlo study on the test-power and alpha-error probability of
 a statistical function.
 }
 \details{
-Based on a \code{\link{design}} object, a large number of single-cases are
-generated and re-analyzed with a provided statistical function. The
-proportion of significant analyzes is the test power. In a second step, a
-specified effect of the design object is set to 0 and again single-cases are
-generated and reanalyzed. The proportion of significant analyzes is the alpha
-error probability.
+Based on a \code{\link[=design]{design()}} object, a large number of single-cases are generated
+and re-analyzed with a provided statistical function. The proportion of
+significant analyzes is the test power. In a second step, a specified effect
+of the design object is set to 0 and again single-cases are generated and
+reanalyzed. The proportion of significant analyzes is the alpha error
+probability.
 }
 \examples{
 
@@ -103,7 +101,7 @@ design <- design(
 power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"))
 }
 \seealso{
-\code{\link{random_scdf}}, \code{\link{design}}
+\code{\link[=random_scdf]{random_scdf()}}, \code{\link[=design]{design()}}
 }
 \author{
 Juergen Wilbert

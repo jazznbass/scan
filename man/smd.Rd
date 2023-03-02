@@ -29,23 +29,24 @@ providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(
 is \code{phases = c(1,2)}.}
 }
 \description{
-The \code{smd} function provides various standardized mean effect sizes for single-case data.
+The \code{smd()} function provides various standardized mean effect sizes for
+single-case data.
 }
 \details{
-'sd cohen' is the (unweigted) average of the variance of phase A and B.
-'sd Hedges' is the weighted average of the variance of phase A and B (with a degrees of freedom correction).
-'Hedges' g' is the mean difference divided by 'sd Hedges'.
-'Hedges' g correction' and 'Hedges' g durlak correction' are two approaches
-of correcting Hedges' g for small sample sizes.
-'Glass' delta' is the mean difference divided by the standard deviation of the
-A-phase.
-'Cohens d` is the mean difference divided by 'sd cohen'.
+'sd cohen' is the (unweigted) average of the variance of phase A and
+B. 'sd Hedges' is the weighted average of the variance of phase A and B
+(with a degrees of freedom correction). 'Hedges' g' is the mean difference
+divided by 'sd Hedges'. 'Hedges' g correction' and 'Hedges' g durlak
+correction' are two approaches of correcting Hedges' g for small sample
+sizes. 'Glass' delta' is the mean difference divided by the standard
+deviation of the A-phase. 'Cohens d` is the mean difference divided by 'sd
+cohen'.
 }
 \examples{
 smd(exampleAB)
 }
 \seealso{
-\code{\link{overlap}}, \code{\link{describe}}
+\code{\link[=overlap]{overlap()}}, \code{\link[=describe]{describe()}}
 }
 \author{
 Juergen Wilbert

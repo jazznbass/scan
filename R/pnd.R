@@ -19,8 +19,8 @@
 pnd <- function(data, dvar, pvar, decreasing = FALSE, phases = c("A","B")) {
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv")) else scdf_attr(data, opt("dv")) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase")) else scdf_attr(data, opt("phase")) <- pvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
   
   data <- .prepare_scdf(data, na.rm = TRUE)
   data <- recombine_phases(data, phases = phases)$data

@@ -93,10 +93,10 @@ tau_u <- function(data, dvar, pvar,
   )
   
   # prepare scdf ----
-  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv"))
-  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase"))
-  scdf_attr(data, opt("phase")) <- pvar
-  scdf_attr(data, opt("dv")) <- dvar
+  if (missing(dvar)) dvar <- dv(data)
+  if (missing(pvar)) pvar <- phase(data)
+  phase(data) <- pvar
+  dv(data) <- dvar
   
   data <- .prepare_scdf(data)
   data <- recombine_phases(data, phases = phases)$data

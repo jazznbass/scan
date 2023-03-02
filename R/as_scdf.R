@@ -53,9 +53,9 @@ as_scdf <- function(object,
   names(object) <- case_names
   
   class(object) <- c("scdf", "list")
-  scdf_attr(object, opt("phase")) <- pvar
-  scdf_attr(object, opt("dv"))    <- dvar
-  scdf_attr(object, opt("mt"))    <- mvar
+  phase(object) <- pvar
+  dv(object) <- dvar
+  mt(object) <- mvar
   
   object
   

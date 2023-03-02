@@ -29,10 +29,10 @@
 pem <- function(data, dvar, pvar, decreasing = FALSE, binom.test = TRUE, chi.test = FALSE, FUN = median, phases = c(1, 2), ...) {
 
   # set default attributes
-  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv"))
-  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase"))
-  scdf_attr(data, opt("dv")) <- dvar
-  scdf_attr(data, opt("phase")) <- pvar
+  if (missing(dvar)) dvar <- dv(data)
+  if (missing(pvar)) pvar <- phase(data)
+  dv(data) <- dvar
+  phase(data) <- pvar
   
   data <- .prepare_scdf(data, na.rm = TRUE)
   data <- recombine_phases(data, phases = phases)$data

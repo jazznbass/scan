@@ -93,7 +93,6 @@ of Single-Case Designs. \emph{Journal of Applied Behavior Analysis, 36},
 }
 \seealso{
 Other overlap functions: 
-\code{\link{corrected_tau}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},

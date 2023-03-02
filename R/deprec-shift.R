@@ -26,7 +26,7 @@
 #'   plm()
 shift <- function(data, value, var) {
   .deprecated_warning("transform", "shift")
-  if (missing(var)) var <- scdf_attr(data, opt("mt"))
+  if (missing(var)) var <- mt(data)
   for (i in 1:length(data)) {
     data[[i]][[var]] <- data[[i]][[var]] + value
   }

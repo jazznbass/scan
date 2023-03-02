@@ -88,3 +88,10 @@ rankSC <- function(...) {
   ranks(...)
 }
 
+#' @rdname deprecated-functions
+#' @export
+power_testSC <- function(...) {
+  .deprecated_warning("power_test", "power_testSC")
+  power_test(...)
+}
+

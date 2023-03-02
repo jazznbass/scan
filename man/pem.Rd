@@ -66,7 +66,6 @@ pem(dat, chi.test = TRUE)
 \seealso{
 Other overlap functions: 
 \code{\link{cdc}()},
-\code{\link{corrected_tau}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},

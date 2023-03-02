@@ -3,7 +3,7 @@ recombine_phases <- function(data,
                          set.phases = TRUE, 
                          pvar) {
   
-  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase"))
+  if (missing(pvar)) pvar <- phase(data)
   
   source_attributes <- attributes(data)
   

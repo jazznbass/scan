@@ -66,8 +66,8 @@ corrected_tau(dat)
 }
 \references{
 Tarlow, K. R. (2016). An Improved Rank Correlation Effect Size
-Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior
-Modification, 41(4), 427–467. https://doi.org/10.1177/0145445516676750
+Statistic for Single-Case Designs: Baseline Corrected Tau. \emph{Behavior
+Modification, 41(4)}, 427–467. https://doi.org/10.1177/0145445516676750
 }
 \seealso{
 Other regression functions: 
@@ -76,16 +76,5 @@ Other regression functions:
 \code{\link{mplm}()},
 \code{\link{plm}()},
 \code{\link{trend}()}
-
-Other overlap functions: 
-\code{\link{cdc}()},
-\code{\link{nap}()},
-\code{\link{overlap}()},
-\code{\link{pand}()},
-\code{\link{pem}()},
-\code{\link{pet}()},
-\code{\link{pnd}()},
-\code{\link{tau_u}()}
 }
-\concept{overlap functions}
 \concept{regression functions}

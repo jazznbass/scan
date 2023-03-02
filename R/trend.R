@@ -47,12 +47,12 @@ trend <- function(data, dvar, pvar, mvar,
   if (is.numeric(offset)) first_mt <- offset + 1
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv"))
-  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase"))
-  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt"))
-  scdf_attr(data, opt("dv"))    <- dvar
-  scdf_attr(data, opt("phase")) <- pvar
-  scdf_attr(data, opt("mt"))    <- mvar
+  if (missing(dvar)) dvar <- dv(data)
+  if (missing(pvar)) pvar <- phase(data)
+  if (missing(mvar)) mvar <- mt(data)
+  dv(data)    <- dvar
+  phase(data) <- pvar
+  mt(data)    <- mvar
   
   data <- .prepare_scdf(data)
 

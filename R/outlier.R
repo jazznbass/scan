@@ -61,13 +61,13 @@ outlier <- function(data, dvar, pvar, mvar,
   )
 
   # set defaults attributes
-  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv")) 
-  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase")) 
-  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt")) 
+  if (missing(dvar)) dvar <- dv(data) 
+  if (missing(pvar)) pvar <- phase(data) 
+  if (missing(mvar)) mvar <- mt(data) 
   
-  scdf_attr(data, opt("dv")) <- dvar
-  scdf_attr(data, opt("phase")) <- pvar
-  scdf_attr(data, opt("mt")) <- mvar
+  dv(data) <- dvar
+  phase(data) <- pvar
+  mt(data) <- mvar
   
   data_list <- .prepare_scdf(data)
  

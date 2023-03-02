@@ -34,21 +34,21 @@
 #'   above).}
 #' \item{F.test}{F-test values of modelfit.} \item{r.squares}{Explained variance
 #' R squared for each model parameter.}
-#' \item{ar}{Autoregression lag from function call (see \code{Arguments}
+#' \item{ar}{Autoregression lag from function call (see `Arguments`
 #'   above).}
 #' \item{family}{Distribution family from function call
-#'   (see \code{Arguments} above).}
+#'   (see `Arguments` above).}
 #' \item{full.model}{Full regression model list from the gls or glm function.}
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @references Beretvas, S., & Chung, H. (2008). An evaluation of modified
 #'   R2-change effect size indices for single-subject experimental designs.
-#'   \emph{Evidence-Based Communication Assessment and Intervention, 2},
+#'   *Evidence-Based Communication Assessment and Intervention, 2*,
 #'   120-128.
 #'
 #'   Huitema, B. E., & McKean, J. W. (2000). Design specification issues in
-#' time-series intervention models. \emph{Educational and Psychological
-#' Measurement, 60}, 38-58.
+#'   time-series intervention models. *Educational and Psychological
+#'   Measurement, 60*, 38-58.
 #' @examples
 #'
 #' ## Compute a piecewise regression model for a random single-case
@@ -127,13 +127,13 @@ plm <- function(data, dvar, pvar, mvar,
   contrast_slope <- contrast_slope[1]
   
   # set defaults attributes
-  if (missing(dvar)) dvar <- scdf_attr(data, opt("dv")) 
-  if (missing(pvar)) pvar <- scdf_attr(data, opt("phase")) 
-  if (missing(mvar)) mvar <- scdf_attr(data, opt("mt")) 
+  if (missing(dvar)) dvar <- dv(data) 
+  if (missing(pvar)) pvar <- phase(data) 
+  if (missing(mvar)) mvar <- mt(data) 
   
-  scdf_attr(data, opt("dv")) <- dvar
-  scdf_attr(data, opt("phase")) <- pvar
-  scdf_attr(data, opt("mt")) <- mvar
+  dv(data) <- dvar
+  phase(data) <- pvar
+  mt(data) <- mvar
   
   data <- .prepare_scdf(data, na.rm = TRUE)
 

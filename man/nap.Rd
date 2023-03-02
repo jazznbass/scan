@@ -57,7 +57,6 @@ single-case research: Nonoverlap of all pairs. \emph{Behavior Therapy}, \emph{40
 \seealso{
 Other overlap functions: 
 \code{\link{cdc}()},
-\code{\link{corrected_tau}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},
 \code{\link{pem}()},
