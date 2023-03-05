@@ -29,8 +29,8 @@
 #'   single-cases, use a vector of values (e.g. `s = c(5, 10, 15)`). If the
 #'   number of cases exceeds the length of the vector, values are recycled. if
 #'   the distribution is 'poisson' or 'binomial' s is not applied.
-#' @param n_trials If \code{distribution} (see below) is `"binomial"`,
-#'   `n_trials` is the number of trials/observations/items.
+#' @param n_trials If `distribution` (see below) is `"binomial"`, `n_trials` is
+#'   the number of trials/observations/items.
 #' @param trend Defines the effect size of a trend added incrementally to each
 #'   measurement across the whole data-set. To assign different trends to
 #'   several single-cases, use a vector of values (e.g. `trend = c(.1, .3,
@@ -87,7 +87,6 @@
 #' @author Juergen Wibert
 #' @keywords datagen
 #' @examples
-#'
 #'  ## Create random single-case data and inspect it
 #'  design <- design(
 #'    n = 3, rtt = 0.75, slope = 0.1, extreme_prop = 0.1,
