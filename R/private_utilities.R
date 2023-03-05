@@ -84,7 +84,7 @@
 revise_names <- function(x, n) {
   if (missing(n)) {
     n <- length(x)
-    x <- names(x)
+    if (!is.character(x)) x <- names(x)
   }
   if (is.null(x)) {
     x <- opt("names_default")[1:n]
