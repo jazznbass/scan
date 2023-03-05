@@ -4,7 +4,7 @@
 #' @param var Attribute
 #'
 #' @return Attribute value
-#' @keywords internal
+#' @export
 scdf_attr <- function(x, var) {
   out <- attr(x, opt("scdf"))
   out[[var]]
