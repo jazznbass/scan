@@ -33,24 +33,31 @@ convert <- function(scdf,
   
   scdf_string <- c()
   attr_scan <- attributes(scdf)[[opt("scdf")]]
+  var_phase <- attr_scan[[opt("phase")]]
+  var_dv <- attr_scan[[opt("dv")]]
+  var_mt <- attr_scan[[opt("mt")]]
   
   for (case in seq_along(scdf)) {
     
     dat <- scdf[[case]]
-    design <- rle(as.character(scdf[[case]][, attr_scan[[opt("phase")]]]))
+    design <- rle(as.character(dat[[var_phase]]))
     
     # phase_design
     if (!inline) {
-      phase_design <- paste0(design$values," = ",design$lengths, collapse=", ")
+      phase_design <- paste0(
+        design$values, " = ", design$lengths, collapse = ", "
+      )
       phase_design <- paste0("phase_design = c(", phase_design, ")")
-    } else phase_design <- NULL
+    } else {
+      phase_design <- NULL
+    }
     
-    var_names <- names(dat)[!names(dat) %in% attr_scan[[opt("phase")]]]
+    var_names <- names(dat)[!names(dat) %in% var_phase]
     vars <- c()
     for (i in seq_along(var_names)) {
       values <- dat[, var_names[i]]
       
-      if (var_names[i] == attr_scan[[opt("mt")]]) {
+      if (var_names[i] == var_mt) {
         if (all(1:length(values) == values)) next
       }
       
@@ -59,9 +66,9 @@ convert <- function(scdf,
       if (!is.numeric(values)) 
         values_string <- paste0('\"', values, '\"', collapse = ", ")
 
-      if (var_names[i]==attr_scan[[opt("dv")]] && inline){
+      if (var_names[i]==var_dv && inline){
         
-        x <- split(dat[[attr_scan[[opt("dv")]]]], dat[[attr_scan[[opt("phase")]]]])
+        x <- split(dat[[var_dv]], dat[[var_phase]])
         x <- mapply(function(x, n) {
             paste0(n, " = ", paste0(x, collapse = ", "),collapse = "") 
           }, 
@@ -94,29 +101,28 @@ convert <- function(scdf,
     body_string <- paste0("\n", strrep(" ", indent), vars, collapse = ",")
     def_string <- character(0)
     
-    if(attr_scan[[opt("dv")]] != "values") 
+    if(var_dv != "values") 
       def_string <- c(
         def_string, 
-        paste0(strrep(" ", indent), 'dvar = \"', attr_scan[[opt("dv")]], '\"')
+        paste0(strrep(" ", indent), 'dvar = \"', var_dv, '\"')
       )
-    if(attr_scan[[opt("phase")]] != "phase") 
+    if(var_phase != "phase") 
       def_string <- c(
         def_string, 
-        paste0(strrep(" ", indent), 'pvar = \"', attr_scan[[opt("phase")]], '\"')
+        paste0(strrep(" ", indent), 'pvar = \"', var_phase, '\"')
       )
-    if(attr_scan[[opt("mt")]] != "mt") 
+    if(var_mt != "mt") 
       def_string <- c(
         def_string, 
-        paste0(strrep(" ", indent), 'mvar = \"', attr_scan[[opt("mt")]], '\"')
+        paste0(strrep(" ", indent), 'mvar = \"', var_mt, '\"')
       )
     
-    if(!is.null(names(scdf)[case]) && !is.na(names(scdf)[case]))
-      
+    if(!is.null(names(scdf)[case]) && !is.na(names(scdf)[case])) {
       def_string <- c(
         def_string, 
         paste0(strrep(" ", indent), 'name = \"', names(scdf)[case], '\"')
       )
-    
+    }
     def_string <- paste0(def_string, collapse =", \n")
     
     if (inline) {
@@ -126,22 +132,14 @@ convert <- function(scdf,
       phase_design <- paste0(",\n", strrep(" ", indent), phase_design)
     }
     
-    if (length(scdf) == 1) {
-      scdf_string[case] <- paste0(
-        study_name, " <- scdf(", 
-        body_string,  
-        phase_design,
-        def_string, "\n)"
-      )
-    } else {
-      scdf_string[case] <- paste0(
-        case_name, case, " <- scdf(", 
-        body_string, 
-        phase_design,
-        def_string, "\n)"
-      )
-    }
- 
+    if (length(scdf) == 1) case_name <- study_name
+    
+    scdf_string[case] <- paste0(
+      case_name, case, " <- scdf(", 
+      body_string, 
+      phase_design,
+      def_string, "\n)"
+    )
   }
   
   scdf_string <- paste0(scdf_string, collapse = "\n\n")
