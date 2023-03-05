@@ -89,12 +89,9 @@ hplm <- function(data, dvar, pvar, mvar,
   }
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- dv(data)
-  if (missing(pvar)) pvar <- phase(data) 
-  if (missing(mvar)) mvar <- mt(data) 
-  dv(data) <- dvar
-  phase(data) <- pvar
-  mt(data) <- mvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
   
   dat <- .prepare_scdf(data)
   
@@ -121,20 +118,20 @@ hplm <- function(data, dvar, pvar, mvar,
 
 # create formulas ---------------------------------------------------------
 
-  if (is.null(fixed))
+  if (is.null(fixed)) {
     fixed <- as.formula(.create_fixed_formula(
       dvar, mvar, slope, level, trend, tmp_model$var_phase, tmp_model$var_inter
     ))
-  
+  }
   if (!is.null(update.fixed)) fixed <- update(fixed, update.fixed)
   
   if (!random.slopes && is.null(random)) random <- as.formula("~1|case")
   
-  if (is.null(random))
+  if (is.null(random)) {
     random <- as.formula(.create_random_formula(
       mvar, slope, level, trend, tmp_model$var_phase, tmp_model$var_inter
     ))
-
+  }
   out$formula <- list(fixed = fixed, random = random)
   
 # lme hplm model ----------------------------------------------------------
@@ -160,12 +157,12 @@ hplm <- function(data, dvar, pvar, mvar,
     }
     
     random_ir <- list(formula(gsub("1", "-1", paste(random, collapse = " "))))
-    for(i in 2:length(pred_rand))
+    for(i in 2:length(pred_rand)) {
       random_ir[[i]] <- formula(
         paste0("~", paste0(pred_rand[!pred_rand %in% pred_rand[i]], 
         collapse = " + "), " | ", pred_rand_id)
       )
-    
+    }
     out$random_ir$restricted <- list()
     
     # lme
@@ -182,7 +179,6 @@ hplm <- function(data, dvar, pvar, mvar,
     # LR test
     for(i in 1:length(random_ir)) {
       out$LR.test[[i]] <- anova(out$random_ir$restricted[[i]], out$hplm)
-      
     }
     attr(out$random_ir, "parameters") <- c("Intercept", pred_rand)
   }
@@ -195,8 +191,8 @@ hplm <- function(data, dvar, pvar, mvar,
     )
     out$model.0$call$fixed <- .formula.null
     
-    VC <- as.numeric(VarCorr(out$model.0))
-    out$ICC$value <- VC[1] / (VC[1] + VC[2])	
+    vc <- as.numeric(VarCorr(out$model.0))
+    out$ICC$value <- vc[1] / (vc[1] + vc[2])	
     out$model.without <- gls(
       .formula.null, data = dat, method = method, 
       na.action = na.omit, control = control

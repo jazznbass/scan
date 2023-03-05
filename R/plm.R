@@ -127,14 +127,10 @@ plm <- function(data, dvar, pvar, mvar,
   contrast_slope <- contrast_slope[1]
   
   # set defaults attributes
-  if (missing(dvar)) dvar <- dv(data) 
-  if (missing(pvar)) pvar <- phase(data) 
-  if (missing(mvar)) mvar <- mt(data) 
-  
-  dv(data) <- dvar
-  phase(data) <- pvar
-  mt(data) <- mvar
-  
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
+
   data <- .prepare_scdf(data, na.rm = TRUE)
 
   if (is.na(contrast_level)) contrast_level <- contrast
