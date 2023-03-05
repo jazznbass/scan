@@ -95,3 +95,16 @@ power_testSC <- function(...) {
   power_test(...)
 }
 
+#' @rdname deprecated-functions
+#' @export
+fillmissingSC <- function(...) {
+  .deprecated_warning("fill_missing", "fillmissingSC")
+  fill_missing(...)
+}
+
+#' @rdname deprecated-functions
+#' @export
+overlapSC <- function(...) {
+  .deprecated_warning("overlap", "overlapSC")
+  overlap(...)
+}

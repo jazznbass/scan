@@ -18,11 +18,11 @@
 #' @keywords manip
 #' @examples
 #'
-#' ## In his study, Grosche (2011) could not realize measurements each 
-#' ## single week for all participants. During the course of 100 weeks, 
+#' ## In his study, Grosche (2011) could not realize measurements each
+#' ## single week for all participants. During the course of 100 weeks,
 #' ## about 20 measurements per person at different times were administered.
 #'
-#' ## Fill missing values in a single-case dataset with discontinuous 
+#' ## Fill missing values in a single-case dataset with discontinuous
 #' ## measurement times
 #' Grosche2011filled <- fill_missing(Grosche2011)
 #' study <- c(Grosche2011[2], Grosche2011filled[2])
@@ -44,11 +44,9 @@ fill_missing <- function(data, dvar, mvar,
                          na.rm = TRUE) {
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- dv(data) 
-  if (missing(mvar)) mvar <- mt(data)
-  dv(data) <- dvar
-  mt(data) <- mvar
-  
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
+
   source_attributes <- attributes(data)
   
   data <- .prepare_scdf(data)
@@ -78,9 +76,3 @@ fill_missing <- function(data, dvar, mvar,
   data
 }
 
-#' @rdname deprecated-functions
-#' @export
-fillmissingSC <- function(...) {
-  .deprecated_warning("fill_missing", "fillmissingSC")
-  fill_missing(...)
-}
