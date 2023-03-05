@@ -26,7 +26,8 @@ export.sc_overlap <- function(object, caption = NA, footnote = NA,
     "NAP = Nonoverlap of all pairs; ",
     "NAP-R = NAP rescaled; ",
     "PAND = Percentage all nonoverlapping data;",
-    "Tau U = Parker's Tau-U; ",
+    "Tau U (A + B - trend A) = Parker's Tau-U; ",
+    "Tau U (A + B - trend A + trend B) = Parker's Tau-U; ",
     "Base Tau = Baseline corrected Tau; ",
     "Delta M = Mean difference between phases; ",
     "Delta Trend = Trend difference between phases; ",
@@ -41,12 +42,14 @@ export.sc_overlap <- function(object, caption = NA, footnote = NA,
   
   out <- object$overlap
   
-  colnames(out)[7] <- "NAP-R"
-  colnames(out)[9] <- "Tau-U"
-  colnames(out)[10] <- "Base Tau"
-  colnames(out)[11] <- "Delta M"
-  colnames(out)[12] <- "Delta Trend"
-  colnames(out)[14] <- "Hedges g"
+  cn <- colnames(out)
+  colnames(out)[which(cn == "NAP rescaled")] <- "NAP-R"
+  colnames(out)[which(cn == "Tau_U(A)")] <- "Tau-U (A + B - trend A)"
+  colnames(out)[which(cn == "Tau_U(BA)")] <- "Tau-U (A + B - trend A + trend B)"
+  colnames(out)[which(cn == "Base_Tau")] <- "Base Tau"
+  colnames(out)[which(cn == "Diff_mean")] <- "Delta M"
+  colnames(out)[which(cn == "Diff_trend")] <- "Delta Trend"
+  colnames(out)[which(cn == "Hedges_g")] <- "Hedges g"
   
   if (isTRUE(flip)) {
     cases <- out$Case
