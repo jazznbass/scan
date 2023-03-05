@@ -102,8 +102,8 @@ the length of the vector, values are repeated.}
 \item{distribution}{Distribution of the criteria varible. Default is
 \code{"normal"}. Possible values are \code{"normal"}, \code{"binomial"}, and \code{"poisson"}.}
 
-\item{n_trials}{If \code{distribution} (see below) is \code{"binomial"},
-\code{n_trials} is the number of trials/observations/items.}
+\item{n_trials}{If \code{distribution} (see below) is \code{"binomial"}, \code{n_trials} is
+the number of trials/observations/items.}
 
 \item{mt, MT}{Number of measurements (in each study). Default is \code{mt = 20}.}
 
@@ -121,7 +121,6 @@ This is used within the \code{random_scdf} function and the \code{power_test} fu
 and for other Monte-Carlo tasks.
 }
 \examples{
-
  ## Create random single-case data and inspect it
  design <- design(
    n = 3, rtt = 0.75, slope = 0.1, extreme_prop = 0.1,

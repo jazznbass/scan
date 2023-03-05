@@ -31,4 +31,3 @@ Attribute value
 \description{
 Set and get scdf attributes
 }
-\keyword{internal}

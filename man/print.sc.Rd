@@ -45,7 +45,7 @@
 
 \method{print}{sc_mplm}(x, digits = "auto", std = FALSE, ...)
 
-\method{print}{sc_nap}(x, digits = "auto", ...)
+\method{print}{sc_nap}(x, digits = "auto", nice = TRUE, ...)
 
 \method{print}{sc_outlier}(x, digits = "auto", ...)
 

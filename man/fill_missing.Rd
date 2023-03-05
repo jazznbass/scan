@@ -35,11 +35,11 @@ randomization test (\code{\link[=rand_test]{rand_test()}}).
 }
 \examples{
 
-## In his study, Grosche (2011) could not realize measurements each 
-## single week for all participants. During the course of 100 weeks, 
+## In his study, Grosche (2011) could not realize measurements each
+## single week for all participants. During the course of 100 weeks,
 ## about 20 measurements per person at different times were administered.
 
-## Fill missing values in a single-case dataset with discontinuous 
+## Fill missing values in a single-case dataset with discontinuous
 ## measurement times
 Grosche2011filled <- fill_missing(Grosche2011)
 study <- c(Grosche2011[2], Grosche2011filled[2])
