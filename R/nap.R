@@ -32,60 +32,52 @@ nap <- function(data, dvar, pvar,
                 decreasing = FALSE,
                 phases = c(1, 2)) {
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- dv(data)
-  if (missing(pvar)) pvar <- phase(data)
-  dv(data) <- dvar
-  phase(data) <- pvar
-
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  
   data <- .prepare_scdf(data, na.rm = TRUE)
   data <- recombine_phases(data, phases = phases)$data
-
-  N <- length(data)
-
-  nap <- rep(NA, N)
-  pairs <- rep(NA, N)
-  pos <- rep(NA, N)
-  ties <- rep(NA, N)
-  w <- rep(NA, N)
-  p <- rep(NA, N)
-
-  for (case in 1:N) {
-    values <- split(data[[case]][[dvar]], data[[case]][[pvar]])
-    pairs[case] <- length(values$A) * length(values$B)
-
+  
+  casenames <- revise_names(data)
+  
+  .nap <- function(data) {
+    
+    values <- split(data[[dvar]], data[[pvar]])
+    pairs <- length(values$A) * length(values$B)
+    
     if (!decreasing) {
-      pos[case] <- pairs[case] -
+      pos <- pairs -
         sum(unlist(lapply(values$A, function(x) x >= values$B)))
     }
     if (decreasing) {
-      pos[case] <- pairs[case] -
+      pos <- pairs -
         sum(unlist(lapply(values$A, function(x) x <= values$B)))
     }
     
-    ties[case] <- sum(unlist(lapply(values$A, function(x) x == values$B)))
-    nap[case] <- (pos[case] + (0.5 * ties[case])) / pairs[case]
+    ties <- sum(unlist(lapply(values$A, function(x) x == values$B)))
+    nap <- (pos + (0.5 * ties)) / pairs
     
-    test <- wilcox.test(
-      values$A, values$B,
-      alternative = if (decreasing) "greater" else "less",
-      exact = FALSE
+    test <- wilcox.test(values$A, values$B,
+                        alternative = if (decreasing) "greater" else "less",
+                        exact = FALSE
     )
-    w[case] <- test$statistic
-    p[case] <- test$p.value
-  }
-
-  nap <- data.frame(
-    Case = revise_names(data),
-    NAP = nap * 100,
-    Rescaled = 2 * (nap * 100) - 100,
-    Pairs = pairs,
-    Positives = pos,
-    Ties = ties,
-    W = w,
-    p = p
-  )
-
-  out <- list(nap = nap, N = N)
+    
+    list(
+      NAP = nap * 100,
+      Rescaled = 2 * (nap * 100) - 100,
+      Pairs = pairs,
+      Positives = pos,
+      Ties = ties,
+      w = test$statistic,
+      p = test$p.value
+    )
+    
+  }  
+  
+  x <- lapply(data, .nap)
+  nap <- do.call(rbind, x)
+  
+  out <- list(nap = nap)
   class(out) <- c("sc_nap")
   attr(out, opt("phase")) <- pvar
   attr(out, opt("dv")) <- dvar
