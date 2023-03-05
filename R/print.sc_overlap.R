@@ -14,8 +14,14 @@ print.sc_overlap <- function(x, digits = "auto", ...) {
   #cat("Design: ", x$design, "\n")
   cat(.phases_string(x$phases.A, x$phases.B),"\n\n")
   
-  x$overlap[3:8] <- round(x$overlap[3:8], digits_1)
-  x$overlap[9:14] <- round(x$overlap[9:14], digits_2)
+  vars <- c("PND", "PEM", "PET", "NAP", "NAP rescaled", "PAND")
+  x$overlap[, vars] <- round(x$overlap[, vars], digits_1)
+  
+  vars <- c(
+    "Tau_U(A)", "Tau_U(BA)", "Base_Tau", "Diff_mean", 
+    "Diff_trend", "SMD", "Hedges_g"
+  )
+  x$overlap[, vars] <- round(x$overlap[, vars], digits_2)
   
   out <- as.data.frame(t(x$overlap[-1]))
   colnames(out) <- x$overlap$Case
