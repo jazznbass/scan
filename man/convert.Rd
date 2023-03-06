@@ -2,8 +2,7 @@
 % Please edit documentation in R/convert.R
 \name{convert}
 \alias{convert}
-\title{Convert
-Converts an scdf object into R code}
+\title{Convert}
 \usage{
 convert(
   scdf,
@@ -35,7 +34,6 @@ format.}
 Returns a string (invisible).
 }
 \description{
-Convert
 Converts an scdf object into R code
 }
 \examples{

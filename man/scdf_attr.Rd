@@ -8,7 +8,7 @@
 \alias{phase}
 \title{Set and get scdf attributes}
 \usage{
-scdf_attr(x, var)
+scdf_attr(x, var = NULL)
 
 scdf_attr(x, var) <- value
 
@@ -24,6 +24,8 @@ phase(scdf)
 \item{var}{Attribute}
 
 \item{value}{set value}
+
+\item{scdf}{An \link{scdf} object.}
 }
 \value{
 Attribute value
@@ -31,3 +33,4 @@ Attribute value
 \description{
 Set and get scdf attributes
 }
+\keyword{internal}

@@ -16,7 +16,7 @@ taken as false.}
 
 \item{cases}{Expression, indicating cases to keep from an scdf.}
 
-\item{...}{\link{not implemented}}
+\item{...}{not implemented}
 }
 \value{
 An scdf.

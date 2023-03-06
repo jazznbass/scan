@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,8 +76,8 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
-this format.</p></dd>
+<dd><p>A single-case data frame. See <code><a href="scdf.html">scdf()</a></code> to learn about this
+format.</p></dd>
 
 
 <dt>dvar</dt>
@@ -96,11 +96,9 @@ Defaults to the attributes in the scdf file.</p></dd>
 
 
 <dt>method</dt>
-<dd><p>Specifies the method for outlier identification. Set
-<code>method = "MAD"</code> for mean average deiviation, <code>method = "SD"</code> for
-standard deviations, <code>method = "CI"</code> for confidence intervals,
-<code>method = "Cook"</code> for Cook's Distance based on the Piecewise Linear
-Regression Model.</p></dd>
+<dd><p>Specifies the method for outlier identification. Set <code>method = "MAD"</code> for mean average deiviation, <code>method = "SD"</code> for standard
+deviations, <code>method = "CI"</code> for confidence intervals, <code>method = "Cook"</code> for
+Cook's Distance based on the Piecewise Linear Regression Model.</p></dd>
 
 
 <dt>criteria</dt>
@@ -144,11 +142,11 @@ identifier.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>For <code>method = "SD"</code>, <code>criteria = 2</code> would refer t0 two
-  standard deviations. For <code>method = "MAD"</code>, <code>criteria = 3.5</code> would
-  refer to 3.5 times the mean average deviation. For <code>method = "CI"</code>,
-  <code>criteria = 0.99</code> would refer to a 99 percent confidence interval. For
-  <code>method = "cook"</code>, <code>criteria = "4/n"</code> would refer to a Cook's
-  Distance greater than 4/n.</p>
+standard deviations. For <code>method = "MAD"</code>, <code>criteria = 3.5</code> would
+refer to 3.5 times the mean average deviation. For <code>method = "CI"</code>,
+<code>criteria = 0.99</code> would refer to a 99 percent confidence interval. For
+<code>method = "cook"</code>, <code>criteria = "4/n"</code> would refer to a Cook's
+Distance greater than 4/n.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -181,7 +179,7 @@ identifier.</p></dd>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">susanne</span>, marks <span class="op">=</span> <span class="va">res_outlier</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="outlier-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Identify outliers in the original data from Grosche (2011) </span></span></span>
+<span class="r-in"><span><span class="co">## Identify outliers in the original data from Grosche (2011)</span></span></span>
 <span class="r-in"><span><span class="co">## using Cook's Distance greater than 4/n as criterion</span></span></span>
 <span class="r-in"><span><span class="va">res_outlier</span> <span class="op">&lt;-</span> <span class="fu">outlier</span><span class="op">(</span><span class="va">Grosche2011</span>, method <span class="op">=</span> <span class="st">"Cook"</span>, criteria <span class="op">=</span> <span class="st">"4/n"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Grosche2011</span>, marks <span class="op">=</span> <span class="va">res_outlier</span><span class="op">)</span></span></span>

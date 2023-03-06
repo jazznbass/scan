@@ -23,6 +23,7 @@
 ## minor
 
 - `convert()`: new arguments. indent sets the indentation. When the scdf contains only one case, no study is combined.
+- `select_phases()`: New argument `phase_names` sets names of the recombined phases. The default `"auto"` creates combinations of the phase names automatically (e.g., `A = c("A", "B", B = "C")` results in phases `AB` and `C`).
 
 # scan 0.56
 

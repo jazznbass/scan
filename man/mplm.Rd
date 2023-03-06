@@ -58,28 +58,27 @@ model.}
 model.}
 
 \item{formula}{Defaults to the standard piecewise regression model. The
-parameter phase followed by the phase name (e.g., phaseB) indicates the
+parameter phase followed by the phase name (e.g., \code{phaseB}) indicates the
 level effect of the corresponding phase. The parameter 'inter' followed by
-the phase name (e.g., interB) adresses the slope effect based on the method
-provide in the model argument (e.g., "B&L-B"). The formula can be changed
-for example to include further variables into the regression model.}
+the phase name (e.g., \code{interB}) adresses the slope effect based on the
+method provide in the model argument (e.g., \code{"B&L-B"}). The formula can be
+changed for example to include further variables into the regression model.}
 
-\item{update}{An easier way to change the regression formula (e.g., . ~ . +
-newvariable).}
+\item{update}{An easier way to change the regression formula (e.g., \code{. ~ . + newvariable}).}
 
 \item{na.action}{Defines how to deal with missing values}
 
 \item{...}{Further arguments passed to the lm function.}
 }
 \value{
-\item{model}{Character string from function call (see
-\code{Arguments} above).} \item{full.model}{Full regression model list}
+\item{model}{Character string from function call (see arguments
+above).} \item{full.model}{Full regression model list.}
 }
 \description{
 The \code{\link[=mplm]{mplm()}} function computes a multivariate piecewise regression model.
 }
 \examples{
-res <- mplm(Leidig2018$`1a1`, 
+res <- mplm(Leidig2018$`1a1`,
   dvar = c("academic_engagement", "disruptive_behavior")
 )
 print(res)

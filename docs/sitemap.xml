@@ -73,6 +73,9 @@
     <loc>/reference/estimate_design.html</loc>
   </url>
   <url>
+    <loc>/reference/example_data.html</loc>
+  </url>
+  <url>
     <loc>/reference/export.html</loc>
   </url>
   <url>
@@ -185,6 +188,9 @@
   </url>
   <url>
     <loc>/reference/scan-package.html</loc>
+  </url>
+  <url>
+    <loc>/reference/scan_app.html</loc>
   </url>
   <url>
     <loc>/reference/scdf.html</loc>

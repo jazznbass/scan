@@ -12,7 +12,7 @@ across all phases."><meta property="og:image" content="/logo.png"><!-- mathjax -
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,8 +72,8 @@ across all phases.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
-this format.</p></dd>
+<dd><p>A single-case data frame. See <code><a href="scdf.html">scdf()</a></code> to learn about this
+format.</p></dd>
 
 
 <dt>dvar</dt>
@@ -96,7 +96,7 @@ Defaults to the attributes in the scdf file.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Further arguments passed to the <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></code> function</p></dd>
+<dd><p>Further arguments passed to the <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf()</a></code> function</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -104,12 +104,12 @@ Defaults to the attributes in the scdf file.</p></dd>
     
 
 <p>A data frame containing separate autocorrelations for each phase and
-  for all phases (for each single-case). If <code>lag_max</code> exceeds the length
-  of a phase minus one, NA is returned for this cell.</p>
+for all phases (for each single-case). If <code>lag_max</code> exceeds the length
+of a phase minus one, NA is returned for this cell.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></code></p>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf()</a></code></p>
 <p>Other regression functions: 
 <code><a href="corrected_tau.html">corrected_tau</a>()</code>,
 <code><a href="hplm.html">hplm</a>()</code>,

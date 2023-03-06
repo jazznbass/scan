@@ -12,7 +12,7 @@ McKean, 2000)."><meta property="og:image" content="/logo.png"><!-- mathjax --><s
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,8 +93,8 @@ McKean, 2000).</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
-this format.</p></dd>
+<dd><p>A single-case data frame. See <code><a href="scdf.html">scdf()</a></code> to learn about this
+format.</p></dd>
 
 
 <dt>dvar</dt>
@@ -120,8 +120,8 @@ argument must be set to <code>family = "gaussian"</code>.</p></dd>
 
 <dt>model</dt>
 <dd><p>Model used for calculating the dummy parameters (see Huitema &amp;
-McKean, 2000). Default is <code>model = "W"</code>. Possible values are:
-<code>"B&amp;L-B"</code>, <code>"H-M"</code>, <code>"W"</code>, and deprecated <code>"JW"</code>.</p></dd>
+McKean, 2000). Default is <code>model = "W"</code>. Possible values are: <code>"B&amp;L-B"</code>,
+<code>"H-M"</code>, <code>"W"</code>, and deprecated <code>"JW"</code>.</p></dd>
 
 
 <dt>family</dt>
@@ -145,7 +145,8 @@ model.</p></dd>
 
 
 <dt>contrast</dt>
-<dd><p>Sets contrast_level and contrast_slope. Either "first", "preceding" or a contrast matrix.</p></dd>
+<dd><p>Sets contrast_level and contrast_slope. Either "first",
+"preceding" or a contrast matrix.</p></dd>
 
 
 <dt>contrast_level</dt>
@@ -160,16 +161,15 @@ contrast_level is a copy of contrast.</p></dd>
 
 <dt>formula</dt>
 <dd><p>Defaults to the standard piecewise regression model. The
-parameter phase followed by the phase name (e.g., phaseB) indicates the 
-level effect of the corresponding phase. The parameter 'inter' followed by 
+parameter phase followed by the phase name (e.g., phaseB) indicates the
+level effect of the corresponding phase. The parameter 'inter' followed by
 the phase name (e.g., interB) adresses the slope effect based on the method
 provide in the model argument (e.g., "B&amp;L-B"). The formula can be changed
 for example to include further variables into the regression model.</p></dd>
 
 
 <dt>update</dt>
-<dd><p>An easier way to change the regression formula 
-(e.g., . ~ . + newvariable).</p></dd>
+<dd><p>An easier way to change the regression formula (e.g., <code>. ~ . + newvariable</code>).</p></dd>
 
 
 <dt>na.action</dt>
@@ -177,19 +177,19 @@ for example to include further variables into the regression model.</p></dd>
 
 
 <dt>r_squared</dt>
-<dd><p>Logical. If TRUE, delta r_squares will be calculated for 
+<dd><p>Logical. If TRUE, delta r_squares will be calculated for
 each predictor.</p></dd>
 
 
 <dt>var_trials</dt>
-<dd><p>Name of the variable containing the number of trials 
-(only for binomial regressions). If a single integer is provided this is
+<dd><p>Name of the variable containing the number of trials (only
+for binomial regressions). If a single integer is provided this is
 considered to be a the constant number of trials across all measurements.</p></dd>
 
 
 <dt>dvar_percentage</dt>
-<dd><p>Only for binomial distribution. If set TRUE, the 
-dependent variable is assumed to represent proportions [0,1]. Otherwise 
+<dd><p>Only for binomial distribution. If set TRUE, the
+dependent variable is assumed to represent proportions <code>[0,1]</code>. Otherwise
 dvar is assumed to represent counts.</p></dd>
 
 
@@ -200,26 +200,26 @@ dvar is assumed to represent counts.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <dl><dt>formula</dt>
-<dd><p>plm formula. Uselful if you want to use the update or 
-  formula argument and you don't know the names of the parameters.</p></dd>
+<dd><p>plm formula. Uselful if you want to use the update or
+formula argument and you don't know the names of the parameters.</p></dd>
 
 <dt>model</dt>
-<dd><p>Character string from function call (see <code>Arguments</code> 
-  above).</p></dd>
- 
+<dd><p>Character string from function call (see <code>Arguments</code>
+above).</p></dd>
+
 <dt>F.test</dt>
 <dd><p>F-test values of modelfit.</p></dd>
-
-<dt>r.squares</dt>
-<dd><p>Explained variance R squared for each model parameter.</p></dd>
+ <dt>r.squares</dt>
+<dd><p>Explained variance
+R squared for each model parameter.</p></dd>
 
 <dt>ar</dt>
-<dd><p>Autoregression lag from function call (see <code>Arguments</code> 
-  above).</p></dd>
+<dd><p>Autoregression lag from function call (see <code>Arguments</code>
+above).</p></dd>
 
 <dt>family</dt>
-<dd><p>Distribution family from function call 
-  (see <code>Arguments</code> above).</p></dd>
+<dd><p>Distribution family from function call
+(see <code>Arguments</code> above).</p></dd>
 
 <dt>full.model</dt>
 <dd><p>Full regression model list from the gls or glm function.</p></dd>
@@ -229,7 +229,8 @@ dvar is assumed to represent counts.</p></dd>
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Beretvas, S., &amp; Chung, H. (2008). An evaluation of modified
 R2-change effect size indices for single-subject experimental designs.
-<em>Evidence-Based Communication Assessment and Intervention, 2</em>, 120-128.</p>
+<em>Evidence-Based Communication Assessment and Intervention, 2</em>,
+120-128.</p>
 <p>Huitema, B. E., &amp; McKean, J. W. (2000). Design specification issues in
 time-series intervention models. <em>Educational and Psychological
 Measurement, 60</em>, 38-58.</p>
@@ -254,8 +255,8 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-in"><span><span class="co">## Compute a piecewise regression model for a random single-case</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">AB</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  phase_design <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">10</span>, B <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">0</span>, B <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, slope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">0</span>, B <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>  phase_design <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">10</span>, B <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">0</span>, B <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, slope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">0</span>, B <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  trend <span class="op">=</span> <span class="fl">0.05</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span>design <span class="op">=</span> <span class="va">AB</span><span class="op">)</span></span></span>
@@ -286,7 +287,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Another example with a more complex design</span></span></span>
 <span class="r-in"><span><span class="va">A1B1A2B2</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  phase_design <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A1 <span class="op">=</span> <span class="fl">15</span>, B1 <span class="op">=</span> <span class="fl">20</span>, A2 <span class="op">=</span> <span class="fl">15</span>, B2 <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>  phase_design <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A1 <span class="op">=</span> <span class="fl">15</span>, B1 <span class="op">=</span> <span class="fl">20</span>, A2 <span class="op">=</span> <span class="fl">15</span>, B2 <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A1 <span class="op">=</span> <span class="fl">0</span>, B1 <span class="op">=</span> <span class="fl">1</span>, A2 <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, B2 <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  slope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A1 <span class="op">=</span> <span class="fl">0</span>, B1 <span class="op">=</span> <span class="fl">0.0</span>, A2 <span class="op">=</span> <span class="fl">0</span>, B2 <span class="op">=</span> <span class="fl">0.0</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  trend <span class="op">=</span> <span class="fl">0.0</span><span class="op">)</span></span></span>
@@ -319,7 +320,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     interB2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## no slope effects were found. Therefore, you might want to the drop slope </span></span></span>
+<span class="r-in"><span><span class="co">## no slope effects were found. Therefore, you might want to the drop slope</span></span></span>
 <span class="r-in"><span><span class="co">## estimation:</span></span></span>
 <span class="r-in"><span><span class="fu">plm</span><span class="op">(</span><span class="va">dat</span>, slope <span class="op">=</span> <span class="cn">FALSE</span>, contrast <span class="op">=</span> <span class="st">"preceding"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
@@ -370,7 +371,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## A poisson regression</span></span></span>
-<span class="r-in"><span><span class="va">example_A24</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span></span>
+<span class="r-in"><span><span class="va">example_A24</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">plm</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"poisson"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

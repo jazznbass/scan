@@ -12,7 +12,7 @@ single-cases."><meta property="og:image" content="/logo.png"><!-- mathjax --><sc
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,8 +96,8 @@ single-cases.</p>
 
 
 <dt>data</dt>
-<dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
-this format.</p></dd>
+<dd><p>A single-case data frame. See <code><a href="scdf.html">scdf()</a></code> to learn about this
+format.</p></dd>
 
 
 <dt>dvar</dt>
@@ -139,12 +139,12 @@ a proper scale based on the given data.</p></dd>
 <dd><p>A list defining one or multiple lines or curves to be
 plotted. The argument is passed as a list (e.g., <code>list(type = "median")</code>).
 Some of the procedures can be refined with an additional argument (e.g.,
-<code>lines = list(type = "mean", trim = 0.2)</code> adds a 20% trimmed mean line.
-For multiple lines, provide a list element for each line (e.g., <code>list( list(type = "median", col = "red"), list(type = "trend", col = "blue"))</code>. 
+<code>lines = list(type = "mean", trim = 0.2)</code> adds a 20\<!-- % trimmed mean line. -->
+For multiple lines, provide a list element for each line (e.g., <code>list( list(type = "median", col = "red"), list(type = "trend", col = "blue"))</code>.
 Possible lines are:</p><ul><li><p><code>"median"</code> Separate lines for phase A and B medians.</p></li>
 <li><p><code>"mean"</code> Separate lines for phase A and B means. By default it is
-10%-trimmed. Other trims can be set, using a trim parameter (e.g.,
-<code>lines = list(type = "mean", trim = 0.2)</code> draws a 20%-trimmed mean line).</p></li>
+10\<!-- %-trimmed. Other trims can be set, using a trim parameter (e.g., -->
+<code>lines = list(type = "mean", trim = 0.2)</code> draws a 20\<!-- %-trimmed mean line). --></p></li>
 <li><p><code>"trend"</code> Separate lines for phase A and B trends.</p></li>
 <li><p><code>"trendA"</code> OLS trend line for phase A, extrapolated throughout phase B.</p></li>
 <li><p><code>"trendA_bisplit"</code> Split middle (bi-split) trend line for phase A, extrapolated throughout phase B.</p></li>
@@ -152,7 +152,7 @@ Possible lines are:</p><ul><li><p><code>"median"</code> Separate lines for phase
 <li><p><code>"maxA/minA"</code> Line at the level of the highest or lowest phase A score.</p></li>
 <li><p><code>"medianA"</code> Line at the phase A median score.</p></li>
 <li><p><code>"meanA"</code>
-Line at the phase A 10%-trimmed mean score. Apply a different trim, by
+Line at the phase A 10\<!-- %-trimmed mean score. Apply a different trim, by -->
 using the additional argument (e.g., <code>lines = list(type = "meanA", trim = 0.2)</code>).</p></li>
 <li><p><code>"plm"</code> Regression lines for piecewise linear regression model.</p></li>
 <li><p><code>"plm.ar"</code> Regression lines for piecewise autoregression model.
@@ -189,7 +189,7 @@ the MTs one, eight and 18 appear big and red.</p></dd>
 
 
 <dt>phase.names</dt>
-<dd><p>By default phases are labeled based on the levels of the phase variable. 
+<dd><p>By default phases are labeled based on the levels of the phase variable.
 Use this argument to specify different labels: <code>phase.names = c("Baseline",
 "Intervention")</code>.</p></dd>
 

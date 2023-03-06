@@ -4,7 +4,7 @@
 \alias{select_phases}
 \title{Select and combine phases for overlap analyses}
 \usage{
-select_phases(data, A, B)
+select_phases(data, A, B, phase_names = "auto")
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
@@ -13,6 +13,10 @@ format.}
 \item{A}{Selection of the A phase}
 
 \item{B}{Selection of the B phase}
+
+\item{phase_names}{A character vector with names for the resulting phases.
+The default \code{"auto"} generates phase names from the combination of the names
+of the recombined phases.}
 }
 \value{
 An scdf with selected phases
@@ -21,7 +25,7 @@ An scdf with selected phases
 Useful when working with \%>\% operators.
 }
 \examples{
-exampleA1B1A2B2_zvt \%>\% 
+exampleA1B1A2B2_zvt \%>\%
   select_phases(A = c(1, 3), B = c(2, 4)) \%>\%
   overlap()
 }

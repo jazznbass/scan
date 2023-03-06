@@ -18,11 +18,11 @@ the attributes in the scdf file.}
 
 \item{rel}{Reliability of the measure, used to compute the standard error.}
 
-\item{ci}{Width of confidence interval as a decimal. Default is \code{ci =
-0.95} applying a 95\\%-confidence interval.}
+\item{ci}{Width of confidence interval as a decimal. Default is \code{ci = 0.95}
+applying a 95 percent confidence interval.}
 
-\item{graph}{If set \code{TRUE}, a box plot of phase A and B scores is
-displayed. \code{graph = FALSE} by default.}
+\item{graph}{If set \code{TRUE}, a box plot of phase A and B scores is displayed.
+\code{graph = FALSE} by default.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
 that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
@@ -31,9 +31,8 @@ providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(
 is \code{phases = c(1,2)}.}
 }
 \description{
-\bold{CAUTION! This function is still under development and not ready for
-use!} The \code{rciSC} function computes three indices of reliable change
-(Wise, 2004) and corresponding descriptive statistics.
+The \code{rci()} function computes three indices of reliable change (Wise, 2004)
+and corresponding descriptive statistics.
 }
 \examples{
 
