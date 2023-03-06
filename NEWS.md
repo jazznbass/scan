@@ -14,6 +14,7 @@
 - Helper functions for `transform()`: `moving_mean()`, `moving_median()`, `local_regression()`
 - `corrected_tau()`: returns multiple cases
 - `export()`: new for `nap(), pen()`
+- `c()/combine()`: new arguments to set author and info attributes (`author`, `info`)
 
 ## Bug fixes
 
