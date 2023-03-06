@@ -1,4 +1,5 @@
 #' Convert
+#' 
 #' Converts an scdf object into R code
 #'
 #' @inheritParams .inheritParams
@@ -35,6 +36,8 @@ convert <- function(scdf,
   var_dv <- attr_scan[[opt("dv")]]
   var_mt <- attr_scan[[opt("mt")]]
 
+  sindent <- strrep(" ", indent)
+  
   for (case in seq_along(scdf)) {
     dat <- scdf[[case]]
     design <- rle(as.character(dat[[var_phase]]))
@@ -84,44 +87,50 @@ convert <- function(scdf,
           strrep(" ", indent * 1), ")"
         )
       } else {
-        vars[i] <- paste0(var_names[i], " = c(", values_string, ")")
-        vars[i] <- paste0(
-          strwrap(
-            vars[i],
-            exdent = nchar(var_names[i]) + indent + 5,
-          ),
-          collapse = "\n"
+        values_string <- paste0(
+          strwrap(values_string, exdent = 2 * indent), collapse = "\n"
         )
+        vars[i] <- paste0(
+          var_names[i], " = c(\n", sindent, sindent, values_string, "\n", 
+          sindent, ")"
+        )
+        #vars[i] <- paste0(
+        #  strwrap(
+        #    vars[i],
+        #    exdent = nchar(var_names[i]) + indent + 5,
+        #  ),
+        #  collapse = "\n"
+        #)
       }
     }
 
     vars <- vars[!is.na(vars)]
-    body_string <- paste0("\n", strrep(" ", indent), vars, collapse = ",")
+    body_string <- paste0("\n", sindent, vars, collapse = ",")
     def_string <- character(0)
 
     if (var_dv != "values") {
       def_string <- c(
         def_string,
-        paste0(strrep(" ", indent), 'dvar = \"', var_dv, '\"')
+        paste0(sindent, 'dvar = \"', var_dv, '\"')
       )
     }
     if (var_phase != "phase") {
       def_string <- c(
         def_string,
-        paste0(strrep(" ", indent), 'pvar = \"', var_phase, '\"')
+        paste0(sindent, 'pvar = \"', var_phase, '\"')
       )
     }
     if (var_mt != "mt") {
       def_string <- c(
         def_string,
-        paste0(strrep(" ", indent), 'mvar = \"', var_mt, '\"')
+        paste0(sindent, 'mvar = \"', var_mt, '\"')
       )
     }
 
     if (!is.null(names(scdf)[case]) && !is.na(names(scdf)[case])) {
       def_string <- c(
         def_string,
-        paste0(strrep(" ", indent), 'name = \"', names(scdf)[case], '\"')
+        paste0(sindent, 'name = \"', names(scdf)[case], '\"')
       )
     }
     def_string <- paste0(def_string, collapse = ", \n")
@@ -130,7 +139,7 @@ convert <- function(scdf,
       phase_design <- paste0(",\n")
     } else {
       if (def_string != "") def_string <- paste0(",\n", def_string)
-      phase_design <- paste0(",\n", strrep(" ", indent), phase_design)
+      phase_design <- paste0(",\n", sindent, phase_design)
     }
 
     if (length(scdf) == 1) case_name <- study_name
@@ -146,54 +155,42 @@ convert <- function(scdf,
   scdf_string <- paste0(scdf_string, collapse = "\n\n")
 
   # study <- c(...)
-  if (length(scdf) > 1) {
+  if (length(scdf) > 1 || 
+      !is.null(attr_scan$author) || 
+      !is.null(attr_scan$info)) {
     con_string <- paste0(case_name, seq_along(scdf), collapse = ", ")
-    con_string <- paste0(study_name, " <- c(", con_string, ")")
     con_string <- paste0(
       strwrap(con_string, exdent = indent, width = 80, simplify = TRUE),
       collapse = "\n"
     )
+    if (!is.null(attr_scan$info)) {
+      con_string <- paste0(
+        con_string, ", \n", sindent, "info = \"", attr_scan$info, "\""
+      )
+    }
+
+    if (!is.null(attr_scan$author)) {
+      con_string <- paste0(
+        con_string, ", \n", sindent, "author = \"", attr_scan$author, "\""
+      )
+    }
+    con_string <- paste0(study_name, " <- c(\n", sindent, con_string, "\n)")
+
   } else {
     con_string <- NULL
   }
-
-  # info
-  attr_string <- character(0)
-  if (!is.null(attr_scan$info)) {
-    info <- paste0(
-      "scdf_attr(", study_name, ", \"info\") <- \"",
-      attr_scan[[opt("info")]], "\""
-    )
-    info <- strwrap(info, width = 80)
-    attr_string <- info
-  }
-
-  # author
-  if (!is.null(attr_scan$author)) {
-    author <- paste0(
-      "scdf_attr(", study_name, ", \"author\") <- \"",
-      attr_scan[[opt("author")]], "\""
-    )
-    author <- strwrap(author, width = 80)
-    attr_string <- c(
-      attr_string,
-      author
-    )
-  }
-
-  attr_string <- paste(attr_string, collapse = "\n")
 
   if (!is.null(con_string)) {
     complete_string <- paste(
       scdf_string,
       con_string,
-      attr_string,
+      #attr_string,
       sep = "\n\n"
     )
   } else {
     complete_string <- paste(
       scdf_string,
-      attr_string,
+      #attr_string,
       sep = "\n\n"
     )
   }
