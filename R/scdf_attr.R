@@ -4,14 +4,17 @@
 #' @param var Attribute
 #'
 #' @return Attribute value
+#' @keywords internal
 #' @export
-scdf_attr <- function(x, var) {
+scdf_attr <- function(x, var = NULL) {
+  if (is.null(var)) return(attr(x, opt("scdf")))
   out <- attr(x, opt("scdf"))
   out[[var]]
 }
 
 #' @rdname scdf_attr
 #' @param value set value
+#' @export
 "scdf_attr<-" <- function(x, var, value) {
   scdf_attr <- attr(x, opt("scdf"))
   if (is.null(scdf_attr)) scdf_attr <- list()
@@ -22,6 +25,7 @@ scdf_attr <- function(x, var) {
 }
 
 #' @rdname scdf_attr
+#' @param scdf An [scdf] object.
 dv <- function(scdf) scdf_attr(scdf, opt("dv"))
 "dv<-" <- function(x, value) {
   scdf_attr(x, opt("dv")) <- value
