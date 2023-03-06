@@ -1,14 +1,25 @@
 #' Combine single-case data frames
 #'
 #' @param ... scdf objects
-#' @param dvar Character string. Name of the dependent variable. Defaults to the dependent variable of the first case provided.
-#' @param pvar Character string. Name of the phase variable. Defaults to the phase variable of the first case provided.
-#' @param mvar Character string. Name of the measurement-time variable. Defaults to the measurement-time variable of the first case provided.
+#' @param dvar Character string. Name of the dependent variable. Defaults to the
+#'   dependent variable of the first case provided.
+#' @param pvar Character string. Name of the phase variable. Defaults to the
+#'   phase variable of the first case provided.
+#' @param mvar Character string. Name of the measurement-time variable. Defaults
+#'   to the measurement-time variable of the first case provided.
+#' @param author author of the data.
+#' @param info additional information on the scdf file.
+#' @return A scdf. If not set differently, the attributes of this scdf are
+#'   copied from the first scdf provided (i.e the first argument of the
+#'   function).
 #'
-#' @return A scdf. If not set differently, the attributes of this scdf are copied from the first scdf provided (i.e the first argument of the function). 
-#' 
 #' @export
-combine <- function(..., dvar = NULL, pvar = NULL, mvar = NULL) {
+combine <- function(..., 
+                    dvar = NULL, 
+                    pvar = NULL, 
+                    mvar = NULL, 
+                    info = NULL, 
+                    author = NULL) {
   scdfs <- list(...)
   
   source_attr <- attributes(scdfs[[1]])
@@ -17,16 +28,13 @@ combine <- function(..., dvar = NULL, pvar = NULL, mvar = NULL) {
    
   data <- unlist(scdfs, recursive = FALSE)
   
-  #attributes(data) <- .default_attributes()
-
-  #if (!is.null(source_attr[[opt("scdf")]])) attr(data, opt("scdf")) <- source_attr[[opt("scdf")]]
   attributes(data) <- source_attr
-  #attr(data, opt("scdf")) <- source_attr[[opt("scdf")]]
   
   if (!is.null(dvar)) dv(data) <- dvar
   if (!is.null(mvar)) mt(data) <- mvar
   if (!is.null(pvar)) phase(data) <- pvar
-  
+  if (!is.null(info)) scdf_attr(data, "info") <- info
+  if (!is.null(author)) scdf_attr(data, "author") <- author
   
   names(data) <- case_names
   if (!is.null(names(scdfs))) {
@@ -34,10 +42,6 @@ combine <- function(..., dvar = NULL, pvar = NULL, mvar = NULL) {
     names(data)[which(names(scdfs) != "")] <- .names
     
   }
-  
-  if (!is.null(dvar)) source_attr[[opt("dv")]] <- dvar
-  if (!is.null(mvar)) source_attr[[opt("mt")]] <- mvar
-  if (!is.null(pvar)) source_attr[[opt("phase")]] <- pvar
   
   # check class scdf validity
   if (opt("rigorous_class_check")) {

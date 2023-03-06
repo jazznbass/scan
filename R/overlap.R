@@ -40,12 +40,9 @@ overlap <- function(data, dvar, pvar, mvar,
                     phases = c(1, 2)){
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) 
-    dvar <- dv(data) else dv(data) <- dvar
-  if (missing(pvar)) 
-    pvar <- phase(data) else phase(data) <- pvar
-  if (missing(mvar)) 
-    mvar <- mt(data) else mt(data) <- mvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
   
   data_list <- .prepare_scdf(data)
   
@@ -119,12 +116,9 @@ overlap <- function(data, dvar, pvar, mvar,
     #design = keep$design[[1]]$values
   )
   
+  atr <- scdf_attr(data_list)
+  for(i in seq_along(atr)) attr(out, names(atr)[i]) <- atr[[i]]
   class(out) <- c("sc_overlap")
-  
-  source_attributes <- attributes(data_list)[[opt("scdf")]]
-  attr(out, opt("phase")) <- source_attributes[[opt("phase")]]
-  attr(out, opt("mt"))    <- source_attributes[[opt("mt")]]
-  attr(out, opt("dv"))    <- source_attributes[[opt("dv")]]
   
   out
 }

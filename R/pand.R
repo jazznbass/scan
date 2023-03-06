@@ -4,14 +4,14 @@
 #' (PAND; Parker, Hagan-Burke, & Vannest, 2007), an index to quantify a level
 #' increase (or decrease) in performance after the onset of an intervention.
 #'
-#' The PAND indicates nonoverlap between phase A and B data ([PND()]), but uses
+#' The PAND indicates nonoverlap between phase A and B data, but uses
 #' all data and is therefore not based on one single (probably unrepresentative)
 #' datapoint.  Furthermore, PAND allows the comparison of real and expected
 #' associations (Chi-square test) and estimation of the effect size Phi, which
 #' equals Pearsons r for dichotomous data.  Thus, phi-Square is the amount of
 #' explained variance. The original procedure for computing the PAND (Parker,
 #' Hagan-Burke, & Vannest, 2007) does not account for ambivalent datapoints
-#' (ties).  The newer `NAP` overcomes this problem and has better
+#' (ties).  The newer *nap* ([nap()]) overcomes this problem and has better
 #' precision-power (Parker, Vannest, & Davis, 2014).
 #'
 #' @inheritParams .inheritParams

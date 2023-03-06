@@ -4,7 +4,7 @@
 #' also arguments to filter variables and cases.
 #'
 #' @param x An scdf object.
-#' @param ... [not implemented]
+#' @param ... not implemented
 #' @param subset Logical expression indicating rows to keep: missing values are
 #'   taken as false.
 #' @param select Expression, indicating columns to select from an scdf.

@@ -22,13 +22,9 @@ smd <- function(data, dvar, pvar, mvar,
                 phases = c(1, 2)) {
   
   # set defaults attributes
-  if (missing(dvar)) dvar <- dv(data) 
-  if (missing(pvar)) pvar <- phase(data) 
-  if (missing(mvar)) mvar <- mt(data) 
-  
-  dv(data) <- dvar
-  phase(data) <- pvar
-  mt(data) <- mvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
   
   data_list <- .prepare_scdf(data)
   
@@ -51,8 +47,8 @@ smd <- function(data, dvar, pvar, mvar,
   for(i in 1:N) {
     data <- data_list[i][[1]]
     
-    A <- data[data[, pvar] == "A", dvar]
-    B <- data[data[, pvar] == "B", dvar]
+    A <- data[data[[pvar]] == "A", dvar]
+    B <- data[data[[pvar]] == "B", dvar]
     nA <- sum(!is.na(A))
     nB <- sum(!is.na(B))    
     n <- nA + nB

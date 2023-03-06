@@ -2,8 +2,8 @@ methods::setOldClass(c("scdf", "list"))
 
 #' Single case data frame
 #'
-#' The \code{scdf} class stores single-case study data with one or more
-#' single-cases.
+#' `scdf()` is the constructor for the `scdf` class. It stores single-case study
+#' data with one or more single-cases.
 #'
 #' @aliases scdf scdf-class as.scdf
 #' @param values A vector containing measurement values of the dependent
@@ -11,37 +11,36 @@ methods::setOldClass(c("scdf", "list"))
 #' @param B_start,B.start The first measurement of phase B (simple coding if
 #'   design is strictly AB).
 #' @inheritParams .inheritParams
-#' @param mt A vector defining measurement times. Default is \code{mt =
-#'   (1,2,3,...,n)}.
+#' @param mt A vector defining measurement times. Default is `mt =
+#'   (1,2,3,...,n)`.
 #' @param phase_design,phase.design A vector defining the length and label of
-#'   each phase. E.g., \code{phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 =
-#'   10)}.
+#'   each phase. E.g., `phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)`.
 #' @param name A name for the case.
 #' @param phase A vector defining phase assignments.
-#' @param ...  Additional variables. E.g., \code{teacher = c(0,1,0,1,0,0,1),
-#'   lesson = c(1,3,4,5,2,3)}.
-#' @return Returns a single-case data frame \code{scdf} suitable for all
-#'   functions of the \code{scan} package. Multiple data sets (e.g. from
+#' @param ...  Additional variables. E.g., `teacher = c(0,1,0,1,0,0,1),
+#'   lesson = c(1,3,4,5,2,3)`.
+#' @return Returns a single-case data frame `scdf` suitable for all
+#'   functions of the `scan` package. Multiple data sets (e.g. from
 #'   Multiple Baseline Designs) can be listed.
 #' @details If the dependent variable is a named vector then the names are
-#'   extracted to create a phase design (e.g., values = c(A = 2,3,5,4,3, B =
-#'   6,5,4,3) will create an AB phase design with five and four measuresments).
-#'   An scdf contains several attributes: \code{dvar} The name of the dependent
-#'   variable. \code{phase} The name of the phase variable. \code{mt} The name
-#'   of the measurement time variable. \code{author} Information on the author
-#'   of the data. \code{info} Further information on the data. E.g., a
-#'   publication. \code{dvar, phase, and mt} are the defaults most of the
-#'   \code{scan} function use. You can change the values of the attributes with
-#'   the \code{scdf_attr} function (e.g., \code{scdf_attr(exampleAB_add, "dvar")
-#'   <- "depression"} defines depression as the dependent variable. Please
-#'   notice that all \code{scan} functions have arguments to define \code{dvar,
-#'   phase, and mt} for a given analysis.
+#'   extracted to create a phase design (e.g., `values = c(A = 2,3,5,4,3, B =
+#'   6,5,4,3)` will create an AB phase design with five and four measurements).
+#'   An scdf contains several attributes: `dvar` The name of the dependent
+#'   variable. `phase` The name of the phase variable. `mt` The name
+#'   of the measurement time variable. `author` Information on the author
+#'   of the data. `info` Further information on the data. E.g., a
+#'   publication. `dvar, phase`, and `mt` are the defaults most of the
+#'   `scan` function use. You can change the values of the attributes with
+#'   the `scdf_attr` function (e.g., `scdf_attr(exampleAB_add, "dvar")
+#'   <- "depression"` defines depression as the dependent variable. Please
+#'   notice that all `scan` functions have arguments to define `dvar`,
+#'   `phase`, and `mt` for a given analysis.
 #' @author Juergen Wilbert
 #' @family data manipulation functions
 #' @examples
 #'
-#' ## Scores on a letter naming task were collected on eleven days in a row. 
-#' ## The intervention started after the fifth measurement, 
+#' ## Scores on a letter naming task were collected on eleven days in a row.
+#' ## The intervention started after the fifth measurement,
 #' ## so the first B phase measurement was 6 (B_start = 6).
 #' klaas <- scdf(
 #'   c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
@@ -61,16 +60,16 @@ methods::setOldClass(c("scdf", "list"))
 #'   phase_design = c(A = 5, B = 6), name = "Klaas"
 #' )
 #'
-#' ## Unfortunately in a similar study there were no data collected on 
+#' ## Unfortunately in a similar study there were no data collected on
 #' ## days 3 and 9. Use NA to pass them to the function:
 #' emmi <- scdf(c(5, 7, NA, 5, 7, 12, 16, 18, NA, 14, 19),
 #'   phase_design = c(A = 5, B = 6), name = "Emmi"
 #' )
 #' describe(emmi)
 #'
-#' ## In a MBD over three cases, data were collected eleven days in a row. 
-#' ## Intervention starting points differ between subjects as they were 
-#' ## randomly assigned. The three SCDFs are then combined in a list for 
+#' ## In a MBD over three cases, data were collected eleven days in a row.
+#' ## Intervention starting points differ between subjects as they were
+#' ## randomly assigned. The three SCDFs are then combined in a list for
 #' ## further conjoined analyses.
 #' charlotte <- scdf(c(A = 5, 7, 10, 5, 12, B = 7, 10, 18, 15, 14, 19))
 #' theresa <- scdf(c(A = 3, 4, 3, 5, B = 7, 4, 7, 9, 8, 10, 12))
@@ -79,8 +78,8 @@ methods::setOldClass(c("scdf", "list"))
 #' names(mbd) <- c("Charlotte", "Theresa", "Antonia")
 #' overlap(mbd)
 #'
-#' ## In a classroom-based intervention it was not possible to measure outcomes 
-#' ## every day, but only on schooldays. The sequence of measurements is passed 
+#' ## In a classroom-based intervention it was not possible to measure outcomes
+#' ## every day, but only on schooldays. The sequence of measurements is passed
 #' ## to the package by using a vector of measurement times.
 #' frida <- scdf(
 #'   c(A = 3, 2, 4, 2, 2, 3, 5, 6, B = 8, 10, 8, 12, 14, 13, 12),
@@ -97,22 +96,21 @@ methods::setOldClass(c("scdf", "list"))
 #' )
 #' overlap(jim, phases = list(c("A1", "A2"), c("B1", "B2")))
 #' @export
-scdf <- function(values, 
-                 B_start, 
-                 mt, 
-                 phase, 
-                 phase_design = NULL, 
-                 name = NULL, 
-                 dvar = "values", 
-                 pvar = "phase", 
+scdf <- function(values,
+                 B_start,
+                 mt,
+                 phase,
+                 phase_design = NULL,
+                 name = NULL,
+                 dvar = "values",
+                 pvar = "phase",
                  mvar = "mt",
                  phase.design,
                  B.start,
                  ...) {
-  
   if (!missing(phase.design)) phase_design <- phase.design
   if (!missing(B.start)) B_start <- B.start
-  
+
   df <- list(...)
 
   if ("var.values" %in% names(df)) {
@@ -157,7 +155,10 @@ scdf <- function(values,
   if (!missing(B_start)) {
     B_start <- match(B_start, data[, mvar])
     if (is.na(B_start)) {
-      stop("No values provided at the measurement-time of B_start in var '", mvar, "'.")
+      stop(
+        "No values provided at the measurement-time of B_start in var '", 
+        mvar, "'."
+      )
     }
     phase_design <- c("A" = B_start - 1, "B" = nrow(data) - B_start + 1)
   }
@@ -171,8 +172,8 @@ scdf <- function(values,
   }
 
   data[, pvar] <- factor(
-      rep(names(phase_design), phase_design), 
-      levels = unique(names(phase_design))
+    rep(names(phase_design), phase_design),
+    levels = unique(names(phase_design))
   )
 
   data <- list(data)

@@ -5,7 +5,6 @@
 scan_app <- function() {
   
   if (requireNamespace("shiny", quietly = TRUE)) {
-    
     shiny::runApp(system.file('shiny', package = 'scan'),launch.browser = TRUE)
   } else {
     message("You need to install the 'shiny' package to run this app ",

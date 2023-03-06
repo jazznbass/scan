@@ -1,36 +1,36 @@
 #' Reliable change index
-#' 
-#' \bold{CAUTION! This function is still under development and not ready for
-#' use!} The \code{rciSC} function computes three indices of reliable change
-#' (Wise, 2004) and corresponding descriptive statistics.
-#' 
+#'
+#' The `rci()` function computes three indices of reliable change (Wise, 2004)
+#' and corresponding descriptive statistics.
+#'
 #' @inheritParams .inheritParams
 #' @param rel Reliability of the measure, used to compute the standard error.
-#' @param ci Width of confidence interval as a decimal. Default is \code{ci =
-#' 0.95} applying a 95\%-confidence interval.
-#' @param graph If set \code{TRUE}, a box plot of phase A and B scores is
-#' displayed. \code{graph = FALSE} by default.
+#' @param ci Width of confidence interval as a decimal. Default is `ci = 0.95`
+#'   applying a 95 percent confidence interval.
+#' @param graph If set `TRUE`, a box plot of phase A and B scores is displayed.
+#'   `graph = FALSE` by default.
 #' @author Juergen Wilbert
 #' @references Christensen, L., & Mendoza, J. L. (1986). A method of assessing
-#' change in a single subject: An alteration of the RC index. \emph{Behavior
-#' Therapy, 17}, 305-308.
-#' 
-#' Hageman, W. J. J., & Arrindell, W. A. (1993). A further refinement of the
-#' reliable change (RC) index by improving the pre-post difference score:
-#' Introducing RCID. \emph{Behaviour Research and Therapy, 31}, 693-700.
-#' 
-#' Jacobson, N. S., & Truax, P. (1991). Clinical Significance: A statistical
-#' approach to defining meaningful change in psychotherapy research.
-#' \emph{Journal of Consulting and Clinical Psychology, 59}, 12-19.
-#' 
-#' Wise, E. A. (2004). Methods for analyzing psychotherapy outcomes: A review
-#' of clinical significance, reliable change, and recommendations for future
-#' directions. \emph{Journal of Personality Assessment, 82}, 50 - 59.
+#'   change in a single subject: An alteration of the RC index. *Behavior
+#'   Therapy, 17*, 305-308.
+#'
+#'   Hageman, W. J. J., & Arrindell, W. A. (1993). A further refinement of the
+#'   reliable change (RC) index by improving the pre-post difference score:
+#'   Introducing RCID. *Behaviour Research and Therapy, 31*, 693-700.
+#'
+#'   Jacobson, N. S., & Truax, P. (1991). Clinical Significance: A statistical
+#'   approach to defining meaningful change in psychotherapy research.
+#' *Journal of Consulting and Clinical Psychology, 59*, 12-19.
+#'
+#'   Wise, E. A. (2004). Methods for analyzing psychotherapy outcomes: A review
+#'   of clinical significance, reliable change, and recommendations for future
+#'   directions. *Journal of Personality Assessment, 82*, 50 - 59.
+#'
 #' @examples
-#' 
+#'
 #' ## Report the RCIs of the first case from the byHeart data and include a graph
 #' rci(byHeart2011[1], graph = TRUE, rel = 0.8)
-#' 
+#'
 #' @export
 rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2)) {
   

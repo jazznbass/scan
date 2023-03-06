@@ -16,7 +16,7 @@
 #' pnd(GruenkeWilbert2014)
 #' 
 #' @export
-pnd <- function(data, dvar, pvar, decreasing = FALSE, phases = c("A","B")) {
+pnd <- function(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2)) {
 
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
