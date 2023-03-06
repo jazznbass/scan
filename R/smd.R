@@ -1,19 +1,19 @@
 #' Standardized mean differences
 #'
-#' The \code{smd} function provides various standardized mean effect sizes for single-case data.
+#' The `smd()` function provides various standardized mean effect sizes for
+#' single-case data.
 #'
 #' @inheritParams .inheritParams
-#' @details  
-#' 'sd cohen' is the (unweigted) average of the variance of phase A and B.  
-#' 'sd Hedges' is the weighted average of the variance of phase A and B (with a degrees of freedom correction). 
-#' 'Hedges' g' is the mean difference divided by 'sd Hedges'.
-#' 'Hedges' g correction' and 'Hedges' g durlak correction' are two approaches 
-#' of correcting Hedges' g for small sample sizes.
-#' 'Glass' delta' is the mean difference divided by the standard deviation of the 
-#' A-phase.
-#' 'Cohens d` is the mean difference divided by 'sd cohen'.
+#' @details 'sd cohen' is the (unweigted) average of the variance of phase A and
+#'   B. 'sd Hedges' is the weighted average of the variance of phase A and B
+#'   (with a degrees of freedom correction). 'Hedges' g' is the mean difference
+#'   divided by 'sd Hedges'. 'Hedges' g correction' and 'Hedges' g durlak
+#'   correction' are two approaches of correcting Hedges' g for small sample
+#'   sizes. 'Glass' delta' is the mean difference divided by the standard
+#'   deviation of the A-phase. 'Cohens d` is the mean difference divided by 'sd
+#'   cohen'.
 #' @author Juergen Wilbert
-#' @seealso \code{\link{overlap}}, \code{\link{describe}}
+#' @seealso [overlap()], [describe()]
 #' @examples
 #' smd(exampleAB)
 #' @export
@@ -22,25 +22,22 @@ smd <- function(data, dvar, pvar, mvar,
                 phases = c(1, 2)) {
   
   # set defaults attributes
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) 
-  
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
-  scdf_attr(data, .opt$mt) <- mvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
   
   data_list <- .prepare_scdf(data)
   
-  keep <- .keep_phases(data_list, phases = phases)
+  keep <- recombine_phases(data_list, phases = phases)
   data_list <- keep$data
   
   N <- length(data_list)
   
-  case_names <- .case_names(names(data_list), length(data_list))
+  case_names <- revise_names(names(data_list), length(data_list))
   
   vars <- c(
-    "mA", "mB", "sdA", "sdB", "sd cohen", "sd hedges", "Glass' delta",  "Hedges' g", "Hedges' g correction",
+    "mA", "mB", "sdA", "sdB", "sd cohen", "sd hedges", "Glass' delta",  
+    "Hedges' g", "Hedges' g correction",
     "Hedges' g durlak correction", "Cohen's d"
   )
   df <- as.data.frame(matrix(nrow = N, ncol = length(vars)))
@@ -50,8 +47,8 @@ smd <- function(data, dvar, pvar, mvar,
   for(i in 1:N) {
     data <- data_list[i][[1]]
     
-    A <- data[data[, pvar] == "A", dvar]
-    B <- data[data[, pvar] == "B", dvar]
+    A <- data[data[[pvar]] == "A", dvar]
+    B <- data[data[[pvar]] == "B", dvar]
     nA <- sum(!is.na(A))
     nB <- sum(!is.na(B))    
     n <- nA + nB
@@ -68,9 +65,7 @@ smd <- function(data, dvar, pvar, mvar,
     df$"Glass' delta"[i] <- (mB - mA) / sdA
     
     df$"sd hedges"[i] <- sqrt(
-      ( (nA - 1) * sdA^2 + (nB - 1) * sdB^2) 
-      / 
-        (nA + nB - 2) 
+      ((nA - 1) * sdA^2 + (nB - 1) * sdB^2) / (nA + nB - 2) 
     )  
     
     df$"Hedges' g"[i] <- (mB - mA) / df$"sd hedges"[i]
@@ -95,10 +90,10 @@ smd <- function(data, dvar, pvar, mvar,
   
   class(out) <- c("sc_smd")
   
-  source_attributes <- attributes(data_list)[[.opt$scdf]]
-  attr(out, .opt$phase) <- source_attributes[[.opt$phase]]
-  attr(out, .opt$mt)    <- source_attributes[[.opt$mt]]
-  attr(out, .opt$dv)    <- source_attributes[[.opt$dv]]
+  source_attributes <- attributes(data_list)[[opt("scdf")]]
+  attr(out, opt("phase")) <- source_attributes[[opt("phase")]]
+  attr(out, opt("mt"))    <- source_attributes[[opt("mt")]]
+  attr(out, opt("dv"))    <- source_attributes[[opt("dv")]]
   
   out
   

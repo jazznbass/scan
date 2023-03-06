@@ -30,6 +30,6 @@ plot_rand(
 \item{...}{Further arguments passed to the plot function.}
 }
 \description{
-This function takes the return of the rand_test function and creates a 
+This function takes the return of the rand_test function and creates a
 histogram with the distribution of the rand sample statistics.
 }

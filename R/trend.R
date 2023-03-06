@@ -1,7 +1,7 @@
 #' Trend analysis for single-cases data
 #'
-#' The \code{trend} function provides an overview of linear trends in single
-#' case data. By default, it provides the intercept and slope of a linear and
+#' The `trend()` function provides an overview of linear trends in single case
+#' data. By default, it provides the intercept and slope of a linear and
 #' quadratic regression of measurement time on scores. Models are calculated
 #' separately for each phase and across all phases. For more advanced use, you
 #' can add regression models using the R-specific formula class.
@@ -10,18 +10,18 @@
 #' @param first_mt A numeric setting the value for the first measurement-time.
 #'   Default = 0.
 #' @param offset (Deprecated. Please use first_mt). An offset for the first
-#'   measurement-time of each phase. If \code{offset = 0}, the phase measurement
-#'   is handled as MT 1. Default is \code{offset = -1}, setting the first value
-#'   of MT to 0.
+#'   measurement-time of each phase. If `offset = 0`, the phase measurement is
+#'   handled as MT 1. Default is `offset = -1`, setting the first value of MT to
+#'   0.
 #' @param model A string or a list of (named) strings each depicting one
 #'   regression model. This is a formula expression of the standard R class. The
-#'   parameters of the model are \code{values}, \code{mt} and \code{phase}.
+#'   parameters of the model are `values`, `mt` and `phase`.
 #' @return \item{trend}{A matrix containing the results (Intercept, B and beta)
 #'   of separate regression models for phase A, phase B, and the whole data.}
-#' \item{offset}{Numeric argument from function call (see \code{Arguments}
+#' \item{offset}{Numeric argument from function call (see arguments
 #' section).}
 #' @author Juergen Wilbert
-#' @seealso \code{\link{describe}}
+#' @seealso [describe()]
 #' @family regression functions
 #' @examples
 #'
@@ -47,12 +47,9 @@ trend <- function(data, dvar, pvar, mvar,
   if (is.numeric(offset)) first_mt <- offset + 1
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase)
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt)
-  scdf_attr(data, .opt$dv)    <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
-  scdf_attr(data, .opt$mt)    <- mvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else  mt(data) <- mvar
   
   data <- .prepare_scdf(data)
 
@@ -116,8 +113,8 @@ trend <- function(data, dvar, pvar, mvar,
     design = design
   )
   class(out) <- c("sc_trend")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$mt) <- mvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("mt")) <- mvar
+  attr(out, opt("dv")) <- dvar
   out
 }

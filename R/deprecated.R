@@ -88,3 +88,23 @@ rankSC <- function(...) {
   ranks(...)
 }
 
+#' @rdname deprecated-functions
+#' @export
+power_testSC <- function(...) {
+  .deprecated_warning("power_test", "power_testSC")
+  power_test(...)
+}
+
+#' @rdname deprecated-functions
+#' @export
+fillmissingSC <- function(...) {
+  .deprecated_warning("fill_missing", "fillmissingSC")
+  fill_missing(...)
+}
+
+#' @rdname deprecated-functions
+#' @export
+overlapSC <- function(...) {
+  .deprecated_warning("overlap", "overlapSC")
+  overlap(...)
+}

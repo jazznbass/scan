@@ -14,9 +14,9 @@ show <- function(scdf, max = 5) {
     return()
   }
   
-  var_dv <- scdf_attr(scdf, .opt$dv)
-  var_phase <- scdf_attr(scdf, .opt$phase)
-  var_mt <- scdf_attr(scdf, .opt$mt)
+  var_dv <- scdf_attr(scdf, opt("dv"))
+  var_phase <- scdf_attr(scdf, opt("phase"))
+  var_mt <- scdf_attr(scdf, opt("mt"))
   
   mapply(function(x, y) {
       attr(x[[var_dv]], "label") <- "Dependent variable"

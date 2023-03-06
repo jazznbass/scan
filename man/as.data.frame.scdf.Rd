@@ -21,7 +21,7 @@ names.}
 }
 \value{
 Returns one data frame with data of all single-cases structured by
-  the case variable.
+the case variable.
 }
 \description{
 The as.data.frame function transposes an scdf into one long data frame.

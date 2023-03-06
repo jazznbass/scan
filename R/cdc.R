@@ -1,36 +1,34 @@
 #' Conservative Dual-Criterion Method
 #'
-#' The \code{cdc} function applies the Conservative Dual-Criterion Method
-#' (Fisher, Kelley, & Lomas, 2003) to scdf objects. It compares phase B data
-#' points to both phase A mean and trend (OLS, bi-split, tri-split) with an
-#' additional increase/decrease of .25 SD. A binomial test against a 50/50
-#' distribution is computed and p-values below .05 are labeled "systematic
-#' change".
+#' The `cdc()` function applies the Conservative Dual-Criterion Method (Fisher,
+#' Kelley, & Lomas, 2003) to scdf objects. It compares phase B data points to
+#' both phase A mean and trend (OLS, bi-split, tri-split) with an additional
+#' increase/decrease of .25 SD. A binomial test against a 50/50 distribution is
+#' computed and p-values below .05 are labeled "systematic change".
 #'
 #' @inheritParams .inheritParams
 #' @param trend_method Method used to calculate the trend line. Default is
-#'   \code{trend_method = "OLS"}. Possible values are: \code{"OLS"},
-#'   \code{"bisplit"}, and \code{"trisplit"}. \code{"bisplit"}, and
-#'   \code{"trisplit"} should only be used for cases with at least five
-#'   data-points in both relevant phases.
+#'   `trend_method = "OLS"`. Possible values are: `"OLS"`, `"bisplit"`, and
+#'   `"trisplit"`. `"bisplit"`, and `"trisplit"` should only be used for cases
+#'   with at least five data-points in both relevant phases.
 #' @param conservative The CDC method adjusts the original mean and trend lines
 #'   by adding (expected increase) or subtracting (expected decrease) an
 #'   additional .25 SD before evaluating phase B data. Default is the CDC method
-#'   with \code{conservative = .25}. To apply the Dual-Criterion (DC) method,
-#'   set \code{conservative = 0}.
+#'   with `conservative = .25`. To apply the Dual-Criterion (DC) method, set
+#'   `conservative = 0`.
 #' @return \item{cdc}{CDC Evaluation based on a p-value below .05.}
 #'   \item{cdc_exc}{Number of phase B datapoints indicating expected change.}
 #' \item{cdc_nb}{Number of phase B datapoints.} \item{cdc_p}{P value of Binomial
 #' Test.} \item{cdc_all}{Overall CDC Evaluation based on all instances/cases of
 #' a Multiple Baseline Design.} \item{N}{Number of cases.}
-#'  \item{decreasing}{Logical argument from function call (see \code{Arguments}
+#'  \item{decreasing}{Logical argument from function call (see `Arguments`
 #'   above).}
-#' \item{conservative}{Numeric argument from function call (see \code{Arguments}
+#' \item{conservative}{Numeric argument from function call (see `Arguments`
 #' above).} \item{case_names}{Assigned name of single-case.} \item{phases}{-}
 #' @author Timo Lueke
 #' @references Fisher, W. W., Kelley, M. E., & Lomas, J. E. (2003). Visual Aids
 #'   and Structured Criteria for Improving Visual Inspection and Interpretation
-#'   of Single-Case Designs. \emph{Journal of Applied Behavior Analysis, 36},
+#'   of Single-Case Designs. *Journal of Applied Behavior Analysis, 36*,
 #'   387-406. https://doi.org/10.1901/jaba.2003.36-387
 #' @family overlap functions
 #' @keywords overlap
@@ -47,7 +45,7 @@
 #' ## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.
 #' cdc(exampleABAB, trend_method = "trisplit", phases = c(1,4))
 #'
-#' ## Apply the Dual-Criterion (DC) method (i.e., mean and trend without 
+#' ## Apply the Dual-Criterion (DC) method (i.e., mean and trend without
 #' ##shifting).
 #' cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit", conservative = 0)
 #'
@@ -66,15 +64,12 @@ cdc <- function(data,
   trend_method <- match.arg(trend_method)
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase)
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt)
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
-  scdf_attr(data, .opt$mt) <- mvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
   
   data  <- .prepare_scdf(data, na.rm = TRUE)
-  data  <- .keep_phases(data, phases = phases)$data
+  data  <- recombine_phases(data, phases = phases)$data
   
   N       <- length(data)
   cdc_na  <- rep(NA, N)  # total data points in phase A
@@ -176,11 +171,11 @@ cdc <- function(data,
     decreasing = decreasing,
     trend_method = trend_method,
     conservative = conservative,
-    case_names = .case_names(names(data), length(data))
+    case_names = revise_names(data)
   )
   class(out) <- c("sc_cdc")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$mt) <- mvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("mt")) <- mvar
+  attr(out, opt("dv")) <- dvar
   out
 }

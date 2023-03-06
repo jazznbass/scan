@@ -36,10 +36,8 @@ server <- function(input, output, session) {
     ext <- tools::file_ext(input$upload$datapath)
     if (ext == "rds") {
       new <- readRDS(input$upload$datapath)
-      #syntax <- paste0("scdf <- read_RDS(\"", input$upload$name, "\")")
     } else {
       new <- read_scdf(input$upload$datapath)
-      #syntax <- paste0("scdf <- read_scdf(\"", input$upload$name, "\")")
     }
 
     if (!inherits(new, "scdf")) {

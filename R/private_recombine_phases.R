@@ -1,9 +1,10 @@
-.keep_phases <- function(data, 
-                         phases = c(1, 2), 
-                         set.phases = TRUE, 
-                         pvar) {
-  
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase)
+recombine_phases <- function(data, 
+                             phases = c(1, 2), 
+                             set_phases = TRUE, 
+                             phase_names = c("A", "B"),
+                             pvar) {
+      
+  if (missing(pvar)) pvar <- phase(data)
   
   source_attributes <- attributes(data)
   
@@ -11,7 +12,7 @@
   
   if (inherits(phases, c("character", "numeric", "integer"))) {
     if (!length(phases) == 2) {
-      stop("Phases argument not set correctly.")
+      stop("phases argument not set correctly.")
     }    
     phases_A <- phases[1]
     phases_B <- phases[2]
@@ -56,13 +57,10 @@
       
       tmp <- sapply(phases_total, function(x) sum(x == design$values) > 1)
       if (any(tmp)) {
-        stop(
-          paste0(
-            "Selected phase ", paste(names(tmp[tmp])), 
-            " occure several times. ",
-            "Please give number of phases instead of characters."
-          )
-        )
+        stop(paste0(
+          "Selected phase ", paste(names(tmp[tmp])), " occure several times. ",
+          "Please give number of phases instead of characters."
+        ))
       }
       
       tmp <- sapply(phases_total, function(x) any(x == design$values))
@@ -88,9 +86,18 @@
     
     data[[case]][[pvar]] <- as.character(data[[case]][[pvar]])
     
-    if (set.phases) {
-      data[[case]][A ,pvar] <- "A"
-      data[[case]][B ,pvar] <- "B"
+    if (set_phases) {
+      if (identical(phase_names, "auto")) {
+        phase_names <- sapply(phases, function(x) {
+          if (is.numeric(x)) {
+            paste0(design$values[x], collapse = "")
+          } else {
+            paste0(x, collapse = "")
+          }
+        })          
+      }
+      data[[case]][A ,pvar] <- phase_names[1]
+      data[[case]][B ,pvar] <- phase_names[2]
     }
     data[[case]] <- data[[case]][c(A, B),]
     design_list[[case]] <- design
@@ -105,6 +112,7 @@
   }
   
   attributes(data) <- source_attributes
+  
   out <- list(
     data = data, 
     designs = design_list, 
@@ -112,7 +120,6 @@
     phases_A = phases_A, 
     phases_B = phases_B
   )
-  
   class(out) <- c("sc_keepphases")
   
   out

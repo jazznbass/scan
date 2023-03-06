@@ -29,12 +29,12 @@
 pet <- function(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = c(1, 2)) {
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
   
   data <- .prepare_scdf(data, na.rm = TRUE)
-  data <- .keep_phases(data, phases = phases)$data
+  data <- recombine_phases(data, phases = phases)$data
   
   N <- length(data)
   
@@ -64,10 +64,10 @@ pet <- function(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = 
   out <- list(
     PET = pet, PET.ci = pet.ci, p = p, ci.percent = ci * 100, 
     se.factors = se.factor, N = N, decreasing = decreasing, 
-    case.names = .case_names(names(data), length(data))
+    case.names = revise_names(names(data), length(data))
   )
   class(out) <- c("sc_pet")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("dv")) <- dvar
   out
 }

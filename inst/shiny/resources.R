@@ -39,7 +39,7 @@ examples <- examples[!endsWith(examples,"Leidig2018_l2")]
 examples <- examples[!startsWith(examples,"exampleAB_50.l2")]
 res$choices$examples <- c(
   "(none)", 
-  substr(examples, 0, nchar(examples) - 12)
+  examples#substr(examples, 0, nchar(examples) - 12)
 )
 
 res$choices$scplot_examples <- c(

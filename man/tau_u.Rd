@@ -20,8 +20,8 @@ tau_u(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -37,11 +37,10 @@ calculates the number of possible pairs as described in Parker et al.
 (2011) which might lead to tau-U values greater than 1.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
-that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
-c(2,4)} for comparing the second to the fourth phase. Phases could be
-combined by providing a list with two elements. E.g., \code{phases = list(A
-= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
-(as B). Default is \code{phases = c(1,2)}.}
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
+for comparing the second to the fourth phase. Phases could be combined by
+providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4 (as B). Default
+is \code{phases = c(1,2)}.}
 
 \item{meta_analyses}{If TRUE, a meta analysis is conducted.}
 
@@ -50,7 +49,7 @@ combined by providing a list with two elements. E.g., \code{phases = list(A
 \item{ci_method}{String to specify the method for calculating the standard
 error of tau. Either "tau", "z", or "s" (not recommended).}
 
-\item{meta_weight_method}{String to specify the method for calculating the weights of the studies. 
+\item{meta_weight_method}{String to specify the method for calculating the weights of the studies.
 Either "tau" or "z".}
 
 \item{continuity_correction}{If TRUE, a continuity correction is applied for
@@ -72,18 +71,18 @@ al. (2011a).
 }
 \details{
 Tau-U is an inconsistently operationalized construct. Parker et al.
-  (2011b) describe a method which may result in Tau-U lager than 1. A
-  different implementation of the method (provided at
-  http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of
-  tau-a as in the original formulation by Parker). Bossart et. al (2018)
-  describe inconsistencies in the results from this implementation as well.
-  Another problems lies in the calculation in overall Tau-U values from
-  several single cases. The function presented here applies a metaanalyzes to
-  gain the overall values. Each tau value is weighted by the inverse of the
-  variance (ie. the tau standard error). The confidence intervals for single
-  cases are calculated by Fisher-Z transforming tau, calculating the
-  confidence intervals, and inverse transform them back to tau (see Long &
-  Cliff, 1997).
+(2011b) describe a method which may result in Tau-U lager than 1. A
+different implementation of the method (provided at
+http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of
+tau-a as in the original formulation by Parker). Bossart et. al (2018)
+describe inconsistencies in the results from this implementation as well.
+Another problems lies in the calculation in overall Tau-U values from
+several single cases. The function presented here applies a metaanalyzes to
+gain the overall values. Each tau value is weighted by the inverse of the
+variance (ie. the tau standard error). The confidence intervals for single
+cases are calculated by Fisher-Z transforming tau, calculating the
+confidence intervals, and inverse transform them back to tau (see Long &
+Cliff, 1997).
 }
 \examples{
 
@@ -99,25 +98,24 @@ tau_u(Grosche2011)
 }
 \references{
 Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018).
-  Interpreting Kendall’s Tau and Tau-U for single-case experimental designs.
-  \emph{Cogent Psychology, 5(1)}, 1–26.
-  https://doi.org/10.1080/23311908.2018.1518687.
+Interpreting Kendall’s Tau and Tau-U for single-case experimental designs.
+\emph{Cogent Psychology, 5(1)}, 1–26.
+https://doi.org/10.1080/23311908.2018.1518687.
 
-  Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall’s tau.
-  \emph{British Journal of Mathematical and Statistical Psychology}, 50(1),
-  31–41. https://doi.org/10.1111/j.2044-8317.1997.tb01100.x
+Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall’s tau.
+\emph{British Journal of Mathematical and Statistical Psychology}, 50(1),
+31–41. https://doi.org/10.1111/j.2044-8317.1997.tb01100.x
 
-  Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in
-  Single-Case Research: A Review of Nine Nonoverlap Techniques.
-  \emph{Behavior Modification}, 35(4), 303–322. https://doi.org/10/dsdfs4
-  Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011b).
-  Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
-  \emph{Behavior Therapy, 42}, 284-299.
+Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in
+Single-Case Research: A Review of Nine Nonoverlap Techniques.
+\emph{Behavior Modification}, 35(4), 303–322. https://doi.org/10/dsdfs4
+Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011b).
+Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
+\emph{Behavior Therapy, 42}, 284-299.
 }
 \seealso{
 Other overlap functions: 
 \code{\link{cdc}()},
-\code{\link{corrected_tau}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},

@@ -2,7 +2,7 @@
 .prepare_scdf <- function(data, na.rm = FALSE) {
   
   # check class scdf validity
-  if (.opt$rigorous_class_check) {
+  if (opt("rigorous_class_check")) {
     check_scdf(data)
   }
   #   if (!isTRUE(results)) {
@@ -15,11 +15,11 @@
   #   } 
   # }
 
-  pvar <- scdf_attr(data, .opt$phase)
-  mvar <- scdf_attr(data, .opt$mt)
-  dvar <- scdf_attr(data, .opt$dv)
+  pvar <- phase(data)
+  mvar <- mt(data)
+  dvar <- dv(data)
   
-  names(data) <- .case_names(names(data), length(data))
+  names(data) <- revise_names(names(data), length(data))
   
   for(case in 1:length(data)) {
     

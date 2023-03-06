@@ -7,8 +7,8 @@
 pet(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = c(1, 2))
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -25,15 +25,14 @@ Defaults to the attributes in the scdf file.}
 \code{decreasing = TRUE}. Default is \code{decreasing = FALSE}.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
-that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
-c(2,4)} for comparing the second to the fourth phase. Phases could be
-combined by providing a list with two elements. E.g., \code{phases = list(A
-= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
-(as B). Default is \code{phases = c(1,2)}.}
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
+for comparing the second to the fourth phase. Phases could be combined by
+providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4 (as B). Default
+is \code{phases = c(1,2)}.}
 }
 \value{
 \item{PET}{Percent exceeding the trend.} \item{PET.ci}{Percent
-exceeding the upper / lower 95\%-CI boundary.} \item{p}{P value of Binomial
+exceeding the upper / lower 95\\%-CI boundary.} \item{p}{P value of Binomial
 Test.} \item{ci.percent}{Width of confidence interval in percent.}
 \item{se.factors}{Standard error.} \item{N}{Number of cases.}
 \item{decreasing}{Logical argument from function call (see \code{Arguments}
@@ -58,7 +57,6 @@ pet(dat, ci = .99)
 \seealso{
 Other overlap functions: 
 \code{\link{cdc}()},
-\code{\link{corrected_tau}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},

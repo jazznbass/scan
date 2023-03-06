@@ -7,8 +7,8 @@
 write_scdf(data, filename = NULL, sep = ",", dec = ".", ...)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{filename}{A character string defining the output file name (e.g.
 \code{"SC_data.csv"}.}
@@ -25,8 +25,7 @@ columns: must be a single character.}
 This function restructures and writes single-case data into a .csv-file.
 }
 \details{
-This is a wrapper for the write.table function with predefined
-parameters.
+This is a wrapper for the write.table function with predefined parameters.
 }
 \examples{
 ## write single-case data to a .csv-file
@@ -47,7 +46,7 @@ res2 <- describe(dat)$descriptives
 all.equal(res1,res2)
 }
 \seealso{
-\code{\link{write.table}}, \code{\link{saveRDS}}
+\code{\link[=write.table]{write.table()}}, \code{\link[=saveRDS]{saveRDS()}}
 
 Other io-functions: 
 \code{\link{convert}()},

@@ -27,7 +27,7 @@ print.scdf <- function(x,
   row.names <- FALSE
   N <- length(x)
 
-  names(x) <- .case_names(names(x), N)
+  names(x) <- revise_names(x)
 
   if (identical(cases, "all")) cases <- N
   if (is.numeric(cases) && cases > N) cases <- N
@@ -35,7 +35,7 @@ print.scdf <- function(x,
   if (N > 1)  cat("#A single-case data frame with", N, "cases\n\n")
   
   if (identical(cols, "main")) {
-    cols <- c(attr(x, .opt$dv), attr(x, .opt$phase), attr(x, .opt$mt))
+    cols <- c(attr(x, opt("dv")), attr(x, opt("phase")), attr(x, opt("mt")))
   }
   
   if (!identical(cols, "all")) for(i in 1:N) x[[i]] <- x[[i]][, cols]

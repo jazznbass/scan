@@ -1,48 +1,48 @@
 #' Estimate single-case design
 #'
 #' This functions takes an scdf and extracts design parameters. The resulting
-#' object can be used to randomly create new scdf files with the same
-#' underlying parameters. This is useful for Monte-Carlo studies and
-#' bootstrapping procedures.
+#' object can be used to randomly create new scdf files with the same underlying
+#' parameters. This is useful for Monte-Carlo studies and bootstrapping
+#' procedures.
 #'
 #' @inheritParams .inheritParams
-#' @param s The standard deviation depicting the between case variance of the 
-#' overall performance.
-#' If more than two single-cases are included in the scdf, the variance is 
-#' estimated if s is set to NULL.
-#' @param rtt The reliability of the measurements. The reliability is estimated 
-#' when rtt = NULL.
-#' @param overall_rtt Ignored when `rtt` is set. If TRUE, rtt estimations will be based on all cases and identical for each case.
-#' If FALSE rtt is estimated for each case separately.
-#' @param overall_effects If TRUE, trend, level, and slope effect estimations 
-#' will be identical for each case.
-#' If FALSE, effects are estimated for each case separately.
-#' @param ... Further arguments passed to the plm function used for parameter 
-#' estimation.
-#' @return A list of parameters for each single-case. Parameters include name, 
-#' length, and starting measurement time of each phase, trend, level, and slope 
-#' effects for each phase, start value, standard deviation, and reliability for 
-#' each case.
-#' @examples 
+#' @param s The standard deviation depicting the between case variance of the
+#'   overall performance. If more than two single-cases are included in the
+#'   scdf, the variance is estimated if s is set to NULL.
+#' @param rtt The reliability of the measurements. The reliability is estimated
+#'   when rtt = NULL.
+#' @param overall_rtt Ignored when `rtt` is set. If TRUE, rtt estimations will
+#'   be based on all cases and identical for each case. If FALSE rtt is
+#'   estimated for each case separately.
+#' @param overall_effects If TRUE, trend, level, and slope effect estimations
+#'   will be identical for each case. If FALSE, effects are estimated for each
+#'   case separately.
+#' @param ... Further arguments passed to the plm function used for parameter
+#'   estimation.
+#' @return A list of parameters for each single-case. Parameters include name,
+#'   length, and starting measurement time of each phase, trend, level, and
+#'   slope effects for each phase, start value, standard deviation, and
+#'   reliability for each case.
+#' @examples
 #' # create a random scdf with predefined parameters
 #' set.seed(1234)
 #' design <- design(
-#'   n = 10, trend = -0.02, 
+#'   n = 10, trend = -0.02,
 #'   level = list(0, 1), rtt = 0.8,
 #'   s = 1
 #' )
 #' scdf<- random_scdf(design)
-#' 
-#' # Estimate the parameters based on the scdf and create a new random scdf 
+#'
+#' # Estimate the parameters based on the scdf and create a new random scdf
 #' # based on these estimations
 #' design_est <- estimate_design(scdf, rtt = 0.8)
 #' scdf_est <- random_scdf(design_est)
-#' 
-#' # Analyze both datasets with an hplm model. See how similar the estimations 
+#'
+#' # Analyze both datasets with an hplm model. See how similar the estimations
 #' # are:
 #' hplm(scdf, slope = FALSE)
 #' hplm(scdf_est, slope = FALSE)
-#' 
+#'
 #' # Also similar results for pand and randomization tests:
 #' pand(scdf)
 #' pand(scdf_est)
@@ -59,18 +59,18 @@ estimate_design <- function(data, dvar, pvar, mvar,
                             ...) {
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase)
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt)
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
-  scdf_attr(data, .opt$mt) <- mvar
+  if (missing(dvar)) dvar <- dv(data)
+  if (missing(pvar)) pvar <- phase(data)
+  if (missing(mvar)) mvar <- mt(data)
+  dv(data) <- dvar
+  phase(data) <- pvar
+  mt(data) <- mvar
   
   data <- .prepare_scdf(data)
   N <- length(data)
   case_names <- names(data)
 
-  if (is.null(case_names)) case_names <- .case_names(names(data), length(data))
+  if (is.null(case_names)) case_names <- revise_names(data)
 
   cases <- lapply(data, function(x) {
     df <- as.list(.phasestructure(x, pvar))
@@ -152,8 +152,8 @@ estimate_design <- function(data, dvar, pvar, mvar,
   )
 
   class(out) <- c("sc_design")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$mt) <- mvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("mt")) <- mvar
+  attr(out, opt("dv")) <- dvar
   out
 }

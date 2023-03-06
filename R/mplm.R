@@ -1,23 +1,26 @@
 #' Multivariate Piecewise linear model / piecewise regression
 #'
-#' The \code{mplm} function computes a multivariate piecewise regression model.
-#'
+#' The [mplm()] function computes a multivariate piecewise regression model.
 #'
 #' @inheritParams .inheritParams
 #' @param formula Defaults to the standard piecewise regression model. The
-#' parameter phase followed by the phase name (e.g., phaseB) indicates the level effect of the corresponding phase. The parameter 'inter' followed by the phase name (e.g., interB) adresses the slope effect based on the method
-#' provide in the model argument (e.g., "B&L-B"). The formula can be changed
-#' for example to include further variables into the regression model.
-#' @param update An easier way to change the regression formula (e.g., . ~ . + newvariable).
+#'   parameter phase followed by the phase name (e.g., `phaseB`) indicates the
+#'   level effect of the corresponding phase. The parameter 'inter' followed by
+#'   the phase name (e.g., `interB`) adresses the slope effect based on the
+#'   method provide in the model argument (e.g., `"B&L-B"`). The formula can be
+#'   changed for example to include further variables into the regression model.
+#' @param update An easier way to change the regression formula (e.g., `. ~ . +
+#'   newvariable`).
 #' @param na.action Defines how to deal with missing values
 #' @param ... Further arguments passed to the lm function.
-#' @return \item{model}{Character string from function call (see
-#' \code{Arguments} above).}
-#' \item{full.model}{Full regression model list}
+#' @return \item{model}{Character string from function call (see arguments
+#' above).} \item{full.model}{Full regression model list.}
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @examples
-#' res <- mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
+#' res <- mplm(Leidig2018$`1a1`,
+#'   dvar = c("academic_engagement", "disruptive_behavior")
+#' )
 #' print(res)
 #' ## also report standardized coefficients:
 #' print(res, std = TRUE)
@@ -35,10 +38,16 @@ mplm <- function(data, dvar, mvar, pvar,
                  update = NULL, 
                  na.action = na.omit, ...) {
  
-  model <- match.arg(model)
-  contrast <- match.arg(contrast)
-  contrast_level <- match.arg(contrast_level)
-  contrast_slope <- match.arg(contrast_slope)
+  check_args(
+    by_call(model, "mplm"),
+    by_call(contrast, "mplm"),
+    by_call(contrast_level, "mplm"),
+    by_call(contrast_slope, "mplm")
+  )
+  model <- model[1]
+  contrast <- contrast[1]
+  contrast_level <- contrast_level[1]
+  contrast_slope <- contrast_slope[1]
   
   if (is.na(contrast_level)) contrast_level <- contrast
   if (is.na(contrast_slope)) contrast_slope <- contrast
@@ -48,20 +57,11 @@ mplm <- function(data, dvar, mvar, pvar,
     contrast_slope <- "preceding"
     model <- "B&L-B"
   }
-  
-  check_args(
-    one_of(model, c("H-M", "B&L-B", "W")),
-    one_of(contrast, c("first", "preceding"))
-  )
-  #start_check() %>%
-  #  check_in(model, c("H-M", "B&L-B", "W")) %>%
-  #  check_in(contrast, c("first", "preceding")) %>%
-  #  end_check()
-  
+
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
 
   data <- .prepare_scdf(data)
 
@@ -80,8 +80,8 @@ mplm <- function(data, dvar, mvar, pvar,
 
   if (is.null(formula)) {
     formula <- .create_fixed_formula(
-      dvar = "y", mvar = mvar, slope = slope, level = level,
-      trend = trend, var_phase = tmp_model$var_phase, var_inter = tmp_model$var_inter
+      dvar = "y", mvar = mvar, slope = slope, level = level, trend = trend, 
+      var_phase = tmp_model$var_phase, var_inter = tmp_model$var_inter
     )
     formula <- as.formula(formula)
   }
@@ -92,13 +92,19 @@ mplm <- function(data, dvar, mvar, pvar,
 
   full <- lm(formula, data = data, na.action = na.action, ...)
   full$coef_std <- .std_lm(full)
-  out <- list(model = model, 
-              contrast = list(level = contrast_level, slope = contrast_slope), 
-              full.model = full, formula = formula)
+  
+  out <- structure(
+    list(
+      model = model, 
+      contrast = list(level = contrast_level, slope = contrast_slope), 
+      full.model = full, 
+      formula = formula
+    ),
+    class = c("sc_mplm")
+  )
 
-  class(out) <- c("sc_mplm")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$mt) <- mvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("mt")) <- mvar
+  attr(out, opt("dv")) <- dvar
   out
 }

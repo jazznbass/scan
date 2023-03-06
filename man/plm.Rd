@@ -28,8 +28,8 @@ plm(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -45,8 +45,8 @@ Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
 argument must be set to \code{family = "gaussian"}.}
 
 \item{model}{Model used for calculating the dummy parameters (see Huitema &
-McKean, 2000). Default is \code{model = "W"}. Possible values are:
-\code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
+McKean, 2000). Default is \code{model = "W"}. Possible values are: \code{"B&L-B"},
+\code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
 \item{family}{Set the distribution family. Defaults to a gaussian
 distribution. See the \code{family} function for more details.}
@@ -60,7 +60,8 @@ model.}
 \item{slope}{A logical indicating if a slope parameters is included in the
 model.}
 
-\item{contrast}{Sets contrast_level and contrast_slope. Either "first", "preceding" or a contrast matrix.}
+\item{contrast}{Sets contrast_level and contrast_slope. Either "first",
+"preceding" or a contrast matrix.}
 
 \item{contrast_level}{Either "first", "preceding" or a contrast matrix. If NA
 contrast_level is a copy of contrast.}
@@ -69,41 +70,40 @@ contrast_level is a copy of contrast.}
 contrast_level is a copy of contrast.}
 
 \item{formula}{Defaults to the standard piecewise regression model. The
-parameter phase followed by the phase name (e.g., phaseB) indicates the 
-level effect of the corresponding phase. The parameter 'inter' followed by 
+parameter phase followed by the phase name (e.g., phaseB) indicates the
+level effect of the corresponding phase. The parameter 'inter' followed by
 the phase name (e.g., interB) adresses the slope effect based on the method
 provide in the model argument (e.g., "B&L-B"). The formula can be changed
 for example to include further variables into the regression model.}
 
-\item{update}{An easier way to change the regression formula 
-(e.g., . ~ . + newvariable).}
+\item{update}{An easier way to change the regression formula (e.g., \code{. ~ . + newvariable}).}
 
 \item{na.action}{Defines how to deal with missing values.}
 
-\item{r_squared}{Logical. If TRUE, delta r_squares will be calculated for 
+\item{r_squared}{Logical. If TRUE, delta r_squares will be calculated for
 each predictor.}
 
-\item{var_trials}{Name of the variable containing the number of trials 
-(only for binomial regressions). If a single integer is provided this is
+\item{var_trials}{Name of the variable containing the number of trials (only
+for binomial regressions). If a single integer is provided this is
 considered to be a the constant number of trials across all measurements.}
 
-\item{dvar_percentage}{Only for binomial distribution. If set TRUE, the 
-dependent variable is assumed to represent proportions [0,1]. Otherwise 
+\item{dvar_percentage}{Only for binomial distribution. If set TRUE, the
+dependent variable is assumed to represent proportions \verb{[0,1]}. Otherwise
 dvar is assumed to represent counts.}
 
 \item{...}{Further arguments passed to the glm function.}
 }
 \value{
-\item{formula}{plm formula. Uselful if you want to use the update or 
-  formula argument and you don't know the names of the parameters.}
-\item{model}{Character string from function call (see \code{Arguments} 
-  above).} 
-\item{F.test}{F-test values of modelfit.}
-\item{r.squares}{Explained variance R squared for each model parameter.}
-\item{ar}{Autoregression lag from function call (see \code{Arguments} 
-  above).}
-\item{family}{Distribution family from function call 
-  (see \code{Arguments} above).}
+\item{formula}{plm formula. Uselful if you want to use the update or
+formula argument and you don't know the names of the parameters.}
+\item{model}{Character string from function call (see \code{Arguments}
+above).}
+\item{F.test}{F-test values of modelfit.} \item{r.squares}{Explained variance
+R squared for each model parameter.}
+\item{ar}{Autoregression lag from function call (see \code{Arguments}
+above).}
+\item{family}{Distribution family from function call
+(see \code{Arguments} above).}
 \item{full.model}{Full regression model list from the gls or glm function.}
 }
 \description{
@@ -115,8 +115,8 @@ McKean, 2000).
 ## Compute a piecewise regression model for a random single-case
 set.seed(123)
 AB <- design(
-  phase_design = list(A = 10, B = 20), 
-  level = list(A = 0, B = 1), slope = list(A = 0, B = 0.05), 
+  phase_design = list(A = 10, B = 20),
+  level = list(A = 0, B = 1), slope = list(A = 0, B = 0.05),
   trend = 0.05
 )
 dat <- random_scdf(design = AB)
@@ -124,14 +124,14 @@ plm(dat, AR = 3)
 
 ## Another example with a more complex design
 A1B1A2B2 <- design(
-  phase_design = list(A1 = 15, B1 = 20, A2 = 15, B2 = 20), 
+  phase_design = list(A1 = 15, B1 = 20, A2 = 15, B2 = 20),
   level = list(A1 = 0, B1 = 1, A2 = -1, B2 = 1),
   slope = list(A1 = 0, B1 = 0.0, A2 = 0, B2 = 0.0),
   trend = 0.0)
 dat <- random_scdf(design = A1B1A2B2, seed = 123)
 plm(dat, contrast = "preceding")
 
-## no slope effects were found. Therefore, you might want to the drop slope 
+## no slope effects were found. Therefore, you might want to the drop slope
 ## estimation:
 plm(dat, slope = FALSE, contrast = "preceding")
 
@@ -139,7 +139,7 @@ plm(dat, slope = FALSE, contrast = "preceding")
 plm(dat, slope = FALSE, trend = FALSE, contrast = "preceding")
 
 ## A poisson regression
-example_A24 \%>\% 
+example_A24 \%>\%
   plm(family = "poisson")
 
 ## A binomial regression (frequencies as dependent variable)
@@ -154,7 +154,8 @@ exampleAB_score$Christiano \%>\%
 \references{
 Beretvas, S., & Chung, H. (2008). An evaluation of modified
 R2-change effect size indices for single-subject experimental designs.
-\emph{Evidence-Based Communication Assessment and Intervention, 2}, 120-128.
+\emph{Evidence-Based Communication Assessment and Intervention, 2},
+120-128.
 
 Huitema, B. E., & McKean, J. W. (2000). Design specification issues in
 time-series intervention models. \emph{Educational and Psychological

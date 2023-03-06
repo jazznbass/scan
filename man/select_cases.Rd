@@ -7,8 +7,8 @@
 select_cases(scdf, ...)
 }
 \arguments{
-\item{scdf}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{scdf}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{...}{Selection criteria. Either numeric, objectnames, or as characters.}
 }

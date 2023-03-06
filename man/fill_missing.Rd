@@ -7,8 +7,8 @@
 fill_missing(data, dvar, mvar, na.rm = TRUE)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -16,30 +16,31 @@ Defaults to the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{na.rm}{If set \code{TRUE}, \code{NA} values are also interpolated.
-Default is \code{na.rm = TRUE}.}
+\item{na.rm}{If set \code{TRUE}, \code{NA} values are also interpolated. Default is
+\code{na.rm = TRUE}.}
 }
 \value{
-A single-case data frame with interpolated missing data
-  points.  See \code{\link{scdf}} to learn about the SCDF Format.
+A single-case data frame with interpolated missing data points.  See
+\code{\link[=scdf]{scdf()}} to learn about the SCDF Format.
 }
 \description{
-The \code{fillmissingSC} function replaces missing measurements in
-single-case data.
+The \code{fillmissing()} function replaces missing measurements in single-case
+data.
 }
 \details{
 This procedure is recommended if there are gaps between measurement times
 (e.g. MT: 1, 2, 3, 4, 5, ... 8, 9) or explicitly missing values in your
-single-case data and you want to calculate overlap indices
-(\code{\link{overlapSC}}) or a randomization test (\code{\link{randSC}}).
+single-case data and you want to calculate overlap indices (\code{\link[=overlap]{overlap()}}) or a
+randomization test (\code{\link[=rand_test]{rand_test()}}).
 }
 \examples{
 
-## In his study, Grosche (2011) could not realize measurements each single week for
-## all participants. During the course of 100 weeks, about 20 measurements per person
-## at different times were administered.
+## In his study, Grosche (2011) could not realize measurements each
+## single week for all participants. During the course of 100 weeks,
+## about 20 measurements per person at different times were administered.
 
-## Fill missing values in a single-case dataset with discontinuous measurement times
+## Fill missing values in a single-case dataset with discontinuous
+## measurement times
 Grosche2011filled <- fill_missing(Grosche2011)
 study <- c(Grosche2011[2], Grosche2011filled[2])
 names(study) <- c("Original", "Filled")

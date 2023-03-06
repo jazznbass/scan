@@ -103,14 +103,14 @@ rand_test <- function (data, dvar, pvar,
   if(!is.null(seed)) set.seed(seed)
   
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv)
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
+  if (missing(dvar)) dvar <- dv(data)
+  if (missing(pvar)) pvar <- phase(data) 
+  dv(data) <- dvar
+  phase(data) <- pvar
   
   data <- .prepare_scdf(data)
   
-  keep <- .keep_phases(data, phases = phases)
+  keep <- recombine_phases(data, phases = phases)
   data <- keep$data
   
   a   <- lapply(data, function(x) x[x[, pvar] == "A", dvar])
@@ -282,8 +282,8 @@ rand_test <- function (data, dvar, pvar,
   )
   
   class(out) <- c("sc_rand")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("dv")) <- dvar
   out
 
 }

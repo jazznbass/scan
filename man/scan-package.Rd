@@ -6,7 +6,8 @@
 \alias{scan}
 \title{Single-Case Data Analyses}
 \description{
-A collection of procedures for analysing, visualising, and managing single-case data.
+A collection of procedures for analysing, visualising, and managing
+single-case data.
 }
 \author{
 Juergen Wilbert [aut, cre]

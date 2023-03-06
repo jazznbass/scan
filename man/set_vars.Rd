@@ -16,8 +16,8 @@ set_mvar(data, mvar)
 set_pvar(data, pvar)
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string. Name of the dependent variable.}
 

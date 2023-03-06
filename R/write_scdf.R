@@ -2,20 +2,19 @@
 #'
 #' This function restructures and writes single-case data into a .csv-file.
 #'
-#' This is a wrapper for the write.table function with predefined
-#' parameters.
+#' This is a wrapper for the write.table function with predefined parameters.
 #'
 #' @inheritParams .inheritParams
 #' @param filename A character string defining the output file name (e.g.
-#'   \code{"SC_data.csv"}.
+#'   `"SC_data.csv"`.
 #' @param sep The field separator string. Values within each row of x are
 #'   separated by this string.
 #' @param dec The string to use for decimal points in numeric or complex
 #'   columns: must be a single character.
 #' @param \dots Further arguments passed to write.table.
 #' @author Juergen Wilbert
-#' 
-#' @seealso \code{\link{write.table}}, \code{\link{saveRDS}}
+#'
+#' @seealso [write.table()], [saveRDS()]
 #' @family io-functions
 #' @keywords io
 #' @examples

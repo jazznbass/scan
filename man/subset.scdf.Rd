@@ -4,27 +4,30 @@
 \alias{subset.scdf}
 \title{Subset cases, rows, and variables}
 \usage{
-\method{subset}{scdf}(x, filter, select, cases, ...)
+\method{subset}{scdf}(x, subset, select, cases, ...)
 }
 \arguments{
 \item{x}{An scdf object.}
 
-\item{filter}{Logical expression indicating rows to keep: missing values are taken as false.}
+\item{subset}{Logical expression indicating rows to keep: missing values are
+taken as false.}
 
 \item{select}{Expression, indicating columns to select from an scdf.}
 
 \item{cases}{Expression, indicating cases to keep from an scdf.}
 
-\item{...}{[not implemented]}
+\item{...}{not implemented}
 }
 \value{
 An scdf.
 }
 \description{
-Subset cases, rows, and variables
+This function is mainly used to filter rows by a logical expression. It has
+also arguments to filter variables and cases.
 }
 \examples{
-subset(exampleAB, (values < 60 & phase == "A") | (values >= 60 & phase == "B"))
+exampleAB \%>\%
+  subset((values < 60 & phase == "A") | (values >= 60 & phase == "B"))
 subset(exampleAB_add, select = c(-cigarrets, -depression))
 subset(exampleAB, cases = c(Karolina, Johanna))
 subset(exampleA1B1A2B2, phase \%in\% c("A1", "B2"), cases = Pawel:Moritz)

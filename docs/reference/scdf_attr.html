@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,9 +63,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">scdf_attr</span><span class="op">(</span><span class="va">x</span>, <span class="va">var</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">scdf_attr</span><span class="op">(</span><span class="va">x</span>, var <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">scdf_attr</span><span class="op">(</span><span class="va">x</span>, <span class="va">var</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span></code></pre></div>
+<span><span class="fu">scdf_attr</span><span class="op">(</span><span class="va">x</span>, <span class="va">var</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span></span>
+<span><span class="fu">dv</span><span class="op">(</span><span class="va">scdf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mt</span><span class="op">(</span><span class="va">scdf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">phase</span><span class="op">(</span><span class="va">scdf</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,6 +86,10 @@
 
 <dt>value</dt>
 <dd><p>set value</p></dd>
+
+
+<dt>scdf</dt>
+<dd><p>An <a href="scdf.html">scdf</a> object.</p></dd>
 
 </dl></div>
     <div class="section level2">

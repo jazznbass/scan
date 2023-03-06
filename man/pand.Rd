@@ -7,8 +7,8 @@
 pand(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases = c(1, 2))
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -19,17 +19,16 @@ the attributes in the scdf file.}
 \item{decreasing}{If you expect data to be lower in the B phase, set
 \code{decreasing = TRUE}. Default is \code{decreasing = FALSE}.}
 
-\item{correction}{The default \code{correction = TRUE} makes \code{pand} use
-a frequency matrix, which is corrected for ties. A tie is counted as the
-half of a measurement in both phases. Set \code{correction = FALSE} to use
-the uncorrected matrix, which is not recommended.}
+\item{correction}{The default \code{correction = TRUE} makes \code{pand} use a
+frequency matrix, which is corrected for ties. A tie is counted as the half
+of a measurement in both phases. Set \code{correction = FALSE} to use the
+uncorrected matrix, which is not recommended.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
-that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
-c(2,4)} for comparing the second to the fourth phase. Phases could be
-combined by providing a list with two elements. E.g., \code{phases = list(A
-= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
-(as B). Default is \code{phases = c(1,2)}.}
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
+for comparing the second to the fourth phase. Phases could be combined by
+providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4 (as B). Default
+is \code{phases = c(1,2)}.}
 }
 \value{
 \item{pand}{Percentage of all non-overlapping data.}
@@ -47,21 +46,20 @@ null.value, alternative, method, data.name, correction.}
 above).}
 }
 \description{
-The \code{pand} function calculates the percentage of all non-overlapping
-data (PAND; Parker, Hagan-Burke, & Vannest, 2007), an index to quantify a
-level increase (or decrease) in performance after the onset of an
-intervention.
+The \code{pand()} function calculates the percentage of all non-overlapping data
+(PAND; Parker, Hagan-Burke, & Vannest, 2007), an index to quantify a level
+increase (or decrease) in performance after the onset of an intervention.
 }
 \details{
-The PAND indicates nonoverlap between phase A and B data (like \code{PND}),
-but uses all data and is therefore not based on one single (probably
-unrepresentative) datapoint.  Furthermore, PAND allows the comparison of
-real and expected associations (Chi-square test) and estimation of the
-effect size Phi, which equals Pearsons r for dichotomous data.  Thus,
-phi-Square is the amount of explained variance. The original procedure for
-computing the PAND (Parker, Hagan-Burke, & Vannest, 2007) does not account
-for ambivalent datapoints (ties).  The newer \code{NAP} overcomes this
-problem and has better precision-power (Parker, Vannest, & Davis, 2014).
+The PAND indicates nonoverlap between phase A and B data, but uses
+all data and is therefore not based on one single (probably unrepresentative)
+datapoint.  Furthermore, PAND allows the comparison of real and expected
+associations (Chi-square test) and estimation of the effect size Phi, which
+equals Pearsons r for dichotomous data.  Thus, phi-Square is the amount of
+explained variance. The original procedure for computing the PAND (Parker,
+Hagan-Burke, & Vannest, 2007) does not account for ambivalent datapoints
+(ties).  The newer \emph{nap} (\code{\link[=nap]{nap()}}) overcomes this problem and has better
+precision-power (Parker, Vannest, & Davis, 2014).
 }
 \examples{
 
@@ -80,16 +78,16 @@ pand(cubs, decreasing = TRUE)
 }
 \references{
 Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage
-of All Non-Overlapping Data (PAND): An Alternative to PND. \emph{The Journal
-of Special Education, 40}, 194-204.
+of All Non-Overlapping Data (PAND): An Alternative to PND. \emph{The Journal of
+Special Education, 40}, 194-204.
 
-Parker, R. I., & Vannest, K. (2009). An Improved Effect Size for Single-Case
-Research: Nonoverlap of All Pairs. \emph{Behavior Therapy, 40}, 357-367.
+Parker, R. I., & Vannest, K. (2009). An Improved Effect Size for
+Single-Case Research: Nonoverlap of All Pairs. \emph{Behavior Therapy, 40},
+357-367.
 }
 \seealso{
 Other overlap functions: 
 \code{\link{cdc}()},
-\code{\link{corrected_tau}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pem}()},

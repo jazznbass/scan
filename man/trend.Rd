@@ -15,8 +15,8 @@ trend(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -28,9 +28,9 @@ the attributes in the scdf file.}
 Defaults to the attributes in the scdf file.}
 
 \item{offset}{(Deprecated. Please use first_mt). An offset for the first
-measurement-time of each phase. If \code{offset = 0}, the phase measurement
-is handled as MT 1. Default is \code{offset = -1}, setting the first value
-of MT to 0.}
+measurement-time of each phase. If \code{offset = 0}, the phase measurement is
+handled as MT 1. Default is \code{offset = -1}, setting the first value of MT to
+0.}
 
 \item{first_mt}{A numeric setting the value for the first measurement-time.
 Default = 0.}
@@ -41,13 +41,13 @@ parameters of the model are \code{values}, \code{mt} and \code{phase}.}
 }
 \value{
 \item{trend}{A matrix containing the results (Intercept, B and beta)
-  of separate regression models for phase A, phase B, and the whole data.}
-\item{offset}{Numeric argument from function call (see \code{Arguments}
+of separate regression models for phase A, phase B, and the whole data.}
+\item{offset}{Numeric argument from function call (see arguments
 section).}
 }
 \description{
-The \code{trend} function provides an overview of linear trends in single
-case data. By default, it provides the intercept and slope of a linear and
+The \code{trend()} function provides an overview of linear trends in single case
+data. By default, it provides the intercept and slope of a linear and
 quadratic regression of measurement time on scores. Models are calculated
 separately for each phase and across all phases. For more advanced use, you
 can add regression models using the R-specific formula class.
@@ -68,7 +68,7 @@ trend(ben, offset = 0, model = c("Cubic" = values ~ I(mt^3), "Log Time" = values
 
 }
 \seealso{
-\code{\link{describe}}
+\code{\link[=describe]{describe()}}
 
 Other regression functions: 
 \code{\link{autocorr}()},

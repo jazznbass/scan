@@ -51,7 +51,7 @@ file extension.}
 }
 \value{
 Returns a single-case data frame. See \code{\link{scdf}} to learn
-  about the format of these data frames.
+about the format of these data frames.
 }
 \description{
 Use the \code{read_scdf} function to load single-case data csv, excel, or
@@ -76,7 +76,7 @@ all.equal(res1,res2)
 }
 \seealso{
 \code{\link{read.table}}, \code{\link{readRDS}},
-  \code{\link{read_excel}}
+\code{\link{read_excel}}
 
 Other io-functions: 
 \code{\link{convert}()},

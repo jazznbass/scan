@@ -2,8 +2,7 @@
 % Please edit documentation in R/convert.R
 \name{convert}
 \alias{convert}
-\title{Convert
-Converts an scdf object into R code}
+\title{Convert}
 \usage{
 convert(
   scdf,
@@ -16,8 +15,8 @@ convert(
 )
 }
 \arguments{
-\item{scdf}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{scdf}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{file}{A filename for exporting the syntax.}
 
@@ -35,7 +34,6 @@ this format.}
 Returns a string (invisible).
 }
 \description{
-Convert
 Converts an scdf object into R code
 }
 \examples{

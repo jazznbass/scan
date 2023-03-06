@@ -1,16 +1,12 @@
 #' as_scdf
-#' 
-#' Converts a data frame to an scdf object. 
+#'
+#' Converts a data frame to an scdf object.
 #'
 #' @param object A data.frame
-#' @param cvar Sets the variable name of the "case" variable. Defaults to
-#'   \code{"case"}.
-#' @param pvar Sets the variable name of the "phase" variable. Defaults to
-#'   \code{"phase"}.
-#' @param dvar Sets the variable name of the "values" variable. Defaults to
-#'   \code{"values"}.
-#' @param mvar Sets the variable name of the "mt" variable. Defaults to
-#'   \code{"mt"}.
+#' @param cvar Sets the "case" variable. Defaults to `case`.
+#' @param pvar Sets the "phase" variable. Defaults to `phase`.
+#' @param dvar Sets the "values" variable. Defaults to `values`.
+#' @param mvar Sets the variable name of the "mt" variable. Defaults to `mt`.
 #' @param phase_names A character vector with phase names. Defaults to the phase
 #'   names provided in the phase variable.
 #' @param sort_cases If set TRUE, the resulting list is sorted by label names
@@ -33,10 +29,10 @@ as_scdf <- function(object,
     object[[cvar]] <- "unnamed"
   }
   
-  if (!is.null(attr(object, .opt$scdf))) {
-    pvar <- attr(object, .opt$scdf)[[.opt$phase]] 
-    dvar <- attr(object, .opt$scdf)[[.opt$dv]] 
-    mvar <- attr(object, .opt$scdf)[[.opt$mt]] 
+  if (!is.null(attr(object, opt("scdf")))) {
+    pvar <- attr(object, opt("scdf"))[[opt("phase")]] 
+    dvar <- attr(object, opt("scdf"))[[opt("dv")]] 
+    mvar <- attr(object, opt("scdf"))[[opt("mt")]] 
     message("Found scdf attributes and replaced function arguments.")
   }
   
@@ -57,9 +53,9 @@ as_scdf <- function(object,
   names(object) <- case_names
   
   class(object) <- c("scdf", "list")
-  scdf_attr(object, .opt$phase) <- pvar
-  scdf_attr(object, .opt$dv)    <- dvar
-  scdf_attr(object, .opt$mt)    <- mvar
+  phase(object) <- pvar
+  dv(object) <- dvar
+  mt(object) <- mvar
   
   object
   

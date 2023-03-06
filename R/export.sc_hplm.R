@@ -15,7 +15,7 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   if (is.na(caption)) {
     caption <- paste0(
       "Hierarchical Piecewise Linear Regression predicting variable '", 
-      attr(object, .opt$dv),  "'"
+      attr(object, opt("dv")),  "'"
     )
   }
   kable_options$caption <- caption

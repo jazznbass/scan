@@ -18,8 +18,8 @@ estimate_design(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -30,56 +30,56 @@ the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{s}{The standard deviation depicting the between case variance of the 
-overall performance.
-If more than two single-cases are included in the scdf, the variance is 
-estimated if s is set to NULL.}
+\item{s}{The standard deviation depicting the between case variance of the
+overall performance. If more than two single-cases are included in the
+scdf, the variance is estimated if s is set to NULL.}
 
-\item{rtt}{The reliability of the measurements. The reliability is estimated 
+\item{rtt}{The reliability of the measurements. The reliability is estimated
 when rtt = NULL.}
 
-\item{overall_effects}{If TRUE, trend, level, and slope effect estimations 
-will be identical for each case.
-If FALSE, effects are estimated for each case separately.}
+\item{overall_effects}{If TRUE, trend, level, and slope effect estimations
+will be identical for each case. If FALSE, effects are estimated for each
+case separately.}
 
-\item{overall_rtt}{Ignored when `rtt` is set. If TRUE, rtt estimations will be based on all cases and identical for each case.
-If FALSE rtt is estimated for each case separately.}
+\item{overall_rtt}{Ignored when \code{rtt} is set. If TRUE, rtt estimations will
+be based on all cases and identical for each case. If FALSE rtt is
+estimated for each case separately.}
 
 \item{model}{Model used for calculating the dummy parameters (see Huitema &
-McKean, 2000). Default is \code{model = "W"}. Possible values are:
-\code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
+McKean, 2000). Default is \code{model = "W"}. Possible values are: \code{"B&L-B"},
+\code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
-\item{...}{Further arguments passed to the plm function used for parameter 
+\item{...}{Further arguments passed to the plm function used for parameter
 estimation.}
 }
 \value{
-A list of parameters for each single-case. Parameters include name, 
-length, and starting measurement time of each phase, trend, level, and slope 
-effects for each phase, start value, standard deviation, and reliability for 
-each case.
+A list of parameters for each single-case. Parameters include name,
+length, and starting measurement time of each phase, trend, level, and
+slope effects for each phase, start value, standard deviation, and
+reliability for each case.
 }
 \description{
 This functions takes an scdf and extracts design parameters. The resulting
-object can be used to randomly create new scdf files with the same
-underlying parameters. This is useful for Monte-Carlo studies and
-bootstrapping procedures.
+object can be used to randomly create new scdf files with the same underlying
+parameters. This is useful for Monte-Carlo studies and bootstrapping
+procedures.
 }
 \examples{
 # create a random scdf with predefined parameters
 set.seed(1234)
 design <- design(
-  n = 10, trend = -0.02, 
+  n = 10, trend = -0.02,
   level = list(0, 1), rtt = 0.8,
   s = 1
 )
 scdf<- random_scdf(design)
 
-# Estimate the parameters based on the scdf and create a new random scdf 
+# Estimate the parameters based on the scdf and create a new random scdf
 # based on these estimations
 design_est <- estimate_design(scdf, rtt = 0.8)
 scdf_est <- random_scdf(design_est)
 
-# Analyze both datasets with an hplm model. See how similar the estimations 
+# Analyze both datasets with an hplm model. See how similar the estimations
 # are:
 hplm(scdf, slope = FALSE)
 hplm(scdf_est, slope = FALSE)

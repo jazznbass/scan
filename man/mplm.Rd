@@ -23,8 +23,8 @@ mplm(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -36,10 +36,11 @@ Defaults to the attributes in the scdf file.}
 the attributes in the scdf file.}
 
 \item{model}{Model used for calculating the dummy parameters (see Huitema &
-McKean, 2000). Default is \code{model = "W"}. Possible values are:
-\code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
+McKean, 2000). Default is \code{model = "W"}. Possible values are: \code{"B&L-B"},
+\code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
-\item{contrast}{Sets contrast_level and contrast_slope. Either "first", "preceding" or a contrast matrix.}
+\item{contrast}{Sets contrast_level and contrast_slope. Either "first",
+"preceding" or a contrast matrix.}
 
 \item{contrast_level}{Either "first", "preceding" or a contrast matrix. If NA
 contrast_level is a copy of contrast.}
@@ -57,26 +58,29 @@ model.}
 model.}
 
 \item{formula}{Defaults to the standard piecewise regression model. The
-parameter phase followed by the phase name (e.g., phaseB) indicates the level effect of the corresponding phase. The parameter 'inter' followed by the phase name (e.g., interB) adresses the slope effect based on the method
-provide in the model argument (e.g., "B&L-B"). The formula can be changed
-for example to include further variables into the regression model.}
+parameter phase followed by the phase name (e.g., \code{phaseB}) indicates the
+level effect of the corresponding phase. The parameter 'inter' followed by
+the phase name (e.g., \code{interB}) adresses the slope effect based on the
+method provide in the model argument (e.g., \code{"B&L-B"}). The formula can be
+changed for example to include further variables into the regression model.}
 
-\item{update}{An easier way to change the regression formula (e.g., . ~ . + newvariable).}
+\item{update}{An easier way to change the regression formula (e.g., \code{. ~ . + newvariable}).}
 
 \item{na.action}{Defines how to deal with missing values}
 
 \item{...}{Further arguments passed to the lm function.}
 }
 \value{
-\item{model}{Character string from function call (see
-\code{Arguments} above).}
-\item{full.model}{Full regression model list}
+\item{model}{Character string from function call (see arguments
+above).} \item{full.model}{Full regression model list.}
 }
 \description{
-The \code{mplm} function computes a multivariate piecewise regression model.
+The \code{\link[=mplm]{mplm()}} function computes a multivariate piecewise regression model.
 }
 \examples{
-res <- mplm(Leidig2018$`1a1`, dvar = c("academic_engagement", "disruptive_behavior"))
+res <- mplm(Leidig2018$`1a1`,
+  dvar = c("academic_engagement", "disruptive_behavior")
+)
 print(res)
 ## also report standardized coefficients:
 print(res, std = TRUE)

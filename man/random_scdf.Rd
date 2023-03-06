@@ -14,8 +14,8 @@ all parameters.}
 decimal, set \code{round = 2}.}
 
 \item{random_names}{Is \code{FALSE} by default. If set \code{random_names =
-TRUE} cases are assigned random first names. If set \code{"neutral", "male"
-or "female"} only gender neutral, male, or female names are chosen. The
+  TRUE} cases are assigned random first names. If set \code{"neutral", "male"
+  or "female"} only gender neutral, male, or female names are chosen. The
 names are drawn from the 2,000 most popular names for newborns in 2012 in
 the U.S. (1,000 male and 1,000 female names).}
 
@@ -26,7 +26,7 @@ for a more concise coding.}
 }
 \value{
 A single-case data frame. See \code{\link{scdf}} to learn about this
-  format.
+format.
 }
 \description{
 The \code{random_scdf} function generates random single-case data frames for

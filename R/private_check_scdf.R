@@ -25,17 +25,17 @@ check_scdf <- function(object, message = FALSE) {
     errors <- c(errors, msg)
   }
   
-  scdf_attributes <- attr(object, .opt$scdf)
+  scdf_attributes <- attr(object, opt("scdf"))
   
   if (is.null(scdf_attributes)) {
-    msg <- paste0("Attribute '", .opt$scdf, "' missing.")
+    msg <- paste0("Attribute '", opt("scdf"), "' missing.")
     errors <- c(errors, msg)
     return(errors)
   } 
   
-  var_phase <- scdf_attributes[[.opt$phase]]
-  var_mt <- scdf_attributes[[.opt$mt]]
-  var_dv <- scdf_attributes[[.opt$dv]]
+  var_phase <- scdf_attributes[[opt("phase")]]
+  var_mt <- scdf_attributes[[opt("mt")]]
+  var_dv <- scdf_attributes[[opt("dv")]]
   
   # check all elements are data frames
   if (!all(unlist(lapply(object, function(x) is.data.frame(x))))) {

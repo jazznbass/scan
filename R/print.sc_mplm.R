@@ -14,6 +14,10 @@ print.sc_mplm <- function(x, digits = "auto", std = FALSE, ...) {
   )
    
   coef <- x$full.model$coefficients
+  if (inherits(coef, "numeric"))  {
+    coef <- as.data.frame(coef)
+    names(coef) <- attr(x, opt("dv"))
+  }
   
   rownames(coef) <- gsub("(Intercept)", "Intercept", rownames(coef))
   rownames(coef) <- gsub("mt", "Trend", rownames(coef))
@@ -38,11 +42,20 @@ print.sc_mplm <- function(x, digits = "auto", std = FALSE, ...) {
   cat("Formula: ")
   print(x$formula, showEnv = FALSE)
   res <- car::Anova(x$full.model, type = 3)
-  res$terms <- gsub("(Intercept)", "Intercept", res$terms)
-  res$terms <- gsub("mt", "Trend", res$terms)
-  res$terms <- gsub("phase", "Level Phase ", res$terms)
-  res$terms <- gsub("inter", "Slope Phase ", res$terms)
-  
+  if (!is.null(res$terms)) {
+    res$terms <- gsub("(Intercept)", "Intercept", res$terms)
+    res$terms <- gsub("mt", "Trend", res$terms)
+    res$terms <- gsub("phase", "Level Phase ", res$terms)
+    res$terms <- gsub("inter", "Slope Phase ", res$terms)
+  } else {
+    rn <- attr(res, "row.names")
+    rn <- gsub("(Intercept)", "Intercept", rn)
+    rn <- gsub("mt", "Trend", rn)
+    rn <- gsub("phase", "Level Phase ", rn)
+    rn <- gsub("inter", "Slope Phase ", rn)
+    attr(res, "row.names") <- rn
+  }
+    
   print(res, digits = digits, ...)
   .note_vars(x)
   

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,6 +59,18 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.56" id="scan-056x">scan 0.56.x<a class="anchor" aria-label="anchor" href="#scan-056x"></a></h2><p class="text-muted">CRAN release: 2023-02-16</p>
 <div class="section level3">
+<h3 id="shiny-app-added-experimentally-0-56">Shiny app added (experimentally)<a class="anchor" aria-label="anchor" href="#shiny-app-added-experimentally-0-56"></a></h3>
+<ul><li>start the app with <code><a href="../reference/scan_app.html">scan_app()</a></code>
+</li>
+<li>you need the following packages to run the app:
+<ul><li>
+<code>shiny</code>, <code>shinyjs</code>, <code>scplot</code>, <code>markdown</code>
+</li>
+<li>install scplot with <code>devtools::install_github("jazznbass/scplot")</code>
+</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
 <h3 id="new-fucntions-0-56">New fucntions<a class="anchor" aria-label="anchor" href="#new-fucntions-0-56"></a></h3>
 <ul><li>
 <code><a href="../reference/show.html">show()</a></code>: Opens each case within an scdf in a separate viewer tab.</li>
@@ -71,6 +83,8 @@
 <li>
 <code><a href="../reference/export.html">export()</a></code>: new for <code>nap(), pen()</code>
 </li>
+<li>
+<code>c()/combine()</code>: new arguments to set author and info attributes (<code>author</code>, <code>info</code>)</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-56">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-56"></a></h3>
@@ -81,6 +95,8 @@
 <h3 id="minor-0-56">minor<a class="anchor" aria-label="anchor" href="#minor-0-56"></a></h3>
 <ul><li>
 <code><a href="../reference/convert.html">convert()</a></code>: new arguments. indent sets the indentation. When the scdf contains only one case, no study is combined.</li>
+<li>
+<code><a href="../reference/select_phases.html">select_phases()</a></code>: New argument <code>phase_names</code> sets names of the recombined phases. The default <code>"auto"</code> creates combinations of the phase names automatically (e.g., <code>A = c("A", "B", B = "C")</code> results in phases <code>AB</code> and <code>C</code>).</li>
 </ul></div>
 </div>
     <div class="section level2">

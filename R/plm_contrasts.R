@@ -1,7 +1,7 @@
 .add_model_dummies <- function(data, model, 
-                               dvar = scdf_attr(data, .opt$dv), 
-                               pvar = scdf_attr(data, .opt$phase), 
-                               mvar = scdf_attr(data, .opt$mt),
+                               dvar = dv(data), 
+                               pvar = phase(data), 
+                               mvar = mt(data),
                                contrast_level,
                                contrast_slope) {
       

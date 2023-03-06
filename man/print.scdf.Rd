@@ -34,8 +34,8 @@ Print an scdf
 }
 \details{
 Print options for scdf objects could be set globally:
-option(scan.print.cases = "all"), 
-option(scan.print.rows = 10), 
+option(scan.print.cases = "all"),
+option(scan.print.rows = 10),
 option(scan.print.cols = "main"),
 option(scan.print.long = TRUE),
 option(scan.print.digits = 0),

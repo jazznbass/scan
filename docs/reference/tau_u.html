@@ -12,7 +12,7 @@ al. (2011a)."><meta property="og:image" content="/logo.png"><!-- mathjax --><scr
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,8 +85,8 @@ al. (2011a).</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>A single-case data frame. See <code><a href="scdf.html">scdf</a></code> to learn about
-this format.</p></dd>
+<dd><p>A single-case data frame. See <code><a href="scdf.html">scdf()</a></code> to learn about this
+format.</p></dd>
 
 
 <dt>dvar</dt>
@@ -112,11 +112,10 @@ calculates the number of possible pairs as described in Parker et al.
 
 <dt>phases</dt>
 <dd><p>A vector of two characters or numbers indicating the two phases
-that should be compared. E.g., <code>phases = c("A","C")</code> or <code>phases =
-c(2,4)</code> for comparing the second to the fourth phase. Phases could be
-combined by providing a list with two elements. E.g., <code>phases = list(A
-= c(1,3), B = c(2,4))</code> will compare phases 1 and 3 (as A) against 2 and 4
-(as B). Default is <code>phases = c(1,2)</code>.</p></dd>
+that should be compared. E.g., <code>phases = c("A","C")</code> or <code>phases = c(2,4)</code>
+for comparing the second to the fourth phase. Phases could be combined by
+providing a list with two elements. E.g., <code>phases = list(A = c(1,3), B = c(2,4))</code> will compare phases 1 and 3 (as A) against 2 and 4 (as B). Default
+is <code>phases = c(1,2)</code>.</p></dd>
 
 
 <dt>meta_analyses</dt>
@@ -133,7 +132,7 @@ error of tau. Either "tau", "z", or "s" (not recommended).</p></dd>
 
 
 <dt>meta_weight_method</dt>
-<dd><p>String to specify the method for calculating the weights of the studies. 
+<dd><p>String to specify the method for calculating the weights of the studies.
 Either "tau" or "z".</p></dd>
 
 
@@ -164,39 +163,39 @@ statistics.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Tau-U is an inconsistently operationalized construct. Parker et al.
-  (2011b) describe a method which may result in Tau-U lager than 1. A
-  different implementation of the method (provided at
-  http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of
-  tau-a as in the original formulation by Parker). Bossart et. al (2018)
-  describe inconsistencies in the results from this implementation as well.
-  Another problems lies in the calculation in overall Tau-U values from
-  several single cases. The function presented here applies a metaanalyzes to
-  gain the overall values. Each tau value is weighted by the inverse of the
-  variance (ie. the tau standard error). The confidence intervals for single
-  cases are calculated by Fisher-Z transforming tau, calculating the
-  confidence intervals, and inverse transform them back to tau (see Long &amp;
-  Cliff, 1997).</p>
+(2011b) describe a method which may result in Tau-U lager than 1. A
+different implementation of the method (provided at
+http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of
+tau-a as in the original formulation by Parker). Bossart et. al (2018)
+describe inconsistencies in the results from this implementation as well.
+Another problems lies in the calculation in overall Tau-U values from
+several single cases. The function presented here applies a metaanalyzes to
+gain the overall values. Each tau value is weighted by the inverse of the
+variance (ie. the tau standard error). The confidence intervals for single
+cases are calculated by Fisher-Z transforming tau, calculating the
+confidence intervals, and inverse transform them back to tau (see Long &amp;
+Cliff, 1997).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Brossart, D. F., Laird, V. C., &amp; Armstrong, T. W. (2018).
-  Interpreting Kendall’s Tau and Tau-U for single-case experimental designs.
-  <em>Cogent Psychology, 5(1)</em>, 1–26.
-  https://doi.org/10.1080/23311908.2018.1518687.</p>
+Interpreting Kendall’s Tau and Tau-U for single-case experimental designs.
+<em>Cogent Psychology, 5(1)</em>, 1–26.
+https://doi.org/10.1080/23311908.2018.1518687.</p>
 <p>Long, J. D., &amp; Cliff, N. (1997). Confidence intervals for Kendall’s tau.
-  <em>British Journal of Mathematical and Statistical Psychology</em>, 50(1),
-  31–41. https://doi.org/10.1111/j.2044-8317.1997.tb01100.x</p>
+<em>British Journal of Mathematical and Statistical Psychology</em>, 50(1),
+31–41. https://doi.org/10.1111/j.2044-8317.1997.tb01100.x</p>
 <p>Parker, R. I., Vannest, K. J., &amp; Davis, J. L. (2011a). Effect Size in
-  Single-Case Research: A Review of Nine Nonoverlap Techniques.
-  <em>Behavior Modification</em>, 35(4), 303–322. https://doi.org/10/dsdfs4
-  Parker, R. I., Vannest, K. J., Davis, J. L., &amp; Sauber, S. B. (2011b).
-  Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
-  <em>Behavior Therapy, 42</em>, 284-299.</p>
+Single-Case Research: A Review of Nine Nonoverlap Techniques.
+<em>Behavior Modification</em>, 35(4), 303–322. https://doi.org/10/dsdfs4
+Parker, R. I., Vannest, K. J., Davis, J. L., &amp; Sauber, S. B. (2011b).
+Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
+<em>Behavior Therapy, 42</em>, 284-299.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other overlap functions: 
-<code><a href="corrected_tau.html">corrected_tau</a>()</code>,
+<code><a href="cdc.html">cdc</a>()</code>,
 <code><a href="nap.html">nap</a>()</code>,
 <code><a href="overlap.html">overlap</a>()</code>,
 <code><a href="pand.html">pand</a>()</code>,

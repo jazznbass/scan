@@ -161,10 +161,10 @@ random_scdf <- function(design = NULL,
     #)
   }
 
-  if (random_names == "male") names(out) <- sample(.opt$male.names, n)
-  if (random_names == "female") names(out) <- sample(.opt$female.names, n)
-  if (random_names == "neutral") names(out) <- sample(.opt$neutrals.names, n)
-  if (isTRUE(random_names)) names(out) <- sample(.opt$names, n)
+  if (random_names == "male") names(out) <- sample(case_names$male, n)
+  if (random_names == "female") names(out) <- sample(case_names$female, n)
+  if (random_names == "neutral") names(out) <- sample(case_names$neutral, n)
+  if (isTRUE(random_names)) names(out) <- sample(case_names$all, n)
 
   attributes(out) <- .default_attributes(attributes(out))
   out

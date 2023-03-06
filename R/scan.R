@@ -1,5 +1,5 @@
 .onAttach <- function(lib, pkg, ...) {
-  packageStartupMessage(.opt$startup_message)
+  packageStartupMessage(opt("startup_message"))
 }	
 
 .onLoad <- function(lib, pkg, ...) {

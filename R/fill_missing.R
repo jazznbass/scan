@@ -1,28 +1,29 @@
 #' Replacing missing measurement times in single-case data
 #'
-#' The \code{fillmissingSC} function replaces missing measurements in
-#' single-case data.
+#' The `fillmissing()` function replaces missing measurements in single-case
+#' data.
 #'
 #' This procedure is recommended if there are gaps between measurement times
 #' (e.g. MT: 1, 2, 3, 4, 5, ... 8, 9) or explicitly missing values in your
-#' single-case data and you want to calculate overlap indices
-#' (\code{\link{overlapSC}}) or a randomization test (\code{\link{randSC}}).
+#' single-case data and you want to calculate overlap indices ([overlap()]) or a
+#' randomization test ([rand_test()]).
 #'
 #' @inheritParams .inheritParams
-#' @param na.rm If set \code{TRUE}, \code{NA} values are also interpolated.
-#'   Default is \code{na.rm = TRUE}.
-#' @return A single-case data frame with interpolated missing data
-#'   points.  See \code{\link{scdf}} to learn about the SCDF Format.
+#' @param na.rm If set `TRUE`, `NA` values are also interpolated. Default is
+#'   `na.rm = TRUE`.
+#' @return A single-case data frame with interpolated missing data points.  See
+#'   [scdf()] to learn about the SCDF Format.
 #' @author Juergen Wilbert
 #' @family data manipulation functions
 #' @keywords manip
 #' @examples
 #'
-#' ## In his study, Grosche (2011) could not realize measurements each single week for
-#' ## all participants. During the course of 100 weeks, about 20 measurements per person
-#' ## at different times were administered.
+#' ## In his study, Grosche (2011) could not realize measurements each
+#' ## single week for all participants. During the course of 100 weeks,
+#' ## about 20 measurements per person at different times were administered.
 #'
-#' ## Fill missing values in a single-case dataset with discontinuous measurement times
+#' ## Fill missing values in a single-case dataset with discontinuous
+#' ## measurement times
 #' Grosche2011filled <- fill_missing(Grosche2011)
 #' study <- c(Grosche2011[2], Grosche2011filled[2])
 #' names(study) <- c("Original", "Filled")
@@ -43,11 +44,9 @@ fill_missing <- function(data, dvar, mvar,
                          na.rm = TRUE) {
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt)
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$mt) <- mvar
-  
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
+
   source_attributes <- attributes(data)
   
   data <- .prepare_scdf(data)
@@ -77,9 +76,3 @@ fill_missing <- function(data, dvar, mvar,
   data
 }
 
-#' @rdname deprecated-functions
-#' @export
-fillmissingSC <- function(...) {
-  .deprecated_warning("fill_missing", "fillmissingSC")
-  fill_missing(...)
-}

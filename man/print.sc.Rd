@@ -45,7 +45,7 @@
 
 \method{print}{sc_mplm}(x, digits = "auto", std = FALSE, ...)
 
-\method{print}{sc_nap}(x, digits = "auto", ...)
+\method{print}{sc_nap}(x, digits = "auto", nice = TRUE, ...)
 
 \method{print}{sc_outlier}(x, digits = "auto", ...)
 
@@ -83,7 +83,7 @@
 \arguments{
 \item{x}{Object}
 
-\item{digits}{The minimum number of significant digits to be use. 
+\item{digits}{The minimum number of significant digits to be use.
 If set to "auto" (default), values are predefined.}
 
 \item{...}{Further parameters passed to the print function}

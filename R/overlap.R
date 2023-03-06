@@ -1,46 +1,52 @@
 #' Overlap indices for single-case data
-#' 
+#'
 #' The \code{overlap} function provides the most common overlap indices for
 #' single-case data and some additional statistics.
-#' 
+#'
 #' @inheritParams .inheritParams
-#' @details See corresponding functions of PND, PEM, PET, NAP, PAND for calculation. Tau_U reports "A vs. B + Trend B - Trend A". Base_Tau is baseline corrected tau (correction applied when autocorrelation in phase A is significant). Diff_mean is the mean difference. Diff_trend is the difference in the regression estimation of the dependent variable on measurement-time ( x ~ mt) for each phase. SMD is the mean difference divided by the standardd eviation of phase A. Hedges_g is the mean difference divided by the pooled standard deviation [sqrt(((nA - 1) * sdA^2 + (nB - 1) * sdB^2) / (nA + nB - 2) )] with a hedges correction applied [(* (1 - (3 / (4 * n - 9) ) )].
-#' @return 
+#' @details See corresponding functions of PND, PEM, PET, NAP, PAND for
+#'   calculation. Tau_U(A) reports "A vs. B - Trend A" whereas Tau_U(BA) reports
+#'   "A vs. B + Trend B - Trend A". Base_Tau is baseline corrected tau
+#'   (correction applied when autocorrelation in phase A is significant).
+#'   Diff_mean is the mean difference. Diff_trend is the difference in the
+#'   regression estimation of the dependent variable on measurement-time (`x ~
+#'   mt`) for each phase. SMD is the mean difference divided by the standard
+#'   eviation of phase A. Hedges_g is the mean difference divided by the pooled
+#'   standard deviation: \eqn{\sqrt{ (n_A - 1)sd_A^2 + (n_B - 1)sd_B^2 \over n_A
+#'   + n_B - 2 }} with a hedges correction applied: \eqn{Hedges_g * (1 -
+#'   \frac{3}{4n - 9} ) )}.
+#' @return
 #' \item{overlap}{A data frame consisting of the following indices for
 #' each single-case for all cases: PND, PEM, PET, NAP, PAND, Tau-U (A vs. B -
 #' Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.}
-#' \item{phases.A}{Selection for A phase.}
-#' \item{phases.B}{Selection for B phase.}
-#' \item{design}{Phase design.}
+#' \item{phases.A}{Selection for A phase.} \item{phases.B}{Selection for B
+#' phase.} \item{design}{Phase design.}
 #' @family overlap functions
 #' @author Juergen Wilbert
 #' @examples
-#' 
+#'
 #' ## Display overlap indices for one single-case
 #' overlap(Huitema2000, decreasing = TRUE)
-#' 
+#'
 #' ## Display overlap indices for six single-cases
 #' overlap(GruenkeWilbert2014)
-#' 
-#' ## Combining phases for analyszing designs with more than two phases   
+#'
+#' ## Combining phases for analyszing designs with more than two phases
 #' overlap(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
-#' 
+#'
 #' @export
 overlap <- function(data, dvar, pvar, mvar, 
                     decreasing = FALSE, 
                     phases = c(1, 2)){
 
   # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) 
-    dvar <- scdf_attr(data, .opt$dv) else scdf_attr(data, .opt$dv) <- dvar
-  if (missing(pvar)) 
-    pvar <- scdf_attr(data, .opt$phase) else scdf_attr(data, .opt$phase) <- pvar
-  if (missing(mvar)) 
-    mvar <- scdf_attr(data, .opt$mt) else scdf_attr(data, .opt$mt) <- mvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
   
   data_list <- .prepare_scdf(data)
   
-  keep <- .keep_phases(data_list, phases = phases)
+  keep <- recombine_phases(data_list, phases = phases)
   data_list <- keep$data
   
   designs <- lapply(keep$designs, function(x) x$values)
@@ -48,11 +54,11 @@ overlap <- function(data, dvar, pvar, mvar,
   
   N <- length(data_list)
 
-  case_names <- .case_names(names(data_list), length(data_list))
+  case_names <- revise_names(data_list)
 
   vars <- c(
-    "PND", "PEM", "PET", "NAP", "NAP rescaled", "PAND", "Tau_U", 
-    "Base_Tau",  "Diff_mean", "Diff_trend", "SMD", "Hedges_g"
+    "PND", "PEM", "PET", "NAP", "NAP rescaled", "PAND", "Tau_U(A)", 
+    "Tau_U(BA)", "Base_Tau",  "Diff_mean", "Diff_trend", "SMD", "Hedges_g"
   )
   df <- as.data.frame(matrix(nrow = N, ncol = length(vars)))
   colnames(df) <- vars
@@ -61,13 +67,15 @@ overlap <- function(data, dvar, pvar, mvar,
   for(i in 1:N) {
     data <- data_list[i]
     df$PND[i] <- pnd(data, decreasing = decreasing)$PND
-    df$PEM[i] <- pem(data, decreasing = decreasing, binom.test = FALSE, chi.test = FALSE)$PEM
+    df$PEM[i] <- pem(data, 
+      decreasing = decreasing, binom.test = FALSE, chi.test = FALSE)$PEM
     df$PET[i] <- pet(data, decreasing = decreasing)$PET
-    df$NAP[i] <- nap(data, decreasing = decreasing)$nap$NAP[1]
-    df$"NAP rescaled"[i] <- nap(data, decreasing = decreasing)$nap$Rescaled[1]
+    df$NAP[i] <- nap(data, decreasing = decreasing)$nap[[1, "NAP"]]
+    df$"NAP rescaled"[i] <- nap(
+      data, decreasing = decreasing)$nap[[1, "Rescaled"]]
     df$PAND[i] <- pand(data, decreasing = decreasing)$pand
-    #df$TAU_U[i] <- tauUSC(data)$Overall_tau_u[2]
-    df$Tau_U[i] <- tau_u(data)$table[[1]]["A vs. B + Trend B - Trend A", "Tau"]
+    df$`Tau_U(A)`[i] <- tau_u(data)$table[[1]]["A vs. B - Trend A", "Tau"]
+    df$`Tau_U(BA)`[i] <- tau_u(data)$table[[1]]["A vs. B + Trend B - Trend A", "Tau"]
     df$Base_Tau[i] <- corrected_tau(data)$tau
     
     data <- data[[1]]
@@ -108,19 +116,10 @@ overlap <- function(data, dvar, pvar, mvar,
     #design = keep$design[[1]]$values
   )
   
+  atr <- scdf_attr(data_list)
+  for(i in seq_along(atr)) attr(out, names(atr)[i]) <- atr[[i]]
   class(out) <- c("sc_overlap")
-  
-  source_attributes <- attributes(data_list)[[.opt$scdf]]
-  attr(out, .opt$phase) <- source_attributes[[.opt$phase]]
-  attr(out, .opt$mt)    <- source_attributes[[.opt$mt]]
-  attr(out, .opt$dv)    <- source_attributes[[.opt$dv]]
   
   out
 }
 
-#' @rdname deprecated-functions
-#' @export
-overlapSC <- function(...) {
-  .deprecated_warning("overlap", "overlapSC")
-  overlap(...)
-}

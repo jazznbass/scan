@@ -3,11 +3,20 @@
 \name{scdf_attr}
 \alias{scdf_attr}
 \alias{scdf_attr<-}
+\alias{dv}
+\alias{mt}
+\alias{phase}
 \title{Set and get scdf attributes}
 \usage{
-scdf_attr(x, var)
+scdf_attr(x, var = NULL)
 
 scdf_attr(x, var) <- value
+
+dv(scdf)
+
+mt(scdf)
+
+phase(scdf)
 }
 \arguments{
 \item{x}{Variable}
@@ -15,6 +24,8 @@ scdf_attr(x, var) <- value
 \item{var}{Attribute}
 
 \item{value}{set value}
+
+\item{scdf}{An \link{scdf} object.}
 }
 \value{
 Attribute value

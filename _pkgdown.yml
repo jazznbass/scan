@@ -53,6 +53,7 @@ reference:
   - subset.scdf
   - transform.scdf
   - is.scdf
+  - scan_app
 - subtitle: Export and import
   contents:
   - convert

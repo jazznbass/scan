@@ -7,8 +7,8 @@
 nap(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2))
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -20,24 +20,23 @@ the attributes in the scdf file.}
 \code{decreasing = TRUE}. Default is \code{decreasing = FALSE}.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
-that should be compared. E.g., \code{phases = c("A","C")} or \code{phases =
-c(2,4)} for comparing the second to the fourth phase. Phases could be
-combined by providing a list with two elements. E.g., \code{phases = list(A
-= c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4
-(as B). Default is \code{phases = c(1,2)}.}
+that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
+for comparing the second to the fourth phase. Phases could be combined by
+providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4 (as B). Default
+is \code{phases = c(1,2)}.}
 }
 \value{
 \item{nap}{A data frame with NAP and additional values for each
-  case.} \item{N}{Number of cases.}
+case.} \item{N}{Number of cases.}
 }
 \description{
-The \code{nap} function calculates the nonoverlap of all pairs (NAP; Parker &
+The \code{\link[=nap]{nap()}} function calculates the nonoverlap of all pairs (NAP; Parker &
 Vannest, 2009).  NAP summarizes the overlap between all pairs of phase A and
 phase B data points.  If an increase of phase B scores is expected, a
 non-overlapping pair has a higher phase B data point.  The NAP equals
-\eqn{number of pairs showing no overlap / number of pairs}.  Because NAP can
+\emph{number of pairs showing no overlap / number of pairs}.  Because NAP can
 only take values between 50 and 100 percent, a rescaled and therefore more
-intuitive NAP (0-100\%) is also displayed.
+intuitive NAP (0-100\\%) is also displayed.
 }
 \examples{
 
@@ -52,13 +51,12 @@ nap(Grosche2011)
 }
 \references{
 Parker, R. I., & Vannest, K. (2009). An improved effect size for
-  single-case research: Nonoverlap of all pairs. \emph{Behavior Therapy, 40},
-  357-367.
+single-case research: Nonoverlap of all pairs. \emph{Behavior Therapy}, \emph{40},
+357-367.
 }
 \seealso{
 Other overlap functions: 
 \code{\link{cdc}()},
-\code{\link{corrected_tau}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},
 \code{\link{pem}()},

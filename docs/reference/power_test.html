@@ -12,7 +12,7 @@ a statistical function."><meta property="og:image" content="/logo.png"><!-- math
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,18 +86,17 @@ a statistical function.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>design</dt>
-<dd><p>An object returned from the `design` function.</p></dd>
+<dd><p>An object returned from the <code>design</code> function.</p></dd>
 
 
 <dt>method</dt>
 <dd><p>A (named) list that defines the methods the power analysis is
 based on. Each element can contain a function (that takes an scdf file and
 returns a p value) or a character string (the name of predefined
-functions). default <code>method = list("plm_level", "rand", "tauU")</code>
-computes a power analysis based on <code><a href="tau_u.html">tau_u</a></code>,
-<code><a href="rand_test.html">rand_test</a></code> and <code><a href="plm.html">plm</a></code> analyses. (Further predefined
-functions are: "plm_slope", "plm_poisson_level", "plm_poisson_slope",
-"hplm_level", "hplm_slope", "base_tau".</p></dd>
+functions). default <code>method = list("plm_level", "rand", "tauU")</code> computes a
+power analysis based on <code><a href="tau_u.html">tau_u()</a></code>, <code><a href="rand_test.html">rand_test()</a></code> and <code><a href="plm.html">plm()</a></code> analyses.
+(Further predefined functions are: "plm_slope", "plm_poisson_level",
+"plm_poisson_slope", "hplm_level", "hplm_slope", "base_tau".</p></dd>
 
 
 <dt>effect</dt>
@@ -112,10 +111,9 @@ Default is <code>n = 100</code>. Ignored if design_is_one_study = FALSE.</p></dd
 
 <dt>design_is_one_study</dt>
 <dd><p>If TRUE, the design is assumed to define all cases
-of one study that is repeatedly randomly created <code>n_sim</code> times. If
-false, the design is assumed to contain all cases from which a random
-sample is generated. This is useful for very specific complex simulation
-studies.</p></dd>
+of one study that is repeatedly randomly created <code>n_sim</code> times. If false,
+the design is assumed to contain all cases from which a random sample is
+generated. This is useful for very specific complex simulation studies.</p></dd>
 
 
 <dt>alpha_test</dt>
@@ -162,16 +160,16 @@ significant tests. Default is <code>alpha_level = 0.05</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Based on a <code><a href="design.html">design</a></code> object, a large number of single-cases are
-generated and re-analyzed with a provided statistical function. The
-proportion of significant analyzes is the test power. In a second step, a
-specified effect of the design object is set to 0 and again single-cases are
-generated and reanalyzed. The proportion of significant analyzes is the alpha
-error probability.</p>
+    <p>Based on a <code><a href="design.html">design()</a></code> object, a large number of single-cases are generated
+and re-analyzed with a provided statistical function. The proportion of
+significant analyzes is the test power. In a second step, a specified effect
+of the design object is set to 0 and again single-cases are generated and
+reanalyzed. The proportion of significant analyzes is the alpha error
+probability.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="random_scdf.html">random_scdf</a></code>, <code><a href="design.html">design</a></code></p></div>
+    <div class="dont-index"><p><code><a href="random_scdf.html">random_scdf()</a></code>, <code><a href="design.html">design()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

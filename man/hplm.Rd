@@ -29,8 +29,8 @@ hplm(
 )
 }
 \arguments{
-\item{data}{A single-case data frame. See \code{\link{scdf}} to learn about
-this format.}
+\item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
+format.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -42,10 +42,11 @@ the attributes in the scdf file.}
 Defaults to the attributes in the scdf file.}
 
 \item{model}{Model used for calculating the dummy parameters (see Huitema &
-McKean, 2000). Default is \code{model = "W"}. Possible values are:
-\code{"B&L-B"}, \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
+McKean, 2000). Default is \code{model = "W"}. Possible values are: \code{"B&L-B"},
+\code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
-\item{contrast}{Sets contrast_level and contrast_slope. Either "first", "preceding" or a contrast matrix.}
+\item{contrast}{Sets contrast_level and contrast_slope. Either "first",
+"preceding" or a contrast matrix.}
 
 \item{contrast_level}{Either "first", "preceding" or a contrast matrix. If NA
 contrast_level is a copy of contrast.}
@@ -53,16 +54,15 @@ contrast_level is a copy of contrast.}
 \item{contrast_slope}{Either "first", "preceding" or a contrast matrix. If NA
 contrast_level is a copy of contrast.}
 
-\item{method}{Method used to fit your model. Pass \code{"REML"} to maximize
-the restricted log-likelihood or \code{"ML"} for maximized log-likelihood.
-Default is \code{"ML"}.}
+\item{method}{Method used to fit your model. Pass \code{"REML"} to maximize the
+restricted log-likelihood or \code{"ML"} for maximized log-likelihood. Default
+is \code{"ML"}.}
 
 \item{control}{A list of settings for the estimation algorithm, replacing the
-default values passed to the function \code{lmeControl} of the \code{nlme}
-package.}
+default values passed to the function \code{lmeControl} of the \code{nlme} package.}
 
-\item{random.slopes}{If \code{random.slopes = TRUE} random slope effects of
-the level, trend, and treatment parameter are estimated.}
+\item{random.slopes}{If \code{random.slopes = TRUE} random slope effects of the
+level, trend, and treatment parameter are estimated.}
 
 \item{lr.test}{If set TRUE likelihood ratio tests are calculated comparing
 model with vs. without random slope parameters.}
@@ -88,8 +88,8 @@ into the regression model.}
 
 \item{random}{The random part of the model.}
 
-\item{update.fixed}{An easier way to change the fixed model part (e.g., . ~ .
-+ newvariable).}
+\item{update.fixed}{An easier way to change the fixed model part
+(e.g., \code{. ~ . + newvariable}).}
 
 \item{data.l2}{A dataframe providing additional variables at Level 2. The
 scdf File has to have names for all cases and the Level 2 dataframe has to
@@ -108,7 +108,7 @@ parameters.} \item{model.without}{Object of class gls containing the fixed
 effect model.}
 }
 \description{
-The \code{hplm} function computes a hierarchical piecewise regression model.
+The \code{\link[=hplm]{hplm()}} function computes a hierarchical piecewise regression model.
 }
 \examples{
 
@@ -116,11 +116,11 @@ The \code{hplm} function computes a hierarchical piecewise regression model.
 hplm(exampleAB_50, method = "REML", random.slopes = FALSE)
 
 ## Analyzing with additional L2 variables
-Leidig2018 \%>\% 
-  add_l2(Leidig2018_l2) \%>\% 
+Leidig2018 \%>\%
+  add_l2(Leidig2018_l2) \%>\%
   hplm(update.fixed = .~. + gender + migration + ITRF_TOTAL*phaseB,
        slope = FALSE, random.slopes = FALSE, lr.test = FALSE
-  )    
+  )
 
 }
 \seealso{

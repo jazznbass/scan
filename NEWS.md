@@ -1,5 +1,12 @@
 # scan 0.56.x
 
+## Shiny app added (experimentally)
+
+- start the app with `scan_app()`
+- you need the following packages to run the app:
+  - `shiny`, `shinyjs`, `scplot`, `markdown`
+  - install scplot with `devtools::install_github("jazznbass/scplot")`
+
 ## New fucntions
 
 - `show()`: Opens each case within an scdf in a separate viewer tab.
@@ -7,6 +14,7 @@
 - Helper functions for `transform()`: `moving_mean()`, `moving_median()`, `local_regression()`
 - `corrected_tau()`: returns multiple cases
 - `export()`: new for `nap(), pen()`
+- `c()/combine()`: new arguments to set author and info attributes (`author`, `info`)
 
 ## Bug fixes
 
@@ -16,6 +24,7 @@
 ## minor
 
 - `convert()`: new arguments. indent sets the indentation. When the scdf contains only one case, no study is combined.
+- `select_phases()`: New argument `phase_names` sets names of the recombined phases. The default `"auto"` creates combinations of the phase names automatically (e.g., `A = c("A", "B", B = "C")` results in phases `AB` and `C`).
 
 # scan 0.56
 

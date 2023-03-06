@@ -5,12 +5,12 @@
 #'
 #' @inheritParams .inheritParams
 #' @param lag_max,lag.max The lag up to which autocorrelations will be computed.
-#' @param ... Further arguments passed to the \code{\link{acf}} function
+#' @param ... Further arguments passed to the [acf()] function
 #' @return A data frame containing separate autocorrelations for each phase and
-#'   for all phases (for each single-case). If \code{lag_max} exceeds the length
+#'   for all phases (for each single-case). If `lag_max` exceeds the length
 #'   of a phase minus one, NA is returned for this cell.
 #' @author Juergen Wilbert
-#' @seealso \code{\link{acf}}
+#' @seealso [acf()]
 #' @family regression functions
 #' @keywords regression
 #' @examples
@@ -27,18 +27,14 @@ autocorr <- function(data, dvar, pvar, mvar,
   if (!missing(lag.max)) lag_max <- lag.max
   
   # set defaults attributes
-  if (missing(dvar)) dvar <- scdf_attr(data, .opt$dv) 
-  if (missing(pvar)) pvar <- scdf_attr(data, .opt$phase) 
-  if (missing(mvar)) mvar <- scdf_attr(data, .opt$mt) 
-  
-  scdf_attr(data, .opt$dv) <- dvar
-  scdf_attr(data, .opt$phase) <- pvar
-  scdf_attr(data, .opt$mt) <- mvar
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
 
   data <- .prepare_scdf(data)
 
   N <- length(data)
-  case_names <- .case_names(data)
+  case_names <- revise_names(data)
   var_lag <- paste0("Lag ", 1:lag_max)
   
   ac <- list()
@@ -78,9 +74,9 @@ autocorr <- function(data, dvar, pvar, mvar,
     dvar = dvar
   )
   class(out) <- c("sc_ac")
-  attr(out, .opt$phase) <- pvar
-  attr(out, .opt$mt) <- mvar
-  attr(out, .opt$dv) <- dvar
+  attr(out, opt("phase")) <- pvar
+  attr(out, opt("mt")) <- mvar
+  attr(out, opt("dv")) <- dvar
   out
 }
 
