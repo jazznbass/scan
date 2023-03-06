@@ -7,7 +7,7 @@ print.sc_nap <- function(x, digits = "auto", nice = TRUE, ...) {
   
   out <- as.data.frame(x$nap)
   row.names(out) <- revise_names(row.names(out))#
-  if (nice) out$p <- .nice_p(out$p)
+  if (nice) out$p <- .nice_p(unlist(out$p))
   print(out, digits = digits)
   
 }
