@@ -267,7 +267,7 @@ server <- function(input, output, session) {
         if (length(value) > 1) {
           choices <- setNames(quoted(value), value)
           if (input$stats_default == "No")
-            choices <- c("(empty)" = "", choices)
+            choices <- c("(default)" = "", choices)
           selected <- names(choices)[1]
           out[[i]] <- selectInput(
             args$names[i], args$names[i],
@@ -281,7 +281,7 @@ server <- function(input, output, session) {
         } else if (is.logical(value)) {
           choices <- c("FALSE", "TRUE")
           if (input$stats_default == "No")
-            choices <- c("(empty)" = "", choices)
+            choices <- c("(default)" = "", choices)
           out[[i]] <- radioButtons(
             args$names[i], args$names[i],
             choices = choices,
