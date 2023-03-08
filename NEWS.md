@@ -9,7 +9,7 @@
 
 ## New fucntions
 
-- `show()`: Opens each case within an scdf in a separate viewer tab.
+- !(`show()`: Opens each case within an scdf in a separate viewer tab.)
 - Helper functions for `transform()`: `n()`, `all_cases()`, `across_cases()`, `first_of`
 - Helper functions for `transform()`: `moving_mean()`, `moving_median()`, `local_regression()`
 - `corrected_tau()`: returns multiple cases
