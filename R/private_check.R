@@ -39,7 +39,7 @@ check_args <- function(...) {
   env$by_call <- function(arg, fn) {
     args <- formals(fn)
     id <- which(names(args) == as.character(match.call()[2]))
-    if (length(id) == 0) stop("by_call has a no matching arg.")
+    if (length(id) == 0) stop("by_call has no matching arg.")
     match <- eval(args[[id]])
     msg <- paste0("'", match, "'")
     if (length(match) == 2) msg <- paste0(msg, collapse = " or ")
@@ -77,6 +77,9 @@ check_args <- function(...) {
   }
 }
 
-# dummy functions
-by_class <- by_call <- not <- within <- 
-  one_of <- has_length <- is_true <- function(...) {}
+# 
+
+utils::globalVariables(c("by_class", "by_call", "not","within","one_of","has_length","is_true"))
+
+#by_class <- by_call <- not <- within <- 
+#  one_of <- has_length <- is_true <- function(...) {}
