@@ -60,21 +60,26 @@ res$choices$scplot_examples <- c(
 
 "Smoothed line" = 'add_statline("loess", color = "darkgreen", span = 0.4)',
 
-"Background", 'set_background(fill = "grey90", color = "black", size = 2',
+"Background", 'set_background(fill = "grey90", color = "black", size = 2'
+)
 
-"Legend" = 'add_legend()',
-"Add title" = 'add_title("A new plot", color = "darkblue", size = 1.3)',
-"Add caption" = 'add_caption("Note. What a nice plot!", face = "italic", colour = "darkred")',
-"Set axis labels" = 'set_ylabel("Score", color = "darkred", angle = 0)
+res$choices$scplot_templates_design <- c(
+  "",
+  "Legend" = 'add_legend()',
+  "Add title" = 'add_title("A new plot", color = "darkblue", size = 1.3)',
+  "Add caption" = 'add_caption("Note. What a nice plot!", face = "italic", colour = "darkred")',
+  "Set axis labels" = 'set_ylabel("Score", color = "darkred", angle = 0)
 set_xlabel("Session", color = "darkred")',
+  "Set phase names" = 'set_phasenames(labels = c("Baseline", "Intervention", "Extended", "Follow-up"), color = "darkblue", size = 0.9, face = "italic")',
+  "Set case names" = 'set_casenames(position = "strip", background = list(fill = "lightblue"))',
+  "Resize size" = 'set_base_text(size = 19)'
 
-"Set case names" = 'set_casenames(position = "strip", background = list(fill = "lightblue"))'
 )
 
 themes <- names(scplot:::.scplot_themes)
 
 for(i in seq_along(themes)) {
-  res$choices$scplot_examples[[paste0("Theme ", themes[i])]] <-
+  res$choices$scplot_templates_design[[paste0("Theme ", themes[i])]] <-
     paste0('add_theme("', themes[i], '")')
 }
 

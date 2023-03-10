@@ -351,19 +351,32 @@ server <- function(input, output, session) {
     )
   })
 
+  observeEvent(input$scplot_templates_design, {
+    new_value <- unname(
+      res$choices$scplot_templates_design[input$scplot_templates_design]
+    )
+    old_value <- input$plot_arguments
+    if (old_value == "") {
+      value <- new_value
+    } else {
+      value <- paste0(input$plot_arguments, "\n", new_value)
+    }
+  updateTextAreaInput(inputId = "plot_arguments", value = value)
+  })
 
   observeEvent(input$scplot_examples, {
-    selects <- input$scplot_examples
-    id <- which(names(res$choices$scplot_examples) %in% selects)
-    values <- paste0(unname(res$choices$scplot_examples[id]), collapse = "\n")
-    if (length(id) == 0) values <- ""
-    if ("(empty selection)" %in% selects) {
-      values <- ""
-      updateSelectInput(
-        inputId = "scplot_examples", selected = ""
-      )
+    if ("(empty selection)" == input$scplot_examples) {
+      value <- ""
+    } else {
+      new_value <- unname(res$choices$scplot_examples[input$scplot_examples])
+      old_value <- input$plot_arguments
+      if (old_value == "") {
+        value <- new_value
+      } else {
+        value <- paste0(input$plot_arguments, "\n", new_value)
+      }
     }
-    updateTextAreaInput(inputId = "plot_arguments", value = values)
+    updateTextAreaInput(inputId = "plot_arguments", value = value)
   })
 
   observeEvent(input$plot_arguments, render_plot_syntax())

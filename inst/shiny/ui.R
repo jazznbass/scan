@@ -139,8 +139,11 @@ tab_plot <- tabPanel(
         "plot_arguments", "Arguments", value = "",rows = 5,
         placeholder = res$placeholder$plot_arguments
       ),
-      selectInput("scplot_examples", "sclot templates", multiple = TRUE,
-                  choices = names(res$choices$scplot_examples)
+      selectInput("scplot_examples", "stats templates",
+          choices = names(res$choices$scplot_examples)
+      ),
+      selectInput("scplot_templates_design", "design templates",
+                    choices = names(res$choices$scplot_templates_design)
       ),
       actionButton("plot_help", "Open help", inline = TRUE),
       downloadButton("saveplot", "Save plot", inline = TRUE),
