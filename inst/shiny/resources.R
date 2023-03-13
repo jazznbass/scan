@@ -46,21 +46,19 @@ res$choices$scplot_examples <- c(
 "(empty selection)" = "",
 
 "Trend lines" =
-'add_statline("trend", color = "darkred", width = 2)',
+'add_statline("trend")',
 
 "Baseline trend" =
-'add_statline("trendA", color = "darkblue", width = 2, linetype = "dashed")',
+'add_statline("trendA")',
 
-"Max A" = 'add_statline("max", phase = "A", color = "darkblue", linetype = "dashed")',
+"Max A" = 'add_statline("max", phase = "A")',
 
-"Means" = 'add_statline("mean", color = "darkred")',
-"Medians" = 'add_statline("median", color = "darkred")',
+"Means" = 'add_statline("mean")',
+"Medians" = 'add_statline("median")',
 
-"Moving average" = 'add_statline("movingMean", color = "darkred")',
+"Moving average" = 'add_statline("movingMean")',
 
-"Smoothed line" = 'add_statline("loess", color = "darkgreen", span = 0.4)',
-
-"Background", 'set_background(fill = "grey90", color = "black", size = 2'
+"Smoothed line" = 'add_statline("loess", span = 0.4)'
 )
 
 res$choices$scplot_templates_design <- c(
@@ -72,7 +70,8 @@ res$choices$scplot_templates_design <- c(
 set_xlabel("Session", color = "darkred")',
   "Set phase names" = 'set_phasenames(labels = c("Baseline", "Intervention", "Extended", "Follow-up"), color = "darkblue", size = 0.9, face = "italic")',
   "Set case names" = 'set_casenames(position = "strip", background = list(fill = "lightblue"))',
-  "Resize size" = 'set_base_text(size = 19)'
+  "Resize size" = 'set_base_text(size = 19)',
+  "Background" = 'set_background(fill = "grey90", color = "black", size = 2)'
 
 )
 

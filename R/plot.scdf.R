@@ -1,28 +1,31 @@
 #' Plot single-case data
-#' 
-#' This function provides a plot of a single-case or multiple
-#' single-cases.
-#' 
-#' 
+#'
+#' This function provides a plot of a single-case or multiple single-cases.
+#'
+#'
 #' @aliases plotSC plot.scdf
 #' @inheritParams .inheritParams
 #' @param ylim Lower and upper limits of the y-axis (e.g., \code{ylim = c(0,
-#' 20)} sets the y-axis to a scale from 0 to 20). With multiple single-cases
-#' you can use \code{ylim = c(0, NA)} to scale the y-axis from 0 to the maximum
-#' of each case. \code{ylim} is not set by default, which makes \code{scan} set
-#' a proper scale based on the given data.
+#'   20)} sets the y-axis to a scale from 0 to 20). With multiple single-cases
+#'   you can use \code{ylim = c(0, NA)} to scale the y-axis from 0 to the
+#'   maximum of each case. \code{ylim} is not set by default, which makes
+#'   \code{scan} set a proper scale based on the given data.
 #' @param xlim Lower and upper limits of the x-axis (e.g., \code{xlim = c(0,
-#' 20)} sets the x-axis to a scale from 0 to 20). With multiple single-cases
-#' you can use \code{ylim = c(0, NA)} to scale the x-axis from 0 to the maximum
-#' of each case. \code{xlim} is not set by default, which makes \code{scan} set
-#' a proper scale based on the given data.
-#' @param xinc An integer. Increment of the x-axis. 1 :each mt value will be printed, 2 : every other value, 3 : every third values etc.
-#' @param style Either a character with the name of a pre-implemented style or a style object. See \code{\link{style_plot}} to learn about this format. 
-#' @param lines A list defining one or multiple lines or curves to be
-#' plotted. The argument is passed as a list (e.g., \code{list(type = "median")}).
-#' Some of the procedures can be refined with an additional argument (e.g.,
-#' \code{lines = list(type = "mean", trim = 0.2)} adds a 20\% trimmed mean line.
-#' For multiple lines, provide a list element for each line (e.g., \code{list( list(type = "median", col = "red"), list(type = "trend", col = "blue"))}. 
+#'   20)} sets the x-axis to a scale from 0 to 20). With multiple single-cases
+#'   you can use \code{ylim = c(0, NA)} to scale the x-axis from 0 to the
+#'   maximum of each case. \code{xlim} is not set by default, which makes
+#'   \code{scan} set a proper scale based on the given data.
+#' @param xinc An integer. Increment of the x-axis. 1 :each mt value will be
+#'   printed, 2 : every other value, 3 : every third values etc.
+#' @param style Either a character with the name of a pre-implemented style or a
+#'   style object. See \code{\link{style_plot}} to learn about this format.
+#' @param lines A list defining one or multiple lines or curves to be plotted.
+#'   The argument is passed as a list (e.g., \code{list(type = "median")}). Some
+#'   of the procedures can be refined with an additional argument (e.g.,
+#'   \code{lines = list(type = "mean", trim = 0.2)} adds a 20\% trimmed mean
+#'   line. For multiple lines, provide a list element for each line (e.g.,
+#'   \code{list( list(type = "median", col = "red"), list(type = "trend", col =
+#'   "blue"))}.
 #' Possible lines are: \itemize{
 #' \item\code{"median"} Separate lines for phase A and B medians.
 #' \item\code{"mean"} Separate lines for phase A and B means. By default it is
@@ -57,40 +60,42 @@
 #' vectors, marks are set differently for each case. The list must have the
 #' same length as there are cases in the data file.  \item\code{"col"} Color of
 #' the marks.  \item\code{"cex"} Size of the marks.  } Use for example
-#' \code{marks = list(positions = c(1, 8, 15), col = "red", cex = 3)} to make
-#' the MTs one, eight and 18 appear big and red.
-#' @param phase.names By default phases are labeled based on the levels of the phase variable. 
+#'   \code{marks = list(positions = c(1, 8, 15), col = "red", cex = 3)} to make
+#'   the MTs one, eight and 18 appear big and red.
+#' @param phase.names By default phases are labeled based on the levels of the
+#'   phase variable.
 #' Use this argument to specify different labels: \code{phase.names = c("Baseline",
 #' "Intervention")}.
 #' @param xlab The label of the x-axis. Default is \code{xlab = "Measurement
-#' time"}.
+#'   time"}.
 #' @param ylab The labels of the y-axis. Default is \code{ylab = "Score"}.
 #' @param main Main title of the plot.
 #' @param case.names Case names. If not provided, names are taken from the scdf.
-#' Set \code{case.names = ""} if you don't like to include case names.
+#'   Set \code{case.names = ""} if you don't like to include case names.
 #' @param ... Further arguments passed to the plot command.
 #' @return Returns a plot of one or multiple single-cases.
 #' @author Juergen Wilbert
-#' @seealso \code{\link{style_plot}}, \code{\link{describeSC}}, \code{\link{overlapSC}}
+#' @seealso \code{\link{style_plot}}, \code{\link{describeSC}},
+#'   \code{\link{overlapSC}}
 #' @examples
-#' 
+#'
 #' ## Request the default plot of the data from Borckhardt (2014)
 #' plot(Borckardt2014)
-#' 
+#'
 #' ## Plot the three cases from Grosche (2011) and visualize the phase A trend
 #' plot(Grosche2011, style = "grid", lines = "trendA")
-#' 
+#'
 #' ## Request the local regression line for Georg from that data set and customize the plot
 #' plot(Grosche2011$Georg, style = "sienna", ylim = c(0,NA),
 #'        xlab = "Training session", ylab = "Words per minute",
 #'        phase.names = c("Baseline", "Intervention"), xinc = 5,
 #'        lines = list(type = "loreg", f = 0.2, lty = "solid", col = "black", lwd = 3))
-#' 
+#'
 #' ## Plot a random MBD over three cases and mark interesting MTs
 #' dat <- random_scdf(design = design(3))
 #' plot(dat, marks = list(positions = list(c(2,4,5),c(1,2,3),c(7,8,9)), col = "blue",
 #'        cex = 1.4), style = c("grid", "annotate", "tiny"))
-#' 
+#'
 #' @export
 plot.scdf <- function(...) {
   plotSC(...)

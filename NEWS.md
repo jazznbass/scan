@@ -1,4 +1,4 @@
-# scan 0.56.x
+# scan 0.57.x
 
 ## Shiny app added (experimentally)
 
@@ -19,7 +19,7 @@
 ## Bug fixes
 
 - solved: `summary()` failed when one of the cases had no name
-- solved: `nap()` only report values for the first case with multiple cases.
+- solved: `nap()` only reported values for the first case with multiple cases.
 
 ## minor
 
