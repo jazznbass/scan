@@ -81,5 +81,3 @@ check_args <- function(...) {
 
 utils::globalVariables(c("by_class", "by_call", "not","within","one_of","has_length","is_true"))
 
-#by_class <- by_call <- not <- within <- 
-#  one_of <- has_length <- is_true <- function(...) {}
