@@ -109,7 +109,7 @@ plm <- function(data, dvar, pvar, mvar,
                 ...) {
   
   check_args(
-    has_length(data, 1, 
+    at_most(length(data), 1, 
                "plm can not be applied to more than one case (use hplm)."),
     not(family != "gaussian" && AR != 0, 
         "family is not 'gaussian' but AR is set."),
@@ -118,7 +118,8 @@ plm <- function(data, dvar, pvar, mvar,
     by_call(model, "plm"),
     by_call(contrast_level, "plm"),
     by_call(contrast_slope, "plm"),
-    by_call(contrast, "plm")
+    by_call(contrast, "plm"),
+    at_least(AR, 0)
   )
   
   model <- model[1]
