@@ -134,7 +134,7 @@ tab_plot <- tabPanel(
   shinyjs::extendShinyjs(text = res$java$window.open, functions = 'openURL'),
   sidebarLayout(
     sidebarPanel(
-      selectInput("plot", "Plot engine", choices = res$choices$fn_plot),
+      #selectInput("plot", "Plot engine", choices = res$choices$fn_plot),
       textAreaInput(
         "plot_arguments", "Arguments", value = "",rows = 5,
         placeholder = res$placeholder$plot_arguments

@@ -2,7 +2,7 @@ errors <- c()
 
 if (!requireNamespace("scplot", quietly = TRUE)) {
   errors <- c(errors, paste0("- You need to install the 'scplot' package to ",
-  "run this app with devtools::install_github('jazznbass/scplot')\n"))
+  "run this app with install_packages('scplot')\n"))
 } 
 
 if (!requireNamespace("shinyjs", quietly = TRUE)) {
@@ -34,30 +34,21 @@ res <- list()
 
 res$choices <- list()
 examples <- data(package = "scan")$results[, 3]
-examples <- examples[!startsWith(examples,"Grosche2014")]
-examples <- examples[!endsWith(examples,"Leidig2018_l2")]
-examples <- examples[!startsWith(examples,"exampleAB_50.l2")]
-res$choices$examples <- c(
-  "(none)", 
-  examples#substr(examples, 0, nchar(examples) - 12)
-)
+filter <- startsWith(examples,"Grosche2014") | 
+          endsWith(examples,"Leidig2018_l2") | 
+          startsWith(examples,"exampleAB_50.l2")
+examples <- examples[!filter]
+
+res$choices$examples <- c("(none)", examples)
 
 res$choices$scplot_examples <- c(
 "(empty selection)" = "",
-
-"Trend lines" =
-'add_statline("trend")',
-
-"Baseline trend" =
-'add_statline("trendA")',
-
+"Trend lines" = 'add_statline("trend")',
+"Baseline trend" = 'add_statline("trendA")',
 "Max A" = 'add_statline("max", phase = "A")',
-
 "Means" = 'add_statline("mean")',
 "Medians" = 'add_statline("median")',
-
 "Moving average" = 'add_statline("movingMean")',
-
 "Smoothed line" = 'add_statline("loess", span = 0.4)'
 )
 
@@ -102,7 +93,7 @@ res$choices$fn_stats <- c(
   "Outlier analysis" = "outlier"
 )
 
-res$choices$fn_plot <- c("scplot" = "scplot", "plot" = "plot.scdf")
+#res$choices$fn_plot <- c("scplot" = "scplot", "plot" = "plot.scdf")
 
 res$placeholder$transform <- 'e.g.
 values = scale(values)
@@ -111,12 +102,7 @@ values2 = values - max(values[phase=="A"])
 across_cases(values2 = scale(values)
 '
 
-res$placeholder$plot_arguments <- 'for scplot:
-choose one or more from the templates below and experiment with the syntax here.
-
-e.g. for plot:
-style = "sienna"
-lines = list("loreg", f = 0.2, lty = "solid", col = "black", lwd = 3)
+res$placeholder$plot_arguments <- '(choose one or more from the templates below and experiment with the syntax here.)
 '
 
 res$placeholder$mt <- "(optional, e.g. 1,2,4,6,7,8,9,12,13)"
@@ -182,18 +168,13 @@ The basic procedure is:
 
 Analysis and plots are based on the scdf after any changes from the **Transform tab**.
 
-You have two plot engines to choose from. scplot is much more powerful.
-
 Here are helpful links:
-
-[How to install shinyscan on your computer](https://github.com/jazznbass/shinyscan#readme)
 
 [Help pages for scan](https://jazznbass.github.io/scan/)
 
 [Online book for single case analysis with scan](https://jazznbass.github.io/scan-Book/)
 
 [Help pages for scplot](https://jazznbass.github.io/scplot/)
-
 
 
 Have fun!
