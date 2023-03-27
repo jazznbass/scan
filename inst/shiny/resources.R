@@ -2,7 +2,7 @@ errors <- c()
 
 if (!requireNamespace("scplot", quietly = TRUE)) {
   errors <- c(errors, paste0("- You need to install the 'scplot' package to ",
-  "run this app with install_packages('scplot')\n"))
+  "run this app with install.packages('scplot')\n"))
 } 
 
 if (!requireNamespace("shinyjs", quietly = TRUE)) {

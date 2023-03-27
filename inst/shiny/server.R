@@ -60,9 +60,14 @@ server <- function(input, output, session) {
         format(Sys.time(), format = "%y%m%d-%H%M%S"),
         sep = "-"
       )
-      paste0(out, ".rds")
+      paste0(out, input$save_scdf_format)
     },
-    content = function(file) saveRDS(my_scdf(), file)
+    content = function(file) {
+      if (input$save_scdf_format == ".rds") 
+        saveRDS(my_scdf(), file)
+      if (input$save_scdf_format == ".R") 
+        convert(my_scdf(), file = file)
+    }
   )
 
   # scdf: new cases --------

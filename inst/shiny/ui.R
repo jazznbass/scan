@@ -20,6 +20,10 @@ tab_scdf <-   tabPanel(
       actionButton("remove_case", "Remove last"),
       actionButton("remove_all", "Remove all"),
       hr(),
+      radioButtons(
+        "save_scdf_format", "Save format", 
+        choices = c("R object" = ".rds", "R syntax" = ".R"), 
+        inline = TRUE),
       div(style="display:inline-block; vertical-align: top",
           downloadButton("scdf_save", "Save")
       ),
