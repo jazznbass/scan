@@ -70,7 +70,7 @@ themes <- names(scplot:::.scplot_themes)
 
 for(i in seq_along(themes)) {
   res$choices$scplot_templates_design[[paste0("Theme ", themes[i])]] <-
-    paste0('add_theme("', themes[i], '")')
+    paste0('set_theme("', themes[i], '")')
 }
 
 res$choices$fn_stats <- c(
@@ -123,9 +123,9 @@ res$msg$startup <-
 
 You can:
 
-1. create a new case (click 'Add')
+1. create a new case (fill in 'values' and click 'Add')
 2. load a dataset (click 'Load file' to import an rds, csv, or excel file)
-3. choose an example scdf (choosse from 'Load example')
+3. choose an example scdf (choose from 'Load example')
 
 'exampleABC' is a good place to start.
 
@@ -144,9 +144,9 @@ Have fun!
 res$msg$no_case_scdf <-
 "No case has been defined yet.
 You can:
-1. create a new case (click 'Add')
+1. create a new case (fill in 'values' and click 'Add')
 2. load a dataset (click 'Load file' to import an rds, csv, or excel file)
-3. choose an example scdf (choosse from 'Load example')
+3. choose an example scdf (from 'Load example')
 "
 
 res$msg$no_case <-

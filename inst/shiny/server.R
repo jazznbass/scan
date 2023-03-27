@@ -51,7 +51,17 @@ server <- function(input, output, session) {
   })
 
   output$scdf_save <- downloadHandler(
-    filename = function() "my_scdf.rds",
+    filename = function() {
+      scdf <- my_scdf()
+      out <- paste(
+        "scdf",
+        sprintf("%02d", length(scdf)),
+        paste0(unique(scdf[[1]]$phase), collapse = ""),
+        format(Sys.time(), format = "%y%m%d-%H%M%S"),
+        sep = "-"
+      )
+      paste0(out, ".rds")
+    },
     content = function(file) saveRDS(my_scdf(), file)
   )
 
@@ -168,7 +178,17 @@ server <- function(input, output, session) {
   })
 
   output$transform_save <- downloadHandler(
-    filename = function() "my_scdf.rds",
+    filename = function() {
+      scdf <- transformed()
+      out <- paste(
+        "scdf",
+        sprintf("%02d", length(scdf)),
+        paste0(unique(scdf[[1]]$phase), collapse = ""),
+        format(Sys.time(), format = "%y%m%d-%H%M%S"),
+        sep = "-"
+      )
+      paste0(out, ".rds")
+    },
     content = function(file) saveRDS(transformed(), file)
   )
 
@@ -376,7 +396,17 @@ server <- function(input, output, session) {
   })
 
   output$saveplot <- downloadHandler(
-    filename = function() "my_scan_plot.png",
+    filename = function() {
+      scdf <- transformed()
+      out <- paste(
+        "scplot",
+        sprintf("%02d", length(scdf)),
+        paste0(unique(scdf[[1]]$phase), collapse = ""),
+        format(Sys.time(), format = "%y%m%d-%H%M%S"),
+        sep = "-"
+      )
+      paste0(out, ".png")
+    },
     content = function(file) {
       ggplot2::ggsave(
         file, render_plot(), width = input$width, height = input$height,
