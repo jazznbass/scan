@@ -2,7 +2,7 @@
 #'
 #' Run a Shiny app with most of the scan functions.
 #' @export
-scan_app <- function() {
+shinyscan <- function() {
   
   if (requireNamespace("shiny", quietly = TRUE)) {
     shiny::runApp(system.file('shiny', package = 'scan'),launch.browser = TRUE)
