@@ -9,7 +9,9 @@ check_args <- function(...) {
     if (isFALSE(condition)) {
       message <- paste0(...)
       if (length(message) == 0) {
-        message <- paste0("Argument ", as.character(match.call()[2]), " is ill defined.")
+        message <- paste0(
+          "Argument ", as.character(match.call()[2]), " is ill defined."
+        )
       }
       return(message) 
     } else {
@@ -19,7 +21,9 @@ check_args <- function(...) {
   
   env$has_length <- function(arg, l, msg) {
     if (missing(msg)) 
-      msg <- paste0("Argument ", as.character(match.call()[2]), " not of length ", l, ".")
+      msg <- paste0(
+        "Argument ", as.character(match.call()[2]), " not of length ", l, "."
+      )
     env$is_true(length(arg) == l, msg)
   }
   
