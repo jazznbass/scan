@@ -9,9 +9,9 @@ Authors@R: c(
   person("Timo", "Lueke", email = "timo.lueke@uni-graz.at", role = "aut", 
     comment = c(ORCID = "0000-0002-2603-7341")))
 Depends: 
-  R (>= 3.5.0),
-  scplot
+  R (>= 3.5.0)
 Imports: 
+  scplot,
   stats, 
   nlme, 
   utils, 
