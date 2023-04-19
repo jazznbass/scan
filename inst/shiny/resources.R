@@ -95,6 +95,8 @@ res$choices$fn_stats <- c(
 
 #res$choices$fn_plot <- c("scplot" = "scplot", "plot" = "plot.scdf")
 
+res$placeholder$values <- "To creat a new case, start by entering scores here. E.g. \nA = 1,2,3,4,3, \nB = 7,6,7,8,7,6"
+
 res$placeholder$transform <- 'e.g.
 values = scale(values)
 values = local_regression(values)

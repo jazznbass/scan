@@ -5,10 +5,10 @@ tab_scdf <-   tabPanel(
   "scdf",
   sidebarLayout(
     sidebarPanel(
-      h4("New case"),
-      br(),
+      #h4("New case"),
+      #br(),
       textAreaInput(
-        "values", "Values", placeholder = "A = 1,2,3,4,3, \nB = 7,6,7,8,7,6"
+        "values", "Values", placeholder = res$placeholder$values
       ),
       textInput("mt", "Measurement times", placeholder = res$placeholder$mt),
       textAreaInput(
