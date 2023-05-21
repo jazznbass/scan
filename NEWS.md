@@ -8,6 +8,12 @@
 
 ## New fucntions
 
+- `batch_apply()`: Apply a function to each element in an scdf. Use `.` as a placeholder for the scdf case.
+
+```r
+batch_apply(exampleAB, plm(.) |> coef())
+```
+
 - Helper functions for `transform()`: `n()`, `all_cases()`, `across_cases()`, `first_of`
 - Helper functions for `transform()`: `moving_mean()`, `moving_median()`, `local_regression()`
 - `corrected_tau()`: returns multiple cases
@@ -18,6 +24,7 @@
 
 - solved: `summary()` failed when one of the cases had no name
 - solved: `nap()` only reported values for the first case with multiple cases.
+- solved: `add_l2()` lost column name of l2 variable when l2 had only one variable.
 
 ## minor
 
