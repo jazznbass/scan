@@ -51,8 +51,23 @@ server <- function(input, output, session) {
   })
 
   output$scdf_save <- downloadHandler(
-    filename = function() "my_scdf.rds",
-    content = function(file) saveRDS(my_scdf(), file)
+    filename = function() {
+      scdf <- my_scdf()
+      out <- paste(
+        "scdf",
+        sprintf("%02d", length(scdf)),
+        paste0(unique(scdf[[1]]$phase), collapse = ""),
+        format(Sys.time(), format = "%y%m%d-%H%M%S"),
+        sep = "-"
+      )
+      paste0(out, input$save_scdf_format)
+    },
+    content = function(file) {
+      if (input$save_scdf_format == ".rds") 
+        saveRDS(my_scdf(), file)
+      if (input$save_scdf_format == ".R") 
+        convert(my_scdf(), file = file)
+    }
   )
 
   # scdf: new cases --------
@@ -168,7 +183,17 @@ server <- function(input, output, session) {
   })
 
   output$transform_save <- downloadHandler(
-    filename = function() "my_scdf.rds",
+    filename = function() {
+      scdf <- transformed()
+      out <- paste(
+        "scdf",
+        sprintf("%02d", length(scdf)),
+        paste0(unique(scdf[[1]]$phase), collapse = ""),
+        format(Sys.time(), format = "%y%m%d-%H%M%S"),
+        sep = "-"
+      )
+      paste0(out, ".rds")
+    },
     content = function(file) saveRDS(transformed(), file)
   )
 
@@ -267,7 +292,7 @@ server <- function(input, output, session) {
         if (length(value) > 1) {
           choices <- setNames(quoted(value), value)
           if (input$stats_default == "No")
-            choices <- c("(empty)" = "", choices)
+            choices <- c("(default)" = "", choices)
           selected <- names(choices)[1]
           out[[i]] <- selectInput(
             args$names[i], args$names[i],
@@ -281,7 +306,7 @@ server <- function(input, output, session) {
         } else if (is.logical(value)) {
           choices <- c("FALSE", "TRUE")
           if (input$stats_default == "No")
-            choices <- c("(empty)" = "", choices)
+            choices <- c("(default)" = "", choices)
           out[[i]] <- radioButtons(
             args$names[i], args$names[i],
             choices = choices,
@@ -321,29 +346,19 @@ server <- function(input, output, session) {
   # plot -----
 
   observeEvent(input$plot_help, {
-    if (input$plot == "scplot") {
-      link <- "https://jazznbass.github.io/scplot/reference/index.html"
-    } else if (input$plot == "plot.scdf") {
-      link <- "https://jazznbass.github.io/scan/reference/plot.scdf.html"
-    }
+    link <- "https://jazznbass.github.io/scplot/reference/index.html"
     shinyjs::js$openURL(link)
   })
 
   render_plot <- reactive({
     req(inherits(my_scdf(), "scdf"))
-    if (input$plot == "scplot") {
-      call <- paste0("scplot(transformed())")
-      if (trimws(input$plot_arguments) != "") {
-        call <- paste0(
-          call, "%>% ", gsub("\n", " %>% ", trimws(input$plot_arguments))
-        )
-      }
-      call <- paste0("print(",call,")")
-    } else if (input$plot == "plot.scdf") {
+    call <- paste0("scplot(transformed())")
+    if (trimws(input$plot_arguments) != "") {
       call <- paste0(
-        "plot(transformed(), ", trim(input$plot_arguments), ")"
+        call, "%>% ", gsub("\n", " %>% ", trimws(input$plot_arguments))
       )
     }
+    call <- paste0("print(",call,")")
     tryCatch(
       str2lang(call) |> eval(),
       error = function(x)
@@ -351,19 +366,32 @@ server <- function(input, output, session) {
     )
   })
 
+  observeEvent(input$scplot_templates_design, {
+    new_value <- unname(
+      res$choices$scplot_templates_design[input$scplot_templates_design]
+    )
+    old_value <- input$plot_arguments
+    if (old_value == "") {
+      value <- new_value
+    } else {
+      value <- paste0(input$plot_arguments, "\n", new_value)
+    }
+  updateTextAreaInput(inputId = "plot_arguments", value = value)
+  })
 
   observeEvent(input$scplot_examples, {
-    selects <- input$scplot_examples
-    id <- which(names(res$choices$scplot_examples) %in% selects)
-    values <- paste0(unname(res$choices$scplot_examples[id]), collapse = "\n")
-    if (length(id) == 0) values <- ""
-    if ("(empty selection)" %in% selects) {
-      values <- ""
-      updateSelectInput(
-        inputId = "scplot_examples", selected = ""
-      )
+    if ("(empty selection)" == input$scplot_examples) {
+      value <- ""
+    } else {
+      new_value <- unname(res$choices$scplot_examples[input$scplot_examples])
+      old_value <- input$plot_arguments
+      if (old_value == "") {
+        value <- new_value
+      } else {
+        value <- paste0(input$plot_arguments, "\n", new_value)
+      }
     }
-    updateTextAreaInput(inputId = "plot_arguments", value = values)
+    updateTextAreaInput(inputId = "plot_arguments", value = value)
   })
 
   observeEvent(input$plot_arguments, render_plot_syntax())
@@ -373,45 +401,35 @@ server <- function(input, output, session) {
   })
 
   output$saveplot <- downloadHandler(
-    filename = function() "my_scan_plot.png",
+    filename = function() {
+      scdf <- transformed()
+      out <- paste(
+        "scplot",
+        sprintf("%02d", length(scdf)),
+        paste0(unique(scdf[[1]]$phase), collapse = ""),
+        format(Sys.time(), format = "%y%m%d-%H%M%S"),
+        sep = "-"
+      )
+      paste0(out, ".png")
+    },
     content = function(file) {
-      if (input$plot == "scplot"){
-        ggplot2::ggsave(
-          file, render_plot(), width = input$width, height = input$height,
-          dpi = input$dpi, units = "px",  device = "png"
-        )
-      }
-      if (input$plot == "plot.scdf"){
-        grDevices::png(file, width = input$width, height = input$height,
-                       res = input$dpi, units = "px")
-        call <- paste0(
-          "plot(transformed(), ", trim(input$plot_arguments), ")"
-        )
-        str2lang(call) |> eval()
-        grDevices::dev.off()
-      }
+      ggplot2::ggsave(
+        file, render_plot(), width = input$width, height = input$height,
+        dpi = input$dpi, units = "px",  device = "png"
+      )
     }
   )
 
   render_plot_syntax <- reactive({
-    if (input$plot == "scplot") {
-      call <- paste0("scplot(scdf)")
-      if (trimws(input$plot_arguments) != "") {
-        call <- paste0(
-          call, "%>%\n  ", gsub("\n", " %>%\n  ", trimws(input$plot_arguments))
-        )
-      }
-    } else if (input$plot == "plot.scdf") {
-      if (trim(input$plot_arguments) != "") {
-        call <- paste0("plot(scdf, ", trim(input$plot_arguments), ")")
-      } else {
-        call <- "plot(scdf)"
-      }
+    call <- paste0("scplot(scdf)")
+    if (trimws(input$plot_arguments) != "") {
+      call <- paste0(
+        call, "%>%\n  ", gsub("\n", " %>%\n  ", trimws(input$plot_arguments))
+      )
     }
     output$plot_syntax <- renderPrint({
       cat(call)
     })
-
   })
 
 }

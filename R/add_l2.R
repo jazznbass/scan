@@ -44,7 +44,7 @@ add_l2 <- function(scdf,
     if (length(id) == 1) {
       scdf[[i]] <- cbind(
         scdf[[i]], 
-        data_l2[id, -which(names(data_l2) == cvar)], 
+        data_l2[id, -which(names(data_l2) == cvar), drop = FALSE], 
         row.names = NULL
       )
     }

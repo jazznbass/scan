@@ -18,11 +18,11 @@ show <- function(scdf, max = 5) {
   var_phase <- scdf_attr(scdf, opt("phase"))
   var_mt <- scdf_attr(scdf, opt("mt"))
   
-  mapply(function(x, y) {
+  mapply(function(x, name) {
       attr(x[[var_dv]], "label") <- "Dependent variable"
       attr(x[[var_mt]], "label") <- "Measurement time"
       attr(x[[var_phase]], "label") <- "Phase"
-      utils::View(x, y)
+      invisible(utils::View(x, name))
     }, 
     scdf, names(scdf)
   )

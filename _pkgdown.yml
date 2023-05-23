@@ -53,7 +53,7 @@ reference:
   - subset.scdf
   - transform.scdf
   - is.scdf
-  - scan_app
+  - shinyscan
 - subtitle: Export and import
   contents:
   - convert
@@ -62,6 +62,7 @@ reference:
 - subtitle: Single-case data analysis
 - contents:
   - autocorr
+  - batch_apply
   - cdc
   - corrected_tau
   - describe
@@ -88,7 +89,6 @@ reference:
   - plot.scdf
   - style_plot
   - plot_rand
-  - show
   - summary.scdf
 - subtitle: Simulating data
   contents:

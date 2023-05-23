@@ -42,24 +42,27 @@ the attributes in the scdf file.}
 Defaults to the attributes in the scdf file.}
 
 \item{ylim}{Lower and upper limits of the y-axis (e.g., \code{ylim = c(0,
-20)} sets the y-axis to a scale from 0 to 20). With multiple single-cases
-you can use \code{ylim = c(0, NA)} to scale the y-axis from 0 to the maximum
-of each case. \code{ylim} is not set by default, which makes \code{scan} set
-a proper scale based on the given data.}
+  20)} sets the y-axis to a scale from 0 to 20). With multiple single-cases
+you can use \code{ylim = c(0, NA)} to scale the y-axis from 0 to the
+maximum of each case. \code{ylim} is not set by default, which makes
+\code{scan} set a proper scale based on the given data.}
 
 \item{xlim}{Lower and upper limits of the x-axis (e.g., \code{xlim = c(0,
-20)} sets the x-axis to a scale from 0 to 20). With multiple single-cases
-you can use \code{ylim = c(0, NA)} to scale the x-axis from 0 to the maximum
-of each case. \code{xlim} is not set by default, which makes \code{scan} set
-a proper scale based on the given data.}
+  20)} sets the x-axis to a scale from 0 to 20). With multiple single-cases
+you can use \code{ylim = c(0, NA)} to scale the x-axis from 0 to the
+maximum of each case. \code{xlim} is not set by default, which makes
+\code{scan} set a proper scale based on the given data.}
 
-\item{xinc}{An integer. Increment of the x-axis. 1 :each mt value will be printed, 2 : every other value, 3 : every third values etc.}
+\item{xinc}{An integer. Increment of the x-axis. 1 :each mt value will be
+printed, 2 : every other value, 3 : every third values etc.}
 
-\item{lines}{A list defining one or multiple lines or curves to be
-plotted. The argument is passed as a list (e.g., \code{list(type = "median")}).
-Some of the procedures can be refined with an additional argument (e.g.,
-\code{lines = list(type = "mean", trim = 0.2)} adds a 20\\% trimmed mean line.
-For multiple lines, provide a list element for each line (e.g., \code{list( list(type = "median", col = "red"), list(type = "trend", col = "blue"))}.
+\item{lines}{A list defining one or multiple lines or curves to be plotted.
+The argument is passed as a list (e.g., \code{list(type = "median")}). Some
+of the procedures can be refined with an additional argument (e.g.,
+\code{lines = list(type = "mean", trim = 0.2)} adds a 20\\% trimmed mean
+line. For multiple lines, provide a list element for each line (e.g.,
+\code{list( list(type = "median", col = "red"), list(type = "trend", col =
+  "blue"))}.
 Possible lines are: \itemize{
 \item\code{"median"} Separate lines for phase A and B medians.
 \item\code{"mean"} Separate lines for phase A and B means. By default it is
@@ -98,7 +101,8 @@ the marks.  \item\code{"cex"} Size of the marks.  } Use for example
 \code{marks = list(positions = c(1, 8, 15), col = "red", cex = 3)} to make
 the MTs one, eight and 18 appear big and red.}
 
-\item{phase.names}{By default phases are labeled based on the levels of the phase variable.
+\item{phase.names}{By default phases are labeled based on the levels of the
+phase variable.
 Use this argument to specify different labels: \code{phase.names = c("Baseline",
 "Intervention")}.}
 
@@ -112,14 +116,14 @@ time"}.}
 \item{case.names}{Case names. If not provided, names are taken from the scdf.
 Set \code{case.names = ""} if you don't like to include case names.}
 
-\item{style}{Either a character with the name of a pre-implemented style or a style object. See \code{\link{style_plot}} to learn about this format.}
+\item{style}{Either a character with the name of a pre-implemented style or a
+style object. See \code{\link{style_plot}} to learn about this format.}
 }
 \value{
 Returns a plot of one or multiple single-cases.
 }
 \description{
-This function provides a plot of a single-case or multiple
-single-cases.
+This function provides a plot of a single-case or multiple single-cases.
 }
 \examples{
 
@@ -142,7 +146,8 @@ plot(dat, marks = list(positions = list(c(2,4,5),c(1,2,3),c(7,8,9)), col = "blue
 
 }
 \seealso{
-\code{\link{style_plot}}, \code{\link{describeSC}}, \code{\link{overlapSC}}
+\code{\link{style_plot}}, \code{\link{describeSC}},
+\code{\link{overlapSC}}
 }
 \author{
 Juergen Wilbert

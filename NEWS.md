@@ -1,25 +1,38 @@
-# scan 0.56.x
+# scan 0.57.x
 
-## Shiny app added (experimentally)
+## Shiny app added
 
-- start the app with `scan_app()`
+- start the app with `shinyscan()`
 - you need the following packages to run the app:
   - `shiny`, `shinyjs`, `scplot`, `markdown`
-  - install scplot with `devtools::install_github("jazznbass/scplot")`
 
 ## New fucntions
 
-- `show()`: Opens each case within an scdf in a separate viewer tab.
+- `batch_apply()`: Apply a function to each element in an scdf. Use `.` as a placeholder for the scdf case.
+
+```r
+batch_apply(exampleAB, plm(.) |> coef())
+```
+
 - Helper functions for `transform()`: `n()`, `all_cases()`, `across_cases()`, `first_of`
 - Helper functions for `transform()`: `moving_mean()`, `moving_median()`, `local_regression()`
 - `corrected_tau()`: returns multiple cases
 - `export()`: new for `nap(), pen()`
 - `c()/combine()`: new arguments to set author and info attributes (`author`, `info`)
 
+## Changes in functions
+
+- `plm()`: Print function allows to set maximum lag for autocorrelations; Overall significance Ljung_Box test is reported.
+
+```r
+plm(exampleAB$Johanna) |> print(lag_max = 5)
+```
+
 ## Bug fixes
 
 - solved: `summary()` failed when one of the cases had no name
-- solved: `nap()` only report values for the first case with multiple cases.
+- solved: `nap()` only reported values for the first case with multiple cases.
+- solved: `add_l2()` lost column name of l2 variable when l2 had only one variable.
 
 ## minor
 

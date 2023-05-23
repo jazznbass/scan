@@ -1,4 +1,4 @@
-#' Extract coefficents from plm/hplm objects
+#' Extract coefficients from plm/hplm objects
 #'
 #' @param object plm or hplm object
 #' @param ... not implemented

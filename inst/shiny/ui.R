@@ -5,10 +5,10 @@ tab_scdf <-   tabPanel(
   "scdf",
   sidebarLayout(
     sidebarPanel(
-      h4("New case"),
-      br(),
+      #h4("New case"),
+      #br(),
       textAreaInput(
-        "values", "Values", placeholder = "A = 1,2,3,4,3, \nB = 7,6,7,8,7,6"
+        "values", "Values", placeholder = res$placeholder$values
       ),
       textInput("mt", "Measurement times", placeholder = res$placeholder$mt),
       textAreaInput(
@@ -20,6 +20,10 @@ tab_scdf <-   tabPanel(
       actionButton("remove_case", "Remove last"),
       actionButton("remove_all", "Remove all"),
       hr(),
+      radioButtons(
+        "save_scdf_format", "Save format", 
+        choices = c("R object" = ".rds", "R syntax" = ".R"), 
+        inline = TRUE),
       div(style="display:inline-block; vertical-align: top",
           downloadButton("scdf_save", "Save")
       ),
@@ -134,13 +138,16 @@ tab_plot <- tabPanel(
   shinyjs::extendShinyjs(text = res$java$window.open, functions = 'openURL'),
   sidebarLayout(
     sidebarPanel(
-      selectInput("plot", "Plot engine", choices = res$choices$fn_plot),
+      #selectInput("plot", "Plot engine", choices = res$choices$fn_plot),
       textAreaInput(
         "plot_arguments", "Arguments", value = "",rows = 5,
         placeholder = res$placeholder$plot_arguments
       ),
-      selectInput("scplot_examples", "sclot templates", multiple = TRUE,
-                  choices = names(res$choices$scplot_examples)
+      selectInput("scplot_examples", "stats templates",
+          choices = names(res$choices$scplot_examples)
+      ),
+      selectInput("scplot_templates_design", "design templates",
+                    choices = names(res$choices$scplot_templates_design)
       ),
       actionButton("plot_help", "Open help", inline = TRUE),
       downloadButton("saveplot", "Save plot", inline = TRUE),

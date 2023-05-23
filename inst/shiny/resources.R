@@ -2,7 +2,7 @@ errors <- c()
 
 if (!requireNamespace("scplot", quietly = TRUE)) {
   errors <- c(errors, paste0("- You need to install the 'scplot' package to ",
-  "run this app with devtools::install_github('jazznbass/scplot')\n"))
+  "run this app with install.packages('scplot')\n"))
 } 
 
 if (!requireNamespace("shinyjs", quietly = TRUE)) {
@@ -34,48 +34,43 @@ res <- list()
 
 res$choices <- list()
 examples <- data(package = "scan")$results[, 3]
-examples <- examples[!startsWith(examples,"Grosche2014")]
-examples <- examples[!endsWith(examples,"Leidig2018_l2")]
-examples <- examples[!startsWith(examples,"exampleAB_50.l2")]
-res$choices$examples <- c(
-  "(none)", 
-  examples#substr(examples, 0, nchar(examples) - 12)
-)
+filter <- startsWith(examples,"Grosche2014") | 
+          endsWith(examples,"Leidig2018_l2") | 
+          startsWith(examples,"exampleAB_50.l2")
+examples <- examples[!filter]
+
+res$choices$examples <- c("(none)", examples)
 
 res$choices$scplot_examples <- c(
 "(empty selection)" = "",
+"Trend lines" = 'add_statline("trend")',
+"Baseline trend" = 'add_statline("trendA")',
+"Max A" = 'add_statline("max", phase = "A")',
+"Means" = 'add_statline("mean")',
+"Medians" = 'add_statline("median")',
+"Moving average" = 'add_statline("movingMean")',
+"Smoothed line" = 'add_statline("loess", span = 0.4)'
+)
 
-"Trend lines" =
-'add_statline("trend", color = "darkred", width = 2)',
-
-"Baseline trend" =
-'add_statline("trendA", color = "darkblue", width = 2, linetype = "dashed")',
-
-"Max A" = 'add_statline("max", phase = "A", color = "darkblue", linetype = "dashed")',
-
-"Means" = 'add_statline("mean", color = "darkred")',
-"Medians" = 'add_statline("median", color = "darkred")',
-
-"Moving average" = 'add_statline("movingMean", color = "darkred")',
-
-"Smoothed line" = 'add_statline("loess", color = "darkgreen", span = 0.4)',
-
-"Background", 'set_background(fill = "grey90", color = "black", size = 2',
-
-"Legend" = 'add_legend()',
-"Add title" = 'add_title("A new plot", color = "darkblue", size = 1.3)',
-"Add caption" = 'add_caption("Note. What a nice plot!", face = "italic", colour = "darkred")',
-"Set axis labels" = 'set_ylabel("Score", color = "darkred", angle = 0)
+res$choices$scplot_templates_design <- c(
+  "",
+  "Legend" = 'add_legend()',
+  "Add title" = 'add_title("A new plot", color = "darkblue", size = 1.3)',
+  "Add caption" = 'add_caption("Note. What a nice plot!", face = "italic", colour = "darkred")',
+  "Set axis labels" = 'set_ylabel("Score", color = "darkred", angle = 0)
 set_xlabel("Session", color = "darkred")',
+  "Set phase names" = 'set_phasenames(labels = c("Baseline", "Intervention", "Extended", "Follow-up"), color = "darkblue", size = 0.9, face = "italic")',
+  "Set case names" = 'set_casenames(position = "strip", background = list(fill = "lightblue"))',
+  "Resize size" = 'set_base_text(size = 19)',
+  "Background" = 'set_background(fill = "grey90", color = "black", size = 2)'
 
-"Set case names" = 'set_casenames(position = "strip", background = list(fill = "lightblue"))'
 )
 
 themes <- names(scplot:::.scplot_themes)
 
 for(i in seq_along(themes)) {
-  res$choices$scplot_examples[[paste0("Theme ", themes[i])]] <-
-    paste0('add_theme("', themes[i], '")')
+  res$choices$scplot_templates_design[[paste0("Theme ", themes[i])]] <-
+    paste0('set_theme("', themes[i], '")')
 }
 
 res$choices$fn_stats <- c(
@@ -98,7 +93,9 @@ res$choices$fn_stats <- c(
   "Outlier analysis" = "outlier"
 )
 
-res$choices$fn_plot <- c("scplot" = "scplot", "plot" = "plot.scdf")
+#res$choices$fn_plot <- c("scplot" = "scplot", "plot" = "plot.scdf")
+
+res$placeholder$values <- "To creat a new case, start by entering scores here. E.g. \nA = 1,2,3,4,3, \nB = 7,6,7,8,7,6"
 
 res$placeholder$transform <- 'e.g.
 values = scale(values)
@@ -107,12 +104,7 @@ values2 = values - max(values[phase=="A"])
 across_cases(values2 = scale(values)
 '
 
-res$placeholder$plot_arguments <- 'for scplot:
-choose one or more from the templates below and experiment with the syntax here.
-
-e.g. for plot:
-style = "sienna"
-lines = list("loreg", f = 0.2, lty = "solid", col = "black", lwd = 3)
+res$placeholder$plot_arguments <- '(choose one or more from the templates below and experiment with the syntax here.)
 '
 
 res$placeholder$mt <- "(optional, e.g. 1,2,4,6,7,8,9,12,13)"
@@ -133,9 +125,9 @@ res$msg$startup <-
 
 You can:
 
-1. create a new case (click 'Add')
+1. create a new case (fill in 'values' and click 'Add')
 2. load a dataset (click 'Load file' to import an rds, csv, or excel file)
-3. choose an example scdf (choosse from 'Load example')
+3. choose an example scdf (choose from 'Load example')
 
 'exampleABC' is a good place to start.
 
@@ -154,9 +146,9 @@ Have fun!
 res$msg$no_case_scdf <-
 "No case has been defined yet.
 You can:
-1. create a new case (click 'Add')
+1. create a new case (fill in 'values' and click 'Add')
 2. load a dataset (click 'Load file' to import an rds, csv, or excel file)
-3. choose an example scdf (choosse from 'Load example')
+3. choose an example scdf (from 'Load example')
 "
 
 res$msg$no_case <-
@@ -178,18 +170,13 @@ The basic procedure is:
 
 Analysis and plots are based on the scdf after any changes from the **Transform tab**.
 
-You have two plot engines to choose from. scplot is much more powerful.
-
 Here are helpful links:
-
-[How to install shinyscan on your computer](https://github.com/jazznbass/shinyscan#readme)
 
 [Help pages for scan](https://jazznbass.github.io/scan/)
 
 [Online book for single case analysis with scan](https://jazznbass.github.io/scan-Book/)
 
 [Help pages for scplot](https://jazznbass.github.io/scplot/)
-
 
 
 Have fun!

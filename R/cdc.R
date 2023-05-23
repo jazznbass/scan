@@ -61,7 +61,15 @@ cdc <- function(data,
                 phases = c(1, 2)) {
 
   
-  trend_method <- match.arg(trend_method)
+  
+  
+  check_args(
+    by_class(decreasing, "logical"),
+    by_call(trend_method, "cdc"),
+    within(conservative, 0, 1)
+  )
+  
+  trend_method <- trend_method[1]
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
