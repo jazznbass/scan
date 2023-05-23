@@ -33,8 +33,7 @@ print.sc_plm <- function(x, ...) {
   
   if (x$ar == 0) res <- summary(x$full.model)$coefficients
   if (x$ar  > 0) res <- summary(x$full.model)$tTable
-  
-  #if ("(Intercept)" %in% row.names(res)) {
+   
   if (attr(x$full.model$terms, "intercept")) {
     intercept_included <- TRUE 
   } else{ 
