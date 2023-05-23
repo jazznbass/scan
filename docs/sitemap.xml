@@ -16,9 +16,6 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/Beretvas2008.html</loc>
-  </url>
-  <url>
     <loc>/reference/Subsetting.html</loc>
   </url>
   <url>
@@ -34,10 +31,10 @@
     <loc>/reference/autocorr.html</loc>
   </url>
   <url>
-    <loc>/reference/cdc.html</loc>
+    <loc>/reference/batch_apply.html</loc>
   </url>
   <url>
-    <loc>/reference/check_scdf.html</loc>
+    <loc>/reference/cdc.html</loc>
   </url>
   <url>
     <loc>/reference/coef.sc_plm.html</loc>
@@ -58,16 +55,10 @@
     <loc>/reference/describe.html</loc>
   </url>
   <url>
-    <loc>/reference/describeSC.html</loc>
-  </url>
-  <url>
     <loc>/reference/design.html</loc>
   </url>
   <url>
     <loc>/reference/dot-inheritParams.html</loc>
-  </url>
-  <url>
-    <loc>/reference/estimateSC.html</loc>
   </url>
   <url>
     <loc>/reference/estimate_design.html</loc>
@@ -88,25 +79,7 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/install_scplot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/install_shinyscan.html</loc>
-  </url>
-  <url>
     <loc>/reference/is.scdf.html</loc>
-  </url>
-  <url>
-    <loc>/reference/load_scdf.html</loc>
-  </url>
-  <url>
-    <loc>/reference/longSCDF.html</loc>
-  </url>
-  <url>
-    <loc>/reference/makesingleSC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mc_function.html</loc>
   </url>
   <url>
     <loc>/reference/mplm.html</loc>
@@ -145,9 +118,6 @@
     <loc>/reference/pnd.html</loc>
   </url>
   <url>
-    <loc>/reference/power.testSC.html</loc>
-  </url>
-  <url>
     <loc>/reference/power_test.html</loc>
   </url>
   <url>
@@ -157,13 +127,7 @@
     <loc>/reference/print.scdf.html</loc>
   </url>
   <url>
-    <loc>/reference/rand.test.html</loc>
-  </url>
-  <url>
     <loc>/reference/rand_test.html</loc>
-  </url>
-  <url>
-    <loc>/reference/random.html</loc>
   </url>
   <url>
     <loc>/reference/random_scdf.html</loc>
@@ -175,31 +139,19 @@
     <loc>/reference/rci.html</loc>
   </url>
   <url>
-    <loc>/reference/readSC.html</loc>
-  </url>
-  <url>
     <loc>/reference/read_scdf.html</loc>
   </url>
   <url>
     <loc>/reference/sample_names.html</loc>
   </url>
   <url>
-    <loc>/reference/save_scdf.html</loc>
-  </url>
-  <url>
     <loc>/reference/scan-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/scan_app.html</loc>
   </url>
   <url>
     <loc>/reference/scdf.html</loc>
   </url>
   <url>
     <loc>/reference/scdf_attr.html</loc>
-  </url>
-  <url>
-    <loc>/reference/scplot.html</loc>
   </url>
   <url>
     <loc>/reference/select_cases.html</loc>
@@ -214,7 +166,7 @@
     <loc>/reference/shift.html</loc>
   </url>
   <url>
-    <loc>/reference/show.html</loc>
+    <loc>/reference/shinyscan.html</loc>
   </url>
   <url>
     <loc>/reference/smd.html</loc>
@@ -245,9 +197,6 @@
   </url>
   <url>
     <loc>/reference/truncate_phase.html</loc>
-  </url>
-  <url>
-    <loc>/reference/writeSC.html</loc>
   </url>
   <url>
     <loc>/reference/write_scdf.html</loc>

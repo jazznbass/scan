@@ -20,6 +20,14 @@ batch_apply(exampleAB, plm(.) |> coef())
 - `export()`: new for `nap(), pen()`
 - `c()/combine()`: new arguments to set author and info attributes (`author`, `info`)
 
+## Changes in functions
+
+- `plm()`: Print function allows to set maximum lag for autocorrelations; Overall significance Ljung_Box test is reported.
+
+```r
+plm(exampleAB$Johanna) |> print(lag_max = 5)
+```
+
 ## Bug fixes
 
 - solved: `summary()` failed when one of the cases had no name

@@ -1,7 +1,9 @@
 #' @rdname print.sc
+#' @param lag_max Maximum lag to be reported for autocorrelation of residuals.
+#'   Default is `3`. Set `FALSE` for no report of autocorrelations.
 #' @export
 #' 
-print.sc_plm <- function(x, ...) {
+print.sc_plm <- function(x, lag_max = 3, ...) {
   cat("Piecewise Regression Analysis\n\n")
   cat(
     "Contrast model: ", 
@@ -80,13 +82,22 @@ print.sc_plm <- function(x, ...) {
   }
   print(res)
   cat("\n")
-  if (x$family == "gaussian") {
+  if (x$family == "gaussian" && lag_max > 0) {
     cat("Autocorrelations of the residuals\n")
-    lag.max = 3
-    cr <- acf(residuals(x$full.model), lag.max = lag.max,plot = FALSE)$acf[2:(1 + lag.max)]
+    
+    cr <- acf(residuals(x$full.model), lag.max = lag_max,plot = FALSE)$acf[2:(1 + lag_max)]
     cr <- round(cr, 2)
-    print(data.frame(lag = 1:lag.max, cr = cr), row.names = FALSE)
-    cat("\n")
+    print(data.frame(lag = 1:lag_max, cr = cr), row.names = FALSE)
+    
+    if (x$ar == 0) {
+      bj <- Box.test(residuals(x$full.model), lag_max, type = "Ljung-Box")
+      cat(sprintf(
+        "Ljung-Box test: X-Squared(%d) = %.2f; p = %0.3f", 
+        bj$parameter, bj$statistic, bj$p.value
+      ), "\n\n"
+      )	   
+    }
+
   }
   cat("Formula: ")
   if (x$family == "binomial" && !x$dvar_percentage) {

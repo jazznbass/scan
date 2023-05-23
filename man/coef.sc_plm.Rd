@@ -3,7 +3,7 @@
 \name{coef.sc_plm}
 \alias{coef.sc_plm}
 \alias{coef.sc_hplm}
-\title{Extract coefficents from plm/hplm objects}
+\title{Extract coefficients from plm/hplm objects}
 \usage{
 \method{coef}{sc_plm}(object, ...)
 
@@ -18,7 +18,7 @@
 data frame with coefficient table
 }
 \description{
-Extract coefficents from plm/hplm objects
+Extract coefficients from plm/hplm objects
 }
 \examples{
 coefficients(plm(exampleAB$Johanna))

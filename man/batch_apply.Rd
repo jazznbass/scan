@@ -11,6 +11,9 @@ batch_apply(scdf, fn, simplify = FALSE)
 
 \item{fn}{The function to apply to each element. Use a \code{.} as a
 placeholder for the scdf (e.g. \code{describe(.)}).}
+
+\item{simplify}{If simplify is TRUE and \code{fn} returns a vector of values,
+\code{batch_apply} will return a data frame case names.}
 }
 \value{
 A list of the output of each function call.

@@ -6,7 +6,8 @@
 #' @param scdf    A list of inputs to apply the function to.
 #' @param fn      The function to apply to each element. Use a `.` as a
 #'   placeholder for the scdf (e.g. `describe(.)`).
-#'
+#' @param simplify If simplify is TRUE and `fn` returns a vector of values,
+#'   `batch_apply` will return a data frame case names.
 #' @return A list of the output of each function call.
 #'
 #' @examples

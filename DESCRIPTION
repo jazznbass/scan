@@ -1,8 +1,8 @@
 Package: scan
 Type: Package
 Title: Single-Case Data Analyses for Single and Multiple Baseline Designs
-Version: 0.57.9
-Date: 2023-05-21
+Version: 0.57.10
+Date: 2023-05-23
 Authors@R: c(
   person("Juergen", "Wilbert", email = "juergen.wilbert@uni-potsdam.de", 
     role = c("cre", "aut"), comment = c(ORCID = "0000-0002-8392-2873")), 
@@ -11,7 +11,6 @@ Authors@R: c(
 Depends: 
   R (>= 3.5.0)
 Imports: 
-  scplot,
   stats, 
   nlme, 
   utils, 
@@ -28,7 +27,8 @@ Suggests:
   testthat (>= 3.0.0),
   shiny,
   shinyjs,
-  markdown
+  markdown,
+  scplot
 Description: A collection of procedures for analysing, visualising, 
   and managing single-case data. These include piecewise linear regression 
   models, multilevel models, overlap indices ('PND', 'PEM', 'PAND', 'PET', 'tau-u', 
