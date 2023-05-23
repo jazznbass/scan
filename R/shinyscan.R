@@ -4,18 +4,23 @@
 #' @export
 shinyscan <- function() {
   
+  if (!requireNamespace("markdown", quietly = TRUE)) {
+    stop("You need to install the 'markdown' package to run this app ",
+            "with install.packages('markdown')")
+  }
   if (!requireNamespace("scplot", quietly = TRUE)) {
-    message("You need to install the 'scplot' package to run this app ",
+    stop("You need to install the 'scplot' package to run this app ",
             "with install.packages('scplot')")
   }
   if (!requireNamespace("shinyjs", quietly = TRUE)) {
-    message("You need to install the 'shinyjs' package to run this app ",
+    stop("You need to install the 'shinyjs' package to run this app ",
             "with install.packages('shinyjs')")
   }
-  if (requireNamespace("shiny", quietly = TRUE)) {
-    shiny::runApp(system.file('shiny', package = 'scan'),launch.browser = TRUE)
-  } else {
-    message("You need to install the 'shiny' package to run this app ",
+  if (!requireNamespace("shiny", quietly = TRUE)) {
+    stop("You need to install the 'shiny' package to run this app ",
             "with install.packages('shiny')")
   }
+  
+  shiny::runApp(system.file('shiny', package = 'scan'),launch.browser = TRUE)
+  
 }
