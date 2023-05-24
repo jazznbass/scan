@@ -1,4 +1,4 @@
-# scan 0.57.x
+# scan 0.58
 
 ## Shiny app added
 

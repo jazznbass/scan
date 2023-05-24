@@ -9,3 +9,10 @@ shinyscan()
 \description{
 Run a Shiny app with most of the scan functions.
 }
+\details{
+This function launches a shiny application in your default browser.
+You need to have the following CRAN packages installed: \code{scplot}, \code{shiny}.
+\code{shinyjs}, \code{markdown}. These packages are suggested but not necessarily
+installed along with cran. \code{shinyscan()} will tell you if a package is
+missing.
+}
