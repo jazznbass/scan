@@ -1,8 +1,8 @@
 Package: scan
 Type: Package
 Title: Single-Case Data Analyses for Single and Multiple Baseline Designs
-Version: 0.57.10
-Date: 2023-05-23
+Version: 0.58
+Date: 2023-05-24
 Authors@R: c(
   person("Juergen", "Wilbert", email = "juergen.wilbert@uni-potsdam.de", 
     role = c("cre", "aut"), comment = c(ORCID = "0000-0002-8392-2873")), 
@@ -36,7 +36,7 @@ Description: A collection of procedures for analysing, visualising,
   support outlier detection, handling missing values, scaling, truncation, 
   rank transformation, and smoothing. An export function helps to generate 
   html and latex tables in a publication friendly style. More details can be 
-  found in the online book 'Analyzing single-case data with R and scan', Jürgen Wilbert (2013)
+  found in the online book 'Analyzing single-case data with R and scan', Juergen Wilbert (2013)
   <https://jazznbass.github.io/scan-Book/>.
 License: GPL (>= 3)
 URL: https://github.com/jazznbass/scan/, https://jazznbass.github.io/scan-Book/

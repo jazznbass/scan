@@ -1,4 +1,4 @@
-# scan 0.57.x
+# scan 0.58
 
 ## Shiny app added
 
@@ -18,7 +18,7 @@ batch_apply(exampleAB, plm(.) |> coef())
 - Helper functions for `transform()`: `moving_mean()`, `moving_median()`, `local_regression()`
 - `corrected_tau()`: returns multiple cases
 - `export()`: new for `nap(), pen()`
-- `c()/combine()`: new arguments to set author and info attributes (`author`, `info`)
+- `c()/combine()`: new arguments to set author and info attributes of the resulting scdf (`author`, `info`)
 
 ## Changes in functions
 

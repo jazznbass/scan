@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.57.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.58</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,9 +57,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.57" id="scan-057x">scan 0.57.x<a class="anchor" aria-label="anchor" href="#scan-057x"></a></h2><p class="text-muted">CRAN release: 2023-02-24</p>
+<h2 class="pkg-version" data-toc-text="0.58" id="scan-058">scan 0.58<a class="anchor" aria-label="anchor" href="#scan-058"></a></h2>
 <div class="section level3">
-<h3 id="shiny-app-added-0-57">Shiny app added<a class="anchor" aria-label="anchor" href="#shiny-app-added-0-57"></a></h3>
+<h3 id="shiny-app-added-0-58">Shiny app added<a class="anchor" aria-label="anchor" href="#shiny-app-added-0-58"></a></h3>
 <ul><li>start the app with <code><a href="../reference/shinyscan.html">shinyscan()</a></code>
 </li>
 <li>you need the following packages to run the app:
@@ -69,7 +69,7 @@
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-fucntions-0-57">New fucntions<a class="anchor" aria-label="anchor" href="#new-fucntions-0-57"></a></h3>
+<h3 id="new-fucntions-0-58">New fucntions<a class="anchor" aria-label="anchor" href="#new-fucntions-0-58"></a></h3>
 <ul><li>
 <code><a href="../reference/batch_apply.html">batch_apply()</a></code>: Apply a function to each element in an scdf. Use <code>.</code> as a placeholder for the scdf case.</li>
 </ul><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -85,10 +85,10 @@
 <code><a href="../reference/export.html">export()</a></code>: new for <code>nap(), pen()</code>
 </li>
 <li>
-<code>c()/combine()</code>: new arguments to set author and info attributes (<code>author</code>, <code>info</code>)</li>
+<code>c()/combine()</code>: new arguments to set author and info attributes of the resulting scdf (<code>author</code>, <code>info</code>)</li>
 </ul></div>
 <div class="section level3">
-<h3 id="changes-in-functions-0-57">Changes in functions<a class="anchor" aria-label="anchor" href="#changes-in-functions-0-57"></a></h3>
+<h3 id="changes-in-functions-0-58">Changes in functions<a class="anchor" aria-label="anchor" href="#changes-in-functions-0-58"></a></h3>
 <ul><li>
 <code><a href="../reference/plm.html">plm()</a></code>: Print function allows to set maximum lag for autocorrelations; Overall significance Ljung_Box test is reported.</li>
 </ul><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -96,13 +96,13 @@
 <span><span class="fu"><a href="../reference/plm.html">plm</a></span><span class="op">(</span><span class="va">exampleAB</span><span class="op">$</span><span class="va">Johanna</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>lag_max <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="bug-fixes-0-57">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-57"></a></h3>
+<h3 id="bug-fixes-0-58">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-58"></a></h3>
 <ul><li>solved: <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> failed when one of the cases had no name</li>
 <li>solved: <code><a href="../reference/nap.html">nap()</a></code> only reported values for the first case with multiple cases.</li>
 <li>solved: <code><a href="../reference/add_l2.html">add_l2()</a></code> lost column name of l2 variable when l2 had only one variable.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-0-57">minor<a class="anchor" aria-label="anchor" href="#minor-0-57"></a></h3>
+<h3 id="minor-0-58">minor<a class="anchor" aria-label="anchor" href="#minor-0-58"></a></h3>
 <ul><li>
 <code><a href="../reference/convert.html">convert()</a></code>: new arguments. indent sets the indentation. When the scdf contains only one case, no study is combined.</li>
 <li>
