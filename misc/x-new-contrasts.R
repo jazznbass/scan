@@ -129,19 +129,26 @@ contr.cum <- function(n) {
   
   df <- list()
   
+  phase_str <- rle(phase)
+  class(phase_str) <- "list"
+  phase_str$start <- c(1, cumsum(phase_str$lengths) + 1)
+  phase_str$start <- phase_str$start[1:length(phase_str$lengths)]
+  phase_str$stop  <- cumsum(phase_str$lengths)
+  phase_number <- rep(seq_along(phase_str$values), phase_str$lengths)
+  
   for(i in 1:ncol(contrast)) {
-    
+
     df[[dummy_names[i]]] <- 0
-    phase_str <- rle(contrast[,i])
-    class(phase_str) <- "list"
-    phase_str$start <- c(1, cumsum(phase_str$lengths) + 1)
-    phase_str$start <- phase_str$start[1:length(phase_str$lengths)]
-    phase_str$stop  <- cumsum(phase_str$lengths)
+    #phase_str <- rle(contrast[,i])
+    #class(phase_str) <- "list"
+    #phase_str$start <- c(1, cumsum(phase_str$lengths) + 1)
+    #phase_str$start <- phase_str$start[1:length(phase_str$lengths)]
+    #phase_str$stop  <- cumsum(phase_str$lengths)
     
-    for(j in 1:length(phase_str$lengths)) {
-      selection_phases <- levels(phase)[phase_str$start[j]:phase_str$stop[j]]
-      browser()
-      id <- which(phase %in% selection_phases)
+    for(j in seq_along(phase_str$lengths)) {
+      selection_phases <- which(as.numeric(contrast[,i]) != 0)
+      id <- which(phase_number %in% selection_phases)
+    
       
       if (model %in% c("B&L-B")) {
         df[[dummy_names[i]]][id] <- (mt[1:length(id)] - mt[1] + 1) * phase_str$values[j]
