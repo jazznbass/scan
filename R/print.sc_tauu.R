@@ -21,7 +21,7 @@ print.sc_tauu <- function(x,
  
   if (!is.na(x$ci)) {
     cat(x$ci * 100, "% CIs for tau are reported.\n", sep = "")
-    cat("CI method: ", x$ci_se_method, "\n\n", sep = "")
+    cat("CI method: ", x$ci_method, "\n\n", sep = "")
   } else cat("\n")
   
   out <- x$table
