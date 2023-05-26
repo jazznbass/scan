@@ -13,7 +13,7 @@ tau_u(
   phases = c(1, 2),
   meta_analyses = TRUE,
   ci = 0.95,
-  ci_method = c("z", "tau"),
+  ci_method = c("z", "tau", "s"),
   meta_weight_method = c("z", "tau"),
   continuity_correction = FALSE,
   meta_method = NULL

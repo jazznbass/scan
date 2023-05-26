@@ -52,7 +52,7 @@ server <- function(input, output, session) {
 
   output$scdf_save <- downloadHandler(
     filename = function() {
-      scdf <- my_scdf()
+      scdf <- transformed()
       out <- paste(
         "scdf",
         sprintf("%02d", length(scdf)),
@@ -64,9 +64,11 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       if (input$save_scdf_format == ".rds") 
-        saveRDS(my_scdf(), file)
+        saveRDS(transformed(), file)
       if (input$save_scdf_format == ".R") 
-        convert(my_scdf(), file = file)
+        convert(transformed(), file = file)
+      if (input$save_scdf_format == ".csv") 
+        write_scdf(transformed(), filename = file)
     }
   )
 
@@ -182,20 +184,20 @@ server <- function(input, output, session) {
     print(transformed(), rows = 100)
   })
 
-  output$transform_save <- downloadHandler(
-    filename = function() {
-      scdf <- transformed()
-      out <- paste(
-        "scdf",
-        sprintf("%02d", length(scdf)),
-        paste0(unique(scdf[[1]]$phase), collapse = ""),
-        format(Sys.time(), format = "%y%m%d-%H%M%S"),
-        sep = "-"
-      )
-      paste0(out, ".rds")
-    },
-    content = function(file) saveRDS(transformed(), file)
-  )
+  #output$transform_save <- downloadHandler(
+  #  filename = function() {
+  #    scdf <- transformed()
+  #    out <- paste(
+  #      "scdf",
+  #      sprintf("%02d", length(scdf)),
+  #      paste0(unique(scdf[[1]]$phase), collapse = ""),
+  #      format(Sys.time(), format = "%y%m%d-%H%M%S"),
+  #      sep = "-"
+  #    )
+  #    paste0(out, ".rds")
+  #  },
+  #  content = function(file) saveRDS(transformed(), file)
+  #)
 
   # stats -----
 
@@ -234,14 +236,6 @@ server <- function(input, output, session) {
     } else call <- "print(results)"
 
     str2lang(call) |> eval()
-  })
-
-
-  observeEvent(input$stats_help, {
-    link <- paste0(
-      "https://jazznbass.github.io/scan/reference/", input$func, ".html"
-    )
-    shinyjs::js$openURL(link)
   })
 
   output$stats_syntax <- renderPrint({
@@ -344,11 +338,6 @@ server <- function(input, output, session) {
 
 
   # plot -----
-
-  observeEvent(input$plot_help, {
-    link <- "https://jazznbass.github.io/scplot/reference/index.html"
-    shinyjs::js$openURL(link)
-  })
 
   render_plot <- reactive({
     req(inherits(my_scdf(), "scdf"))

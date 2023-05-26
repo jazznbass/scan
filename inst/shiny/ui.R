@@ -2,11 +2,9 @@ source("resources.R")
 
 # scdf ------
 tab_scdf <-   tabPanel(
-  "scdf",
+  "Data",
   sidebarLayout(
     sidebarPanel(
-      #h4("New case"),
-      #br(),
       textAreaInput(
         "values", "Values", placeholder = res$placeholder$values
       ),
@@ -20,23 +18,21 @@ tab_scdf <-   tabPanel(
       actionButton("remove_case", "Remove last"),
       actionButton("remove_all", "Remove all"),
       hr(),
-      radioButtons(
-        "save_scdf_format", "Save format", 
-        choices = c("R object" = ".rds", "R syntax" = ".R"), 
-        inline = TRUE),
-      div(style="display:inline-block; vertical-align: top",
-          downloadButton("scdf_save", "Save")
-      ),
-      div(
-        style="display:inline-block; vertical-align: top; padding-left: 20px;",
-        fileInput(
-          "upload", NULL, accept = c(".csv", ".rds", ".xlsx", "xls"),
-           buttonLabel = "Load file"
-        )
-      ),
       selectInput(
         "scdf_example", "Load example", choices = res$choices$examples,
       ),
+      fileInput(
+        "upload", NULL, accept = c(".csv", ".rds", ".xlsx", "xls"),
+        buttonLabel = "Load file"
+      ),
+      div(style="display:inline-block; vertical-align: top",
+          downloadButton("scdf_save", "Save")
+      ),
+      div(style="display:inline-block; vertical-align: top; padding-left: 20px;",
+      radioButtons(
+        "save_scdf_format", "Save format", 
+        choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
+        inline = TRUE)),
     ),
 
     mainPanel(
@@ -70,12 +66,11 @@ tab_transform <- tabPanel(
       textInput(
         "setdvar", "Set dependent variable", placeholder = "e.g.: depression"
       ),
-      downloadButton("transform_save", "Save")
+      #downloadButton("transform_save", "Save")
     ),
     mainPanel(
       verbatimTextOutput("transform_syntax"),
       verbatimTextOutput("transform_scdf")
-      #htmlOutput("transform_html")
     )
   )
 )
@@ -84,8 +79,6 @@ tab_transform <- tabPanel(
 # Stats -----
 tab_stats <- tabPanel(
   "Stats",
-  shinyjs::useShinyjs(),
-  shinyjs::extendShinyjs(text = res$java$window.open, functions = 'openURL'),
   sidebarLayout(
     sidebarPanel(
       selectInput(
@@ -98,9 +91,7 @@ tab_stats <- tabPanel(
         inline = TRUE
       ),
 
-      uiOutput("stats_arguments"),
-      hr(),
-      actionButton("stats_help", "Open help")
+      uiOutput("stats_arguments")
     ),
     mainPanel(
       div(
@@ -134,11 +125,8 @@ tab_stats <- tabPanel(
 ## Plot -----
 tab_plot <- tabPanel(
   "Plot",
-  shinyjs::useShinyjs(),
-  shinyjs::extendShinyjs(text = res$java$window.open, functions = 'openURL'),
   sidebarLayout(
     sidebarPanel(
-      #selectInput("plot", "Plot engine", choices = res$choices$fn_plot),
       textAreaInput(
         "plot_arguments", "Arguments", value = "",rows = 5,
         placeholder = res$placeholder$plot_arguments
@@ -149,8 +137,7 @@ tab_plot <- tabPanel(
       selectInput("scplot_templates_design", "design templates",
                     choices = names(res$choices$scplot_templates_design)
       ),
-      actionButton("plot_help", "Open help", inline = TRUE),
-      downloadButton("saveplot", "Save plot", inline = TRUE),
+      downloadButton("saveplot", "Save plot", inline = FALSE),
       numericInput("width", "Width", value = 800, min = 100, max = 2000),
       numericInput("height", "Height", value = 600, min = 100, max = 2000),
       numericInput("dpi", "Dpi", value = 100, min = 50, max = 600)
@@ -166,7 +153,7 @@ tab_plot <- tabPanel(
 
 tab_help <- tabPanel(
   "Help",
-  htmltools::includeMarkdown(res$help_page)
+  res$help_page
 )
 
 
@@ -193,14 +180,12 @@ tab_about <- tabPanel(
 ## ui ------
 
 ui <- navbarPage(
-  title = "Shiny scan",
-  theme = shinythemes::shinytheme("cerulean"),
-  #header = shinythemes::themeSelector(),
+  title = "Shiny-Scan",
+  theme = "cerulean.min.css",
   tab_scdf,
   tab_transform,
   tab_stats,
   tab_plot,
   tab_help,
-  #tab_test,
   tab_about
 )

@@ -6,7 +6,7 @@
 #' @inheritParams .inheritParams
 #' @param tau_method Character with values "a" or "b" (default) indicating
 #'   whether Kendall Tau A or Kendall Tau B is applied.
-#' @param method \code{"complete"} (default) or \code{"parker"}. The latter
+#' @param method `"complete"` (default) or `"parker"`. The latter
 #'   calculates the number of possible pairs as described in Parker et al.
 #'   (2011) which might lead to tau-U values greater than 1.
 #' @param meta_analyses If TRUE, a meta analysis is conducted.
@@ -74,23 +74,24 @@ tau_u <- function(data, dvar, pvar,
                   phases = c(1, 2), 
                   meta_analyses = TRUE,
                   ci = 0.95,
-                  ci_method = c("z", "tau"),
+                  ci_method = c("z", "tau", "s"),
                   meta_weight_method = c("z", "tau"),
                   continuity_correction = FALSE,
                   meta_method = NULL) {
-  
-  
-  method <- match.arg(method)
-  tau_method <- match.arg(tau_method)
-  meta_weight_method <- match.arg(meta_weight_method)
-  ci_method <- match.arg(ci_method)
-  
+
   # validity check ----
   check_args(
-    one_of(tau_method, "a", "b"),
-    one_of(method, "complete", "parker"),
+    by_call(tau_method, "tau_u"),
+    by_call(ci_method, "tau_u"),
+    by_call(method, "tau_u"),
+    by_call(meta_weight_method, "tau_u"),
     within(ci, 0, 1)
   )
+  
+  method <- method[1]
+  tau_method <- tau_method[1]
+  meta_weight_method <- meta_weight_method[1]
+  ci_method <- ci_method[1]
   
   # prepare scdf ----
   if (missing(dvar)) dvar <- dv(data)
