@@ -16,7 +16,7 @@ server <- function(input, output, session) {
 
     output$scdf_syntax <- renderPrint({
       req(inherits(my_scdf(), "scdf"))
-      do.call("convert", list(my_scdf()))
+      do.call("convert", list(my_scdf(), inline = as.logical(input$convert)))
     })
 
   })
@@ -36,6 +36,12 @@ server <- function(input, output, session) {
     ext <- tools::file_ext(input$upload$datapath)
     if (ext == "rds") {
       new <- readRDS(input$upload$datapath)
+    } else if (ext %in% c("r", "R")) {
+      new <- readLines(input$upload$datapath)
+      new <- paste0(new, collapse = "\n")
+      .tmp <- new.env()
+      eval(parse(text = new), envir = .tmp)
+      new <- .tmp$study
     } else {
       new <- read_scdf(input$upload$datapath)
     }
@@ -115,6 +121,7 @@ server <- function(input, output, session) {
     )
   })
 
+  # scdf: remove cases --------
   observeEvent(input$remove_case, {
     if (length(my_scdf()) > 1) {
       my_scdf(my_scdf()[-length(my_scdf())])
@@ -122,6 +129,7 @@ server <- function(input, output, session) {
     scdf_render()
   })
 
+  # scdf: remove all cases --------
   observeEvent(input$remove_all, {
     my_scdf(NULL)
     scdf_render()
@@ -183,21 +191,6 @@ server <- function(input, output, session) {
     if(!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
     print(transformed(), rows = 100)
   })
-
-  #output$transform_save <- downloadHandler(
-  #  filename = function() {
-  #    scdf <- transformed()
-  #    out <- paste(
-  #      "scdf",
-  #      sprintf("%02d", length(scdf)),
-  #      paste0(unique(scdf[[1]]$phase), collapse = ""),
-  #      format(Sys.time(), format = "%y%m%d-%H%M%S"),
-  #      sep = "-"
-  #    )
-  #    paste0(out, ".rds")
-  #  },
-  #  content = function(file) saveRDS(transformed(), file)
-  #)
 
   # stats -----
 
@@ -343,8 +336,10 @@ server <- function(input, output, session) {
     req(inherits(my_scdf(), "scdf"))
     call <- paste0("scplot(transformed())")
     if (trimws(input$plot_arguments) != "") {
+      plot_args <- trimws(input$plot_arguments)
+      plot_args <- gsub("\n+", "\n", plot_args)
       call <- paste0(
-        call, "%>% ", gsub("\n", " %>% ", trimws(input$plot_arguments))
+        call, "%>% ", gsub("\n", " %>% ", plot_args)
       )
     }
     call <- paste0("print(",call,")")

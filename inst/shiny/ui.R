@@ -22,17 +22,10 @@ tab_scdf <-   tabPanel(
         "scdf_example", "Load example", choices = res$choices$examples,
       ),
       fileInput(
-        "upload", NULL, accept = c(".csv", ".rds", ".xlsx", "xls"),
+        "upload", NULL, accept = c(".csv", ".rds", ".xlsx", ".xls", ".R", ".r"),
         buttonLabel = "Load file"
       ),
-      div(style="display:inline-block; vertical-align: top",
-          downloadButton("scdf_save", "Save")
-      ),
-      div(style="display:inline-block; vertical-align: top; padding-left: 20px;",
-      radioButtons(
-        "save_scdf_format", "Save format", 
-        choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
-        inline = TRUE)),
+      downloadButton("scdf_save", "Save scdf"),
     ),
 
     mainPanel(
@@ -137,15 +130,41 @@ tab_plot <- tabPanel(
       selectInput("scplot_templates_design", "design templates",
                     choices = names(res$choices$scplot_templates_design)
       ),
-      downloadButton("saveplot", "Save plot", inline = FALSE),
-      numericInput("width", "Width", value = 800, min = 100, max = 2000),
-      numericInput("height", "Height", value = 600, min = 100, max = 2000),
-      numericInput("dpi", "Dpi", value = 100, min = 50, max = 600)
+      downloadButton("saveplot", "Save plot", inline = FALSE)
     ),
     mainPanel(
       verbatimTextOutput("plot_syntax"),
       plotOutput("plot_scdf", width = 800,height = 600)
     )
+  )
+)
+
+## settings -----
+tab_settings <- tabPanel(
+  "Setting",
+  fluidRow(
+    column(3, div(
+      style = "background-color:#f0f0f0; border: 1px solid black", 
+      h3("Data"),
+      hr(),
+      radioButtons(
+       "save_scdf_format", "Save format", 
+       choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
+       inline = TRUE),
+      radioButtons(
+       "convert", "Code phase structure", 
+       choices = c("phase_design" = FALSE, "inline" = TRUE), 
+       inline = TRUE
+      ))
+    ),
+    column(3, div(
+      style = "background-color:#f0f0f0; border: 1px solid black; padding-left: 2px;", 
+      h3("Plot"),
+      hr(),
+      numericInput("width", "Export width", value = 800, min = 100, max = 2000),
+      numericInput("height", "Export height", value = 600, min = 100, max = 2000),
+      numericInput("dpi", " Export dpi", value = 100, min = 50, max = 600)
+    )) 
   )
 )
 
@@ -186,6 +205,7 @@ ui <- navbarPage(
   tab_transform,
   tab_stats,
   tab_plot,
+  tab_settings,
   tab_help,
   tab_about
 )
