@@ -3,11 +3,9 @@
 #' Run a Shiny app with most of the scan functions.
 #'
 #' @details This function launches a shiny application in your default browser.
-#'   You need to have the following CRAN packages installed: `scplot`, `shiny`.
-#'   `shinyjs`, `markdown`. These packages are suggested but not necessarily
-#'   installed along with cran. `shinyscan()` will tell you if a package is
-#'   missing.
-#'
+#'   You need to have the the `scplot` and `shiny` installed.
+#'   These packages are suggested but not necessarily installed along with scan.
+#'   `shinyscan()` will ask you to install missing packages.
 #'
 #' @export
 shinyscan <- function() {
