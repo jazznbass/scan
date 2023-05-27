@@ -6,12 +6,12 @@
 #' @inheritParams .inheritParams
 #' @param tau_method Character with values "a" or "b" (default) indicating
 #'   whether Kendall Tau A or Kendall Tau B is applied.
-#' @param method `"complete"` (default) or `"parker"`. The latter
-#'   calculates the number of possible pairs as described in Parker et al.
-#'   (2011) which might lead to tau-U values greater than 1.
+#' @param method `"complete"` (default) or `"parker"`. The latter calculates the
+#'   number of possible pairs as described in Parker et al. (2011) which might
+#'   lead to tau-U values greater than 1.
 #' @param meta_analyses If TRUE, a meta analysis is conducted.
-#' @param meta_weight_method String to specify the method for calculating the weights of the studies. 
-#'   Either "tau" or "z".
+#' @param meta_weight_method String to specify the method for calculating the
+#'   weights of the studies. Either "tau" or "z".
 #' @param ci Confidence intervals
 #' @param ci_method String to specify the method for calculating the standard
 #'   error of tau. Either "tau", "z", or "s" (not recommended).
@@ -26,16 +26,16 @@
 #' \item{matrix}{The matrix of comparisons used for calculating the
 #' statistics.} \item{tau_u}{Tau-U value.}
 #' @details Tau-U is an inconsistently operationalized construct. Parker et al.
-#'   (2011b) describe a method which may result in Tau-U lager than 1. A
-#'   different implementation of the method (provided at
+#'   (2011b) describe a method which may result in Tau-U outside the \[-1;1\]
+#'   interval. A different implementation of the method (provided at
 #'   http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of
 #'   tau-a as in the original formulation by Parker). Bossart et. al (2018)
 #'   describe inconsistencies in the results from this implementation as well.
 #'   Another problems lies in the calculation in overall Tau-U values from
-#'   several single cases. The function presented here applies a metaanalyzes to
-#'   gain the overall values. Each tau value is weighted by the inverse of the
-#'   variance (ie. the tau standard error). The confidence intervals for single
-#'   cases are calculated by Fisher-Z transforming tau, calculating the
+#'   several single cases. The function presented here applies a meta-analysis
+#'   to gain the overall values. Each tau value is weighted by the inverse of
+#'   the variance (ie. the tau standard error). The confidence intervals for
+#'   single cases are calculated by Fisher-Z transforming tau, calculating the
 #'   confidence intervals, and inverse transform them back to tau (see Long &
 #'   Cliff, 1997).
 #' @author Juergen Wilbert
@@ -329,8 +329,8 @@ tau_u <- function(data, dvar, pvar,
 
     out$table[[case]] <- table_tau
     out$tau_u[[case]] <- c(
-      "A vs. B + Trend B - Trend A" = 
-        table_tau["A vs. B + Trend B - Trend A", "Tau"]
+      "A vs. B - Trend A" = 
+        table_tau["A vs. B - Trend A", "Tau"]
     )
   }
   
