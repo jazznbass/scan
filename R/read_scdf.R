@@ -1,19 +1,16 @@
 #' Load single-case data from files
 #'
-#' Use the \code{read_scdf} function to load single-case data csv, excel, or
-#' yaml files.
+#' Use the `read_scdf` function to load single-case data csv, excel, or yaml
+#' files.
 #'
 #' @param file Either a character string defining the file to be loaded (e.g.
-#'   \code{"SC_Anita.csv"} (if left empty a dialog box for choosing will be
-#'   opened) or a data.frame.
+#'   `"SC_Anita.csv"` (if left empty a dialog box for choosing will be opened)
+#'   or a data.frame.
 #' @param cvar Sets the variable name of the "case" variable. Defaults to
-#'   \code{"case"}.
-#' @param pvar Sets the variable name of the "phase" variable. Defaults to
-#'   \code{"phase"}.
-#' @param dvar Sets the variable name of the "values" variable. Defaults to
-#'   \code{"values"}.
-#' @param mvar Sets the variable name of the "mt" variable. Defaults to
-#'   \code{"mt"}.
+#'   `"case"`.
+#' @param pvar Sets the variable name of the "phase" variable. Defaults to `"phase"`.
+#' @param dvar Sets the variable name of the "values" variable. Defaults to `"values"`.
+#' @param mvar Sets the variable name of the "mt" variable. Defaults to `"mt"`.
 #' @param sort_cases,sort.labels If set TRUE, the resulting list is sorted by
 #'   label names (alphabetically increasing).
 #' @param phase_names,phase.names A character vector with phase names. Defaults
@@ -21,14 +18,11 @@
 #' @param type Format of the file to be loaded. Either "csv", "xlsx", "xls",
 #'   "excel", "yml" is possible. By default (NA) the type is extracted from the
 #'   file extension.
-#' @param \dots Further arguments passed to the respective read function
-#'   (\code{\link{read.table}}, \code{\link{read_excel}},
-#'   \code{\link{read_yaml}} command.
+#' @param \dots Further arguments passed to the respective read function.
 #' @return Returns a single-case data frame. See \code{\link{scdf}} to learn
 #'   about the format of these data frames.
 #' @author Juergen Wilbert
-#' @seealso \code{\link{read.table}}, \code{\link{readRDS}},
-#'   \code{\link{read_excel}}
+#' @seealso [read.table()], [readRDS()]
 #' @family io-functions
 #' @keywords io
 #' @examples
@@ -83,7 +77,6 @@ read_scdf <- function(file,
       stringsAsFactors = FALSE,
       ...
     )
-    #dat <- utils::read.table(
   }
   
   if (type %in% c("yml", "yaml")) return(.load_yml(file, ...))

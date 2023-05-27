@@ -70,8 +70,6 @@ res$choices$fn_stats <- c(
   "Outlier analysis" = "outlier"
 )
 
-#res$choices$fn_plot <- c("scplot" = "scplot", "plot" = "plot.scdf")
-
 res$placeholder$values <- "To creat a new case, start by entering scores here. E.g. \nA = 1,2,3,4,3, \nB = 7,6,7,8,7,6"
 
 res$placeholder$transform <- 'e.g.
@@ -110,7 +108,7 @@ You can:
 
 The basic procedure is:
 
-1. Choose or create an scdf (Single Case Data Frame) in the 'scdf' tab.
+1. Choose or create an scdf (Single Case Data Frame) in the 'Data' tab.
 2. Optionally refine the scdf in the 'Transform' tab (e.g. select cases, recombine phases)
 3. Analyse the data in the 'Stats' tab.
 4. Create a plot in the 'Plot' tab.
@@ -130,14 +128,14 @@ You can:
 
 res$msg$no_case <-
 "There is no case defined yet.
-Please define a case on the 'scdf' tab first.
+Please define a case on the 'Data' tab first.
 "
 
 res$help_page <- structure(
   "<h4 id=\"welcome-to-shiny-scan\">Welcome to <em><strong>shiny scan</strong></em>!</h4>
   <p><em>Shiny-scan</em> is a graphical surface for <em>scan</em> (Single-Case Data Analysis). <em>scan</em> is an R package.</p>
   <p>The basic procedure is:</p>\n<ol>
-  <li>Choose/ create a single case file in the <strong>scdf tab</strong>.</li>
+  <li>Choose/ create a single case file in the <strong>Data</strong> tab.</li>
   <li>Optionally refine the case in the <strong>Transform tab</strong> (select cases, recombine phases, etc.)</li>
   <li>Analyse the data in the <strong>Stats tab</strong>.</li>
   <li>Create a plot in the <strong>Plot tab</strong>.</li>\n</ol>

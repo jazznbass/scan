@@ -20,20 +20,17 @@ read_scdf(
 }
 \arguments{
 \item{file}{Either a character string defining the file to be loaded (e.g.
-\code{"SC_Anita.csv"} (if left empty a dialog box for choosing will be
-opened) or a data.frame.}
+\code{"SC_Anita.csv"} (if left empty a dialog box for choosing will be opened)
+or a data.frame.}
 
 \item{cvar}{Sets the variable name of the "case" variable. Defaults to
 \code{"case"}.}
 
-\item{pvar}{Sets the variable name of the "phase" variable. Defaults to
-\code{"phase"}.}
+\item{pvar}{Sets the variable name of the "phase" variable. Defaults to \code{"phase"}.}
 
-\item{dvar}{Sets the variable name of the "values" variable. Defaults to
-\code{"values"}.}
+\item{dvar}{Sets the variable name of the "values" variable. Defaults to \code{"values"}.}
 
-\item{mvar}{Sets the variable name of the "mt" variable. Defaults to
-\code{"mt"}.}
+\item{mvar}{Sets the variable name of the "mt" variable. Defaults to \code{"mt"}.}
 
 \item{sort_cases, sort.labels}{If set TRUE, the resulting list is sorted by
 label names (alphabetically increasing).}
@@ -45,17 +42,15 @@ to the phase names provided in the phase variable.}
 "excel", "yml" is possible. By default (NA) the type is extracted from the
 file extension.}
 
-\item{\dots}{Further arguments passed to the respective read function
-(\code{\link{read.table}}, \code{\link{read_excel}},
-\code{\link{read_yaml}} command.}
+\item{\dots}{Further arguments passed to the respective read function.}
 }
 \value{
 Returns a single-case data frame. See \code{\link{scdf}} to learn
 about the format of these data frames.
 }
 \description{
-Use the \code{read_scdf} function to load single-case data csv, excel, or
-yaml files.
+Use the \code{read_scdf} function to load single-case data csv, excel, or yaml
+files.
 }
 \examples{
 
@@ -75,8 +70,7 @@ all.equal(res1,res2)
 
 }
 \seealso{
-\code{\link{read.table}}, \code{\link{readRDS}},
-\code{\link{read_excel}}
+\code{\link[=read.table]{read.table()}}, \code{\link[=readRDS]{readRDS()}}
 
 Other io-functions: 
 \code{\link{convert}()},

@@ -32,9 +32,9 @@ the attributes in the scdf file.}
 \item{tau_method}{Character with values "a" or "b" (default) indicating
 whether Kendall Tau A or Kendall Tau B is applied.}
 
-\item{method}{\code{"complete"} (default) or \code{"parker"}. The latter
-calculates the number of possible pairs as described in Parker et al.
-(2011) which might lead to tau-U values greater than 1.}
+\item{method}{\code{"complete"} (default) or \code{"parker"}. The latter calculates the
+number of possible pairs as described in Parker et al. (2011) which might
+lead to tau-U values greater than 1.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
 that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
@@ -49,8 +49,8 @@ is \code{phases = c(1,2)}.}
 \item{ci_method}{String to specify the method for calculating the standard
 error of tau. Either "tau", "z", or "s" (not recommended).}
 
-\item{meta_weight_method}{String to specify the method for calculating the weights of the studies.
-Either "tau" or "z".}
+\item{meta_weight_method}{String to specify the method for calculating the
+weights of the studies. Either "tau" or "z".}
 
 \item{continuity_correction}{If TRUE, a continuity correction is applied for
 calculating p-values of correlations (here: S will be reduced by one before
@@ -71,16 +71,16 @@ al. (2011a).
 }
 \details{
 Tau-U is an inconsistently operationalized construct. Parker et al.
-(2011b) describe a method which may result in Tau-U lager than 1. A
-different implementation of the method (provided at
+(2011b) describe a method which may result in Tau-U outside the [-1;1]
+interval. A different implementation of the method (provided at
 http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of
 tau-a as in the original formulation by Parker). Bossart et. al (2018)
 describe inconsistencies in the results from this implementation as well.
 Another problems lies in the calculation in overall Tau-U values from
-several single cases. The function presented here applies a metaanalyzes to
-gain the overall values. Each tau value is weighted by the inverse of the
-variance (ie. the tau standard error). The confidence intervals for single
-cases are calculated by Fisher-Z transforming tau, calculating the
+several single cases. The function presented here applies a meta-analysis
+to gain the overall values. Each tau value is weighted by the inverse of
+the variance (ie. the tau standard error). The confidence intervals for
+single cases are calculated by Fisher-Z transforming tau, calculating the
 confidence intervals, and inverse transform them back to tau (see Long &
 Cliff, 1997).
 }
