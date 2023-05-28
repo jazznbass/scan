@@ -4,14 +4,22 @@
 \alias{shinyscan}
 \title{A Shiny app for scan}
 \usage{
-shinyscan()
+shinyscan(mode = "browser", quiet = TRUE, ...)
+}
+\arguments{
+\item{mode}{Where to start the shiny app. Either \code{"browser"}, \code{"window"}, or
+\code{"viewer"}.}
+
+\item{quiet}{If TRUE (default) does not report shiny messages in the console.}
+
+\item{\dots}{Further arguments passed to the \code{shiny::runApp()} function.}
 }
 \description{
 Run a Shiny app with most of the scan functions.
 }
 \details{
-This function launches a shiny application in your default browser.
+This function launches a shiny application.
 You need to have the the \code{scplot} and \code{shiny} installed.
 These packages are suggested but not necessarily installed along with scan.
-\code{shinyscan()} will ask you to install missing packages.
+\code{shinyscan()} will ask to install missing packages.
 }

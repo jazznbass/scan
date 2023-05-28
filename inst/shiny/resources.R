@@ -3,6 +3,7 @@ errors <- c()
 if (length(errors) > 0) stop(errors)
 
 suppressPackageStartupMessages({
+library(scan)
 library(scplot)
 library(shiny)
 })

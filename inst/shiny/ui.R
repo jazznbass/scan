@@ -141,7 +141,7 @@ tab_plot <- tabPanel(
 
 ## settings -----
 tab_settings <- tabPanel(
-  "Setting",
+  "Settings",
   fluidRow(
     column(3, div(
       style = "background-color:#f0f0f0; border: 1px solid black", 
@@ -199,6 +199,7 @@ tab_about <- tabPanel(
 ## ui ------
 
 ui <- navbarPage(
+  id = "navpage",
   title = "Shiny-Scan",
   theme = "cerulean.min.css",
   tab_scdf,
@@ -207,5 +208,6 @@ ui <- navbarPage(
   tab_plot,
   tab_settings,
   tab_help,
-  tab_about
+  tab_about,
+  tabPanel(title = "Quit")
 )

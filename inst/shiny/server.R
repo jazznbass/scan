@@ -416,4 +416,10 @@ server <- function(input, output, session) {
     })
   })
 
+  # quit app -----
+  observeEvent(input$navpage, {
+    if (input$navpage == "Quit") {
+      stopApp()
+    }
+  })
 }
