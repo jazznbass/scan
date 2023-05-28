@@ -42,7 +42,7 @@ Other data manipulation functions:
 \code{\link{moving_median}()},
 \code{\link{outlier}()},
 \code{\link{ranks}()},
-\code{\link{scdf}},
+\code{\link{scdf}()},
 \code{\link{select_cases}()},
 \code{\link{shift}()},
 \code{\link{smooth_cases}()},
