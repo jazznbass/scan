@@ -147,10 +147,22 @@ server <- function(input, output, session) {
 
     }
 
-    if (input$select_phases != "") {
-      out <- paste0("select_phases(out, ", input$select_phases, ")") |>
-        str2lang() |> eval()
-      syntax <- c(syntax, paste0("select_phases(", input$select_phases, ")"))
+    if (input$select_phasesA != "" || input$select_phasesB != "") {
+ 
+      out <- paste0(
+          "select_phases(out, A = c(", input$select_phasesA, "), B = c(",
+          input$select_phasesB, "))"
+        ) |>
+        str2lang() |> 
+        eval()
+      
+      syntax <- c(
+        syntax, 
+        paste0(
+          "select_phases(A = c(", input$select_phasesA, "), B = c(",
+          input$select_phasesB, "))"
+        )
+      )
     }
 
     if (input$subset != "") {
@@ -192,6 +204,11 @@ server <- function(input, output, session) {
     print(transformed(), rows = 100)
   })
 
+  output$transform_html <- renderUI({
+    if(!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
+    export(transformed()) |> HTML()
+  })
+  
   # stats -----
 
   calculate_stats <- reactive({
