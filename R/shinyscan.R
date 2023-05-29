@@ -2,8 +2,6 @@
 #'
 #' Run a Shiny app with most of the scan functions.
 #'
-#' @param mode Where to start the shiny app. Either `"browser"`, `"window"`, or
-#'   `"viewer"`.
 #' @param quiet If TRUE (default) does not report shiny messages in the console.
 #' @param \dots Further arguments passed to the `shiny::runApp()` function.
 #' @details This function launches a shiny application.
@@ -12,7 +10,7 @@
 #'   `shinyscan()` will ask to install missing packages.
 #'
 #' @export
-shinyscan <- function(mode = "browser", quiet = TRUE, ...) {
+shinyscan <- function(quiet = TRUE, ...) {
   
   miss <- c()
   
@@ -34,14 +32,14 @@ shinyscan <- function(mode = "browser", quiet = TRUE, ...) {
     }
   }
   
-  prev <- getOption("shiny.launch.browser")
+  #prev <- getOption("shiny.launch.browser")
   
-  if (mode == "browser") 
-    options(shiny.launch.browser = .rs.invokeShinyWindowExternal)
-  if (mode == "window") 
-    options(shiny.launch.browser = .rs.invokeShinyWindowViewer)
-  if (mode == "viewer") 
-    options(shiny.launch.browser = .rs.invokeShinyPaneViewer)
+  #if (mode == "browser") 
+  ##  options(shiny.launch.browser = .rs.invokeShinyWindowExternal)
+  #if (mode == "window") 
+  #  options(shiny.launch.browser = .rs.invokeShinyWindowViewer)
+  #if (mode == "viewer") 
+  #  options(shiny.launch.browser = .rs.invokeShinyPaneViewer)
   
   
   shiny::runApp(
@@ -50,6 +48,6 @@ shinyscan <- function(mode = "browser", quiet = TRUE, ...) {
     ...
   )
   
-  options(shiny.launch.browser = prev)
+  #options(shiny.launch.browser = prev)
   
 }

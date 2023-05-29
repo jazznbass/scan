@@ -4,12 +4,9 @@
 \alias{shinyscan}
 \title{A Shiny app for scan}
 \usage{
-shinyscan(mode = "browser", quiet = TRUE, ...)
+shinyscan(quiet = TRUE, ...)
 }
 \arguments{
-\item{mode}{Where to start the shiny app. Either \code{"browser"}, \code{"window"}, or
-\code{"viewer"}.}
-
 \item{quiet}{If TRUE (default) does not report shiny messages in the console.}
 
 \item{\dots}{Further arguments passed to the \code{shiny::runApp()} function.}
