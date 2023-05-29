@@ -8,6 +8,13 @@ library(scplot)
 library(shiny)
 })
 
+options(
+  scan.export.kable_styling = list(
+    bootstrap_options = "striped", 
+    full_width = FALSE
+  )
+)
+
 res <- list()
 
 res$choices <- list()
