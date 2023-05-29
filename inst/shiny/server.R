@@ -199,6 +199,8 @@ server <- function(input, output, session) {
     out
   })
 
+  # transform output ------
+  
   output$transform_scdf <- renderPrint({
     if(!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
     print(transformed(), rows = 100)
@@ -206,7 +208,7 @@ server <- function(input, output, session) {
 
   output$transform_html <- renderUI({
     if(!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
-    export(transformed()) |> HTML()
+    export(transformed(), caption = "") |> HTML()
   })
   
   # stats -----
@@ -346,7 +348,53 @@ server <- function(input, output, session) {
     call
   })
 
-
+  # stats save ------
+  
+  output$stats_save <- downloadHandler(
+    
+    filename = function() {
+      scdf <- transformed()
+      out <- paste(
+        input$prefix_output_stats, input$func,
+        sprintf("%02d", length(scdf)),
+        paste0(unique(scdf[[1]]$phase), collapse = ""),
+        format(Sys.time(), format = "%y%m%d-%H%M%S"),
+        sep = "-"
+      )
+      
+      if (input$stats_out == "Html") out <- paste0(out, ".html")
+      if (input$stats_out == "Text") out <- paste0(out, ".txt")
+      out
+    },
+    content = function(file) {
+      
+      if (input$stats_out == "Text") {
+        results <- calculate_stats()
+        print_args <- input$stats_print_arguments
+        if (print_args != "") {
+          print_args <- paste0(", ", print_args)
+          call<- paste0("print(results, ", print_args, ")")
+        } else call <- "print(results)"
+        call <- paste0("capture.output(", call, ")")
+        writeLines(str2lang(call) |> eval(), con = file)
+      }
+      
+      if (input$stats_out == "Html") {
+        results <- calculate_stats()
+        print_args <- input$stats_print_arguments
+        if (print_args != "") {
+          print_args <- paste0(", ", print_args)
+          call<- paste0("export(results, ", print_args, ")")
+        } else {
+          call <- "export(results)"
+        }
+        out <- str2lang(call) |> eval()
+        writeLines(out, con = file)
+      }
+      
+    }
+  )
+  
   # plot -----
 
   render_plot <- reactive({

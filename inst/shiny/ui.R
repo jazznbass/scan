@@ -62,11 +62,9 @@ tab_transform <- tabPanel(
       textInput(
         "setdvar", "Set dependent variable", placeholder = "e.g.: depression"
       ),
-      #downloadButton("transform_save", "Save")
     ),
     mainPanel(
       
-      ####
       radioButtons(
         "transform_out", "Output format", c("Text", "Html"), inline = TRUE
       ),
@@ -114,6 +112,10 @@ tab_stats <- tabPanel(
           "stats_print_arguments", "Output arguments",
           placeholder = "e.g.: flip = TRUE; digits = 2; meta = FALSE"
         )
+      ),
+      div(
+        style="display:inline-block; padding-left: 30px;",
+        downloadButton("stats_save", "Save output")
       ),
       hr(),
       verbatimTextOutput("stats_syntax"),
@@ -172,12 +174,18 @@ tab_settings <- tabPanel(
     ),
     column(3, div(
       style = "background-color:#f0f0f0; border: 1px solid black; padding-left: 2px;", 
+      h3("Stats"),
+      hr(),
+      textInput("prefix_output_stats", "Prefix output filename", value = "scan")
+    )),
+    column(3, div(
+      style = "background-color:#f0f0f0; border: 1px solid black; padding-left: 2px;", 
       h3("Plot"),
       hr(),
       numericInput("width", "Export width", value = 800, min = 100, max = 2000),
       numericInput("height", "Export height", value = 600, min = 100, max = 2000),
       numericInput("dpi", " Export dpi", value = 100, min = 50, max = 600)
-    )) 
+    ))
   )
 )
 
