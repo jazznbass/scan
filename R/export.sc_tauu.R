@@ -42,6 +42,7 @@ export.sc_tauu <- function(object,
   if (!meta) {
     tables <- object$table
     names_models <- c(" ", row.names(tables[[1]]))
+    
     n_cases <- length(tables)
     out <- rbind(tables[[1]])
     out <- rbind(NA, out)
@@ -50,11 +51,7 @@ export.sc_tauu <- function(object,
   
     row.names(out) <- NULL
     Model <- rep(names_models, length = nrow(out)) 
-    Case <- lapply(
-      names(tables), 
-      function(x) c(x, rep(" ", length(names_models) - 1))
-    )
-    Case <- unlist(Case)
+    Case <- lapply(names(tables), function(x) c(x, rep(" ", 6))) |> unlist()
     out <- cbind(Case, Model, out)
     
   }  
@@ -63,7 +60,7 @@ export.sc_tauu <- function(object,
   
   if (identical(select, "auto")) {
     if (!meta) 
-      select <- c("Case", "Tau", "CI lower", "CI upper", "Z", "p")
+      select <- c("Case", "Model", "Tau", "CI lower", "CI upper", "Z", "p")
     if (meta) 
       select <- c(
         "Model", "Tau U" = "Tau_U", "se", "CI lower", "CI upper", "z", "p"
@@ -78,6 +75,11 @@ export.sc_tauu <- function(object,
   table <- do.call(kable, kable_options)
   kable_styling_options$kable_input <- table
   table <- do.call(kable_styling, kable_styling_options)
+  
+  #if (!meta) {
+  #  table <- add_indent(table, (1:nrow(out))[-(1:(nrow(out)/7) * 7 - 6)])
+  #}
+  
   if (!is.na(footnote) && footnote != "") 
     table <- footnote(table, general = footnote, threeparttable = TRUE)
   
