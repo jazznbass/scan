@@ -1,14 +1,14 @@
 #' Randomization Tests for single-case data
-#' 
-#' The \code{randSC} function computes a randomization test for single or
-#' multiple baseline single-case data.  The function is based on an algorithm
-#' from the \code{SCRT} package (Bulte & Onghena, 2009, 2012), but rewritten
-#' and extended for the use in AB designs.
-#' 
-#' 
+#'
+#' The `rand_test` function computes a randomization test for single or multiple
+#' baseline single-case data.  The function is based on an algorithm from the
+#' `SCRT` package (Bulte & Onghena, 2009, 2012), but rewritten and extended
+#' for the use in AB designs.
+#'
+#'
 #' @inheritParams .inheritParams
 #' @param statistic Defines the statistic on which the comparison of phases A
-#' and B is based on. Default setting is \code{statistic = "Mean B-A"}). The
+#'   and B is based on. Default setting is `statistic = "Mean B-A"`. The
 #' following comparisons are possible: \itemize{ \item\code{"Mean A-B"}: Uses
 #' the difference between the mean of phase A and the mean of phase B. This is
 #' appropriate if a decrease of scores was expected for phase B.
@@ -19,38 +19,39 @@
 #' A-B"}: The same as \code{"Mean A-B"}, but based on the median.
 #' \item\code{"Median B-A"}: The same as \code{"Mean B-A"}, but based on the
 #' median.  }
-#' @param number Sample size of the randomization distribution. The exactness
-#' of the p-value can not exceed \eqn{1/number} (i.e., \code{number = 100}
-#' results in p-values with an exactness of one percent). Default is
-#' \code{number = 500}. For faster processing use \code{number = 100}. For more
-#' precise p-values set \code{number = 1000}.
+#' @param number Sample size of the randomization distribution. The exactness of
+#'   the p-value can not exceed \eqn{1/number} (i.e., `number = 100` results in
+#'   p-values with an exactness of one percent). Default is `number = 500`. For
+#'   faster processing use `number = 100`. For more precise p-values set `number
+#'   = 1000`).
 #' @param complete If TRUE, the distribution is based on a complete permutation
-#' of all possible starting combinations. This setting overwrites the number
-#' Argument. The default setting is FALSE.
-#' @param limit Minimal number of data points per phase in the sample. The
-#' first number refers to the A-phase and the second to the B-phase (e.g.,
-#' \code{limit = c(5,3)}). If only one number is given, this number is applied
-#' to both phases. Default is \code{limit = 5}.
-#' @param startpoints Alternative to the \code{limit}-parameter
-#' \code{startpoints} exactly defines the possible start points of phase B
-#' (e.g., \code{startpoints = 4:9} restricts the phase B start points to
-#' measurements 4 to 9. \code{startpoints} overruns the \code{limit}-parameter.
+#'   of all possible starting combinations. This setting overwrites the number
+#'   Argument. The default setting is FALSE.
+#' @param limit Minimal number of data points per phase in the sample. The first
+#'   number refers to the A-phase and the second to the B-phase (e.g., `limit =
+#'   c(5,3)`). If only one number is given, this number is applied to both
+#'   phases. Default is `limit = 5`.
+#' @param startpoints Alternative to the `limit`-parameter `startpoints` exactly
+#'   defines the possible start points of phase B (e.g., `startpoints = 4:9`
+#'   restricts the phase B start points to measurements 4 to 9. `startpoints`
+#'   overruns the `limit`-parameter.
 #' @param exclude.equal If set to \code{exclude.equal = FALSE}, which is the
-#' default, random distribution values equal to the observed distribution are
-#' counted as null-hypothesis conform. That is, they decrease the probability
-#' of rejecting the null-hypothesis (increase the p-value).
-#' \code{exclude.equal} should be set to \code{TRUE} if you analyse one
-#' single-case design (not a multiple baseline data set) to reach a sufficient
-#' power. But be aware, that it increases the chance of an alpha-error.
-#' @param graph If \code{graph = TRUE}, a histogram of the resulting
-#' distribution is plotted. It is \code{FALSE} by default. \emph{Note: use the more
-#' versatile \code{\link{plot_rand}} function instead.}
+#'   default, random distribution values equal to the observed distribution are
+#'   counted as null-hypothesis conform. That is, they decrease the probability
+#'   of rejecting the null-hypothesis (increase the p-value).
+#'   \code{exclude.equal} should be set to `TRUE` if you analyse one single-case
+#'   design (not a multiple baseline data set) to reach a sufficient power. But
+#'   be aware, that it increases the chance of an alpha-error.
+#' @param graph If `graph = TRUE`, a histogram of the resulting distribution is
+#'   plotted. It is `FALSE` by default. *Note: use the more versatile
+#'   [plot_rand()] function instead.*
 #' @param output (deprecated and not implemented)
 #' @param seed A seed number for the random generator.
 #' @return \item{statistic}{Character string from function call (see
-#' \code{Arguments} above).} \item{N}{Number of single-cases.} \item{n1}{Number
-#' of data points in phase A.} \item{n2}{Number of data points in phase B.}
-#' \item{limit}{Numeric from function call (see \code{Arguments} above).}
+#'   \code{Arguments} above).} \item{N}{Number of single-cases.}
+#'   \item{n1}{Number of data points in phase A.} \item{n2}{Number of data
+#'   points in phase B.} \item{limit}{Numeric from function call (see
+#'   \code{Arguments} above).}
 #' \item{startpoints}{A vector defining the start points passed from the
 #' function call (see \code{Arguments} above).} \item{p.value}{P-value of the
 #' randomization test for the given data.} \item{number}{Sample size of
@@ -67,23 +68,23 @@
 #' the requested \code{number} of combinations.}
 #' @author Juergen Wilbert
 #' @references Bulte, I., & Onghena, P. (2009). Randomization tests for
-#' multiple-baseline designs: An extension of the SCRT-R package.
-#' \emph{Behavior Research Methods, 41}, 477-485.
-#' 
-#' Bulte, I., & Onghena, P. (2012). \emph{SCRT: Single-Case Randomization
-#' Tests}. Available from: \url{https://CRAN.R-project.org/package=SCRT}
+#'   multiple-baseline designs: An extension of the SCRT-R package.
+#' *Behavior Research Methods, 41*, 477-485.
+#'
+#'   Bulte, I., & Onghena, P. (2012). *SCRT: Single-Case Randomization Tests*.
+#'   Available from: \url{https://CRAN.R-project.org/package=SCRT}
 #' @examples
-#' 
+#'
 #' ## Compute a randomization test on the first case of the byHeart2011 data and include a graph
 #' rand_test(byHeart2011[1], statistic = "Median B-A", graph = TRUE, seed = 123)
-#' 
+#'
 #' ## Compute a randomization test on the Grosche2011 data using complete permutation
 #' rand_test(Grosche2011, statistic = "Median B-A", complete = TRUE, limit = 4, seed = 123)
-#' 
+#'
 #' @export
 rand_test <- function (data, dvar, pvar, 
                        statistic = c("Mean B-A", "Mean A-B", "Median B-A", 
-                                     "Median A-B", "Mean |A-B|"), 
+                                     "Median A-B", "Mean |A-B|", "Median |A-B|"), 
                        number = 500, 
                        complete = FALSE, 
                        limit = 5, 
@@ -232,7 +233,19 @@ rand_test <- function (data, dvar, pvar,
     ma <- matrix(abs(means.a - means.b), ncol = N, nrow = 1, byrow = TRUE)
     obs.stat <- mean(ma, na.rm = TRUE)
   }
-  
+
+  if (statistic == "Median |A-B|") {
+    medians.b <- unlist(lapply(rnd.b, function(x) lapply(x, median, na.rm = TRUE)))
+    medians.a <- unlist(lapply(rnd.a, function(x) lapply(x, median, na.rm = TRUE)))
+    ma <- matrix(abs(medians.a - medians.b), ncol = N, nrow = number, byrow = TRUE)
+    dist <- apply(ma, 1, median,na.rm = TRUE)
+    
+    medians.b <- unlist(lapply(b, median, na.rm = TRUE))
+    medians.a <- unlist(lapply(a, median, na.rm = TRUE))
+    ma <- matrix(abs(medians.a - medians.b), ncol = N, nrow = 1, byrow = TRUE)
+    obs.stat <- median(ma, na.rm = TRUE)
+  }
+
 # p value -----------------------------------------------------------------
 
   if (!exclude.equal) test <- dist >= obs.stat else test <- dist > obs.stat
@@ -284,6 +297,7 @@ rand_test <- function (data, dvar, pvar,
   class(out) <- c("sc_rand")
   attr(out, opt("phase")) <- pvar
   attr(out, opt("dv")) <- dvar
+  attr(out, "casenames") <- names(data)
   out
 
 }

@@ -79,7 +79,7 @@ klaas <- scdf(
   c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
   B_start = 6, name = "Klaas"
 )
-plot(klaas)
+describe(klaas)
 
 # Alternative coding 1:
 klaas <- scdf(

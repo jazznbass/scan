@@ -3,9 +3,17 @@ errors <- c()
 if (length(errors) > 0) stop(errors)
 
 suppressPackageStartupMessages({
+library(scan)
 library(scplot)
 library(shiny)
 })
+
+options(
+  scan.export.kable_styling = list(
+    bootstrap_options = "striped", 
+    full_width = FALSE
+  )
+)
 
 res <- list()
 

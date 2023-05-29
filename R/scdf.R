@@ -1,5 +1,3 @@
-methods::setOldClass(c("scdf", "list"))
-
 #' Single case data frame
 #'
 #' `scdf()` is the constructor for the `scdf` class. It stores single-case study
@@ -46,7 +44,7 @@ methods::setOldClass(c("scdf", "list"))
 #'   c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
 #'   B_start = 6, name = "Klaas"
 #' )
-#' plot(klaas)
+#' describe(klaas)
 #'
 #' # Alternative coding 1:
 #' klaas <- scdf(

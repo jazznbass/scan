@@ -5,9 +5,9 @@ account: jazznbass
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8353962
-bundleId: 7266121
+bundleId: 7273005
 url: https://jazznbass.shinyapps.io/shinyscan/
-when: 1685086315.81922
-lastSyncTime: 1685086315.81924
+when: 1685262443.25488
+lastSyncTime: 1685262443.25489
 asMultiple: FALSE
 asStatic: FALSE

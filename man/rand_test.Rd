@@ -8,7 +8,8 @@ rand_test(
   data,
   dvar,
   pvar,
-  statistic = c("Mean B-A", "Mean A-B", "Median B-A", "Median A-B", "Mean |A-B|"),
+  statistic = c("Mean B-A", "Mean A-B", "Median B-A", "Median A-B", "Mean |A-B|",
+    "Median |A-B|"),
   number = 500,
   complete = FALSE,
   limit = 5,
@@ -31,7 +32,7 @@ Defaults to the attributes in the scdf file.}
 the attributes in the scdf file.}
 
 \item{statistic}{Defines the statistic on which the comparison of phases A
-and B is based on. Default setting is \code{statistic = "Mean B-A"}). The
+and B is based on. Default setting is \code{statistic = "Mean B-A"}. The
 following comparisons are possible: \itemize{ \item\code{"Mean A-B"}: Uses
 the difference between the mean of phase A and the mean of phase B. This is
 appropriate if a decrease of scores was expected for phase B.
@@ -43,33 +44,31 @@ A-B"}: The same as \code{"Mean A-B"}, but based on the median.
 \item\code{"Median B-A"}: The same as \code{"Mean B-A"}, but based on the
 median.  }}
 
-\item{number}{Sample size of the randomization distribution. The exactness
-of the p-value can not exceed \eqn{1/number} (i.e., \code{number = 100}
-results in p-values with an exactness of one percent). Default is
-\code{number = 500}. For faster processing use \code{number = 100}. For more
-precise p-values set \code{number = 1000}.}
+\item{number}{Sample size of the randomization distribution. The exactness of
+the p-value can not exceed \eqn{1/number} (i.e., \code{number = 100} results in
+p-values with an exactness of one percent). Default is \code{number = 500}. For
+faster processing use \code{number = 100}. For more precise p-values set \code{number = 1000}).}
 
 \item{complete}{If TRUE, the distribution is based on a complete permutation
 of all possible starting combinations. This setting overwrites the number
 Argument. The default setting is FALSE.}
 
-\item{limit}{Minimal number of data points per phase in the sample. The
-first number refers to the A-phase and the second to the B-phase (e.g.,
-\code{limit = c(5,3)}). If only one number is given, this number is applied
-to both phases. Default is \code{limit = 5}.}
+\item{limit}{Minimal number of data points per phase in the sample. The first
+number refers to the A-phase and the second to the B-phase (e.g., \code{limit = c(5,3)}). If only one number is given, this number is applied to both
+phases. Default is \code{limit = 5}.}
 
-\item{startpoints}{Alternative to the \code{limit}-parameter
-\code{startpoints} exactly defines the possible start points of phase B
-(e.g., \code{startpoints = 4:9} restricts the phase B start points to
-measurements 4 to 9. \code{startpoints} overruns the \code{limit}-parameter.}
+\item{startpoints}{Alternative to the \code{limit}-parameter \code{startpoints} exactly
+defines the possible start points of phase B (e.g., \code{startpoints = 4:9}
+restricts the phase B start points to measurements 4 to 9. \code{startpoints}
+overruns the \code{limit}-parameter.}
 
 \item{exclude.equal}{If set to \code{exclude.equal = FALSE}, which is the
 default, random distribution values equal to the observed distribution are
 counted as null-hypothesis conform. That is, they decrease the probability
 of rejecting the null-hypothesis (increase the p-value).
-\code{exclude.equal} should be set to \code{TRUE} if you analyse one
-single-case design (not a multiple baseline data set) to reach a sufficient
-power. But be aware, that it increases the chance of an alpha-error.}
+\code{exclude.equal} should be set to \code{TRUE} if you analyse one single-case
+design (not a multiple baseline data set) to reach a sufficient power. But
+be aware, that it increases the chance of an alpha-error.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
 that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
@@ -77,9 +76,9 @@ for comparing the second to the fourth phase. Phases could be combined by
 providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4 (as B). Default
 is \code{phases = c(1,2)}.}
 
-\item{graph}{If \code{graph = TRUE}, a histogram of the resulting
-distribution is plotted. It is \code{FALSE} by default. \emph{Note: use the more
-versatile \code{\link{plot_rand}} function instead.}}
+\item{graph}{If \code{graph = TRUE}, a histogram of the resulting distribution is
+plotted. It is \code{FALSE} by default. \emph{Note: use the more versatile
+\code{\link[=plot_rand]{plot_rand()}} function instead.}}
 
 \item{output}{(deprecated and not implemented)}
 
@@ -87,9 +86,10 @@ versatile \code{\link{plot_rand}} function instead.}}
 }
 \value{
 \item{statistic}{Character string from function call (see
-\code{Arguments} above).} \item{N}{Number of single-cases.} \item{n1}{Number
-of data points in phase A.} \item{n2}{Number of data points in phase B.}
-\item{limit}{Numeric from function call (see \code{Arguments} above).}
+\code{Arguments} above).} \item{N}{Number of single-cases.}
+\item{n1}{Number of data points in phase A.} \item{n2}{Number of data
+points in phase B.} \item{limit}{Numeric from function call (see
+\code{Arguments} above).}
 \item{startpoints}{A vector defining the start points passed from the
 function call (see \code{Arguments} above).} \item{p.value}{P-value of the
 randomization test for the given data.} \item{number}{Sample size of
@@ -106,10 +106,10 @@ the number of possible combinations (under the given restrictions) undercuts
 the requested \code{number} of combinations.}
 }
 \description{
-The \code{randSC} function computes a randomization test for single or
-multiple baseline single-case data.  The function is based on an algorithm
-from the \code{SCRT} package (Bulte & Onghena, 2009, 2012), but rewritten
-and extended for the use in AB designs.
+The \code{rand_test} function computes a randomization test for single or multiple
+baseline single-case data.  The function is based on an algorithm from the
+\code{SCRT} package (Bulte & Onghena, 2009, 2012), but rewritten and extended
+for the use in AB designs.
 }
 \examples{
 
@@ -125,8 +125,8 @@ Bulte, I., & Onghena, P. (2009). Randomization tests for
 multiple-baseline designs: An extension of the SCRT-R package.
 \emph{Behavior Research Methods, 41}, 477-485.
 
-Bulte, I., & Onghena, P. (2012). \emph{SCRT: Single-Case Randomization
-Tests}. Available from: \url{https://CRAN.R-project.org/package=SCRT}
+Bulte, I., & Onghena, P. (2012). \emph{SCRT: Single-Case Randomization Tests}.
+Available from: \url{https://CRAN.R-project.org/package=SCRT}
 }
 \author{
 Juergen Wilbert

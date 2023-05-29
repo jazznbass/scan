@@ -44,10 +44,13 @@ tab_transform <- tabPanel(
         "select_cases", "Select cases",
         placeholder = "e.g.: 1, Anja, 3:5"
       ),
-      textInput(
-        "select_phases", "Recombine phases",
-        placeholder = "e.g.: A = 1, B = c(2,3)"
+      div(style="display:inline-block; vertical-align: top",
+        textInput("select_phasesA", "Combine phases to A", placeholder = "(e.g.: 1)")
       ),
+      div(style="display:inline-block; vertical-align: top; padding-left: 30px;",
+        textInput("select_phasesB", "Combine phases to B", placeholder = "(e.g.: 2,3)")
+      ),
+      
       textInput(
         "subset", "Filter measurments",
         placeholder = 'e.g.: mt > mean(values[phase == "A"])'
@@ -62,8 +65,19 @@ tab_transform <- tabPanel(
       #downloadButton("transform_save", "Save")
     ),
     mainPanel(
+      
+      ####
+      radioButtons(
+        "transform_out", "Output format", c("Text", "Html"), inline = TRUE
+      ),
+      hr(),
       verbatimTextOutput("transform_syntax"),
-      verbatimTextOutput("transform_scdf")
+      conditionalPanel(
+        'input.transform_out == "Text"', verbatimTextOutput("transform_scdf")
+      ),
+      conditionalPanel(
+        'input.transform_out == "Html"', htmlOutput("transform_html")
+      )
     )
   )
 )
@@ -107,9 +121,8 @@ tab_stats <- tabPanel(
         'input.stats_out == "Text"', verbatimTextOutput("stats_text")
       ),
       conditionalPanel(
-        'input.stats_out == "Html"', htmlOutput("stats_html")
+        'input.stats_out == "Html"', tableOutput("stats_html")
       )
-
     )
   )
 )
@@ -141,7 +154,7 @@ tab_plot <- tabPanel(
 
 ## settings -----
 tab_settings <- tabPanel(
-  "Setting",
+  "Settings",
   fluidRow(
     column(3, div(
       style = "background-color:#f0f0f0; border: 1px solid black", 
@@ -199,6 +212,7 @@ tab_about <- tabPanel(
 ## ui ------
 
 ui <- navbarPage(
+  id = "navpage",
   title = "Shiny-Scan",
   theme = "cerulean.min.css",
   tab_scdf,
@@ -207,5 +221,6 @@ ui <- navbarPage(
   tab_plot,
   tab_settings,
   tab_help,
-  tab_about
+  tab_about,
+  tabPanel(title = "Quit")
 )
