@@ -11,7 +11,8 @@ library(shiny)
 options(
   scan.export.kable_styling = list(
     bootstrap_options = c("striped", "condensed"), 
-    full_width = FALSE
+    full_width = FALSE,
+    position = "left"
   )
 )
 
