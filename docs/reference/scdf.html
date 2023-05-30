@@ -12,7 +12,7 @@ data with one or more single-cases."><meta property="og:image" content="/logo.pn
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.58.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.58.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -184,8 +184,31 @@ notice that all <code>scan</code> functions have arguments to define <code>dvar<
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">12</span>, <span class="fl">16</span>, <span class="fl">18</span>, <span class="fl">15</span>, <span class="fl">14</span>, <span class="fl">19</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  B_start <span class="op">=</span> <span class="fl">6</span>, name <span class="op">=</span> <span class="st">"Klaas"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">klaas</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="scdf-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu"><a href="describe.html">describe</a></span><span class="op">(</span><span class="va">klaas</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Describe Single-Case Data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Klaas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Design   A-B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> n.A        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> n.B        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mis.A      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mis.B      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Klaas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> m.A        6.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> m.B     15.667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> md.A         7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> md.B      15.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sd.A     1.342</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sd.B     2.582</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mad.A    1.483</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mad.B    2.965</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min.A        5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min.B       12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max.A        8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max.B       19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> trend.A    0.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> trend.B  0.743</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Alternative coding 1:</span></span></span>
 <span class="r-in"><span><span class="va">klaas</span> <span class="op">&lt;-</span> <span class="fu">scdf</span><span class="op">(</span></span></span>
