@@ -389,7 +389,8 @@ server <- function(input, output, session) {
           call <- "export(results)"
         }
         out <- str2lang(call) |> eval()
-        writeLines(out, con = file)
+        kableExtra::save_kable(out, file)
+        #writeLines(out, con = file)
       }
       
     }
