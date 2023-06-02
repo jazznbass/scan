@@ -37,32 +37,35 @@ describe <- function(data, dvar, pvar, mvar) {
   mt(data) <- mvar
   
   data_list <- .prepare_scdf(data)
-
   N <- length(data_list)
-  
-  case_names <- revise_names(data_list)
 
   designs <- lapply(
     data_list, 
     function(x) rle(as.character(x[[pvar]]))$values
   )
+  phase_designs <- sapply(designs, function(x) paste0(x, collapse = "-"))
   
-  design <- unique(unlist(designs))
-  
-  designs <- sapply(designs, function(x) paste0(x, collapse = "-"))
-  
-  while (any(duplicated(design))) {
-    design[anyDuplicated(design)] <-
-      paste0(design[anyDuplicated(design)], ".phase", anyDuplicated(design))
+  for(i in 1:N) {
+    data_list[[i]][[pvar]] <- rename_phase_duplicates(data_list[[i]][[pvar]])
   }
+  
+  designs <- lapply(
+    data_list, 
+    function(x) rle(as.character(x[[pvar]]))$values
+  )
+  design <- unique(unlist(designs))
   
   vars <- c("n", "mis", "m", "md", "sd", "mad", "min", "max", "trend")
   vars <- paste0(rep(vars, each = length(design)), ".", design)
   
-  
   desc <- as.data.frame(matrix(nrow = N, ncol = length(vars)))
   colnames(desc) <- vars
-  desc <- data.frame(Case = case_names, Design = designs, desc)
+  desc <- data.frame(
+    Case = names(data_list), 
+    Design = phase_designs, 
+    desc,
+    check.names = FALSE
+  )
 
   for (case in 1:N) {
     data <- data_list[[case]]
