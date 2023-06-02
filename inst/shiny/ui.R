@@ -62,6 +62,7 @@ tab_transform <- tabPanel(
       textInput(
         "setdvar", "Set dependent variable", placeholder = "e.g.: depression"
       ),
+      downloadButton("transformed_save", "Save transformed scdf"),
     ),
     mainPanel(
       
@@ -158,10 +159,11 @@ tab_plot <- tabPanel(
 tab_settings <- tabPanel(
   "Settings",
   fluidRow(
-    column(3, div(
+    column(2, div(
       style = "background-color:#f0f0f0; border: 1px solid black", 
       h3("Data"),
       hr(),
+      textInput("prefix_output_data", "Prefix output filename", value = "scdf"),
       radioButtons(
        "save_scdf_format", "Save format", 
        choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
@@ -170,18 +172,29 @@ tab_settings <- tabPanel(
        "convert", "Code phase structure", 
        choices = c("phase_design" = FALSE, "inline" = TRUE), 
        inline = TRUE
-      ))
-    ),
-    column(3, div(
+      )
+    )),
+    column(2, div(
+      style = "background-color:#f0f0f0; border: 1px solid black", 
+      h3("Transformed"),
+      hr(),
+      textInput("prefix_output_transformed", "Prefix output filename", value = "scdf-transformed"),
+      radioButtons(
+        "save_transformed_format", "Save format", 
+        choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
+        inline = TRUE)
+    )),
+    column(2, div(
       style = "background-color:#f0f0f0; border: 1px solid black; padding-left: 2px;", 
       h3("Stats"),
       hr(),
-      textInput("prefix_output_stats", "Prefix output filename", value = "scan")
+      textInput("prefix_output_stats", "Prefix output filename", value = "scan-stat")
     )),
-    column(3, div(
+    column(2, div(
       style = "background-color:#f0f0f0; border: 1px solid black; padding-left: 2px;", 
       h3("Plot"),
       hr(),
+      textInput("prefix_output_plot", "Prefix output filename", value = "scplot"),
       numericInput("width", "Export width", value = 800, min = 100, max = 2000),
       numericInput("height", "Export height", value = 600, min = 100, max = 2000),
       numericInput("dpi", " Export dpi", value = 100, min = 50, max = 600)
