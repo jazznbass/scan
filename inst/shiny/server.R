@@ -111,9 +111,27 @@ server <- function(input, output, session) {
       call <- paste0("scdf(", call, ")")
 
       new <- call |> str2lang() |> eval()
-      if (length(my_scdf()) > 0) new <- c(my_scdf(), new)
-      my_scdf(new)
-      scdf_render()
+      if (input$remove_which == "last") {
+        if (length(my_scdf()) > 0) new <- c(my_scdf(), new)
+        my_scdf(new)
+        scdf_render()
+      } 
+      
+      if (input$remove_which == "at") {
+        at <- input$remove_at
+        if (length(my_scdf()) >= at - 1) {
+          if (at == 1) {
+            new <- c(new, my_scdf())
+          } else if (at == length(my_scdf()) + 1) {
+            new <- c(my_scdf(), new)
+          } else {
+            new <- c(my_scdf()[1:(at-1)], new, my_scdf()[at:(length(my_scdf()))])
+          }
+          my_scdf(new)
+          scdf_render() 
+        }
+      }  
+
     },
     error = function(e)
       output$scdf_summary <- renderText(
@@ -124,9 +142,18 @@ server <- function(input, output, session) {
 
   # scdf: remove cases --------
   observeEvent(input$remove_case, {
-    if (length(my_scdf()) > 1) {
-      my_scdf(my_scdf()[-length(my_scdf())])
-    } else (my_scdf(NULL))
+    if (input$remove_which == "last") {
+      if (length(my_scdf()) > 1) {
+        my_scdf(my_scdf()[-length(my_scdf())])
+      } else (my_scdf(NULL))
+    }
+    
+    if (input$remove_which == "at") {
+      at <- input$remove_at
+      if (length(my_scdf()) >= at)
+        my_scdf(my_scdf()[-input$remove_at])
+    }
+    
     scdf_render()
   })
 
