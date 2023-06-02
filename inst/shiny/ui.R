@@ -14,10 +14,19 @@ tab_scdf <-   tabPanel(
         placeholder = res$placeholder$variables
       ),
       textInput("casename", "Case name", placeholder = "(optional)"),
-      actionButton("add_case", "Add"),
-      actionButton("remove_case", "Remove last"),
-      actionButton("remove_all", "Remove all"),
-      hr(),
+      actionButton("add_case", "Add case"),
+      actionButton("remove_case", "Remove case"),
+      actionButton("remove_all", "Clear all cases"),
+      br(),
+      div(style="display:inline-block;",
+          radioButtons(
+            "remove_which", "Position", choices = c("last", "at"), inline = TRUE
+          ),
+      ),
+      div(style="display:inline-block; padding-left: 30px;",
+          numericInput("remove_at", "At", min = 1,value = 1),
+      ),
+      br(),
       selectInput(
         "scdf_example", "Load example", choices = res$choices$examples,
       ),
