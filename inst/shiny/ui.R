@@ -101,11 +101,6 @@ tab_stats <- tabPanel(
         "Statistic",
         choices = res$choices$fn_stats
       ),
-      radioButtons(
-        "stats_default", "Show defaults", choices = c("No", "Yes"),
-        inline = TRUE
-      ),
-
       uiOutput("stats_arguments")
     ),
     mainPanel(
@@ -197,6 +192,10 @@ tab_settings <- tabPanel(
       style = "background-color:#f0f0f0; border: 1px solid black; padding-left: 2px;", 
       h3("Stats"),
       hr(),
+      radioButtons(
+        "stats_default", "Show defaults", choices = c("No", "Yes"),
+        inline = TRUE
+      ),
       textInput("prefix_output_stats", "Prefix output filename", value = "scan-stat")
     )),
     column(2, div(
