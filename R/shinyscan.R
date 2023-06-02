@@ -5,7 +5,7 @@
 #' @param quiet If TRUE (default) does not report shiny messages in the console.
 #' @param \dots Further arguments passed to the `shiny::runApp()` function.
 #' @details This function launches a shiny application.
-#'   You need to have the the `scplot` and `shiny` installed.
+#'   You need to have `scplot` and `shiny` installed.
 #'   These packages are suggested but not necessarily installed along with scan.
 #'   `shinyscan()` will ask to install missing packages.
 #'

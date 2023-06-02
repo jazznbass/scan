@@ -58,9 +58,9 @@ server <- function(input, output, session) {
 
   output$scdf_save <- downloadHandler(
     filename = function() {
-      scdf <- transformed()
+      scdf <- my_scdf()
       out <- paste(
-        "scdf",
+        input$prefix_output_data,
         sprintf("%02d", length(scdf)),
         paste0(unique(scdf[[1]]$phase), collapse = ""),
         format(Sys.time(), format = "%y%m%d-%H%M%S"),
@@ -69,12 +69,13 @@ server <- function(input, output, session) {
       paste0(out, input$save_scdf_format)
     },
     content = function(file) {
+      scdf <- my_scdf()
       if (input$save_scdf_format == ".rds") 
-        saveRDS(transformed(), file)
+        saveRDS(scdf, file)
       if (input$save_scdf_format == ".R") 
-        convert(transformed(), file = file)
+        convert(scdf, file = file)
       if (input$save_scdf_format == ".csv") 
-        write_scdf(transformed(), filename = file)
+        write_scdf(scdf, filename = file)
     }
   )
 
@@ -141,10 +142,9 @@ server <- function(input, output, session) {
     out <- my_scdf()
     syntax = "scdf"
     if (input$select_cases != "") {
-      args <- list(str2lang(input$select_cases))
-      out <- do.call("select_cases", c(list(out), args))
+      call <- str2lang(paste0("select_cases(out, ", input$select_cases,")"))
+      out <- eval(call)
       syntax <- c(syntax, paste0("select_cases(",input$select_cases,")"))
-
     }
 
     if (input$select_phasesA != "" || input$select_phasesB != "") {
@@ -199,6 +199,30 @@ server <- function(input, output, session) {
     out
   })
 
+  # transform save ----
+  
+  output$transformed_save <- downloadHandler(
+    filename = function() {
+      scdf <- transformed()
+      out <- paste(
+        input$prefix_output_transformed,
+        sprintf("%02d", length(scdf)),
+        paste0(unique(scdf[[1]]$phase), collapse = ""),
+        format(Sys.time(), format = "%y%m%d-%H%M%S"),
+        sep = "-"
+      )
+      paste0(out, input$save_transformed_format)
+    },
+    content = function(file) {
+      if (input$save_transformed_format == ".rds") 
+        saveRDS(transformed(), file)
+      if (input$save_transformed_format == ".R") 
+        convert(transformed(), file = file)
+      if (input$save_transformed_format == ".csv") 
+        write_scdf(transformed(), filename = file)
+    }
+  )
+  
   # transform output ------
   
   output$transform_scdf <- renderPrint({
@@ -454,7 +478,7 @@ server <- function(input, output, session) {
     filename = function() {
       scdf <- transformed()
       out <- paste(
-        "scplot",
+        input$prefix_output_plot,
         sprintf("%02d", length(scdf)),
         paste0(unique(scdf[[1]]$phase), collapse = ""),
         format(Sys.time(), format = "%y%m%d-%H%M%S"),
