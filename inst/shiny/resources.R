@@ -79,7 +79,7 @@ res$choices$fn_stats <- c(
   "Outlier analysis" = "outlier"
 )
 
-res$placeholder$values <- "To creat a new case, start by entering scores here. E.g. \nA = 1,2,3,4,3, \nB = 7,6,7,8,7,6"
+res$placeholder$values <- "Enter values here to create a new case. E.g. \nA = 1,2,3,4,3 \nB = 7,6,7,8,7,6"
 
 res$placeholder$transform <- 'e.g.
 values = scale(values)
@@ -88,7 +88,7 @@ values2 = values - max(values[phase=="A"])
 across_cases(values2 = scale(values)
 '
 
-res$placeholder$plot_arguments <- '(choose one or more from the templates below and experiment with the syntax here.)
+res$placeholder$plot_arguments <- '(choose one or more of the templates below and experiment with the syntax here.)
 '
 
 res$placeholder$mt <- "(optional, e.g. 1,2,4,6,7,8,9,12,13)"

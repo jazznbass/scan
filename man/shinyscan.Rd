@@ -16,7 +16,7 @@ Run a Shiny app with most of the scan functions.
 }
 \details{
 This function launches a shiny application.
-You need to have the the \code{scplot} and \code{shiny} installed.
+You need to have \code{scplot} and \code{shiny} installed.
 These packages are suggested but not necessarily installed along with scan.
 \code{shinyscan()} will ask to install missing packages.
 }
