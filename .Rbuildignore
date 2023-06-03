@@ -7,3 +7,4 @@
 ^misc
 ^data-raw$
 ^inst/shiny/rsconnect$
+^CRAN-SUBMISSION$
