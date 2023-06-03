@@ -91,8 +91,8 @@ server <- function(input, output, session) {
 
       call <- paste0(dvar, " = ", values)
       call <- c(call, paste0("dvar = ", deparse(dvar)))
-      if (input$mt != "") call <- c(call, paste0("mt = ", deparse(mt)))
-
+      if (input$mt != "") call <- c(call, paste0("mt = c(", input$mt, ")"))
+      
       if (input$variables != "") {
         variables <- input$variables |>
           strsplit("\n")  |>

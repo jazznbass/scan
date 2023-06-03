@@ -1,4 +1,4 @@
-# scan 0.58.xxx
+# scan 0.59.0
 
 - `describe()`: now works correctly for duplicated phase names.
 
