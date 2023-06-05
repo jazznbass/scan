@@ -18,6 +18,8 @@ options(
 
 res <- list()
 
+# choices ------
+
 res$choices <- list()
 examples <- data(package = "scan")$results[, 3]
 filter <- startsWith(examples,"Grosche2014") | 
@@ -79,6 +81,8 @@ res$choices$fn_stats <- c(
   "Outlier analysis" = "outlier"
 )
 
+# placeholder ----
+
 res$placeholder$values <- "Enter values here to create a new case. E.g. \nA = 1,2,3,4,3 \nB = 7,6,7,8,7,6"
 
 res$placeholder$transform <- 'e.g.
@@ -97,12 +101,24 @@ res$placeholder$variables <-
 "(optional, e.g., depression = 1,4,3,5,6,5,7
 separate multiple variables with linebreaks)"
 
+# div ------
+
+res$div$settings <- paste0(
+  "background-color:#f0f0f0; ",
+  "border: 1px solid black; border-radius: 5px; ",
+  "padding-left: 10px; padding-right: 10px; ",
+  "padding-top: 0px; padding-bottom: 0px; "
+)
+
+# error ----
+
 res$error_msg$invalid_case <- "Sorry!
 The last case you tried to add didn't have a valid case definition."
 
 res$error_msg$plot <- "Sorry!
 The plot arguments are not valid."
 
+# msg ----
 
 res$msg$startup <-
 "Welcome to 'shiny scan'!

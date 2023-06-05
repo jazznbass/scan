@@ -135,7 +135,7 @@ tab_stats <- tabPanel(
 )
 
 
-## Plot -----
+# Plot -----
 tab_plot <- tabPanel(
   "Plot",
   sidebarLayout(
@@ -159,14 +159,14 @@ tab_plot <- tabPanel(
   )
 )
 
-## settings -----
+# settings -----
 tab_settings <- tabPanel(
   "Settings",
   fluidRow(
     column(2, div(
-      style = "background-color:#f0f0f0; border: 1px solid black", 
+      style = res$div$settings, 
       h3("Data"),
-      hr(),
+      #hr(),
       textInput("prefix_output_data", "Prefix output filename", value = "scdf"),
       radioButtons(
        "save_scdf_format", "Save format", 
@@ -179,19 +179,23 @@ tab_settings <- tabPanel(
       )
     )),
     column(2, div(
-      style = "background-color:#f0f0f0; border: 1px solid black", 
+      style = res$div$settings, 
       h3("Transformed"),
-      hr(),
-      textInput("prefix_output_transformed", "Prefix output filename", value = "scdf-transformed"),
+      #hr(),
+      textInput(
+        "prefix_output_transformed", 
+        "Prefix output filename", 
+        value = "scdf-transformed"
+      ),
       radioButtons(
         "save_transformed_format", "Save format", 
         choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
         inline = TRUE)
     )),
     column(2, div(
-      style = "background-color:#f0f0f0; border: 1px solid black; padding-left: 2px;", 
+      style = res$div$settings, 
       h3("Stats"),
-      hr(),
+      #hr(),
       radioButtons(
         "stats_default", "Show defaults", choices = c("No", "Yes"),
         inline = TRUE
@@ -199,9 +203,9 @@ tab_settings <- tabPanel(
       textInput("prefix_output_stats", "Prefix output filename", value = "scan-stat")
     )),
     column(2, div(
-      style = "background-color:#f0f0f0; border: 1px solid black; padding-left: 2px;", 
+      style = res$div$settings, 
       h3("Plot"),
-      hr(),
+      #br(),
       textInput("prefix_output_plot", "Prefix output filename", value = "scplot"),
       numericInput("width", "Export width", value = 800, min = 100, max = 2000),
       numericInput("height", "Export height", value = 600, min = 100, max = 2000),
@@ -210,7 +214,7 @@ tab_settings <- tabPanel(
   )
 )
 
-## Help -----
+# Help -----
 
 tab_help <- tabPanel(
   "Help",
@@ -218,7 +222,7 @@ tab_help <- tabPanel(
 )
 
 
-## About -----
+# About -----
 
 tab_about <- tabPanel(
   "About",
@@ -238,7 +242,7 @@ tab_about <- tabPanel(
   h4("(c) Jürgen Wilbert, 2023")
 )
 
-## ui ------
+# ui ------
 
 ui <- navbarPage(
   id = "navpage",
