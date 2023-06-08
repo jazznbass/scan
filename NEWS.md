@@ -3,6 +3,7 @@
 # scan 0.59.0
 
 - `describe()`: now works correctly for duplicated phase names.
+- shiny-app no longer depends on `shinyjs` and `markdown`. `shinyscan()` asks if missing packages `scplot` and `shiny` should be installed automatically. 
 
 # scan 0.58
 
