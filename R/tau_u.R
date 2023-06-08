@@ -3,6 +3,7 @@
 #' This function calculates indices of the Tau-U family as proposed by Parker et
 #' al. (2011a).
 #'
+#' @order 1
 #' @inheritParams .inheritParams
 #' @param tau_method Character with values "a" or "b" (default) indicating
 #'   whether Kendall Tau A or Kendall Tau B is applied.

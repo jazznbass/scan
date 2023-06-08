@@ -1,4 +1,9 @@
-#' @rdname print.sc
+#' @describeIn mplm Print results
+#' @order 2
+#' @inheritParams print.sc
+#' @param x Object returned from [mplm()]. 
+#' @param digits The minimum number of significant digits to be use. 
+#' If set to "auto" (default), values are predefined.
 #' @param std If TRUE, a table with standardized estimates is included.
 #' @export
 print.sc_mplm <- function(x, digits = "auto", std = FALSE, ...) {

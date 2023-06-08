@@ -3,6 +3,7 @@
 #' The [mplm()] function computes a multivariate piecewise regression model.
 #'
 #' @inheritParams .inheritParams
+#' @order 1
 #' @param formula Defaults to the standard piecewise regression model. The
 #'   parameter phase followed by the phase name (e.g., `phaseB`) indicates the
 #'   level effect of the corresponding phase. The parameter 'inter' followed by

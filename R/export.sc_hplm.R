@@ -1,4 +1,6 @@
-#' @rdname export
+#' @describeIn hplm Export results as html table (see [export()])
+#' @order 3
+#' @inheritParams export
 #' @param nice If set TRUE (default) output values are rounded and optimized for
 #' publication tables.
 #' @export

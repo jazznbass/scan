@@ -1,4 +1,5 @@
-#' @rdname print.sc
+#' @describeIn hplm Print results
+#' @order 2
 #' @export
 print.sc_hplm <- function(x, ...) {
   cat("Hierarchical Piecewise Linear Regression\n\n")
