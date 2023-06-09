@@ -12,6 +12,7 @@ print.sc_bctau <- function(x, nice = TRUE, digits = "auto", ...) {
     cat("Method: Theil-Sen regression\n")
   }
   
+  cat("Kendall's tau", x$tau_method, "applied.\n")
   if (x$continuity) {
     cat("Continuity correction applied\n")
   } else {
