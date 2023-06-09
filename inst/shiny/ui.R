@@ -154,9 +154,61 @@ tab_plot <- tabPanel(
     ),
     mainPanel(
       verbatimTextOutput("plot_syntax"),
-      plotOutput("plot_scdf", width = 800,height = 600)
+      plotOutput("plot_scdf", width = 1000,height = 800,)
     )
   )
+)
+
+# Power-test -----
+tab_power_test <- tabPanel(
+  "Power-test",
+  fluidRow(
+    column(2, div(style = res$div$pt,
+      h3("Design"),
+      br(),
+      textInput("design_n", "n", value = 1),
+      textInput("design_phase", "Phase design", value = "A = 5, B = 15"),
+      textInput("design_trend", "Trend", value = "0.02"),
+      textInput("design_slope", "Slope", value = "0"),
+      textInput("design_level", "Level", value = "1"),
+      textInput("design_start", "Start value", value = 50),
+      #textInput("design_s", "Standard deviation", value = 10),
+      textInput("design_rtt", "Reliabiliy", value = 0.8),
+      selectInput("design_distribution", "Distribution", 
+                 choices = c("normal", "poisson", "binomial")
+      ),
+    )),
+    column(2, div(style = res$div$pt,
+      h3("Analysis"),
+      br(),
+      checkboxGroupInput(
+        "pt_method", "Statistical method(s)", 
+        choices = res$choices$pt_method,selected = "plm_level"
+      ),
+      #selectInput("pt_method", "Statstical method", 
+      #           choices = res$choices$pt_method
+      #),
+      selectInput(
+       "pt_effect", "Null effect", choices = c("level", "slope")
+      ),
+      numericInput(
+        "pt_n", "Number of simulations", min = 30, max = 10000, value = 100
+      ),
+      textInput("pt_ci", "Confidence intervall", placeholder = "e.g.: 0.95"),   
+    )),
+    column(4, div(style = res$div$pt,
+      br(),
+      verbatimTextOutput("pt_syntax"),
+      actionButton("pt_compute", "Run"),
+      hr(),
+      verbatimTextOutput("pt_results", placeholder = TRUE)
+    )),
+    column(4, div(style = res$div$pt,
+      actionButton("desigh_plot_button", "Create plot example"),
+      plotOutput("plot_design", width = 600, height = 800)
+    )),
+  ),
+ 
 )
 
 # settings -----
@@ -206,6 +258,7 @@ tab_settings <- tabPanel(
       style = res$div$settings, 
       h3("Plot"),
       #br(),
+      #numericInput("plot_display_res", "Display resolution", value = 120, min = 10, max = 4000),
       textInput("prefix_output_plot", "Prefix output filename", value = "scplot"),
       numericInput("width", "Export width", value = 800, min = 100, max = 2000),
       numericInput("height", "Export height", value = 600, min = 100, max = 2000),
@@ -252,6 +305,7 @@ ui <- navbarPage(
   tab_transform,
   tab_stats,
   tab_plot,
+  tab_power_test,
   tab_settings,
   tab_help,
   tab_about,

@@ -81,6 +81,8 @@ res$choices$fn_stats <- c(
   "Outlier analysis" = "outlier"
 )
 
+res$choices$pt_method <- names(scan:::.opt$mc_fun)
+
 # placeholder ----
 
 res$placeholder$values <- "Enter values here to create a new case. E.g. \nA = 1,2,3,4,3 \nB = 7,6,7,8,7,6"
@@ -101,12 +103,21 @@ res$placeholder$variables <-
 "(optional, e.g., depression = 1,4,3,5,6,5,7
 separate multiple variables with linebreaks)"
 
+res$placeholder$pt <- "Power calculation may take some time. Click 'Run' to start calculation."
+
 # div ------
 
 res$div$settings <- paste0(
   "background-color:#f0f0f0; ",
   "border: 1px solid black; border-radius: 5px; ",
   "padding-left: 10px; padding-right: 10px; ",
+  "padding-top: 0px; padding-bottom: 0px; "
+)
+
+res$div$pt <- paste0(
+  "background-color:#f0f0f0; ",
+  "border: 1px solid black; border-radius: 5px; ",
+  "padding-left: 5px; padding-right: 5px; ",
   "padding-top: 0px; padding-bottom: 0px; "
 )
 

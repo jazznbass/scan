@@ -1,15 +1,17 @@
 
 server <- function(input, output, session) {
 
-  # Startup message
+  # scdf ----
+  
+  ## startup message ----
+  
   output$scdf_summary <- renderPrint(cat(res$msg$startup))
 
+  ## Render ----
   my_scdf <- reactiveVal()
-
   scdf_render <- reactive({
-
+    
     if (!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
-
     output$scdf_summary <- renderPrint({
       do.call("summary", list(my_scdf()))
     })
@@ -21,6 +23,7 @@ server <- function(input, output, session) {
 
   })
 
+  ## input example ----
   observeEvent(input$scdf_example, {
     if (input$scdf_example != "(none)") {
       my_scdf(paste0("scan::", input$scdf_example) |> str2lang() |> eval())
@@ -30,8 +33,7 @@ server <- function(input, output, session) {
     }
   })
 
-
-  # scdf: upload / save ------
+  ## upload ------
   observeEvent(input$upload, {
     ext <- tools::file_ext(input$upload$datapath)
     if (ext == "rds") {
@@ -56,6 +58,7 @@ server <- function(input, output, session) {
 
   })
 
+  ## save ----
   output$scdf_save <- downloadHandler(
     filename = function() {
       scdf <- my_scdf()
@@ -79,8 +82,7 @@ server <- function(input, output, session) {
     }
   )
 
-  # scdf: new cases --------
-
+  ## new cases --------
   observeEvent(input$add_case, {
     tryCatch({
       values <- paste0("c(", trim(input$values), ")")
@@ -140,7 +142,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # scdf: remove cases --------
+  ## remove cases --------
   observeEvent(input$remove_case, {
     if (input$remove_which == "last") {
       if (length(my_scdf()) > 1) {
@@ -157,14 +159,15 @@ server <- function(input, output, session) {
     scdf_render()
   })
 
-  # scdf: remove all cases --------
+  ## remove all cases --------
   observeEvent(input$remove_all, {
     my_scdf(NULL)
     scdf_render()
   })
 
-  # transform ----
+  # Transform ----
 
+  ## render ----
   transformed <- reactive({
     out <- my_scdf()
     syntax = "scdf"
@@ -226,8 +229,7 @@ server <- function(input, output, session) {
     out
   })
 
-  # transform save ----
-  
+  ## save ----
   output$transformed_save <- downloadHandler(
     filename = function() {
       scdf <- transformed()
@@ -250,7 +252,7 @@ server <- function(input, output, session) {
     }
   )
   
-  # transform output ------
+  ## output ------
   
   output$transform_scdf <- renderPrint({
     if(!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
@@ -262,8 +264,9 @@ server <- function(input, output, session) {
     export(transformed(), caption = "") |> HTML()
   })
   
-  # stats -----
+  # Stats -----
 
+  ## Calculate ---- 
   calculate_stats <- reactive({
     if (!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
     scdf <- transformed()
@@ -275,6 +278,7 @@ server <- function(input, output, session) {
     )
   })
 
+  ## Output ----
   output$stats_html <- renderUI({
     results <- calculate_stats()
     print_args <- input$stats_print_arguments
@@ -306,8 +310,7 @@ server <- function(input, output, session) {
   })
 
 
-  # stats: arguments ------
-
+  ## Arguments ------
   stat_arg_names <- reactive({
     args <- names(formals(input$func))
     values <- formals(input$func)
@@ -399,7 +402,7 @@ server <- function(input, output, session) {
     call
   })
 
-  # stats save ------
+  ## Save ------
   
   output$stats_save <- downloadHandler(
     
@@ -447,8 +450,9 @@ server <- function(input, output, session) {
     }
   )
   
-  # plot -----
+  # Plot -----
 
+  ## Render ----
   render_plot <- reactive({
     req(inherits(my_scdf(), "scdf"))
     call <- paste0("scplot(transformed())")
@@ -497,10 +501,25 @@ server <- function(input, output, session) {
 
   observeEvent(input$plot_arguments, render_plot_syntax())
 
-  output$plot_scdf <- renderPlot({
+  ## Output ----
+ 
+  render_plot_syntax <- reactive({
+    call <- paste0("scplot(scdf)")
+    if (trimws(input$plot_arguments) != "") {
+      call <- paste0(
+        call, "%>%\n  ", gsub("\n", " %>%\n  ", trimws(input$plot_arguments))
+      )
+    }
+    output$plot_syntax <- renderPrint({
+      cat(call)
+    })
+  })
+  
+  output$plot_scdf <- renderPlot(res = 120,{
     render_plot()
   })
 
+  ## Save ----
   output$saveplot <- downloadHandler(
     filename = function() {
       scdf <- transformed()
@@ -521,18 +540,99 @@ server <- function(input, output, session) {
     }
   )
 
-  render_plot_syntax <- reactive({
-    call <- paste0("scplot(scdf)")
-    if (trimws(input$plot_arguments) != "") {
-      call <- paste0(
-        call, "%>%\n  ", gsub("\n", " %>%\n  ", trimws(input$plot_arguments))
-      )
-    }
-    output$plot_syntax <- renderPrint({
-      cat(call)
-    })
-  })
+  # Power test -----
+  
+  output$pt_results <- renderPrint(cat(res$placeholder$pt))
+  
+  ## Render -----
+  render_power_test <- reactive({
+    syntax <- paste0(
+      "design(\n  n = ", input$design_n, ", ",
+      "phase_design = list(", input$design_phase, "), \n  ",
+      "trend = ", input$design_trend, ", ",
+      "level = list(", input$design_level, "), ",
+      "slope = list(", input$design_slope, "), \n  ",
+      "start_value = ", input$design_start, ", ",
+      #"s = ", input$design_s, ", ",
+      "rtt = ", input$design_rtt, ", ",
+      "distribution = ", deparse(input$design_distribution),
+      "\n)"
+    )  
+    
+    ci <- input$pt_ci
 
+    syntax <- paste0(
+      syntax, " %>% \n",
+      "  power_test(method = ", deparse(input$pt_method), ", ",
+      "effect = ", deparse(input$pt_effect), ", ",
+      "n_sim = ", input$pt_n, ", ",
+      "ci = ", ci,
+      ")"
+    )
+    
+    syntax
+  })
+  
+  ## Output ----
+  output$pt_syntax <- renderPrint({
+    cat(render_power_test())
+  })
+  
+  ## Plot ----
+  
+  observeEvent(input$desigh_plot_button, {
+    call <- paste0(
+      "design(\n  n = ", input$design_n, ", ",
+      "phase_design = list(", input$design_phase, "), \n  ",
+      "trend = ", input$design_trend, ", ",
+      "level = list(", input$design_level, "), ",
+      "slope = list(", input$design_slope, "), \n  ",
+      "start_value = ", input$design_start, ", ",
+      #"s = ", input$design_s, ", ",
+      "rtt = ", input$design_rtt, ", ",
+      "distribution = ", deparse(input$design_distribution),
+      "\n) %>% ",
+      "random_scdf() %>% ",
+      "scplot()"
+    )
+    
+    output$plot_design <- renderPlot(res = 100, {
+      str2lang(call) |> eval()
+    })
+    #tryCatch(
+    #  str2lang(call) |> eval(),
+    #  error = function(x)
+    #    output <- renderText(paste0(res$error_msg$plot, "\n\n", x))
+    #)
+
+  })
+  
+  ## Analyse ----
+  
+  observeEvent(input$pt_compute, {
+    
+    phase_structure <- eval(str2lang(
+      paste0("list(", input$design_phase, ")")
+    ))
+    if (length(phase_structure) > 2) {
+      output$pt_results <- renderPrint({
+        cat("Sorry, power-tests are only possible for designs with two phases.")
+      })
+    } else {
+      call <- render_power_test()
+      output$pt_results <- renderPrint({cat("Calculating ...")})
+      res <- tryCatch(
+        str2lang(call) |> eval(),
+        error = function(e)
+          paste0("Sorry, could not proceed calculation:\n\n", e)
+      )
+      output$pt_results <- renderPrint({
+        if (inherits(res, "character")) cat(res) else res
+      })
+    }
+    
+  })
+  
   # quit app -----
   observeEvent(input$navpage, {
     if (input$navpage == "Quit") {
