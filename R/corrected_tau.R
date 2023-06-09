@@ -51,11 +51,20 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     A_data <- data[rowsA, ]
     B_data <- data[rowsB, ]
     
-    auto_tau <- .kendall_full(
-      A_data[[dvar]], 
-      A_data[[mvar]], 
-      continuity_correction = continuity
-    )
+    if (var(A_data[[dvar]]) == 0) {
+      warning(
+        "All phase A values are identical. ",
+        "Autocorrelation can not be calculated and is set to NA.",
+        call. = FALSE
+      )
+      auto_tau <- list(tau = NA, z = NA, p = NA)
+    } else {
+      auto_tau <- .kendall_full(
+        A_data[[dvar]], 
+        A_data[[mvar]], 
+        continuity_correction = continuity
+      )
+    }
     
     formula  <- as.formula(paste0(dvar, "~", mvar))
     fit_mblm <- mblm(formula, dataframe = A_data, repeated = repeated)
@@ -94,15 +103,18 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   }
   
   x <- lapply(data, corr_tau)
+
+  
+  
   
   out <- list(
-    tau = sapply(x, function(x) if (x$p[1] <= 0.05) x$tau[3] else x$tau[2]), 
-    p = sapply(x, function(x) if (x$p[1] <= 0.05) x$p[3] else x$p[2]), 
+    tau = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > 0.05) x$tau[2] else x$tau[3]), 
+    p = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > 0.05) x$p[2] else x$p[3]), 
     corrected_tau = x,
     auto_tau = sapply(x, function(x) x$tau[1]),
     tau_corrected = sapply(x, function(x) x$tau[3]),
     tau_uncorrected = sapply(x, function(x) x$tau[2]),    
-    correction = sapply(x, function(x) if (x$p[1] <= 0.05) TRUE else FALSE),
+    correction = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > 0.05) FALSE else TRUE),
     alpha = alpha,
     continuity = continuity,
     repeated   = repeated,
