@@ -1,5 +1,9 @@
 # scan (development version)
 
+- `pand()`: Replaced tau test with X SQuared and exact fisher teset.
+- `corrected_tau`: Report results with warning when all phase A data are identical; new argument tau_method = "a" to switch to Kendall's tau-a.
+
+
 # scan 0.59.0
 
 - `describe()`: now works correctly for duplicated phase names.
