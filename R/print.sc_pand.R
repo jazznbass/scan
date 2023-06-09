@@ -45,13 +45,21 @@ print.sc_pand <- function(x, ...) {
   cat("\n")
   cat("\n")
   if (x$correction) cat("\nNote. Matrix is corrected for ties\n")
-  cat("\nCorrelation based analysis:\n\n")
+  cat("\nChi-Squared test:\n")
   out <- sprintf(
-    "z = %.3f, p = %.3f, \u03c4 = %.3f",
-    x$correlation$statistic, 
-    x$correlation$p.value, 
-    x$correlation$estimate
+    "X-Squared = %.3f, df = 1, p = %.3f",
+    x$chi_test$statistic, 
+    x$chi_test$p.value
   )
   cat(out, "\n")
+  
+  cat("\nFisher exact test:\n")
+  out <- sprintf(
+    "Odds ratio = %.3f, p = %.3f",
+    x$fisher_test$estimate, 
+    x$fisher_test$p.value
+  )
+  cat(out, "\n")
+  
 }
 
