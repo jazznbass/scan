@@ -248,6 +248,7 @@ power_test <- function(design,
     p <- sapply(rand_sample, func)
     mean(p <= alpha_level, na.rm = TRUE) * 100
   }
+
   out <-  sapply(mc_fun, test_function) 
 
   # return

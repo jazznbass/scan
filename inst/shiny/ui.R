@@ -38,8 +38,8 @@ tab_scdf <-   tabPanel(
     ),
 
     mainPanel(
-      verbatimTextOutput("scdf_summary"),
-      verbatimTextOutput("scdf_syntax"),
+      verbatimTextOutput("scdf_messages"),
+      verbatimTextOutput("scdf_output")
     )
   )
 )
@@ -74,17 +74,12 @@ tab_transform <- tabPanel(
       downloadButton("transformed_save", "Save transformed scdf"),
     ),
     mainPanel(
-      
-      radioButtons(
-        "transform_out", "Output format", c("Text", "Html"), inline = TRUE
-      ),
-      hr(),
       verbatimTextOutput("transform_syntax"),
       conditionalPanel(
-        'input.transform_out == "Text"', verbatimTextOutput("transform_scdf")
+        'input.transform_output_format == "Text"', verbatimTextOutput("transform_scdf")
       ),
       conditionalPanel(
-        'input.transform_out == "Html"', htmlOutput("transform_html")
+        'input.transform_output_format == "Html"', htmlOutput("transform_html")
       )
     )
   )
@@ -135,7 +130,7 @@ tab_stats <- tabPanel(
 )
 
 
-## Plot -----
+# Plot -----
 tab_plot <- tabPanel(
   "Plot",
   sidebarLayout(
@@ -154,55 +149,114 @@ tab_plot <- tabPanel(
     ),
     mainPanel(
       verbatimTextOutput("plot_syntax"),
-      plotOutput("plot_scdf", width = 800,height = 600)
+      plotOutput("plot_scdf", width = 1000,height = 800,)
     )
   )
 )
 
-## settings -----
+# Power-test -----
+tab_power_test <- tabPanel(
+  "Power-test",
+  fluidRow(
+    column(2, div(style = res$div$pt,
+      h3("Design"),
+      br(),
+      textInput("design_n", "n", value = 1),
+      textInput("design_phase", "Phase design", value = "A = 5, B = 15"),
+      textInput("design_trend", "Trend", value = "0.02"),
+      textInput("design_slope", "Slope", value = "0"),
+      textInput("design_level", "Level", value = "1"),
+      textInput("design_start", "Start value", value = 50),
+      #textInput("design_s", "Standard deviation", value = 10),
+      textInput("design_rtt", "Reliabiliy", value = 0.8),
+      selectInput("design_distribution", "Distribution", 
+                 choices = c("normal", "poisson", "binomial")
+      ),
+    )),
+    column(2, div(style = res$div$pt,
+      h3("Analysis"),
+      br(),
+      checkboxGroupInput(
+        "pt_method", "Statistical method(s)", 
+        choices = res$choices$pt_method,selected = "plm_level"
+      ),
+      selectInput(
+       "pt_effect", "Null effect", choices = c("level", "slope")
+      ),
+      numericInput(
+        "pt_n", "Number of simulations", min = 30, max = 10000, value = 100
+      ),
+      textInput("pt_ci", "Confidence intervall", placeholder = "e.g.: 0.95"),   
+    )),
+    column(4, div(style = res$div$pt,
+      br(),
+      verbatimTextOutput("pt_syntax"),
+      actionButton("pt_compute", "Run"),
+      hr(),
+      verbatimTextOutput("pt_results", placeholder = TRUE)
+    )),
+    column(4, div(style = res$div$pt,
+      actionButton("desigh_plot_button", "Create plot example"),
+      plotOutput("plot_design", width = 600, height = 800)
+    )),
+  ),
+ 
+)
+
+# settings -----
 tab_settings <- tabPanel(
   "Settings",
   fluidRow(
     column(2, div(
-      style = "background-color:#f0f0f0; border: 1px solid black", 
+      style = res$div$settings, 
       h3("Data"),
-      hr(),
-      textInput("prefix_output_data", "Prefix output filename", value = "scdf"),
       radioButtons(
-       "save_scdf_format", "Save format", 
+        "scdf_output_format", "Output format", 
+        choices = c("Summary", "Syntax"), 
+        inline = TRUE
+      ),
+      radioButtons(
+        "scdf_syntax_phase_structure", "Syntax phase structure", 
+        choices = c("phase_design" = FALSE, "inline" = TRUE), 
+        inline = TRUE
+      ),
+      textInput("scdf_save_prefix", "Prefix save filename", value = "scdf"),
+      radioButtons(
+       "scdf_save_format", "Save format", 
        choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
        inline = TRUE),
-      radioButtons(
-       "convert", "Code phase structure", 
-       choices = c("phase_design" = FALSE, "inline" = TRUE), 
-       inline = TRUE
-      )
+
     )),
     column(2, div(
-      style = "background-color:#f0f0f0; border: 1px solid black", 
-      h3("Transformed"),
-      hr(),
-      textInput("prefix_output_transformed", "Prefix output filename", value = "scdf-transformed"),
+      style = res$div$settings, 
+      h3("Transform"),
       radioButtons(
-        "save_transformed_format", "Save format", 
+        "transform_output_format", "Output format", c("Text", "Html"), inline = TRUE
+      ),
+      textInput(
+        "transform_save_prefix", 
+        "Prefix save filename", 
+        value = "scdf-transformed"
+      ),
+      radioButtons(
+        "transform_save_format", "Save format", 
         choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
         inline = TRUE)
     )),
     column(2, div(
-      style = "background-color:#f0f0f0; border: 1px solid black; padding-left: 2px;", 
+      style = res$div$settings, 
       h3("Stats"),
-      hr(),
       radioButtons(
         "stats_default", "Show defaults", choices = c("No", "Yes"),
         inline = TRUE
       ),
-      textInput("prefix_output_stats", "Prefix output filename", value = "scan-stat")
+      textInput("prefix_output_stats", "Prefix save filename", value = "scan-stat")
     )),
     column(2, div(
-      style = "background-color:#f0f0f0; border: 1px solid black; padding-left: 2px;", 
+      style = res$div$settings, 
       h3("Plot"),
-      hr(),
-      textInput("prefix_output_plot", "Prefix output filename", value = "scplot"),
+      #numericInput("plot_display_res", "Display resolution", value = 120, min = 10, max = 4000),
+      textInput("prefix_output_plot", "Prefix save filename", value = "scplot"),
       numericInput("width", "Export width", value = 800, min = 100, max = 2000),
       numericInput("height", "Export height", value = 600, min = 100, max = 2000),
       numericInput("dpi", " Export dpi", value = 100, min = 50, max = 600)
@@ -210,7 +264,7 @@ tab_settings <- tabPanel(
   )
 )
 
-## Help -----
+# Help -----
 
 tab_help <- tabPanel(
   "Help",
@@ -218,7 +272,7 @@ tab_help <- tabPanel(
 )
 
 
-## About -----
+# About -----
 
 tab_about <- tabPanel(
   "About",
@@ -238,7 +292,7 @@ tab_about <- tabPanel(
   h4("(c) Jürgen Wilbert, 2023")
 )
 
-## ui ------
+# ui ------
 
 ui <- navbarPage(
   id = "navpage",
@@ -248,6 +302,7 @@ ui <- navbarPage(
   tab_transform,
   tab_stats,
   tab_plot,
+  tab_power_test,
   tab_settings,
   tab_help,
   tab_about,

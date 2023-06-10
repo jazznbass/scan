@@ -195,6 +195,13 @@ convert <- function(scdf,
     )
   }
 
-  if (!silent) cat(complete_string, file = file)
+  if (!silent) {
+    cat(
+      #"# This is an automatically generated syntax\n\n",
+      complete_string, 
+      "\n", 
+      file = file
+    )
+  }
   invisible(complete_string)
 }

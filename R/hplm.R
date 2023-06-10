@@ -3,6 +3,7 @@
 #' The [hplm()] function computes a hierarchical piecewise regression model.
 #'
 #' @inheritParams .inheritParams
+#' @order 1
 #' @param method Method used to fit your model. Pass `"REML"` to maximize the
 #'   restricted log-likelihood or `"ML"` for maximized log-likelihood. Default
 #'   is `"ML"`.

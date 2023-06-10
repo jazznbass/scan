@@ -264,6 +264,9 @@ sum(unlist(lapply(data2[rowsA, "values"], function(x) x > data2[rowsB, "values"]
 x <- Tarlow2016a[[1]]$values
 y <- as.numeric(Tarlow2016a[[1]]$phase)
 
+x <- rep(2, 11)
+.kendall_full(x,y)
+
 cor.test(x,y,method="kendall",continuity = TRUE)
 DescTools::KendallTauA(x,y)
 corrected_tau(Tarlow2016a, continuity = TRUE)

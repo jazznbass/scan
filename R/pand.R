@@ -89,7 +89,7 @@ pand <- function(data, dvar, pvar,
     unlist(phase_real), unlist(phase_expected), method = "kendall"
   )
   options(warn = tmp)
-  
+
   nA <- sum(sapply(A, length))
   nB <- sum(sapply(B, length))
   n <- nA + nB
@@ -131,6 +131,8 @@ pand <- function(data, dvar, pvar,
   mat <- matrix(c(a, b, c, d), nrow = 2)
   mat2 <- mat * n
   
+  chisq.test(matrix(c(4, 5.5, 4, 11.5), byrow= FALSE))
+  
   out <- list(
     pand = pand, 
     phi = phi, 
@@ -146,6 +148,8 @@ pand <- function(data, dvar, pvar,
     matrix = mat, 
     matrix_counts = mat2, 
     correlation = results_cor, 
+    chi_test = suppressWarnings(chisq.test(mat2)),
+    fisher_test = suppressWarnings(fisher.test(mat2)),
     correction = correction
   )
   

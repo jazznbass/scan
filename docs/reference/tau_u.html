@@ -12,7 +12,7 @@ al. (2011a)."><meta property="og:image" content="/logo.png"><!-- mathjax --><scr
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.58.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@ al. (2011a)."><meta property="og:image" content="/logo.png"><!-- mathjax --><scr
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Tau-U for single-case data</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/tau_u.R" class="external-link"><code>R/tau_u.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/tau_u.R" class="external-link"><code>R/tau_u.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print.sc_tauu.R" class="external-link"><code>R/print.sc_tauu.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.sc_tauu.R" class="external-link"><code>R/export.sc_tauu.R</code></a></small>
       <div class="d-none name"><code>tau_u.Rd</code></div>
     </div>
 
@@ -79,6 +79,29 @@ al. (2011a).</p>
 <span>  meta_weight_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"z"</span>, <span class="st">"tau"</span><span class="op">)</span>,</span>
 <span>  continuity_correction <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  meta_method <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_tauu</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  complete <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Tau"</span>, <span class="st">"CI lower"</span>, <span class="st">"CI upper"</span>, <span class="st">"SD_S"</span>, <span class="st">"Z"</span>, <span class="st">"p"</span><span class="op">)</span>,</span>
+<span>  nice_p <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_tauu</span></span>
+<span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  select <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  meta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -146,6 +169,65 @@ calculating Z)</p></dd>
 <dd><p>(not implemented) All meta analyses are based on a fixed
 model.</p></dd>
 
+
+<dt>x</dt>
+<dd><p>Object returned from <code>tau_u()</code>.</p></dd>
+
+
+<dt>complete</dt>
+<dd><p>Print all parameters.</p></dd>
+
+
+<dt>digits</dt>
+<dd><p>The minimum number of significant digits to be use.
+If set to "auto" (default), values are predefined.</p></dd>
+
+
+<dt>select</dt>
+<dd><p>Character vector with name of variables to be included. When
+the vector is named, variables are renamed appropriately.</p></dd>
+
+
+<dt>nice_p</dt>
+<dd><p>If TRUE, p-values are printed in publication friendly form.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Further arguments passed to the function.</p></dd>
+
+
+<dt>object</dt>
+<dd><p>An scdf or an object exported from a scan function.</p></dd>
+
+
+<dt>caption</dt>
+<dd><p>Character string with table caption. If left NA (default) a
+caption will be created based on the exported object.</p></dd>
+
+
+<dt>footnote</dt>
+<dd><p>Character string with table footnote. If left NA (default) a
+footnote will be created based on the exported object.</p></dd>
+
+
+<dt>filename</dt>
+<dd><p>String containing the file name. If a filename is given the
+output will be written to that file.</p></dd>
+
+
+<dt>kable_styling_options</dt>
+<dd><p>list with arguments passed to the kable_styling
+function.</p></dd>
+
+
+<dt>kable_options</dt>
+<dd><p>list with arguments passed to the kable function.</p></dd>
+
+
+<dt>meta</dt>
+<dd><p>If TRUE, the results of the meta analysis will be exported. If
+FALSE, each single-case is exported.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -176,6 +258,12 @@ single cases are calculated by Fisher-Z transforming tau, calculating the
 confidence intervals, and inverse transform them back to tau (see Long &amp;
 Cliff, 1997).</p>
     </div>
+    <div class="section level2">
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
+    
+<ul><li><p><code>print(sc_tauu)</code>: Print results</p></li>
+<li><p><code>export(sc_tauu)</code>: Export results as html table</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Brossart, D. F., Laird, V. C., &amp; Armstrong, T. W. (2018).

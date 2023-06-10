@@ -1,4 +1,6 @@
-#' @rdname export
+#' @describeIn tau_u Export results as html table
+#' @order 3
+#' @inheritParams export
 #' @param meta If TRUE, the results of the meta analysis will be exported. If
 #'   FALSE, each single-case is exported.
 #' @param select Character vector with name of variables to be included. When

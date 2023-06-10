@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.58.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,6 +56,19 @@
       <small>Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="scan-development-version">scan (development version)<a class="anchor" aria-label="anchor" href="#scan-development-version"></a></h2>
+<ul><li>
+<code><a href="../reference/pand.html">pand()</a></code>: Replaced tau test with X Squared and fisher exact test.</li>
+<li>
+<code>corrected_tau</code>: Report results with warning when all phase A data are identical; new argument tau_method = “a” to switch to Kendall’s tau-a.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.59.0" id="scan-0590">scan 0.59.0<a class="anchor" aria-label="anchor" href="#scan-0590"></a></h2><p class="text-muted">CRAN release: 2023-06-03</p>
+<ul><li>
+<code><a href="../reference/describe.html">describe()</a></code>: now works correctly for duplicated phase names.</li>
+<li>shiny-app no longer depends on <code>shinyjs</code> and <code>markdown</code>. <code><a href="../reference/shinyscan.html">shinyscan()</a></code> asks if missing packages <code>scplot</code> and <code>shiny</code> should be installed automatically.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.58" id="scan-058">scan 0.58<a class="anchor" aria-label="anchor" href="#scan-058"></a></h2><p class="text-muted">CRAN release: 2023-05-24</p>
 <div class="section level3">
@@ -169,20 +182,20 @@
 <h3 id="new-functions-0-55">new functions<a class="anchor" aria-label="anchor" href="#new-functions-0-55"></a></h3>
 <ul><li>
 <code>coef()/ coefficients()</code>: Method for base R <code>coef</code> function for plm/hplm objects. Extracts coefficient tables from provided object.</li>
-</ul><div class="sourceCode" id="cb5"><pre class="sourceCode .r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">plm</span>(exampleAB<span class="sc">$</span>Johanna))</span></code></pre></div>
+</ul><div class="sourceCode" id="cb5"><pre class="sourceCode .r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">plm</span>(exampleAB<span class="sc">$</span>Johanna))</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="new-features-0-55">New features<a class="anchor" aria-label="anchor" href="#new-features-0-55"></a></h3>
 <ul><li>
 <code><a href="../reference/power_test.html">power_test()</a></code>: New argument <code>ci</code> provides confidence intervals for power, alpha error, and correct proportions. New arguments <code>binom_test_alpha, binom_test_power, binom_test_correct</code> provide test against a provided proportion for alpha, power, and correct proportions.</li>
-</ul><div class="sourceCode" id="cb6"><pre class="sourceCode .r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">design</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">1</span>, <span class="at">phase_design =</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="dv">6</span>, <span class="at">B =</span> <span class="dv">9</span>),</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rtt =</span> <span class="fl">0.8</span>, <span class="at">level =</span> <span class="fl">1.0</span>, <span class="at">trend =</span> <span class="fl">0.05</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">power_test</span>(</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  design, <span class="at">ci =</span> <span class="fl">0.95</span>, <span class="at">binom_test =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+</ul><div class="sourceCode" id="cb6"><pre class="sourceCode .r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">design</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">1</span>, <span class="at">phase_design =</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="dv">6</span>, <span class="at">B =</span> <span class="dv">9</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">rtt =</span> <span class="fl">0.8</span>, <span class="at">level =</span> <span class="fl">1.0</span>, <span class="at">trend =</span> <span class="fl">0.05</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="fu">power_test</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  design, <span class="at">ci =</span> <span class="fl">0.95</span>, <span class="at">binom_test =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>)</span></code></pre></div>
 <ul><li>
 <code><a href="../reference/plm.html">plm()</a></code>, <code><a href="../reference/hplm.html">hplm()</a></code>: Added contrast argument with values <code>"first"</code> or “<code>preceding</code>”. Now <code>model = "JW"</code> is deprecated and identical to <code>model = "B&amp;L-B", contrast = "preceding"</code>.<br></li>
 <li>
@@ -252,16 +265,16 @@
 <code><a href="../reference/read_scdf.html">read_scdf()</a></code>: extracts filetype from file extension.</li>
 <li>
 <code><a href="../reference/read_scdf.html">read_scdf()</a></code>: New <code>yaml</code> import options for scdf files</li>
-</ul><div class="sourceCode" id="cb7"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anna</span><span class="kw">:</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">values</span><span class="kw">:</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">A</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">1</span><span class="kw">,</span><span class="at"> </span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">4</span><span class="kw">,</span><span class="at"> </span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">6</span><span class="kw">,</span><span class="at"> </span><span class="dv">7</span><span class="kw">]</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">B</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">8</span><span class="kw">,</span><span class="at"> </span><span class="dv">9</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">11</span><span class="kw">]</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Toni</span><span class="kw">:</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">values</span><span class="kw">:</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">A</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">2</span><span class="kw">,</span><span class="at"> </span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">4</span><span class="kw">,</span><span class="at"> </span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">6</span><span class="kw">,</span><span class="at"> </span><span class="dv">7</span><span class="kw">]</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">B</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">9</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="dv">11</span><span class="kw">]</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">control_var</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="kw">,</span><span class="dv">4</span><span class="kw">,</span><span class="dv">5</span><span class="kw">,</span><span class="dv">6</span><span class="kw">,</span><span class="dv">7</span><span class="kw">,</span><span class="dv">8</span><span class="kw">,</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="kw">]</span></span></code></pre></div>
+</ul><div class="sourceCode" id="cb7"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">Anna</span><span class="kw">:</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="at">  </span><span class="fu">values</span><span class="kw">:</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="at">    </span><span class="fu">A</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">1</span><span class="kw">,</span><span class="at"> </span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">4</span><span class="kw">,</span><span class="at"> </span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">6</span><span class="kw">,</span><span class="at"> </span><span class="dv">7</span><span class="kw">]</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="at">    </span><span class="fu">B</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">8</span><span class="kw">,</span><span class="at"> </span><span class="dv">9</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">11</span><span class="kw">]</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="fu">Toni</span><span class="kw">:</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="at">  </span><span class="fu">values</span><span class="kw">:</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="at">    </span><span class="fu">A</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">2</span><span class="kw">,</span><span class="at"> </span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">4</span><span class="kw">,</span><span class="at"> </span><span class="dv">5</span><span class="kw">,</span><span class="at"> </span><span class="dv">6</span><span class="kw">,</span><span class="at"> </span><span class="dv">7</span><span class="kw">]</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="at">    </span><span class="fu">B</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">3</span><span class="kw">,</span><span class="at"> </span><span class="dv">9</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="at"> </span><span class="dv">10</span><span class="kw">,</span><span class="dv">11</span><span class="kw">]</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="at">  </span><span class="fu">control_var</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="kw">,</span><span class="dv">4</span><span class="kw">,</span><span class="dv">5</span><span class="kw">,</span><span class="dv">6</span><span class="kw">,</span><span class="dv">7</span><span class="kw">,</span><span class="dv">8</span><span class="kw">,</span><span class="dv">1</span><span class="kw">,</span><span class="dv">2</span><span class="kw">,</span><span class="dv">3</span><span class="kw">]</span></span></code></pre></div>
 <ul><li>
 <code><a href="../reference/tau_u.html">tau_u()</a></code> <a href="https://github.com/jazznbass/scan/issues/51" class="external-link">#51</a>: Added option for confidence intervals for tau_u output.</li>
 </ul></div>

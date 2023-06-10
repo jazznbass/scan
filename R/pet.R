@@ -1,30 +1,29 @@
 #' Percent exceeding the trend
-#' 
-#' The \code{pet} function provides the percentage of phase B data points
-#' exceeding the prediction based on the phase A trend. A binomial test against
-#' a 50/50 distribution is computed. Furthermore, the percentage of phase B
-#' data points exceeding the upper (or lower) 95 percent confidence interval of
-#' the predicted progress is computed.
-#' 
-#' 
+#'
+#' The `pet` function returns the percentage of Phase B data points that exceed
+#' the prediction based on the Phase A trend. A binomial test against a 50/50
+#' distribution is calculated. It also calculates the percentage of Phase B data
+#' points that exceed the upper (or lower) 95 percent confidence interval of the
+#' predicted progression.
+#'
 #' @inheritParams .inheritParams
-#' @param ci Width of the confidence interval. Default is \code{ci = 0.95}.
+#' @param ci Width of the confidence interval. Default is `ci = 0.95`.
 #' @return \item{PET}{Percent exceeding the trend.} \item{PET.ci}{Percent
-#' exceeding the upper / lower 95\%-CI boundary.} \item{p}{P value of Binomial
-#' Test.} \item{ci.percent}{Width of confidence interval in percent.}
-#' \item{se.factors}{Standard error.} \item{N}{Number of cases.}
+#'   exceeding the upper / lower 95\%-CI boundary.} \item{p}{P value of Binomial
+#'   Test.} \item{ci.percent}{Width of confidence interval in percent.}
+#'   \item{se.factors}{Standard error.} \item{N}{Number of cases.}
 #' \item{decreasing}{Logical argument from function call (see \code{Arguments}
 #' above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @examples
-#' 
+#'
 #' ## Calculate the PET and use a 99%-CI for the additional calculation
 #' # create random example data
 #' design <- design(n = 5, slope = 0.2)
 #' dat <- random_scdf(design, seed = 23)
 #' pet(dat, ci = .99)
-#' 
+#'
 #' @export
 pet <- function(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = c(1, 2)) {
   

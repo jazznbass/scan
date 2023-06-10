@@ -2,12 +2,9 @@
 % Please edit documentation in R/coefficents.sc_plm.R
 \name{coef.sc_plm}
 \alias{coef.sc_plm}
-\alias{coef.sc_hplm}
 \title{Extract coefficients from plm/hplm objects}
 \usage{
 \method{coef}{sc_plm}(object, ...)
-
-\method{coef}{sc_hplm}(object, ...)
 }
 \arguments{
 \item{object}{plm or hplm object}

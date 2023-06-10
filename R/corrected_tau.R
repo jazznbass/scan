@@ -9,6 +9,8 @@
 #' @param continuity If TRUE applies a continuity correction for calculating p
 #' @param repeated If TRUE applies the repeated median method for calculating
 #'   slope and intercept ([mblm()])
+#' @param tau_method Character with values "a" or "b" (default) indicating
+#'   whether Kendall Tau A or Kendall Tau B is applied.
 #' @details This method has been proposed by Tarlow (2016). The baseline data
 #'   are checked for a significant autocorrelation (based on Kendall's Tau). If
 #'   so, a non-parametric Theil-Sen regression is applied for the baseline data
@@ -35,7 +37,8 @@ corrected_tau <- function(data, dvar, pvar, mvar,
                           phases = c(1, 2), 
                           alpha = 0.05, 
                           continuity = FALSE, 
-                          repeated = FALSE) {
+                          repeated = FALSE,
+                          tau_method = "b") {
   
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
@@ -51,21 +54,35 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     A_data <- data[rowsA, ]
     B_data <- data[rowsB, ]
     
-    auto_tau <- .kendall_full(
-      A_data[[dvar]], 
-      A_data[[mvar]], 
-      continuity_correction = continuity
-    )
+    if (var(A_data[[dvar]]) == 0) {
+      warning(
+        "All phase A values are identical. ",
+        "Autocorrelation can not be calculated and is set to NA.",
+        call. = FALSE
+      )
+      auto_tau <- list(tau = NA, z = NA, p = NA)
+    } else {
+      auto_tau <- .kendall_full(
+        A_data[[dvar]], 
+        A_data[[mvar]], 
+        continuity_correction = continuity,
+        tau_method = tau_method
+      )
+    }
     
     formula  <- as.formula(paste0(dvar, "~", mvar))
     fit_mblm <- mblm(formula, dataframe = A_data, repeated = repeated)
     data$fit <- predict(fit_mblm, data, se.fit = FALSE)
     x <- data[[dvar]] - data$fit
     y <- as.numeric(factor(data[[pvar]]))
-    base_corr_tau <- .kendall_full(x, y, continuity_correction = continuity)
+    base_corr_tau <- .kendall_full(
+      x, y, continuity_correction = continuity, tau_method = tau_method
+    )
     
     x <- data[[dvar]]
-    uncorrected_tau <- .kendall_full(x, y, continuity_correction = continuity)
+    uncorrected_tau <- .kendall_full(
+      x, y, continuity_correction = continuity, tau_method = tau_method
+    )
     
     if (is.na(auto_tau$p)) {
       corr_applied <- FALSE
@@ -94,18 +111,22 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   }
   
   x <- lapply(data, corr_tau)
+
+  
+  
   
   out <- list(
-    tau = sapply(x, function(x) if (x$p[1] <= 0.05) x$tau[3] else x$tau[2]), 
-    p = sapply(x, function(x) if (x$p[1] <= 0.05) x$p[3] else x$p[2]), 
+    tau = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > 0.05) x$tau[2] else x$tau[3]), 
+    p = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > 0.05) x$p[2] else x$p[3]), 
     corrected_tau = x,
     auto_tau = sapply(x, function(x) x$tau[1]),
     tau_corrected = sapply(x, function(x) x$tau[3]),
     tau_uncorrected = sapply(x, function(x) x$tau[2]),    
-    correction = sapply(x, function(x) if (x$p[1] <= 0.05) TRUE else FALSE),
+    correction = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > 0.05) FALSE else TRUE),
     alpha = alpha,
     continuity = continuity,
     repeated   = repeated,
+    tau_method = tau_method,
     data = data
   )
   

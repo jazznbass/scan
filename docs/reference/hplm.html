@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.58.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Hierarchical piecewise linear model / piecewise regression</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/hplm.R" class="external-link"><code>R/hplm.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/hplm.R" class="external-link"><code>R/hplm.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print.sc_hplm.R" class="external-link"><code>R/print.sc_hplm.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.sc_hplm.R" class="external-link"><code>R/export.sc_hplm.R</code></a>, and 1 more</small>
       <div class="d-none name"><code>hplm.Rd</code></div>
     </div>
 
@@ -85,7 +85,26 @@
 <span>  update.fixed <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data.l2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_hplm</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_hplm</span></span>
+<span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  nice <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_hplm</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -200,6 +219,48 @@ variables belong to.</p></dd>
 <dt>...</dt>
 <dd><p>Further arguments passed to the lme function.</p></dd>
 
+
+<dt>x</dt>
+<dd><p>An object returned by <code>hplm()</code></p></dd>
+
+
+<dt>object</dt>
+<dd><p>An scdf or an object exported from a scan function.</p></dd>
+
+
+<dt>caption</dt>
+<dd><p>Character string with table caption. If left NA (default) a
+caption will be created based on the exported object.</p></dd>
+
+
+<dt>footnote</dt>
+<dd><p>Character string with table footnote. If left NA (default) a
+footnote will be created based on the exported object.</p></dd>
+
+
+<dt>filename</dt>
+<dd><p>String containing the file name. If a filename is given the
+output will be written to that file.</p></dd>
+
+
+<dt>kable_styling_options</dt>
+<dd><p>list with arguments passed to the kable_styling
+function.</p></dd>
+
+
+<dt>kable_options</dt>
+<dd><p>list with arguments passed to the kable function.</p></dd>
+
+
+<dt>round</dt>
+<dd><p>Integer passed to the digits argument internally used to round
+values.</p></dd>
+
+
+<dt>nice</dt>
+<dd><p>If set TRUE (default) output values are rounded and optimized for
+publication tables.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -225,6 +286,13 @@ parameters.</p></dd>
 effect model.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
+    
+<ul><li><p><code>print(sc_hplm)</code>: Print results</p></li>
+<li><p><code>export(sc_hplm)</code>: Export results as html table (see <code><a href="export.html">export()</a></code>)</p></li>
+<li><p><code>coef(sc_hplm)</code>: Extract model coefficients</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other regression functions: 

@@ -39,11 +39,11 @@ Test.} \item{ci.percent}{Width of confidence interval in percent.}
 above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
 }
 \description{
-The \code{pet} function provides the percentage of phase B data points
-exceeding the prediction based on the phase A trend. A binomial test against
-a 50/50 distribution is computed. Furthermore, the percentage of phase B
-data points exceeding the upper (or lower) 95 percent confidence interval of
-the predicted progress is computed.
+The \code{pet} function returns the percentage of Phase B data points that exceed
+the prediction based on the Phase A trend. A binomial test against a 50/50
+distribution is calculated. It also calculates the percentage of Phase B data
+points that exceed the upper (or lower) 95 percent confidence interval of the
+predicted progression.
 }
 \examples{
 

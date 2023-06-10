@@ -12,6 +12,7 @@ print.sc_bctau <- function(x, nice = TRUE, digits = "auto", ...) {
     cat("Method: Theil-Sen regression\n")
   }
   
+  cat("Kendall's tau", x$tau_method, "applied.\n")
   if (x$continuity) {
     cat("Continuity correction applied\n")
   } else {
@@ -21,8 +22,6 @@ print.sc_bctau <- function(x, nice = TRUE, digits = "auto", ...) {
   
   for(i in seq_along(x$corrected_tau)) {
     if (digits == "auto") {
-      if (x$corrected_tau[[i]]$p[1] <= 0.05) 
-        correction <- TRUE else correction <- FALSE
       x$corrected_tau[[i]]$p <- round(x$corrected_tau[[i]]$p, 3)
       x$corrected_tau[[i]]$z <- sprintf("%.2f", x$corrected_tau[[i]]$z)
       x$corrected_tau[[i]]$tau <- sprintf("%.2f", x$corrected_tau[[i]]$tau)
@@ -40,8 +39,8 @@ print.sc_bctau <- function(x, nice = TRUE, digits = "auto", ...) {
     cat(names(x$corrected_tau)[i], ":\n")
     print(x$corrected_tau[[i]][,-1], ...)
     cat("\n")
-    if (correction) cat("Baseline correction should be applied.\n\n")
-    if (!correction) cat("Baseline correction should not be applied.\n\n")
+    if (x$correction) cat("Baseline correction should be applied.\n\n")
+    if (!x$correction) cat("Baseline correction should not be applied.\n\n")
   }
   
 

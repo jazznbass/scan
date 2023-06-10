@@ -1,8 +1,8 @@
 #' Export scan objects to html or latex
-#'
-#' This function is in an experimental status. Export creates html files of
-#' tables or displays them directly in the viewer pane of rstudio. When applied
-#' in rmarkdown/quarto, tables can also be created for pdf/latex output.
+#' 
+#' Export creates html files of tables or displays them directly in the viewer
+#' pane of rstudio. When applied in rmarkdown/quarto, tables can also be created
+#' for pdf/latex output.
 #'
 #' @param object An scdf or an object exported from a scan function.
 #' @param caption Character string with table caption. If left NA (default) a

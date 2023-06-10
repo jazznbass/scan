@@ -13,7 +13,9 @@ coef.sc_plm <- function(object, ...) {
   summary(object$full.model)$coef
 }
 
-#' @rdname coef.sc_plm
+#' @describeIn hplm Extract model coefficients
+#' @order 4
+#' @inheritParams coef.sc_plm
 #' @export
 coef.sc_hplm <- function(object, ...) {
   summary(object$hplm)$tTable

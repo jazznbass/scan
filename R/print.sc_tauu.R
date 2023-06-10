@@ -1,6 +1,10 @@
-#' @rdname print.sc
+#' @describeIn tau_u Print results
+#' @order 2
+#' @inheritParams print.sc
+#' @param x Object returned from [tau_u()].
 #' @param complete Print all parameters.
-#' @param select Character vector with name of variables to be included. When the vector is named, variables are renamed appropriately.
+#' @param select Character vector with name of variables to be included. When
+#'   the vector is named, variables are renamed appropriately.
 #' @param nice_p If TRUE, p-values are printed in publication friendly form.
 #' @export
 #' 
