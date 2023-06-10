@@ -16,8 +16,6 @@ scdf(
   dvar = "values",
   pvar = "phase",
   mvar = "mt",
-  phase.design,
-  B.start,
   ...
 )
 }
@@ -25,14 +23,14 @@ scdf(
 \item{values}{A vector containing measurement values of the dependent
 variable.}
 
-\item{B_start, B.start}{The first measurement of phase B (simple coding if
+\item{B_start}{The first measurement of phase B (simple coding if
 design is strictly AB).}
 
 \item{mt}{A vector defining measurement times. Default is \verb{mt = (1,2,3,...,n)}.}
 
 \item{phase}{A vector defining phase assignments.}
 
-\item{phase_design, phase.design}{A vector defining the length and label of
+\item{phase_design}{A vector defining the length and label of
 each phase. E.g., \code{phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.}
 
 \item{name}{A name for the case.}

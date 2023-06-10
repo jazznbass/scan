@@ -6,12 +6,12 @@
 #' @aliases scdf scdf-class as.scdf
 #' @param values A vector containing measurement values of the dependent
 #'   variable.
-#' @param B_start,B.start The first measurement of phase B (simple coding if
+#' @param B_start The first measurement of phase B (simple coding if
 #'   design is strictly AB).
 #' @inheritParams .inheritParams
 #' @param mt A vector defining measurement times. Default is `mt =
 #'   (1,2,3,...,n)`.
-#' @param phase_design,phase.design A vector defining the length and label of
+#' @param phase_design A vector defining the length and label of
 #'   each phase. E.g., `phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)`.
 #' @param name A name for the case.
 #' @param phase A vector defining phase assignments.
@@ -103,17 +103,25 @@ scdf <- function(values,
                  dvar = "values",
                  pvar = "phase",
                  mvar = "mt",
-                 phase.design,
-                 B.start,
                  ...) {
-  if (!missing(phase.design)) phase_design <- phase.design
-  if (!missing(B.start)) B_start <- B.start
-
+  
+  msg <- c()
   df <- list(...)
 
   if ("var.values" %in% names(df)) {
     stop("Argument 'var.values' is deprecated. Please use 'dvar' instead.")
   }
+  
+  if ("phase.design" %in% names(df)) {
+    msg <- c(msg, "Argument 'phase.design' is deprecated. Please use 'phase_design' instead.")
+    phase_design <- df$phase.design
+  }
+  
+  if ("B.start" %in% names(df)) {
+    msg <- c(msg, "Argument 'B.start' is deprecated. Please use 'B_start' instead.")
+    phase_design <- df$phase.design
+  }
+  
   if (!missing(mt)) df <- c(mt = list(mt), df)
   if (!missing(phase)) df <- c(phase = list(phase), df)
   if (!missing(values)) df <- c(values = list(values), df)
@@ -141,7 +149,7 @@ scdf <- function(values,
 
   ### for backward compatibility
   if (("MT" %in% names(data)) && missing(mt) && mvar == "mt") {
-    warning("Please rename argument 'MT' to 'mt'.")
+    msg <- c(msg, "Please rename argument 'MT' to 'mt'.")
     mvar <- "MT"
   }
   ### END : for backward compatibility
@@ -184,5 +192,7 @@ scdf <- function(values,
 
   if (!is.null(name)) names(data) <- name
 
+  return_messages(msg, TRUE)
+  
   data
 }
