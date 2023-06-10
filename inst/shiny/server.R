@@ -5,35 +5,43 @@ server <- function(input, output, session) {
   
   ## startup message ----
   
-  output$scdf_summary <- renderPrint(cat(res$msg$startup))
+  output$scdf_messages <- renderPrint(cat(res$msg$startup))
 
   ## Render ----
   my_scdf <- reactiveVal()
   scdf_render <- reactive({
     
     if (!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
-    output$scdf_summary <- renderPrint({
-      do.call("summary", list(my_scdf()))
-    })
-
-    output$scdf_syntax <- renderPrint({
-      req(inherits(my_scdf(), "scdf"))
-      do.call("convert", list(my_scdf(), inline = as.logical(input$convert)))
-    })
+    
+    if (input$scdf_output_format == "Summary"){
+      output$scdf_output <- renderPrint({
+        do.call("summary", list(my_scdf()))
+      })
+    } else if (input$scdf_output_format == "Syntax") {
+      output$scdf_output <- renderPrint({
+        req(inherits(my_scdf(), "scdf"))
+        do.call("convert", list(
+          my_scdf(), inline = as.logical(input$scdf_syntax_phase_structure)
+        ))
+      })
+    }
 
   })
 
+  observeEvent(input$scdf_output_format, scdf_render()) 
+  
   ## input example ----
   observeEvent(input$scdf_example, {
     if (input$scdf_example != "(none)") {
       my_scdf(paste0("scan::", input$scdf_example) |> str2lang() |> eval())
       scdf_render()
+      output$scdf_messages <- renderPrint(cat(paste0("loaded example ", input$scdf_example)))
     } else {
       my_scdf(NULL)
     }
   })
 
-  ## upload ------
+  ## upload (load) ------
   observeEvent(input$upload, {
     ext <- tools::file_ext(input$upload$datapath)
     if (ext == "rds") {
@@ -49,36 +57,46 @@ server <- function(input, output, session) {
     }
 
     if (!inherits(new, "scdf")) {
-      output$scdf_summary <- renderText(
-        "Sorry,\n the file you tried to upload is not a valid scdf file.")
+      output$scdf_messages <- renderText(
+        "Sorry,\n the file you tried to load is not a valid scdf file.")
     } else {
       my_scdf(new)
       scdf_render()
+      output$scdf_messages <- renderPrint(cat(paste0("loaded file successfully")))
     }
 
   })
 
-  ## save ----
+  ## download (save) ----
   output$scdf_save <- downloadHandler(
     filename = function() {
       scdf <- my_scdf()
       out <- paste(
-        input$prefix_output_data,
+        input$scdf_save_prefix,
         sprintf("%02d", length(scdf)),
         paste0(unique(scdf[[1]]$phase), collapse = ""),
         format(Sys.time(), format = "%y%m%d-%H%M%S"),
         sep = "-"
       )
-      paste0(out, input$save_scdf_format)
+      paste0(out, input$scdf_save_format)
     },
+    
     content = function(file) {
       scdf <- my_scdf()
-      if (input$save_scdf_format == ".rds") 
+      
+      if (!inherits(scdf, "scdf")) {
+        output$scdf_messages <- renderPrint(cat(res$error_msg$scdf_save))
+      } else {
+        output$scdf_messages <- renderPrint(cat("Saved file"))
+      }
+      
+      if (input$scdf_save_format == ".rds") 
         saveRDS(scdf, file)
-      if (input$save_scdf_format == ".R") 
+      if (input$scdf_save_format == ".R") 
         convert(scdf, file = file)
-      if (input$save_scdf_format == ".csv") 
+      if (input$scdf_save_format == ".csv") 
         write_scdf(scdf, filename = file)
+
     }
   )
 
@@ -116,6 +134,7 @@ server <- function(input, output, session) {
       if (input$remove_which == "last") {
         if (length(my_scdf()) > 0) new <- c(my_scdf(), new)
         my_scdf(new)
+        output$scdf_messages <- renderPrint(cat("Appended case"))
         scdf_render()
       } 
       
@@ -130,13 +149,14 @@ server <- function(input, output, session) {
             new <- c(my_scdf()[1:(at-1)], new, my_scdf()[at:(length(my_scdf()))])
           }
           my_scdf(new)
+          output$scdf_messages <- renderPrint(cat("Added case at position", input$remove_at))
           scdf_render() 
         }
       }  
 
     },
     error = function(e)
-      output$scdf_summary <- renderText(
+      output$scdf_messages <- renderText(
         paste0(res$error_msg$invalid_case, "\n\n", e)
       )
     )
@@ -156,13 +176,16 @@ server <- function(input, output, session) {
         my_scdf(my_scdf()[-input$remove_at])
     }
     
+    output$scdf_messages <- renderPrint(cat("removed case"))
     scdf_render()
   })
 
   ## remove all cases --------
   observeEvent(input$remove_all, {
     my_scdf(NULL)
+    output$scdf_messages <- renderPrint(cat("Cleared cases"))
     scdf_render()
+    
   })
 
   # Transform ----
@@ -234,20 +257,20 @@ server <- function(input, output, session) {
     filename = function() {
       scdf <- transformed()
       out <- paste(
-        input$prefix_output_transformed,
+        input$transform_save_prefix,
         sprintf("%02d", length(scdf)),
         paste0(unique(scdf[[1]]$phase), collapse = ""),
         format(Sys.time(), format = "%y%m%d-%H%M%S"),
         sep = "-"
       )
-      paste0(out, input$save_transformed_format)
+      paste0(out, input$transform_save_format)
     },
     content = function(file) {
-      if (input$save_transformed_format == ".rds") 
+      if (input$transform_save_format == ".rds") 
         saveRDS(transformed(), file)
-      if (input$save_transformed_format == ".R") 
+      if (input$transform_save_format == ".R") 
         convert(transformed(), file = file)
-      if (input$save_transformed_format == ".csv") 
+      if (input$transform_save_format == ".csv") 
         write_scdf(transformed(), filename = file)
     }
   )

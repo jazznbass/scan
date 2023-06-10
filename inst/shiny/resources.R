@@ -129,6 +129,9 @@ The last case you tried to add didn't have a valid case definition."
 res$error_msg$plot <- "Sorry!
 The plot arguments are not valid."
 
+res$error_msg$scdf_save <- "Sorry!
+The last file you saved is corrupt. Did you forget to add a case before saving?"
+
 # msg ----
 
 res$msg$startup <-

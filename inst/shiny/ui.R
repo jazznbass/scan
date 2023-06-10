@@ -38,8 +38,8 @@ tab_scdf <-   tabPanel(
     ),
 
     mainPanel(
-      verbatimTextOutput("scdf_summary"),
-      verbatimTextOutput("scdf_syntax"),
+      verbatimTextOutput("scdf_messages"),
+      verbatimTextOutput("scdf_output")
     )
   )
 )
@@ -74,17 +74,12 @@ tab_transform <- tabPanel(
       downloadButton("transformed_save", "Save transformed scdf"),
     ),
     mainPanel(
-      
-      radioButtons(
-        "transform_out", "Output format", c("Text", "Html"), inline = TRUE
-      ),
-      hr(),
       verbatimTextOutput("transform_syntax"),
       conditionalPanel(
-        'input.transform_out == "Text"', verbatimTextOutput("transform_scdf")
+        'input.transform_output_format == "Text"', verbatimTextOutput("transform_scdf")
       ),
       conditionalPanel(
-        'input.transform_out == "Html"', htmlOutput("transform_html")
+        'input.transform_output_format == "Html"', htmlOutput("transform_html")
       )
     )
   )
@@ -185,9 +180,6 @@ tab_power_test <- tabPanel(
         "pt_method", "Statistical method(s)", 
         choices = res$choices$pt_method,selected = "plm_level"
       ),
-      #selectInput("pt_method", "Statstical method", 
-      #           choices = res$choices$pt_method
-      #),
       selectInput(
        "pt_effect", "Null effect", choices = c("level", "slope")
       ),
@@ -218,48 +210,53 @@ tab_settings <- tabPanel(
     column(2, div(
       style = res$div$settings, 
       h3("Data"),
-      #hr(),
-      textInput("prefix_output_data", "Prefix output filename", value = "scdf"),
       radioButtons(
-       "save_scdf_format", "Save format", 
+        "scdf_output_format", "Output format", 
+        choices = c("Summary", "Syntax"), 
+        inline = TRUE
+      ),
+      radioButtons(
+        "scdf_syntax_phase_structure", "Syntax phase structure", 
+        choices = c("phase_design" = FALSE, "inline" = TRUE), 
+        inline = TRUE
+      ),
+      textInput("scdf_save_prefix", "Prefix save filename", value = "scdf"),
+      radioButtons(
+       "scdf_save_format", "Save format", 
        choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
        inline = TRUE),
-      radioButtons(
-       "convert", "Code phase structure", 
-       choices = c("phase_design" = FALSE, "inline" = TRUE), 
-       inline = TRUE
-      )
+
     )),
     column(2, div(
       style = res$div$settings, 
-      h3("Transformed"),
-      #hr(),
+      h3("Transform"),
+      radioButtons(
+        "transform_output_format", "Output format", c("Text", "Html"), inline = TRUE
+      ),
       textInput(
-        "prefix_output_transformed", 
-        "Prefix output filename", 
+        "transform_save_prefix", 
+        "Prefix save filename", 
         value = "scdf-transformed"
       ),
       radioButtons(
-        "save_transformed_format", "Save format", 
+        "transform_save_format", "Save format", 
         choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
         inline = TRUE)
     )),
     column(2, div(
       style = res$div$settings, 
       h3("Stats"),
-      #hr(),
       radioButtons(
         "stats_default", "Show defaults", choices = c("No", "Yes"),
         inline = TRUE
       ),
-      textInput("prefix_output_stats", "Prefix output filename", value = "scan-stat")
+      textInput("prefix_output_stats", "Prefix save filename", value = "scan-stat")
     )),
     column(2, div(
       style = res$div$settings, 
       h3("Plot"),
-      #br(),
       #numericInput("plot_display_res", "Display resolution", value = 120, min = 10, max = 4000),
-      textInput("prefix_output_plot", "Prefix output filename", value = "scplot"),
+      textInput("prefix_output_plot", "Prefix save filename", value = "scplot"),
       numericInput("width", "Export width", value = 800, min = 100, max = 2000),
       numericInput("height", "Export height", value = 600, min = 100, max = 2000),
       numericInput("dpi", " Export dpi", value = 100, min = 50, max = 600)
