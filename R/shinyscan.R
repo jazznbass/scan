@@ -25,6 +25,7 @@ shinyscan <- function(quiet = TRUE, ...) {
     cat("shinyscan needs the following additional packages to run: \n", 
         paste0(miss, collapse = ", "), "\n")
     res <- readline("Enter `y` to install the packages: ")
+    cat("(if you encounter problems with the installation, restart R and try again to install the packages.")
     if (res %in% c("y", "Y")) {
       install.packages(miss)
     } else {
