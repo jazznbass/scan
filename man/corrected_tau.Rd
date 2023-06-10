@@ -12,7 +12,8 @@ corrected_tau(
   phases = c(1, 2),
   alpha = 0.05,
   continuity = FALSE,
-  repeated = FALSE
+  repeated = FALSE,
+  tau_method = "b"
 )
 }
 \arguments{
@@ -41,6 +42,9 @@ applied.}
 
 \item{repeated}{If TRUE applies the repeated median method for calculating
 slope and intercept (\code{\link[=mblm]{mblm()}})}
+
+\item{tau_method}{Character with values "a" or "b" (default) indicating
+whether Kendall Tau A or Kendall Tau B is applied.}
 }
 \description{
 Kendall's tau correlation for the dependent variable and the phase variable

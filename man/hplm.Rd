@@ -118,6 +118,8 @@ variables belong to.}
 
 \item{...}{Further arguments passed to the lme function.}
 
+\item{x}{An object returned by \code{\link[=hplm]{hplm()}}}
+
 \item{object}{An scdf or an object exported from a scan function.}
 
 \item{caption}{Character string with table caption. If left NA (default) a

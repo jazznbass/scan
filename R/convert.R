@@ -197,7 +197,7 @@ convert <- function(scdf,
 
   if (!silent) {
     cat(
-      "# This is an automatically generated syntax\n\n",
+      #"# This is an automatically generated syntax\n\n",
       complete_string, 
       "\n", 
       file = file
