@@ -12,7 +12,7 @@ is calculated after correcting for a baseline trend."><meta property="og:image" 
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.58.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,8 @@ is calculated after correcting for a baseline trend.</p>
 <span>  phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  continuity <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  repeated <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  repeated <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tau_method <span class="op">=</span> <span class="st">"b"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -121,6 +122,11 @@ applied.</p></dd>
 <dd><p>If TRUE applies the repeated median method for calculating
 slope and intercept (<code>mblm()</code>)</p></dd>
 
+
+<dt>tau_method</dt>
+<dd><p>Character with values "a" or "b" (default) indicating
+whether Kendall Tau A or Kendall Tau B is applied.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -160,6 +166,7 @@ Modification, 41(4)</em>, 427–467. https://doi.org/10.1177/0145445516676750</p
 <span class="r-out co"><span class="r-pr">#&gt;</span> Baseline corrected tau</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Method: Theil-Sen regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Kendall's tau b applied.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Continuity correction not applied.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Case1 :</span>

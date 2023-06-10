@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.58.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Multivariate Piecewise linear model / piecewise regression</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/mplm.R" class="external-link"><code>R/mplm.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/mplm.R" class="external-link"><code>R/mplm.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print.sc_mplm.R" class="external-link"><code>R/print.sc_mplm.R</code></a></small>
       <div class="d-none name"><code>mplm.Rd</code></div>
     </div>
 
@@ -79,7 +79,10 @@
 <span>  update <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  na.action <span class="op">=</span> <span class="va">na.omit</span>,</span>
 <span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_mplm</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="st">"auto"</span>, std <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -160,6 +163,19 @@ changed for example to include further variables into the regression model.</p><
 <dt>...</dt>
 <dd><p>Further arguments passed to the lm function.</p></dd>
 
+
+<dt>x</dt>
+<dd><p>Object returned from <code>mplm()</code>.</p></dd>
+
+
+<dt>digits</dt>
+<dd><p>The minimum number of significant digits to be use.
+If set to "auto" (default), values are predefined.</p></dd>
+
+
+<dt>std</dt>
+<dd><p>If TRUE, a table with standardized estimates is included.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -170,6 +186,11 @@ above).</p></dd>
 <dd><p>Full regression model list.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
+    
+<ul><li><p><code>print(sc_mplm)</code>: Print results</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other regression functions: 
@@ -192,7 +213,7 @@ above).</p></dd>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate piecewise linear model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W level = , slope = </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               academic_engagement disruptive_behavior</span>
@@ -218,7 +239,7 @@ above).</p></dd>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span>, std <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate piecewise linear model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W level = , slope = </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               academic_engagement disruptive_behavior</span>
