@@ -220,7 +220,7 @@ export.sc_pand <- function(object,
     )
   }
     
-  table <- footnote(table, general = footnote, threeparttable = TRUE)
+  table <- add_footnote(table, footnote, notation = "none")
   
   # finish ------------------------------------------------------------------
   
