@@ -15,6 +15,7 @@
 #' precision-power (Parker, Vannest, & Davis, 2014).
 #'
 #' @inheritParams .inheritParams
+#' @order 1
 #' @param correction The default `correction = TRUE` makes `pand` use a
 #'   frequency matrix, which is corrected for ties. A tie is counted as the half
 #'   of a measurement in both phases. Set `correction = FALSE` to use the
@@ -159,3 +160,70 @@ pand <- function(data, dvar, pvar,
   out
 }
 
+#' @describeIn pand Export results as html table (see [export()])
+#' @inheritParams export
+#' @order 3
+#' @export
+export.sc_pand <- function(object, 
+                           caption = NA, 
+                           footnote = NA, 
+                           filename = NA,
+                           kable_styling_options = list(), 
+                           kable_options = list(), 
+                           digits = 1,
+                           ...) {
+  
+  kable_options <- .join_kabel(kable_options)
+  kable_styling_options <- .join_kabel_styling(kable_styling_options)
+  
+  if (is.na(caption)) caption <- c("Percentage of all non-overlapping data (PAND)")
+  kable_options$caption <- caption
+  
+  object$matrix <- rbind(object$matrix, object$matrix[1,] + object$matrix[2,])
+  object$matrix_counts <- rbind(object$matrix_counts, object$matrix_counts[1,] + object$matrix_counts[2,])
+  
+  object$matrix <- cbind(object$matrix, object$matrix[,1] + object$matrix[,2])
+  object$matrix_counts <- cbind(object$matrix_counts, object$matrix_counts[,1] + object$matrix_counts[,2])  
+  out <- as.data.frame(round(rbind(object$matrix * 100, object$matrix_counts), digits))
+  out <- cbind(data.frame(" " = rep(c("Real", " ", " "), 2), Phase = rep(c("A", "B", "Total"), 2)), out)
+  names(out) <- c(" ", "  ", "A", "B", "Total")
+
+  
+  kable_options$x <- out
+  kable_options$align <- c("l", "r", "c", "c", "c")
+  table <- do.call(kable, kable_options)
+  kable_styling_options$kable_input <- table
+  table <- do.call(kable_styling, kable_styling_options)
+  
+  style <- "border-bottom: 1px solid; text-align: center;"
+  table <- table %>%
+    add_header_above(c(" " = 2, "Expected" = 3)) %>%
+    pack_rows(index = c("Percentage" = 3, "Counts" = 3), label_row_css = style) %>%
+    column_spec(1, bold = TRUE) %>%
+    column_spec(2, bold = TRUE)
+  
+  if (is.na(footnote)) {
+    footnote <- paste0(
+      "PAND = ", round(object$pand, 1), "%; ",
+      "\u03A6 = ", round(object$phi, 3), " ; \u03A6\u00b2 = ", round(object$phi^2, 3), "; ",
+      "Number of cases: ", object$N, "; ",
+      "n overlapping data per case: ", paste0(object$overlaps_cases, collapse = "-"), "; ",
+      sprintf("\u03C7\u00B2 = %.2f, df = 1, p = %.3f; ",
+        object$chi_test$statistic, 
+        object$chi_test$p.value
+      ),
+      sprintf(
+        "Fisher exact test: Odds ratio = %.2f, p = %.3f",
+        object$fisher_test$estimate, 
+        object$fisher_test$p.value
+      )
+    )
+  }
+    
+  table <- footnote(table, general = footnote, threeparttable = TRUE)
+  
+  # finish ------------------------------------------------------------------
+  
+  if (!is.na(filename)) cat(table, file = filename)
+  table
+}

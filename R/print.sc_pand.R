@@ -1,4 +1,6 @@
-#' @rdname print.sc
+#' @describeIn pand Print results
+#' @order 2
+#' @param x An object returned by [pand()]
 #' @export
 #' 
 print.sc_pand <- function(x, ...) {
@@ -11,7 +13,7 @@ print.sc_pand <- function(x, ...) {
   cat("Total measurements:", x$n, " ")
   cat("(in phase A: ", x$nA, "; in phase B: ", x$nB, ")\n", sep = "")
   cat("n overlapping data per case: ")
-  cat(x$overlaps_cases, sep = ", ")
+  cat(x$overlaps_cases, sep = "; ")
   cat("\n")
   cat("Total overlapping data: n =",x$overlaps , 
       "; percentage =", round(x$perc_overlap, 1), 
