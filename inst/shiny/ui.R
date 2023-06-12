@@ -20,11 +20,11 @@ tab_scdf <-   tabPanel(
       br(),
       div(style="display:inline-block;",
           radioButtons(
-            "remove_which", "Position", choices = c("last", "at"), inline = TRUE
+            "remove_which", "Position", choices = c("last" = "last", "at:" = "at"), inline = TRUE
           ),
       ),
-      div(style="display:inline-block; padding-left: 30px;",
-          numericInput("remove_at", "At", min = 1,value = 1),
+      div(style="display:inline-block; padding-left: 0px",
+          numericInput("remove_at", "", min = 1,value = 1,width = "75px"),
       ),
       br(),
       selectInput(
