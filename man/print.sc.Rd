@@ -2,9 +2,9 @@
 % Please edit documentation in R/print.sc.R, R/print.sc_ac.R,
 %   R/print.sc_bctau.R, R/print.sc_cdc.R, R/print.sc_desc.R,
 %   R/print.sc_design.R, R/print.sc_nap.R, R/print.sc_outlier.R,
-%   R/print.sc_overlap.R, R/print.sc_pand.R, R/print.sc_pem.R, R/print.sc_pet.R,
-%   R/print.sc_plm.R, R/print.sc_pnd.R, R/print.sc_power.R, R/print.sc_rand.R,
-%   R/print.sc_rci.R, R/print.sc_smd.R, R/print.sc_trend.R
+%   R/print.sc_overlap.R, R/print.sc_pem.R, R/print.sc_pet.R, R/print.sc_plm.R,
+%   R/print.sc_pnd.R, R/print.sc_power.R, R/print.sc_rand.R, R/print.sc_rci.R,
+%   R/print.sc_smd.R, R/print.sc_trend.R
 \name{print.sc}
 \alias{print.sc}
 \alias{print.sc_ac}
@@ -15,7 +15,6 @@
 \alias{print.sc_nap}
 \alias{print.sc_outlier}
 \alias{print.sc_overlap}
-\alias{print.sc_pand}
 \alias{print.sc_pem}
 \alias{print.sc_pet}
 \alias{print.sc_plm}
@@ -42,8 +41,6 @@
 \method{print}{sc_outlier}(x, digits = "auto", ...)
 
 \method{print}{sc_overlap}(x, digits = "auto", ...)
-
-\method{print}{sc_pand}(x, ...)
 
 \method{print}{sc_pem}(x, ...)
 

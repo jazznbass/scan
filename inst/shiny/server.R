@@ -35,7 +35,9 @@ server <- function(input, output, session) {
     if (input$scdf_example != "(none)") {
       my_scdf(paste0("scan::", input$scdf_example) |> str2lang() |> eval())
       scdf_render()
-      output$scdf_messages <- renderPrint(cat(paste0("loaded example ", input$scdf_example)))
+      output$scdf_messages <- renderPrint(
+        cat(paste0("loaded example ", input$scdf_example))
+      )
     } else {
       my_scdf(NULL)
     }
@@ -124,9 +126,11 @@ server <- function(input, output, session) {
         call <- c(call, variables)
       }
 
-      if (input$casename != "")
+      if (input$casename != "") {
         call <- c(call, paste0("name = ", deparse(input$casename)))
-
+      } else {
+        call <- c(call, paste0("name = \"case\""))
+      }
       call <- paste0(call, collapse = ",")
       call <- paste0("scdf(", call, ")")
 
