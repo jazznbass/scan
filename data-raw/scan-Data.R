@@ -48,9 +48,12 @@ filenames <- c(filenames, "exampleAB_mpd")
 # exampleAB_simple from the scan Manual -----
 
 exampleAB_simple <- c(
-  scdf(score = c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19), B_start = 6, name = "Charlotte", dvar = "score"),
-  scdf(score = c(3, 4, 3, 5, 7, 8, 7, 9, 8, 10, 12), B_start = 5, name = "Theresa", dvar = "score"),
-  scdf(score = c(9, 8, 8, 7, 5, 7, 13, 14, 15, 12, 16), B_start = 7, name = "Antonia", dvar = "score")
+  scdf(score = c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19), 
+       B_start = 6, name = "Charlotte", dvar = "score"),
+  scdf(score = c(3, 4, 3, 5, 7, 8, 7, 9, 8, 10, 12), 
+       B_start = 5, name = "Theresa", dvar = "score"),
+  scdf(score = c(9, 8, 8, 7, 5, 7, 13, 14, 15, 12, 16), 
+       B_start = 7, name = "Antonia", dvar = "score")
 )
 
 scdf_attr(exampleAB_simple, "info") <- "A simple multiple baseline AB Design."
@@ -918,14 +921,35 @@ scdf_attr(Waddell2011, "info") <- "Example from Waddell, D. E., Nassar, S. L., &
 
 filenames <- c(filenames, "Waddell2011")
 
-# Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (20 --------
+# Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011) --------
 
-# dat <- scdf(c(2,0,1,4,3,5,9,7,8), B_start = 5)
 Parker2011 <- scdf(c(2, 3, 5, 3, 4, 5, 5, 7, 6), phase_design = c(A = 4, B = 5))
 scdf_attr(Parker2011, "info") <- "Example from Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011). Combining Nonoverlap and Trend for Single-Case Research: Tau-U. Behavior Therapy, 42(2), 284-299."
 
 filenames <- c(filenames, "Parker2011")
 
+# Parker 2009 ------
+Parker2009 <- c(
+  scdf(c(A1 = 0,0,0,0,0,0,0, 
+         B1 = 0, 50, 30, 0, 0,40, 50, 70, 40, 60, 60, 70, 70, 60, 60, 60, 
+         A2 = 30, 50, 0, 0, 
+         B2 = 30, 80, 70, 80, 80, 100, 70, 100, 90,70, 70, 80)),
+  info = "Parker, R. I., Vannest, K. J., & Brown, L. (2009). The improvement rate difference for single-case research. Exceptional Children, 75(2), 135–150."
+)
+
+filenames <- c(filenames, "Parker2009")
+
+# Parker 2007 -------
+
+Parker2007 <- c(
+  scdf(c(A = 20, 18, 20, B = 20, 21, 23), name = "Adam"),
+  scdf(c(A = 18, 17, 16, 20, B = 19, 22, 19, 20, 20, 24), name = "Bob"),
+  scdf(c(A = 19, 18, 24, 22, 21, 19, B = 30, 21, 23, 28, 32, 34), name = "Carol"),
+  info = "Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage of All Non-Overlapping Data (PAND) An Alternative to PND. The Journal of Special Education, 40(4), 194–204.
+"
+)
+
+filenames <- c(filenames, "Parker2007")
 
 
 # Borckardt, J. J., & Nash, M. R. (2014). Simulation modelling ana --------
@@ -954,12 +978,25 @@ scdf_attr(SSDforR2017, "author") <- "Charles Auerbach, PhD & Wendy Zeitlin, PhD;
 
 filenames <- c(filenames, "SSDforR2017")
 
-## Tarlow 2016
-# Tarlow2016 <- scdf(c(A = 9, 6, 11, 5, B = 4, 7, 8, 7, 3, 7, 1))
+## examples from Tarlow 2017
 
-# scdf_attr(Tarlow2016, "info")   <- "Example from Tarlow (2016)."
-# scdf_attr(Tarlow2016, "author") <- "Tarlow"
-# filenames <- c(filenames,"Tarlow2016")
+Tarlow2017 <- c(
+  scdf(c(A = 9, 6, 11, 5, B = 4, 7, 8, 7, 3, 7, 1), name = "example_a"),
+  scdf(c(A = 1, 2, 3, 4, 5, B = 2, 1, 0, 0, 0), name = "example_b"),
+  scdf(c(A = 33, 25, 17, 25, 14, 13,14, B = 14, 15, 15, 4, 6, 9, 5 ,4 ,2 ,2 ,8, 11 ,7), name = "example_c"),
+  info = "Tarlow, K. R. (2017). An Improved Rank Correlation Effect Size Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior Modification, 41(4), 427–467. https://doi.org/10.1177/0145445516676750"
+)
+
+filenames <- c(filenames,"Tarlow2017")
+
+# Parker 2011b
+
+Parker2011b <- c(
+scdf(c(A = 20, 20, 26, 25, 22, 23, B = 28, 25, 24, 27, 30, 30, 29)),
+info = "Parker, R. I., Vannest, K. J., & Davis, J. L. (2011). Effect Size in Single-Case Research: A Review of Nine Nonoverlap Techniques. Behavior Modification, 35(4), 303–322. https://doi.org/10.1177/0145445511399147"
+)
+
+filenames <- c(filenames, "Parker2011b")
 
 # exampleABAB-Design --------------------------------------------------
 
@@ -1045,7 +1082,7 @@ exampleABC <- c(A, B, C)
 names(exampleABC) <- c("Marie", "Rosalind", "Lise")
 filenames <- c(filenames, "exampleABC")
 
-### example of AB-Design -----------------
+# example of AB-Design -----------------
 
 case1 <- scdf(
   values = c(54, 53, 56, 58, 52, 61, 62, 71, 66, 64, 78, 70, 74, 82, 77, 86, 
@@ -1074,7 +1111,7 @@ scdf_attr(exampleAB, "info") <- "Randomly created data with normal distributed d
 
 filenames <- c(filenames, "exampleAB")
 
-### example of AB-Design decreaising-------------------
+# example of AB-Design decreasing -------------------
 case1 <- scdf(
   values = c(108, 105, 109, 112, 100, 94, 105, 97, 73, 73, 82, 93, 81, 93, 59, 
              74, 83, 61, 84, 78), 
@@ -1102,7 +1139,7 @@ scdf_attr(exampleAB_decreasing, "info") <- "Random data-set from a poisson distr
 
 filenames <- c(filenames, "exampleAB_decreasing")
 
-### example for AB multilevel analyzes
+# example for AB multilevel analyzes -----
 set.seed(123456)
 n <- 25
 
@@ -1140,7 +1177,7 @@ exampleAB_50.l2 <- data.frame(
 
 filenames <- c(filenames, "exampleAB_50", "exampleAB_50.l2")
 
-### example for ABC multilevel analyzes
+# example for ABC multilevel analyzes -----
 set.seed(123456)
 n <- 150
 
@@ -1231,14 +1268,13 @@ scdf_attr(exampleAB_score, "info") <- "Random data-set for binomial data."
 filenames <- c(filenames, "exampleAB_score")
 
 
-#############
-
+# write data -----
 
 .createDataFileScan <- function(filenames) {
   library(usethis)
   for(i in 1:length(filenames)) {
     
-    do.call("use_data", list(as.name(filenames[i])))
+    do.call("use_data", list(as.name(filenames[i]), overwrite = TRUE))
     #usethis::use_data(str2lang(filenames[i]), overwrite = TRUE)    
   }
 
