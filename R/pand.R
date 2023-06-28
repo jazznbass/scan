@@ -1,68 +1,93 @@
-#' Percentage of all non-overlapping data
+#'Percentage of all non-overlapping data
 #'
-#' The `pand()` function calculates the percentage of all non-overlapping data
-#' (PAND; Parker, Hagan-Burke, & Vannest, 2007), an index to quantify a level
-#' increase (or decrease) in performance after the onset of an intervention.
+#'The `pand()` function calculates the percentage of all non-overlapping data
+#'(PAND; Parker, Hagan-Burke, & Vannest, 2007), an index to quantify a level
+#'increase (or decrease) in performance after the onset of an intervention.
 #'
-#' The PAND indicates nonoverlap between phase A and B data, but uses
-#' all data and is therefore not based on one single (probably unrepresentative)
-#' datapoint.  Furthermore, PAND allows the comparison of real and expected
-#' associations (Chi-square test) and estimation of the effect size Phi, which
-#' equals Pearsons r for dichotomous data.  Thus, phi-Square is the amount of
-#' explained variance. The original procedure for computing the PAND (Parker,
-#' Hagan-Burke, & Vannest, 2007) does not account for ambivalent datapoints
-#' (ties).  The newer *nap* ([nap()]) overcomes this problem and has better
-#' precision-power (Parker, Vannest, & Davis, 2014).
+#'PAND was proposed by Parker, Hagan-Burke, and Vannest in 2007. The authors
+#'emphasize that PAND is designed for application in a multiple case design with
+#'a substantial number of measurements, technically at least 20 to 25, but
+#'preferably 60 or more. PAND is defined as 100% minus the percentage of data
+#'points that need to be removed from either phase in order to ensure nonoverlap
+#'between the phases. Several approaches have been suggested to calculate PAND,
+#'leading to potentially different outcomes. In their 2007 paper, Parker and
+#'colleagues present an algorithm for computing PAND. The algorithm involves
+#'sorting the scores of a time series, including the associated phases, and
+#'comparing the resulting phase order with the original phase order using a
+#'contingency table. To account for ties, the algorithm includes a randomization
+#'process where ties are randomly assigned to one of the two phases.
+#'Consequently, executing the algorithm multiple times could yield different
+#'results. It is important to note that this algorithm does not produce the same
+#'results as the PAND definition provided earlier in the same paper. However, it
+#'offers the advantage of allowing the calculation of an effect size measure
+#'`phi`, and the application of statistical tests for frequency distributions.
+#'Pustejovsky (2019) presented a mathematical formulation of Parker's original
+#'definition for comparing two phases of a single case: \deqn{PAND =
+#'\frac{1}{m+n}max\{(i+j)I(y^A_{i}<y^B_{n+1-j}\}} This formulation provides
+#'accurate results for PAND, but the original definition has the drawback of an
+#'unknown distribution under the null hypothesis, making a statistical test
+#'difficult. The `pand()` function enables the calculation of PAND using both
+#'methods. The first approach (`method = "sort"`) follows the algorithm
+#'described above, with the exclusion of randomization before sorting to avoid
+#'ambiguity. It calculates a phi measure and provides the results of a
+#'chi-squared test and a Fisher exact test. The second approach (`method =
+#'"minimum"`) applies the aforementioned formula. The code of this function is
+#'based on the code of the `SingleCaseES` package (function `calc_PAND`). For a
+#'multiple case design, overlaps are calculated for each case, summed, and then
+#'divided by the total number of measurements. No statistical test is conducted
+#'for this method.
 #'
-#' @inheritParams .inheritParams
-#' @order 1
-#' @param correction The default `correction = TRUE` makes `pand` use a
-#'   frequency matrix, which is corrected for ties. A tie is counted as the half
-#'   of a measurement in both phases. Set `correction = FALSE` to use the
-#'   uncorrected matrix, which is not recommended.
-#' @return \item{pand}{Percentage of all non-overlapping data.}
-#'   \item{phi}{Effect size Phi based on expected and observed values.}
+#'@inheritParams .inheritParams
+#'@param method Either `"sort"`" or `"minimum"`. See details.
+#'@order 1
+#'@return \item{pand}{Percentage of all non-overlapping data.} \item{phi}{Effect
+#'  size Phi based on expected and observed values.}
 #' \item{perc_overlap}{Percentage of overlapping data points.} \item{overlaps}{Number of
 #' overlapping data points.} \item{n}{Number of data points.} \item{N}{Number
-#' of cases.} \item{nA}{Number of data points in phase A.} \item{nB}{Number of
-#' data points in phase B.} \item{pA}{Percentage of data points in phase A.}
-#' \item{pB}{Percentage of data points in phase B.} \item{matrix}{2x2 frequency
+#' of cases.} \item{n_a}{Number of data points in phase A.} \item{n_b}{Number of
+#' data points in phase B.} \item{matrix}{2x2 frequency
 #' matrix of phase A and B comparisons.} \item{matrix_counts}{2x2 counts matrix
-#' of phase A and B comparisons.} \item{correlation}{A list of the
-#' \code{correlation} values: statistic, parameter, p.value, estimate,
-#' null.value, alternative, method, data.name, correction.}
-#' \item{correction}{Logical argument from function call (see `Arguments`
-#' above).}
-#' @author Juergen Wilbert
-#' @family overlap functions
-#' @references Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage
-#'   of All Non-Overlapping Data (PAND): An Alternative to PND. *The Journal of
-#'   Special Education, 40*, 194-204.
+#' of phase A and B comparisons.} \item{chi_test}{A Chi-squared analysis of expected and observed data
+#' ([chisq.test()]).} \item{fisher_test}{A Fisher exact test analysis of expected and observed data
+#' ([fisher.test()]).}
+#'@author Juergen Wilbert
+#'@family overlap functions
+#'@references Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage
+#'  of All Non-Overlapping Data (PAND): An Alternative to PND. *The Journal of
+#'  Special Education, 40*, 194-204.
 #'
-#'   Parker, R. I., & Vannest, K. (2009). An Improved Effect Size for
-#'   Single-Case Research: Nonoverlap of All Pairs. *Behavior Therapy, 40*,
-#'   357-367.
+#'  Parker, R. I., & Vannest, K. (2009). An Improved Effect Size for Single-Case
+#'  Research: Nonoverlap of All Pairs. *Behavior Therapy, 40*, 357-367.
+#'
+#'  Pustejovsky, J. E. (2019). Procedural sensitivities of effect sizes for
+#'  single-case designs with directly observed behavioral outcome measures.
+#'  *Psychological Methods*, *24(2)*, 217–235.
+#'  https://doi.org/10.1037/met0000179
+#'
+#'  Pustejovsky JE, Chen M, Swan DM (2023). SingleCaseES: A Calculator for
+#'  Single-Case Effect Sizes. R package version 0.7.1.9999,
+#'  https://jepusto.github.io/SingleCaseES/.
 #' @examples
-#'
-#' ## Calculate the PAND for a MMBD over three cases
-#' gunnar <- scdf(c(2,3,1,5,3,4,2,6,4,7), B_start = 5)
-#' birgit <- scdf(c(3,3,2,4,7,4,2,1,4,7), B_start = 4)
-#' bodo   <- scdf(c(2,3,4,5,3,4,7,6,8,7), B_start = 6)
-#' mbd <- c(gunnar, birgit, bodo)
-#' pand(mbd)
-#' pand(bodo)
+#' ## REplication of the Parker et al. 2007 example
+#' pand(Parker2007)
 #'
 #' ## Calculate the PAND with an expected decrease of phase B scores
 #' cubs <- scdf(c(20,22,24,17,21,13,10,9,20,9,18), B_start = 5)
 #' pand(cubs, decreasing = TRUE)
 #'
-#' @export
+#'@export
 pand <- function(data, dvar, pvar, 
                  decreasing = FALSE, 
-                 correction = TRUE, 
-                 phases = c(1, 2)) {
+                 phases = c(1, 2),
+                 method = c("sort", "minimum")) {
   
-  # set default attirubtes
+  
+  check_args(
+    by_call(method, "pand")
+  )
+  method <- method[1]
+
+  # set default attributes
   if (missing(dvar)) dvar <- dv(data)
   if (missing(pvar)) pvar <- phase(data)
   
@@ -71,94 +96,114 @@ pand <- function(data, dvar, pvar,
   
   data <- .prepare_scdf(data, na.rm = TRUE)
   data <- recombine_phases(data, phases = phases)$data
-
+  
   N <- length(data)
+  values_a <- lapply(data, function(x) x[x[[pvar]] == "A", dvar])
+  values_b <- lapply(data, function(x) x[x[[pvar]] == "B", dvar])
+  n_all_a <- length(unlist(values_a))
+  n_all_b <- length(unlist(values_b))
+  n <- n_all_a + n_all_b
   
-  A <- lapply(data, function(x) x[x[[pvar]] == "A", dvar])
-  B <- lapply(data, function(x) x[x[[pvar]] == "B", dvar])
-  
-  phase_real <- 
-    lapply(
-      data, function(x) 
-        as.numeric(as.factor(x[[pvar]][sort.list(x[[dvar]])]))
-    )
-  phase_expected <- lapply(data, function(x) as.numeric(as.factor(x[[pvar]])))
-  
-  tmp <- getOption("warn")
-  options(warn = -1)
-  results_cor <- cor.test(
-    unlist(phase_real), unlist(phase_expected), method = "kendall"
-  )
-  options(warn = tmp)
-
-  nA <- sum(sapply(A, length))
-  nB <- sum(sapply(B, length))
-  n <- nA + nB
-  
-  overlaps_cases <- rep(NA, N)
-  overlaps_A <- 0
-  overlaps_B <- 0
-  
-  for (i in 1:N) {
-    z <- data[[i]][, dvar, drop = FALSE]
-    n1 <- length(A[[i]])
-    n2 <- length(B[[i]])
-    n12 <- n1 + n2
+  if (method == "sort") {
     
-    rang <- sort.list(unlist(z), decreasing = decreasing)
-    AB <- sum(rang[1:n1] > n1)
-    BA <- sum(rang[(n1 + 1):n12] <= n1)
-    if(correction) {
-      ord <- z[[1]][rang]
-      AB <- AB + 0.5 * sum(ord[1:n1] == min(ord[(n1 + 1):n12]))
-      BA <- BA + 0.5 * sum(ord[(n1 + 1):n12] == max(ord[1:n1]))
-    }
-    overlaps_cases[i] <- AB + BA
-    overlaps_A <- overlaps_A + AB
-    overlaps_B <- overlaps_B + BA
+    # phase order per case as found in data -----
+    
+    phases_data <- lapply(data, function(x) x[[pvar]]) |> unlist()
+    
+    # phase order when sorted by values within case ----
+    phases_sorted <- lapply(data, function(x) {
+      x <- x[sample(1:nrow(x)),]
+      x[[pvar]][sort.list(x[[dvar]],decreasing = decreasing)]
+    }) |> unlist()
+    
+    mat_counts <- table(phases_data, phases_sorted)
+    mat_propotions <- prop.table(mat_counts)
+    pand <- (mat_propotions[1,1] + mat_propotions[2,2]) * 100
+    overlaps <- mat_counts[1,2] + mat_counts[2,1]
+    perc_overlap <- overlaps / n * 100
+    
+    chi_test <- suppressWarnings(chisq.test(mat_counts, correct = FALSE))
+    
+    phi <- sqrt(chi_test$statistic / n)
+    
+    out <- list(
+      pand = pand, 
+      method = method,
+      phi = phi, 
+      perc_overlap = perc_overlap, 
+      overlaps = overlaps, 
+      n = n, 
+      N = N, 
+      n_a = n_all_a, 
+      n_b = n_all_b, 
+      matrix = mat_propotions, 
+      matrix_counts = mat_counts, 
+      chi_test = chi_test,
+      fisher_test = suppressWarnings(fisher.test(mat_counts))
+    )
+    
   }
   
-  overlaps <- sum(overlaps_cases)
-  perc_overlap <- overlaps / n * 100
-  pA <- nA / n
-  pB <- nB / n
+  if (method == "minimum") {
+    
+    .pand_pustejowski <- function(values_a, values_b) {
+      
+      if (decreasing) {
+        values_a <- -1 * values_a
+        values_b <- -1 * values_b
+      }
+      n_a <- length(values_a)
+      n_b <- length(values_b)
+      x <- c(-Inf, sort(values_a))
+      y <- c(sort(values_b), Inf)
+      grid <- expand.grid(a = 1:(n_a + 1), b = 1:(n_b + 1))
+      grid$no_overlap <- mapply(
+        function(a, b) x[a] < y[b], 
+        a = grid$a, 
+        b = grid$b
+      )
+      grid$overlap <- grid$a + n_b - grid$b
+      
+      nonoverlaps <- max(grid$overlap * grid$no_overlap)
   
-  b <- overlaps_A / n
-  c <- overlaps_B / n
-  a <- pA - b
-  d <- pB - c
-  phi <- (a / (a + c)) - (b / (b + d))
-  pand <- 100 - perc_overlap
-  mat <- matrix(c(a, b, c, d), nrow = 2)
-  mat2 <- mat * n
-  
-  chisq.test(matrix(c(4, 5.5, 4, 11.5), byrow= FALSE))
-  
-  out <- list(
-    pand = pand, 
-    phi = phi, 
-    perc_overlap = perc_overlap, 
-    overlaps_cases = overlaps_cases, 
-    overlaps = overlaps, 
-    n = n, 
-    N = N, 
-    nA = nA, 
-    nB = nB, 
-    pA = pA, 
-    pB = pB, 
-    matrix = mat, 
-    matrix_counts = mat2, 
-    correlation = results_cor, 
-    chi_test = suppressWarnings(chisq.test(mat2)),
-    fisher_test = suppressWarnings(fisher.test(mat2)),
-    correction = correction
-  )
-  
+      list(
+        pand = nonoverlaps/(n_a + n_b), 
+        nonoverlaps = nonoverlaps, 
+        length_a = n_a, 
+        length_b = n_b
+      )
+    }
+    
+    casewise <- mapply(
+      .pand_pustejowski, 
+      values_a = values_a, 
+      values_b = values_b,
+      SIMPLIFY = FALSE, 
+      USE.NAMES = TRUE
+    )
+    nonoverlaps <- lapply(casewise, function(x) x$nonoverlaps) |> 
+      unlist() |> 
+      sum()
+    
+    out <- list(
+      pand = nonoverlaps / n * 100,
+      overlaps = n - nonoverlaps,
+      perc_overlaps = 100 - (nonoverlaps / n * 100),
+      n = n, 
+      N = N, 
+      n_a = n_all_a, 
+      n_b = n_all_b, 
+      casewise = casewise,
+      method = method
+    )
+  }
+
   class(out) <- c("sc_pand")
   attr(out, opt("phase")) <- pvar
   attr(out, opt("dv")) <- dvar
   out
 }
+
 
 #' @describeIn pand Export results as html table (see [export()])
 #' @inheritParams export
@@ -176,18 +221,30 @@ export.sc_pand <- function(object,
   kable_options <- .join_kabel(kable_options)
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
-  if (is.na(caption)) caption <- c("Percentage of all non-overlapping data (PAND)")
+  if (is.na(caption)) {
+    caption <- c("Percentage of all non-overlapping data (PAND)")
+  }
   kable_options$caption <- caption
   
   object$matrix <- rbind(object$matrix, object$matrix[1,] + object$matrix[2,])
-  object$matrix_counts <- rbind(object$matrix_counts, object$matrix_counts[1,] + object$matrix_counts[2,])
-  
+  object$matrix_counts <- rbind(
+    object$matrix_counts, object$matrix_counts[1,] + object$matrix_counts[2,]
+  )
   object$matrix <- cbind(object$matrix, object$matrix[,1] + object$matrix[,2])
-  object$matrix_counts <- cbind(object$matrix_counts, object$matrix_counts[,1] + object$matrix_counts[,2])  
-  out <- as.data.frame(round(rbind(object$matrix * 100, object$matrix_counts), digits))
-  out <- cbind(data.frame(" " = rep(c("Real", " ", " "), 2), Phase = rep(c("A", "B", "Total"), 2)), out)
+  object$matrix_counts <- cbind(
+    object$matrix_counts, object$matrix_counts[,1] + object$matrix_counts[,2]
+  )  
+  out <- as.data.frame(
+    round(rbind(object$matrix * 100, object$matrix_counts), digits)
+  )
+  out <- cbind(
+    data.frame(
+      " " = rep(c("Real", " ", " "), 2), Phase = rep(c("A", "B", "Total"), 2)
+    ), 
+    out
+  )
   names(out) <- c(" ", "  ", "A", "B", "Total")
-
+  row.names(out) <- NULL
   
   kable_options$x <- out
   kable_options$align <- c("l", "r", "c", "c", "c")
@@ -201,13 +258,13 @@ export.sc_pand <- function(object,
     pack_rows(index = c("Percentage" = 3, "Counts" = 3), label_row_css = style) %>%
     column_spec(1, bold = TRUE) %>%
     column_spec(2, bold = TRUE)
-  
+
   if (is.na(footnote)) {
     footnote <- paste0(
       "PAND = ", round(object$pand, 1), "%; ",
       "\u03A6 = ", round(object$phi, 3), " ; \u03A6\u00b2 = ", round(object$phi^2, 3), "; ",
       "Number of cases: ", object$N, "; ",
-      "n overlapping data per case: ", paste0(object$overlaps_cases, collapse = "-"), "; ",
+      #"n overlapping data per case: ", paste0(object$overlaps_cases, collapse = "-"), "; ",
       sprintf("\u03C7\u00B2 = %.2f, df = 1, p = %.3f; ",
         object$chi_test$statistic, 
         object$chi_test$p.value
@@ -227,3 +284,5 @@ export.sc_pand <- function(object,
   if (!is.na(filename)) cat(table, file = filename)
   table
 }
+
+
