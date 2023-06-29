@@ -24,7 +24,7 @@ pand(
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
-  digits = 1,
+  round = 1,
   ...
 )
 }
@@ -68,6 +68,9 @@ output will be written to that file.}
 function.}
 
 \item{kable_options}{list with arguments passed to the kable function.}
+
+\item{round}{Integer passed to the digits argument internally used to round
+values.}
 }
 \value{
 \item{pand}{Percentage of all non-overlapping data.} \item{phi}{Effect
@@ -145,7 +148,7 @@ Research: Nonoverlap of All Pairs. \emph{Behavior Therapy, 40}, 357-367.
 
 Pustejovsky, J. E. (2019). Procedural sensitivities of effect sizes for
 single-case designs with directly observed behavioral outcome measures.
-\emph{Psychological Methods}, \emph{24(2)}, 217–235.
+\emph{Psychological Methods}, \emph{24(2)}, 217-235.
 https://doi.org/10.1037/met0000179
 
 Pustejovsky JE, Chen M, Swan DM (2023). SingleCaseES: A Calculator for

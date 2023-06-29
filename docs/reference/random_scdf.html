@@ -16,7 +16,7 @@ function."><meta property="og:image" content="/logo.png"><!-- mathjax --><script
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.4.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -157,37 +157,35 @@ format.</p>
 <span class="r-in"><span>  distribution <span class="op">=</span> <span class="st">"poisson"</span>, level <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, missing_prop <span class="op">=</span> <span class="fl">0.1</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">random_scdf</span><span class="op">(</span><span class="va">design</span>, seed <span class="op">=</span> <span class="fl">1234</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="pand.html">pand</a></span><span class="op">(</span><span class="va">dat</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span>, correction <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pand.html">pand</a></span><span class="op">(</span><span class="va">dat</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Percentage of all non-overlapping data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PAND =  95.9 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Φ =  0.918  ; Φ² =  0.843 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Method: sort </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of cases: 3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total measurements: 49  (in phase A: 23; in phase B: 26)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> n overlapping data per case: 2, 0, 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total overlapping data: n = 2 ; percentage = 4.1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PAND = 91.8%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Φ =  0.836  ; Φ² =  0.699 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 x 2 Matrix of proportions</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	% expected</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	A	B	total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> %    A	44.9	2	46.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> real B	2	51	53</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  total	46.9	53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49 measurements (23 Phase A, 26 Phase B) in 3 cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Overlapping data: n = 4 ; percentage = 8.2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 x 2 Matrix of percentages</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          A    B total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A     42.9  4.1  46.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B      4.1 49.0  53.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> total 46.9 53.1 100.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 x 2 Matrix of counts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	expected</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	A	B	total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      A	22	1	23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> real B	1	25	26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  total	23	26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        A  B total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A     21  2    23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B      2 24    26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> total 23 26    49</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chi-Squared test:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X-Squared = 37.695, df = 1, p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X-Squared = 34.256, df = 1, p = 0.000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fisher exact test:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Odds ratio = 333.881, p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Odds ratio = 99.881, p = 0.000 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -50,7 +50,7 @@ design <- design(
   distribution = "poisson", level = -5, missing_prop = 0.1
 )
 dat <- random_scdf(design, seed = 1234)
-pand(dat, decreasing = TRUE, correction = FALSE)
+pand(dat, decreasing = TRUE)
 }
 \author{
 Juergen Wibert

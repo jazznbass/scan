@@ -1,5 +1,11 @@
 # scan (development version)
 
+## New function
+
+- `ird()`: Robust improvement rate difference as formulated by Postejovski (2019).
+
+## Changes
+
 - `pand()`: Rewrote function. New argument `method` allows to apply the sorting algorithm proposed in Parker 2007 and `method = "minimum"` applies the exact method provided by Pustejovski in 2019. Furthermore, the tau test was replaced with a X Squared and a fisher exact test.
 - `corrected_tau`: Report results with warning when all phase A data are identical; new argument tau_method = "a" to switch to Kendall's tau-a.
 - `export()`: new for `pand()`.
