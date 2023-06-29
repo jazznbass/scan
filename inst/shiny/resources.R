@@ -76,6 +76,7 @@ res$choices$fn_stats <- c(
   "Percent exceeding the median" = "pem",
   "Percent exceeding the trend" = "pet",
   "Percentage of all non-overlapping data" = "pand",
+  "Improvement rate difference" = "ird",
   "Nonoverlap of all Pairs" = "nap",
   "Randomization test" = "rand_test",
   "Outlier analysis" = "outlier"
