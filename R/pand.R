@@ -113,8 +113,13 @@ pand <- function(data, dvar, pvar,
     # phase order when sorted by values within case ----
     phases_sorted <- lapply(data, function(x) {
       x <- x[sample(1:nrow(x)),]
-      x[[pvar]][sort.list(x[[dvar]],decreasing = decreasing)]
-    }) |> unlist()
+      x[[pvar]][order(x[[dvar]], x[[pvar]], decreasing = decreasing)]
+    }) |> unlist() 
+    
+    #phases_sorted <- lapply(data, function(x) {
+    #  x <- x[sample(1:nrow(x)),]
+    #  x[[pvar]][sort.list(x[[dvar]],decreasing = decreasing)]
+    #}) |> unlist()
     
     mat_counts <- table(phases_data, phases_sorted)
     mat_propotions <- prop.table(mat_counts)
@@ -129,7 +134,7 @@ pand <- function(data, dvar, pvar,
     out <- list(
       pand = pand, 
       method = method,
-      phi = phi, 
+      phi = unname(phi), 
       perc_overlap = perc_overlap, 
       overlaps = overlaps, 
       n = n, 
