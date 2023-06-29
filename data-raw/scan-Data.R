@@ -934,7 +934,7 @@ Parker2009 <- c(
          B1 = 0, 50, 30, 0, 0,40, 50, 70, 40, 60, 60, 70, 70, 60, 60, 60, 
          A2 = 30, 50, 0, 0, 
          B2 = 30, 80, 70, 80, 80, 100, 70, 100, 90,70, 70, 80)),
-  info = "Parker, R. I., Vannest, K. J., & Brown, L. (2009). The improvement rate difference for single-case research. Exceptional Children, 75(2), 135–150."
+  info = "Parker, R. I., Vannest, K. J., & Brown, L. (2009). The improvement rate difference for single-case research. Exceptional Children, 75(2), 135-150."
 )
 
 filenames <- c(filenames, "Parker2009")
@@ -945,7 +945,7 @@ Parker2007 <- c(
   scdf(c(A = 20, 18, 20, B = 20, 21, 23), name = "Adam"),
   scdf(c(A = 18, 17, 16, 20, B = 19, 22, 19, 20, 20, 24), name = "Bob"),
   scdf(c(A = 19, 18, 24, 22, 21, 19, B = 30, 21, 23, 28, 32, 34), name = "Carol"),
-  info = "Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage of All Non-Overlapping Data (PAND) An Alternative to PND. The Journal of Special Education, 40(4), 194–204.
+  info = "Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage of All Non-Overlapping Data (PAND) An Alternative to PND. The Journal of Special Education, 40(4), 194-204.
 "
 )
 
@@ -984,7 +984,7 @@ Tarlow2017 <- c(
   scdf(c(A = 9, 6, 11, 5, B = 4, 7, 8, 7, 3, 7, 1), name = "example_a"),
   scdf(c(A = 1, 2, 3, 4, 5, B = 2, 1, 0, 0, 0), name = "example_b"),
   scdf(c(A = 33, 25, 17, 25, 14, 13,14, B = 14, 15, 15, 4, 6, 9, 5 ,4 ,2 ,2 ,8, 11 ,7), name = "example_c"),
-  info = "Tarlow, K. R. (2017). An Improved Rank Correlation Effect Size Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior Modification, 41(4), 427–467. https://doi.org/10.1177/0145445516676750"
+  info = "Tarlow, K. R. (2017). An Improved Rank Correlation Effect Size Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior Modification, 41(4), 427-467. https://doi.org/10.1177/0145445516676750"
 )
 
 filenames <- c(filenames,"Tarlow2017")
@@ -993,7 +993,7 @@ filenames <- c(filenames,"Tarlow2017")
 
 Parker2011b <- c(
 scdf(c(A = 20, 20, 26, 25, 22, 23, B = 28, 25, 24, 27, 30, 30, 29)),
-info = "Parker, R. I., Vannest, K. J., & Davis, J. L. (2011). Effect Size in Single-Case Research: A Review of Nine Nonoverlap Techniques. Behavior Modification, 35(4), 303–322. https://doi.org/10.1177/0145445511399147"
+info = "Parker, R. I., Vannest, K. J., & Davis, J. L. (2011). Effect Size in Single-Case Research: A Review of Nine Nonoverlap Techniques. Behavior Modification, 35(4), 303-322. https://doi.org/10.1177/0145445511399147"
 )
 
 filenames <- c(filenames, "Parker2011b")
