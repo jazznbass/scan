@@ -61,7 +61,7 @@
 #'
 #'  Pustejovsky, J. E. (2019). Procedural sensitivities of effect sizes for
 #'  single-case designs with directly observed behavioral outcome measures.
-#'  *Psychological Methods*, *24(2)*, 217–235.
+#'  *Psychological Methods*, *24(2)*, 217-235.
 #'  https://doi.org/10.1037/met0000179
 #'
 #'  Pustejovsky JE, Chen M, Swan DM (2023). SingleCaseES: A Calculator for
@@ -220,7 +220,7 @@ export.sc_pand <- function(object,
                            filename = NA,
                            kable_styling_options = list(), 
                            kable_options = list(), 
-                           digits = 1,
+                           round = 1,
                            ...) {
   
   kable_options <- .join_kabel(kable_options)
@@ -240,7 +240,7 @@ export.sc_pand <- function(object,
     object$matrix_counts, object$matrix_counts[,1] + object$matrix_counts[,2]
   )  
   out <- as.data.frame(
-    round(rbind(object$matrix * 100, object$matrix_counts), digits)
+    round(rbind(object$matrix * 100, object$matrix_counts), round)
   )
   out <- cbind(
     data.frame(
