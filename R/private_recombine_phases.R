@@ -113,12 +113,31 @@ recombine_phases <- function(data,
   
   attributes(data) <- source_attributes
   
+  original_phases <- lapply(design_list, function(x) x$values)
+  
+  new_phases <- lapply(original_phases, function(x) {
+    out <- if (is.numeric(phases_A)) {
+      paste0(x[phases_A], collapse = "")
+    } else {
+      paste0(x[which(phases_A %in% x)], collapse = "")
+    }
+    out <- if (is.numeric(phases_B)) {
+      c(out, paste0(x[phases_B], collapse = ""))
+    } else {
+      c(out, paste0(x[which(phases_B %in% x)], collapse = ""))
+    }
+    out
+  })
+  
+  #browser()
+  
   out <- list(
     data = data, 
     designs = design_list, 
     N = N, 
     phases_A = phases_A, 
-    phases_B = phases_B
+    phases_B = phases_B,
+    phases = list(original = original_phases, new = new_phases)
   )
   class(out) <- c("sc_keepphases")
   

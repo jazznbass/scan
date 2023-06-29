@@ -16,7 +16,7 @@ procedures."><meta property="og:image" content="/logo.png"><!-- mathjax --><scri
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.4.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -217,66 +217,58 @@ reliability for each case.</p>
 <span class="r-in"><span><span class="fu"><a href="pand.html">pand</a></span><span class="op">(</span><span class="va">scdf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Percentage of all non-overlapping data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PAND =  84 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Method: sort </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PAND = 84%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Φ =  0.573  ; Φ² =  0.329 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of cases: 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total measurements: 200  (in phase A: 50; in phase B: 150)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> n overlapping data per case: 2, 4, 2, 4, 2, 2, 6, 4, 2, 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total overlapping data: n = 32 ; percentage = 16 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 200 measurements (50 Phase A, 150 Phase B) in 10 cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Overlapping data: n = 32 ; percentage = 16 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 x 2 Matrix of proportions</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	% expected</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	A	B	total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> %    A	17	8	25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> real B	8	67	75</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  total	25	75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 x 2 Matrix of percentages</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        A  B total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A     17  8    25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B      8 67    75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> total 25 75   100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 x 2 Matrix of counts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	expected</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	A	B	total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      A	34	16	50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> real B	16	134	150</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  total	50	150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        A   B total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A     34  16    50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B     16 134   150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> total 50 150   200</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Note. Matrix is corrected for ties</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chi-Squared test:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X-Squared = 62.720, df = 1, p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X-Squared = 65.742, df = 1, p = 0.000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fisher exact test:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Odds ratio = 17.393, p = 0.000 </span>
 <span class="r-in"><span><span class="fu"><a href="pand.html">pand</a></span><span class="op">(</span><span class="va">scdf_est</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Percentage of all non-overlapping data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PAND =  79 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Method: sort </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PAND = 79%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Φ =  0.44  ; Φ² =  0.194 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of cases: 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total measurements: 200  (in phase A: 50; in phase B: 150)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> n overlapping data per case: 4, 8, 4, 2, 4, 2, 4, 8, 2, 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total overlapping data: n = 42 ; percentage = 21 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 200 measurements (50 Phase A, 150 Phase B) in 10 cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Overlapping data: n = 42 ; percentage = 21 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 x 2 Matrix of proportions</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	% expected</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	A	B	total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> %    A	14.5	10.5	25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> real B	10.5	64.5	75</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  total	25	75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 x 2 Matrix of percentages</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          A    B total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A     14.5 10.5    25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B     10.5 64.5    75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> total 25.0 75.0   100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 x 2 Matrix of counts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	expected</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	A	B	total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      A	29	21	50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> real B	21	129	150</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  total	50	150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        A   B total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A     29  21    50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B     21 129   150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> total 50 150   200</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Note. Matrix is corrected for ties</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chi-Squared test:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X-Squared = 36.409, df = 1, p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X-Squared = 38.720, df = 1, p = 0.000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fisher exact test:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Odds ratio = 8.360, p = 0.000 </span>
@@ -293,18 +285,18 @@ reliability for each case.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Distribution based on a random sample of all 25937424601 possible combinations.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> n   =  500 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> M   =  0.3097159 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SD  =  0.06831258 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Min =  0.1211692 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Max =  0.5219912 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> M   =  0.3085513 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SD  =  0.06906004 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Min =  0.1427584 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Max =  0.5118563 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probability of observed statistic based on distribution:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p   &lt;  0.002 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Shapiro-Wilk Normality Test: W = 0.998; p = 0.746  (Hypothesis of normality maintained)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Shapiro-Wilk Normality Test: W = 0.994; p = 0.037  (Hypothesis of normality rejected)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probabilty of observed statistic based on the assumption of normality:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> z = 6.7072, p = 0.0000 (single sided)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> z = 6.6515, p = 0.0000 (single sided)</span>
 <span class="r-in"><span><span class="fu"><a href="rand_test.html">rand_test</a></span><span class="op">(</span><span class="va">scdf_est</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Randomization Test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -318,18 +310,18 @@ reliability for each case.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Distribution based on a random sample of all 25937424601 possible combinations.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> n   =  500 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> M   =  0.2717592 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SD  =  0.08040287 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Min =  0.0733932 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> M   =  0.269875 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SD  =  0.07922479 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Min =  0.08001321 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Max =  0.5456197 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probability of observed statistic based on distribution:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p   &lt;  0.002 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Shapiro-Wilk Normality Test: W = 0.991; p = 0.004  (Hypothesis of normality rejected)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Shapiro-Wilk Normality Test: W = 0.992; p = 0.013  (Hypothesis of normality rejected)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probabilty of observed statistic based on the assumption of normality:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> z = 5.7171, p = 0.0000 (single sided)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> z = 5.8259, p = 0.0000 (single sided)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

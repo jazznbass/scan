@@ -18,7 +18,7 @@ can add regression models using the R-specific formula class."><meta property="o
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.4.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,12 +162,12 @@ section).</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend for each phase</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Intercept      B   Beta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.ALL       41.820  4.077  0.964</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.A         54.085 -0.207 -0.056</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.B         55.277  4.891  0.982</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.ALL    54.644  0.210  0.976</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.A      53.733 -0.010 -0.011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.B      67.383  0.327  0.953</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.ALL       38.979  4.359  0.971</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.A         52.090 -0.620 -0.578</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.B         54.536  5.100  0.981</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.ALL    52.497  0.226  0.990</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.A      51.719 -0.145 -0.563</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.B      66.393  0.352  0.983</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note. Measurement-times start at 0  for each phase</span>
 <span class="r-in"><span></span></span>
@@ -179,19 +179,19 @@ section).</p></dd>
 <span class="r-in"><span><span class="fu">trend</span><span class="op">(</span><span class="va">ben</span>, offset <span class="op">=</span> <span class="fl">0</span>, model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cubic"</span> <span class="op">=</span> <span class="va">values</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">mt</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span>, <span class="st">"Log Time"</span> <span class="op">=</span> <span class="va">values</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">mt</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend for each phase</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Intercept      B   Beta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.ALL       41.892  2.576  0.945</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.A         56.248 -2.263 -0.932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.B         53.670  2.720  0.939</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.ALL    52.077  0.117  0.932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.A      53.533 -0.370 -0.933</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.B      62.523  0.156  0.887</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Cubic.ALL        56.418  0.006  0.882</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Cubic.A          52.555 -0.069 -0.914</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Cubic.B          66.069  0.010  0.821</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Log Time.ALL     34.174 16.422  0.828</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Log Time.A       54.589 -5.358 -0.887</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Log Time.B       47.218 15.167  0.916</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Intercept      B  Beta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.ALL       40.300  2.781 0.909</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.A         49.455  1.125 0.376</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Linear.B         46.354  3.588 0.918</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.ALL    50.513  0.132 0.935</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.A      51.488  0.122 0.249</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Quadratic.B      57.271  0.215 0.906</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cubic.ALL        54.820  0.007 0.922</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cubic.A          52.304  0.012 0.126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cubic.B          61.600  0.014 0.875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log Time.ALL     32.875 17.302 0.777</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log Time.A       49.518  3.458 0.465</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log Time.B       39.477 19.128 0.856</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note. Measurement-times start at 1  for each phase</span>
 <span class="r-in"><span></span></span>

@@ -6,7 +6,14 @@
 \alias{export.sc_pand}
 \title{Percentage of all non-overlapping data}
 \usage{
-pand(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases = c(1, 2))
+pand(
+  data,
+  dvar,
+  pvar,
+  decreasing = FALSE,
+  phases = c(1, 2),
+  method = c("sort", "minimum")
+)
 
 \method{print}{sc_pand}(x, ...)
 
@@ -17,7 +24,7 @@ pand(data, dvar, pvar, decreasing = FALSE, correction = TRUE, phases = c(1, 2))
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
-  digits = 1,
+  round = 1,
   ...
 )
 }
@@ -34,16 +41,13 @@ the attributes in the scdf file.}
 \item{decreasing}{If you expect data to be lower in the B phase, set
 \code{decreasing = TRUE}. Default is \code{decreasing = FALSE}.}
 
-\item{correction}{The default \code{correction = TRUE} makes \code{pand} use a
-frequency matrix, which is corrected for ties. A tie is counted as the half
-of a measurement in both phases. Set \code{correction = FALSE} to use the
-uncorrected matrix, which is not recommended.}
-
 \item{phases}{A vector of two characters or numbers indicating the two phases
 that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
 for comparing the second to the fourth phase. Phases could be combined by
 providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(2,4))} will compare phases 1 and 3 (as A) against 2 and 4 (as B). Default
 is \code{phases = c(1,2)}.}
+
+\item{method}{Either \code{"sort"}" or \code{"minimum"}. See details.}
 
 \item{x}{An object returned by \code{\link[=pand]{pand()}}}
 
@@ -64,21 +68,21 @@ output will be written to that file.}
 function.}
 
 \item{kable_options}{list with arguments passed to the kable function.}
+
+\item{round}{Integer passed to the digits argument internally used to round
+values.}
 }
 \value{
-\item{pand}{Percentage of all non-overlapping data.}
-\item{phi}{Effect size Phi based on expected and observed values.}
+\item{pand}{Percentage of all non-overlapping data.} \item{phi}{Effect
+size Phi based on expected and observed values.}
 \item{perc_overlap}{Percentage of overlapping data points.} \item{overlaps}{Number of
 overlapping data points.} \item{n}{Number of data points.} \item{N}{Number
-of cases.} \item{nA}{Number of data points in phase A.} \item{nB}{Number of
-data points in phase B.} \item{pA}{Percentage of data points in phase A.}
-\item{pB}{Percentage of data points in phase B.} \item{matrix}{2x2 frequency
+of cases.} \item{n_a}{Number of data points in phase A.} \item{n_b}{Number of
+data points in phase B.} \item{matrix}{2x2 frequency
 matrix of phase A and B comparisons.} \item{matrix_counts}{2x2 counts matrix
-of phase A and B comparisons.} \item{correlation}{A list of the
-\code{correlation} values: statistic, parameter, p.value, estimate,
-null.value, alternative, method, data.name, correction.}
-\item{correction}{Logical argument from function call (see \code{Arguments}
-above).}
+of phase A and B comparisons.} \item{chi_test}{A Chi-squared analysis of expected and observed data
+(\code{\link[=chisq.test]{chisq.test()}}).} \item{fisher_test}{A Fisher exact test analysis of expected and observed data
+(\code{\link[=fisher.test]{fisher.test()}}).}
 }
 \description{
 The \code{pand()} function calculates the percentage of all non-overlapping data
@@ -86,15 +90,37 @@ The \code{pand()} function calculates the percentage of all non-overlapping data
 increase (or decrease) in performance after the onset of an intervention.
 }
 \details{
-The PAND indicates nonoverlap between phase A and B data, but uses
-all data and is therefore not based on one single (probably unrepresentative)
-datapoint.  Furthermore, PAND allows the comparison of real and expected
-associations (Chi-square test) and estimation of the effect size Phi, which
-equals Pearsons r for dichotomous data.  Thus, phi-Square is the amount of
-explained variance. The original procedure for computing the PAND (Parker,
-Hagan-Burke, & Vannest, 2007) does not account for ambivalent datapoints
-(ties).  The newer \emph{nap} (\code{\link[=nap]{nap()}}) overcomes this problem and has better
-precision-power (Parker, Vannest, & Davis, 2014).
+PAND was proposed by Parker, Hagan-Burke, and Vannest in 2007. The authors
+emphasize that PAND is designed for application in a multiple case design with
+a substantial number of measurements, technically at least 20 to 25, but
+preferably 60 or more. PAND is defined as 100\% minus the percentage of data
+points that need to be removed from either phase in order to ensure nonoverlap
+between the phases. Several approaches have been suggested to calculate PAND,
+leading to potentially different outcomes. In their 2007 paper, Parker and
+colleagues present an algorithm for computing PAND. The algorithm involves
+sorting the scores of a time series, including the associated phases, and
+comparing the resulting phase order with the original phase order using a
+contingency table. To account for ties, the algorithm includes a randomization
+process where ties are randomly assigned to one of the two phases.
+Consequently, executing the algorithm multiple times could yield different
+results. It is important to note that this algorithm does not produce the same
+results as the PAND definition provided earlier in the same paper. However, it
+offers the advantage of allowing the calculation of an effect size measure
+\code{phi}, and the application of statistical tests for frequency distributions.
+Pustejovsky (2019) presented a mathematical formulation of Parker's original
+definition for comparing two phases of a single case: \deqn{PAND =
+\frac{1}{m+n}max\{(i+j)I(y^A_{i}<y^B_{n+1-j}\}} This formulation provides
+accurate results for PAND, but the original definition has the drawback of an
+unknown distribution under the null hypothesis, making a statistical test
+difficult. The \code{pand()} function enables the calculation of PAND using both
+methods. The first approach (\code{method = "sort"}) follows the algorithm
+described above, with the exclusion of randomization before sorting to avoid
+ambiguity. It calculates a phi measure and provides the results of a
+chi-squared test and a Fisher exact test. The second approach (\code{method = "minimum"}) applies the aforementioned formula. The code of this function is
+based on the code of the \code{SingleCaseES} package (function \code{calc_PAND}). For a
+multiple case design, overlaps are calculated for each case, summed, and then
+divided by the total number of measurements. No statistical test is conducted
+for this method.
 }
 \section{Functions}{
 \itemize{
@@ -104,14 +130,8 @@ precision-power (Parker, Vannest, & Davis, 2014).
 
 }}
 \examples{
-
-## Calculate the PAND for a MMBD over three cases
-gunnar <- scdf(c(2,3,1,5,3,4,2,6,4,7), B_start = 5)
-birgit <- scdf(c(3,3,2,4,7,4,2,1,4,7), B_start = 4)
-bodo   <- scdf(c(2,3,4,5,3,4,7,6,8,7), B_start = 6)
-mbd <- c(gunnar, birgit, bodo)
-pand(mbd)
-pand(bodo)
+## REplication of the Parker et al. 2007 example
+pand(Parker2007)
 
 ## Calculate the PAND with an expected decrease of phase B scores
 cubs <- scdf(c(20,22,24,17,21,13,10,9,20,9,18), B_start = 5)
@@ -123,9 +143,17 @@ Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage
 of All Non-Overlapping Data (PAND): An Alternative to PND. \emph{The Journal of
 Special Education, 40}, 194-204.
 
-Parker, R. I., & Vannest, K. (2009). An Improved Effect Size for
-Single-Case Research: Nonoverlap of All Pairs. \emph{Behavior Therapy, 40},
-357-367.
+Parker, R. I., & Vannest, K. (2009). An Improved Effect Size for Single-Case
+Research: Nonoverlap of All Pairs. \emph{Behavior Therapy, 40}, 357-367.
+
+Pustejovsky, J. E. (2019). Procedural sensitivities of effect sizes for
+single-case designs with directly observed behavioral outcome measures.
+\emph{Psychological Methods}, \emph{24(2)}, 217-235.
+https://doi.org/10.1037/met0000179
+
+Pustejovsky JE, Chen M, Swan DM (2023). SingleCaseES: A Calculator for
+Single-Case Effect Sizes. R package version 0.7.1.9999,
+https://jepusto.github.io/SingleCaseES/.
 }
 \seealso{
 Other overlap functions: 

@@ -32,6 +32,10 @@
 \alias{Leidig2018_l2}
 \alias{SSDforR2017}
 \alias{Parker2011}
+\alias{Parker2007}
+\alias{Parker2009}
+\alias{Parker2011b}
+\alias{Tarlow2017}
 \title{Single-case example data}
 \value{
 \item{Beretvas2008}{Fictitious single-case intervention study.
