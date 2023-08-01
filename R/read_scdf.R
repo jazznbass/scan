@@ -18,6 +18,7 @@
 #' @param type Format of the file to be loaded. Either "csv", "xlsx", "xls",
 #'   "excel", "yml" is possible. By default (NA) the type is extracted from the
 #'   file extension.
+#' @param na Character vector of strings to interpret as missing values.
 #' @param \dots Further arguments passed to the respective read function.
 #' @return Returns a single-case data frame. See \code{\link{scdf}} to learn
 #'   about the format of these data frames.
@@ -50,6 +51,7 @@ read_scdf <- function(file,
                       sort_cases = FALSE,
                       phase_names = NULL, 
                       type = NA, 
+                      na = c("", "NA"),
                       sort.labels = NULL, 
                       phase.names = NULL, 
                       ...) {
@@ -75,6 +77,7 @@ read_scdf <- function(file,
       file, 
       header = TRUE,
       stringsAsFactors = FALSE,
+      na.strings = na,
       ...
     )
   }
@@ -82,7 +85,7 @@ read_scdf <- function(file,
   if (type %in% c("yml", "yaml")) return(.load_yml(file, ...))
   
   if (type %in% c("excel", "xlsx", "xls")) {
-    dat <- as.data.frame(readxl::read_excel(file, ...))
+    dat <- as.data.frame(readxl::read_excel(file, na = na,...))
   }
 
   if (type == "data") {

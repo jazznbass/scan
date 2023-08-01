@@ -13,6 +13,7 @@ read_scdf(
   sort_cases = FALSE,
   phase_names = NULL,
   type = NA,
+  na = c("", "NA"),
   sort.labels = NULL,
   phase.names = NULL,
   ...
@@ -41,6 +42,8 @@ to the phase names provided in the phase variable.}
 \item{type}{Format of the file to be loaded. Either "csv", "xlsx", "xls",
 "excel", "yml" is possible. By default (NA) the type is extracted from the
 file extension.}
+
+\item{na}{Character vector of strings to interpret as missing values.}
 
 \item{\dots}{Further arguments passed to the respective read function.}
 }
