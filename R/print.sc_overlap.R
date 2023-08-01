@@ -18,7 +18,7 @@ print.sc_overlap <- function(x, digits = "auto", ...) {
   x$overlap[, vars] <- round(x$overlap[, vars], digits_1)
   
   vars <- c(
-    "Tau_U(A)", "Tau_U(BA)", "Base_Tau", "Diff_mean", 
+    "IRD", "Tau_U(A)", "Tau_U(BA)", "Base_Tau", "Diff_mean", 
     "Diff_trend", "SMD", "Hedges_g"
   )
   x$overlap[, vars] <- round(x$overlap[, vars], digits_2)

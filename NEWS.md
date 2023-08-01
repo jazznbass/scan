@@ -1,4 +1,4 @@
-# scan (development version)
+# scan 0.60.0
 
 ## New function
 
@@ -6,10 +6,17 @@
 
 ## Changes
 
-- `pand()`: Rewrote function. New argument `method` allows to apply the sorting algorithm proposed in Parker 2007 and `method = "minimum"` applies the exact method provided by Pustejovski in 2019. Furthermore, the tau test was replaced with a X Squared and a fisher exact test.
+- `pand()`: Rewrote function. New argument `method` allows to apply the sorting algorithm proposed in Parker 2007 and `method = "minimum"` applies the exact method provided by Pustejovski in 2019. Furthermore, the tau test was replaced with a X Squared and a Fisher exact test.
 - `corrected_tau`: Report results with warning when all phase A data are identical; new argument tau_method = "a" to switch to Kendall's tau-a.
 - `export()`: new for `pand()`.
 - New example datasets: Tarlow2017, Parker2011b, Parker2009, Parker2007
+
+## Shiny scan
+
+- Added power-analyses
+- Added settings
+- Extended save options
+- Various changes and optimizations of the ui
 
 # scan 0.59.0
 

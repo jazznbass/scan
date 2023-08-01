@@ -12,7 +12,7 @@ single-case data and some additional statistics."><meta property="og:image" cont
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.4.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.60.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,7 +108,7 @@ is <code>phases = c(1,2)</code>.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <dl><dt>overlap</dt>
 <dd><p>A data frame consisting of the following indices for
-each single-case for all cases: PND, PEM, PET, NAP, PAND, Tau-U (A vs. B -
+each single-case for all cases: PND, PEM, PET, NAP, PAND, IRD, Tau-U (A vs. B -
 Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.</p></dd>
 
 <dt>phases.A</dt>
@@ -128,7 +128,7 @@ calculation. Tau_U(A) reports "A vs. B - Trend A" whereas Tau_U(BA) reports
 (correction applied when autocorrelation in phase A is significant).
 Diff_mean is the mean difference. Diff_trend is the difference in the
 regression estimation of the dependent variable on measurement-time (<code>x ~ mt</code>) for each phase. SMD is the mean difference divided by the standard
-eviation of phase A. Hedges_g is the mean difference divided by the pooled
+deviation of phase A. Hedges_g is the mean difference divided by the pooled
 standard deviation: \(\sqrt{ (n_A - 1)sd_A^2 + (n_B - 1)sd_B^2 \over n_A
   + n_B - 2 }\) with a hedges correction applied: \(Hedges_g * (1 -
   \frac{3}{4n - 9} ) )\).</p>
@@ -166,6 +166,7 @@ standard deviation: \(\sqrt{ (n_A - 1)sd_A^2 + (n_B - 1)sd_B^2 \over n_A
 <span class="r-out co"><span class="r-pr">#&gt;</span> NAP              70</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NAP rescaled     40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PAND             60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IRD             0.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tau_U(A)      -0.51</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tau_U(BA)     -0.69</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Base_Tau      -0.73</span>
@@ -191,6 +192,7 @@ standard deviation: \(\sqrt{ (n_A - 1)sd_A^2 + (n_B - 1)sd_B^2 \over n_A
 <span class="r-out co"><span class="r-pr">#&gt;</span> NAP            100   100   100    100   100   100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NAP rescaled   100   100   100    100   100   100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PAND           100   100   100    100   100   100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IRD              1     1     1      1     1     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tau_U(A)      0.67  0.66  0.75   0.68  0.65  0.68</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tau_U(BA)     0.48  0.57  0.60   0.49  0.51  0.35</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Base_Tau      0.67  0.77  0.75   0.77  0.72  0.66</span>
@@ -216,6 +218,7 @@ standard deviation: \(\sqrt{ (n_A - 1)sd_A^2 + (n_B - 1)sd_B^2 \over n_A
 <span class="r-out co"><span class="r-pr">#&gt;</span> NAP                   94          97          98</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NAP rescaled          89          94          97</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PAND                  85          85          90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IRD                 0.75        0.80        0.89</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tau_U(A)            0.54        0.44        0.43</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tau_U(BA)           0.45        0.46        0.38</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Base_Tau            0.65        0.68        0.68</span>

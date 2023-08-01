@@ -30,7 +30,7 @@ is \code{phases = c(1,2)}.}
 }
 \value{
 \item{overlap}{A data frame consisting of the following indices for
-each single-case for all cases: PND, PEM, PET, NAP, PAND, Tau-U (A vs. B -
+each single-case for all cases: PND, PEM, PET, NAP, PAND, IRD, Tau-U (A vs. B -
 Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.}
 \item{phases.A}{Selection for A phase.} \item{phases.B}{Selection for B
 phase.} \item{design}{Phase design.}
@@ -46,7 +46,7 @@ calculation. Tau_U(A) reports "A vs. B - Trend A" whereas Tau_U(BA) reports
 (correction applied when autocorrelation in phase A is significant).
 Diff_mean is the mean difference. Diff_trend is the difference in the
 regression estimation of the dependent variable on measurement-time (\code{x ~ mt}) for each phase. SMD is the mean difference divided by the standard
-eviation of phase A. Hedges_g is the mean difference divided by the pooled
+deviation of phase A. Hedges_g is the mean difference divided by the pooled
 standard deviation: \eqn{\sqrt{ (n_A - 1)sd_A^2 + (n_B - 1)sd_B^2 \over n_A
   + n_B - 2 }} with a hedges correction applied: \eqn{Hedges_g * (1 -
   \frac{3}{4n - 9} ) )}.
