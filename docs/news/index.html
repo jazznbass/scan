@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.59.4.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.60.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,21 +57,28 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="scan-development-version">scan (development version)<a class="anchor" aria-label="anchor" href="#scan-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.60.0" id="scan-0600">scan 0.60.0<a class="anchor" aria-label="anchor" href="#scan-0600"></a></h2>
 <div class="section level3">
-<h3 id="new-function-development-version">New function<a class="anchor" aria-label="anchor" href="#new-function-development-version"></a></h3>
+<h3 id="new-function-0-60-0">New function<a class="anchor" aria-label="anchor" href="#new-function-0-60-0"></a></h3>
 <ul><li>
 <code><a href="../reference/ird.html">ird()</a></code>: Robust improvement rate difference as formulated by Postejovski (2019).</li>
 </ul></div>
 <div class="section level3">
-<h3 id="changes-development-version">Changes<a class="anchor" aria-label="anchor" href="#changes-development-version"></a></h3>
+<h3 id="changes-0-60-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-60-0"></a></h3>
 <ul><li>
-<code><a href="../reference/pand.html">pand()</a></code>: Rewrote function. New argument <code>method</code> allows to apply the sorting algorithm proposed in Parker 2007 and <code>method = "minimum"</code> applies the exact method provided by Pustejovski in 2019. Furthermore, the tau test was replaced with a X Squared and a fisher exact test.</li>
+<code><a href="../reference/pand.html">pand()</a></code>: Rewrote function. New argument <code>method</code> allows to apply the sorting algorithm proposed in Parker 2007 and <code>method = "minimum"</code> applies the exact method provided by Pustejovski in 2019. Furthermore, the tau test was replaced with a X Squared and a Fisher exact test.</li>
 <li>
 <code>corrected_tau</code>: Report results with warning when all phase A data are identical; new argument tau_method = “a” to switch to Kendall’s tau-a.</li>
 <li>
 <code><a href="../reference/export.html">export()</a></code>: new for <code><a href="../reference/pand.html">pand()</a></code>.</li>
 <li>New example datasets: Tarlow2017, Parker2011b, Parker2009, Parker2007</li>
+</ul></div>
+<div class="section level3">
+<h3 id="shiny-scan-0-60-0">Shiny scan<a class="anchor" aria-label="anchor" href="#shiny-scan-0-60-0"></a></h3>
+<ul><li>Added power-analyses</li>
+<li>Added settings</li>
+<li>Extended save options</li>
+<li>Various changes and optimizations of the ui</li>
 </ul></div>
 </div>
     <div class="section level2">

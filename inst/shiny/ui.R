@@ -139,11 +139,14 @@ tab_plot <- tabPanel(
         "plot_arguments", "Arguments", value = "",rows = 5,
         placeholder = res$placeholder$plot_arguments
       ),
-      selectInput("scplot_examples", "stats templates",
+      selectInput("scplot_examples", "Stats templates",
           choices = names(res$choices$scplot_examples)
       ),
-      selectInput("scplot_templates_design", "design templates",
+      selectInput("scplot_templates_design", "Design templates",
                     choices = names(res$choices$scplot_templates_design)
+      ),
+      selectInput("scplot_templates_annotate", "Annotate templates",
+                  choices = names(res$choices$scplot_templates_annotate)
       ),
       downloadButton("saveplot", "Save plot", inline = FALSE)
     ),
@@ -225,6 +228,7 @@ tab_settings <- tabPanel(
        "scdf_save_format", "Save format", 
        choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
        inline = TRUE),
+      textInput("scdf_load_na", "Missing values", value = '"", "NA"'),
 
     )),
     column(2, div(

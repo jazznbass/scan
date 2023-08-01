@@ -54,6 +54,13 @@ set_xlabel("Session", color = "darkred")',
 
 )
 
+res$choices$scplot_templates_annotate <- c(
+  "",
+  "Marks" = 'add_marks(case = "all", position = \"values < mean(values)\", shape = 16, size = 2)',
+  "Text" = 'add_text("Hallo", case = 1, x = 5, y = 20)',
+  "Arrow" = 'add_arrow(case = 1, 2, 70, 6, 55, color = "darkred")'
+)  
+
 themes <- names(scplot:::.scplot_themes)
 
 for(i in seq_along(themes)) {
@@ -76,6 +83,7 @@ res$choices$fn_stats <- c(
   "Percent exceeding the median" = "pem",
   "Percent exceeding the trend" = "pet",
   "Percentage of all non-overlapping data" = "pand",
+  "Improvement rate difference" = "ird",
   "Nonoverlap of all Pairs" = "nap",
   "Randomization test" = "rand_test",
   "Outlier analysis" = "outlier"

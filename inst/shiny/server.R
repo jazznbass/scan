@@ -55,7 +55,8 @@ server <- function(input, output, session) {
       eval(parse(text = new), envir = .tmp)
       new <- .tmp$study
     } else {
-      new <- read_scdf(input$upload$datapath)
+      na <- eval(str2lang(paste0("c(", input$scdf_load_na, ")")))
+      new <- read_scdf(input$upload$datapath, na = na)
     }
 
     if (!inherits(new, "scdf")) {
@@ -511,6 +512,19 @@ server <- function(input, output, session) {
   updateTextAreaInput(inputId = "plot_arguments", value = value)
   })
 
+  observeEvent(input$scplot_templates_annotate, {
+    new_value <- unname(
+      res$choices$scplot_templates_annotate[input$scplot_templates_annotate]
+    )
+    old_value <- input$plot_arguments
+    if (old_value == "") {
+      value <- new_value
+    } else {
+      value <- paste0(input$plot_arguments, "\n", new_value)
+    }
+    updateTextAreaInput(inputId = "plot_arguments", value = value)
+  })
+  
   observeEvent(input$scplot_examples, {
     if ("(empty selection)" == input$scplot_examples) {
       value <- ""

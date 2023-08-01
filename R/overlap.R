@@ -11,13 +11,13 @@
 #'   Diff_mean is the mean difference. Diff_trend is the difference in the
 #'   regression estimation of the dependent variable on measurement-time (`x ~
 #'   mt`) for each phase. SMD is the mean difference divided by the standard
-#'   eviation of phase A. Hedges_g is the mean difference divided by the pooled
+#'   deviation of phase A. Hedges_g is the mean difference divided by the pooled
 #'   standard deviation: \eqn{\sqrt{ (n_A - 1)sd_A^2 + (n_B - 1)sd_B^2 \over n_A
 #'   + n_B - 2 }} with a hedges correction applied: \eqn{Hedges_g * (1 -
 #'   \frac{3}{4n - 9} ) )}.
 #' @return
 #' \item{overlap}{A data frame consisting of the following indices for
-#' each single-case for all cases: PND, PEM, PET, NAP, PAND, Tau-U (A vs. B -
+#' each single-case for all cases: PND, PEM, PET, NAP, PAND, IRD, Tau-U (A vs. B -
 #' Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.}
 #' \item{phases.A}{Selection for A phase.} \item{phases.B}{Selection for B
 #' phase.} \item{design}{Phase design.}
@@ -57,7 +57,7 @@ overlap <- function(data, dvar, pvar, mvar,
   case_names <- revise_names(data_list)
 
   vars <- c(
-    "PND", "PEM", "PET", "NAP", "NAP rescaled", "PAND", "Tau_U(A)", 
+    "PND", "PEM", "PET", "NAP", "NAP rescaled", "PAND", "IRD", "Tau_U(A)", 
     "Tau_U(BA)", "Base_Tau",  "Diff_mean", "Diff_trend", "SMD", "Hedges_g"
   )
   df <- as.data.frame(matrix(nrow = N, ncol = length(vars)))
@@ -74,6 +74,7 @@ overlap <- function(data, dvar, pvar, mvar,
     df$"NAP rescaled"[i] <- nap(
       data, decreasing = decreasing)$nap[[1, "Rescaled"]]
     df$PAND[i] <- pand(data, decreasing = decreasing)$pand
+    df$IRD[i] <- ird(data, decreasing = decreasing)$ird
     df$`Tau_U(A)`[i] <- tau_u(data)$table[[1]]["A vs. B - Trend A", "Tau"]
     df$`Tau_U(BA)`[i] <- tau_u(data)$table[[1]]["A vs. B + Trend B - Trend A", "Tau"]
     df$Base_Tau[i] <- corrected_tau(data)$tau
