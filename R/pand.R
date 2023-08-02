@@ -229,7 +229,24 @@ export.sc_pand <- function(object,
   if (is.na(caption)) {
     caption <- c("Percentage of all non-overlapping data (PAND)")
   }
-  kable_options$caption <- caption
+  
+  if (is.na(footnote)) {
+    footnote <- c(
+      paste0("PAND = ", round(object$pand, 1), "%"),
+      paste0("\u03A6 = ", round(object$phi, 3)), 
+      paste0("\u03A6\u00b2 = ", round(object$phi^2, 3)), 
+      paste0("Number of cases: ", object$N), 
+      sprintf("\u03C7\u00B2 = %.2f, df = 1, p = %.3f; ",
+              object$chi_test$statistic, 
+              object$chi_test$p.value
+      ),
+      sprintf(
+        "Fisher exact test: Odds ratio = %.2f, p = %.3f",
+        object$fisher_test$estimate, 
+        object$fisher_test$p.value
+      )
+    )
+  }
   
   object$matrix <- rbind(object$matrix, object$matrix[1,] + object$matrix[2,])
   object$matrix_counts <- rbind(
@@ -249,44 +266,26 @@ export.sc_pand <- function(object,
     out
   )
   names(out) <- c(" ", "  ", "A", "B", "Total")
-  row.names(out) <- NULL
-  
-  kable_options$x <- out
-  kable_options$align <- c("l", "r", "c", "c", "c")
-  table <- do.call(kable, kable_options)
-  kable_styling_options$kable_input <- table
-  table <- do.call(kable_styling, kable_styling_options)
-  
-  style <- "border-bottom: 1px solid; text-align: center;"
-  table <- table %>%
-    add_header_above(c(" " = 2, "Expected" = 3)) %>%
-    pack_rows(index = c("Percentage" = 3, "Counts" = 3), label_row_css = style) %>%
-    column_spec(1, bold = TRUE) %>%
-    column_spec(2, bold = TRUE)
 
-  if (is.na(footnote)) {
-    footnote <- paste0(
-      "PAND = ", round(object$pand, 1), "%; ",
-      "\u03A6 = ", round(object$phi, 3), " ; \u03A6\u00b2 = ", round(object$phi^2, 3), "; ",
-      "Number of cases: ", object$N, "; ",
-      #"n overlapping data per case: ", paste0(object$overlaps_cases, collapse = "-"), "; ",
-      sprintf("\u03C7\u00B2 = %.2f, df = 1, p = %.3f; ",
-        object$chi_test$statistic, 
-        object$chi_test$p.value
-      ),
-      sprintf(
-        "Fisher exact test: Odds ratio = %.2f, p = %.3f",
-        object$fisher_test$estimate, 
-        object$fisher_test$p.value
-      )
-    )
-  }
-    
-  table <- add_footnote(table, footnote, notation = "none")
+  kable_options$align <- c("l", "r", "c", "c", "c")
   
+  table <- .create_table(
+    out, 
+    kable_options, 
+    kable_styling_options, 
+    caption = caption,
+    footnote = footnote
+  )
+  
+  style <- "border-bottom: 1px solid; text-align: center"
+  table <- table  |> 
+    add_header_above(c(" " = 2, "Expected" = 3))  |> 
+    pack_rows(index = c("Percentage" = 3, "Counts" = 3), label_row_css = style)  |> 
+    column_spec(1:2, bold = TRUE)
+
   # finish ------------------------------------------------------------------
   
-  if (!is.na(filename)) cat(table, file = filename)
+  if (!is.na(filename)) .save_export(table, filename)
   table
 }
 

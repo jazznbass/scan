@@ -28,8 +28,7 @@ export.sc_tauu <- function(object,
       caption <- "Tau-U analyses"
     #, .phases_string(A, B))
   }
-  kable_options$caption <- caption
-  
+
   if (is.na(footnote)) {
     footnote <- paste(
       "Method is '", object$method, 
@@ -72,22 +71,22 @@ export.sc_tauu <- function(object,
   
   opts <- options(knitr.kable.NA = "")
   
-  kable_options$x <- out
-  kable_options$align <- c("l", rep("r", ncol(out) - 1))
-  table <- do.call(kable, kable_options)
-  kable_styling_options$kable_input <- table
-  table <- do.call(kable_styling, kable_styling_options)
+  table <- .create_table(
+    out, 
+    kable_options, 
+    kable_styling_options, 
+    caption = caption,
+    footnote = footnote
+  )
   
   #if (!meta) {
   #  table <- add_indent(table, (1:nrow(out))[-(1:(nrow(out)/7) * 7 - 6)])
   #}
   
-  if (!is.na(footnote) && footnote != "") 
-    table <- footnote(table, general = footnote, threeparttable = TRUE)
   
   options(opts)
   # finish ------------------------------------------------------------------
   
-  if (!is.na(filename)) cat(table, file = filename)
+  if (!is.na(filename)) .save_export(table, filename)
   table
 }

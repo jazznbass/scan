@@ -27,35 +27,38 @@ export.sc_smd <- function(object, caption = NA, footnote = NA,
   )
   
   footnote <- c(
-    'SD Cohen = unweigted average of the variance of both phases; ',
-    'SD Hedges = weighted average of the variance of both phases with a degrees of freedom correction; ',
-    "Glass' delta = mean difference divided by the standard deviation of the A-phase; ",
-    "Hedges' g = mean difference divided by SD Hedges; ",
-    "Hedges' g (durlak) correction = approaches for correcting Hedges' g for small sample sizes; ",
-    "Cohens d = mean difference divided by SD Cohen",
-    "."
+    'SD Cohen = unweigted average of the variance of both phases',
+    'SD Hedges = weighted average of the variance of both phases with a degrees of freedom correction',
+    "Glass' delta = mean difference divided by the standard deviation of the A-phase",
+    "Hedges' g = mean difference divided by SD Hedges",
+    "Hedges' g (durlak) correction = approaches for correcting Hedges' g for small sample sizes",
+    "Cohens d = mean difference divided by SD Cohen"
   )
-  footnote <- paste0(footnote, collapse = "")
-  caption <- paste0(caption, collapse = "")
   
-  kable_options$caption <- caption
+  caption <- paste0(caption, collapse = "")
   
   out <- object$smd
   
   out <- .select(out, select)
   
   if (isTRUE(flip)) {
-    cases <- out[[1]]
+    cases <- out$Case
     out[-2:-1] <- round(out[-2:-1], round)
-    out <- t(out[-1])
-    colnames(out) <- cases
+    names_par <- colnames(out)[-1]
+    out <- t(out[-2:-1]) |> as.data.frame()
+    out <- cbind(Statistic = rownames(out), out)
+    colnames(out) <- c("Statistic", cases)
   }
   
-  kable_options$x <- out
-  table <- do.call(kable, kable_options)
-  kable_styling_options$kable_input <- table
-  table <- do.call(kable_styling, kable_styling_options)
-  if (!is.na(footnote) && footnote != "") 
-    table <- footnote(table, general = footnote, threeparttable = TRUE)
+  table <- .create_table(
+    out, 
+    kable_options, 
+    kable_styling_options, 
+    caption = caption,
+    footnote = footnote
+  )
+  
+  if (!is.na(filename)) .save_export(table, filename)
+  
   table
 }

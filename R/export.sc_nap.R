@@ -13,20 +13,18 @@ export.sc_nap <- function(object,
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (is.na(caption)) caption <- c("Nonoverlap of all pairs")
-  kable_options$caption <- caption
-  
-  out <- object$nap
 
-  kable_options$x <- out
-  table <- do.call(kable, kable_options)
-  kable_styling_options$kable_input <- table
-  table <- do.call(kable_styling, kable_styling_options)
-  
-  if (!is.na(footnote) && footnote != "") 
-    table <- footnote(table, general = footnote, threeparttable = TRUE)
+  table <- .create_table(
+    object$nap, 
+    kable_options, 
+    kable_styling_options, 
+    caption = caption,
+    footnote = footnote
+  )
   
   # finish ------------------------------------------------------------------
   
-  if (!is.na(filename)) cat(table, file = filename)
+  if (!is.na(filename)) .save_export(table, filename)
+  
   table
 }

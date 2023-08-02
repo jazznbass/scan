@@ -13,7 +13,6 @@ export.sc_trend <- function(object,
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (is.na(caption)) caption <- c("Trend analysis")
-  kable_options$caption <- caption
   
   out <- object$trend
   #if (isTRUE(flip)) out <- t(out)
@@ -25,10 +24,13 @@ export.sc_trend <- function(object,
   }
   out <- cbind(Phase = tmp.rownames, out)
   
-  kable_options$x <- out
-  table <- do.call(kable, kable_options)
-  kable_styling_options$kable_input <- table
-  table <- do.call(kable_styling, kable_styling_options)
+  table <- .create_table(
+    out, 
+    kable_options, 
+    kable_styling_options, 
+    caption = caption,
+    footnote = footnote
+  )
   
   for (i in 1:length(object$formulas)) {
     table <- group_rows(
@@ -39,11 +41,8 @@ export.sc_trend <- function(object,
     )
   }
   
-  if (!is.na(footnote) && footnote != "") 
-    table <- footnote(table, general = footnote, threeparttable = TRUE)
-  
   # finish ------------------------------------------------------------------
   
-  if (!is.na(filename)) cat(table, file = filename)
+  if (!is.na(filename)) .save_export(table, filename)
   table
 }
