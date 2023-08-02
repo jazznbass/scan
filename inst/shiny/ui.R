@@ -214,7 +214,7 @@ tab_settings <- tabPanel(
       style = res$div$settings, 
       h3("Data"),
       radioButtons(
-        "scdf_output_format", "Output format", 
+        "scdf_output_format", "Show output as", 
         choices = c("Summary", "Syntax"), 
         inline = TRUE
       ),
@@ -228,14 +228,14 @@ tab_settings <- tabPanel(
        "scdf_save_format", "Save format", 
        choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
        inline = TRUE),
-      textInput("scdf_load_na", "Missing values", value = '"", "NA"'),
+      textInput("scdf_load_na", "Missing values in import file", value = '"", "NA"'),
 
     )),
     column(2, div(
       style = res$div$settings, 
       h3("Transform"),
       radioButtons(
-        "transform_output_format", "Output format", c("Text", "Html"), inline = TRUE
+        "transform_output_format", "Show output as", c("Text", "Html"), inline = TRUE
       ),
       textInput(
         "transform_save_prefix", 
