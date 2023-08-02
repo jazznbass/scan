@@ -37,8 +37,8 @@ Description: A collection of procedures for analysing, visualising,
   found in the online book 'Analyzing single-case data with R and scan', Juergen Wilbert (2023)
   <https://jazznbass.github.io/scan-Book/>.
 License: GPL (>= 3)
-URL: https://github.com/jazznbass/scan/, https://jazznbass.github.io/scan-Book/
-BugReports: https://github.com/jazznbass/scan/issues/
+URL: https://github.com/jazznbass/scan/, https://jazznbass.github.io/scan-Book/, https://github.com/jazznbass/scan
+BugReports: https://github.com/jazznbass/scan/issues
 LazyData: true
 Encoding: UTF-8
 RoxygenNote: 7.2.3

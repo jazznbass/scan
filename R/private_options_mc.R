@@ -20,12 +20,12 @@
     res[2 + param + 1, 5]
   },
   tauU = function(x) {
-    if (length(x) > 1) stop("Use 'tauU_meta' for multiple case designs.")
+    if (length(x) > 1) stop("Use 'tauU_meta' for multiple case designs.", call. = FALSE)
     res <- tau_u(x, method = "parker", meta_method = "none")$table[[1]]
     res[which(row.names(res) == "A vs. B - Trend A"), which(names(res) == "p")]
   },
   tauU_slope = function(x) {
-    if (length(x) > 1) stop("Use 'tauU_slope_meta' for multiple case designs.")
+    if (length(x) > 1) stop("Use 'tauU_slope_meta' for multiple case designs.", call. = FALSE)
     res <- tau_u(x, method = "parker", meta_method = "none")$table[[1]]
     res[which(row.names(res) == "A vs. B + Trend B - Trend A"), which(names(res) == "p")]
   },
@@ -39,7 +39,9 @@
   },
   base_tau = function(x) corrected_tau(x)$p,
   
-  rand = function(x) rand_test(x, number = 100, exclude.equal = "auto")$p.value
+  rand = function(x) rand_test(x, number = 100, exclude.equal = "auto", limit = 3)$p.value,
+  rand_decrease = function(x) rand_test(
+    x, statistic = "Mean A-B", number = 100, exclude.equal = "auto", limit = 3)$p.value
 )
 
 

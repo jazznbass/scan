@@ -89,7 +89,30 @@ res$choices$fn_stats <- c(
   "Outlier analysis" = "outlier"
 )
 
-res$choices$pt_method <- names(scan:::.opt$mc_fun)
+.name <- function(x, at, label) {
+  names(x)[which(x == at)] <- label
+  x
+}
+
+
+res$choices$pt_method <- names(scan:::.opt$mc_fun)  |> 
+  setNames(names(scan:::.opt$mc_fun)) |> 
+  .name("plm_level", "Regression (level effect)") |> 
+  .name("plm_slope", "Regression (slope effect)") |> 
+  .name("plm_poisson_level", "Regression (level effect; frequencies)") |> 
+  .name("plm_poisson_slope", "Regression (slope effect; frequencies)") |> 
+  .name("hplm_level", "Multilevel-regression (level effect)") |> 
+  .name("hplm_slope", "Multilevel-regression (slope effect)") |> 
+  .name("tauU", "Tau-U (trend A)") |>
+  .name("tauU_slope", "Tau-U (trend A and B)") |>
+  .name("tauU_meta", "Metaanalysis Tau-U (trend A)") |>
+  .name("tauU_slope_meta", "Metaanalysis Tau-U (trend A and B)") |>
+  .name("base_tau", "Baseline corrected tau") |>
+  .name("rand", "Randomization test") |> 
+  .name("rand_decrease", "Randomization test (decreasing)")
+
+
+
 
 # placeholder ----
 
