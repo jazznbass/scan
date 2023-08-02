@@ -162,7 +162,7 @@ tab_power_test <- tabPanel(
   "Power-test",
   fluidRow(
     column(2, div(style = res$div$pt,
-      h3("Design"),
+      h3("Case design"),
       br(),
       textInput("design_n", "n", value = 1),
       textInput("design_phase", "Phase design", value = "A = 5, B = 15"),
@@ -180,11 +180,11 @@ tab_power_test <- tabPanel(
       h3("Analysis"),
       br(),
       checkboxGroupInput(
-        "pt_method", "Statistical method(s)", 
+        "pt_method", "Method(s)", 
         choices = res$choices$pt_method,selected = "plm_level"
       ),
       selectInput(
-       "pt_effect", "Null effect", choices = c("level", "slope")
+       "pt_effect", "Null effect for", choices = c("level", "slope")
       ),
       numericInput(
         "pt_n", "Number of simulations", min = 30, max = 10000, value = 100
