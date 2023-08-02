@@ -32,7 +32,8 @@ print.scdf <- function(x,
   if (identical(cases, "all")) cases <- N
   if (is.numeric(cases) && cases > N) cases <- N
   if (N == 1) cat("#A single-case data frame with one case\n\n")
-  if (N > 1)  cat("#A single-case data frame with", N, "cases\n\n")
+  if (N > 1)  
+    cat("#A single-case data frame with", number_word(N), "cases\n\n")
   
   if (identical(cols, "main")) {
     cols <- c(attr(x, opt("dv")), attr(x, opt("phase")), attr(x, opt("mt")))
@@ -92,8 +93,9 @@ print.scdf <- function(x,
     }
   }
   
-  if (max_row > rows) cat("# ... up to", max_row-rows, "more rows\n")
-  if ((N - cases)  > 1) cat("# ", N - cases, "more cases\n")
+  if (max_row > rows) 
+    cat("# ... up to", number_word(max_row - rows), "more rows\n")
+  if ((N - cases)  > 1) cat("# ", number_word(N - cases), "more cases\n")
   if ((N - cases) == 1) cat("# One more case\n")
   
 }

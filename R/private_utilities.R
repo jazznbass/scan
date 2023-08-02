@@ -116,3 +116,13 @@ revise_names <- function(x, n) {
   
   coef_std
 }
+
+number_word <- function(x) {
+  if (x %in% 0:9) {
+    return(
+      c("zero", "one", "two", "three", "four", "five", "six", "seven", 
+        "eight", "nine")[x + 1]
+    )
+  }
+  x
+}

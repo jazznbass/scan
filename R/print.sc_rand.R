@@ -4,7 +4,7 @@
 print.sc_rand <- function(x, ...) {
   
   cat("Randomization Test\n\n")
-  if (x$N > 1) cat("Test for", x$N, "cases.\n\n")
+  if (x$N > 1) cat("Combined test for", number_word(x$N), "cases.\n\n")
   
   cat(.phases_string(x$phases.A, x$phases.B), "\n")
   
