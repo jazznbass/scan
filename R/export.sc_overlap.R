@@ -2,7 +2,7 @@
 #' @export
 export.sc_overlap <- function(object, 
                               caption = NA, 
-                              footnote = NA, 
+                              footnote = NULL, 
                               filename = NA,
                               kable_styling_options = list(), 
                               kable_options = list(), 
@@ -19,7 +19,7 @@ export.sc_overlap <- function(object,
     collapse = ""
   )
   
-  footnote <- c(
+  if (is.null(footnote)) footnote <- c(
     "PND = Percentage Non-Overlapping Data",
     "PEM = Percentage Exceeding the Median",
     "PET = Percentage Exceeding the Trend",

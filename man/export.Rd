@@ -43,7 +43,7 @@ export(object, ...)
 \method{export}{sc_overlap}(
   object,
   caption = NA,
-  footnote = NA,
+  footnote = NULL,
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
