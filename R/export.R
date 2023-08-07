@@ -40,9 +40,11 @@ export <- function (object, ...) {
       identical(select, FALSE)) return(df)
   
   if (!all(select %in% names(df)) && !is.numeric(select)) {
-    warning("`select` arguments has variable names that are not included in " ,
-            "the output table: valid names are: ", 
-            paste(names(df), collapse = ", "), ".")
+    warning(
+      "`select` arguments has variable names that are not included in " ,
+      "the output table: valid names are: ", 
+      paste(names(df), collapse = ", "), "."
+    )
   }
   df <- df[, select]
   if (!is.null(names(select))) {
@@ -69,7 +71,10 @@ export <- function (object, ...) {
   
   default_kable_styling <- getOption("scan.export.kable_styling")
   
-  tmp <- which(!(names(default_kable_styling) %in% names(kable_styling_options)))
+  tmp <- which(
+    !(names(default_kable_styling) %in% names(kable_styling_options))
+  )
+  
   kable_styling_options <- c(kable_styling_options, default_kable_styling[tmp])
   
   kable_styling_options
@@ -113,8 +118,9 @@ export <- function (object, ...) {
   kable_styling_args$kable_input <- table
   table <- do.call(kable_styling, kable_styling_args)
   
-  if (!is.null(footnote) && !identical(footnote, NA) && !identical(footnote, "")) {
-    table <- .add_footnote(table, footnote)
+  if (!is.null(footnote)) {
+    if (!identical(footnote, NA) && !identical(footnote, ""))
+      table <- .add_footnote(table, footnote)
   }
   
   table
