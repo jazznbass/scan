@@ -165,7 +165,7 @@ cases. E.g., <code>across_cases(values_ranked = rank(values, na.last =
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">study</span>, proportion <span class="op">=</span> <span class="va">values</span><span class="op">/</span><span class="va">trials</span>, percentage <span class="op">=</span> <span class="va">proportion</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 3 cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with three cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Case1: phase values mt trials proportion percentage</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             A      9  1     20       0.45         45</span>
@@ -183,8 +183,8 @@ cases. E.g., <code>across_cases(values_ranked = rank(values, na.last =
 <span class="r-out co"><span class="r-pr">#&gt;</span>             B     20 13     20          1        100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             B     20 14     20          1        100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             B     20 15     20          1        100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 5 more rows</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #  2 more cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to five more rows</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #  two more cases</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Z standardize the dependent variable and add two new variables:</span></span></span>
 <span class="r-in"><span><span class="va">exampleAB</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
@@ -193,7 +193,7 @@ cases. E.g., <code>across_cases(values_ranked = rank(values, na.last =
 <span class="r-in"><span>    mean_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">values</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    sd_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">values</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 3 cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with three cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Johanna: values mt phase mean_values sd_values</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            -1.31  1     A           0         1</span>
@@ -211,8 +211,8 @@ cases. E.g., <code>across_cases(values_ranked = rank(values, na.last =
 <span class="r-out co"><span class="r-pr">#&gt;</span>             0.41 13     B           0         1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              1.1 14     B           0         1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             0.67 15     B           0         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 5 more rows</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #  2 more cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to five more rows</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #  two more cases</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Use `all` to calculate global variables.</span></span></span>
 <span class="r-in"><span><span class="va">exampleAB</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
@@ -221,7 +221,7 @@ cases. E.g., <code>across_cases(values_ranked = rank(values, na.last =
 <span class="r-in"><span>    values_center_global <span class="op">=</span> <span class="va">values</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">values</span><span class="op">[</span><span class="va">phase</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    value_dif <span class="op">=</span> <span class="va">values_center_case</span> <span class="op">-</span> <span class="va">values_center_global</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 3 cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with three cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Johanna: values mt phase values_center_case values_center_global value_dif</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               54  1     A               -0.6                 0.67     -1.27</span>
@@ -239,8 +239,8 @@ cases. E.g., <code>across_cases(values_ranked = rank(values, na.last =
 <span class="r-out co"><span class="r-pr">#&gt;</span>               74 13     B               19.4                20.67     -1.27</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               82 14     B               27.4                28.67     -1.27</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               77 15     B               22.4                23.67     -1.27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 5 more rows</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #  2 more cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to five more rows</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #  two more cases</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Use `across_cases` to calculate or replace a variable with values from</span></span></span>
 <span class="r-in"><span><span class="co">## all cases. E.g., standardize the dependent variable:</span></span></span>
@@ -248,7 +248,7 @@ cases. E.g., <code>across_cases(values_ranked = rank(values, na.last =
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="fu">across_cases</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">values</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 3 cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with three cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Marie: values mt phase | Rosalind: values mt phase | Lise: values mt phase |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          -0.24  1     A |            -1.02  1     A |        -0.81  1     A |</span>
@@ -274,7 +274,7 @@ cases. E.g., <code>across_cases(values_ranked = rank(values, na.last =
 <span class="r-in"><span>    <span class="fu">across_cases</span><span class="op">(</span>values_across <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rank.html" class="external-link">rank</a></span><span class="op">(</span><span class="va">values</span>, na.last<span class="op">=</span><span class="st">"keep"</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    value_within <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rank.html" class="external-link">rank</a></span><span class="op">(</span><span class="va">values</span>, na.last<span class="op">=</span><span class="st">"keep"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 3 cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with three cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Marie: values mt phase values_across value_within</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             58  1     A            40           11</span>
@@ -293,7 +293,7 @@ cases. E.g., <code>across_cases(values_ranked = rank(values, na.last =
 <span class="r-out co"><span class="r-pr">#&gt;</span>             83 14     B            82           27</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             70 15     B          65.5         20.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 15 more rows</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #  2 more cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #  two more cases</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Three helper functions to smooth the data</span></span></span>
 <span class="r-in"><span><span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
@@ -366,7 +366,7 @@ cases. E.g., <code>across_cases(values_ranked = rank(values, na.last =
 <span class="r-out co"><span class="r-pr">#&gt;</span>                      14 14     B |                        14 14     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                      17 15     B |                        15 15     B |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 11 more rows</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #  9 more cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #  nine more cases</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

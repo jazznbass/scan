@@ -54,6 +54,7 @@ export.sc_tauu <- function(object,
     Model <- rep(names_models, length = nrow(out)) 
     Case <- lapply(names(tables), function(x) c(x, rep(" ", 6))) |> unlist()
     out <- cbind(Case, Model, out)
+    kable_options$align <- c("l", "l", rep("c", ncol(out) - 2))
     
   }  
   
