@@ -20,7 +20,6 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
       attr(object, opt("dv")),  "'"
     )
   }
-  kable_options$caption <- caption
   
   summary_model <- summary(object$hplm)
   if (object$model$ICC) {
@@ -38,7 +37,6 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
     paste0(" ", object$model$contrast.method),
     paste0(object$N, " cases")
   )
-  footnote <- paste0(footnote, collapse = "; ")
   
   out <- as.data.frame(summary(object$hplm)$tTable)
   
@@ -82,7 +80,7 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   out[, ] <- lapply(out[, ], function(x)
     if (inherits(x, "numeric")) as.character(round(x, round)) else x
   )
-  out <- cbind(Parameter = rownames(out), out, stringsAsFactors = FALSE)
+  out <- cbind(Predictors = rownames(out), out, stringsAsFactors = FALSE)
   rownames(out) <- NULL
   md[, ] <- lapply(md, function(x)
     if (inherits(x, "numeric")) as.character(round(x, round)) else x
@@ -97,8 +95,12 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   tmp_row <- (nrow_out + 1):(nrow_out + nrow(md) + 1)
   out[tmp_row, 1:ncol(md)] <- rbind(colnames(md), md, stringsAsFactors = FALSE)
   
-  out[nrow_out + nrow(md) + 2, 1:2] <- c("AIC", as.character(round(summary_model$AIC, 1)))
-  out[nrow_out + nrow(md) + 3, 1:2] <- c("BIC", as.character(round(summary_model$BIC, 1)))
+  out[nrow_out + nrow(md) + 2, 1:2] <- c(
+    "AIC", as.character(round(summary_model$AIC, 1))
+  )
+  out[nrow_out + nrow(md) + 3, 1:2] <- c(
+    "BIC", as.character(round(summary_model$BIC, 1))
+  )
   if (!is.null(object$ICC)) {
     out[nrow_out + nrow(md) + 4, 1:4] <-
       c(
@@ -108,26 +110,25 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
       )
   }
   
-  kable_options$x <- out
-  kable_options$align <- c("l", rep("r", ncol(out) - 1))
-  table <- do.call(kable, kable_options)
-  kable_styling_options$kable_input <- table
-  table <- do.call(kable_styling, kable_styling_options)
+  table <- .create_table(
+    out, 
+    kable_options, 
+    kable_styling_options, 
+    caption = caption,
+    footnote = footnote
+  )
   
-  table <- pack_rows(table, "Fixed effects", 1,nrow_out, indent = FALSE)
-  table <- pack_rows(table, "Random effects", nrow_out + 1, nrow(out) - 3, indent = FALSE)
-  table <- pack_rows(table, "Model", nrow(out) - 2, nrow(out), indent = FALSE)
-  #table <- row_spec(table, nrow_out + 1, bold = TRUE, color = "black")
-  table <- row_spec(table, nrow_out + nrow(md) + 1, hline_after = TRUE)
-  # table <- row_spec(table, nrow(out) - 3, hline_after = TRUE)
-  table <- row_spec(table, nrow_out, hline_after = TRUE)
-  
-  if (!is.na(footnote) && footnote != "") 
-    table <- footnote(table, general = footnote, threeparttable = TRUE)
+  table <- table |> 
+    #pack_rows("Fixed effects", 1, nrow_out, indent = FALSE) |> 
+    pack_rows("\nRandom effects", nrow_out + 1, nrow(out), indent = FALSE) |> 
+    pack_rows("\nModel", nrow(out) - 2, nrow(out), indent = FALSE) |> 
+    #row_spec(nrow_out + nrow(md) + 1, hline_after = TRUE) |> 
+    row_spec(nrow_out, hline_after = TRUE)
   
   # finish ------------------------------------------------------------------
   
-  if (!is.na(filename)) cat(table, file = filename)
+  if (!is.na(filename)) .save_export(table, filename)
+  
   table
   
 }

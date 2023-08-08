@@ -18,8 +18,7 @@ export.scdf <- function(object, caption = NA, footnote = NA, filename = NA,
   N <- cases <- length(object)
   
   if (is.na(caption)) 
-    caption <- paste("Single case data frame with", N, "cases")
-  kable_options$caption <- caption
+    caption <- paste("Single case data frame with", number_word(N), "cases")
   
   if (missing(cols)) {
     cols <- names(object[[1]])
@@ -48,21 +47,25 @@ export.scdf <- function(object, caption = NA, footnote = NA, filename = NA,
   out <- as.data.frame(out)
   names(out) <- unlist(names[1:cases])
   
-  kable_options$x <- out
   kable_options$align <- rep("c", ncol(out))
-  table <- do.call(kable, kable_options)
-  kable_styling_options$kable_input <- table
-  table <- do.call(kable_styling, kable_styling_options)
+  
+  table <- .create_table(
+    out, 
+    kable_options, 
+    kable_styling_options, 
+    caption = caption,
+    footnote = footnote
+  )
   
   case_names <- rep(ncol(out) / N, N)
   names(case_names) <- names(object)
   table <- add_header_above(table, case_names)
   if (!is.na(footnote) && footnote != "") 
-    table <- footnote(table, general = footnote, threeparttable = TRUE)
+    table <- .add_footnote(table, footnote)
   
   # finish ------------------------------------------------------------------
   
-  if (!is.na(filename)) cat(table, file = filename)
+  if (!is.na(filename)) .save_export(table, filename)
   
   table
 }

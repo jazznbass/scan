@@ -12,7 +12,7 @@ summary.scdf <- function(object, all_cases = FALSE, ...) {
   if (max_cases > N) max_cases <- N
   
   if(N > 1) {
-    cat("#A single-case data frame with", N, "cases\n\n")
+    cat("#A single-case data frame with", number_word(N), "cases\n\n")
   } else {
     cat("#A single-case data frame with one case\n\n")
   }

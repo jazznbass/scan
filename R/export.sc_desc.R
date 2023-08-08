@@ -1,6 +1,9 @@
 #' @rdname export
 #' @export
-export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
+export.sc_desc <- function(object, 
+                           caption = NA, 
+                           footnote = NA, 
+                           filename = NA,
                            kable_styling_options = list(), 
                            kable_options = list(), 
                            flip = FALSE, 
@@ -10,19 +13,19 @@ export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (is.na(caption)) caption <- "Descriptive statistics"
-  kable_options$caption <- caption
+
   
   if (is.na(footnote)) {
-    footnote <- paste0(
-      "n = Number of measurements; ",
-      "Missing = Number of missing values; ",
-      "M = Mean; ",
-      "Median = Median; ",
-      "SD = Standard deviation; ",
-      "MAD = Median average deviation; ",
-      "Min = Minimum; ",
-      "Max = Maximum; ",
-      "Trend = Slope of dependent variable regressed on measurement-time."
+    footnote <- c(
+      "n = Number of measurements",
+      "Missing = Number of missing values",
+      "M = Mean",
+      "Median = Median",
+      "SD = Standard deviation",
+      "MAD = Median average deviation",
+      "Min = Minimum",
+      "Max = Maximum",
+      "Trend = Slope of dependent variable regressed on measurement-time"
     )
   }
   
@@ -37,12 +40,14 @@ export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
     rownames(out) <- gsub("trend", "Trend", rownames(out))
     rownames(out) <- gsub("\\.", " ", rownames(out))
     out <- cbind(Parameter = rownames(out), out)
-    rownames(out) <- NULL
-    kable_options$align <- c("l", rep("c", 9))
-    kable_options$x <- out
-    table <- do.call(kable, kable_options)
-    kable_styling_options$kable_input <- table
-    table <- do.call(kable_styling, kable_styling_options)
+
+    table <- .create_table(
+      out, 
+      kable_options, 
+      kable_styling_options, 
+      caption = caption,
+      footnote = footnote
+    )
   }
   
   
@@ -50,12 +55,15 @@ export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
     n_phases <- length(object$design)
     out <- object$descriptives
     colnames(out) <- c("Case", "Design", rep(object$design, 9))
-    rownames(out) <- NULL
-    kable_options$align <- c("l", rep("c", 9 * n_phases))
-    kable_options$x <- out
-    table <- do.call(kable, kable_options)
-    kable_styling_options$kable_input <- table
-    table <- do.call(kable_styling, kable_styling_options)
+    
+    table <- .create_table(
+      out, 
+      kable_options, 
+      kable_styling_options, 
+      caption = caption,
+      footnote = footnote
+    )
+    
     table <- add_header_above(
       table,
       c(
@@ -72,11 +80,9 @@ export.sc_desc <- function(object, caption = NA, footnote = NA, filename = NA,
     )
   }
   
-  if (!is.na(footnote) && footnote != "") 
-    table <- footnote(table, general = footnote, threeparttable = TRUE)
-  
   # finish ------------------------------------------------------------------
   
-  if (!is.na(filename)) cat(table, file = filename)
+  if (!is.na(filename)) .save_export(table, filename)
+  
   table
 }

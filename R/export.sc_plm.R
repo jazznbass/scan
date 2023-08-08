@@ -18,8 +18,7 @@ export.sc_plm <- function(object, caption = NA, footnote = NA, filename = NA,
       attr(object, opt("dv")), "'"
     )
   }
-  kable_options$caption <- caption
-  
+
   if (object$ar == 0) out <- summary(object$full.model)$coefficients
   if (object$ar > 0) out <- summary(object$full.model)$tTable
   
@@ -82,15 +81,15 @@ export.sc_plm <- function(object, caption = NA, footnote = NA, filename = NA,
     )
   }
   
-  
-  
   if (is.na(footnote)) footnote <- F_test
   
-  kable_options$x <- out
-  kable_options$align <- c("l", rep("r", ncol(out) - 1))
-  table <- do.call(kable, kable_options)
-  kable_styling_options$kable_input <- table
-  table <- do.call(kable_styling, kable_styling_options)
+  table <- .create_table(
+    out, 
+    kable_options, 
+    kable_styling_options, 
+    caption = caption,
+    footnote = footnote
+  )
   
   if (object$family == "gaussian") {
     table <- add_header_above(table, c(" " = 2, "CI(95%)" = 2, " " = 4))
@@ -102,12 +101,9 @@ export.sc_plm <- function(object, caption = NA, footnote = NA, filename = NA,
     )
   }
   
-  if (!is.na(footnote) && footnote != "") 
-    table <- footnote(table, general = footnote, threeparttable = TRUE)
-  
   # finish ------------------------------------------------------------------
   
-  if (!is.na(filename)) cat(table, file = filename)
+  if (!is.na(filename)) .save_export(table, filename)
   table
   
 }

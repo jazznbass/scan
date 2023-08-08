@@ -1,6 +1,8 @@
 #' @rdname export
 #' @export
-export.sc_overlap <- function(object, caption = NA, footnote = NA, 
+export.sc_overlap <- function(object, 
+                              caption = NA, 
+                              footnote = NULL, 
                               filename = NA,
                               kable_styling_options = list(), 
                               kable_options = list(), 
@@ -8,38 +10,31 @@ export.sc_overlap <- function(object, caption = NA, footnote = NA,
                               flip = FALSE,
                               ...) {
   
-  kable_options <- .join_kabel(kable_options)
+  options <- .join_kabel(kable_options)
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
-  if (is.na(caption)) caption <- c(
+  if (is.na(caption)) caption <- paste0(
     "Overlap indices. ",
-    .phases_string(
-      object$phases.A, 
-      object$phases.B
-    )
+    .phases_string(object$phases.A, object$phases.B),
+    collapse = ""
   )
   
-  footnote <- c(
-    "PND = Percentage Non-Overlapping Data; ",
-    "PEM = Percentage Exceeding the Median; ",
-    "PET = Percentage Exceeding the Trend; ",
-    "NAP = Nonoverlap of all pairs; ",
-    "NAP-R = NAP rescaled; ",
-    "PAND = Percentage all nonoverlapping data;",
-    "IRD = Improvement rate difference;",
-    "Tau U (A + B - trend A) = Parker's Tau-U; ",
-    "Tau U (A + B - trend A + trend B) = Parker's Tau-U; ",
-    "Base Tau = Baseline corrected Tau; ",
-    "Delta M = Mean difference between phases; ",
-    "Delta Trend = Trend difference between phases; ",
-    "SMD = Standardized Mean Difference; ",
-    "Hedges g = Corrected SMD",
-    "."
+  if (is.null(footnote)) footnote <- c(
+    "PND = Percentage Non-Overlapping Data",
+    "PEM = Percentage Exceeding the Median",
+    "PET = Percentage Exceeding the Trend",
+    "NAP = Nonoverlap of all pairs",
+    "NAP-R = NAP rescaled",
+    "PAND = Percentage all nonoverlapping data",
+    "IRD = Improvement rate difference",
+    "Tau U (A + B - trend A) = Parker's Tau-U",
+    "Tau U (A + B - trend A + trend B) = Parker's Tau-U",
+    "Base Tau = Baseline corrected Tau",
+    "Delta M = Mean difference between phases",
+    "Delta Trend = Trend difference between phases",
+    "SMD = Standardized Mean Difference",
+    "Hedges g = Corrected SMD"
   )
-  footnote <- paste0(footnote, collapse = "")
-  caption <- paste0(caption, collapse = "")
-  
-  kable_options$caption <- caption
   
   out <- object$overlap
   
@@ -55,19 +50,23 @@ export.sc_overlap <- function(object, caption = NA, footnote = NA,
   if (isTRUE(flip)) {
     cases <- out$Case
     out[-2:-1] <- round(out[-2:-1], round)
-    out <- t(out[-1])
-    colnames(out) <- cases
+    names_par <- colnames(out)[-1]
+    out <- t(out[-2:-1]) |> as.data.frame()
+    out <- cbind(Statistic = rownames(out), out)
+    colnames(out) <- c("Statistic", cases)
   }
   
-  kable_options$x <- out
-  table <- do.call(kable, kable_options)
-  kable_styling_options$kable_input <- table
-  table <- do.call(kable_styling, kable_styling_options)
-  if (!is.na(footnote) && footnote != "") 
-    table <- footnote(table, general = footnote, threeparttable = TRUE)
+  table <- .create_table(
+    out, 
+    options, 
+    kable_styling_options, 
+    caption = caption,
+    footnote = footnote
+  )
  
   # finish ------------------------------------------------------------------
   
-  if (!is.na(filename)) cat(table, file = filename)
+  if (!is.na(filename)) .save_export(table, filename)
+  
   table
 }

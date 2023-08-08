@@ -13,21 +13,19 @@ export.sc_pem <- function(object,
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (is.na(caption)) caption <- c("Percent Exceeding the Median")
-  kable_options$caption <- caption
-  
   
   out <- cbind(PEM = object$PEM, object$test)
     
-  kable_options$x <- out
-  table <- do.call(kable, kable_options)
-  kable_styling_options$kable_input <- table
-  table <- do.call(kable_styling, kable_styling_options)
-  
-  if (!is.na(footnote) && footnote != "") 
-    table <- footnote(table, general = footnote, threeparttable = TRUE)
+  table <- .create_table(
+    out, 
+    kable_options, 
+    kable_styling_options, 
+    caption = caption,
+    footnote = footnote
+  )
   
   # finish ------------------------------------------------------------------
   
-  if (!is.na(filename)) cat(table, file = filename)
+  if (!is.na(filename)) .save_export(table, filename)
   table
 }

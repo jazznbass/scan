@@ -40,9 +40,11 @@ export <- function (object, ...) {
       identical(select, FALSE)) return(df)
   
   if (!all(select %in% names(df)) && !is.numeric(select)) {
-    warning("`select` arguments has variable names that are not included in " ,
-            "the output table: valid names are: ", 
-            paste(names(df), collapse = ", "), ".")
+    warning(
+      "`select` arguments has variable names that are not included in " ,
+      "the output table: valid names are: ", 
+      paste(names(df), collapse = ", "), "."
+    )
   }
   df <- df[, select]
   if (!is.null(names(select))) {
@@ -69,9 +71,57 @@ export <- function (object, ...) {
   
   default_kable_styling <- getOption("scan.export.kable_styling")
   
-  tmp <- which(!(names(default_kable_styling) %in% names(kable_styling_options)))
+  tmp <- which(
+    !(names(default_kable_styling) %in% names(kable_styling_options))
+  )
+  
   kable_styling_options <- c(kable_styling_options, default_kable_styling[tmp])
   
   kable_styling_options
 } 
 
+.save_export <- function(x, filename) {
+  if (inherits(x, "kableExtra"))
+    out <- kableExtra::save_kable(x, filename, zoom = 2)
+  
+  out
+}
+
+.add_footnote <- function(x, footnote) {
+  if (length(footnote) > 1) {
+    footnote <- paste0(footnote, collapse = "; ") |> paste0(".")
+  }
+  if (inherits(x, "kableExtra"))
+    out <- kableExtra::footnote(x, general = footnote, threeparttable = TRUE)
+  
+}
+
+.create_table <- function(x, 
+                          options, 
+                          kable_styling_args, 
+                          caption = NULL,
+                          footnote = NULL,
+                          align = NULL) {
+  
+  rownames(x) <- NULL
+  
+  if (!is.null(align)) options$align <- align
+  
+  if (is.null(options$align))  
+    options$align <- c("l", rep("c",  ncol(x) - 1))
+  
+  if (is.null(options$caption))  
+    options$caption <- caption
+  
+  options$x <- x
+  table <- do.call(kable, options)
+  kable_styling_args$kable_input <- table
+  table <- do.call(kable_styling, kable_styling_args)
+  
+  if (!is.null(footnote)) {
+    if (!identical(footnote, NA) && !identical(footnote, ""))
+      table <- .add_footnote(table, footnote)
+  }
+  
+  table
+}
