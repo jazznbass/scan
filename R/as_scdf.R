@@ -15,48 +15,47 @@
 #' @family data manipulation functions
 #' @export
 
-as_scdf <- function(object,                       
-                    cvar = "case", 
-                    pvar = "phase", 
-                    dvar = "values", 
-                    mvar = "mt", 
+as_scdf <- function(object,
+                    cvar = "case",
+                    pvar = "phase",
+                    dvar = "values",
+                    mvar = "mt",
                     phase_names = NULL,
                     sort_cases = FALSE) {
-  
-  
+
   if (!cvar %in% names(object)) {
     message("Casename variable not found. Assuming one case.")
     object[[cvar]] <- "unnamed"
   }
-  
+
   if (!is.null(attr(object, opt("scdf")))) {
-    pvar <- attr(object, opt("scdf"))[[opt("phase")]] 
-    dvar <- attr(object, opt("scdf"))[[opt("dv")]] 
-    mvar <- attr(object, opt("scdf"))[[opt("mt")]] 
+    pvar <- attr(object, opt("scdf"))[[opt("phase")]]
+    dvar <- attr(object, opt("scdf"))[[opt("dv")]]
+    mvar <- attr(object, opt("scdf"))[[opt("mt")]]
     message("Found scdf attributes and replaced function arguments.")
   }
-  
+
   if (!sort_cases) {
     object[[cvar]] <- factor(object[[cvar]], levels = unique(object[[cvar]]))
   } else {
     object[[cvar]] <- factor(object[[cvar]])
   }
-  
+
   object[[pvar]] <- factor(object[[pvar]], levels = unique(object[[pvar]]))
   if (!is.null(phase_names)) levels(object[[pvar]]) <- phase_names
-  
+
   case_names <- levels(object[[cvar]])
   object <- split(object, object[[cvar]])
   object <- lapply(object, function(x) {
     x[, -which(names(x) == cvar)]
   })
   names(object) <- case_names
-  
+
   class(object) <- c("scdf", "list")
   phase(object) <- pvar
   dv(object) <- dvar
   mt(object) <- mvar
-  
+
   object
-  
+
 }
