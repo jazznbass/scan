@@ -19,13 +19,12 @@
 #' @concept Autocorrelation
 #' @concept Serial correlation
 #' @export
-autocorr <- function(data, dvar, pvar, mvar, 
+autocorr <- function(data, dvar, pvar, mvar,
                      lag_max = 3,
-                     lag.max, 
+                     lag.max,
                      ...) {
-  
   if (!missing(lag.max)) lag_max <- lag.max
-  
+
   # set defaults attributes
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
@@ -33,44 +32,43 @@ autocorr <- function(data, dvar, pvar, mvar,
 
   data <- .prepare_scdf(data)
 
-  N <- length(data)
   case_names <- revise_names(data)
   var_lag <- paste0("Lag ", 1:lag_max)
-  
+
   ac <- list()
-  for (case in 1:N) {
+  for (case in seq_along(data)) {
     phases <- .phasestructure(data[[case]], pvar = pvar)
-    
+
     while (any(duplicated(phases$values))) {
       phases$values[anyDuplicated(phases$values)] <- paste0(
-        phases$values[anyDuplicated(phases$values)], 
-        "_phase", 
+        phases$values[anyDuplicated(phases$values)],
+        "_phase",
         anyDuplicated(phases$values)
       )
     }
-    
+
     df <- data.frame(Phase = c(phases$values, "all"))
-    for (phase in 1:length(phases$values)) {
+    for (phase in seq_along(phases$values)) {
       y <- data[[case]][phases$start[phase]:phases$stop[phase], dvar]
       if (length(y) - 1 < lag_max) lag <- length(y) - 1 else lag <- lag_max
 
       .tmp <- acf(y, lag.max = lag, plot = FALSE, ...)$acf[-1]
       df[phase, var_lag[1:lag]] <- .tmp
     }
-    
+
     y <- data[[case]][[dvar]]
     if (length(y) - 1 < lag_max) lag <- length(y) - 1 else lag <- lag_max
 
     .tmp <- acf(y, lag.max = lag, plot = FALSE, ...)$acf[-1]
     df[length(phases$values) + 1, var_lag[1:lag]] <- .tmp
-    
+
     ac[[case]] <- df
   }
-  
+
   names(ac) <- case_names
-  
+
   out <- list(
-    autocorr = ac, 
+    autocorr = ac,
     dvar = dvar
   )
   class(out) <- c("sc_ac")
@@ -85,4 +83,4 @@ autocorr <- function(data, dvar, pvar, mvar,
 autocorrSC <- function(...) {
   .deprecated_warning("autocorr", "autocorrSC")
   autocorr(...)
-  }
+}
