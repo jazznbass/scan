@@ -18,6 +18,9 @@ options(
 
 res <- list()
 
+res$pipe <- " |> "
+res$pipe_br <- paste0(res$pipe, "\n")
+
 # choices ------
 
 res$choices <- list()
@@ -124,6 +127,8 @@ values = local_regression(values)
 values2 = values - max(values[phase=="A"])
 across_cases(values2 = scale(values)
 '
+
+res$placeholder$stats_out_args <- "e.g.: digits = 2; meta = FALSE"
 
 res$placeholder$plot_arguments <- '(choose one or more of the templates below and experiment with the syntax here.)
 '

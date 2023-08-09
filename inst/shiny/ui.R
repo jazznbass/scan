@@ -109,8 +109,18 @@ tab_stats <- tabPanel(
       div(
         style="display:inline-block; vertical-align: top; padding-left: 30px;",
         textInput(
-          "stats_print_arguments", "Output arguments",
-          placeholder = "e.g.: flip = TRUE; digits = 2; meta = FALSE"
+          "stats_print_arguments", 
+          "Output arguments",
+          placeholder = res$placeholder$stats_out_args
+        )
+      ),
+      div(
+        style="display:inline-block; vertical-align: top; padding-left: 30px;",
+        radioButtons(
+          "stats_export_flip", 
+          "Flip",
+          c(FALSE, TRUE),
+          inline = TRUE
         )
       ),
       div(

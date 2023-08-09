@@ -246,8 +246,8 @@ server <- function(input, output, session) {
     if (length(syntax)>1) {
       syntax <- syntax[-1]
       syntax <- paste0(
-        "scdf %>%\n  ",
-        paste0(syntax, collapse = " %>%\n  ")
+        "scdf", res$pipe_br, " ",
+        paste0(syntax, collapse = paste0(res$pipe_br, " "))
       )
 
     }
@@ -310,10 +310,11 @@ server <- function(input, output, session) {
   output$stats_html <- renderUI({
     results <- calculate_stats()
     print_args <- input$stats_print_arguments
+    flip <- paste0("flip = ", input$stats_export_flip)
     if (print_args != "") {
       print_args <- paste0(", ", print_args)
-      call<- paste0("export(results, ", print_args, ")")
-    } else call <- "export(results)"
+      call<- paste0("export(results, ", flip, ", ", print_args, ")")
+    } else call <- paste0("export(results,", flip ,")")
     tryCatch(
       str2lang(call) |> eval() |> HTML(),
       error = function(e)
@@ -488,7 +489,7 @@ server <- function(input, output, session) {
       plot_args <- trimws(input$plot_arguments)
       plot_args <- gsub("\n+", "\n", plot_args)
       call <- paste0(
-        call, "%>% ", gsub("\n", " %>% ", plot_args)
+        call, res$pipe, gsub("\n", res$pipe, plot_args)
       )
     }
     call <- paste0("print(",call,")")
@@ -548,7 +549,7 @@ server <- function(input, output, session) {
     call <- paste0("scplot(scdf)")
     if (trimws(input$plot_arguments) != "") {
       call <- paste0(
-        call, "%>%\n  ", gsub("\n", " %>%\n  ", trimws(input$plot_arguments))
+        call, res$pipe_br, " ", gsub("\n", paste0(res$pipe_br, " "), trimws(input$plot_arguments))
       )
     }
     output$plot_syntax <- renderPrint({
@@ -601,13 +602,13 @@ server <- function(input, output, session) {
     )  
     
     ci <- input$pt_ci
-
+   
     syntax <- paste0(
-      syntax, " %>% \n",
+      syntax, res$pipe,
       "  power_test(method = ", deparse(input$pt_method), ", ",
       "effect = ", deparse(input$pt_effect), ", ",
-      "n_sim = ", input$pt_n, ", ",
-      "ci = ", ci,
+      "n_sim = ", input$pt_n, 
+      if (!identical(ci, "")) paste0(", ci = ", ci),
       ")"
     )
     
@@ -632,8 +633,8 @@ server <- function(input, output, session) {
       #"s = ", input$design_s, ", ",
       "rtt = ", input$design_rtt, ", ",
       "distribution = ", deparse(input$design_distribution),
-      "\n) %>% ",
-      "random_scdf() %>% ",
+      "\n)", res$pipe,
+      "random_scdf()", res$pipe,
       "scplot()"
     )
     
