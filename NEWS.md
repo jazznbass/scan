@@ -1,3 +1,7 @@
+# scan 0.60.9999
+
+- Corrected name of level-effect predictor for regressions when the phase variable is not named "phase"
+
 # scan 0.60.0
 
 ## New function
