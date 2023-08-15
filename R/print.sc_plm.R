@@ -92,7 +92,7 @@ print.sc_plm <- function(x, lag_max = 3, ...) {
     if (x$ar == 0) {
       bj <- Box.test(residuals(x$full.model), lag_max, type = "Ljung-Box")
       cat(sprintf(
-        "Ljung-Box test: X-Squared(%d) = %.2f; p = %0.3f", 
+        "Ljung-Box test: X\u00b2(%d) = %.2f; p = %0.3f", 
         bj$parameter, bj$statistic, bj$p.value
       ), "\n\n"
       )	   
