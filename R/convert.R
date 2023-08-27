@@ -33,25 +33,19 @@ convert <- function(scdf,
   if (length(scdf) == 1) case_name <- study_name
 
   scdf_string <- c()
-  attr_scan <- attributes(scdf)[[opt("scdf")]]
-  var_phase <- attr_scan[[opt("phase")]]
-  var_dv <- attr_scan[[opt("dv")]]
-  var_mt <- attr_scan[[opt("mt")]]
+  
+  var_phase <- phase(scdf)
+  var_dv <- dv(scdf)
+  var_mt <- mt(scdf)
 
   sindent <- strrep(" ", indent)
 
-  for (case in seq_along(scdf)) {
-    dat <- scdf[[case]]
+  for (i_case in seq_along(scdf)) {
 
     body_string <- format_body(
-      var_names = names(dat)[!names(dat) %in% var_phase],
-      dat = dat,
-      var_mt,
-      var_dv,
-      var_phase,
+      case = scdf[i_case],
       inline,
-      indent,
-      sindent
+      indent
     )
 
     def_string <- format_definition(
@@ -59,19 +53,19 @@ convert <- function(scdf,
       var_phase,
       var_mt,
       sindent,
-      casename = names(scdf)[case],
+      casename = names(scdf)[i_case],
       inline
     )
 
     phase_design <- format_phase_design(
       inline,
-      design = rle(as.character(dat[[var_phase]])),
+      design = rle(as.character(scdf[[i_case]][[var_phase]])),
       def_string,
       sindent
     )
 
-    scdf_string[case] <- paste0(
-      case_name, case, " <- scdf(",
+    scdf_string[i_case] <- paste0(
+      case_name, i_case, " <- scdf(",
       body_string,
       phase_design,
       def_string, "\n)"
@@ -82,7 +76,7 @@ convert <- function(scdf,
 
   study_string <- format_study(
     n_cases = length(scdf),
-    attr_scan,
+    scdf_attr(scdf),
     case_name,
     indent,
     sindent,
@@ -115,20 +109,23 @@ format_phase_design <- function(inline, design, def_string, sindent) {
   phase_design
 }
 
-format_body <- function(var_names,
-                        dat,
-                        var_mt,
-                        var_dv,
-                        var_phase,
+format_body <- function(case,
                         inline,
-                        indent,
-                        sindent) {
+                        indent) {
+
+  attr_case <- scdf_attr(case)
+  case <- case[[1]]
+  var_names <- names(case)[!names(case) %in% attr_case[[opt("phase")]]]
+  
+  
   vars <- c()
 
+  sindent <- strrep(" ", indent)
+  
   for (i in seq_along(var_names)) {
-    values <- dat[, var_names[i]]
+    values <- case[, var_names[i]]
 
-    if (var_names[i] == var_mt) {
+    if (var_names[i] == attr_case[[opt("mt")]]) {
       if (all(seq_along(values) == values)) next
     }
 
@@ -139,8 +136,11 @@ format_body <- function(var_names,
       values_string <- paste0('\"', values, '\"', collapse = ", ")
     }
 
-    if (var_names[i] == var_dv && inline) {
-      x <- split(dat[[var_dv]], dat[[var_phase]])
+    if (var_names[i] == attr_case[[opt("dv")]] && inline) {
+      x <- split(
+        case[[attr_case[[opt("dv")]]]], 
+        case[[attr_case[[opt("phase")]]]]
+      )
       x <- mapply(
         function(x, n) {
           paste0(n, " = ", paste0(x, collapse = ", "), collapse = "")
