@@ -20,7 +20,7 @@
 - Added power-analyses
 - Added settings
 - Extended save options
-- Various changes and optimizations of the ui
+- Various changes and optimization of the ui
 
 # scan 0.59.0
 
