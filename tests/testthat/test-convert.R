@@ -14,6 +14,10 @@ test_that("main", {
   
   convert(Leidig2018, file = fx)
   source(fx)
-  
   expect_equal(scan:::check_scdf(study), TRUE)
+  
+  ne <- new.env()
+  eval(parse(text = convert(exampleAB_score)), ne)
+  expect_equal(exampleAB_score, ne$study)
+  
 })
