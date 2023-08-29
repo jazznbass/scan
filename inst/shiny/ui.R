@@ -6,7 +6,7 @@ tab_scdf <-   tabPanel(
   sidebarLayout(
     sidebarPanel(
       textAreaInput(
-        "values", "Values", placeholder = res$placeholder$values
+        "values", "Values (dependent variable)", placeholder = res$placeholder$values
       ),
       textInput("mt", "Measurement times", placeholder = res$placeholder$mt),
       textAreaInput(
@@ -271,39 +271,36 @@ tab_settings <- tabPanel(
       h3("Plot"),
       #numericInput("plot_display_res", "Display resolution", value = 120, min = 10, max = 4000),
       textInput("prefix_output_plot", "Prefix save filename", value = "scplot"),
-      numericInput("width", "Export width", value = 800, min = 100, max = 2000),
-      numericInput("height", "Export height", value = 600, min = 100, max = 2000),
-      numericInput("dpi", " Export dpi", value = 100, min = 50, max = 600)
+      numericInput("width", "Export width", value = 1600, min = 100, max = 4000),
+      numericInput("height", "Export height", value = 1200, min = 100, max = 4000),
+      numericInput("dpi", " Export dpi", value = 200, min = 50, max = 1200)
     ))
   )
 )
 
 # Help -----
 
-tab_help <- tabPanel(
+tab_help <- navbarMenu(
   "Help",
-  res$help_page
-)
-
-
-# About -----
-
-tab_about <- tabPanel(
-  "About",
-  h4("Running:"),
-  h4(paste0(
-    "scan ",
-    utils::packageVersion("scan")," (",utils::packageDate('scan'), ")"
-  )),
-  h4(paste0(
-    "scplot ",
-    utils::packageVersion("scplot")," (",utils::packageDate('scplot'), ")"
-  )),
-  hr(),
-  h4("Please cite as:"),
-  h4({x<-citation("scan"); class(x)<-"list"; attributes(x[[1]])$textVersion}),
-  hr(),
-  h4("(c) Jürgen Wilbert, 2023")
+  tabPanel("Info",res$help_page),
+  tabPanel(
+    "About",
+    h4("Running:"),
+    h4(paste0(
+      "scan ",
+      utils::packageVersion("scan")," (",utils::packageDate('scan'), ")"
+    )),
+    h4(paste0(
+      "scplot ",
+      utils::packageVersion("scplot")," (",utils::packageDate('scplot'), ")"
+    )),
+    hr(),
+    h4("Please cite as:"),
+    h4({x<-citation("scan"); class(x)<-"list"; attributes(x[[1]])$textVersion}),
+    hr(),
+    h4("(c) Jürgen Wilbert, 2023")
+  ),
+  tabPanel(title = "Quit")
 )
 
 # ui ------
@@ -318,7 +315,5 @@ ui <- navbarPage(
   tab_plot,
   tab_power_test,
   tab_settings,
-  tab_help,
-  tab_about,
-  tabPanel(title = "Quit")
+  tab_help
 )
