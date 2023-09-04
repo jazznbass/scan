@@ -26,7 +26,13 @@
 #' pem(dat, chi.test = TRUE)
 #' 
 #' @export
-pem <- function(data, dvar, pvar, decreasing = FALSE, binom.test = TRUE, chi.test = FALSE, FUN = median, phases = c(1, 2), ...) {
+pem <- function(data, dvar, pvar, 
+                decreasing = FALSE, 
+                binom.test = TRUE, 
+                chi.test = FALSE, 
+                FUN = median, 
+                phases = c(1, 2), 
+                ...) {
 
   # set default attributes
   if (missing(dvar)) dvar <- dv(data)
@@ -80,6 +86,8 @@ pem <- function(data, dvar, pvar, decreasing = FALSE, binom.test = TRUE, chi.tes
     colnames(stats.ma) <- cn
   }
   
+  PEM <- cbind(Case = revise_names(data), PEM = PEM, as.data.frame(stats.ma))
+  row.names(PEM) <- NULL
   out <- list(PEM = PEM, test = stats.ma, decreasing = decreasing)
   class(out) <- c("sc_pem")
   attr(out, opt("phase")) <- pvar
