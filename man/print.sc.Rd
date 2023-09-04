@@ -36,7 +36,7 @@
 
 \method{print}{sc_design}(x, ...)
 
-\method{print}{sc_nap}(x, digits = "auto", nice = TRUE, ...)
+\method{print}{sc_nap}(x, digits = "auto", nice = TRUE, complete = FALSE, ...)
 
 \method{print}{sc_outlier}(x, digits = "auto", ...)
 
@@ -44,7 +44,7 @@
 
 \method{print}{sc_pem}(x, ...)
 
-\method{print}{sc_pet}(x, ...)
+\method{print}{sc_pet}(x, digits = 3, ...)
 
 \method{print}{sc_plm}(x, lag_max = 3, ...)
 

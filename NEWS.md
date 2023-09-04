@@ -2,6 +2,11 @@
 
 - Corrected name of level-effect predictor for regressions when the phase variable is not named "phase"
 
+## Changes
+
+- `nap()`: added Cohen's d and R-Squared effects.
+- `export()`: select argument for `nap`; new for `pem()`, `pet()`
+
 # scan 0.60.0
 
 ## New function

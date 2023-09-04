@@ -69,9 +69,9 @@ changed for example to include further variables into the regression model.}
 
 \item{update}{An easier way to change the regression formula (e.g., \code{. ~ . + newvariable}).}
 
-\item{na.action}{Defines how to deal with missing values}
+\item{na.action}{Defines how to deal with missing values.}
 
-\item{...}{Further arguments passed to the lm function.}
+\item{...}{Further arguments passed to the \code{\link[=lm]{lm()}} function.}
 
 \item{x}{Object returned from \code{\link[=mplm]{mplm()}}.}
 

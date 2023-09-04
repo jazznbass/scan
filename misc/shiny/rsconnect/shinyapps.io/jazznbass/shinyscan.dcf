@@ -1,0 +1,13 @@
+name: shinyscan
+title: shinyscan
+username:
+account: jazznbass
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8353962
+bundleId: 7568329
+url: https://jazznbass.shinyapps.io/shinyscan/
+when: 1692079810.94045
+lastSyncTime: 1692079810.94046
+asMultiple: FALSE
+asStatic: FALSE
