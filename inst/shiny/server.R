@@ -9,17 +9,19 @@ server <- function(input, output, session) {
 
   ## Render ----
   my_scdf <- reactiveVal()
+  
   scdf_render <- reactive({
-    
-    if (!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
     
     if (input$scdf_output_format == "Summary"){
       output$scdf_output <- renderPrint({
+        if (!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
+        if (identical(length(my_scdf()), 0)) validate(res$msg$no_case)
         do.call("summary", list(my_scdf()))
       })
     } else if (input$scdf_output_format == "Syntax") {
       output$scdf_output <- renderPrint({
-        req(inherits(my_scdf(), "scdf"))
+        if (!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
+        if (identical(length(my_scdf()), 0)) validate(res$msg$no_case)
         do.call("convert", list(
           my_scdf(), inline = as.logical(input$scdf_syntax_phase_structure)
         ))
@@ -35,9 +37,13 @@ server <- function(input, output, session) {
     if (input$scdf_example != "(none)") {
       my_scdf(paste0("scan::", input$scdf_example) |> str2lang() |> eval())
       scdf_render()
-      output$scdf_messages <- renderPrint(
+      output$load_messages <- renderPrint(
         cat(paste0("loaded example ", input$scdf_example))
       )
+      output$load_output <- renderPrint({
+        do.call("summary", list(my_scdf()))
+      })
+      output$scdf_messages <- renderPrint(cat(""))
     } else {
       my_scdf(NULL)
     }
@@ -60,12 +66,16 @@ server <- function(input, output, session) {
     }
 
     if (!inherits(new, "scdf")) {
-      output$scdf_messages <- renderText(
+      output$load_messages <- renderText(
         "Sorry,\n the file you tried to load is not a valid scdf file.")
     } else {
       my_scdf(new)
       scdf_render()
-      output$scdf_messages <- renderPrint(cat(paste0("loaded file successfully")))
+      output$load_messages <- renderPrint(cat(paste0("loaded file successfully")))
+      output$load_output <- renderPrint({
+        do.call("summary", list(my_scdf()))
+      })
+      output$scdf_messages <- renderPrint(cat(""))
     }
 
   })
@@ -185,8 +195,8 @@ server <- function(input, output, session) {
     scdf_render()
   })
 
-  ## remove all cases --------
-  observeEvent(input$remove_all, {
+  ## clear cases --------
+  observeEvent(input$clear_cases, {
     my_scdf(NULL)
     output$scdf_messages <- renderPrint(cat("Cleared cases"))
     scdf_render()
@@ -349,9 +359,12 @@ server <- function(input, output, session) {
       "data", "scdf", "data.l2", "offset", "lag.max",
       "graph", "output", "...")
     )
-    args <- args[id]
-    values <- values[id]
-    list(names = args, values = values)
+    if (input$func == "mplm") {
+      id <- c(which(args == "dvar") , id)
+      values[which(args == "dvar")] <- scan:::dv(transformed())
+    }
+    
+    list(names = args[id], values = values[id])
   })
 
   output$stats_arguments <- renderUI({
@@ -473,7 +486,6 @@ server <- function(input, output, session) {
         }
         out <- str2lang(call) |> eval()
         kableExtra::save_kable(out, file)
-        #writeLines(out, con = file)
       }
       
     }
@@ -678,7 +690,12 @@ server <- function(input, output, session) {
   # quit app -----
   observeEvent(input$navpage, {
     if (input$navpage == "Quit") {
+      session$sendCustomMessage(
+        type = "closeWindow", 
+        list(message = "window.close();")
+      )
       stopApp()
     }
   })
+  
 }

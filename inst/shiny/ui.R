@@ -1,12 +1,14 @@
 source("resources.R")
 
-# scdf ------
-tab_scdf <-   tabPanel(
-  "Data",
+# data ------
+tab_scdf <- tabPanel(
+  "New",
   sidebarLayout(
     sidebarPanel(
       textAreaInput(
-        "values", "Values (dependent variable)", placeholder = res$placeholder$values
+        "values", 
+        "Values (dependent variable)", 
+        placeholder = res$placeholder$values
       ),
       textInput("mt", "Measurement times", placeholder = res$placeholder$mt),
       textAreaInput(
@@ -16,30 +18,46 @@ tab_scdf <-   tabPanel(
       textInput("casename", "Case name", placeholder = "(optional)"),
       actionButton("add_case", "Add case"),
       actionButton("remove_case", "Remove case"),
-      actionButton("remove_all", "Clear all cases"),
+      actionButton("clear_cases", "Clear all cases"),
       br(),
       div(style="display:inline-block;",
           radioButtons(
-            "remove_which", "Position", choices = c("last" = "last", "at:" = "at"), inline = TRUE
+            "remove_which", 
+            "Position", 
+            choices = c("last" = "last", "at:" = "at"), 
+            inline = TRUE
           ),
       ),
       div(style="display:inline-block; padding-left: 0px",
           numericInput("remove_at", "", min = 1,value = 1,width = "75px"),
       ),
       br(),
-      selectInput(
-        "scdf_example", "Load example", choices = res$choices$examples,
-      ),
-      fileInput(
-        "upload", NULL, accept = c(".csv", ".rds", ".xlsx", ".xls", ".R", ".r"),
-        buttonLabel = "Load file"
-      ),
       downloadButton("scdf_save", "Save scdf"),
     ),
 
     mainPanel(
       verbatimTextOutput("scdf_messages"),
       verbatimTextOutput("scdf_output")
+    )
+  )
+)
+
+tab_load <- tabPanel(
+  "Load",
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(
+        "scdf_example", "Load example", choices = res$choices$examples,
+      ),
+      fileInput(
+        "upload", NULL, accept = c(".csv", ".rds", ".xlsx", ".xls", ".R", ".r"),
+        buttonLabel = "Open file"
+      ),
+    ),
+    
+    mainPanel(
+      verbatimTextOutput("load_messages"),
+      verbatimTextOutput("load_output")
     )
   )
 )
@@ -54,10 +72,18 @@ tab_transform <- tabPanel(
         placeholder = "e.g.: 1, Anja, 3:5"
       ),
       div(style="display:inline-block; vertical-align: top",
-        textInput("select_phasesA", "Combine phases to A", placeholder = "(e.g.: 1)")
+        textInput(
+          "select_phasesA", 
+          "Combine phases to A", 
+          placeholder = "(e.g.: 1)"
+        )
       ),
       div(style="display:inline-block; vertical-align: top; padding-left: 30px;",
-        textInput("select_phasesB", "Combine phases to B", placeholder = "(e.g.: 2,3)")
+        textInput(
+          "select_phasesB", 
+          "Combine phases to B", 
+          placeholder = "(e.g.: 2,3)"
+        )
       ),
       
       textInput(
@@ -76,7 +102,8 @@ tab_transform <- tabPanel(
     mainPanel(
       verbatimTextOutput("transform_syntax"),
       conditionalPanel(
-        'input.transform_output_format == "Text"', verbatimTextOutput("transform_scdf")
+        'input.transform_output_format == "Text"', 
+        verbatimTextOutput("transform_scdf")
       ),
       conditionalPanel(
         'input.transform_output_format == "Html"', htmlOutput("transform_html")
@@ -85,6 +112,13 @@ tab_transform <- tabPanel(
   )
 )
 
+navbar_data <- navbarMenu(
+  "Data",
+  tab_scdf,
+  tab_load,
+  tabPanel(downloadButton("test_save", "Save", class = "align: left;")),
+  #tab_transform
+)
 
 # Stats -----
 tab_stats <- tabPanel(
@@ -138,7 +172,6 @@ tab_stats <- tabPanel(
     )
   )
 )
-
 
 # Plot -----
 tab_plot <- tabPanel(
@@ -269,7 +302,6 @@ tab_settings <- tabPanel(
     column(2, div(
       style = res$div$settings, 
       h3("Plot"),
-      #numericInput("plot_display_res", "Display resolution", value = 120, min = 10, max = 4000),
       textInput("prefix_output_plot", "Prefix save filename", value = "scplot"),
       numericInput("width", "Export width", value = 1600, min = 100, max = 4000),
       numericInput("height", "Export height", value = 1200, min = 100, max = 4000),
@@ -280,7 +312,7 @@ tab_settings <- tabPanel(
 
 # Help -----
 
-tab_help <- navbarMenu(
+navbar_help <- navbarMenu(
   "Help",
   tabPanel("Info",res$help_page),
   tabPanel(
@@ -305,15 +337,22 @@ tab_help <- navbarMenu(
 
 # ui ------
 
+js <- HTML(
+  "Shiny.addCustomMessageHandler('closeWindow', function(data) {
+    eval(data.message)
+  });"
+)
+  
 ui <- navbarPage(
   id = "navpage",
   title = "Shiny-Scan",
   theme = "cerulean.min.css",
-  tab_scdf,
+  tags$head(tags$script(js)),
+  navbar_data,#tab_scdf,
   tab_transform,
-  tab_stats,
+  tab_stats, #navbar_analyses,
   tab_plot,
   tab_power_test,
   tab_settings,
-  tab_help
+  navbar_help
 )
