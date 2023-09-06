@@ -37,7 +37,7 @@ export(object, ...)
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
-  round = 2
+  select = c("Case", "NAP", "NAP Rescaled", "w", "p", "d", "R²")
 )
 
 \method{export}{sc_overlap}(
@@ -150,15 +150,15 @@ function.}
 
 \item{flip}{If TRUE, some objects are exported with rows and columns flipped.}
 
+\item{select}{A character vector containing the names of the variables to be
+included. If the vector is named, the variables will be renamed
+accordingly.}
+
 \item{round}{Integer passed to the digits argument internally used to round
 values.}
 
 \item{nice}{If set TRUE (default) output values are rounded and optimized for
 publication tables.}
-
-\item{select}{A character vector containing the names of the variables to be
-included. If the vector is named, the variables will be renamed
-accordingly.}
 
 \item{cols}{Defines which columns are included when exporting an scdf. It is
 either a vector of variable names or the string "main" will select the
