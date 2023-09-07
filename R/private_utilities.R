@@ -126,3 +126,9 @@ number_word <- function(x) {
   }
   x
 }
+
+round_numeric <- function(df, digits = 0) {
+  id <- which(sapply(df, is.numeric))
+  df[, id] <- round(df[, id], digits)
+  df
+}
