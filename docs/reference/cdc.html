@@ -18,7 +18,7 @@ computed and p-values below .05 are labeled "systematic change".'><meta property
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.60.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.60.0.9999</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -224,7 +224,7 @@ of Single-Case Designs. <em>Journal of Applied Behavior Analysis, 36</em>,
 <span class="r-out co"><span class="r-pr">#&gt;</span> Alternative hypothesis (Binomial test): true probability &lt; 50%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Overall evaluation of all MBD instances:   no change </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.</span></span></span>
+<span class="r-in"><span><span class="co">## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase</span></span></span>
 <span class="r-in"><span><span class="fu">cdc</span><span class="op">(</span><span class="va">exampleABAB</span>, trend_method <span class="op">=</span> <span class="st">"trisplit"</span>, phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Conservative Dual Criterion</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -241,7 +241,12 @@ of Single-Case Designs. <em>Journal of Applied Behavior Analysis, 36</em>,
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Apply the Dual-Criterion (DC) method (i.e., mean and trend without</span></span></span>
 <span class="r-in"><span><span class="co">##shifting).</span></span></span>
-<span class="r-in"><span><span class="fu">cdc</span><span class="op">(</span><span class="va">exampleAB_decreasing</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span>, trend_method <span class="op">=</span> <span class="st">"bisplit"</span>, conservative <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cdc</span><span class="op">(</span></span></span>
+<span class="r-in"><span> <span class="va">exampleAB_decreasing</span>,</span></span>
+<span class="r-in"><span> decreasing <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span> trend_method <span class="op">=</span> <span class="st">"bisplit"</span>,</span></span>
+<span class="r-in"><span> conservative <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Conservative Dual Criterion</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> N cases =  3 </span>
