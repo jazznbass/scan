@@ -42,54 +42,56 @@
 #' ## Apply the CDC with Koenig's bi-split and an expected decrease in phase B.
 #' cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit")
 #'
-#' ## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.
+#' ## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase
 #' cdc(exampleABAB, trend_method = "trisplit", phases = c(1,4))
 #'
 #' ## Apply the Dual-Criterion (DC) method (i.e., mean and trend without
 #' ##shifting).
-#' cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit", conservative = 0)
+#' cdc(
+#'  exampleAB_decreasing,
+#'  decreasing = TRUE,
+#'  trend_method = "bisplit",
+#'  conservative = 0
+#' )
 #'
 #'
 #' @export
-cdc <- function(data, 
-                dvar, 
-                pvar, 
-                mvar, 
-                decreasing = FALSE, 
-                trend_method = c("OLS", "bisplit", "trisplit"), 
-                conservative = .25, 
+cdc <- function(data,
+                dvar,
+                pvar,
+                mvar,
+                decreasing = FALSE,
+                trend_method = c("OLS", "bisplit", "trisplit"),
+                conservative = .25,
                 phases = c(1, 2)) {
 
-  
-  
-  
   check_args(
     by_class(decreasing, "logical"),
     by_call(trend_method, "cdc"),
     within(conservative, 0, 1)
   )
-  
+
   trend_method <- trend_method[1]
-  
+
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
   if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
-  
+
   data  <- .prepare_scdf(data, na.rm = TRUE)
   data  <- recombine_phases(data, phases = phases)$data
-  
-  N       <- length(data)
-  cdc_na  <- rep(NA, N)  # total data points in phase A
-  cdc_nb  <- rep(NA, N)  # total data points in phase B
-  cdc_exc <- rep(NA, N)  # exceeding data points in phase B
-  cdc     <- rep(NA, N)  # CDC rule evaluation of change
-  cdc_p   <- rep(NA, N)  # binomial p (50/50)
+
+  n_cases <- length(data)
+  cdc_na  <- rep(NA, n_cases)  # total data points in phase A
+  cdc_nb  <- rep(NA, n_cases)  # total data points in phase B
+  cdc_exc <- rep(NA, n_cases)  # exceeding data points in phase B
+  cdc     <- rep(NA, n_cases)  # CDC rule evaluation of change
+  cdc_p   <- rep(NA, n_cases)  # binomial p (50/50)
   cdc_all <- NA          # CDC rule evaluation of all "cases"
-  
-  for(i in 1:N) {
-    A <- data[[i]][data[[i]][, pvar] == "A",]
-    B <- data[[i]][data[[i]][, pvar] == "B",]
+
+  for (i in 1:n_cases) {
+    A <- data[[i]][data[[i]][, pvar] == "A", ]
+    B <- data[[i]][data[[i]][, pvar] == "B", ]
     cdc_na[i] <- nrow(A)
     cdc_nb[i] <- nrow(B)
 
@@ -100,7 +102,7 @@ cdc <- function(data,
       )
     }
 
-    if(trend_method == "bisplit"){
+    if (trend_method == "bisplit") {
       x <- A[[mvar]]
       y <- A[[dvar]]
       # na.rm = FALSE for now to prevent misuse; will draw no line if NA present
@@ -113,12 +115,12 @@ cdc <- function(data,
         median(x[ceiling(length(x) / 2 + 1):length(x)], na.rm = FALSE)
       )
       md <- as.data.frame(rbind(md1, md2))
-      names(md) <- c(dvar,mvar)
+      names(md) <- c(dvar, mvar)
       formula <- as.formula(paste0(dvar, "~", mvar))
       model <- lm(formula, data = md, na.action = na.omit)
     }
-    
-    if(trend_method == "trisplit"){
+
+    if (trend_method == "trisplit") {
       x <- A[[mvar]]
       y <- A[[dvar]]
       # na.rm = FALSE for now to prevent misuse; will draw no line if NA present
@@ -131,19 +133,19 @@ cdc <- function(data,
         median(x[ceiling(length(x) / 3 * 2 + 1):length(x)], na.rm = FALSE)
       )
       md <- as.data.frame(rbind(md1, md2))
-      names(md) <- c(dvar,mvar)
-      formula <- as.formula(paste0(dvar,"~",mvar))
+      names(md) <- c(dvar, mvar)
+      formula <- as.formula(paste0(dvar, "~", mvar))
       model <- lm(formula, data = md, na.action = na.omit)
     }
-    
-    if(trend_method == "OLS"){
+
+    if (trend_method == "OLS") {
       formula <- as.formula(paste0(dvar, "~", mvar))
       model <- lm(formula, data = A, na.action = na.omit)
     }
-    
+
     trnd <- predict(model, B, se.fit = TRUE)
-    
-    if(!decreasing) {
+
+    if (!decreasing) {
       cdc_exc[i] <- sum(
         B[[dvar]] > trnd$fit + (conservative * sd(A[[dvar]])) &
         B[[dvar]] > (mean(A[[dvar]]) + (conservative * sd(A[[dvar]])))
@@ -151,7 +153,7 @@ cdc <- function(data,
       cdc_p[i] <- binom.test(
         cdc_exc[i], cdc_nb[i], alternative = "greater"
       )$p.value
-      cdc[i] <- if(cdc_p[i] < .05) "systematic change" else "no change"
+      cdc[i] <- if (cdc_p[i] < .05) "systematic change" else "no change"
     } else {
       cdc_exc[i] <- sum(
         B[[dvar]] < trnd$fit - (conservative * sd(A[[dvar]])) &
@@ -160,9 +162,10 @@ cdc <- function(data,
       cdc_p[i] <- binom.test(
         cdc_exc[i], cdc_nb[i], alternative = "greater"
       )$p.value
-      cdc[i] <- if(cdc_p[i] < .05) "systematic change" else "no change"
+      cdc[i] <- if (cdc_p[i] < .05) "systematic change" else "no change"
     }
-    cdc_all <- if(length(cdc_p[cdc_p > .05]) / length(cdc_p) <= .25) {
+    
+    cdc_all <- if (length(cdc_p[cdc_p > .05]) / length(cdc_p) <= .25) {
       "systematic change"
     } else {
       "no change"
@@ -175,7 +178,7 @@ cdc <- function(data,
     cdc_b = cdc_nb,
     cdc_p = cdc_p,
     cdc_all = cdc_all,
-    N = N,
+    N = n_cases,
     decreasing = decreasing,
     trend_method = trend_method,
     conservative = conservative,

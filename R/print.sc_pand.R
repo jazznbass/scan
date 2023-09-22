@@ -36,7 +36,7 @@ print.sc_pand <- function(x, ...) {
     cat("\n")
     cat("\nChi-Squared test:\n")
     out <- sprintf(
-      "X-Squared = %.3f, df = 1, p = %.3f",
+      "X\u00b2 = %.3f, df = 1, p = %.3f",
       x$chi_test$statistic, 
       x$chi_test$p.value
     )

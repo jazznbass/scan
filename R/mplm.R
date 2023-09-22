@@ -12,8 +12,8 @@
 #'   changed for example to include further variables into the regression model.
 #' @param update An easier way to change the regression formula (e.g., `. ~ . +
 #'   newvariable`).
-#' @param na.action Defines how to deal with missing values
-#' @param ... Further arguments passed to the lm function.
+#' @param na.action Defines how to deal with missing values.
+#' @param ... Further arguments passed to the [lm()] function.
 #' @return \item{model}{Character string from function call (see arguments
 #' above).} \item{full.model}{Full regression model list.}
 #' @author Juergen Wilbert
@@ -37,7 +37,8 @@ mplm <- function(data, dvar, mvar, pvar,
                  slope = TRUE, 
                  formula = NULL, 
                  update = NULL, 
-                 na.action = na.omit, ...) {
+                 na.action = na.omit, 
+                 ...) {
  
   check_args(
     by_call(model, "mplm"),

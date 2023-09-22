@@ -76,12 +76,17 @@ cdc(dat)
 ## Apply the CDC with Koenig's bi-split and an expected decrease in phase B.
 cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit")
 
-## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase.
+## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase
 cdc(exampleABAB, trend_method = "trisplit", phases = c(1,4))
 
 ## Apply the Dual-Criterion (DC) method (i.e., mean and trend without
 ##shifting).
-cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit", conservative = 0)
+cdc(
+ exampleAB_decreasing,
+ decreasing = TRUE,
+ trend_method = "bisplit",
+ conservative = 0
+)
 
 
 }

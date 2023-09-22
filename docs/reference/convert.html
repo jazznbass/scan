@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.60.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.60.0.9999</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,6 +122,36 @@ format.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">convert</span><span class="op">(</span><span class="va">exampleABC</span>, file <span class="op">=</span> <span class="va">filename</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> case1 &lt;- scdf(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   values = c(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     58, 56, 60, 63, 51, 45, 44, 59, 45, 39, 83, 65, 70, 83, 70, 85, 47, 66,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     77, 75, 51, 87, 80, 68, 70, 56, 52, 70, 83, 63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   phase_design = c(A = 10, B = 10, C = 10),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   name = "Marie"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> )</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> case2 &lt;- scdf(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   values = c(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     47, 41, 47, 52, 54, 65, 55, 37, 51, 60, 60, 65, 55, 46, 49, 54, 77, 73,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     97, 64, 84, 71, 66, 74, 78, 68, 52, 76, 63, 54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   phase_design = c(A = 15, B = 8, C = 7),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   name = "Rosalind"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> )</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> case3 &lt;- scdf(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   values = c(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     50, 45, 63, 53, 66, 57, 35, 45, 74, 63, 47, 45, 47, 36, 51, 55, 35, 66,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     59, 55, 73, 60, 85, 62, 79, 69, 87, 76, 90, 48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   phase_design = c(A = 20, B = 7, C = 3),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   name = "Lise"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> )</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> study &lt;- c(</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   case1, case2, case3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ) </span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">study</span>, <span class="va">exampleABC</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>

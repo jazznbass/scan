@@ -25,7 +25,11 @@
 #' pet(dat, ci = .99)
 #'
 #' @export
-pet <- function(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = c(1, 2)) {
+pet <- function(data, 
+                dvar, pvar, mvar, 
+                ci = 0.95, 
+                decreasing = FALSE, 
+                phases = c(1, 2)) {
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
@@ -45,25 +49,42 @@ pet <- function(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = 
   
   for(i in 1:N) {
     formula <- as.formula(paste0(dvar, "~", mvar))
-    model <- lm(formula, data = data[[i]][data[[i]][, pvar] == "A",], na.action = na.omit)
+    model <- lm(
+      formula, 
+      data = data[[i]][data[[i]][, pvar] == "A",], 
+      na.action = na.omit
+    )
     B <- data[[i]][data[[i]][, pvar] == "B",]
     res <- predict(model, B, se.fit = TRUE)
     nB <- nrow(B)
     if(!decreasing) {
       pet.ci[i] <- mean(B[, dvar] > (res$fit + res$se.fit * se.factor)) * 100
       pet[i]    <- mean(B[, dvar] > res$fit)*100
-      p[i]      <- binom.test(sum(B[, dvar] > res$fit), nB, alternative = "greater")$p.value
+      p[i]      <- binom.test(
+        sum(B[, dvar] > res$fit), nB, alternative = "greater"
+      )$p.value
     } else {
       pet.ci[i] <- mean(B[, dvar] < (res$fit - res$se.fit * se.factor)) * 100
-      pet[i]    <- mean(B[, dvar] < res$fit) * 100
-      p[i]      <- binom.test(sum(B[, dvar] < res$fit), nB, alternative = "greater")$p.value
+      pet[i] <- mean(B[, dvar] < res$fit) * 100
+      p[i] <- binom.test(
+        sum(B[, dvar] < res$fit), nB, alternative = "greater"
+      )$p.value
     }
   }
 
+  pet <- data.frame(
+    Case = revise_names(data),
+    PET = pet, 
+    "PET CI" = pet.ci, 
+    binom.p = p, 
+    check.names = FALSE
+  )
+  
   out <- list(
-    PET = pet, PET.ci = pet.ci, p = p, ci.percent = ci * 100, 
-    se.factors = se.factor, N = N, decreasing = decreasing, 
-    case.names = revise_names(names(data), length(data))
+    PET = pet,
+    ci.percent = ci * 100, 
+    se.factors = se.factor, 
+    decreasing = decreasing
   )
   class(out) <- c("sc_pet")
   attr(out, opt("phase")) <- pvar

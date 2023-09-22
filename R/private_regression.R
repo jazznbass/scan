@@ -48,7 +48,7 @@
     out[match("(Intercept)", rn)] <- "Intercept"
   
   phase <- attr(x, opt("phase"))
-  out <- gsub(  phase, paste0("Level ", phase," "), out)
+  out <- gsub("phase", paste0("Level ", phase," "), out)
   out <- gsub("inter", paste0("Slope ", phase," "), out)
 }
 

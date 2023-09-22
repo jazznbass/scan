@@ -33,10 +33,13 @@ case.} \item{N}{Number of cases.}
 The \code{\link[=nap]{nap()}} function calculates the nonoverlap of all pairs (NAP; Parker &
 Vannest, 2009).  NAP summarizes the overlap between all pairs of phase A and
 phase B data points.  If an increase of phase B scores is expected, a
-non-overlapping pair has a higher phase B data point.  The NAP equals
-\emph{number of pairs showing no overlap / number of pairs}.  Because NAP can
-only take values between 50 and 100 percent, a rescaled and therefore more
-intuitive NAP (0-100\\%) is also displayed.
+non-overlapping pair has a higher phase B data point. The NAP equals
+\emph{number of pairs showing no overlap / number of pairs} where ties are
+counted as half non-overlaps.  Because NAP can take values between 0 and 100
+percent where values below 50 percent indicate an inverse effect, an nap
+rescaled from -100 to 100 percent where negative
+values indicate an inverse effect is also displayed (\eqn{nap_{rescaled} = 2
+* nap - 100}).
 }
 \examples{
 

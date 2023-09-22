@@ -18,6 +18,9 @@ options(
 
 res <- list()
 
+res$pipe <- " |> "
+res$pipe_br <- paste0(res$pipe, "\n")
+
 # choices ------
 
 res$choices <- list()
@@ -75,6 +78,7 @@ res$choices$fn_stats <- c(
   "Data trends" = "trend",
   "Auto correlations" = "autocorr",
   "Piecewise regression" = "plm",
+  "Multivariate piecewise regression" = "mplm",
   "Hierarchical piecewise regression" = "hplm",
   "Conservative Dual-Criterion" = "cdc",
   "Tau U" = "tau_u",
@@ -124,6 +128,8 @@ values = local_regression(values)
 values2 = values - max(values[phase=="A"])
 across_cases(values2 = scale(values)
 '
+
+res$placeholder$stats_out_args <- "e.g.: digits = 2; meta = FALSE"
 
 res$placeholder$plot_arguments <- '(choose one or more of the templates below and experiment with the syntax here.)
 '
@@ -192,7 +198,7 @@ res$msg$no_case_scdf <-
 "No case has been defined yet.
 You can:
 1. create a new case (fill in 'values' and click 'Add')
-2. load a dataset (click 'Load file' to import an rds, csv, or excel file)
+2. load a dataset (click 'Open file' to import an rds, csv, or excel file)
 3. choose an example scdf (from 'Load example')
 "
 
@@ -200,6 +206,8 @@ res$msg$no_case <-
 "There is no case defined yet.
 Please define a case on the 'Data' tab first.
 "
+
+res$msg$load_page <- "Please choose an example scdf or open a file in rds, xlsx, csv, or R-code format."
 
 res$help_page <- structure(
   "<h4 id=\"welcome-to-shiny-scan\">Welcome to <em><strong>shiny scan</strong></em>!</h4>

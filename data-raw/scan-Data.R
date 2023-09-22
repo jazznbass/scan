@@ -114,8 +114,8 @@ Grosche2011 <- c(
 
 names(Grosche2011) <- c("Eva", "Georg", "Olaf")
 
-scdf_attr(Grosche2011, "info") <- "Data from Grosche, M. (2011). Effekte einer direkt-instruktiven F\u00f6rderung der Lesegenauigkeit. Empirische Sonderp\u00E4dagogik, 3(2), 147-161."
-scdf_attr(Grosche2011, "author") <- "Michael Grosche"
+scdf_attr(Grosche2011, "info") <- "Direct instruction intervention on reading accuracy."
+scdf_attr(Grosche2011, "author") <- "Grosche, M. (2011). Effekte einer direkt-instruktiven F\u00f6rderung der Lesegenauigkeit. Empirische Sonderp\u00E4dagogik, 3(2), 147-161."
 
 filenames <- c(filenames, "Grosche2011")
 
@@ -231,7 +231,7 @@ case11 <- scdf(
 
 byHeart2011 <- c(case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11)
 scdf_attr(byHeart2011, "info") <- "Data from university students learning vocabulary by heart and checking their progress with 20 flashcards each session."
-scdf_attr(byHeart2011, "author") <- "Juergen Wilbert"
+scdf_attr(byHeart2011, "author") <- "Juergen Wilbert, 2011"
 filenames <- c(filenames, "byHeart2011")
 
 
@@ -293,8 +293,8 @@ case6 <- scdf(
 
 GruenkeWilbert2014 <- c(case1, case2, case3, case4, case5, case6)
 names(GruenkeWilbert2014) <- c("Anton", "Bob", "Paul", "Robert", "Sam", "Tim")
-scdf_attr(GruenkeWilbert2014, "info") <- "Data from an intervention study on text comprehension. Gruenke, M., Wilbert, J., & Stegemann-Calder, K. (2013). Analyzing the effects of story mapping on the reading comprehension of children with low intellectual abilities. Learning Disabilities: A Contemporary Journal, 11(2), 51-64."
-scdf_attr(GruenkeWilbert2014, "author") <- "Matthias Gruenke and Juergen Wilbert"
+scdf_attr(GruenkeWilbert2014, "info") <- "Data from an intervention study on text comprehension."
+scdf_attr(GruenkeWilbert2014, "author") <- "Gruenke, M., Wilbert, J., & Stegemann-Calder, K. (2013). Analyzing the effects of story mapping on the reading comprehension of children with low intellectual abilities. Learning Disabilities: A Contemporary Journal, 11(2), 51-64."
 
 filenames <- c(filenames, "GruenkeWilbert2014")
 
@@ -384,7 +384,7 @@ Grosche2014 <-
 
 
 scdf_attr(Grosche2014, "info") <- "Data from a multiple material multi person intervention study on reading."
-scdf_attr(Grosche2014, "author") <- "Michael Grosche, Timo Lueke and Juergen Wilbert"
+scdf_attr(Grosche2014, "author") <- "Michael Grosche, Timo Lueke, and Juergen Wilbert"
 
 filenames <- c(filenames, "Grosche2014")
 
@@ -879,8 +879,8 @@ case35 <- scdf(
 )
 
 Leidig2018 <- c(case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16, case17, case18, case19, case20, case21, case22, case23, case24, case25, case26, case27, case28, case29, case30, case31, case32, case33, case34, case35)
-scdf_attr(Leidig2018, "info") <- "Data from: Leidig, T., Casale, G., Wilbert, J., Hennemann, T., Volpe, R. J., Briesch, A., & Grosche, M. (2022). Individual, generalized, and moderated effects of the good behavior game on at-risk primary school students: A multilevel multiple baseline study using behavioral progress monitoring. Frontiers in Education, 7. https://www.frontiersin.org/articles/10.3389/feduc.2022.917138"
-
+#scdf_attr(Leidig2018, "info") <- NULL
+scdf_attr(Leidig2018, "author") <- "Leidig, T., Casale, G., Wilbert, J., Hennemann, T., Volpe, R. J., Briesch, A., & Grosche, M. (2022). Individual, generalized, and moderated effects of the good behavior game on at-risk primary school students: A multilevel multiple baseline study using behavioral progress monitoring. Frontiers in Education, 7. https://www.frontiersin.org/articles/10.3389/feduc.2022.917138"
 filenames <- c(filenames, "Leidig2018")
 
 Leidig2018_l2 <- data.frame(
@@ -902,7 +902,7 @@ filenames <- c(filenames, "Leidig2018_l2")
 # Example from Beretvas, S., & Chung, H. (2008). An evaluation of  --------
 
 Beretvas2008 <- scdf(c(0.7, 1.60, 1.40, 1.60, 1.90, 1.20, 1.30, 1.60, 10.00, 10.80, 11.90, 11.00, 13.00, 12.70, 14.00), B_start = 9)
-scdf_attr(Beretvas2008, "info") <- "Example from Beretvas, S., & Chung, H. (2008). An evaluation of modified R2-change effect size indices for single-subject experimental designs. Evidence-Based Communication Assessment and Intervention, 2, 120-128."
+scdf_attr(Beretvas2008, "author") <- "Beretvas, S., & Chung, H. (2008). An evaluation of modified R2-change effect size indices for single-subject experimental designs. Evidence-Based Communication Assessment and Intervention, 2, 120-128."
 
 filenames <- c(filenames, "Beretvas2008")
 
@@ -924,7 +924,7 @@ filenames <- c(filenames, "Waddell2011")
 # Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011) --------
 
 Parker2011 <- scdf(c(2, 3, 5, 3, 4, 5, 5, 7, 6), phase_design = c(A = 4, B = 5))
-scdf_attr(Parker2011, "info") <- "Example from Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011). Combining Nonoverlap and Trend for Single-Case Research: Tau-U. Behavior Therapy, 42(2), 284-299."
+scdf_attr(Parker2011, "author") <- "Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011). Combining Nonoverlap and Trend for Single-Case Research: Tau-U. Behavior Therapy, 42(2), 284-299."
 
 filenames <- c(filenames, "Parker2011")
 
@@ -934,7 +934,7 @@ Parker2009 <- c(
          B1 = 0, 50, 30, 0, 0,40, 50, 70, 40, 60, 60, 70, 70, 60, 60, 60, 
          A2 = 30, 50, 0, 0, 
          B2 = 30, 80, 70, 80, 80, 100, 70, 100, 90,70, 70, 80)),
-  info = "Parker, R. I., Vannest, K. J., & Brown, L. (2009). The improvement rate difference for single-case research. Exceptional Children, 75(2), 135-150."
+  author = "Parker, R. I., Vannest, K. J., & Brown, L. (2009). The improvement rate difference for single-case research. Exceptional Children, 75(2), 135-150."
 )
 
 filenames <- c(filenames, "Parker2009")
@@ -945,7 +945,7 @@ Parker2007 <- c(
   scdf(c(A = 20, 18, 20, B = 20, 21, 23), name = "Adam"),
   scdf(c(A = 18, 17, 16, 20, B = 19, 22, 19, 20, 20, 24), name = "Bob"),
   scdf(c(A = 19, 18, 24, 22, 21, 19, B = 30, 21, 23, 28, 32, 34), name = "Carol"),
-  info = "Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage of All Non-Overlapping Data (PAND) An Alternative to PND. The Journal of Special Education, 40(4), 194-204.
+  author = "Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage of All Non-Overlapping Data (PAND) An Alternative to PND. The Journal of Special Education, 40(4), 194-204.
 "
 )
 
@@ -955,14 +955,14 @@ filenames <- c(filenames, "Parker2007")
 # Borckardt, J. J., & Nash, M. R. (2014). Simulation modelling ana --------
 
 Borckardt2014 <- scdf(c(7, 9, 8, 7, 7, 8, 8, 3, 4, 2, 4, 2, 1, 4, 5, 3, 2, 1, 2, 4, 4), B_start = 8)
-scdf_attr(Borckardt2014, "info") <- "Example from Borckardt, J. J., & Nash, M. R. (2014). Simulation modelling analysis for small sets of single-subject data collected over time. Neuropsychological Rehabilitation, 24(3-4), 492-506."
+scdf_attr(Borckardt2014, "author") <- "Borckardt, J. J., & Nash, M. R. (2014). Simulation modelling analysis for small sets of single-subject data collected over time. Neuropsychological Rehabilitation, 24(3-4), 492-506."
 
 filenames <- c(filenames, "Borckardt2014")
 
 # Lenz, A. S. (2013). Calculating Effect Size in Single-Case Resea --------
 
 Lenz2013 <- scdf(c(22, 25, 23, 26, 20, 22, 25, 26, 25, 22, 22, 18, 21, 18, 20, 21, 18, 16, 16, 14, 14, 12), phase_design = c("A" = 7, "B" = 15))
-scdf_attr(Lenz2013, "info") <- "Example from Lenz, A. S. (2013). Calculating Effect Size in Single-Case Research: A Comparison of Nonoverlap Methods. Measurement and Evaluation in Counseling and Development, 46(1), 64-73."
+scdf_attr(Lenz2013, "author") <- "Lenz, A. S. (2013). Calculating Effect Size in Single-Case Research: A Comparison of Nonoverlap Methods. Measurement and Evaluation in Counseling and Development, 46(1), 64-73."
 
 filenames <- c(filenames, "Lenz2013")
 
@@ -984,7 +984,7 @@ Tarlow2017 <- c(
   scdf(c(A = 9, 6, 11, 5, B = 4, 7, 8, 7, 3, 7, 1), name = "example_a"),
   scdf(c(A = 1, 2, 3, 4, 5, B = 2, 1, 0, 0, 0), name = "example_b"),
   scdf(c(A = 33, 25, 17, 25, 14, 13,14, B = 14, 15, 15, 4, 6, 9, 5 ,4 ,2 ,2 ,8, 11 ,7), name = "example_c"),
-  info = "Tarlow, K. R. (2017). An Improved Rank Correlation Effect Size Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior Modification, 41(4), 427-467. https://doi.org/10.1177/0145445516676750"
+  author = "Tarlow, K. R. (2017). An Improved Rank Correlation Effect Size Statistic for Single-Case Designs: Baseline Corrected Tau. Behavior Modification, 41(4), 427-467. https://doi.org/10.1177/0145445516676750"
 )
 
 filenames <- c(filenames,"Tarlow2017")
@@ -993,7 +993,7 @@ filenames <- c(filenames,"Tarlow2017")
 
 Parker2011b <- c(
 scdf(c(A = 20, 20, 26, 25, 22, 23, B = 28, 25, 24, 27, 30, 30, 29)),
-info = "Parker, R. I., Vannest, K. J., & Davis, J. L. (2011). Effect Size in Single-Case Research: A Review of Nine Nonoverlap Techniques. Behavior Modification, 35(4), 303-322. https://doi.org/10.1177/0145445511399147"
+author = "Parker, R. I., Vannest, K. J., & Davis, J. L. (2011). Effect Size in Single-Case Research: A Review of Nine Nonoverlap Techniques. Behavior Modification, 35(4), 303-322. https://doi.org/10.1177/0145445511399147"
 )
 
 filenames <- c(filenames, "Parker2011b")

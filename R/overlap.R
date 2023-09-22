@@ -68,11 +68,11 @@ overlap <- function(data, dvar, pvar, mvar,
     data <- data_list[i]
     df$PND[i] <- pnd(data, decreasing = decreasing)$PND
     df$PEM[i] <- pem(data, 
-      decreasing = decreasing, binom.test = FALSE, chi.test = FALSE)$PEM
-    df$PET[i] <- pet(data, decreasing = decreasing)$PET
+      decreasing = decreasing, binom.test = FALSE, chi.test = FALSE)$PEM$PEM
+    df$PET[i] <- pet(data, decreasing = decreasing)$PET$PET
     df$NAP[i] <- nap(data, decreasing = decreasing)$nap[[1, "NAP"]]
     df$"NAP rescaled"[i] <- nap(
-      data, decreasing = decreasing)$nap[[1, "Rescaled"]]
+      data, decreasing = decreasing)$nap[[1, "NAP Rescaled"]]
     df$PAND[i] <- pand(data, decreasing = decreasing)$pand
     df$IRD[i] <- ird(data, decreasing = decreasing)$ird
     df$`Tau_U(A)`[i] <- tau_u(data)$table[[1]]["A vs. B - Trend A", "Tau"]
