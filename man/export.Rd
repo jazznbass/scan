@@ -124,7 +124,6 @@ export(object, ...)
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
-  round = 2,
   nice = TRUE,
   ...
 )

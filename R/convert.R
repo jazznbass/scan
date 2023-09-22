@@ -89,8 +89,9 @@ convert <- function(scdf,
     sep = "\n\n"
   )
 
-  if (!silent) cat(complete_string, "\n", file = file)
-
+  if (!silent) cat(complete_string, "\n")
+  if (file != "") cat(complete_string, "\n", file = file)
+  
   invisible(complete_string)
 }
 
