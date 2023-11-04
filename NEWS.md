@@ -7,6 +7,10 @@
 - `nap()`: added Cohen's d and R-Squared effects.
 - `export()`: select argument for `nap`; new for `pem()`, `pet()`
 
+## New examples
+
+- `Parker2009b`
+
 # scan 0.60.0
 
 ## New function
