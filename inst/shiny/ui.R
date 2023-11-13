@@ -115,8 +115,8 @@ tab_transform <- tabPanel(
 navbar_data <- navbarMenu(
   "Data",
   tab_scdf,
-  tab_load,
-  tabPanel(downloadButton("test_save", "Save", class = "align: left;")),
+  tab_load#,
+  #tabPanel(downloadButton("test_save", "Save", class = "align: left;")),
   #tab_transform
 )
 
