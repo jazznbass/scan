@@ -9,7 +9,7 @@ rand_test(
   dvar,
   pvar,
   statistic = c("Mean B-A", "Mean A-B", "Median B-A", "Median A-B", "Mean |A-B|",
-    "Median |A-B|"),
+    "Median |A-B|", "SMD hedges", "SMD glass", "W-test"),
   number = 500,
   complete = FALSE,
   limit = 5,
@@ -33,16 +33,15 @@ the attributes in the scdf file.}
 
 \item{statistic}{Defines the statistic on which the comparison of phases A
 and B is based on. Default setting is \code{statistic = "Mean B-A"}. The
-following comparisons are possible: \itemize{ \item\code{"Mean A-B"}: Uses
+following comparisons are possible: \itemize{ \item\verb{Mean A-B}: Uses
 the difference between the mean of phase A and the mean of phase B. This is
 appropriate if a decrease of scores was expected for phase B.
-\item\code{"Mean B-A"}: Uses the difference between the mean of phase B and
+\item\verb{Mean B-A}: Uses the difference between the mean of phase B and
 the mean of phase A. This is appropriate if an increase of scores was
-expected for phase B.  \item\code{"Mean |A-B|"}: Uses the absolute value of
-the difference between the means of phases A and B.  \item\code{"Median
-A-B"}: The same as \code{"Mean A-B"}, but based on the median.
-\item\code{"Median B-A"}: The same as \code{"Mean B-A"}, but based on the
-median.  }}
+expected for phase B.  \item\verb{Mean |A-B|}: Uses the absolute value of
+the difference between the means of phases A and B.  \item\verb{Median A-B}: The same as \verb{Mean A-B}, but based on the median.
+\item\verb{Median B-A}: The same as \verb{Mean B-A}, but based on the
+median.  \item\code{SMD}: Standardizes mean difference of B-A as Hedges's g.}}
 
 \item{number}{Sample size of the randomization distribution. The exactness of
 the p-value can not exceed \eqn{1/number} (i.e., \code{number = 100} results in
@@ -103,13 +102,14 @@ data sets.} \item{possible.combinations}{Number of possible combinations
 under the given restrictions.} \item{auto.corrected.number}{\code{TRUE}
 indicates that a corrected number of combinations was used. This happens, if
 the number of possible combinations (under the given restrictions) undercuts
-the requested \code{number} of combinations.}
+the requested \code{number} of combinations.} \item{ecxlude.equal}{ see argument
+above}
 }
 \description{
 The \code{rand_test} function computes a randomization test for single or multiple
 baseline single-case data.  The function is based on an algorithm from the
-\code{SCRT} package (Bulte & Onghena, 2009, 2012), but rewritten and extended
-for the use in AB designs.
+\code{SCRT} package (Bulte & Onghena, 2009, 2012), but rewritten and extended for
+the use in AB designs.
 }
 \examples{
 

@@ -2,23 +2,23 @@
 #'
 #' The `rand_test` function computes a randomization test for single or multiple
 #' baseline single-case data.  The function is based on an algorithm from the
-#' `SCRT` package (Bulte & Onghena, 2009, 2012), but rewritten and extended
-#' for the use in AB designs.
+#' `SCRT` package (Bulte & Onghena, 2009, 2012), but rewritten and extended for
+#' the use in AB designs.
 #'
 #'
 #' @inheritParams .inheritParams
 #' @param statistic Defines the statistic on which the comparison of phases A
 #'   and B is based on. Default setting is `statistic = "Mean B-A"`. The
-#' following comparisons are possible: \itemize{ \item\code{"Mean A-B"}: Uses
+#' following comparisons are possible: \itemize{ \item`Mean A-B`: Uses
 #' the difference between the mean of phase A and the mean of phase B. This is
 #' appropriate if a decrease of scores was expected for phase B.
-#' \item\code{"Mean B-A"}: Uses the difference between the mean of phase B and
+#' \item`Mean B-A`: Uses the difference between the mean of phase B and
 #' the mean of phase A. This is appropriate if an increase of scores was
-#' expected for phase B.  \item\code{"Mean |A-B|"}: Uses the absolute value of
-#' the difference between the means of phases A and B.  \item\code{"Median
-#' A-B"}: The same as \code{"Mean A-B"}, but based on the median.
-#' \item\code{"Median B-A"}: The same as \code{"Mean B-A"}, but based on the
-#' median.  }
+#' expected for phase B.  \item`Mean |A-B|`: Uses the absolute value of
+#' the difference between the means of phases A and B.  \item`Median
+#' A-B`: The same as `Mean A-B`, but based on the median.
+#' \item`Median B-A`: The same as `Mean B-A`, but based on the
+#' median.  \item`SMD`: Standardizes mean difference of B-A as Hedges's g.}
 #' @param number Sample size of the randomization distribution. The exactness of
 #'   the p-value can not exceed \eqn{1/number} (i.e., `number = 100` results in
 #'   p-values with an exactness of one percent). Default is `number = 500`. For
@@ -53,7 +53,7 @@
 #'   points in phase B.} \item{limit}{Numeric from function call (see
 #'   \code{Arguments} above).}
 #' \item{startpoints}{A vector defining the start points passed from the
-#' function call (see \code{Arguments} above).} \item{p.value}{P-value of the
+#' function call (see `Arguments` above).} \item{p.value}{P-value of the
 #' randomization test for the given data.} \item{number}{Sample size of
 #' randomization distribution from function call (see \code{Arguments} above).}
 #' \item{complete}{Logical argument from function call (see \code{Arguments}
@@ -62,10 +62,11 @@
 #' \item{Z}{Z-value of observed test statistic.} \item{p.z.single}{Probability
 #' of z-value.} \item{distribution}{Test statistic distribution from randomized
 #' data sets.} \item{possible.combinations}{Number of possible combinations
-#' under the given restrictions.} \item{auto.corrected.number}{\code{TRUE}
+#' under the given restrictions.} \item{auto.corrected.number}{`TRUE`
 #' indicates that a corrected number of combinations was used. This happens, if
 #' the number of possible combinations (under the given restrictions) undercuts
-#' the requested \code{number} of combinations.}
+#' the requested `number` of combinations.} \item{ecxlude.equal}{ see argument 
+#' above}
 #' @author Juergen Wilbert
 #' @references Bulte, I., & Onghena, P. (2009). Randomization tests for
 #'   multiple-baseline designs: An extension of the SCRT-R package.
@@ -84,7 +85,8 @@
 #' @export
 rand_test <- function (data, dvar, pvar, 
                        statistic = c("Mean B-A", "Mean A-B", "Median B-A", 
-                                     "Median A-B", "Mean |A-B|", "Median |A-B|"), 
+                                     "Median A-B", "Mean |A-B|", "Median |A-B|",
+                                     "SMD hedges", "SMD glass", "W-test"), 
                        number = 500, 
                        complete = FALSE, 
                        limit = 5, 
@@ -119,6 +121,8 @@ rand_test <- function (data, dvar, pvar,
   obs <- lapply(data, function(x) x[, dvar])
   MT  <- lapply(data, nrow)
   N   <- length(data)
+  
+  testdirection <- "greater"
   
   if (identical(exclude.equal, "auto")) exclude.equal <- N == 1
   
@@ -246,9 +250,33 @@ rand_test <- function (data, dvar, pvar,
     obs.stat <- median(ma, na.rm = TRUE)
   }
 
+  if (statistic == "SMD hedges") {
+    res <- rand_test_smd(rnd.a, rnd.b, a, b, method = "hedges")
+    obs.stat <- res$obs_stat
+    dist <- res$dist
+  }  
+  
+  if (statistic == "SMD glass") {
+    res <- rand_test_smd(rnd.a, rnd.b, a, b, method = "glass")
+    obs.stat <- res$obs_stat
+    dist <- res$dist
+  }  
+  
+  if (statistic == "W-test") {
+    res <- rand_test_u_test(rnd.a, rnd.b, a, b)
+    obs.stat <- res$obs_stat
+    dist <- res$dist
+    testdirection <- "less"
+  }   
+
+  
 # p value -----------------------------------------------------------------
 
-  if (!exclude.equal) test <- dist >= obs.stat else test <- dist > obs.stat
+  if (testdirection == "greater") {
+    test <- if (!exclude.equal) dist >= obs.stat else dist > obs.stat
+  } else {
+    test <- if (!exclude.equal) dist <= obs.stat else dist < obs.stat
+  }
   
   p.value <- sum(test) / number
   
@@ -271,7 +299,8 @@ rand_test <- function (data, dvar, pvar,
   }
   
   Z <- (obs.stat - mean(dist, na.rm = TRUE)) / sd(dist, na.rm = TRUE)
-  p.Z.single <- 1 - pnorm(Z)
+  p.Z.single <- if (testdirection == "greater") 1 - pnorm(Z) else pnorm(Z)
+    
   possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[N]
 
   out <- list(
@@ -291,7 +320,9 @@ rand_test <- function (data, dvar, pvar,
     p.Z.single = p.Z.single, 
     distribution = dist, 
     possible.combinations = possible.combinations, 
-    auto.corrected.number = auto.corrected.number
+    auto.corrected.number = auto.corrected.number,
+    exclude.equal = exclude.equal,
+    testdirection = testdirection
   )
   
   class(out) <- c("sc_rand")
@@ -316,4 +347,93 @@ rand.test <- function(...) {
   rand_test(...)
 }
 
+rand_test_smd <- function(rnd_a, rnd_b, a, b, method) {
+  
+  
+  N <- length(rnd_a[[1]])
+  number <- length(rnd_a)
+  
+  stats_a <- unlist(lapply(rnd_a, function(x) lapply(x, mean, na.rm = TRUE)))
+  stats_b <- unlist(lapply(rnd_b, function(x) lapply(x, mean, na.rm = TRUE)))
+  sds_a <- unlist(lapply(rnd_a, function(x) lapply(x, sd, na.rm = TRUE)))
+  sds_b <- unlist(lapply(rnd_b, function(x) lapply(x, sd, na.rm = TRUE)))
+  ns_a <- unlist(lapply(rnd_a, function(x) lapply(x, length)))
+  ns_b <- unlist(lapply(rnd_b, function(x) lapply(x, length)))
+  
+  # Hedges'g + Durlak correction
+  
+  if (method == "hedges") {
+    dat <- (stats_b - stats_a) / 
+           sqrt(((ns_a - 1) * sds_a^2 + (ns_b - 1) * sds_b^2) / (ns_a + ns_b - 2)) *
+           (((ns_a+ns_b) - 3) / ((ns_a+ns_b) - 2.25) * sqrt(((ns_a+ns_b) - 2) / (ns_a+ns_b)))
+  } else if (method == "glass") {
+    dat <- (stats_b - stats_a) / sds_a
+  }
+  
+  ma <- matrix(
+    dat, 
+    ncol = N, 
+    nrow = number, 
+    byrow = TRUE
+  )   
+ 
+  dist <- apply(ma, 1, function(x) sqrt(sum(x^2) / length(x)))
+  
+  stats_a <- unlist(lapply(a, mean, na.rm = TRUE))
+  stats_b <- unlist(lapply(b, mean, na.rm = TRUE))
+  sds_a <- unlist(lapply(a, sd, na.rm = TRUE))
+  sds_b <- unlist(lapply(b, sd, na.rm = TRUE)) 
+  ns_a <- unlist(lapply(a, length))
+  ns_b <- unlist(lapply(b, length))
+  
+  if (method == "hedges") {
+    dat <- (stats_b - stats_a) / 
+      sqrt(((ns_a - 1) * sds_a^2 + (ns_b - 1) * sds_b^2) / (ns_a + ns_b - 2)) *
+      (((ns_a+ns_b) - 3) / ((ns_a+ns_b) - 2.25) * sqrt(((ns_a+ns_b) - 2) / (ns_a+ns_b)))
+  } else if (method == "glass") {
+    dat <- (stats_b - stats_a) / sds_a
+  }
 
+  list(
+    obs_stat = sqrt(sum(dat^2) / length(dat)),
+    dist = dist
+  )
+}
+
+rand_test_u_test <- function(rnd_a, rnd_b, a, b) {
+  
+  
+  N <- length(rnd_a[[1]])
+  number <- length(rnd_a)
+ 
+  rnd_a <- unlist(rnd_a,recursive = FALSE)
+  rnd_b <- unlist(rnd_b,recursive = FALSE)
+  
+  dat <- mapply(
+    function(a, b) {
+      suppressWarnings(wilcox.test(a,b)$statistic)
+    }, 
+    a = rnd_a, b = rnd_b
+  )
+  
+  ma <- matrix(
+    dat, 
+    ncol = N, 
+    nrow = number, 
+    byrow = TRUE
+  )   
+  
+  dist <- apply(ma, 1, mean, na.rm = TRUE)
+  
+  dat <- mapply(
+    function(a, b) {
+      suppressWarnings(wilcox.test(a,b)$statistic)
+    }, 
+    a = a, b = b
+  )
+  
+  list(
+    obs_stat = sqrt(sum(dat^2) / length(dat)),
+    dist = dist
+  )
+}
