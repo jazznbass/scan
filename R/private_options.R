@@ -36,11 +36,16 @@ opt <- function(x) {
   attributes(x[[1]])$textVersion
 }
 
+.opt$tip <- list(
+    "Visit the free online book on scan at: https://jazznbass.github.io/scan-Book/",
+    "For information on citing scan, type citation(\"scan\").",
+    "Start the graphical user interface of scan with shinyscan().",
+    "Post a question or improvement idea on scan at https://github.com/jazznbass/scan/discussions",
+    "Post issues at https://github.com/jazznbass/scan/issues",
+    "Find the online help-pages at https://jazznbass.github.io/scan/"
+  )
+
 .opt$startup_message <- paste0(
-  "\033[34m", 
-  "scan ",utils::packageVersion("scan")," (",utils::packageDate('scan'),")\n",
-  #"Single-Case Data Analysis for Single and Multiple Baseline Designs\n",
-  "\033[31m",
-  paste0("For information on citing scan, type citation(\"scan\").")
+  "scan ",utils::packageVersion("scan")," (",utils::packageDate('scan'),")\n"
 )
 
