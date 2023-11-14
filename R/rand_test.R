@@ -86,7 +86,8 @@
 rand_test <- function (data, dvar, pvar, 
                        statistic = c("Mean B-A", "Mean A-B", "Median B-A", 
                                      "Median A-B", "Mean |A-B|", "Median |A-B|",
-                                     "SMD hedges", "SMD glass", "W-test"), 
+                                     "SMD hedges", "SMD glass", 
+                                     "W-test", "T-test"), 
                        number = 500, 
                        complete = FALSE, 
                        limit = 5, 
@@ -159,27 +160,27 @@ rand_test <- function (data, dvar, pvar,
   
 # Sample Random A and B phases ---------------------------------------------
   
-  rnd.a <- list()
+  rnd_a <- list()
   for (i in 1:number) {
     ascores <- list()
     for (case in 1:N)
       ascores[[case]] <- data[[case]][1:(startpts[i, case] - 1), dvar]
-    rnd.a[[i]] <- ascores
+    rnd_a[[i]] <- ascores
   }
   
-  rnd.b <- list()
+  rnd_b <- list()
   for (i in 1:number) {
     ascores <- list()
     for (case in 1:N)
       ascores[[case]] <- data[[case]][startpts[i, case]:MT[[case]], dvar]
-    rnd.b[[i]] <- ascores
+    rnd_b[[i]] <- ascores
   }
   
 # Functions for phase differences -----------------------------------------
 
   if (statistic == "B-A" || statistic == "Mean B-A") {
-    means.b <- unlist(lapply(rnd.b, function(x) lapply(x, mean,na.rm = TRUE)))
-    means.a <- unlist(lapply(rnd.a, function(x) lapply(x, mean,na.rm = TRUE)))
+    means.b <- unlist(lapply(rnd_b, function(x) lapply(x, mean,na.rm = TRUE)))
+    means.a <- unlist(lapply(rnd_a, function(x) lapply(x, mean,na.rm = TRUE)))
     ma <- matrix(means.b - means.a, ncol = N, nrow = number, byrow = TRUE)
     
     dist <- apply(ma, 1, mean, na.rm = TRUE)
@@ -190,8 +191,8 @@ rand_test <- function (data, dvar, pvar,
   }
   
   if (statistic == "A-B" || statistic == "Mean A-B") {
-    means.b <- unlist(lapply(rnd.b, function(x) lapply(x, mean,na.rm = TRUE)))
-    means.a <- unlist(lapply(rnd.a, function(x) lapply(x, mean,na.rm = TRUE)))
+    means.b <- unlist(lapply(rnd_b, function(x) lapply(x, mean,na.rm = TRUE)))
+    means.a <- unlist(lapply(rnd_a, function(x) lapply(x, mean,na.rm = TRUE)))
     ma <- matrix(means.a - means.b, ncol = N, nrow = number, byrow = TRUE)
     
     dist <- apply(ma, 1, mean,na.rm = TRUE)
@@ -202,8 +203,8 @@ rand_test <- function (data, dvar, pvar,
   }
   
   if (statistic == "Median B-A") {
-    medians.b <- unlist(lapply(rnd.b, function(x) lapply(x,median,na.rm = TRUE)))
-    medians.a <- unlist(lapply(rnd.a, function(x) lapply(x,median,na.rm = TRUE)))
+    medians.b <- unlist(lapply(rnd_b, function(x) lapply(x,median,na.rm = TRUE)))
+    medians.a <- unlist(lapply(rnd_a, function(x) lapply(x,median,na.rm = TRUE)))
     ma <- matrix(medians.b-medians.a, ncol = N, nrow = number, byrow = TRUE)
     
     dist <- apply(ma,1,median,na.rm = TRUE)
@@ -214,8 +215,8 @@ rand_test <- function (data, dvar, pvar,
   }
   
   if (statistic == "Median A-B") {
-    medians.b <- unlist(lapply(rnd.b, function(x) lapply(x, median, na.rm = TRUE)))
-    medians.a <- unlist(lapply(rnd.a, function(x) lapply(x, median, na.rm = TRUE)))
+    medians.b <- unlist(lapply(rnd_b, function(x) lapply(x, median, na.rm = TRUE)))
+    medians.a <- unlist(lapply(rnd_a, function(x) lapply(x, median, na.rm = TRUE)))
     ma <- matrix(medians.a - medians.b, ncol = N, nrow = number, byrow = TRUE)
     
     dist <- apply(ma, 1, median,na.rm = TRUE)
@@ -227,8 +228,8 @@ rand_test <- function (data, dvar, pvar,
   
   
   if (statistic == "Mean |A-B|") {
-    means.b <- unlist(lapply(rnd.b, function(x) lapply(x, mean, na.rm = TRUE)))
-    means.a <- unlist(lapply(rnd.a, function(x) lapply(x, mean, na.rm = TRUE)))
+    means.b <- unlist(lapply(rnd_b, function(x) lapply(x, mean, na.rm = TRUE)))
+    means.a <- unlist(lapply(rnd_a, function(x) lapply(x, mean, na.rm = TRUE)))
     ma <- matrix(abs(means.a - means.b), ncol = N, nrow = number, byrow = TRUE)
     
     dist <- apply(ma, 1, mean,na.rm = TRUE)
@@ -239,8 +240,8 @@ rand_test <- function (data, dvar, pvar,
   }
 
   if (statistic == "Median |A-B|") {
-    medians.b <- unlist(lapply(rnd.b, function(x) lapply(x, median, na.rm = TRUE)))
-    medians.a <- unlist(lapply(rnd.a, function(x) lapply(x, median, na.rm = TRUE)))
+    medians.b <- unlist(lapply(rnd_b, function(x) lapply(x, median, na.rm = TRUE)))
+    medians.a <- unlist(lapply(rnd_a, function(x) lapply(x, median, na.rm = TRUE)))
     ma <- matrix(abs(medians.a - medians.b), ncol = N, nrow = number, byrow = TRUE)
     dist <- apply(ma, 1, median,na.rm = TRUE)
     
@@ -251,24 +252,30 @@ rand_test <- function (data, dvar, pvar,
   }
 
   if (statistic == "SMD hedges") {
-    res <- rand_test_smd(rnd.a, rnd.b, a, b, method = "hedges")
+    res <- rand_test_smd(rnd_a, rnd_b, a, b, method = "hedges")
     obs.stat <- res$obs_stat
     dist <- res$dist
   }  
   
   if (statistic == "SMD glass") {
-    res <- rand_test_smd(rnd.a, rnd.b, a, b, method = "glass")
+    res <- rand_test_smd(rnd_a, rnd_b, a, b, method = "glass")
     obs.stat <- res$obs_stat
     dist <- res$dist
   }  
   
   if (statistic == "W-test") {
-    res <- rand_test_u_test(rnd.a, rnd.b, a, b)
+    res <- rand_test_u_test(rnd_a, rnd_b, a, b)
     obs.stat <- res$obs_stat
     dist <- res$dist
     testdirection <- "less"
   }   
 
+  if (statistic == "T-test") {
+    res <- rand_test_t_test(rnd_a, rnd_b, a, b)
+    obs.stat <- res$obs_stat
+    dist <- res$dist
+  }     
+  
   
 # p value -----------------------------------------------------------------
 
@@ -400,12 +407,50 @@ rand_test_smd <- function(rnd_a, rnd_b, a, b, method) {
   )
 }
 
-rand_test_u_test <- function(rnd_a, rnd_b, a, b) {
+rand_test_t_test <- function(rnd_a, rnd_b, a, b) {
   
   
   N <- length(rnd_a[[1]])
   number <- length(rnd_a)
  
+  rnd_a <- unlist(rnd_a,recursive = FALSE)
+  rnd_b <- unlist(rnd_b,recursive = FALSE)
+  
+  dat <- mapply(
+    function(a, b) {
+      suppressWarnings(t.test(b,a)$statistic)
+    }, 
+    a = rnd_a, b = rnd_b
+  )
+  
+  ma <- matrix(
+    dat, 
+    ncol = N, 
+    nrow = number, 
+    byrow = TRUE
+  )   
+  
+  dist <- apply(ma, 1, mean, na.rm = TRUE)
+  
+  dat <- mapply(
+    function(a, b) {
+      suppressWarnings(t.test(b,a)$statistic)
+    }, 
+    a = a, b = b
+  )
+  
+  list(
+    obs_stat = mean(dat, na.rm = TRUE),
+    dist = dist
+  )
+}
+
+rand_test_u_test <- function(rnd_a, rnd_b, a, b) {
+  
+  
+  N <- length(rnd_a[[1]])
+  number <- length(rnd_a)
+  
   rnd_a <- unlist(rnd_a,recursive = FALSE)
   rnd_b <- unlist(rnd_b,recursive = FALSE)
   
@@ -433,7 +478,7 @@ rand_test_u_test <- function(rnd_a, rnd_b, a, b) {
   )
   
   list(
-    obs_stat = sqrt(sum(dat^2) / length(dat)),
+    obs_stat = mean(dat, na.rm = TRUE),
     dist = dist
   )
 }

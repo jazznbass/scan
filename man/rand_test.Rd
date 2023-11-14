@@ -9,7 +9,7 @@ rand_test(
   dvar,
   pvar,
   statistic = c("Mean B-A", "Mean A-B", "Median B-A", "Median A-B", "Mean |A-B|",
-    "Median |A-B|", "SMD hedges", "SMD glass", "W-test"),
+    "Median |A-B|", "SMD hedges", "SMD glass", "W-test", "T-test"),
   number = 500,
   complete = FALSE,
   limit = 5,
