@@ -37,7 +37,8 @@ export(object, ...)
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
-  select = c("Case", "NAP", "NAP Rescaled", "w", "p", "d", "R²")
+  select = c("Case", "NAP", "NAP Rescaled", "w", "p", "d", "R²"),
+  ...
 )
 
 \method{export}{sc_overlap}(
@@ -58,7 +59,8 @@ export(object, ...)
   footnote = NA,
   filename = NA,
   kable_styling_options = list(),
-  kable_options = list()
+  kable_options = list(),
+  ...
 )
 
 \method{export}{sc_pet}(
@@ -67,7 +69,8 @@ export(object, ...)
   footnote = NA,
   filename = NA,
   kable_styling_options = list(),
-  kable_options = list()
+  kable_options = list(),
+  ...
 )
 
 \method{export}{sc_power}(

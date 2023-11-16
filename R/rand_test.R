@@ -212,6 +212,7 @@ rand_test <- function (data, dvar, pvar,
       fn = function(x) mean(x, na.rm = TRUE),
       method = "B-A"
     )
+   
   } 
   
   if (statistic == "Mean A-B") {
@@ -257,9 +258,9 @@ rand_test <- function (data, dvar, pvar,
 # p value -----------------------------------------------------------------
 
   if (testdirection == "greater") {
-    test <- if (!exclude.equal) res$dist >= res$obs.stat else res$dist > res$obs.stat
+    test <- if (!exclude.equal) res$dist >= res$obs_stat else res$dist > res$obs_stat
   } else {
-    test <- if (!exclude.equal) res$dist <= res$obs.stat else res$dist < res$obs.stat
+    test <- if (!exclude.equal) res$dist <= res$obs_stat else res$dist < res$obs_stat
   }
   
   p.value <- sum(test) / number
@@ -271,18 +272,18 @@ rand_test <- function (data, dvar, pvar,
     lab <- paste0(round(h$counts / length(res$dist) * 100, 0), "%")
     xlim <- c(min(h$breaks,na.rm = TRUE), max(h$breaks, na.rm = TRUE))
     ylim <- round(max(h$counts * 1.2))
-    if (res$obs.stat < xlim[1]) xlim[1] <- res$obs.stat
-    if (res$obs.stat > xlim[2]) xlim[2] <- res$obs.stat
+    if (res$obs_stat < xlim[1]) xlim[1] <- res$obs_stat
+    if (res$obs_stat > xlim[2]) xlim[2] <- res$obs_stat
     hist(
       res$dist, xlab = statistic, labels = lab, xlim = xlim, ylim = c(0, ylim), 
       ylab = "Frequency", main = "Random distribution", col = "lightgrey"
     )
-    abline(v = obs.stat, lty = 2, lwd = 2, col = "grey") 
+    abline(v = res$obs_stat, lty = 2, lwd = 2, col = "grey") 
     if (p.value < 0.5) pos <- 2 else pos <- 4
-    text(obs.stat, ylim, "observed", pos = pos)
+    text(res$obs_stat, ylim, "observed", pos = pos)
   }
   
-  Z <- (res$obs.stat - mean(res$dist, na.rm = TRUE)) / sd(res$dist, na.rm = TRUE)
+  Z <- (res$obs_stat - mean(res$dist, na.rm = TRUE)) / sd(res$dist, na.rm = TRUE)
   p.Z.single <- if (testdirection == "greater") 1 - pnorm(Z) else pnorm(Z)
     
   possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[N]
@@ -299,7 +300,7 @@ rand_test <- function (data, dvar, pvar,
     p.value = p.value, 
     number = number, 
     complete = complete, 
-    observed.statistic = res$obs.stat, 
+    observed.statistic = res$obs_stat, 
     Z = Z, 
     p.Z.single = p.Z.single, 
     distribution = res$dist, 
@@ -337,12 +338,12 @@ rand_test_avg <- function(rnd_a, rnd_b, a, b, fn, method) {
   avg_b <- unlist(lapply(b, fn))
   avg_a <- unlist(lapply(a, fn))
   
-  obs_stat <- if (method == "B-A") {
-    avg_b - avg_a
+  if (method == "B-A") {
+    obs_stat <- avg_b - avg_a
   } else if (method == "A-B") {
-    avg_a - avg_b
+    obs_stat <- avg_a - avg_b
   } else if (method == "abs") {
-    abs(avg_a - avg_b)
+    obs_stat <- abs(avg_a - avg_b)
   }
   
   list(

@@ -941,7 +941,7 @@ filenames <- c(filenames, "Parker2009")
 
 Parker2009b <- c(
   scdf(c(A=4, 3, 4, 3, 4, 7, 5, 2, 3, 2, B=5, 9, 7, 9, 7, 5, 9, 11, 11, 10, 9), name = "Parker2009b"),
-  author = "Parker, R. I., & Vannest, K. (2009). An improved effect size for single-case research: Nonoverlap of all pairs. Behavior Therapy, 40(4), 357–367."
+  author = "Parker, R. I., & Vannest, K. (2009). An improved effect size for single-case research: Nonoverlap of all pairs. Behavior Therapy, 40(4), 357-367."
 )
 
 filenames <- c(filenames, "Parker2009b")

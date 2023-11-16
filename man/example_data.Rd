@@ -34,6 +34,7 @@
 \alias{Parker2011}
 \alias{Parker2007}
 \alias{Parker2009}
+\alias{Parker2009b}
 \alias{Parker2011b}
 \alias{Tarlow2017}
 \title{Single-case example data}
