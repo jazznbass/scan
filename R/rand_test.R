@@ -561,8 +561,8 @@ rand_test_slope <- function(rnd_a, rnd_b, a, b, method) {
   
   dat <- mapply(
     function(a, b) {
-      slope_b <- coef(lm(b ~ I(1:length(b))))[2] / sd(b, na.rm = TRUE)
-      slope_a <- coef(lm(a ~ I(1:length(a))))[2] / sd(a, na.rm = TRUE)
+      slope_b <- coef(lm(b ~ I(1:length(b))))[2] #/ sd(b, na.rm = TRUE)
+      slope_a <- coef(lm(a ~ I(1:length(a))))[2] #/ sd(a, na.rm = TRUE)
       if (method == "B-A") slope_b - slope_a else slope_a - slope_b
     }, 
     a = rnd_a, b = rnd_b
@@ -579,8 +579,8 @@ rand_test_slope <- function(rnd_a, rnd_b, a, b, method) {
   
   dat <- mapply(
     function(a, b) {
-      slope_b <- coef(lm(b ~ I(1:length(b))))[2] / sd(b, na.rm = TRUE)
-      slope_a <- coef(lm(a ~ I(1:length(a))))[2] / sd(a, na.rm = TRUE)
+      slope_b <- coef(lm(b ~ I(1:length(b))))[2] #/ sd(b, na.rm = TRUE)
+      slope_a <- coef(lm(a ~ I(1:length(a))))[2] #/ sd(a, na.rm = TRUE)
       if (method == "B-A") slope_b - slope_a else slope_a - slope_b
     }, 
     a = a, b = b
