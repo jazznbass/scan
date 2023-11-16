@@ -1,11 +1,22 @@
 # scan 0.60.9999
 
+## Solved bugs
+
 - Corrected name of level-effect predictor for regressions when the phase variable is not named "phase"
+
+## New
+
+- Tip of the day like message at startup
 
 ## Changes
 
+- `rand_test()`: New option for `statistic`: `SMD` calculates the standardized mean difference as Hedge's g with Durlak correction. `W-test` computes Wilcoxon tests and compares average W statistics. `T-test` computes T-tests and compares average t-Values. `NAP` and `NAP decreasing` for Non-overlap of all pairs.
 - `nap()`: added Cohen's d and R-Squared effects.
-- `export()`: select argument for `nap`; new for `pem()`, `pet()`
+- `export()`: `select` argument for `nap`; new for `pem()`, `pet()`
+
+## New examples
+
+- `Parker2009b`
 
 # scan 0.60.0
 

@@ -80,7 +80,7 @@ nap <- function(data, dvar, pvar,
       w = test$statistic,
       p = test$p.value,
       d = d,
-      "R²" = r^2,
+      "R\u00B2" = r^2,
       check.names = FALSE
     )
  

@@ -36,7 +36,16 @@ print.sc_rand <- function(x, ...) {
   cat("Min = ", min(x$distribution),"\n")
   cat("Max = ", max(x$distribution),"\n")
   cat("\n")
-  cat("Probability of observed statistic based on distribution:\n")
+  #cat("Probability of observed statistic based on distribution:\n")
+  
+  
+  if (x$testdirection == "greater") {
+    if (x$exclude.equal) cat("Probability of a higher value than the observed statistic:\n")
+    if (!x$exclude.equal) cat("Probability of an equal or higher value than the observed statistic:\n")  
+  } else {
+    if (x$exclude.equal) cat("Probability of a lower value than the observed statistic:\n")
+    if (!x$exclude.equal) cat("Probability of an equal or lower value than the observed statistic:\n")  
+  }
   
   if (x$p.value == 0) {
     cat("p   < ", format(1/x$number, scientific = FALSE), "\n")

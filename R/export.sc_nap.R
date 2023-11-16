@@ -7,7 +7,8 @@ export.sc_nap <- function(object,
                           kable_styling_options = list(), 
                           kable_options = list(), 
                           select = c("Case", "NAP", "NAP Rescaled", 
-                                     "w", "p", "d", "R²")) {
+                                     "w", "p", "d", "R\u00B2"),
+                          ...) {
   
   kable_options <- .join_kabel(kable_options)
   kable_styling_options <- .join_kabel_styling(kable_styling_options)

@@ -5,7 +5,8 @@ export.sc_pem <- function(object,
                           footnote = NA, 
                           filename = NA,
                           kable_styling_options = list(), 
-                          kable_options = list()) {
+                          kable_options = list(),
+                          ...) {
   
   kable_options <- .join_kabel(kable_options)
   kable_styling_options <- .join_kabel_styling(kable_styling_options)

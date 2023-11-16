@@ -108,3 +108,18 @@ overlapSC <- function(...) {
   .deprecated_warning("overlap", "overlapSC")
   overlap(...)
 }
+
+#' @rdname deprecated-functions
+#' @export
+randSC <- function(...) {
+  .deprecated_warning("rand_test", "randSC")
+  rand_test(...)
+}
+
+#' @rdname deprecated-functions
+#' @export
+rand.test <- function(...) {
+  .deprecated_warning("rand_test", "rand.test")
+  rand_test(...)
+}
+
