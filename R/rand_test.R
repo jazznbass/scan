@@ -90,7 +90,8 @@ rand_test <- function (data, dvar, pvar,
                                      "Median A-B", "Mean |A-B|", "Median |A-B|",
                                      "SMD hedges", "SMD glass", 
                                      "W-test", "T-test", 
-                                     "NAP", "NAP decreasing"), 
+                                     "NAP", "NAP decreasing",
+                                     "Slope B-A","Slope A-B"), 
                        number = 500, 
                        complete = FALSE, 
                        limit = 5, 
@@ -253,6 +254,14 @@ rand_test <- function (data, dvar, pvar,
       fn = function(x) median(x, na.rm = TRUE),
       method = "abs"
     )
+  }   
+
+  if (statistic == "Slope B-A") {
+    res <- rand_test_slope(rnd_a, rnd_b, a, b, method = "B-A")
+  }   
+  
+  if (statistic == "Slope A-B") {
+    res <- rand_test_slope(rnd_a, rnd_b, a, b, method = "A-B")
   }   
   
 # p value -----------------------------------------------------------------
@@ -540,3 +549,45 @@ rand_test_nap <- function(rnd_a, rnd_b, a, b, decreasing = FALSE) {
   )
 
 }  
+
+rand_test_slope <- function(rnd_a, rnd_b, a, b, method) {
+  
+  
+  N <- length(rnd_a[[1]])
+  number <- length(rnd_a)
+  
+  rnd_a <- unlist(rnd_a,recursive = FALSE)
+  rnd_b <- unlist(rnd_b,recursive = FALSE)
+  
+  dat <- mapply(
+    function(a, b) {
+      slope_b <- coef(lm(b ~ I(1:length(b))))[2] / sd(b, na.rm = TRUE)
+      slope_a <- coef(lm(a ~ I(1:length(a))))[2] / sd(a, na.rm = TRUE)
+      if (method == "B-A") slope_b - slope_a else slope_a - slope_b
+    }, 
+    a = rnd_a, b = rnd_b
+  )
+  
+  ma <- matrix(
+    dat, 
+    ncol = N, 
+    nrow = number, 
+    byrow = TRUE
+  )   
+  
+  dist <- apply(ma, 1, mean, na.rm = TRUE)
+  
+  dat <- mapply(
+    function(a, b) {
+      slope_b <- coef(lm(b ~ I(1:length(b))))[2] / sd(b, na.rm = TRUE)
+      slope_a <- coef(lm(a ~ I(1:length(a))))[2] / sd(a, na.rm = TRUE)
+      if (method == "B-A") slope_b - slope_a else slope_a - slope_b
+    }, 
+    a = a, b = b
+  )
+  
+  list(
+    obs_stat = mean(dat, na.rm = TRUE),
+    dist = dist
+  )
+}
