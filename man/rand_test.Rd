@@ -9,7 +9,8 @@ rand_test(
   dvar,
   pvar,
   statistic = c("Mean B-A", "Mean A-B", "Median B-A", "Median A-B", "Mean |A-B|",
-    "Median |A-B|", "SMD hedges", "SMD glass", "W-test", "T-test"),
+    "Median |A-B|", "SMD hedges", "SMD glass", "W-test", "T-test", "NAP",
+    "NAP decreasing"),
   number = 500,
   complete = FALSE,
   limit = 5,
@@ -41,7 +42,9 @@ the mean of phase A. This is appropriate if an increase of scores was
 expected for phase B.  \item\verb{Mean |A-B|}: Uses the absolute value of
 the difference between the means of phases A and B.  \item\verb{Median A-B}: The same as \verb{Mean A-B}, but based on the median.
 \item\verb{Median B-A}: The same as \verb{Mean B-A}, but based on the
-median.  \item\code{SMD}: Standardizes mean difference of B-A as Hedges's g.}}
+median.  \item\verb{SMD hedges / SMD glass}: Standardizes mean difference of B-A
+as Hedges's g or Glass' delta. \item\code{NAP}: Non-overlap of all pairs.
+\item\code{W-test}: Wilcoxon-test statistic W.\item\code{T-test}: T-test statistic t.}}
 
 \item{number}{Sample size of the randomization distribution. The exactness of
 the p-value can not exceed \eqn{1/number} (i.e., \code{number = 100} results in
@@ -102,7 +105,7 @@ data sets.} \item{possible.combinations}{Number of possible combinations
 under the given restrictions.} \item{auto.corrected.number}{\code{TRUE}
 indicates that a corrected number of combinations was used. This happens, if
 the number of possible combinations (under the given restrictions) undercuts
-the requested \code{number} of combinations.} \item{ecxlude.equal}{ see argument
+the requested \code{number} of combinations.} \item{ecxlude.equal}{see argument
 above}
 }
 \description{
