@@ -550,6 +550,23 @@ rand_test_nap <- function(rnd_a, rnd_b, a, b, decreasing = FALSE) {
 
 }  
 
+
+# function derived from: https://stackoverflow.com/questions/40141738/is-there-a-fast-estimation-of-simple-regression-a-regression-line-with-only-int
+.estimate_slope <- function (x, y) {
+  
+  ## centring
+  yc <- y - sum(y) / length(y)
+  xc <- x - sum(x) / length(x)
+  
+  ## fitting an intercept-free model: yc ~ xc + 0
+  xty <- c(crossprod(xc, yc))
+  xtx <- c(crossprod(xc))
+  
+  # slope
+  xty / xtx
+  
+}
+
 rand_test_slope <- function(rnd_a, rnd_b, a, b, method) {
   
   
@@ -561,8 +578,8 @@ rand_test_slope <- function(rnd_a, rnd_b, a, b, method) {
   
   dat <- mapply(
     function(a, b) {
-      slope_b <- coef(lm(b ~ I(1:length(b))))[2] #/ sd(b, na.rm = TRUE)
-      slope_a <- coef(lm(a ~ I(1:length(a))))[2] #/ sd(a, na.rm = TRUE)
+      slope_b <- .estimate_slope(b, 1:length(b))#coef(lm(b ~ I(1:length(b))))[2] #/ sd(b, na.rm = TRUE)
+      slope_a <- .estimate_slope(a, 1:length(a))#coef(lm(a ~ I(1:length(a))))[2] #/ sd(a, na.rm = TRUE)
       if (method == "B-A") slope_b - slope_a else slope_a - slope_b
     }, 
     a = rnd_a, b = rnd_b
@@ -579,8 +596,8 @@ rand_test_slope <- function(rnd_a, rnd_b, a, b, method) {
   
   dat <- mapply(
     function(a, b) {
-      slope_b <- coef(lm(b ~ I(1:length(b))))[2] #/ sd(b, na.rm = TRUE)
-      slope_a <- coef(lm(a ~ I(1:length(a))))[2] #/ sd(a, na.rm = TRUE)
+      slope_b <- .estimate_slope(b, 1:length(b))#coef(lm(b ~ I(1:length(b))))[2] #/ sd(b, na.rm = TRUE)
+      slope_a <- .estimate_slope(a, 1:length(a))#coef(lm(a ~ I(1:length(a))))[2] #/ sd(a, na.rm = TRUE)
       if (method == "B-A") slope_b - slope_a else slope_a - slope_b
     }, 
     a = a, b = b
