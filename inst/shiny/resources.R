@@ -113,7 +113,9 @@ res$choices$pt_method <- names(scan:::.opt$mc_fun)  |>
   .name("tauU_slope_meta", "Metaanalysis Tau-U (trend A and B)") |>
   .name("base_tau", "Baseline corrected tau") |>
   .name("rand", "Randomization test") |> 
-  .name("rand_decrease", "Randomization test (decreasing)")
+  .name("rand_decrease", "Randomization test (decreasing)") |> 
+  .name("rand_slope", "Randomization test slope") |>
+  .name("rand_slope_decrease", "Randomization test slope (decreasing)")
 
 
 
