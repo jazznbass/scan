@@ -124,28 +124,28 @@ rand_test <- function (data, dvar, pvar,
   a   <- lapply(data, function(x) x[x[, pvar] == "A", dvar])
   b   <- lapply(data, function(x) x[x[, pvar] == "B", dvar])
   obs <- lapply(data, function(x) x[, dvar])
-  MT  <- lapply(data, nrow)
-  N   <- length(data)
+  mts  <- lapply(data, nrow)
+  n_cases   <- length(data)
   
   testdirection <- "greater"
   
-  if (identical(exclude.equal, "auto")) exclude.equal <- N == 1
+  if (identical(exclude.equal, "auto")) exclude.equal <- n_cases == 1
   
 # starting points ---------------------------------------------------------
 
   if (length(limit) == 1) limit[2] <- limit[1]
-  obs.B.start <- unlist(lapply(a, function(x) length(x) + 1))
+  #obs.B.start <- unlist(lapply(a, function(x) length(x) + 1))
   
   if (is.na(startpoints[1])) {
-    pos.startpts <- lapply(MT, function(x) (limit[1] + 1):(x - limit[2] + 1))
+    pos.startpts <- lapply(mts, function(x) (limit[1] + 1):(x - limit[2] + 1))
   } else {
-    pos.startpts <- lapply(MT, function(x) startpoints)
+    pos.startpts <- lapply(mts, function(x) startpoints)
   }
   
   ### posible combinations
   
   possible.combinations <- lapply(pos.startpts, length)
-  possible.combinations <- cumprod(unlist(possible.combinations))[N]	
+  possible.combinations <- cumprod(unlist(possible.combinations))[n_cases]	
   
   auto.corrected.number <- FALSE
   if (!complete && possible.combinations <= number) {
@@ -155,7 +155,7 @@ rand_test <- function (data, dvar, pvar,
   
   if (!complete) {
     startpts <- lapply(pos.startpts, function(x) sample(x, number, replace = TRUE))
-    startpts <- matrix(unlist(startpts), nrow = number, ncol = N)
+    startpts <- matrix(unlist(startpts), nrow = number, ncol = n_cases)
   }
   if (complete) {
     startpts <- expand.grid(pos.startpts)
@@ -164,19 +164,19 @@ rand_test <- function (data, dvar, pvar,
   
 # Sample Random A and B phases ---------------------------------------------
   
-  rnd_a <- list()
+  rnd_a <- vector("list", number)
   for (i in 1:number) {
-    ascores <- list()
-    for (case in 1:N)
+    ascores <- vector("list", n_cases)
+    for (case in 1:n_cases)
       ascores[[case]] <- data[[case]][1:(startpts[i, case] - 1), dvar]
     rnd_a[[i]] <- ascores
   }
-  
-  rnd_b <- list()
+
+  rnd_b <- vector("list", number)
   for (i in 1:number) {
-    ascores <- list()
-    for (case in 1:N)
-      ascores[[case]] <- data[[case]][startpts[i, case]:MT[[case]], dvar]
+    ascores <- vector("list", n_cases)
+    for (case in 1:n_cases)
+      ascores[[case]] <- data[[case]][startpts[i, case]:mts[[case]], dvar]
     rnd_b[[i]] <- ascores
   }
   
@@ -338,13 +338,13 @@ rand_test <- function (data, dvar, pvar,
   Z <- (res$obs_stat - mean(res$dist, na.rm = TRUE)) / sd(res$dist, na.rm = TRUE)
   p.Z.single <- if (testdirection == "greater") 1 - pnorm(Z) else pnorm(Z)
     
-  possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[N]
+  possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[n_cases]
 
   out <- list(
     statistic = statistic, 
     phases.A = keep$phases_A, 
     phases.B = keep$phases_B, 
-    N = N, 
+    N = n_cases, 
     n1 = length(unlist(a)), 
     n2 = length(unlist(b)), 
     limit = limit, 
@@ -375,13 +375,13 @@ rand_test_statistic <- function(rnd_a, rnd_b, a, b,
                                 args_statistic,
                                 aggregate) {
   
-  N <- length(rnd_a[[1]])
+  n_cases <- length(rnd_a[[1]])
   number <- length(rnd_a)
   rnd_a <- unlist(rnd_a,recursive = FALSE)
   rnd_b <- unlist(rnd_b,recursive = FALSE)
 
   dat <- mapply(statistic, a = rnd_a, b = rnd_b, MoreArgs = args_statistic)
-  ma <- matrix(dat, ncol = N, nrow = number, byrow = TRUE)   
+  ma <- matrix(dat, ncol = n_cases, nrow = number, byrow = TRUE)   
   dist <- apply(ma, 1, aggregate)
   
   dat <- mapply(statistic, a = a, b = b, MoreArgs = args_statistic)

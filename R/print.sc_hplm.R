@@ -1,8 +1,9 @@
 #' @describeIn hplm Print results
+#' @param casewise Returns the effect estimations for each case
 #' @order 2
 #' @param x An object returned by [hplm()]
 #' @export
-print.sc_hplm <- function(x, ...) {
+print.sc_hplm <- function(x, ..., casewise = FALSE) {
   cat("Hierarchical Piecewise Linear Regression\n\n")
   cat("Estimation method", x$model$estimation.method,"\n")
   cat("Contrast model: ", 
@@ -56,5 +57,10 @@ print.sc_hplm <- function(x, ...) {
   }
   
   print(md, na.print = "-", ...)
+  
+  if (casewise) {
+    cat("\nCasewise estimation of effects\n\n")
+    print(coef(x, casewise = TRUE), row.names = FALSE)
+  }
 }
 

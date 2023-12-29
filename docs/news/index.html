@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.60.0.9999</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.60.9999</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,6 +75,12 @@
 <li>
 <code><a href="../reference/export.html">export()</a></code>: <code>select</code> argument for <code>nap</code>; new for <code><a href="../reference/pem.html">pem()</a></code>, <code><a href="../reference/pet.html">pet()</a></code>
 </li>
+<li>
+<code><a href="../reference/hplm.html">coef.sc_hplm()</a></code>: new <code>casewise</code> argument f. If set TRUE, returns the effect estimatinons casewise.</li>
+<li>
+<code><a href="../reference/hplm.html">print.sc_hplm()</a></code>: new <code>casewise</code> argument f. If set TRUE, returns the effect estimatinons casewise.</li>
+<li>
+<code><a href="../reference/hplm.html">export.sc_hplm()</a></code>: new <code>casewise</code> argument f. If set TRUE, returns the effect estimatinons casewise.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-examples-0-60-9999">New examples<a class="anchor" aria-label="anchor" href="#new-examples-0-60-9999"></a></h3>
@@ -184,11 +190,11 @@
 <li>rewrote <code><a href="../reference/as_scdf.html">as_scdf()</a></code>, <code><a href="../reference/read_scdf.html">read_scdf()</a></code>. Now it is easier to import data from any file format.</li>
 </ul><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu">readODS</span><span class="fu">::</span><span class="fu">read_ods</span><span class="op">(</span><span class="st">"filename.ods"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/scdf.html">as.scdf</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/readODS/reference/read_ods.html" class="external-link">read_ods</a></span><span class="op">(</span><span class="st">"filename.ods"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/scdf.html">as.scdf</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">openxlsx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html" class="external-link">read.xlsx</a></span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/scdf.html">as.scdf</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="fu">readODS</span><span class="fu">::</span><span class="fu">read_ods</span><span class="op">(</span><span class="st">"filename.ods"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/readODS/reference/read_ods.html" class="external-link">read_ods</a></span><span class="op">(</span><span class="st">"filename.ods"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/scdf.html">as.scdf</a></span><span class="op">(</span></span>
 <span>    cvar <span class="op">=</span> <span class="st">"id"</span>, </span>
 <span>    pvar <span class="op">=</span> <span class="st">"section"</span>, </span>
@@ -196,7 +202,7 @@
 <span>    phase_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"baseline"</span>, <span class="st">"intervention"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span>  </span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">exampleABC</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">readODS</span><span class="fu">::</span><span class="fu">write_ods</span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">exampleABC</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">readODS</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/readODS/reference/write_ods.html" class="external-link">write_ods</a></span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">exampleABC</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">openxlsx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/write.xlsx.html" class="external-link">write.xlsx</a></span><span class="op">(</span><span class="st">"filename.xlsx"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
