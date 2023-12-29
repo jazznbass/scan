@@ -32,7 +32,7 @@ hplm(
   ...
 )
 
-\method{print}{sc_hplm}(x, ...)
+\method{print}{sc_hplm}(x, ..., casewise = FALSE)
 
 \method{export}{sc_hplm}(
   object,
@@ -43,10 +43,11 @@ hplm(
   kable_options = list(),
   round = 2,
   nice = TRUE,
+  casewise = FALSE,
   ...
 )
 
-\method{coef}{sc_hplm}(object, ...)
+\method{coef}{sc_hplm}(object, casewise = FALSE, ...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
@@ -119,6 +120,8 @@ variables belong to.}
 \item{...}{Further arguments passed to the lme function.}
 
 \item{x}{An object returned by \code{\link[=hplm]{hplm()}}}
+
+\item{casewise}{Returns the estimations for each case}
 
 \item{object}{An scdf or an object exported from a scan function.}
 

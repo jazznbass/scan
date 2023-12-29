@@ -90,7 +90,8 @@ rand_test <- function (data, dvar, pvar,
                                      "Median A-B", "Mean |A-B|", "Median |A-B|",
                                      "SMD hedges", "SMD glass", 
                                      "W-test", "T-test", 
-                                     "NAP", "NAP decreasing"), 
+                                     "NAP", "NAP decreasing",
+                                     "Slope B-A","Slope A-B"), 
                        number = 500, 
                        complete = FALSE, 
                        limit = 5, 
@@ -123,28 +124,28 @@ rand_test <- function (data, dvar, pvar,
   a   <- lapply(data, function(x) x[x[, pvar] == "A", dvar])
   b   <- lapply(data, function(x) x[x[, pvar] == "B", dvar])
   obs <- lapply(data, function(x) x[, dvar])
-  MT  <- lapply(data, nrow)
-  N   <- length(data)
+  mts  <- lapply(data, nrow)
+  n_cases   <- length(data)
   
   testdirection <- "greater"
   
-  if (identical(exclude.equal, "auto")) exclude.equal <- N == 1
+  if (identical(exclude.equal, "auto")) exclude.equal <- n_cases == 1
   
 # starting points ---------------------------------------------------------
 
   if (length(limit) == 1) limit[2] <- limit[1]
-  obs.B.start <- unlist(lapply(a, function(x) length(x) + 1))
+  #obs.B.start <- unlist(lapply(a, function(x) length(x) + 1))
   
   if (is.na(startpoints[1])) {
-    pos.startpts <- lapply(MT, function(x) (limit[1] + 1):(x - limit[2] + 1))
+    pos.startpts <- lapply(mts, function(x) (limit[1] + 1):(x - limit[2] + 1))
   } else {
-    pos.startpts <- lapply(MT, function(x) startpoints)
+    pos.startpts <- lapply(mts, function(x) startpoints)
   }
   
   ### posible combinations
   
   possible.combinations <- lapply(pos.startpts, length)
-  possible.combinations <- cumprod(unlist(possible.combinations))[N]	
+  possible.combinations <- cumprod(unlist(possible.combinations))[n_cases]	
   
   auto.corrected.number <- FALSE
   if (!complete && possible.combinations <= number) {
@@ -154,7 +155,7 @@ rand_test <- function (data, dvar, pvar,
   
   if (!complete) {
     startpts <- lapply(pos.startpts, function(x) sample(x, number, replace = TRUE))
-    startpts <- matrix(unlist(startpts), nrow = number, ncol = N)
+    startpts <- matrix(unlist(startpts), nrow = number, ncol = n_cases)
   }
   if (complete) {
     startpts <- expand.grid(pos.startpts)
@@ -163,95 +164,146 @@ rand_test <- function (data, dvar, pvar,
   
 # Sample Random A and B phases ---------------------------------------------
   
-  rnd_a <- list()
+  rnd_a <- vector("list", number)
   for (i in 1:number) {
-    ascores <- list()
-    for (case in 1:N)
+    ascores <- vector("list", n_cases)
+    for (case in 1:n_cases)
       ascores[[case]] <- data[[case]][1:(startpts[i, case] - 1), dvar]
     rnd_a[[i]] <- ascores
   }
-  
-  rnd_b <- list()
+
+  rnd_b <- vector("list", number)
   for (i in 1:number) {
-    ascores <- list()
-    for (case in 1:N)
-      ascores[[case]] <- data[[case]][startpts[i, case]:MT[[case]], dvar]
+    ascores <- vector("list", n_cases)
+    for (case in 1:n_cases)
+      ascores[[case]] <- data[[case]][startpts[i, case]:mts[[case]], dvar]
     rnd_b[[i]] <- ascores
   }
   
 # Functions for phase differences -----------------------------------------
 
   if (statistic == "SMD hedges") {
-    res <- rand_test_smd(rnd_a, rnd_b, a, b, method = "hedges")
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b,
+      statistic = .opt$rand_test$smd,
+      args_statistic = list(method = "hedges"),
+      aggregate = function(x) sqrt(sum(x^2) / length(x))
+    )
   }  
   
   if (statistic == "SMD glass") {
-    res <- rand_test_smd(rnd_a, rnd_b, a, b, method = "glass")
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b,
+      statistic = .opt$rand_test$smd,
+      args_statistic = list(method = "glass"),
+      aggregate = function(x) sqrt(sum(x^2) / length(x))
+    )
   }  
   
   if (statistic == "W-test") {
-    res <- rand_test_u_test(rnd_a, rnd_b, a, b)
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b, 
+      statistic = .opt$rand_test$u_test,
+      args_statistic = NULL,
+      aggregate = function(x) sum(x) / length(x)
+    )
     testdirection <- "less"
   }   
 
   if (statistic == "T-test") {
-    res <- rand_test_t_test(rnd_a, rnd_b, a, b)
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b, 
+      statistic = .opt$rand_test$t_test,
+      args_statistic = NULL,
+      aggregate = function(x) sum(x) / length(x)
+    )
   } 
   
   if (statistic == "NAP") {
-    res <- rand_test_nap(rnd_a, rnd_b, a, b)
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b, 
+      statistic = .opt$rand_test$nap,
+      args_statistic = list(decreasing = FALSE),
+      aggregate = function(x) sum(x) / length(x)
+    )
   } 
   
   if (statistic == "NAP decreasing") {
-    res <- rand_test_nap(rnd_a, rnd_b, a, b, decreasing = TRUE)
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b, 
+      statistic = .opt$rand_test$nap,
+      args_statistic = list(decreasing = TRUE),
+      aggregate = function(x) sum(x) / length(x)
+    )
   } 
   
   if (statistic == "Mean B-A") {
-    res <- rand_test_avg(
-      rnd_a, rnd_b, a, b, 
-      fn = function(x) mean(x, na.rm = TRUE),
-      method = "B-A"
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b, 
+      statistic = .opt$rand_test$average,
+      args_statistic = list(
+        fn = function(x) {sum(x) / length(x)}, method = "B-A"
+      ),
+      aggregate = function(x) sum(x) / length(x)
     )
-   
   } 
   
   if (statistic == "Mean A-B") {
-    res <- rand_test_avg(
-      rnd_a, rnd_b, a, b, 
-      fn = function(x) mean(x, na.rm = TRUE),
-      method = "A-B"
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b, 
+      statistic = .opt$rand_test$average,
+      args_statistic = list(
+        fn = function(x) {sum(x) / length(x)}, method = "A-B"
+      ),
+      aggregate = function(x) sum(x) / length(x)
     )
   } 
   
   if (statistic == "Mean |A-B|") {
-    res <- rand_test_avg(
-      rnd_a, rnd_b, a, b, 
-      fn = function(x) mean(x, na.rm = TRUE),
-      method = "abs"
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b, 
+      statistic = .opt$rand_test$average,
+      args_statistic = list(
+        fn = function(x) {sum(x) / length(x)}, method = "abs"
+      ),
+      aggregate = function(x) sum(x) / length(x)
     )
   } 
 
   if (statistic == "Median B-A") {
-    res <- rand_test_avg(
-      rnd_a, rnd_b, a, b, 
-      fn = function(x) median(x, na.rm = TRUE),
-      method = "B-A"
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b, 
+      statistic = .opt$rand_test$average,
+      args_statistic = list(
+        fn = function(x) {median(x)}, method = "B-A"
+      ),
+      aggregate = function(x) median(x)
     )
   } 
   
   if (statistic == "Median A-B") {
-    res <- rand_test_avg(
-      rnd_a, rnd_b, a, b, 
-      fn = function(x) median(x, na.rm = TRUE),
-      method = "A-B"
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b, 
+      statistic = .opt$rand_test$average,
+      args_statistic = list(
+        fn = function(x) {median(x)}, method = "A-B"
+      ),
+      aggregate = function(x) median(x)
     )
   } 
   
   if (statistic == "Median |A-B|") {
-    res <- rand_test_avg(
-      rnd_a, rnd_b, a, b, 
-      fn = function(x) median(x, na.rm = TRUE),
-      method = "abs"
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b, 
+      statistic = .opt$rand_test$average,
+      args_statistic = list(
+        fn = function(x) {median(x)}, method = "abs"
+      ),
+      aggregate = function(x) median(x)
+    )
+  }   
+
+  if (statistic == "Slope B-A") {
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b,
+      statistic = .opt$rand_test$slope,
+      args_statistic = list(method = "B-A"),
+      aggregate = function(x) sum(x) / length(x)
+    )
+  }   
+  
+  if (statistic == "Slope A-B") {
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b,
+      statistic = .opt$rand_test$slope,
+      args_statistic = list(method = "B-A"),
+      aggregate = function(x) sum(x) / length(x)
     )
   }   
   
@@ -286,13 +338,13 @@ rand_test <- function (data, dvar, pvar,
   Z <- (res$obs_stat - mean(res$dist, na.rm = TRUE)) / sd(res$dist, na.rm = TRUE)
   p.Z.single <- if (testdirection == "greater") 1 - pnorm(Z) else pnorm(Z)
     
-  possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[N]
+  possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[n_cases]
 
   out <- list(
     statistic = statistic, 
     phases.A = keep$phases_A, 
     phases.B = keep$phases_B, 
-    N = N, 
+    N = n_cases, 
     n1 = length(unlist(a)), 
     n2 = length(unlist(b)), 
     limit = limit, 
@@ -318,225 +370,91 @@ rand_test <- function (data, dvar, pvar,
 
 }
 
-rand_test_avg <- function(rnd_a, rnd_b, a, b, fn, method) {
+rand_test_statistic <- function(rnd_a, rnd_b, a, b, 
+                                statistic,
+                                args_statistic,
+                                aggregate) {
   
-  N <- length(rnd_a[[1]])
+  n_cases <- length(rnd_a[[1]])
   number <- length(rnd_a)
-  avg_b <- unlist(lapply(rnd_b, function(x) lapply(x, fn)))
-  avg_a <- unlist(lapply(rnd_a, function(x) lapply(x, fn)))
+  rnd_a <- unlist(rnd_a,recursive = FALSE)
+  rnd_b <- unlist(rnd_b,recursive = FALSE)
+
+  dat <- mapply(statistic, a = rnd_a, b = rnd_b, MoreArgs = args_statistic)
+  ma <- matrix(dat, ncol = n_cases, nrow = number, byrow = TRUE)   
+  dist <- apply(ma, 1, aggregate)
   
-  ma <- if (method == "B-A") {
-    matrix(avg_b - avg_a, ncol = N, nrow = number, byrow = TRUE)
-  } else if (method == "A-B") {
-    matrix(avg_a - avg_b, ncol = N, nrow = number, byrow = TRUE)
-  } else if (method == "abs") {
-    matrix(abs(avg_a - avg_b), ncol = N, nrow = number, byrow = TRUE)
-  }
+  dat <- mapply(statistic, a = a, b = b, MoreArgs = args_statistic)
+  list(obs_stat = aggregate(dat), dist = dist)
+}  
+
+
+# function derived from: https://stackoverflow.com/questions/40141738/is-there-a-fast-estimation-of-simple-regression-a-regression-line-with-only-int
+.estimate_slope <- function (x, y) {
   
-  dist <- apply(ma, 1, fn)
+  ## centring
+  yc <- y - sum(y) / length(y)
+  xc <- x - sum(x) / length(x)
   
-  avg_b <- unlist(lapply(b, fn))
-  avg_a <- unlist(lapply(a, fn))
+  ## fitting an intercept-free model: yc ~ xc + 0
+  xty <- c(crossprod(xc, yc))
+  xtx <- c(crossprod(xc))
   
-  if (method == "B-A") {
-    obs_stat <- avg_b - avg_a
-  } else if (method == "A-B") {
-    obs_stat <- avg_a - avg_b
-  } else if (method == "abs") {
-    obs_stat <- abs(avg_a - avg_b)
-  }
-  
-  list(
-    obs_stat = fn(obs_stat),
-    dist = dist
-  )
+  # slope
+  xty / xtx
   
 }
 
+.opt$rand_test$statistic_slope <- statistic <- function(a, b, method) {
+  slope_b <- .estimate_slope(1:length(b), b)
+  slope_a <- .estimate_slope(1:length(a), a)
+  if (method == "B-A") slope_b - slope_a else slope_a - slope_b
+}
 
-rand_test_smd <- function(rnd_a, rnd_b, a, b, method) {
+.opt$rand_test$nap <- function(a, b, decreasing) {
   
+  if (!decreasing) pos <- sum(unlist(lapply(a, function(x) b > x)))
+  if (decreasing) pos <- sum(unlist(lapply(a, function(x) b < x)))
   
-  N <- length(rnd_a[[1]])
-  number <- length(rnd_a)
-  
-  stats_a <- unlist(lapply(rnd_a, function(x) lapply(x, mean, na.rm = TRUE)))
-  stats_b <- unlist(lapply(rnd_b, function(x) lapply(x, mean, na.rm = TRUE)))
-  sds_a <- unlist(lapply(rnd_a, function(x) lapply(x, sd, na.rm = TRUE)))
-  sds_b <- unlist(lapply(rnd_b, function(x) lapply(x, sd, na.rm = TRUE)))
-  ns_a <- unlist(lapply(rnd_a, function(x) lapply(x, length)))
-  ns_b <- unlist(lapply(rnd_b, function(x) lapply(x, length)))
-  
+  ties <- sum(unlist(lapply(a, function(x) x == b)))
+  non_overlaps <- pos + (0.5 * ties)
+  pairs <- length(a) * length(b)
+  nap <- non_overlaps / pairs * 100
+}
+
+.opt$rand_test$u_test <- function(a, b) {
+  suppressWarnings(wilcox.test(a,b)$statistic)
+}  
+
+.opt$rand_test$t_test <- function(a, b) {
+  suppressWarnings(t.test(b, a)$statistic)
+}  
+
+.opt$rand_test$smd <- function(a, b, method) {
   # Hedges'g + Durlak correction or Glass' Delta
   
-  if (method == "hedges") {
-    dat <- (stats_b - stats_a) / 
-           sqrt(((ns_a - 1) * sds_a^2 + (ns_b - 1) * sds_b^2) / (ns_a + ns_b - 2)) *
-           (((ns_a+ns_b) - 3) / ((ns_a+ns_b) - 2.25) * sqrt(((ns_a+ns_b) - 2) / (ns_a+ns_b)))
-  } else if (method == "glass") {
-    dat <- (stats_b - stats_a) / sds_a
-  }
-  
-  ma <- matrix(
-    dat, 
-    ncol = N, 
-    nrow = number, 
-    byrow = TRUE
-  )   
- 
-  dist <- apply(ma, 1, function(x) sqrt(sum(x^2) / length(x)))
-  
-  stats_a <- unlist(lapply(a, mean, na.rm = TRUE))
-  stats_b <- unlist(lapply(b, mean, na.rm = TRUE))
-  sds_a <- unlist(lapply(a, sd, na.rm = TRUE))
-  sds_b <- unlist(lapply(b, sd, na.rm = TRUE)) 
-  ns_a <- unlist(lapply(a, length))
-  ns_b <- unlist(lapply(b, length))
+  mean_a <- sum(a) / length(a)
+  mean_b <- sum(b) / length(b)
+  sd_a <- sd(a)
+  sd_b <- sd(b)
+  n_a <- length(a)
+  n_b <- length(b)
   
   if (method == "hedges") {
-    dat <- (stats_b - stats_a) / 
-      sqrt(((ns_a - 1) * sds_a^2 + (ns_b - 1) * sds_b^2) / (ns_a + ns_b - 2)) *
-      (((ns_a+ns_b) - 3) / ((ns_a+ns_b) - 2.25) * sqrt(((ns_a+ns_b) - 2) / (ns_a+ns_b)))
+    dat <- (mean_b - mean_a) / 
+      sqrt(((n_a - 1) * sd_a^2 + (n_b - 1) * sd_b^2) / (n_a + n_b - 2)) *
+      (((n_a+n_b) - 3) / ((n_a+n_b) - 2.25) * sqrt(((n_a+n_b) - 2) / (n_a+n_b)))
   } else if (method == "glass") {
-    dat <- (stats_b - stats_a) / sds_a
+    dat <- (mean_b - mean_a) / sd_a
   }
-
-  list(
-    obs_stat = sqrt(sum(dat^2) / length(dat)),
-    dist = dist
-  )
 }
 
-rand_test_t_test <- function(rnd_a, rnd_b, a, b) {
-  
-  
-  N <- length(rnd_a[[1]])
-  number <- length(rnd_a)
- 
-  rnd_a <- unlist(rnd_a,recursive = FALSE)
-  rnd_b <- unlist(rnd_b,recursive = FALSE)
-  
-  dat <- mapply(
-    function(a, b) {
-      suppressWarnings(t.test(b,a)$statistic)
-    }, 
-    a = rnd_a, b = rnd_b
-  )
-  
-  ma <- matrix(
-    dat, 
-    ncol = N, 
-    nrow = number, 
-    byrow = TRUE
-  )   
-  
-  dist <- apply(ma, 1, mean, na.rm = TRUE)
-  
-  dat <- mapply(
-    function(a, b) {
-      suppressWarnings(t.test(b,a)$statistic)
-    }, 
-    a = a, b = b
-  )
-  
-  list(
-    obs_stat = mean(dat, na.rm = TRUE),
-    dist = dist
-  )
+.opt$rand_test$average <- function(a, b, fn, method) {
+  if (method == "B-A") {
+    fn(b) - fn(a)
+  } else if (method == "A-B") {
+    fn(a) - fn(b)
+  } else if (method == "abs") {
+    abs(fn(b) - fn(a))
+  }
 }
-
-rand_test_u_test <- function(rnd_a, rnd_b, a, b) {
-  
-  
-  N <- length(rnd_a[[1]])
-  number <- length(rnd_a)
-  
-  rnd_a <- unlist(rnd_a,recursive = FALSE)
-  rnd_b <- unlist(rnd_b,recursive = FALSE)
-  
-  dat <- mapply(
-    function(a, b) {
-      suppressWarnings(wilcox.test(a,b)$statistic)
-    }, 
-    a = rnd_a, b = rnd_b
-  )
-  
-  ma <- matrix(
-    dat, 
-    ncol = N, 
-    nrow = number, 
-    byrow = TRUE
-  )   
-  
-  dist <- apply(ma, 1, mean, na.rm = TRUE)
-  
-  dat <- mapply(
-    function(a, b) {
-      suppressWarnings(wilcox.test(a,b)$statistic)
-    }, 
-    a = a, b = b
-  )
-  
-  list(
-    obs_stat = mean(dat, na.rm = TRUE),
-    dist = dist
-  )
-}
-
-rand_test_nap <- function(rnd_a, rnd_b, a, b, decreasing = FALSE) {
- 
-  N <- length(rnd_a[[1]])
-  number <- length(rnd_a)
-  rnd_a <- unlist(rnd_a,recursive = FALSE)
-  rnd_b <- unlist(rnd_b,recursive = FALSE)
-
-  dat <- mapply(
-    function(a, b) {
-     
-      if (!decreasing) {
-        pos <- sum(unlist(lapply(a, function(x) b > x)))
-      }
-      if (decreasing) {
-        pos <- sum(unlist(lapply(a, function(x) b < x)))
-      }
-      
-      ties <- sum(unlist(lapply(a, function(x) x == b)))
-      non_overlaps <- pos + (0.5 * ties)
-      pairs <- length(a) * length(b)
-      nap <- non_overlaps / pairs * 100
-    }, 
-    a = rnd_a, b = rnd_b
-  )
-  
-  ma <- matrix(
-    dat, 
-    ncol = N, 
-    nrow = number, 
-    byrow = TRUE
-  )   
-  
-  dist <- apply(ma, 1, mean, na.rm = TRUE)
-  
-  dat <- mapply(
-    function(a, b) {
-      if (!decreasing) {
-        pos <- sum(unlist(lapply(a, function(x) b > x)))
-      }
-      if (decreasing) {
-        pos <- sum(unlist(lapply(a, function(x) b < x)))
-      }
-    
-      ties <- sum(unlist(lapply(a, function(x) x == b)))
-      non_overlaps <- pos + (0.5 * ties)
-      pairs <- length(a) * length(b)
-      nap <- non_overlaps / pairs * 100
-    }, 
-    a = a, b = b
-  )
-  
-  list(
-    obs_stat = mean(dat, na.rm = TRUE),
-    dist = dist
-  )
-
-}  

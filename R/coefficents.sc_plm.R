@@ -15,8 +15,17 @@ coef.sc_plm <- function(object, ...) {
 
 #' @describeIn hplm Extract model coefficients
 #' @order 4
+#' @param casewise Returns the estimations for each case
 #' @inheritParams coef.sc_plm
 #' @export
-coef.sc_hplm <- function(object, ...) {
-  summary(object$hplm)$tTable
+coef.sc_hplm <- function(object, casewise = FALSE, ...) {
+  if (casewise) {
+    out <- coef(object$hplm)
+    names(out) <- .plm.row.names(names(out), object)
+    out <- cbind(Case = row.names(out), out)
+    row.names(out) <- NULL
+    return(out)
+  } else {
+    summary(object$hplm)$tTable
+  }
 }

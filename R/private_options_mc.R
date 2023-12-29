@@ -38,10 +38,14 @@
     res[which(res$Model == "A vs. B + Trend B - Trend A"), which(names(res) == "p")]
   },
   base_tau = function(x) corrected_tau(x)$p,
-  
   rand = function(x) rand_test(x, number = 100, exclude.equal = "auto", limit = 3)$p.value,
   rand_decrease = function(x) rand_test(
-    x, statistic = "Mean A-B", number = 100, exclude.equal = "auto", limit = 3)$p.value
+    x, statistic = "Mean A-B", number = 100, exclude.equal = "auto", limit = 3)$p.value,
+  rand_slope = function(x) rand_test(
+    x, number = 100, statistic = "Slope B-A", exclude.equal = "auto", limit = 3)$p.value,
+  rand_slope_decrease = function(x) rand_test(
+    x, number = 100, statistic = "Slope B-A", exclude.equal = "auto", limit = 3)$p.value
+  
 )
 
 
