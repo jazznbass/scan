@@ -16,6 +16,7 @@
 - `coef.sc_hplm()`: new `casewise` argument. If set TRUE, returns the effect estimatinons casewise.
 - `print.sc_hplm()`: new `casewise` argument. If set TRUE, returns the effect estimatinons casewise.
 - `export.sc_hplm()`: new `casewise` argument. If set TRUE, returns the effect estimatinons casewise.
+- `hplm()`: new arguments `random_trend`, `random_level`, and `random_slope` to selectively add respective random slope effects to the model.
 
 ## New examples
 

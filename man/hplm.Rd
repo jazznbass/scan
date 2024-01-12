@@ -25,6 +25,9 @@ hplm(
   trend = TRUE,
   level = TRUE,
   slope = TRUE,
+  random_trend = FALSE,
+  random_level = FALSE,
+  random_slope = FALSE,
   fixed = NULL,
   random = NULL,
   update.fixed = NULL,
@@ -98,6 +101,12 @@ model.}
 
 \item{slope}{A logical indicating if a slope parameters is included in the
 model.}
+
+\item{random_trend}{If TRUE, includes a random trend trend effect.}
+
+\item{random_level}{If TRUE, includes a random level trend effect.}
+
+\item{random_slope}{If TRUE, includes a random slope trend effect.}
 
 \item{fixed}{Defaults to the fixed part of the standard piecewise regression
 model. The parameter phase followed by the phase name (e.g., phaseB)
