@@ -125,24 +125,38 @@ export.sc_plm <- function(object,
   
   if (is.na(footnote)) footnote <- F_test
   
+  if (getOption("scan.export.engine") == "gt") {
+    if (object$family == "gaussian") {
+      spanner <- list("CI(95%)" = 3:4)
+    }
+    
+    if (object$family %in% c("poisson", "nbinomial")) {
+      spanner <- list("CI(95%)" = 3:4, " CI(95%) " = 9:10, "  CI(95%)  " = 12:13)
+    }
+  }
+
   table <- .create_table(
     out, 
     kable_options, 
     kable_styling_options, 
     caption = caption,
-    footnote = footnote
+    footnote = footnote,
+    spanner = spanner
   )
   
-  if (object$family == "gaussian") {
-    table <- add_header_above(table, c(" " = 2, "CI(95%)" = 2, " " = 4))
+  if (getOption("scan.export.engine") == "kable") {
+    if (object$family == "gaussian") {
+      table <- add_header_above(table, c(" " = 2, "CI(95%)" = 2, " " = 4))
+    }
+    
+    if (object$family %in% c("poisson", "nbinomial")) {
+      table <- add_header_above(
+        table, 
+        c(" " = 2, "CI(95%)" = 2, " " = 4, "CI(95%)" = 2," " = 1, "CI(95%)" = 2 )
+      )
+    }
   }
-  
-  if (object$family %in% c("poisson", "nbinomial")) {
-    table <- add_header_above(
-      table, 
-      c(" " = 2, "CI(95%)" = 2, " " = 4, "CI(95%)" = 2," " = 1, "CI(95%)" = 2 )
-    )
-  }
+
   
   # finish ------------------------------------------------------------------
   
@@ -197,7 +211,7 @@ export.sc_plm <- function(object,
     out <- cbind(out[, -7], round(OR, 3), round(Q, 2))
     colnames(out) <- c(
       "B", "2.5%", "97.5%", "SE", "t", "p", "Odds Ratio", 
-      "2.5%", "97.5%", "Yule's Q", "2.5%", "97.5%"
+      " 2.5% ", " 97.5% ", "Yule's Q", "  2.5%  ", "  97.5%  "
     )		
   }
   out

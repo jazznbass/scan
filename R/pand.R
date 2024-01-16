@@ -274,15 +274,19 @@ export.sc_pand <- function(object,
     kable_options, 
     kable_styling_options, 
     caption = caption,
-    footnote = footnote
+    footnote = footnote,
+    spanner = list("Expected" = 3:5),
+    row_group = list("Percentage" = 1:3, "Counts" = 4:6)
   )
   
-  style <- "border-bottom: 1px solid; text-align: center"
-  table <- table  |> 
-    add_header_above(c(" " = 2, "Expected" = 3))  |> 
-    pack_rows(index = c("Percentage" = 3, "Counts" = 3), label_row_css = style)  |> 
-    column_spec(1:2, bold = TRUE)
-
+  if (getOption("scan.export.engine") == "kable") {
+    style <- "border-bottom: 1px solid; text-align: center"
+    table <- table  |> 
+      add_header_above(c(" " = 2, "Expected" = 3))  |> 
+      pack_rows(index = c("Percentage" = 3, "Counts" = 3), label_row_css = style)  |> 
+      column_spec(1:2, bold = TRUE)
+  }
+  
   # finish ------------------------------------------------------------------
   
   if (!is.na(filename)) .save_export(table, filename)

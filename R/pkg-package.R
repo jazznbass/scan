@@ -15,6 +15,7 @@
 #' @import kableExtra
 #' @import mblm
 #' @import methods
+#' @import gt
 #' @importFrom car Anova
 #' @importFrom utils install.packages read.csv
 #' @keywords internal

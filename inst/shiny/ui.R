@@ -297,6 +297,10 @@ tab_settings <- tabPanel(
         "stats_default", "Show defaults", choices = c("No", "Yes"),
         inline = TRUE
       ),
+      radioButtons(
+        "format_output_stats", "Save format", choices = c("html", "docx", "text"),
+        inline = TRUE
+      ),
       textInput("prefix_output_stats", "Prefix save filename", value = "scan-stat")
     )),
     column(2, div(

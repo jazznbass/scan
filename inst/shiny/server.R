@@ -326,7 +326,7 @@ server <- function(input, output, session) {
       call<- paste0("export(results, ", flip, ", ", print_args, ")")
     } else call <- paste0("export(results,", flip ,")")
     tryCatch(
-      str2lang(call) |> eval() |> HTML(),
+      str2lang(call) |> eval() |> print() |> as.character() |> HTML(),
       error = function(e)
         validate("Sorry, no html export for this function available yet.")
     )
@@ -457,14 +457,12 @@ server <- function(input, output, session) {
         format(Sys.time(), format = "%y%m%d-%H%M%S"),
         sep = "-"
       )
-      
-      if (input$stats_out == "Html") out <- paste0(out, ".html")
-      if (input$stats_out == "Text") out <- paste0(out, ".txt")
+      out <- paste0(out, ".", input$format_output_stats)
       out
     },
     content = function(file) {
       
-      if (input$stats_out == "Text") {
+      if (input$format_output_stats == "text") {
         results <- calculate_stats()
         print_args <- input$stats_print_arguments
         if (print_args != "") {
@@ -473,20 +471,39 @@ server <- function(input, output, session) {
         } else call <- "print(results)"
         call <- paste0("capture.output(", call, ")")
         writeLines(str2lang(call) |> eval(), con = file)
-      }
-      
-      if (input$stats_out == "Html") {
+      } else {
         results <- calculate_stats()
         print_args <- input$stats_print_arguments
         if (print_args != "") {
           print_args <- paste0(", ", print_args)
-          call<- paste0("export(results, ", print_args, ")")
+          call<- paste0(
+            "export(results, flip = ", input$stats_export_flip, ",",
+            print_args, 
+            ", filename = '", file, "')" 
+          )
         } else {
-          call <- "export(results)"
+          call <- paste0(
+            "export(results, flip = ", input$stats_export_flip,
+            ", filename = '", file, "')"
+            
+          )
         }
         out <- str2lang(call) |> eval()
-        kableExtra::save_kable(out, file)
+        
       }
+      
+      #if (input$stats_out == "Html") {
+      #  results <- calculate_stats()
+      #  print_args <- input$stats_print_arguments
+      #  if (print_args != "") {
+      #    print_args <- paste0(", ", print_args)
+      #    call<- paste0("export(results, ", print_args, ")")
+      #  } else {
+      #    call <- "export(results)"
+      #  }
+      #  out <- str2lang(call) |> eval()
+      #  kableExtra::save_kable(out, file)
+      #}
       
     }
   )

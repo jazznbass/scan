@@ -7,6 +7,7 @@
 ## New
 
 - Tip of the day like message at startup
+- new output engine for rendering html export based on gtable. Set `options(scan.export.engine = "gt")` for trying it out (status is still experimental). This allows also to export tables into docx format: `overlap(exampleAB) |> export(file = "test.docx", flip = TRUE)`
 
 ## Changes
 
