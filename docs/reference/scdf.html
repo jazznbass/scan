@@ -72,6 +72,7 @@ data with one or more single-cases.</p>
 <span>  <span class="va">mt</span>,</span>
 <span>  <span class="va">phase</span>,</span>
 <span>  phase_design <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  phase_starts <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dvar <span class="op">=</span> <span class="st">"values"</span>,</span>
 <span>  pvar <span class="op">=</span> <span class="st">"phase"</span>,</span>
@@ -101,8 +102,13 @@ design is strictly AB).</p></dd>
 
 
 <dt>phase_design</dt>
-<dd><p>A vector defining the length and label of
+<dd><p>A list defining the length and label of
 each phase. E.g., <code>phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)</code>.</p></dd>
+
+
+<dt>phase_starts</dt>
+<dd><p>A vector defining the label and measurement time of each
+phase start. E.g., <code>phase_starts = c(A1 = 1, B1 = 6, A2 = 14, B2 = 19)</code>.</p></dd>
 
 
 <dt>name</dt>
