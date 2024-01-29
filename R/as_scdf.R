@@ -23,8 +23,10 @@ as_scdf <- function(object,
                     phase_names = NULL,
                     sort_cases = FALSE) {
 
+  on.exit(print_messages())
+  
   if (!cvar %in% names(object)) {
-    message("Casename variable not found. Assuming one case.")
+    add_message("Casename variable not found. Assuming one case.")
     object[[cvar]] <- "unnamed"
   }
 
@@ -32,7 +34,7 @@ as_scdf <- function(object,
     pvar <- attr(object, opt("scdf"))[[opt("phase")]]
     dvar <- attr(object, opt("scdf"))[[opt("dv")]]
     mvar <- attr(object, opt("scdf"))[[opt("mt")]]
-    message("Found scdf attributes and replaced function arguments.")
+    add_message("Found scdf attributes and replaced function arguments.")
   }
 
   if (!sort_cases) {
