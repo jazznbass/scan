@@ -78,9 +78,3 @@ autocorr <- function(data, dvar, pvar, mvar,
   out
 }
 
-#' @rdname deprecated-functions
-#' @export
-autocorrSC <- function(...) {
-  .deprecated_warning("autocorr", "autocorrSC")
-  autocorr(...)
-}
