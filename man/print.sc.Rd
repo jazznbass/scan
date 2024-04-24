@@ -54,7 +54,7 @@
 
 \method{print}{sc_rand}(x, ...)
 
-\method{print}{sc_rci}(x, ...)
+\method{print}{sc_rci}(x, digits = 3, ...)
 
 \method{print}{sc_smd}(x, digits = "auto", ...)
 

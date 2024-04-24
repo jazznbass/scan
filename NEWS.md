@@ -11,7 +11,8 @@
 
 ## Changes
 
-- `scdf()`: New argument `phase_starts()`. Which defines the measuremnt times of the start of each phase. `phase_starts = list(A = 1, B = 10, C = 15)`. It throws an error when s phase start is defined where no corresponding measurement-time exists. `phase_starts` is a generalization of `B_start`.
+- `rci89`: removed the Hageman et al. method as it is ot appropriate for singl-cases in the current implementation.
+- `scdf()`: New argument `phase_starts()`. Which defines the measurement times of the start of each phase. `phase_starts = list(A = 1, B = 10, C = 15)`. It throws an error when a phase start is defined where no corresponding measurement-time exists. `phase_starts` is a generalization of `B_start`.
 - `rand_test()`: New option for `statistic`: `SMD` calculates the standardized mean difference as Hedge's g with Durlak correction. `W-test` computes Wilcoxon tests and compares average W statistics. `T-test` computes T-tests and compares average t-Values. `NAP` and `NAP decreasing` for Non-overlap of all pairs.
 - `nap()`: added Cohen's d and R-Squared effects.
 - `export()`: `select` argument for `nap`; new for `pem()`, `pet()`

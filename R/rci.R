@@ -14,9 +14,9 @@
 #'   change in a single subject: An alteration of the RC index. *Behavior
 #'   Therapy, 17*, 305-308.
 #'
-#'   Hageman, W. J. J., & Arrindell, W. A. (1993). A further refinement of the
-#'   reliable change (RC) index by improving the pre-post difference score:
-#'   Introducing RCID. *Behaviour Research and Therapy, 31*, 693-700.
+# #'   Hageman, W. J. J., & Arrindell, W. A. (1993). A further refinement of the
+# #'   reliable change (RC) index by improving the pre-post difference score:
+# #'   Introducing RCID. *Behaviour Research and Therapy, 31*, 693-700.
 #'
 #'   Jacobson, N. S., & Truax, P. (1991). Clinical Significance: A statistical
 #'   approach to defining meaningful change in psychotherapy research.
@@ -37,7 +37,7 @@ rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
-
+  
   data <- .prepare_scdf(data, na.rm = TRUE)
   data <- recombine_phases(data, phases = phases)$data
   
@@ -51,55 +51,72 @@ rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2
   B <- lapply(data, function(x) x[, dvar][x[, pvar] == "B"])
   A <- unlist(A)
   B <- unlist(B)
-  sA <- sd(A)
-  sB <- sd(B)
-  mA <- mean(A)
-  mB <- mean(B)
-  nA <- length(A)
-  nB <- length(B)
+  sA <- sd(A, na.rm = TRUE)
+  sB <- sd(B, na.rm = TRUE)
+  mA <- mean(A, na.rm = TRUE)
+  mB <- mean(B, na.rm = TRUE)
+  nA <- sum(!is.na(A))
+  nB <- sum(!is.na(A))
   n <- nA + nB
-  SE.A <- sA * sqrt(1 - rel)
-  SE.B <- sB * sqrt(1 - rel)
-  stand.dif <- (mB-mA)/sd(c(A,B))
-  RCI.1 <- (mB - mA) / SE.A
-  RCI.2 <- (mB - mA) / sqrt(2 * SE.A * SE.A)
-  RCI.3 <- (mB - mA) * rel + (mB - mA) * (1 - rel) / 
-           (sqrt(rel) * sqrt(2 * SE.A * SE.A))
-  descriptives.ma <- matrix(
-    c(nA, nB, mA, mB, sA, sB, SE.A, SE.B), 2, 4, 
+  seA <- sA * sqrt(1 - rel)
+  seB <- sB * sqrt(1 - rel)
+  stand_dif <- (mB-mA)/sd(c(A,B))
+  se_dif <- sqrt(2*seA^2)
+  
+  cor_a_b <- rel
+  xA <- mA
+  xB <- mB
+  rel_A <- rel
+  rel_B <- rel
+  
+  rdd <- (sA^2*rel_A + sB^2*rel_B - 2*sA*sB*cor_a_b) / 
+         (sA^2 + sB^2 - 2*sA*sB*cor_a_b)
+  
+  rci_jacobsen <- (mB - mA) / seA
+  rci_christensen <- (mB - mA) / se_dif
+  rci_hageman <- (xB - xA) * rdd + (mB - mA) * (1 - rdd) / 
+    sqrt(seA^2 + seB^2)
+  
+  descriptives_ma <- matrix(
+    c(nA, nB, mA, mB, sA, sB, seA, seB), 2, 4, 
     dimnames = list(c("A-Phase", "B-Phase"), c("n", "mean", "SD", "SE"))
   ) 
   z <- qnorm(ci + 0.5 * (1 - ci))
-  ci.ma <- matrix(
+  ci_ma <- matrix(
     NA, 2, 2, byrow = TRUE, 
     dimnames = list(c("A-Phase", "B-Phase"), c("Lower", "Upper"))
   )
-  ci.ma[1,1] <- mA - z * SE.A
-  ci.ma[1,2] <- mA + z * SE.A
-  ci.ma[2,1] <- mB - z * SE.B
-  ci.ma[2,2] <- mB + z * SE.B
+  ci_ma[1,1] <- mA - z * seA
+  ci_ma[1,2] <- mA + z * seA
+  ci_ma[2,1] <- mB - z * seB
+  ci_ma[2,2] <- mB + z * seB
   
   if(graph) {
-    dat <- cbind(ci.ma[1, ], ci.ma[2, ])
+    dat <- cbind(ci_ma[1, ], ci_ma[2, ])
     colnames(dat) <- c("A-Phase", "B-Phase")
     main <- sprintf("%d%% confidence interval (rtt = %.2f)", ci * 100, rel)
     boxplot(dat, ylab = "Mean", main = main)
   }
   
-  RCI.ma <- matrix(
-    c(RCI.1, RCI.2, RCI.3), 3, 1, 
+  rci_ma <- matrix(
+    c(rci_jacobsen, rci_christensen), 2, 1, 
     dimnames = list(
-      c("Jacobson et al.", "Christensen and Mendoza", "Hageman and Arrindell"), 
+      c(
+        "Jacobson et al.", 
+        "Christensen and Mendoza"), 
+        #"Hageman and Arrindell"), 
       "RCI"
     )
   )
   out <- list(
-    RCI = RCI.ma, 
-    stand.dif = stand.dif, 
-    conf = ci.ma, 
-    conf.percent = ci, 
+    rci = rci_ma, 
+    stand_dif = stand_dif, 
+    se_dif = se_dif,
+    conf = ci_ma, 
+    conf_percent = ci, 
     reliability = rel, 
-    descriptives = descriptives.ma
+    descriptives = descriptives_ma,
+    rdd = rdd
   ) 
   class(out) <- c("sc_rci")
   attr(out, opt("phase")) <- pvar
@@ -107,14 +124,6 @@ rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2
   out
 }
 
-#' @rdname deprecated-functions
-#' @export
-rciSC <- function(...) {
-  rci(...)
-}
 
-#' @rdname deprecated-functions
-#' @export
-rCi <- function(...) {
-  rci(...)
-}
+
+

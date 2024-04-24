@@ -130,5 +130,10 @@ autocorrSC <- function(...) {
   autocorr(...)
 }
 
+#' @rdname deprecated-functions
+#' @export
+rciSC <- function(...) {
+  rci(...)
+}
 
 
