@@ -34,6 +34,13 @@
 #' @export
 rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2)) {
   
+  check_args(
+    at_most(length(data), 1, 
+            "RCI can not be applied to more than one case."),
+    within(rel, 0, 1),
+    within(ci, 0, 1)
+  )
+  
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
@@ -43,9 +50,9 @@ rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2
   
   N <- length(data)
   
-  if(N > 1) {
-    stop("Multiple single-cases are given. Calculations can only be applied to one single-case data set.\n")
-  }
+  #if(N > 1) {
+  #  stop("Multiple single-cases are given. Calculations can only be applied to one single-case data set.\n")
+  #}
   
   A <- lapply(data, function(x) x[, dvar][x[, pvar] == "A"])
   B <- lapply(data, function(x) x[, dvar][x[, pvar] == "B"])
