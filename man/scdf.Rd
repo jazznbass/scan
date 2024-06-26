@@ -12,6 +12,7 @@ scdf(
   mt,
   phase,
   phase_design = NULL,
+  phase_starts = NULL,
   name = NULL,
   dvar = "values",
   pvar = "phase",
@@ -30,8 +31,11 @@ design is strictly AB).}
 
 \item{phase}{A vector defining phase assignments.}
 
-\item{phase_design}{A vector defining the length and label of
+\item{phase_design}{A list defining the length and label of
 each phase. E.g., \code{phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.}
+
+\item{phase_starts}{A vector defining the label and measurement time of each
+phase start. E.g., \code{phase_starts = c(A1 = 1, B1 = 6, A2 = 14, B2 = 19)}.}
 
 \item{name}{A name for the case.}
 

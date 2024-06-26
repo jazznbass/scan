@@ -11,8 +11,10 @@
 #' @inheritParams .inheritParams
 #' @param mt A vector defining measurement times. Default is `mt =
 #'   (1,2,3,...,n)`.
-#' @param phase_design A vector defining the length and label of
+#' @param phase_design A list defining the length and label of
 #'   each phase. E.g., `phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)`.
+#' @param phase_starts A vector defining the label and measurement time of each 
+#'  phase start. E.g., `phase_starts = c(A1 = 1, B1 = 6, A2 = 14, B2 = 19)`.
 #' @param name A name for the case.
 #' @param phase A vector defining phase assignments.
 #' @param ...  Additional variables. E.g., `teacher = c(0,1,0,1,0,0,1),
@@ -99,27 +101,26 @@ scdf <- function(values,
                  mt,
                  phase,
                  phase_design = NULL,
+                 phase_starts = NULL,
                  name = NULL,
                  dvar = "values",
                  pvar = "phase",
                  mvar = "mt",
                  ...) {
   
-  msg <- c()
+  on.exit(print_messages())
+  
   df <- list(...)
 
   if ("var.values" %in% names(df)) {
-    stop("Argument 'var.values' is deprecated. Please use 'dvar' instead.")
+    stop("Argument 'var.values' is deprecated. Please use 'dvar' instead.", call. = FALSE)
   }
-  
   if ("phase.design" %in% names(df)) {
-    msg <- c(msg, "Argument 'phase.design' is deprecated. Please use 'phase_design' instead.")
-    phase_design <- df$phase.design
+    stop("Argument 'phase.design' is deprecated. Please use 'phase_design' instead.", call. = FALSE)
   }
   
   if ("B.start" %in% names(df)) {
-    msg <- c(msg, "Argument 'B.start' is deprecated. Please use 'B_start' instead.")
-    phase_design <- df$phase.design
+    stop("Argument 'B.start' is deprecated. Please use 'B_start' instead.", call. = FALSE)
   }
   
   if (!missing(mt)) df <- c(mt = list(mt), df)
@@ -127,7 +128,7 @@ scdf <- function(values,
   if (!missing(values)) df <- c(values = list(values), df)
 
   if (!(dvar %in% names(df))) {
-    stop("Dependent variable not defined correctly!")
+    stop("Dependent variable not defined correctly!", call. = FALSE)
   }
 
   # create phase_design from a named vector
@@ -149,8 +150,7 @@ scdf <- function(values,
 
   ### for backward compatibility
   if (("MT" %in% names(data)) && missing(mt) && mvar == "mt") {
-    msg <- c(msg, "Please rename argument 'MT' to 'mt'.")
-    mvar <- "MT"
+    stop("Please rename argument 'MT' to 'mt'.", call. = FALSE)
   }
   ### END : for backward compatibility
 
@@ -159,22 +159,21 @@ scdf <- function(values,
 
   # convert B_start phase_design
   if (!missing(B_start)) {
-    B_start <- match(B_start, data[, mvar])
-    if (is.na(B_start)) {
-      stop(
-        "No values provided at the measurement-time of B_start in var '", 
-        mvar, "'."
-      )
-    }
-    phase_design <- c("A" = B_start - 1, "B" = nrow(data) - B_start + 1)
+    phase_design <- phase_starts2phase_design(
+      list(A = data[[mvar]][1], B = B_start), 
+      data[[mvar]]
+    )
   }
 
+  if (!is.null(phase_starts)) 
+    phase_design <- phase_starts2phase_design(phase_starts, data[[mvar]])
+  
   if (is.null(phase_design)) {
-    stop("Phase design not defined correctly!")
+    stop("Phase design not defined correctly!", call. = FALSE)
   }
 
   if (!(mvar %in% names(data))) {
-    stop("Measurement-time variable not defined correctly!")
+    stop("Measurement-time variable not defined correctly!", call. = FALSE)
   }
 
   data[, pvar] <- factor(
@@ -191,8 +190,22 @@ scdf <- function(values,
   mt(data) <- mvar
 
   if (!is.null(name)) names(data) <- name
-
-  return_messages(msg, TRUE)
   
   data
+}
+
+phase_starts2phase_design <- function(starts, mt) {
+  ids <- lapply(starts, \(.) which(. == mt))
+  check <- lapply(ids, \(.) {
+    if (length(.) == 0) 
+      stop("phase_starts not defined correctly. ", 
+           "Measurement time does not exist.", call. = FALSE)
+  })
+  
+  phase_design <- list()
+  for (i in 2:length(ids)) {
+    phase_design[[names(starts)[i - 1]]] <- ids[[i]] - ids[[i - 1]]
+  }
+  phase_design[[names(starts)[length(starts)]]] <- length(mt) - sum(unlist(phase_design))
+  phase_design
 }

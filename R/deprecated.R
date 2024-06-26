@@ -123,3 +123,17 @@ rand.test <- function(...) {
   rand_test(...)
 }
 
+#' @rdname deprecated-functions
+#' @export
+autocorrSC <- function(...) {
+  .deprecated_warning("autocorr", "autocorrSC")
+  autocorr(...)
+}
+
+#' @rdname deprecated-functions
+#' @export
+rciSC <- function(...) {
+  rci(...)
+}
+
+

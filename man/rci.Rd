@@ -31,7 +31,7 @@ providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(
 is \code{phases = c(1,2)}.}
 }
 \description{
-The \code{rci()} function computes three indices of reliable change (Wise, 2004)
+The \code{rci()} function computes indices of reliable change (Wise, 2004)
 and corresponding descriptive statistics.
 }
 \examples{
@@ -44,10 +44,6 @@ rci(byHeart2011[1], graph = TRUE, rel = 0.8)
 Christensen, L., & Mendoza, J. L. (1986). A method of assessing
 change in a single subject: An alteration of the RC index. \emph{Behavior
 Therapy, 17}, 305-308.
-
-Hageman, W. J. J., & Arrindell, W. A. (1993). A further refinement of the
-reliable change (RC) index by improving the pre-post difference score:
-Introducing RCID. \emph{Behaviour Research and Therapy, 31}, 693-700.
 
 Jacobson, N. S., & Truax, P. (1991). Clinical Significance: A statistical
 approach to defining meaningful change in psychotherapy research.

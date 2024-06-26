@@ -101,7 +101,7 @@ export(object, ...)
 \method{export}{sc_trend}(
   object,
   caption = NA,
-  footnote = NA,
+  footnote = NULL,
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
@@ -112,7 +112,7 @@ export(object, ...)
 \method{export}{scdf}(
   object,
   caption = NA,
-  footnote = NA,
+  footnote = NULL,
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),

@@ -97,6 +97,13 @@ check_args <- function(...) {
     )
   }
   
+  env$is_logical <- function(param) {
+    env$is_true(
+      is.logical(param), 
+      "Argument ", as.character(match.call()[2]), " is not logical."
+    )
+  }
+  
   out <- vector("list", length(expressions) - 1)
   for(i in 2:length(expressions)) {
     out[i - 1] <- eval(expressions[c(1, i)], envir = env)
@@ -114,7 +121,7 @@ check_args <- function(...) {
 utils::globalVariables(
   c(
     "by_class", "by_call", "not","within", "one_of", "has_length", "is_true",
-    "at_least", "at_most"
+    "at_least", "at_most", "is_logical"
   )
 )
 

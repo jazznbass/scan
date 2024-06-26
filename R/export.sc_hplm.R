@@ -111,22 +111,28 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   }
   
   table <- .create_table(
-    out, 
-    kable_options, 
-    kable_styling_options, 
+    out,
+    kable_options,
+    kable_styling_options,
     caption = caption,
-    footnote = footnote
+    footnote = footnote,
+    decimals = NULL,
+    row_group = list(
+      "Fixed effects" = 1: nrow_out,
+      "Random effects" = (nrow_out + 1) : (nrow(out) - 3),
+      "Model" = (nrow(out) - 2) : nrow(out)
+    )
   )
   
-  table <- table |> 
-    #pack_rows("Fixed effects", 1, nrow_out, indent = FALSE) |> 
-    pack_rows("\nRandom effects", nrow_out + 1, nrow(out), indent = FALSE) |> 
-    pack_rows("\nModel", nrow(out) - 2, nrow(out), indent = FALSE) |> 
-    #row_spec(nrow_out + nrow(md) + 1, hline_after = TRUE) |> 
-    row_spec(nrow_out, hline_after = TRUE)
-  
-  # finish ------------------------------------------------------------------
-  
+  if (getOption("scan.export.engine") == "kable") {
+    table <- table |>
+      #pack_rows("Fixed effects", 1, nrow_out, indent = FALSE) |>
+      pack_rows("\nRandom effects", nrow_out + 1, nrow(out), indent = FALSE) |>
+      pack_rows("\nModel", nrow(out) - 2, nrow(out), indent = FALSE) |>
+      #row_spec(nrow_out + nrow(md) + 1, hline_after = TRUE) |>
+      row_spec(nrow_out, hline_after = TRUE)
+  }
+      
   if (!is.na(filename)) .save_export(table, filename)
   
   table
@@ -141,14 +147,24 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   
   out <- coef(object, casewise = TRUE)
   
-  table <- .create_table(
-    out, 
-    kable_options, 
-    kable_styling_options, 
-    caption = caption,
-    footnote = footnote
-  )
+  if (getOption("scan.export.engine") == "kable") {
+    table <- .create_table(
+      out,
+      kable_options,
+      kable_styling_options,
+      caption = caption,
+      footnote = footnote
+    )
+  }
   
+  if (getOption("scan.export.engine") == "kable") {
+    table <- export_table(
+      out, title = caption, footnote = footnote, 
+      decimals = round
+    )
+  }
+
   if (!is.na(filename)) .save_export(table, filename)
+  
   table
 }

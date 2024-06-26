@@ -14,6 +14,9 @@
 #' @param lr.test If set TRUE likelihood ratio tests are calculated comparing
 #'   model with vs. without random slope parameters.
 #' @param ICC If `ICC = TRUE` an intraclass-correlation is estimated.
+#' @param random_trend If TRUE, includes a random trend trend effect.
+#' @param random_level If TRUE, includes a random level trend effect.
+#' @param random_slope If TRUE, includes a random slope trend effect.
 #' @param fixed Defaults to the fixed part of the standard piecewise regression
 #'   model. The parameter phase followed by the phase name (e.g., phaseB)
 #'   indicates the level effect of the corresponding phase. The parameter
@@ -65,6 +68,9 @@ hplm <- function(data, dvar, pvar, mvar,
                  trend = TRUE, 
                  level = TRUE, 
                  slope = TRUE, 
+                 random_trend = FALSE, 
+                 random_level = FALSE, 
+                 random_slope = FALSE, 
                  fixed = NULL, 
                  random = NULL, 
                  update.fixed = NULL, 
@@ -89,6 +95,12 @@ hplm <- function(data, dvar, pvar, mvar,
     model <- "B&L-B"
   }
 
+  if (random.slopes) {
+    random_trend <- trend
+    random_level <- level
+    random_slope <- slope
+  }
+  
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
@@ -126,11 +138,18 @@ hplm <- function(data, dvar, pvar, mvar,
   }
   if (!is.null(update.fixed)) fixed <- update(fixed, update.fixed)
   
+  
+  if (any(random_trend, random_level, random_slope)) {
+    random.slopes <- TRUE
+  }
+  
   if (!random.slopes && is.null(random)) random <- as.formula("~1|case")
   
   if (is.null(random)) {
     random <- as.formula(.create_random_formula(
-      mvar, slope, level, trend, tmp_model$var_phase, tmp_model$var_inter
+      mvar, 
+      random_slope, random_level, random_trend, 
+      tmp_model$var_phase, tmp_model$var_inter
     ))
   }
   out$formula <- list(fixed = fixed, random = random)
@@ -138,8 +157,14 @@ hplm <- function(data, dvar, pvar, mvar,
 # lme hplm model ----------------------------------------------------------
 
   out$hplm <- lme(
-    fixed = fixed, random = random, data = dat, na.action = na.omit, 
-    method = method, control = control, keep.data = FALSE, ...
+    fixed = fixed, 
+    random = random, 
+    data = dat, 
+    na.action = na.omit, 
+    method = method, 
+    control = control, 
+    keep.data = FALSE, 
+    ...
   )
   
   out$hplm$call$fixed <- fixed

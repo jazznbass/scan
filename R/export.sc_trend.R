@@ -2,7 +2,7 @@
 #' @export
 export.sc_trend <- function(object, 
                             caption = NA, 
-                            footnote = NA, 
+                            footnote = NULL, 
                             filename = NA,
                             kable_styling_options = list(), 
                             kable_options = list(), 
@@ -24,23 +24,34 @@ export.sc_trend <- function(object,
   }
   out <- cbind(Phase = tmp.rownames, out)
   
+  row_group <- vector("list", length(object$formulas))
+  names(row_group) <- object$formulas
+  
+  for (i in 1:length(object$formulas)) {
+    .start <- 1 + (i - 1) * (length(object$design) + 1)
+    row_group[[i]] <- .start : (.start + length(object$design))
+  }
+  
   table <- .create_table(
     out, 
     kable_options, 
     kable_styling_options, 
     caption = caption,
-    footnote = footnote
+    footnote = footnote,
+    row_group = row_group,
+    decimals = round
   )
   
-  for (i in 1:length(object$formulas)) {
-    table <- group_rows(
-      table, object$formulas[i],
-      1 + (i - 1) * (length(object$design) + 1),
-      i * (length(object$design) + 1)
-      #label_row_css = "text-align: center;"
-    )
+  if (getOption("scan.export.engine") == "kable") {
+    for (i in 1:length(object$formulas)) {
+      table <- group_rows(
+        table, object$formulas[i],
+        1 + (i - 1) * (length(object$design) + 1),
+        i * (length(object$design) + 1)
+        #label_row_css = "text-align: center;"
+      )
+    }
   }
-  
   # finish ------------------------------------------------------------------
   
   if (!is.na(filename)) .save_export(table, filename)

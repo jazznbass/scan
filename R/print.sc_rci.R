@@ -1,21 +1,22 @@
 #' @rdname print.sc
 #' @export
 #' 
-print.sc_rci <- function(x, ...) {
+print.sc_rci <- function(x, digits = 3, ...) {
   
   cat("Reliable Change Index\n\n")
-  cat("Mean Difference = ", x$descriptives[2, 2] - x$descriptives[1, 2], "\n")
-  cat("Standardized Difference = ", x$stand.dif, "\n")
+  cat("Mean Difference = ", round(x$descriptives[2, 2] - x$descriptives[1, 2], digits), "\n")
+  cat("Standardized Difference = ", round(x$stand_dif, digits), "\n")
+  cat("Standard error of differences = ", round(x$se_dif, digits), "\n")
+  cat("Reliability of measurements = ", round(x$reliability, digits), "\n")
+  #cat("Reliability of difference scores = ", round(x$rdd, digits), "\n")
   cat("\n")
   cat("Descriptives:\n")
-  print(x$descriptives)
+  print(round(x$descriptives, digits))
   cat("\n")
-  cat("Reliability = ", x$reliability, "\n")
-  cat("\n")
-  cat(x$conf.percent * 100, "% Confidence Intervals:\n")
-  print(x$conf)
+  cat(round(x$conf_percent * 100, digits), "% Confidence Intervals:\n")
+  print(round(x$conf, digits))
   cat("\n")
   cat("Reliable Change Indices:\n")
-  print(x$RCI)
+  print(round(x$rci, digits))
   cat("\n")
 }

@@ -81,10 +81,16 @@ export <- function (object, ...) {
 } 
 
 .save_export <- function(x, filename) {
-  if (inherits(x, "kableExtra"))
-    out <- kableExtra::save_kable(x, filename, zoom = 2)
   
-  out
+  
+  if (getOption("scan.export.engine") == "kable") {
+    kableExtra::save_kable(x, filename, zoom = 2)
+  }
+  
+  if (getOption("scan.export.engine") == "gt") {
+    gt::gtsave(x, filename)
+  }
+  
 }
 
 .add_footnote <- function(x, footnote) {
@@ -96,7 +102,6 @@ export <- function (object, ...) {
       x, general = footnote, threeparttable = TRUE,
       footnote_as_chunk = TRUE
     )
-  
 }
 
 .create_table <- function(x, 
@@ -104,7 +109,19 @@ export <- function (object, ...) {
                           kable_styling_args, 
                           caption = NULL,
                           footnote = NULL,
-                          align = NULL) {
+                          align = NULL,
+                          ...) {
+  
+  if (getOption("scan.export.engine") == "gt") {
+    table <- export_table(
+      x, 
+      title = caption, 
+      footnote = footnote,
+      ...
+    )
+    return(table)
+  }
+  
   
   rownames(x) <- NULL
   
@@ -127,4 +144,102 @@ export <- function (object, ...) {
   }
   
   table
+}
+
+###### gt ####
+
+export_table <- function(x, 
+                         title = NULL, 
+                         footnote = NULL, 
+                         spanner = NULL,
+                         row_group = NULL,
+                         rownames = FALSE,
+                         cols_label = NULL,
+                         decimals = NULL) {
+          
+  
+  while(TRUE) {
+    id <- which(duplicated(names(x)))
+    if (length(id) == 0) break 
+    names(x)[id] <- paste0(" ", names(x)[id], " ")
+    
+  }
+  
+  if (!is.null(title)) title <- paste0("*", title, "*")
+  if (!is.null(footnote) && !identical(footnote, "")) {
+    footnote <- paste0("*Note.* ", paste0(footnote, collapse = ". "), ".")
+  }
+  
+  if (!inherits(x, "data.frame")) {
+    x <- as.data.frame(x)
+    rownames(x) <- NULL
+  }
+  if (rownames && !is.null(rownames(x))) x <- cbind(" " = rownames(x), x)
+  
+  out <- do.call(gt::gt, list(data = x))|> gt_apa_style()
+  
+  if (!is.null(title)) out <- gt::tab_header(out, title = gt::md(title))
+  if (!is.null(row_group)) {
+    for(i in length(row_group):1)
+      out <- gt::tab_row_group(
+        out, label = names(row_group)[i], rows = row_group[[i]]
+      )
+    for(i in length(row_group):1)  
+      out <- gt::tab_style(
+        out, style = gt::cell_text(align = "center"),
+        locations = gt::cells_row_groups(groups = names(row_group)[i])
+      )
+  }
+  if (!is.null(spanner)) {
+    for(i in seq_along(spanner)) {
+      out <- gt::tab_spanner(
+        out, 
+        label = names(spanner)[i], 
+        columns = spanner[[i]]
+      )  
+    }
+  }
+  
+  if (!is.null(cols_label)) out <- gt::cols_label(out, .list = cols_label)
+  if (!is.null(footnote) && !identical(footnote, "")) 
+    out <- gt::tab_footnote(out, gt::md(footnote))
+  if (!is.null(decimals)) out <- gt::fmt_number(out, decimals = decimals)
+
+  out
+}
+
+gt_apa_style <- function(gt_tbl) {
+  gt_tbl  |> 
+    gt::tab_options(
+      table.border.bottom.color = "white",
+      #table.border.bottom.width = 3,
+      
+      table.border.top.color = "white",
+      #table.border.top.width = 3,
+      
+      table_body.border.bottom.color = "black",
+      table_body.border.bottom.width = 3,
+      
+      table_body.border.top.color = "black",
+      table_body.border.top.width = 3,
+      
+      table_body.hlines.width = 0,
+      
+      heading.align = "left",
+      heading.border.bottom.width = 3,
+      heading.border.bottom.color = "black",
+      heading.title.font.size = "100%",
+      column_labels.border.bottom.width = 2,
+      column_labels.border.bottom.color = "black",
+      column_labels.border.top.width = 3,
+      column_labels.border.top.color = "black",
+      
+      row_group.border.bottom.color = "white",
+      row_group.border.bottom.style = NULL,
+      row_group.border.bottom.width = NULL
+      
+    )  |> 
+    gt::opt_table_font(font = "times") |> 
+    gt::cols_align(align = "center") |> 
+    gt::cols_align(align = "left", columns = 1)
 }
