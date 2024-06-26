@@ -1,13 +1,13 @@
 #' @rdname export
 #' @export
-export.scdf <- function(object, caption = NA, footnote = NA, filename = NA,
+export.scdf <- function(object, caption = NA, footnote = NULL, filename = NA,
                         kable_styling_options = list(), kable_options = list(),
                         cols, ...) {
   
   kable_options <- .join_kabel(kable_options)
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
-  if (!is.na(footnote)) {
+  if (is.null(footnote)) {
     if (!is.null(scdf_attr(object, "info"))) 
       footnote <- scdf_attr(object, "info")
     if (!is.null(scdf_attr(object, "author"))) {
@@ -49,19 +49,26 @@ export.scdf <- function(object, caption = NA, footnote = NA, filename = NA,
   
   kable_options$align <- rep("c", ncol(out))
   
+  spanner <- setNames(vector("list", N), names(object))
+  n_vars <- ncol(out) / N
+  for(i in 1:N) {
+    spanner[[i]] <- ((i - 1) * n_vars + 1) : ((i - 1) * n_vars + n_vars)
+  }
+  
   table <- .create_table(
     out, 
     kable_options, 
     kable_styling_options, 
     caption = caption,
-    footnote = footnote
+    footnote = footnote,
+    spanner = spanner
   )
   
-  case_names <- rep(ncol(out) / N, N)
-  names(case_names) <- names(object)
-  table <- add_header_above(table, case_names)
-  if (!is.na(footnote) && footnote != "") 
-    table <- .add_footnote(table, footnote)
+  if (getOption("scan.export.engine") == "kable") {
+    case_names <- rep(n_vars, N)
+    names(case_names) <- names(object)
+    table <- add_header_above(table, case_names)
+  }
   
   # finish ------------------------------------------------------------------
   

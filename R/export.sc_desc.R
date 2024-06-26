@@ -75,7 +75,8 @@ export.sc_desc <- function(object,
         "Min" = spannerpos[7]:(spannerpos[7] + n_phases - 1),
         "Max" = spannerpos[8]:(spannerpos[8] + n_phases - 1),
         "Trend" = spannerpos[9]:(spannerpos[9] + n_phases - 1)
-      )
+      ),
+      ...
     )
     
     if (getOption("scan.export.engine") == "kable") {

@@ -31,7 +31,7 @@ providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(
 is \code{phases = c(1,2)}.}
 }
 \description{
-The \code{rci()} function computes three indices of reliable change (Wise, 2004)
+The \code{rci()} function computes indices of reliable change (Wise, 2004)
 and corresponding descriptive statistics.
 }
 \examples{

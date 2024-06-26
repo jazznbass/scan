@@ -102,7 +102,6 @@ export <- function (object, ...) {
       x, general = footnote, threeparttable = TRUE,
       footnote_as_chunk = TRUE
     )
-  
 }
 
 .create_table <- function(x, 
@@ -167,7 +166,7 @@ export_table <- function(x,
   }
   
   if (!is.null(title)) title <- paste0("*", title, "*")
-  if (!is.null(footnote)) {
+  if (!is.null(footnote) && !identical(footnote, "")) {
     footnote <- paste0("*Note.* ", paste0(footnote, collapse = ". "), ".")
   }
   
@@ -202,7 +201,8 @@ export_table <- function(x,
   }
   
   if (!is.null(cols_label)) out <- gt::cols_label(out, .list = cols_label)
-  if (!is.null(footnote)) out <- gt::tab_footnote(out, gt::md(footnote))
+  if (!is.null(footnote) && !identical(footnote, "")) 
+    out <- gt::tab_footnote(out, gt::md(footnote))
   if (!is.null(decimals)) out <- gt::fmt_number(out, decimals = decimals)
 
   out

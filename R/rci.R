@@ -1,6 +1,6 @@
 #' Reliable change index
 #'
-#' The `rci()` function computes three indices of reliable change (Wise, 2004)
+#' The `rci()` function computes indices of reliable change (Wise, 2004)
 #' and corresponding descriptive statistics.
 #'
 #' @inheritParams .inheritParams
@@ -32,13 +32,18 @@
 #' rci(byHeart2011[1], graph = TRUE, rel = 0.8)
 #'
 #' @export
-rci <- function(data, dvar, pvar, rel, ci = 0.95, graph = FALSE, phases = c(1, 2)) {
+rci <- function(data, dvar, pvar, 
+                rel, 
+                ci = 0.95, 
+                graph = FALSE, 
+                phases = c(1, 2)) {
   
   check_args(
     at_most(length(data), 1, 
             "RCI can not be applied to more than one case."),
     within(rel, 0, 1),
-    within(ci, 0, 1)
+    within(ci, 0, 1),
+    is_logical(graph)
   )
   
   # set attributes to arguments else set to defaults of scdf

@@ -13,7 +13,7 @@ corrected_tau(
   alpha = 0.05,
   continuity = FALSE,
   repeated = FALSE,
-  tau_method = "b"
+  tau_method = c("b", "a")
 )
 }
 \arguments{
