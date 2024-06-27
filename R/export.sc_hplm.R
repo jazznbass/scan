@@ -116,7 +116,6 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
     kable_styling_options,
     caption = caption,
     footnote = footnote,
-    decimals = NULL,
     row_group = list(
       "Fixed effects" = 1: nrow_out,
       "Random effects" = (nrow_out + 1) : (nrow(out) - 3),

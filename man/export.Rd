@@ -27,6 +27,7 @@ export(object, ...)
   kable_styling_options = list(),
   kable_options = list(),
   flip = FALSE,
+  decimals = 2,
   ...
 )
 
@@ -38,6 +39,7 @@ export(object, ...)
   kable_styling_options = list(),
   kable_options = list(),
   select = c("Case", "NAP", "NAP Rescaled", "w", "p", "d", "R²"),
+  decimals = 2,
   ...
 )
 
@@ -49,6 +51,7 @@ export(object, ...)
   kable_styling_options = list(),
   kable_options = list(),
   round = 2,
+  decimals = 2,
   flip = FALSE,
   ...
 )
@@ -60,6 +63,7 @@ export(object, ...)
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
+  decimals = 2,
   ...
 )
 
@@ -70,6 +74,7 @@ export(object, ...)
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
+  decimals = 2,
   ...
 )
 
@@ -80,6 +85,7 @@ export(object, ...)
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
+  decimals = 3,
   ...
 )
 
@@ -94,6 +100,7 @@ export(object, ...)
   kable_styling_options = list(),
   kable_options = list(),
   round = 2,
+  decimals = 2,
   flip = FALSE,
   ...
 )
@@ -106,17 +113,19 @@ export(object, ...)
   kable_styling_options = list(),
   kable_options = list(),
   round = 2,
+  decimals = 2,
   ...
 )
 
 \method{export}{scdf}(
   object,
-  caption = NA,
+  caption = NULL,
   footnote = NULL,
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),
   cols,
+  round = 3,
   ...
 )
 
@@ -151,6 +160,8 @@ function.}
 \item{kable_options}{list with arguments passed to the kable function.}
 
 \item{flip}{If TRUE, some objects are exported with rows and columns flipped.}
+
+\item{decimals}{Decimal places that are reported.}
 
 \item{select}{A character vector containing the names of the variables to be
 included. If the vector is named, the variables will be renamed

@@ -315,7 +315,7 @@ server <- function(input, output, session) {
   calculate_stats <- reactive({
     if (!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
     scdf <- transformed()
-    call <- get_stats_call()
+    call <- paste0("scan::", get_stats_call())
     tryCatch(
       str2lang(call) |> eval(),
       error = function(e)
@@ -339,7 +339,7 @@ server <- function(input, output, session) {
       else
         str2lang(call) |> eval() |> print() |> as.character() |> HTML(),
       error = function(e)
-        validate("Sorry, no html export for this function available yet.")
+        validate(paste0("Sorry, no html export for this function available yet.", "\n",e))
     )
   })
 
@@ -362,8 +362,9 @@ server <- function(input, output, session) {
 
   ## Arguments ------
   stat_arg_names <- reactive({
-    args <- names(formals(input$func))
-    values <- formals(input$func)
+    .formals <- formals(eval(str2lang(paste0("scan::", input$func))))
+    args <- names(.formals)
+    values <- .formals
 
     id <- which(!args %in% c(
       "dvar", "pvar", "mvar", "phases", "meta_method",
@@ -400,12 +401,13 @@ server <- function(input, output, session) {
             value <- substitute(value) |> deparse()
           }
         }
-        if (input$stats_default == "Yes") outvalue <- value else outvalue = NULL
+        #if (input$stats_default == "Yes") outvalue <- value else outvalue = NULL
+        outvalue <- value
 
         if (length(value) > 1) {
           choices <- setNames(quoted(value), value)
-          if (input$stats_default == "No")
-            choices <- c("(default)" = "", choices)
+          #if (input$stats_default == "No")
+          #  choices <- c("(default)" = "", choices)
           selected <- names(choices)[1]
           out[[i]] <- selectInput(
             args$names[i], args$names[i],
@@ -418,8 +420,8 @@ server <- function(input, output, session) {
           )
         } else if (is.logical(value)) {
           choices <- c("FALSE", "TRUE")
-          if (input$stats_default == "No")
-            choices <- c("(default)" = "", choices)
+          #if (input$stats_default == "No")
+          #  choices <- c("(default)" = "", choices)
           out[[i]] <- radioButtons(
             args$names[i], args$names[i],
             choices = choices,
@@ -434,10 +436,33 @@ server <- function(input, output, session) {
   })
 
   get_stats_call <- reactive({
-    args <- stat_arg_names()
+    full_args <- stat_arg_names()
+    args <- full_args
     values <- sapply(args$names, function(name) input[[name]])
     args <- args$names
-
+    #print(full_args$values)
+    #print(values)
+    if (input$stats_default == "No") {
+      id_default <- mapply(
+        function(origin, new) {
+  
+          if (typeof(origin) == "language") origin <- eval(origin)
+          if (typeof(origin) == "symbol") origin <- deparse(origin)
+          if (identical(new, origin)) return(TRUE)
+          if (identical(new, as.character(origin[1]))) return(TRUE)
+          if (identical(new, deparse(origin))) return(TRUE)
+          
+          if (substr(deparse(origin[1]), 1,3) == "NA_") origin <- NA
+          if (identical(new, deparse(origin[1]))) return(TRUE)
+    
+          return(FALSE)
+        },
+        origin = full_args$values,
+        new = values
+      ) |> unlist()
+      values[id_default] <- ""
+    }
+    
     id <- which(values != "")
 
     args <- args[id]

@@ -1,8 +1,9 @@
 #' @rdname export
 #' @export
-export.scdf <- function(object, caption = NA, footnote = NULL, filename = NA,
-                        kable_styling_options = list(), kable_options = list(),
-                        cols, ...) {
+export.scdf <- function(object, caption = NULL, footnote = NULL, filename = NA,
+                        kable_styling_options = list(), 
+                        kable_options = list(),
+                        cols, round = 3, ...) {
   
   kable_options <- .join_kabel(kable_options)
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
@@ -61,7 +62,8 @@ export.scdf <- function(object, caption = NA, footnote = NULL, filename = NA,
     kable_styling_options, 
     caption = caption,
     footnote = footnote,
-    spanner = spanner
+    spanner = spanner,
+    decimals = round
   )
   
   if (getOption("scan.export.engine") == "kable") {

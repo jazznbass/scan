@@ -15,6 +15,7 @@ export.sc_tauu <- function(object,
                            kable_options = list(),
                            meta = FALSE,
                            round = 3,
+                           decimals = 3,
                            ...) {
   
   kable_options <- .join_kabel(kable_options)
@@ -103,7 +104,7 @@ export.sc_tauu <- function(object,
     caption = caption,
     footnote = footnote,
     row_group = row_group,
-    decimals = round,
+    decimals = decimals,
     ...
   )
   

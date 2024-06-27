@@ -7,6 +7,7 @@ export.sc_trend <- function(object,
                             kable_styling_options = list(), 
                             kable_options = list(), 
                             round = 2,
+                            decimals = 2,
                             ...) {
   
   kable_options <- .join_kabel(kable_options)
@@ -39,7 +40,8 @@ export.sc_trend <- function(object,
     caption = caption,
     footnote = footnote,
     row_group = row_group,
-    decimals = round
+    decimals = decimals,
+    ...
   )
   
   if (getOption("scan.export.engine") == "kable") {
