@@ -119,7 +119,7 @@ export(object, ...)
 
 \method{export}{scdf}(
   object,
-  caption = NULL,
+  caption = NA,
   footnote = NULL,
   filename = NA,
   kable_styling_options = list(),

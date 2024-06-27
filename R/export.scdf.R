@@ -1,6 +1,6 @@
 #' @rdname export
 #' @export
-export.scdf <- function(object, caption = NULL, footnote = NULL, filename = NA,
+export.scdf <- function(object, caption = NA, footnote = NULL, filename = NA,
                         kable_styling_options = list(), 
                         kable_options = list(),
                         cols, round = 3, ...) {
