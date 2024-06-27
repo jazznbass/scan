@@ -131,7 +131,7 @@ values2 = values - max(values[phase=="A"])
 across_cases(values2 = scale(values)
 '
 
-res$placeholder$stats_out_args <- "e.g.: digits = 2; meta = FALSE"
+res$placeholder$stats_out_args <- "e.g.: decimals = 3; meta = FALSE"
 
 res$placeholder$plot_arguments <- '(choose one or more of the templates below and experiment with the syntax here.)
 '
@@ -180,7 +180,7 @@ You can:
 
 1. create a new case (fill in 'values' and click 'Add')
 2. load a dataset (Data -> Load -> click 'Open file' to import an rds, csv, or excel file)
-3. choose an example scdf (Data -> Load -> choose from 'Load example')
+3. choose an example scdf (Data -> Load -> choose from 'Choose example')
 
 'exampleABC' is a good place to start.
 
@@ -201,7 +201,7 @@ res$msg$no_case_scdf <-
 You can:
 1. create a new case (fill in 'values' and click 'Add')
 2. load a dataset (Data -> Load -> click 'Open file' to import an rds, csv, or excel file)
-3. choose an example scdf (Data -> Load -> from 'Load example')
+3. choose an example scdf (Data -> Load -> 'Choose example')
 "
 
 res$msg$no_case <-

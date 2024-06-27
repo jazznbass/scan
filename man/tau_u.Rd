@@ -40,6 +40,7 @@ tau_u(
   kable_options = list(),
   meta = FALSE,
   round = 3,
+  decimals = 3,
   ...
 )
 }
@@ -118,6 +119,8 @@ FALSE, each single-case is exported.}
 
 \item{round}{Integer passed to the digits argument internally used to round
 values.}
+
+\item{decimals}{Decimal places that are reported.}
 }
 \value{
 \item{table}{A data frame containing statistics from the Tau-U

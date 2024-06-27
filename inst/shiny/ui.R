@@ -46,12 +46,12 @@ tab_load <- tabPanel(
   "Load",
   sidebarLayout(
     sidebarPanel(
-      selectInput(
-        "scdf_example", "Load example", choices = res$choices$examples,
-      ),
       fileInput(
         "upload", NULL, accept = c(".csv", ".rds", ".xlsx", ".xls", ".R", ".r"),
         buttonLabel = "Open file"
+      ),
+      selectInput(
+        "scdf_example", "Choose example", choices = res$choices$examples,
       ),
     ),
     
@@ -294,7 +294,7 @@ tab_settings <- tabPanel(
       style = res$div$settings, 
       h3("Stats"),
       radioButtons(
-        "stats_default", "Show defaults", choices = c("No", "Yes"),
+        "stats_default", "Syntax with defaults", choices = c("No", "Yes"),
         inline = TRUE
       ),
       radioButtons(
@@ -315,7 +315,7 @@ tab_settings <- tabPanel(
       style = res$div$settings, 
       h3("General"),
       radioButtons(
-        "scan_export_engine", "Export engine", choices = c("kable", "gt"),
+        "scan_export_engine", "Html engine", choices = c("gt", "kable"),
         inline = TRUE
       )
     ))

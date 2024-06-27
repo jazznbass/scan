@@ -18,7 +18,6 @@
 #' smd(exampleAB)
 #' @export
 smd <- function(data, dvar, pvar, mvar, 
-                decreasing = FALSE, 
                 phases = c(1, 2)) {
   
   # set defaults attributes

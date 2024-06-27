@@ -6,6 +6,7 @@ export.sc_pem <- function(object,
                           filename = NA,
                           kable_styling_options = list(), 
                           kable_options = list(),
+                          decimals = 2,
                           ...) {
   
   kable_options <- .join_kabel(kable_options)
@@ -18,7 +19,9 @@ export.sc_pem <- function(object,
     kable_options, 
     kable_styling_options, 
     caption = caption,
-    footnote = footnote
+    footnote = footnote,
+    decimals = decimals,
+    ...
   )
   
   # finish ------------------------------------------------------------------

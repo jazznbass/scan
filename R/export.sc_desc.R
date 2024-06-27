@@ -7,6 +7,7 @@ export.sc_desc <- function(object,
                            kable_styling_options = list(), 
                            kable_options = list(), 
                            flip = FALSE, 
+                           decimals = 2,
                            ...) {
   
   kable_options <- .join_kabel(kable_options)
@@ -76,6 +77,7 @@ export.sc_desc <- function(object,
         "Max" = spannerpos[8]:(spannerpos[8] + n_phases - 1),
         "Trend" = spannerpos[9]:(spannerpos[9] + n_phases - 1)
       ),
+      decimals = decimals,
       ...
     )
     

@@ -7,6 +7,7 @@ export.sc_overlap <- function(object,
                               kable_styling_options = list(), 
                               kable_options = list(), 
                               round = 2,
+                              decimals = 2,
                               flip = FALSE,
                               ...) {
   
@@ -61,7 +62,9 @@ export.sc_overlap <- function(object,
     options, 
     kable_styling_options, 
     caption = caption,
-    footnote = footnote
+    footnote = footnote,
+    decimals = decimals,
+    ...
   )
  
   # finish ------------------------------------------------------------------

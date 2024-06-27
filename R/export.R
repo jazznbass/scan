@@ -20,6 +20,7 @@
 #' @param flip If TRUE, some objects are exported with rows and columns flipped.
 #' @param round Integer passed to the digits argument internally used to round
 #'   values.
+#' @param decimals Decimal places that are reported.
 #' @param select A character vector containing the names of the variables to be
 #'   included. If the vector is named, the variables will be renamed
 #'   accordingly.
@@ -155,7 +156,8 @@ export_table <- function(x,
                          row_group = NULL,
                          rownames = FALSE,
                          cols_label = NULL,
-                         decimals = NULL) {
+                         decimals = NULL,
+                         ...) {
           
   
   while(TRUE) {
@@ -165,8 +167,10 @@ export_table <- function(x,
     
   }
   
-  if (!is.null(title)) title <- paste0("*", title, "*")
-  if (!is.null(footnote) && !identical(footnote, "")) {
+  if (!is.null(title) && title != "") title <- paste0("*", title, "*")
+  if (!is.null(footnote) && 
+      !identical(footnote, "") && 
+      !identical(footnote, NA)) {
     footnote <- paste0("*Note.* ", paste0(footnote, collapse = ". "), ".")
   }
   
@@ -201,7 +205,7 @@ export_table <- function(x,
   }
   
   if (!is.null(cols_label)) out <- gt::cols_label(out, .list = cols_label)
-  if (!is.null(footnote) && !identical(footnote, "")) 
+  if (!is.null(footnote) && !identical(footnote, "") && !identical(footnote, NA)) 
     out <- gt::tab_footnote(out, gt::md(footnote))
   if (!is.null(decimals)) out <- gt::fmt_number(out, decimals = decimals)
 
