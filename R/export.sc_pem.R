@@ -6,7 +6,7 @@ export.sc_pem <- function(object,
                           filename = NA,
                           kable_styling_options = list(), 
                           kable_options = list(),
-                          decimals = 2,
+                          round = 2,
                           ...) {
   
   kable_options <- .join_kabel(kable_options)
@@ -14,13 +14,14 @@ export.sc_pem <- function(object,
   
   if (is.na(caption)) caption <- c("Percent Exceeding the Median")
   
+  object$PEM <- round_numeric(object$PEM, round)
+  
   table <- .create_table(
     object$PEM, 
     kable_options, 
     kable_styling_options, 
     caption = caption,
     footnote = footnote,
-    decimals = decimals,
     ...
   )
   
