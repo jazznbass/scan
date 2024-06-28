@@ -57,7 +57,7 @@ for pdf/latex output."><meta property="og:image" content="/logo.png"><!-- mathja
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Export scan objects to html or latex</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.R" class="external-link"><code>R/export.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.sc_desc.R" class="external-link"><code>R/export.sc_desc.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.sc_nap.R" class="external-link"><code>R/export.sc_nap.R</code></a>, and 8 more</small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.R" class="external-link"><code>R/export.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.sc_desc.R" class="external-link"><code>R/export.sc_desc.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.sc_nap.R" class="external-link"><code>R/export.sc_nap.R</code></a>, and 10 more</small>
       <div class="d-none name"><code>export.Rd</code></div>
     </div>
 
@@ -80,7 +80,7 @@ for pdf/latex output.</p>
 <span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  decimals <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -93,7 +93,7 @@ for pdf/latex output.</p>
 <span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Case"</span>, <span class="st">"NAP"</span>, <span class="st">"NAP Rescaled"</span>, <span class="st">"w"</span>, <span class="st">"p"</span>, <span class="st">"d"</span>, <span class="st">"R²"</span><span class="op">)</span>,</span>
-<span>  decimals <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -119,7 +119,7 @@ for pdf/latex output.</p>
 <span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  decimals <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -131,7 +131,20 @@ for pdf/latex output.</p>
 <span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  decimals <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for sc_pnd</span></span>
+<span><span class="fu">export</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Case"</span>, <span class="st">"PND"</span>, <span class="st">"Total"</span>, <span class="st">"Exceeds"</span><span class="op">)</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -143,7 +156,7 @@ for pdf/latex output.</p>
 <span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  decimals <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -180,13 +193,26 @@ for pdf/latex output.</p>
 <span><span class="co"># S3 method for scdf</span></span>
 <span><span class="fu">export</span><span class="op">(</span></span>
 <span>  <span class="va">object</span>,</span>
-<span>  caption <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  footnote <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  summary <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">cols</span>,</span>
-<span>  round <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for scdf_summary</span></span>
+<span><span class="fu">export</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -241,8 +267,9 @@ function.</p></dd>
 <dd><p>If TRUE, some objects are exported with rows and columns flipped.</p></dd>
 
 
-<dt>decimals</dt>
-<dd><p>Decimal places that are reported.</p></dd>
+<dt>round</dt>
+<dd><p>Integer passed to the digits argument internally used to round
+values.</p></dd>
 
 
 <dt>select</dt>
@@ -251,9 +278,8 @@ included. If the vector is named, the variables will be renamed
 accordingly.</p></dd>
 
 
-<dt>round</dt>
-<dd><p>Integer passed to the digits argument internally used to round
-values.</p></dd>
+<dt>decimals</dt>
+<dd><p>Decimal places that are reported.</p></dd>
 
 
 <dt>cols</dt>
