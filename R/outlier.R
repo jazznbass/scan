@@ -54,12 +54,12 @@ outlier <- function(data, dvar, pvar, mvar,
     criteria <- criteria[2]
   }
   
-  method <- match.arg(method)
-  
   check_args(
     one_of(method, c("MAD", "Cook", "SD", "CI"))
   )
 
+  method <- method[1]
+  
   # set defaults attributes
   if (missing(dvar)) dvar <- dv(data) 
   if (missing(pvar)) pvar <- phase(data) 
@@ -189,11 +189,4 @@ outlier <- function(data, dvar, pvar, mvar,
   attr(out, opt("mt")) <- mvar
   attr(out, opt("dv")) <- dvar
   out
-}
-
-#' @rdname deprecated-functions
-#' @export
-outlierSC <- function(...) {
-  .deprecated_warning("outlier", "outlierSC")
-  outlier(...)
 }

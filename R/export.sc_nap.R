@@ -8,7 +8,7 @@ export.sc_nap <- function(object,
                           kable_options = list(), 
                           select = c("Case", "NAP", "NAP Rescaled", 
                                      "w", "p", "d", "R\u00B2"),
-                          decimals = 2,
+                          round = 2,
                           ...) {
   
   kable_options <- .join_kabel(kable_options)
@@ -20,13 +20,14 @@ export.sc_nap <- function(object,
   out <- .select(out, select)
   out$p <- .nice_p(out$p)
   
+  out <- round_numeric(out, round)
+  
   table <- .create_table(
     out, 
     kable_options, 
     kable_styling_options, 
     caption = caption,
     footnote = footnote,
-    decimals = decimals,
     ...
   )
   

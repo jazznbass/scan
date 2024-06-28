@@ -20,7 +20,7 @@ summary.scdf <- function(object, all_cases = FALSE, ...) {
   designs <- lapply(
     object, function(x) 
     paste0(
-      rle(as.character(x[[scdf_attr(object, opt("phase"))]]))$values, 
+      rle(as.character(x[[phase(object)]]))$values, 
       collapse = "-"
     )
   )
@@ -43,7 +43,7 @@ summary.scdf <- function(object, all_cases = FALSE, ...) {
   cat("Variable names:\n")
   names <- names(object[[1]])
   id_dv <- which(names == scdf_attr(object, opt("dv")))
-  id_phase <- which(names == scdf_attr(object, opt("phase")))
+  id_phase <- which(names == phase(object))
   id_mt <- which(names == scdf_attr(object, opt("mt")))
   names[id_phase] <- paste(names[id_phase], "<phase variable>")
   names[id_mt] <- paste(names[id_mt], "<measurement-time variable>")
@@ -61,5 +61,8 @@ summary.scdf <- function(object, all_cases = FALSE, ...) {
   if(!is.null(scdf_attr(object,"author"))) {
     cat("\nAuthor of data:", scdf_attr(object, "author"), "\n")
   }
+  
+  class(object) <- "scdf_summary"
+  invisible(object)
   
 }

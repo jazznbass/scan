@@ -100,7 +100,9 @@ al. (2011a).</p>
 <span>  select <span class="op">=</span> <span class="st">"auto"</span>,</span>
 <span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  meta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  meta <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  decimals <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -227,6 +229,15 @@ function.</p></dd>
 <dt>meta</dt>
 <dd><p>If TRUE, the results of the meta analysis will be exported. If
 FALSE, each single-case is exported.</p></dd>
+
+
+<dt>round</dt>
+<dd><p>Integer passed to the digits argument internally used to round
+values.</p></dd>
+
+
+<dt>decimals</dt>
+<dd><p>Decimal places that are reported.</p></dd>
 
 </dl></div>
     <div class="section level2">

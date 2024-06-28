@@ -44,9 +44,9 @@ export.sc_smd <- function(object, caption = NA, footnote = NA,
   
   if (isTRUE(flip)) {
     cases <- out$Case
-    out[-2:-1] <- round(out[-2:-1], round)
+    out[-1] <- round(out[-1], round)
     names_par <- colnames(out)[-1]
-    out <- t(out[-2:-1]) |> as.data.frame()
+    out <- t(out[-1]) |> as.data.frame()
     out <- cbind(Statistic = rownames(out), out)
     colnames(out) <- c("Statistic", cases)
   }

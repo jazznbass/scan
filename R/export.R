@@ -98,11 +98,13 @@ export <- function (object, ...) {
   if (length(footnote) > 1) {
     footnote <- paste0(footnote, collapse = "; ") |> paste0(".")
   }
-  if (inherits(x, "kableExtra"))
+  if (inherits(x, "kableExtra")) {
+    footnote <- gsub("<br>", "\n", footnote)
     out <- kableExtra::footnote(
       x, general = footnote, threeparttable = TRUE,
       footnote_as_chunk = TRUE
     )
+  }
 }
 
 .create_table <- function(x, 

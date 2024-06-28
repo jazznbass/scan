@@ -136,4 +136,11 @@ rciSC <- function(...) {
   rci(...)
 }
 
+#' @rdname deprecated-functions
+#' @export
+outlierSC <- function(...) {
+  .deprecated_warning("outlier", "outlierSC")
+  outlier(...)
+}
+
 

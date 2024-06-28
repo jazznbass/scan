@@ -1,14 +1,27 @@
 #' @rdname export
 #' @export
-export.scdf <- function(object, caption = NULL, footnote = NULL, filename = NA,
+export.scdf <- function(object, 
+                        summary = FALSE,
+                        caption = NA, 
+                        footnote = NA, 
+                        filename = NA,
                         kable_styling_options = list(), 
                         kable_options = list(),
-                        cols, round = 3, ...) {
+                        cols, 
+                        round = 2, 
+                        ...) {
+  
+  if (summary) {
+    sink(nullfile())
+    out <- summary(object)
+    sink()
+    return(export(out))
+  }
   
   kable_options <- .join_kabel(kable_options)
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
-  if (is.null(footnote)) {
+  if (is.na(footnote)) {
     if (!is.null(scdf_attr(object, "info"))) 
       footnote <- scdf_attr(object, "info")
     if (!is.null(scdf_attr(object, "author"))) {
@@ -25,11 +38,7 @@ export.scdf <- function(object, caption = NULL, footnote = NULL, filename = NA,
     cols <- names(object[[1]])
   }
   if (identical(cols, "main")) {
-    cols <- c(
-      scdf_attr(object, opt("phase")), 
-      scdf_attr(object, opt("dv")), 
-      scdf_attr(object, opt("mt"))
-    )
+    cols <- c(phase(object), dv(object), mt(object))
   }
   
   names(object) <- revise_names(object)
@@ -37,7 +46,7 @@ export.scdf <- function(object, caption = NULL, footnote = NULL, filename = NA,
   max_row <- max(unlist(lapply(object, nrow)))
   for (i in 1:cases) {
     n_row <- nrow(object[[i]])
-    object[[i]][, scdf_attr(object, opt("phase"))] <- as.character(object[[i]][, scdf_attr(object, opt("phase"))])
+    object[[i]][, phase(object)] <- as.character(object[[i]][, phase(object)])
     if (n_row < max_row) {
       object[[i]][(n_row + 1):max_row, names(object[[i]])] <- ""
     }
@@ -63,7 +72,7 @@ export.scdf <- function(object, caption = NULL, footnote = NULL, filename = NA,
     caption = caption,
     footnote = footnote,
     spanner = spanner,
-    decimals = round
+    ...
   )
   
   if (getOption("scan.export.engine") == "kable") {
@@ -78,5 +87,3 @@ export.scdf <- function(object, caption = NULL, footnote = NULL, filename = NA,
   
   table
 }
-
-
