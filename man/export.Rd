@@ -197,6 +197,8 @@ accordingly.}
 
 \item{decimals}{Decimal places that are reported.}
 
+\item{summary}{If TRUE, exports the summary of an \code{scdf}.}
+
 \item{cols}{Defines which columns are included when exporting an scdf. It is
 either a vector of variable names or the string "main" will select the
 central variables.}

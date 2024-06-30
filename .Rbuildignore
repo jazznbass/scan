@@ -9,3 +9,4 @@
 ^inst/shiny/rsconnect$
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
+^revdep$

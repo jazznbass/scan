@@ -24,6 +24,7 @@
 #' @param select A character vector containing the names of the variables to be
 #'   included. If the vector is named, the variables will be renamed
 #'   accordingly.
+#' @param summary If TRUE, exports the summary of an `scdf`.
 #' @param ... Further Arguments passed to internal functions.
 #' @return  Returns or displays a specially formatted html (or latex) file.
 #' @export
