@@ -8,7 +8,7 @@
 #'   applied.
 #' @param continuity If TRUE applies a continuity correction for calculating p
 #' @param repeated If TRUE applies the repeated median method for calculating
-#'   slope and intercept ([mblm()])
+#'   slope and intercept.
 #' @param tau_method Character with values "a" or "b" (default) indicating
 #'   whether Kendall Tau A or Kendall Tau B is applied.
 #' @details This method has been proposed by Tarlow (2016). The baseline data
