@@ -6,9 +6,9 @@
 
 ## New
 
-- Tip-of-the-day like message at startup.
-- Mulitple improvements of the Shiny app (try out with `shinyscan()`)
-- new output engine for rendering html export based on gtable. Set `options(scan.export.engine = "gt")`. This engine allows to export tables into docx format: `overlap(exampleAB) |> export(file = "test.docx", flip = TRUE)`.
+- Tip-of-the-day like message at start-up.
+- Multiple improvements of the Shiny app (try out with `shinyscan()`)
+- new output engine for rendering html export based on *gt table*. Set `options(scan.export.engine = "gt")`. This engine allows to export tables into docx format: `overlap(exampleAB) |> export(file = "test.docx", flip = TRUE)`.
 - new export functions for `pem()`, `pet()`, `pnd()`, and `summary()` (either `summary(exampleAB) |> export()` or `export(exampleAB, summary = TRUE)`)
 
 ## Changes
@@ -247,7 +247,7 @@ Toni:
 
 - scdf files now allow to combine studies with different phase designs.
 Several functions have been adapted to handle cases with differing designs in a mutual analysis.
-- The %>% operator has been imported and exported from the magrittr package. Now that R 4.1 has a
+- The `%>%` operator has been imported and exported from the magrittr package. Now that R 4.1 has a
 pipe operator, pipes seem to become the standard. For compatibility with older R Versions, we will stay with the `%>%` operator for some time before switching to `|>`.
 - To allow for a piping code, we added several functions: `add_l2, select_phases, select_cases, subset, set_vars, set_dvar, set_mvar, set_pvar`.
 
