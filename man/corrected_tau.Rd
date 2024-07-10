@@ -41,7 +41,7 @@ applied.}
 \item{continuity}{If TRUE applies a continuity correction for calculating p}
 
 \item{repeated}{If TRUE applies the repeated median method for calculating
-slope and intercept (\code{\link[=mblm]{mblm()}})}
+slope and intercept.}
 
 \item{tau_method}{Character with values "a" or "b" (default) indicating
 whether Kendall Tau A or Kendall Tau B is applied.}

@@ -367,7 +367,7 @@ server <- function(input, output, session) {
     values <- .formals
 
     id <- which(!args %in% c(
-      "dvar", "pvar", "mvar", "phases", "meta_method",
+      "dvar", "pvar", "mvar", "phases",
       "data", "scdf", "data.l2", "offset", "lag.max",
       "graph", "output", "...")
     )

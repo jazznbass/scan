@@ -106,6 +106,6 @@ y <- c(rep(0,9), rep(1,12))
 
 bench::mark(
   meta:::kentau(x,y),
-  scan:::.kendall_full(x,y, continuity_correction = FALSE),check = FALSE
+  scan:::kendall_tau(x,y, continuity_correction = FALSE),check = FALSE
 )
 

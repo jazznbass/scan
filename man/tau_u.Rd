@@ -10,15 +10,14 @@ tau_u(
   data,
   dvar,
   pvar,
-  tau_method = c("b", "a"),
-  method = c("complete", "parker"),
+  method = c("complete", "parker", "tarlow"),
   phases = c(1, 2),
   meta_analyses = TRUE,
   ci = 0.95,
   ci_method = c("z", "tau", "s"),
   meta_weight_method = c("z", "tau"),
-  continuity_correction = FALSE,
-  meta_method = NULL
+  tau_method = c("b", "a"),
+  continuity_correction = FALSE
 )
 
 \method{print}{sc_tauu}(
@@ -54,12 +53,10 @@ Defaults to the attributes in the scdf file.}
 \item{pvar}{Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.}
 
-\item{tau_method}{Character with values "a" or "b" (default) indicating
-whether Kendall Tau A or Kendall Tau B is applied.}
-
-\item{method}{\code{"complete"} (default) or \code{"parker"}. The latter calculates the
-number of possible pairs as described in Parker et al. (2011) which might
-lead to tau-U values greater than 1.}
+\item{method}{\code{"complete"} (default), \code{"parker"} or \code{"tarlow"}. The
+\code{"parker"} calculates the number of possible pairs as described in Parker
+et al. (2011) which might lead to tau-U values greater than 1. \code{"tarlow"}
+follows an online calculator and R code developed by Tarlow (2017).}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
 that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
@@ -77,12 +74,13 @@ error of tau. Either "tau", "z", or "s" (not recommended).}
 \item{meta_weight_method}{String to specify the method for calculating the
 weights of the studies. Either "tau" or "z".}
 
+\item{tau_method}{Character with values "a" or "b" (default) indicating
+whether Kendall Tau A or Kendall Tau B is applied. Ignored for methods
+'tarlow' and 'parker'.}
+
 \item{continuity_correction}{If TRUE, a continuity correction is applied for
 calculating p-values of correlations (here: S will be reduced by one before
-calculating Z)}
-
-\item{meta_method}{(not implemented) All meta analyses are based on a fixed
-model.}
+calculating Z). Ignored for methods 'tarlow' and 'parker'.}
 
 \item{x}{Object returned from \code{\link[=tau_u]{tau_u()}}.}
 
@@ -179,13 +177,19 @@ Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall’s tau.
 Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in
 Single-Case Research: A Review of Nine Nonoverlap Techniques.
 \emph{Behavior Modification}, 35(4), 303–322. https://doi.org/10/dsdfs4
+
 Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011b).
 Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
-\emph{Behavior Therapy, 42}, 284-299.
+\emph{Behavior Therapy, 42}(2), 284–299.
+https://doi.org/10.1016/j.beth.2010.08.006
+
+Tarlow, K. R. (2017, March). Tau-U for single-case research (R code).
+Retrieved from http://ktarlow.com/stats/
 }
 \seealso{
 Other overlap functions: 
 \code{\link{cdc}()},
+\code{\link{ird}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},

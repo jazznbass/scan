@@ -5,22 +5,23 @@
 #'
 #' @order 1
 #' @inheritParams .inheritParams
-#' @param tau_method Character with values "a" or "b" (default) indicating
-#'   whether Kendall Tau A or Kendall Tau B is applied.
-#' @param method `"complete"` (default) or `"parker"`. The latter calculates the
-#'   number of possible pairs as described in Parker et al. (2011) which might
-#'   lead to tau-U values greater than 1.
+#' @param method `"complete"` (default), `"parker"` or `"tarlow"`. The
+#'   `"parker"` calculates the number of possible pairs as described in Parker
+#'   et al. (2011) which might lead to tau-U values greater than 1. `"tarlow"`
+#'   follows an online calculator and R code developed by Tarlow (2017).
+#'   
 #' @param meta_analyses If TRUE, a meta analysis is conducted.
 #' @param meta_weight_method String to specify the method for calculating the
 #'   weights of the studies. Either "tau" or "z".
 #' @param ci Confidence intervals
 #' @param ci_method String to specify the method for calculating the standard
 #'   error of tau. Either "tau", "z", or "s" (not recommended).
+#' @param tau_method Character with values "a" or "b" (default) indicating
+#'   whether Kendall Tau A or Kendall Tau B is applied. Ignored for methods
+#'   'tarlow' and 'parker'.
 #' @param continuity_correction If TRUE, a continuity correction is applied for
 #'   calculating p-values of correlations (here: S will be reduced by one before
-#'   calculating Z)
-#' @param meta_method (not implemented) All meta analyses are based on a fixed
-#'   model.
+#'   calculating Z). Ignored for methods 'tarlow' and 'parker'.
 #' @return
 #' \item{table}{A data frame containing statistics from the Tau-U
 #' family, including: Pairs, positive and negative comparisons, S, and Tau}
@@ -53,9 +54,15 @@
 #'   Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in
 #'   Single-Case Research: A Review of Nine Nonoverlap Techniques.
 #'   \emph{Behavior Modification}, 35(4), 303–322. https://doi.org/10/dsdfs4
+#'
 #'   Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011b).
 #'   Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
-#'   \emph{Behavior Therapy, 42}, 284-299.
+#'   \emph{Behavior Therapy, 42}(2), 284–299.
+#'   https://doi.org/10.1016/j.beth.2010.08.006
+#'
+#'   Tarlow, K. R. (2017, March). Tau-U for single-case research (R code).
+#'   Retrieved from http://ktarlow.com/stats/
+#'
 #' @examples
 #'
 #' tau_u(Grosche2011$Eva)
@@ -70,15 +77,14 @@
 #' @export
 
 tau_u <- function(data, dvar, pvar, 
-                  tau_method = c("b", "a"), 
-                  method = c("complete", "parker"), 
+                  method = c("complete", "parker", "tarlow"), 
                   phases = c(1, 2), 
                   meta_analyses = TRUE,
                   ci = 0.95,
                   ci_method = c("z", "tau", "s"),
                   meta_weight_method = c("z", "tau"),
-                  continuity_correction = FALSE,
-                  meta_method = NULL) {
+                  tau_method = c("b", "a"), 
+                  continuity_correction = FALSE) {
 
   # validity check ----
   check_args(
@@ -94,6 +100,18 @@ tau_u <- function(data, dvar, pvar,
   meta_weight_method <- meta_weight_method[1]
   ci_method <- ci_method[1]
   
+  if (method == "parker") {
+    #message("method = 'parker' ignores the tau_method argument.")
+    tau_method <- "a"
+    continuity_correction <- FALSE
+  }
+  
+  if (method == "tarlow") {
+    #message("method = 'tarlow' ignores the tau_method argument.")
+    tau_method <- "a"
+    continuity_correction <- TRUE
+  }
+
   # prepare scdf ----
   if (missing(dvar)) dvar <- dv(data)
   if (missing(pvar)) pvar <- phase(data)
@@ -138,7 +156,7 @@ tau_u <- function(data, dvar, pvar,
     NA, length(row_names), length(col_names), 
     dimnames = list(row_names, col_names)
   ))
-  
+
   # tau-U for each case -----
   for (case in 1:N) {
     
@@ -188,26 +206,30 @@ tau_u <- function(data, dvar, pvar,
     AvBtie <- sum(vapply(A, function(x) x == B, FUN.VALUE = logical(nB)))
     
     # Kendall tau analyses ----------------------------------------------------
+
+    if (method == "complete" && tau_method == "a") {
+      tau_s <- list(
+        AvB = kendall_tau(AB, c(rep(0, nA), rep(1, nB)), tau_method = "a", continuity_correction = continuity_correction), 
+        AvA = kendall_tau(A, 1:nA, tau_method = "a", continuity_correction = continuity_correction), 
+        BvB = kendall_tau(B, 1:nB, tau_method = "a", continuity_correction = continuity_correction), 
+        AvB_A = kendall_tau(AB, c(nA:1, rep(nA + 1, nB)), tau_method = "a", continuity_correction = continuity_correction), 
+        AvB_B = kendall_tau(AB, c(rep(0, nA), (nA + 1):nAB), tau_method = "a", continuity_correction = continuity_correction), 
+        AvB_B_A = kendall_tau(AB, c(nA:1, (nA + 1):nAB), tau_method = "a", continuity_correction = continuity_correction)
+      )
+    } else {
+      tau_s <- list(
+        AvB = kendall_tau(AB, c(rep(0, nA), rep(1, nB)), tau_method = "b", continuity_correction = continuity_correction), 
+        AvA = kendall_tau(A, 1:nA, tau_method = "b", continuity_correction = continuity_correction), 
+        BvB = kendall_tau(B, 1:nB, tau_method = "b", continuity_correction = continuity_correction), 
+        AvB_A = kendall_tau(AB, c(nA:1, rep(nA + 1, nB)), tau_method = "b", continuity_correction = continuity_correction), 
+        AvB_B = kendall_tau(AB, c(rep(0, nA), (nA + 1):nAB), tau_method = "b", continuity_correction = continuity_correction), 
+        AvB_B_A = kendall_tau(AB, c(nA:1, (nA + 1):nAB), tau_method = "b", continuity_correction = continuity_correction)
+      )
+    }
+
+    # n ----------------------------
     
-    AvBKen <- .kendall(AB, c(rep(0, nA), rep(1, nB)), tau_method = tau_method)
-    AvAKen <- .kendall(A, 1:nA, tau_method = tau_method)
-    BvBKen <- .kendall(B, 1:nB, tau_method = tau_method)
-    #BvB_AKen <- .kendall(AB, c(nA:1, 1:nB), tau_method = tau_method)
-    AvB_B_AKen <- .kendall(AB, c(nA:1, (nA + 1):nAB), tau_method = tau_method) 
-    #
-    AvB_AKen <- .kendall(AB, c(nA:1, rep(nA + 1, nB)), tau_method = tau_method)
-    AvB_BKen <- .kendall(AB, c(rep(0, nA), (nA + 1):nAB), tau_method=tau_method)
-    
-    # n -----------------------------------------------------------------------
-    
-    table_tau$n <- c(
-      AvBKen$N,
-      AvAKen$N,
-      BvBKen$N,
-      AvB_AKen$N,
-      AvB_BKen$N,
-      AvB_B_AKen$N
-    )
+    table_tau$n <- lapply(tau_s, \(.) .$N)|>unlist()
     
     # pairs -------------------------------------------------------------------
     
@@ -261,55 +283,49 @@ tau_u <- function(data, dvar, pvar,
     
     # S -----------------------------------------------------------------
     
-    table_tau$S <- table_tau$pos - table_tau$neg
-    
+    table_tau$S <- lapply(tau_s, \(.) .$S)|>unlist()
+   
     # D ----------------------------------------------------------------------
     
-    if (tau_method == "b") {
-      table_tau$D <- c(
-        table_tau$pairs[1] - table_tau$ties[1] / 2,
-        AvAKen$D,
-        BvBKen$D,
-        AvB_AKen$D,
-        AvB_BKen$D,
-        AvB_B_AKen$D
-      )
-    }
-    
-    if (tau_method == "a") {
+    if (method == "complete" && tau_method == "b") {
+      table_tau$D <- lapply(tau_s, \(.) .$D)|>unlist()
+      table_tau$D[1] <- table_tau$pairs[1] - table_tau$ties[1] / 2
+    } else {
       table_tau$D <- table_tau$pairs
     }
-    
+
     # tau -----------------------------------------------------------
     
     table_tau$Tau <- table_tau$S / table_tau$D
-    
+
     # SD and VAR --------------------------------------------------------------
     
-    table_tau$SD_S <- c(
-      sqrt((nA * nB) * (nA + nB + 1) / 12) * 2,
-      .kendall(1:nA, 1:nA, tau_method = tau_method)$sdS,
-      .kendall(1:nB, 1:nB, tau_method = tau_method)$sdS,
-      AvB_AKen$sdS,
-      AvB_BKen$sdS,
-      AvB_B_AKen$sdS
-    )
-    table_tau$VAR_S <- table_tau$SD_S^2
-    
-    # Z, p, se ----------------------------------------
-    if (continuity_correction) {
-      table_tau$Z <- (table_tau$S - 1) / table_tau$SD_S
+    if (method == "tarlow") {
+      table_tau$SD_S <- lapply(tau_s, \(.) .$sdS)|>unlist()
     } else {
-      table_tau$Z <- table_tau$S / table_tau$SD_S
-    }  
+      table_tau$SD_S <- c(
+        sqrt((nA * nB) * (nA + nB + 1) / 12) * 2,
+        kendall_tau(1:nA, 1:nA, tau_method = tau_method)$sdS,
+        kendall_tau(1:nB, 1:nB, tau_method = tau_method)$sdS,
+        tau_s$AvB_A$sdS,
+        tau_s$AvB_B$sdS,
+        tau_s$AvB_B_A$sdS
+      )
+    }
+    
+    table_tau$VAR_S <- table_tau$SD_S^2
+
+    # Z, p, se ----------------------------------------
+    
+    table_tau$Z <- lapply(tau_s, \(.) .$z)|>unlist()
+    table_tau$p <- lapply(tau_s, \(.) .$p)|>unlist()
     
     table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
-    table_tau$p <- pnorm(abs(table_tau$Z), lower.tail = FALSE) * 2
     
-    # confidence intervalls --------------------
-    if (!is.na(ci)) {
+    # confidence intervals --------------------
+    if (!is.na(ci) && !is.null(ci)) {
       if (ci_method == "s") {
-        see <- qnorm((1-ci)/2, lower.tail = FALSE)
+        see <- qnorm((1 - ci) / 2, lower.tail = FALSE)
         S <- table_tau$S
         if (continuity_correction) S <- S - 1
         cis <- list(

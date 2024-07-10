@@ -8,7 +8,7 @@
 #'   applied.
 #' @param continuity If TRUE applies a continuity correction for calculating p
 #' @param repeated If TRUE applies the repeated median method for calculating
-#'   slope and intercept ([mblm()])
+#'   slope and intercept.
 #' @param tau_method Character with values "a" or "b" (default) indicating
 #'   whether Kendall Tau A or Kendall Tau B is applied.
 #' @details This method has been proposed by Tarlow (2016). The baseline data
@@ -73,7 +73,7 @@ corrected_tau <- function(data, dvar, pvar, mvar,
       )
       auto_tau <- list(tau = NA, z = NA, p = NA)
     } else {
-      auto_tau <- .kendall_full(
+      auto_tau <- kendall_tau(
         A_data[[dvar]], 
         A_data[[mvar]], 
         continuity_correction = continuity,
@@ -86,12 +86,12 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     data$fit <- predict(fit_mblm, data, se.fit = FALSE)
     x <- data[[dvar]] - data$fit
     y <- as.numeric(factor(data[[pvar]]))
-    base_corr_tau <- .kendall_full(
+    base_corr_tau <- kendall_tau(
       x, y, continuity_correction = continuity, tau_method = tau_method
     )
     
     x <- data[[dvar]]
-    uncorrected_tau <- .kendall_full(
+    uncorrected_tau <- kendall_tau(
       x, y, continuity_correction = continuity, tau_method = tau_method
     )
     

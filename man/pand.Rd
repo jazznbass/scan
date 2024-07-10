@@ -158,6 +158,7 @@ https://jepusto.github.io/SingleCaseES/.
 \seealso{
 Other overlap functions: 
 \code{\link{cdc}()},
+\code{\link{ird}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pem}()},

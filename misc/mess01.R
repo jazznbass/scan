@@ -242,8 +242,8 @@ B_data <- data2[rowsB, ]
 
 y <- as.numeric(factor(data2[["phase"]]))
 x <- data2[["values"]]
-scan:::.kendall_full(x, y, tau_method = "a")$tau
-scan:::.kendall_full(x, y, tau_method = "b")$tau
+scan:::kendall_tau(x, y, tau_method = "a")$tau
+scan:::kendall_tau(x, y, tau_method = "b")$tau
 
 #Kendall::Kendall(x,y)
 cor(x,y,method="kendall")
@@ -265,7 +265,7 @@ x <- Tarlow2016a[[1]]$values
 y <- as.numeric(Tarlow2016a[[1]]$phase)
 
 x <- rep(2, 11)
-.kendall_full(x,y)
+kendall_tau(x,y)
 
 cor.test(x,y,method="kendall",continuity = TRUE)
 DescTools::KendallTauA(x,y)

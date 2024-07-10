@@ -11,6 +11,7 @@
 #' design, ird is based on the overall improvement rate of all cases which is
 #' the average of the irds for each case.
 #' @inheritParams .inheritParams
+#' @family overlap functions
 #' @references Parker, R. I., Vannest, K. J., & Brown, L. (2009). The
 #'   improvement rate difference for single-case research. Exceptional Children,
 #'   75(2), 135-150.
@@ -35,9 +36,9 @@ ird <- function(data, dvar, pvar,
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
   
   data <- .prepare_scdf(data, na.rm = TRUE)
-  keepphases <- recombine_phases(data, phases = phases)
+  recombined_data <- recombine_phases(data, phases = phases)
   
-  data <- keepphases$data
+  data <- recombined_data$data
   
   casenames <- revise_names(data)
 
@@ -48,7 +49,7 @@ ird <- function(data, dvar, pvar,
   out <- list(
     ird = ird,
     decreasing = decreasing,
-    phases = keepphases$phases
+    phases = recombined_data$phases
   )
   
   class(out) <- "sc_ird"

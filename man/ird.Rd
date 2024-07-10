@@ -66,3 +66,15 @@ single-case designs with directly observed behavioral outcome measures.
 \emph{Psychological Methods}, \emph{24(2)}, 217-235.
 https://doi.org/10.1037/met0000179
 }
+\seealso{
+Other overlap functions: 
+\code{\link{cdc}()},
+\code{\link{nap}()},
+\code{\link{overlap}()},
+\code{\link{pand}()},
+\code{\link{pem}()},
+\code{\link{pet}()},
+\code{\link{pnd}()},
+\code{\link{tau_u}()}
+}
+\concept{overlap functions}
