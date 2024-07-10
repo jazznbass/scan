@@ -36,7 +36,6 @@ print.sc_tauu <- function(x,
     cat("Weight method: ", x$meta_weight_method, "\n", sep = "")
     if (!is.na(x$ci)) cat(x$ci * 100, "% CIs are reported.\n", sep = "")
     cat("\n")
-    #cat("Meta-anlysis model:", x$meta_method, "effect\n\n")
     print(x$Overall_tau_u, row.names = FALSE, digits = digits)
     cat("\n")
   }
