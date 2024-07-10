@@ -53,9 +53,12 @@
 #'   Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in
 #'   Single-Case Research: A Review of Nine Nonoverlap Techniques.
 #'   \emph{Behavior Modification}, 35(4), 303–322. https://doi.org/10/dsdfs4
-#'   Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011b).
-#'   Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
-#'   \emph{Behavior Therapy, 42}, 284-299.
+#'   
+#'   Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011b). 
+#'   Combining Nonoverlap and Trend for Single-Case Research: Tau-U. 
+#'   \emph{Behavior Therapy, 42}(2), 284–299. 
+#'   https://doi.org/10.1016/j.beth.2010.08.006
+#'   
 #' @examples
 #'
 #' tau_u(Grosche2011$Eva)
@@ -71,7 +74,7 @@
 
 tau_u <- function(data, dvar, pvar, 
                   tau_method = c("b", "a"), 
-                  method = c("complete", "parker"), 
+                  method = c("complete", "parker", "tarlow"), 
                   phases = c(1, 2), 
                   meta_analyses = TRUE,
                   ci = 0.95,
@@ -138,7 +141,7 @@ tau_u <- function(data, dvar, pvar,
     NA, length(row_names), length(col_names), 
     dimnames = list(row_names, col_names)
   ))
-  
+
   # tau-U for each case -----
   for (case in 1:N) {
     
@@ -171,6 +174,21 @@ tau_u <- function(data, dvar, pvar,
     AvBneg <- 0
     AvBtie <- 0
     
+    # for(i in 1:(nA-1)) {
+    #   diffs <- A[i] - A[(i + 1):nA]
+    #   AvApos <- AvApos + sum(diffs < 0)
+    #   AvAneg <- AvAneg + sum(diffs > 0)
+    #   AvAtie <- AvAtie + sum(diffs == 0)
+    # }
+    # 
+    # for(i in 1:(nB-1)) {
+    #   diffs <- B[i] - B[(i + 1):nB]
+    #   BvBpos <- BvBpos + sum(diffs < 0)
+    #   BvBneg <- BvBneg + sum(diffs > 0)
+    #   BvBtie <- BvBtie + sum(diffs == 0)
+    # }
+    # 
+    
     for(i in 1:(nA-1)) {
       AvApos <- AvApos + sum(A[i] < A[(i+1):nA])
       AvAneg <- AvAneg + sum(A[i] > A[(i+1):nA])
@@ -188,15 +206,22 @@ tau_u <- function(data, dvar, pvar,
     AvBtie <- sum(vapply(A, function(x) x == B, FUN.VALUE = logical(nB)))
     
     # Kendall tau analyses ----------------------------------------------------
-    
-    AvBKen <- .kendall(AB, c(rep(0, nA), rep(1, nB)), tau_method = tau_method)
-    AvAKen <- .kendall(A, 1:nA, tau_method = tau_method)
-    BvBKen <- .kendall(B, 1:nB, tau_method = tau_method)
-    #BvB_AKen <- .kendall(AB, c(nA:1, 1:nB), tau_method = tau_method)
-    AvB_B_AKen <- .kendall(AB, c(nA:1, (nA + 1):nAB), tau_method = tau_method) 
-    #
-    AvB_AKen <- .kendall(AB, c(nA:1, rep(nA + 1, nB)), tau_method = tau_method)
-    AvB_BKen <- .kendall(AB, c(rep(0, nA), (nA + 1):nAB), tau_method=tau_method)
+    browser()
+    if (method == "tarlow") {
+      AvBKen <- .kendall_full(AB, c(rep(0, nA), rep(1, nB)), tau_method = tau_method)
+      AvAKen <- .kendall_full(A, 1:nA, tau_method = tau_method)
+      BvBKen <- .kendall_full(B, 1:nB, tau_method = tau_method)
+      AvB_B_AKen <- .kendall_full(AB, c(nA:1, (nA + 1):nAB), tau_method = tau_method) 
+      AvB_AKen <- .kendall_full(AB, c(nA:1, rep(nA + 1, nB)), tau_method = tau_method)
+      AvB_BKen <- .kendall_full(AB, c(rep(0, nA), (nA + 1):nAB), tau_method=tau_method)
+    } else {
+      AvBKen <- .kendall(AB, c(rep(0, nA), rep(1, nB)), tau_method = tau_method)
+      AvAKen <- .kendall(A, 1:nA, tau_method = tau_method)
+      BvBKen <- .kendall(B, 1:nB, tau_method = tau_method)
+      AvB_B_AKen <- .kendall(AB, c(nA:1, (nA + 1):nAB), tau_method = tau_method) 
+      AvB_AKen <- .kendall(AB, c(nA:1, rep(nA + 1, nB)), tau_method = tau_method)
+      AvB_BKen <- .kendall(AB, c(rep(0, nA), (nA + 1):nAB), tau_method=tau_method)
+    }
     
     # n -----------------------------------------------------------------------
     
@@ -306,7 +331,7 @@ tau_u <- function(data, dvar, pvar,
     table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
     table_tau$p <- pnorm(abs(table_tau$Z), lower.tail = FALSE) * 2
     
-    # confidence intervalls --------------------
+    # confidence intervals --------------------
     if (!is.na(ci)) {
       if (ci_method == "s") {
         see <- qnorm((1-ci)/2, lower.tail = FALSE)

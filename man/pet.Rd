@@ -57,6 +57,7 @@ pet(dat, ci = .99)
 \seealso{
 Other overlap functions: 
 \code{\link{cdc}()},
+\code{\link{ird}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},

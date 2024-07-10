@@ -98,6 +98,7 @@ of Single-Case Designs. \emph{Journal of Applied Behavior Analysis, 36},
 }
 \seealso{
 Other overlap functions: 
+\code{\link{ird}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},
