@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.61.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.61.9999</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,16 +57,32 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.61.0" id="scan-0610">scan 0.61.0<a class="anchor" aria-label="anchor" href="#scan-0610"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.61.999" id="scan-061999">scan 0.61.999<a class="anchor" aria-label="anchor" href="#scan-061999"></a></h2>
+<div class="section level3">
+<h3 id="new-0-61-999">New<a class="anchor" aria-label="anchor" href="#new-0-61-999"></a></h3>
+</div>
+<div class="section level3">
+<h3 id="changes-0-61-999">Changes<a class="anchor" aria-label="anchor" href="#changes-0-61-999"></a></h3>
+<ul><li>
+<code><a href="../reference/tau_u.html">tau_u()</a></code>: New method <code>"tarlow"</code> calculates Tau-U as implemented in an R code and online calculator by Tarlow (2017). Here, tau values are calculated as in the <code>method = "complete", continuity_correction = TRUE, tau_method = "a"</code>. Inferential statistics are calculated based an tau b and the standard deviation for S is derived directly from Kendall’s Tau B analysis (different from the <code>parker</code> and <code>complete</code> methods).</li>
+<li>
+<code><a href="../reference/tau_u.html">tau_u()</a></code>: Method <code>"parker"</code> ignores the <code>tau_method</code> setting and sets <code>continuity_correction = FALSE</code>. This follows the Parker (2011) paper. There, the inferential statistics are calculated using Kendall’s Tau b while the actual Tau calculation applies Kendall’s Tau a (without ties).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="solved-bugs-0-61-999">Solved bugs<a class="anchor" aria-label="anchor" href="#solved-bugs-0-61-999"></a></h3>
+</div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.61.0" id="scan-0610">scan 0.61.0<a class="anchor" aria-label="anchor" href="#scan-0610"></a></h2><p class="text-muted">CRAN release: 2024-07-01</p>
 <div class="section level3">
 <h3 id="solved-bugs-0-61-0">Solved bugs<a class="anchor" aria-label="anchor" href="#solved-bugs-0-61-0"></a></h3>
 <ul><li>Corrected the name of the level-effect predictor for regressions when the phase variable is not named “phase”.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-0-61-0">New<a class="anchor" aria-label="anchor" href="#new-0-61-0"></a></h3>
-<ul><li>Tip-of-the-day like message at startup.</li>
-<li>Mulitple improvements of the Shiny app (try out with <code><a href="../reference/shinyscan.html">shinyscan()</a></code>)</li>
-<li>new output engine for rendering html export based on gtable. Set <code>options(scan.export.engine = "gt")</code>. This engine allows to export tables into docx format: <code>overlap(exampleAB) |&gt; export(file = "test.docx", flip = TRUE)</code>.</li>
+<ul><li>Tip-of-the-day like message at start-up.</li>
+<li>Multiple improvements of the Shiny app (try out with <code><a href="../reference/shinyscan.html">shinyscan()</a></code>)</li>
+<li>new output engine for rendering html export based on <em>gt table</em>. Set <code>options(scan.export.engine = "gt")</code>. This engine allows to export tables into docx format: <code>overlap(exampleAB) |&gt; export(file = "test.docx", flip = TRUE)</code>.</li>
 <li>new export functions for <code><a href="../reference/pem.html">pem()</a></code>, <code><a href="../reference/pet.html">pet()</a></code>, <code><a href="../reference/pnd.html">pnd()</a></code>, and <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> (either <code>summary(exampleAB) |&gt; export()</code> or <code>export(exampleAB, summary = TRUE)</code>)</li>
 </ul></div>
 <div class="section level3">
@@ -354,7 +370,7 @@
 <div class="section level3">
 <h3 id="major-changes-0-53">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-53"></a></h3>
 <ul><li>scdf files now allow to combine studies with different phase designs. Several functions have been adapted to handle cases with differing designs in a mutual analysis.</li>
-<li>The %&gt;% operator has been imported and exported from the magrittr package. Now that R 4.1 has a pipe operator, pipes seem to become the standard. For compatibility with older R Versions, we will stay with the <code>%&gt;%</code> operator for some time before switching to <code>|&gt;</code>.</li>
+<li>The <code>%&gt;%</code> operator has been imported and exported from the magrittr package. Now that R 4.1 has a pipe operator, pipes seem to become the standard. For compatibility with older R Versions, we will stay with the <code>%&gt;%</code> operator for some time before switching to <code>|&gt;</code>.</li>
 <li>To allow for a piping code, we added several functions: <code>add_l2, select_phases, select_cases, subset, set_vars, set_dvar, set_mvar, set_pvar</code>.</li>
 </ul><div class="section level4">
 <h4 id="new-functions-0-53">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-53"></a></h4>

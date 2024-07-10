@@ -12,7 +12,7 @@ al. (2011a)."><meta property="og:image" content="/logo.png"><!-- mathjax --><scr
     
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.61.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.61.9999</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,15 +70,14 @@ al. (2011a).</p>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">dvar</span>,</span>
 <span>  <span class="va">pvar</span>,</span>
-<span>  tau_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="st">"a"</span><span class="op">)</span>,</span>
-<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"complete"</span>, <span class="st">"parker"</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"complete"</span>, <span class="st">"parker"</span>, <span class="st">"tarlow"</span><span class="op">)</span>,</span>
 <span>  phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  meta_analyses <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  ci_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"z"</span>, <span class="st">"tau"</span>, <span class="st">"s"</span><span class="op">)</span>,</span>
 <span>  meta_weight_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"z"</span>, <span class="st">"tau"</span><span class="op">)</span>,</span>
-<span>  continuity_correction <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  meta_method <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  tau_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="st">"a"</span><span class="op">)</span>,</span>
+<span>  continuity_correction <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for sc_tauu</span></span>
@@ -124,15 +123,11 @@ Defaults to the attributes in the scdf file.</p></dd>
 the attributes in the scdf file.</p></dd>
 
 
-<dt>tau_method</dt>
-<dd><p>Character with values "a" or "b" (default) indicating
-whether Kendall Tau A or Kendall Tau B is applied.</p></dd>
-
-
 <dt>method</dt>
-<dd><p><code>"complete"</code> (default) or <code>"parker"</code>. The latter calculates the
-number of possible pairs as described in Parker et al. (2011) which might
-lead to tau-U values greater than 1.</p></dd>
+<dd><p><code>"complete"</code> (default), <code>"parker"</code> or <code>"tarlow"</code>. The
+<code>"parker"</code> calculates the number of possible pairs as described in Parker
+et al. (2011) which might lead to tau-U values greater than 1. <code>"tarlow"</code>
+follows an online calculator and R code developed by Tarlow (2017).</p></dd>
 
 
 <dt>phases</dt>
@@ -161,15 +156,16 @@ error of tau. Either "tau", "z", or "s" (not recommended).</p></dd>
 weights of the studies. Either "tau" or "z".</p></dd>
 
 
+<dt>tau_method</dt>
+<dd><p>Character with values "a" or "b" (default) indicating
+whether Kendall Tau A or Kendall Tau B is applied. Ignored for methods
+'tarlow' and 'parker'.</p></dd>
+
+
 <dt>continuity_correction</dt>
 <dd><p>If TRUE, a continuity correction is applied for
 calculating p-values of correlations (here: S will be reduced by one before
-calculating Z)</p></dd>
-
-
-<dt>meta_method</dt>
-<dd><p>(not implemented) All meta analyses are based on a fixed
-model.</p></dd>
+calculating Z). Ignored for methods 'tarlow' and 'parker'.</p></dd>
 
 
 <dt>x</dt>
@@ -286,15 +282,19 @@ https://doi.org/10.1080/23311908.2018.1518687.</p>
 31–41. https://doi.org/10.1111/j.2044-8317.1997.tb01100.x</p>
 <p>Parker, R. I., Vannest, K. J., &amp; Davis, J. L. (2011a). Effect Size in
 Single-Case Research: A Review of Nine Nonoverlap Techniques.
-<em>Behavior Modification</em>, 35(4), 303–322. https://doi.org/10/dsdfs4
-Parker, R. I., Vannest, K. J., Davis, J. L., &amp; Sauber, S. B. (2011b).
+<em>Behavior Modification</em>, 35(4), 303–322. https://doi.org/10/dsdfs4</p>
+<p>Parker, R. I., Vannest, K. J., Davis, J. L., &amp; Sauber, S. B. (2011b).
 Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
-<em>Behavior Therapy, 42</em>, 284-299.</p>
+<em>Behavior Therapy, 42</em>(2), 284–299.
+https://doi.org/10.1016/j.beth.2010.08.006</p>
+<p>Tarlow, K. R. (2017, March). Tau-U for single-case research (R code).
+Retrieved from http://ktarlow.com/stats/</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other overlap functions: 
 <code><a href="cdc.html">cdc</a>()</code>,
+<code><a href="ird.html">ird</a>()</code>,
 <code><a href="nap.html">nap</a>()</code>,
 <code><a href="overlap.html">overlap</a>()</code>,
 <code><a href="pand.html">pand</a>()</code>,
@@ -344,12 +344,12 @@ Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
 <span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B              30  25   2    3 23 30 0.77     0.21     0.95</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B - Trend A    36  26   6    4 20 36 0.56    -0.17     0.89</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             SD_S VAR_S SE_Tau    Z    p n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B                     8.16 66.67   0.41 1.96  .05 9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend A                     2.94  8.67   0.49 1.02  .31 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend B                     4.08 16.67   0.41 1.71  .09 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B - Trend A           9.59 92.00   0.48 1.36  .18 9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B           9.59 92.00   0.32 2.40 &lt;.05 9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B - Trend A 9.59 92.00   0.27 2.09 &lt;.05 9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B                     8.16 66.67   0.40 2.00  .05 9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend A                     2.94  8.67   0.46 1.08  .28 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend B                     4.08 16.67   0.40 1.77  .08 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B - Trend A           8.48 71.86   0.42 1.53  .13 9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B           8.91 79.37   0.30 2.58 &lt;.05 9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A vs. B + Trend B - Trend A 9.35 87.33   0.26 2.14 &lt;.05 9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Request tau-U for all single-cases from the Grosche2011 data set</span></span></span>
