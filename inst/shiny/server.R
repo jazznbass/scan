@@ -671,10 +671,24 @@ server <- function(input, output, session) {
     )  
     
     ci <- input$pt_ci
-   
+    
+    pt_method <- deparse(as.list(input$pt_method))
+    if (input$pt_method_user != "") {
+      
+      if (length(input$pt_method) >0) {
+        pt_method <- paste0("\"", input$pt_method, "\"",collapse = ",")
+        pt_method <- paste0(
+          "list(user = function(scdf) {", input$pt_method_user,"}, ",
+          pt_method, ")"
+        )
+      } else {
+        pt_method <- paste0("list(user = function(scdf) {", input$pt_method_user,"})")
+      }
+    }
+    
     syntax <- paste0(
       syntax, res$pipe,
-      "  power_test(method = ", deparse(input$pt_method), ", ",
+      "  power_test(method = ", pt_method, ", ",
       "effect = ", deparse(input$pt_effect), ", ",
       "n_sim = ", input$pt_n, 
       if (!identical(ci, "")) paste0(", ci = ", ci),
