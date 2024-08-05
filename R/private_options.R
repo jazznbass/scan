@@ -39,6 +39,7 @@ opt <- function(x) {
 .opt$tip <- list(
     "Visit the free online book on scan at: https://jazznbass.github.io/scan-Book/",
     "For information on citing scan, type citation(\"scan\").",
+    "Please cite splot (type 'citation(\"scplot\")' for more information.",
     "Start the graphical user interface of scan with shinyscan().",
     "Post a question or improvement idea on scan at https://github.com/jazznbass/scan/discussions",
     "Post issues at https://github.com/jazznbass/scan/issues",
