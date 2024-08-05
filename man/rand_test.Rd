@@ -11,6 +11,7 @@ rand_test(
   statistic = c("Mean B-A", "Mean A-B", "Median B-A", "Median A-B", "Mean |A-B|",
     "Median |A-B|", "SMD hedges", "SMD glass", "W-test", "T-test", "NAP",
     "NAP decreasing", "Slope B-A", "Slope A-B"),
+  statistic_function = NULL,
   number = 500,
   complete = FALSE,
   limit = 5,
@@ -33,18 +34,11 @@ Defaults to the attributes in the scdf file.}
 the attributes in the scdf file.}
 
 \item{statistic}{Defines the statistic on which the comparison of phases A
-and B is based on. Default setting is \code{statistic = "Mean B-A"}. The
-following comparisons are possible: \itemize{ \item\verb{Mean A-B}: Uses
-the difference between the mean of phase A and the mean of phase B. This is
-appropriate if a decrease of scores was expected for phase B.
-\item\verb{Mean B-A}: Uses the difference between the mean of phase B and
-the mean of phase A. This is appropriate if an increase of scores was
-expected for phase B.  \item\verb{Mean |A-B|}: Uses the absolute value of
-the difference between the means of phases A and B.  \item\verb{Median A-B}: The same as \verb{Mean A-B}, but based on the median.
-\item\verb{Median B-A}: The same as \verb{Mean B-A}, but based on the
-median.  \item\verb{SMD hedges / SMD glass}: Standardizes mean difference of B-A
-as Hedges's g or Glass' delta. \item\code{NAP}: Non-overlap of all pairs.
-\item\code{W-test}: Wilcoxon-test statistic W.\item\code{T-test}: T-test statistic t.}}
+and B is based on. Default setting is \code{statistic = "Mean B-A"}. See
+details.}
+
+\item{statistic_function}{A list with a user defined function to calculate
+the statistic. When set, overwrites the \code{statistic} argument. See details.}
 
 \item{number}{Sample size of the randomization distribution. The exactness of
 the p-value can not exceed \eqn{1/number} (i.e., \code{number = 100} results in
@@ -114,6 +108,37 @@ baseline single-case data.  The function is based on an algorithm from the
 \code{SCRT} package (Bulte & Onghena, 2009, 2012), but rewritten and extended for
 the use in AB designs.
 }
+\section{Details}{
+\subsection{Predefinded statisic}{
+
+Use the \code{statistic} argument to choose a predefnied statistic. The
+following comparisons are possible: \itemize{ \item\verb{Mean A-B}: Uses
+the difference between the mean of phase A and the mean of phase B. This is
+appropriate if a decrease of scores was expected for phase B.
+\item\verb{Mean B-A}: Uses the difference between the mean of phase B and
+the mean of phase A. This is appropriate if an increase of scores was
+expected for phase B.  \item\verb{Mean |A-B|}: Uses the absolute value of
+the difference between the means of phases A and B.  \item\verb{Median A-B}: The same as \verb{Mean A-B}, but based on the median.
+\item\verb{Median B-A}: The same as \verb{Mean B-A}, but based on the
+median.  \item\verb{SMD hedges / SMD glass}: Standardizes mean difference of B-A
+as Hedges's g or Glass' delta. \item\code{NAP}: Non-overlap of all pairs.
+\item\code{W-test}: Wilcoxon-test statistic W.\item\code{T-test}: T-test statistic t.}
+}
+
+\subsection{Create own statistic function}{
+
+Use the \code{statistic_function} argument to proved your own function in a list.
+This list must have an element named \code{statistic} with a function that takes
+two arguments \code{a} and \code{b} and returns a single numeric value.  E.g.
+\verb{list(statistic = function(a, b) mean(a) - mean(b)}. A second element of the
+list is named \code{aggregate} which takes a function with one numeric argument
+that returns a numeric argument. This function is used to aggregate the
+values of a multiple case design. If you do not provide this element, it uses
+the default \code{function(x) sum(x)/length(x)}. The third optional argument is
+\code{name} which provides a name for your user function.
+}
+}
+
 \examples{
 
 ## Compute a randomization test on the first case of the byHeart2011 data and include a graph

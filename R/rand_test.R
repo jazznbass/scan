@@ -5,10 +5,11 @@
 #' `SCRT` package (Bulte & Onghena, 2009, 2012), but rewritten and extended for
 #' the use in AB designs.
 #'
+#' # Details
 #'
-#' @inheritParams .inheritParams
-#' @param statistic Defines the statistic on which the comparison of phases A
-#'   and B is based on. Default setting is `statistic = "Mean B-A"`. The
+#' ## Predefinded statisic
+#'
+#' Use the `statistic` argument to choose a predefnied statistic. The
 #' following comparisons are possible: \itemize{ \item`Mean A-B`: Uses
 #' the difference between the mean of phase A and the mean of phase B. This is
 #' appropriate if a decrease of scores was expected for phase B.
@@ -18,9 +19,28 @@
 #' the difference between the means of phases A and B.  \item`Median
 #' A-B`: The same as `Mean A-B`, but based on the median.
 #' \item`Median B-A`: The same as `Mean B-A`, but based on the
-#' median.  \item`SMD hedges / SMD glass`: Standardizes mean difference of B-A 
+#' median.  \item`SMD hedges / SMD glass`: Standardizes mean difference of B-A
 #' as Hedges's g or Glass' delta. \item`NAP`: Non-overlap of all pairs.
 #' \item`W-test`: Wilcoxon-test statistic W.\item`T-test`: T-test statistic t.}
+#'
+#' ## Create own statistic function
+#'
+#' Use the `statistic_function` argument to proved your own function in a list.
+#' This list must have an element named `statistic` with a function that takes
+#' two arguments `a` and `b` and returns a single numeric value.  E.g.
+#' `list(statistic = function(a, b) mean(a) - mean(b)`. A second element of the
+#' list is named `aggregate` which takes a function with one numeric argument
+#' that returns a numeric argument. This function is used to aggregate the
+#' values of a multiple case design. If you do not provide this element, it uses
+#' the default `function(x) sum(x)/length(x)`. The third optional argument is
+#' `name` which provides a name for your user function.
+#'
+#' @inheritParams .inheritParams
+#' @param statistic Defines the statistic on which the comparison of phases A
+#'   and B is based on. Default setting is `statistic = "Mean B-A"`. See
+#'   details.
+#' @param statistic_function A list with a user defined function to calculate
+#'   the statistic. When set, overwrites the `statistic` argument. See details.
 #' @param number Sample size of the randomization distribution. The exactness of
 #'   the p-value can not exceed \eqn{1/number} (i.e., `number = 100` results in
 #'   p-values with an exactness of one percent). Default is `number = 500`. For
@@ -69,6 +89,7 @@
 #' the number of possible combinations (under the given restrictions) undercuts
 #' the requested `number` of combinations.} \item{ecxlude.equal}{see argument
 #' above}
+#'
 #' @author Juergen Wilbert
 #' @references Bulte, I., & Onghena, P. (2009). Randomization tests for
 #'   multiple-baseline designs: An extension of the SCRT-R package.
@@ -92,6 +113,7 @@ rand_test <- function (data, dvar, pvar,
                                      "W-test", "T-test", 
                                      "NAP", "NAP decreasing",
                                      "Slope B-A","Slope A-B"), 
+                       statistic_function = NULL,
                        number = 500, 
                        complete = FALSE, 
                        limit = 5, 
@@ -182,6 +204,21 @@ rand_test <- function (data, dvar, pvar,
   
 # Functions for phase differences -----------------------------------------
 
+  if (!is.null(statistic_function)) {
+    
+    if (is.null(statistic_function$aggregate)) 
+      statistic_function$aggregate <- function(x) sum(x) / length(x)
+    
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b,
+      statistic = statistic_function$statistic,
+      args_statistic = NULL,
+      aggregate = statistic_function$aggregate
+    )
+    
+    if (is.null(statistic_function$name)) statistic_function$name <- ""
+    statistic <- paste0("user defined function ", statistic_function$name)
+  }
+  
   if (statistic == "SMD hedges") {
     res <- rand_test_statistic(rnd_a, rnd_b, a, b,
       statistic = .opt$rand_test$smd,
