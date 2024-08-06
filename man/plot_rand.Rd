@@ -6,9 +6,10 @@
 \usage{
 plot_rand(
   object,
-  xlab = NA,
-  ylab = "Frequency",
-  title = "Random distribution",
+  type = "hist",
+  xlab = NULL,
+  ylab = NULL,
+  title = NULL,
   text_observed = "observed",
   color = "lightgrey",
   ...

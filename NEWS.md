@@ -17,6 +17,20 @@ rand_test(exampleAB, statistic_function = userstat , complete = TRUE)
 rand_test(exampleAB, statistic = "Median B-A" , complete = TRUE)
 ```
 
+- `rand_test()`: Returns startpoints for the random permutations.
+- `plot_rand()`: New argument `type` when `"xy"` a plot with splitpoints and statistics is drawn. This allows to see graphically at which measurement time a statistic changes.
+
+```r
+Leidig2018[4] |> 
+  na.omit() |> 
+  rand_test(complete = TRUE, limit = 1, statistic = "SMD glass") |> 
+  plot_rand(type = "xy")
+```
+
+
+- `na.omit.scdf()`: scdf method for generic `na.omit()`. Removes any row with a missing value from an scdf.
+
+
 ## Changes
 
 - `tau_u()`: New method `"tarlow"` calculates Tau-U as implemented in an R code and online calculator by Tarlow (2017). Here, tau values are calculated as in the `method = "complete", continuity_correction = TRUE, tau_method = "a"`. Inferential statistics are calculated based an tau b and the standard deviation for S is derived directly from Kendall's Tau B analysis (different from the `parker` and `complete` methods). 
