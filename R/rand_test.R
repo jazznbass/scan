@@ -159,28 +159,28 @@ rand_test <- function (data, dvar, pvar,
   #obs.B.start <- unlist(lapply(a, function(x) length(x) + 1))
   
   if (is.na(startpoints[1])) {
-    pos.startpts <- lapply(mts, function(x) (limit[1] + 1):(x - limit[2] + 1))
+    pos_startpts <- lapply(mts, function(x) (limit[1] + 1):(x - limit[2] + 1))
   } else {
-    pos.startpts <- lapply(mts, function(x) startpoints)
+    pos_startpts <- lapply(mts, function(x) startpoints)
   }
   
   ### posible combinations
   
-  possible.combinations <- lapply(pos.startpts, length)
-  possible.combinations <- cumprod(unlist(possible.combinations))[n_cases]	
+  possible_combinations <- lapply(pos_startpts, length)
+  possible_combinations <- cumprod(unlist(possible_combinations))[n_cases]	
   
-  auto.corrected.number <- FALSE
-  if (!complete && possible.combinations <= number) {
-    auto.corrected.number <- TRUE
+  auto_corrected_number <- FALSE
+  if (!complete && possible_combinations <= number) {
+    auto_corrected_number <- TRUE
     complete <- TRUE
   }
   
   if (!complete) {
-    startpts <- lapply(pos.startpts, function(x) sample(x, number, replace = TRUE))
+    startpts <- lapply(pos_startpts, function(x) sample(x, number, replace = TRUE))
     startpts <- matrix(unlist(startpts), nrow = number, ncol = n_cases)
   }
   if (complete) {
-    startpts <- expand.grid(pos.startpts)
+    startpts <- expand.grid(pos_startpts)
     number   <- nrow(startpts)
   }
   
@@ -345,14 +345,14 @@ rand_test <- function (data, dvar, pvar,
   }   
   
 # p value -----------------------------------------------------------------
-
+  
   if (testdirection == "greater") {
     test <- if (!exclude.equal) res$dist >= res$obs_stat else res$dist > res$obs_stat
   } else {
     test <- if (!exclude.equal) res$dist <= res$obs_stat else res$dist < res$obs_stat
   }
   
-  p.value <- sum(test) / number
+  p_value <- sum(test) / number
   
 # return ------------------------------------------------------------------
 
@@ -368,14 +368,14 @@ rand_test <- function (data, dvar, pvar,
       ylab = "Frequency", main = "Random distribution", col = "lightgrey"
     )
     abline(v = res$obs_stat, lty = 2, lwd = 2, col = "grey") 
-    if (p.value < 0.5) pos <- 2 else pos <- 4
+    if (p_value < 0.5) pos <- 2 else pos <- 4
     text(res$obs_stat, ylim, "observed", pos = pos)
   }
   
-  Z <- (res$obs_stat - mean(res$dist, na.rm = TRUE)) / sd(res$dist, na.rm = TRUE)
-  p.Z.single <- if (testdirection == "greater") 1 - pnorm(Z) else pnorm(Z)
+  z <- (res$obs_stat - mean(res$dist, na.rm = TRUE)) / sd(res$dist, na.rm = TRUE)
+  p_z_single <- if (testdirection == "greater") 1 - pnorm(z) else pnorm(z)
     
-  possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[n_cases]
+  possible_combinations <- cumprod(unlist(lapply(pos_startpts, length)))[n_cases]
 
   out <- list(
     statistic = statistic, 
@@ -386,15 +386,16 @@ rand_test <- function (data, dvar, pvar,
     n2 = length(unlist(b)), 
     limit = limit, 
     startpoints = startpoints, 
-    p.value = p.value, 
+    p.value = p_value, 
     number = number, 
     complete = complete, 
     observed.statistic = res$obs_stat, 
-    Z = Z, 
-    p.Z.single = p.Z.single, 
+    Z = z, 
+    p.Z.single = p_z_single, 
     distribution = res$dist, 
-    possible.combinations = possible.combinations, 
-    auto.corrected.number = auto.corrected.number,
+    distribution_startpoints = startpts,
+    possible.combinations = possible_combinations, 
+    auto.corrected.number = auto_corrected_number,
     exclude.equal = exclude.equal,
     testdirection = testdirection
   )
@@ -422,7 +423,10 @@ rand_test_statistic <- function(rnd_a, rnd_b, a, b,
   dist <- apply(ma, 1, aggregate)
   
   dat <- mapply(statistic, a = a, b = b, MoreArgs = args_statistic)
-  list(obs_stat = aggregate(dat), dist = dist)
+  list(
+    obs_stat = aggregate(dat), 
+    dist = dist
+  )
 }  
 
 
