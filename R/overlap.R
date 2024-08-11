@@ -1,6 +1,6 @@
 #' Overlap indices for single-case data
 #'
-#' The \code{overlap} function provides the most common overlap indices for
+#' The `overlap` function provides the most common overlap indices for
 #' single-case data and some additional statistics.
 #'
 #' @inheritParams .inheritParams
@@ -16,11 +16,12 @@
 #'   + n_B - 2 }} with a hedges correction applied: \eqn{Hedges_g * (1 -
 #'   \frac{3}{4n - 9} ) )}.
 #' @return
-#' \item{overlap}{A data frame consisting of the following indices for
-#' each single-case for all cases: PND, PEM, PET, NAP, PAND, IRD, Tau-U (A vs. B -
-#' Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.}
-#' \item{phases.A}{Selection for A phase.} \item{phases.B}{Selection for B
-#' phase.} \item{design}{Phase design.}
+#'  |  |  |
+#'  | --- | --- |
+#'  | `overlap` | A data frame consisting of the following indices for each single-case for all cases: PND, PEM, PET, NAP, PAND, IRD, Tau-U (A vs. B - Trend A), Diff_mean, Diff_trend, SMD, Hedges-g. |
+#'  | `phases.A` | Selection for A phase. |
+#'  | `phases.B` | Selection for B phase. |
+#'  | `design` | Phase design. |
 #' @family overlap functions
 #' @author Juergen Wilbert
 #' @examples

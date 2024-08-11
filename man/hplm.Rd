@@ -155,13 +155,17 @@ values.}
 publication tables.}
 }
 \value{
-\item{model}{List containing infromation about the applied model}
-\item{N}{Number of single-cases.} \item{formla}{A list containing the fixed
-and the random formulas of the hplm model.} \item{hplm}{Object of class lme
-contaning the multilevel model} \item{model.0}{Object of class lme containing
-the Zero Model.} \item{ICC}{List containing intraclass correlation and test
-parameters.} \item{model.without}{Object of class gls containing the fixed
-effect model.}
+\tabular{ll}{
+    \tab  \cr
+   \code{model} \tab List containing infromation about the applied model. \cr
+   \code{N} \tab Number of single-cases. \cr
+   \code{formula} \tab A list containing the fixed and the random formulas of the hplm model. \cr
+   \code{hplm} \tab Object of class lme contaning the multilevel model. \cr
+   \code{model.0} \tab Object of class lme containing the Zero Model. \cr
+   \code{ICC} \tab List containing intraclass correlation and test parameters. \cr
+   \code{model.without} \tab Object of class gls containing the fixed effect model. \cr
+   \code{contrast} \tab List with contrast definitions. \cr
+}
 }
 \description{
 The \code{\link[=hplm]{hplm()}} function computes a hierarchical piecewise regression model.

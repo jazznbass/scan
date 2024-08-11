@@ -49,15 +49,19 @@ providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(
 is \code{phases = c(1,2)}.}
 }
 \value{
-\item{cdc}{CDC Evaluation based on a p-value below .05.}
-\item{cdc_exc}{Number of phase B datapoints indicating expected change.}
-\item{cdc_nb}{Number of phase B datapoints.} \item{cdc_p}{P value of Binomial
-Test.} \item{cdc_all}{Overall CDC Evaluation based on all instances/cases of
-a Multiple Baseline Design.} \item{N}{Number of cases.}
-\item{decreasing}{Logical argument from function call (see \code{Arguments}
-above).}
-\item{conservative}{Numeric argument from function call (see \code{Arguments}
-above).} \item{case_names}{Assigned name of single-case.} \item{phases}{-}
+\tabular{ll}{
+    \tab  \cr
+   \code{cdc} \tab CDC Evaluation based on a p-value below .05. \cr
+   \code{cdc_exc} \tab Number of phase B datapoints indicating expected change. \cr
+   \code{cdc_nb} \tab Number of phase B datapoints. \cr
+   \code{cdc_p} \tab P value of Binomial Test. \cr
+   \code{cdc_all} \tab Overall CDC Evaluation based on all instances/cases of a Multiple Baseline Design. \cr
+   \code{N} \tab Number of cases. \cr
+   \code{decreasing} \tab Logical argument from function call (see Arguments above). \cr
+   \code{conservative} \tab Numeric argument from function call (see Arguments above). \cr
+   \code{case_names} \tab Assigned name of single-case. \cr
+   \code{phases} \tab - \cr
+}
 }
 \description{
 The \code{cdc()} function applies the Conservative Dual-Criterion Method (Fisher,

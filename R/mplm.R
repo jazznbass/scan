@@ -14,8 +14,13 @@
 #'   newvariable`).
 #' @param na.action Defines how to deal with missing values.
 #' @param ... Further arguments passed to the [lm()] function.
-#' @return \item{model}{Character string from function call (see arguments
-#' above).} \item{full.model}{Full regression model list.}
+#' @return 
+#'  |  |  |
+#'  | --- | --- |
+#'  | `model` | Character string from function call (see arguments above). |
+#'  | `contrast` | List with contrast definitions. |
+#'  | `full.model` | Full regression model list. |
+#'  | `formula` | 	Formula of the mplm model. | 
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @examples

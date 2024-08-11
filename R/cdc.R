@@ -16,15 +16,19 @@
 #'   additional .25 SD before evaluating phase B data. Default is the CDC method
 #'   with `conservative = .25`. To apply the Dual-Criterion (DC) method, set
 #'   `conservative = 0`.
-#' @return \item{cdc}{CDC Evaluation based on a p-value below .05.}
-#'   \item{cdc_exc}{Number of phase B datapoints indicating expected change.}
-#' \item{cdc_nb}{Number of phase B datapoints.} \item{cdc_p}{P value of Binomial
-#' Test.} \item{cdc_all}{Overall CDC Evaluation based on all instances/cases of
-#' a Multiple Baseline Design.} \item{N}{Number of cases.}
-#'  \item{decreasing}{Logical argument from function call (see `Arguments`
-#'   above).}
-#' \item{conservative}{Numeric argument from function call (see `Arguments`
-#' above).} \item{case_names}{Assigned name of single-case.} \item{phases}{-}
+#' @return 
+#'  |  |  |
+#'  | --- | --- |
+#'  | `cdc` | CDC Evaluation based on a p-value below .05. |
+#'  | `cdc_exc` | Number of phase B datapoints indicating expected change. |
+#'  | `cdc_nb` | Number of phase B datapoints. |
+#'  | `cdc_p` | P value of Binomial Test. |
+#'  | `cdc_all` | Overall CDC Evaluation based on all instances/cases of a Multiple Baseline Design. |
+#'  | `N` | Number of cases. |
+#'  | `decreasing` | Logical argument from function call (see Arguments above). |
+#'  | `conservative` | Numeric argument from function call (see Arguments above). |
+#'  | `case_names` | Assigned name of single-case. |
+#'  | `phases` | - |
 #' @author Timo Lueke
 #' @references Fisher, W. W., Kelley, M. E., & Lomas, J. E. (2003). Visual Aids
 #'   and Structured Criteria for Improving Visual Inspection and Interpretation

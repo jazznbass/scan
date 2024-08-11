@@ -51,24 +51,22 @@ identifier.}
 Identifies and drops outliers within a single-case data frame (scdf).
 }
 \details{
-For \code{method = "SD"}, \code{criteria = 2} would refer t0 two
-standard deviations. For \code{method = "MAD"}, \code{criteria = 3.5} would
-refer to 3.5 times the mean average deviation. For \code{method = "CI"},
-\code{criteria = 0.99} would refer to a 99 percent confidence interval. For
-\code{method = "cook"}, \code{criteria = "4/n"} would refer to a Cook's
-Distance greater than 4/n.
+For \code{method = "SD"}, \code{criteria = 2} would refer t0 two standard
+deviations. For \code{method = "MAD"}, \code{criteria = 3.5} would refer to 3.5 times
+the mean average deviation. For \code{method = "CI"}, \code{criteria = 0.99} would
+refer to a 99 percent confidence interval. For \code{method = "cook"}, \code{criteria = "4/n"} would refer to a Cook's Distance greater than 4/n.
 }
 \examples{
 
 ## Identify outliers using 1.5 standard deviations as criterion
 susanne <- random_scdf(level = 1.0)
 res_outlier <- outlier(susanne, method = "SD", criteria = 1.5)
-plot(susanne, marks = res_outlier)
+res_outlier
 
 ## Identify outliers in the original data from Grosche (2011)
 ## using Cook's Distance greater than 4/n as criterion
 res_outlier <- outlier(Grosche2011, method = "Cook", criteria = "4/n")
-plot(Grosche2011, marks = res_outlier)
+res_outlier
 
 }
 \seealso{

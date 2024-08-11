@@ -32,13 +32,17 @@
 #'   have a column named 'cases' with the names of the cases the Level 2
 #'   variables belong to.
 #' @param ... Further arguments passed to the lme function.
-#' @return \item{model}{List containing infromation about the applied model}
-#' \item{N}{Number of single-cases.} \item{formla}{A list containing the fixed
-#' and the random formulas of the hplm model.} \item{hplm}{Object of class lme
-#' contaning the multilevel model} \item{model.0}{Object of class lme containing
-#' the Zero Model.} \item{ICC}{List containing intraclass correlation and test
-#' parameters.} \item{model.without}{Object of class gls containing the fixed
-#' effect model.}
+#' @return 
+#'  |  |  |
+#'  | --- | --- |
+#'  | `model` | List containing infromation about the applied model. |
+#'  | `N` | Number of single-cases. |
+#'  | `formula` |A list containing the fixed and the random formulas of the hplm model. |
+#'  | `hplm` | Object of class lme contaning the multilevel model. |
+#'  | `model.0` | Object of class lme containing the Zero Model. |
+#'  | `ICC` | List containing intraclass correlation and test parameters. |
+#'  | `model.without` | Object of class gls containing the fixed effect model. |
+#'  | `contrast` | List with contrast definitions. |
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @examples

@@ -40,7 +40,7 @@ the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{AR}{Maximal lag of autoregression. Modeled based on the
+\item{AR}{Maximal lag of autoregression. Modelled based on the
 Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
 argument must be set to \code{family = "gaussian"}.}
 

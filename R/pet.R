@@ -8,12 +8,17 @@
 #'
 #' @inheritParams .inheritParams
 #' @param ci Width of the confidence interval. Default is `ci = 0.95`.
-#' @return \item{PET}{Percent exceeding the trend.} \item{PET.ci}{Percent
-#'   exceeding the upper / lower 95\%-CI boundary.} \item{p}{P value of Binomial
-#'   Test.} \item{ci.percent}{Width of confidence interval in percent.}
-#'   \item{se.factors}{Standard error.} \item{N}{Number of cases.}
-#' \item{decreasing}{Logical argument from function call (see \code{Arguments}
-#' above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
+#' @return 
+#'  |  |  |
+#'  | --- | --- |
+#'  | `PET` | Percent exceeding the trend. |
+#'  | `PET.ci` | Percent exceeding the upper / lower 95\ Test. |
+#'  | `ci.percent` | Width of confidence interval in percent. |
+#'  | `se.factors` | Standard error. | 
+#'  | `N` | Number of cases. | 
+#'  | `decreasing` | Logical argument from function call (see Arguments above). | 
+#'  | `case.names` | Assigned name of single-case. | 
+#'  | `phases` | - | 
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @examples
