@@ -12,13 +12,9 @@
 #'  |  |  |
 #'  | --- | --- |
 #'  | `PET` | Percent exceeding the trend. |
-#'  | `PET.ci` | Percent exceeding the upper / lower 95\ Test. |
 #'  | `ci.percent` | Width of confidence interval in percent. |
 #'  | `se.factors` | Standard error. | 
-#'  | `N` | Number of cases. | 
 #'  | `decreasing` | Logical argument from function call (see Arguments above). | 
-#'  | `case.names` | Assigned name of single-case. | 
-#'  | `phases` | - | 
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @examples
