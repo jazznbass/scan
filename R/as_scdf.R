@@ -30,10 +30,11 @@ as_scdf <- function(object,
     object[[cvar]] <- "unnamed"
   }
 
-  if (!is.null(attr(object, opt("scdf")))) {
-    pvar <- attr(object, opt("scdf"))[[opt("phase")]]
-    dvar <- attr(object, opt("scdf"))[[opt("dv")]]
-    mvar <- attr(object, opt("scdf"))[[opt("mt")]]
+  original_attr <- scdf_attr(object)
+  if (!is.null(original_attr)) {
+    pvar <- phase(object)
+    dvar <- dv(object)
+    mvar <- mt(object)
     add_message("Found scdf attributes and replaced function arguments.")
   }
 
@@ -54,9 +55,14 @@ as_scdf <- function(object,
   names(object) <- case_names
 
   class(object) <- c("scdf", "list")
-  phase(object) <- pvar
-  dv(object) <- dvar
-  mt(object) <- mvar
+  
+  if (!is.null(original_attr)) {
+    scdf_attr(object) <- original_attr
+  } else {
+    phase(object) <- pvar
+    dv(object) <- dvar
+    mt(object) <- mvar
+  }
 
   object
 
