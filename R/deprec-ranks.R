@@ -14,8 +14,14 @@
 #' @author Juergen Wilbert
 #' @family data manipulation functions
 #' @examples
+#' # The ranks function is deprecated. Please use transform:
 #' res1 <- ranks(Huber2014, var = "compliance")
 #' res2 <- transform(Huber2014, across_cases(compliance = rank(compliance, na.last="keep")))
+#' identical(res1, res2)
+#' 
+#' res1 <- ranks(Huber2014, var = "compliance", grand = FALSE)
+#' res2 <- transform(Huber2014, compliance = rank(compliance, na.last="keep"))
+#' identical(res1, res2)
 #' @export
 #' @keywords internal
 
