@@ -1,4 +1,4 @@
-#' Plot single-case data
+#' (Deprecated) Plot single-case data
 #'
 #' This function provides a plot of a single-case or multiple single-cases.
 #'
@@ -75,8 +75,6 @@
 #' @param ... Further arguments passed to the plot command.
 #' @return Returns a plot of one or multiple single-cases.
 #' @author Juergen Wilbert
-#' @seealso \code{\link{style_plot}}, \code{\link{describeSC}},
-#'   \code{\link{overlapSC}}
 #' @examples
 #'
 #' ## Request the default plot of the data from Borckhardt (2014)
@@ -98,6 +96,7 @@
 #'
 #' @export
 plot.scdf <- function(...) {
+  .deprecated_warning("scplot' from the package 'scplot", "plot")
   plotSC(...)
 }
 

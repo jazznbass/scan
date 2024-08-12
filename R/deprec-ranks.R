@@ -1,4 +1,4 @@
-#' Rank-transformation of single-case data files
+#' (Deprecated) Rank-transformation of single-case data files
 #'
 #' *This function is superseded by the more versatile 
 #' \code{\link{transform.scdf}} function.*
@@ -14,7 +14,8 @@
 #' @author Juergen Wilbert
 #' @family data manipulation functions
 #' @examples
-#' ranks(Huber2014, var = "compliance")
+#' res1 <- ranks(Huber2014, var = "compliance")
+#' res2 <- transform(Huber2014, across_cases(compliance = rank(compliance, na.last="keep")))
 #' @export
 #' @keywords internal
 

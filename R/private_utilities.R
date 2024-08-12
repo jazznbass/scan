@@ -18,7 +18,8 @@
   if (isTRUE(getOption("scan.deprecated.warning"))) {
     warning(
       opt("function_deprecated_warning"), 
-      " Please name function '", new, "' instead of '", old, "'."
+      "\nPlease use function '", new, "' instead of '", old, "'.",
+      call. = FALSE
     )
   }   
 } 

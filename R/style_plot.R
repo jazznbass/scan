@@ -1,4 +1,4 @@
-#' Create styles for single-case data plots
+#' (Deprecated) Create styles for single-case data plots
 #'
 #' The `style_plot` function is used to create graphical styles for a
 #' single-case plot
@@ -61,6 +61,9 @@
 #'
 #' @export
 style_plot <- function(style = "default", ...) {
+  
+  .deprecated_warning("scplot' from the package 'scplot", "style_plot")
+  
   new <- list(...)
   if (identical(style, "")) {
     cat("Available styles: \n")
