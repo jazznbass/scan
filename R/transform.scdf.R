@@ -84,6 +84,7 @@
 #' @export
 transform.scdf <- function(`_data`, ...) {
   expressions <- substitute(list(...))
+  original_attr <- attributes(`_data`)
   .df <- as.data.frame(`_data`)
   
   for(i_expression in 2:length(expressions)) {
@@ -105,6 +106,7 @@ transform.scdf <- function(`_data`, ...) {
       new <- eval(expressions[c(1,i_expression)], .list_env, parent.frame())
       .df <- new[[1]]
       `_data` <- suppressMessages(as_scdf(.df))
+      #attributes(`_data`) <- original_attr
     } else {
       .df <- as.data.frame(`_data`)
       for(i_case in seq_along(`_data`)) {
