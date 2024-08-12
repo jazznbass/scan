@@ -28,7 +28,7 @@ dat <- dat |>
 add_l2(dat, sd_res)
 
 
-dat %>%
+dat |>
   transform(
     values_std = 
   )

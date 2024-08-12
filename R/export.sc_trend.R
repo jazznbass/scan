@@ -2,7 +2,7 @@
 #' @export
 export.sc_trend <- function(object, 
                             caption = NA, 
-                            footnote = NULL, 
+                            footnote = NA, 
                             filename = NA,
                             kable_styling_options = list(), 
                             kable_options = list(), 
@@ -14,7 +14,11 @@ export.sc_trend <- function(object,
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (is.na(caption)) caption <- c("Trend analysis")
-  
+  if (is.na(footnote)) {
+    footnote <- paste(
+      "Measurement-times start at", object$first_mt, " for each phase"
+    )
+  }
   out <- object$trend
   #if (isTRUE(flip)) out <- t(out)
   

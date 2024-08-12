@@ -45,13 +45,13 @@ scaling across all cases included in an scdf.
 \examples{
 
 ## Standardize a multiple case scdf and compute an hplm
-exampleAB_50 \%>\%
-  standardize("values", center = TRUE, scale = TRUE) \%>\%
+exampleAB_50 |>
+  standardize("values", center = TRUE, scale = TRUE) |>
   hplm()
 
 ## The more versatile transform function supersedes standardize:
-exampleAB_50 \%>\%
-  transform(values = (values - mean(all(values))) / sd(all(values))) \%>\%
+exampleAB_50 |>
+  transform(values = (values - mean(all(values))) / sd(all(values))) |>
   hplm()
 }
 \seealso{

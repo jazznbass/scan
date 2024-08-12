@@ -34,13 +34,9 @@ is \code{phases = c(1,2)}.}
 \tabular{ll}{
     \tab  \cr
    \code{PET} \tab Percent exceeding the trend. \cr
-   \code{PET.ci} \tab Percent exceeding the upper / lower 95\ Test. \cr
    \code{ci.percent} \tab Width of confidence interval in percent. \cr
    \code{se.factors} \tab Standard error. \cr
-   \code{N} \tab Number of cases. \cr
    \code{decreasing} \tab Logical argument from function call (see Arguments above). \cr
-   \code{case.names} \tab Assigned name of single-case. \cr
-   \code{phases} \tab - \cr
 }
 }
 \description{

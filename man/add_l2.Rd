@@ -26,7 +26,7 @@ file
 This function is mostly used in combination with the \code{\link[=hplm]{hplm()}} function.
 }
 \examples{
-Leidig2018 \%>\% add_l2(Leidig2018_l2)
+Leidig2018 |> add_l2(Leidig2018_l2)
 }
 \seealso{
 \code{\link[=hplm]{hplm()}}

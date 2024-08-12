@@ -10,7 +10,7 @@
 #'   divided by 'sd Hedges'. 'Hedges' g correction' and 'Hedges' g durlak
 #'   correction' are two approaches of correcting Hedges' g for small sample
 #'   sizes. 'Glass' delta' is the mean difference divided by the standard
-#'   deviation of the A-phase. 'Cohens d` is the mean difference divided by 'sd
+#'   deviation of the A-phase. 'Cohens d' is the mean difference divided by 'sd
 #'   cohen'.
 #' @author Juergen Wilbert
 #' @seealso [overlap()], [describe()]

@@ -108,6 +108,7 @@ is.scdf <- function(x) inherits(x, "scdf")
 #' Removes any row with a missing value
 #'
 #' @param object A scdf.
+#' @param ... not implemented yet.
 #' @return A scdf object.
 #' @export
 na.omit.scdf <- function(object, ...) {

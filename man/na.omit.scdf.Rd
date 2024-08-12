@@ -9,6 +9,8 @@ Removes any row with a missing value}
 }
 \arguments{
 \item{object}{A scdf.}
+
+\item{...}{not implemented yet.}
 }
 \value{
 A scdf object.

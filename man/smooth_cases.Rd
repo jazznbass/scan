@@ -56,7 +56,7 @@ study <- c(
 )
 plot(study)
 
-Huber2014$Berta \%>\% 
+Huber2014$Berta |>
 transform(
   "compliance (moving median)" = moving_median(compliance),
   "compliance (moving mean)" = moving_mean(compliance),

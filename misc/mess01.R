@@ -137,16 +137,16 @@ across_cases <- function(...) {
 
 #df <- as.data.frame(exampleAB)
 
- a <- exampleABC %>%
+ a <- exampleABC |>
    transform(
      across_cases(values = 1:90, mt = 90:1),
      values = values + mt
     )
 
-b <-  exampleABC %>%
+b <-  exampleABC |>
    transform(values = (values - mean(all_cases(values))) / sd(all_cases(values)))
  
-c <-  exampleABC %>%
+c <-  exampleABC |>
   transform(
     across_cases(values = (values - mean(values)) / sd(values))
   )

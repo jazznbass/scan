@@ -35,7 +35,7 @@
 #' transform(study, proportion = values/trials, percentage = proportion * 100)
 #'
 #' ## Z standardize the dependent variable and add two new variables:
-#' exampleAB %>%
+#' exampleAB |>
 #'   transform(
 #'     values = scale(values),
 #'     mean_values = mean(values),
@@ -43,7 +43,7 @@
 #'   )
 #'
 #' ## Use `all` to calculate global variables.
-#' exampleAB %>%
+#' exampleAB |>
 #'   transform(
 #'     values_center_case = values - mean(values[phase == "A"]),
 #'     values_center_global = values - mean(all(values[phase == "A"])),
@@ -52,20 +52,20 @@
 #'
 #' ## Use `across_cases` to calculate or replace a variable with values from
 #' ## all cases. E.g., standardize the dependent variable:
-#' exampleABC %>%
+#' exampleABC |>
 #'   transform(
 #'     across_cases(values = scale(values))
 #'   )
 #'
 #' ## Rank transform the values based on all cases vs. within each case:
-#' exampleABC %>%
+#' exampleABC |>
 #'   transform(
 #'     across_cases(values_across = rank(values, na.last="keep")),
 #'     value_within = rank(values, na.last="keep")
 #'   )
 #'
 #' ## Three helper functions to smooth the data
-#' Huber2014$Berta %>%
+#' Huber2014$Berta |>
 #' transform(
 #'   "compliance (moving median)" = moving_median(compliance),
 #'   "compliance (moving mean)" = moving_mean(compliance),
@@ -76,7 +76,7 @@
 #' ## E.g., you want to replace the first two values of phase A and the first
 #' ## value of phase B and its preceding value.
 #'
-#' byHeart2011 %>%
+#' byHeart2011 |>
 #'   transform(
 #'     values = replace(values, first_of(phase == "A", 0:1), NA),
 #'     values = replace(values, first_of(phase == "B", -1:0), NA)

@@ -123,7 +123,7 @@ export(object, ...)
 \method{export}{sc_trend}(
   object,
   caption = NA,
-  footnote = NULL,
+  footnote = NA,
   filename = NA,
   kable_styling_options = list(),
   kable_options = list(),

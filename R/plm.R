@@ -78,16 +78,16 @@
 #' plm(dat, slope = FALSE, trend = FALSE, contrast = "preceding")
 #'
 #' ## A poisson regression
-#' example_A24 %>%
+#' example_A24 |>
 #'   plm(family = "poisson")
 #'
 #' ## A binomial regression (frequencies as dependent variable)
 #' plm(exampleAB_score$Christiano, family = "binomial", var_trials = "trials")
 #'
 #' ## A binomial regression (percentage as dependent variable)
-#' exampleAB_score$Christiano %>%
-#'   transform(percentage = values/trials) %>%
-#'   set_dvar("percentage") %>%
+#' exampleAB_score$Christiano |>
+#'   transform(percentage = values/trials) |>
+#'   set_dvar("percentage") |>
 #'   plm(family = "binomial", var_trials = "trials", dvar_percentage = TRUE)
 #' @export
 plm <- function(data, dvar, pvar, mvar, 

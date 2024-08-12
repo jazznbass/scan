@@ -6,6 +6,7 @@
 #' @param object Object returned from the rand_test() function
 #' @param xlab Label for the x-axis.
 #' @param ylab Label for the y-axis.
+#' @param type 'hist' or 'xy'.
 #' @param title Plot title.
 #' @param text_observed Text for marking the number of observed statistic.
 #' @param color Bar color.
@@ -36,7 +37,7 @@ plot_rand <- function(object,
     y <- object$distribution[x]
     points(x+1, y, col = "red", pch = 19)
     
-    if (res$testdirection == "greater") 
+    if (object$testdirection == "greater") 
       abline(h = max(object$distribution), col = "red")
     else
       abline(h = min(object$distribution), col = "red")

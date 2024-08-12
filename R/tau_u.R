@@ -9,7 +9,6 @@
 #'   `"parker"` calculates the number of possible pairs as described in Parker
 #'   et al. (2011) which might lead to tau-U values greater than 1. `"tarlow"`
 #'   follows an online calculator and R code developed by Tarlow (2017).
-#'   
 #' @param meta_analyses If TRUE, a meta analysis is conducted.
 #' @param meta_weight_method String to specify the method for calculating the
 #'   weights of the studies. Either "tau" or "z".

@@ -18,6 +18,8 @@ plot_rand(
 \arguments{
 \item{object}{Object returned from the rand_test() function}
 
+\item{type}{'hist' or 'xy'.}
+
 \item{xlab}{Label for the x-axis.}
 
 \item{ylab}{Label for the y-axis.}

@@ -51,8 +51,8 @@
 #' hplm(exampleAB_50, method = "REML", random.slopes = FALSE)
 #'
 #' ## Analyzing with additional L2 variables
-#' Leidig2018 %>%
-#'   add_l2(Leidig2018_l2) %>%
+#' Leidig2018 |>
+#'   add_l2(Leidig2018_l2) |>
 #'   hplm(update.fixed = .~. + gender + migration + ITRF_TOTAL*phaseB,
 #'        slope = FALSE, random.slopes = FALSE, lr.test = FALSE
 #'   )

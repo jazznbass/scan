@@ -22,10 +22,10 @@ of the recombined phases.}
 An scdf with selected phases
 }
 \description{
-Useful when working with \%>\% operators.
+Useful when working with pipe operators.
 }
 \examples{
-exampleA1B1A2B2_zvt \%>\%
-  select_phases(A = c(1, 3), B = c(2, 4)) \%>\%
+exampleA1B1A2B2_zvt |>
+  select_phases(A = c(1, 3), B = c(2, 4)) |>
   overlap()
 }

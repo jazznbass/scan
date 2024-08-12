@@ -157,20 +157,6 @@ design <- function(n = 1,
     within(missing_prop, 0, 1)
   )
   
-  # start_check() %>%
-  #   check_in(distribution, c("normal", "gaussian", "poisson", "binomial")) %>%
-  #   check_not(distribution == "binomial" && is.null(n_trials),
-  #              "Binomial distributions but n_trials not defined.") %>%
-  #   check_not(
-  #     distribution=="binomial" && (any(start_value>1) || any(start_value<0)), 
-  #     "Binomial distributions but start_values outside [0,1].") %>%
-  #   check_not(any(B_start < 1) && any(B_start >= 1),
-  #              "B_start with values below and above 1.") %>%
-  #   check_within(extreme_prop, 0, 1) %>%
-  #   check_within(missing_prop, 0, 1) %>%
-  #   end_check()
-  
-  
   if (!is.null(B_start)) {
     mt <- rep(mt, length.out = n)
     if (B_start[1] == "rand") {
