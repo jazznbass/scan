@@ -9,18 +9,18 @@
 #'   Cook's Distance based on the Piecewise Linear Regression Model.
 #' @param criteria Specifies the criteria for outlier identification. Based on
 #'   the `method` setting.
-#' @return \item{data}{A single-case data frame with substituted outliers.}
-#' \item{dropped.n}{A list with the number of dropped data points for each
-#' single-case.} \item{dropped.mt}{A list with the measurement-times of dropped
-#' data points for each single-case (values are based on the `mt` variable
-#' of each single-case data frame).} \item{sd.matrix}{A list with a matrix for
-#' each case with values for the upper and lower boundaries based on the
-#' standard deviation.} \item{ci.matrix}{A list with a matrix for each
-#' single-case with values for the upper and lower boundaries based on the
-#' confidence interval.} \item{cook}{A list of Cook's Distances for each
-#' measurement of each single-case.} \item{criteria}{Criteria used for outlier
-#' analysis.} \item{N}{Number of single-cases.} \item{case.names}{Case
-#' identifier.}
+#' @return 
+#'  |  |  |
+#'  | --- | --- |
+#'  | `data` | A single-case data frame with substituted outliers. |
+#'  | `dropped.n` | A list with the number of dropped data points for each single-case. |
+#'  | `dropped.mt` | A list with the measurement-times of dropped data points for each single-case (values are based on the mt variable of each single-case data frame). |
+#'  | `sd.matrix` | A list with a matrix for each case with values for the upper and lower boundaries based on the standard deviation. |
+#'  | `ci.matrix` | A list with a matrix for each single-case with values for the upper and lower boundaries based on the confidence interval. |
+#'  | `cook` | A list of Cook's Distances for each measurement of each single-case. |
+#'  | `criteria` | Criteria used for outlier analysis. |
+#'  | `N` | Number of single-cases. |
+#'  | `case.names` | Case identifier. |
 #' @details For `method = "SD"`, `criteria = 2` would refer t0 two standard
 #'   deviations. For `method = "MAD"`, `criteria = 3.5` would refer to 3.5 times
 #'   the mean average deviation. For `method = "CI"`, `criteria = 0.99` would

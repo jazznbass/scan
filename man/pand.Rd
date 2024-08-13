@@ -73,16 +73,22 @@ function.}
 values.}
 }
 \value{
-\item{pand}{Percentage of all non-overlapping data.} \item{phi}{Effect
-size Phi based on expected and observed values.}
-\item{perc_overlap}{Percentage of overlapping data points.} \item{overlaps}{Number of
-overlapping data points.} \item{n}{Number of data points.} \item{N}{Number
-of cases.} \item{n_a}{Number of data points in phase A.} \item{n_b}{Number of
-data points in phase B.} \item{matrix}{2x2 frequency
-matrix of phase A and B comparisons.} \item{matrix_counts}{2x2 counts matrix
-of phase A and B comparisons.} \item{chi_test}{A Chi-squared analysis of expected and observed data
-(\code{\link[=chisq.test]{chisq.test()}}).} \item{fisher_test}{A Fisher exact test analysis of expected and observed data
-(\code{\link[=fisher.test]{fisher.test()}}).}
+\tabular{ll}{
+    \tab  \cr
+   \code{pand} \tab Percentage of all non-overlapping data. \cr
+   \code{method} \tab Calculation method. \cr
+   \code{phi} \tab Effect size Phi based on expected and observed values. \cr
+   \code{perc_overlap} \tab Percentage of overlapping data points. \cr
+   \code{overlaps} \tab Number of overlapping data points. \cr
+   \code{n} \tab Number of data points. \cr
+   \code{N} \tab Number of cases. \cr
+   \code{n_a} \tab Number of data points in phase A. \cr
+   \code{n_b} \tab Number of data points in phase B. \cr
+   \code{matrix} \tab 2x2 frequency matrix of phase A and B comparisons. \cr
+   \code{matrix_counts} \tab 2x2 counts matrix of phase A and B comparisons. \cr
+   \code{chi_test} \tab A Chi-squared analysis of expected and observed data (chisq.test()). \cr
+   \code{fisher_test} \tab A Fisher exact test analysis of expected and observed data (fisher.test()). \cr
+}
 }
 \description{
 The \code{pand()} function calculates the percentage of all non-overlapping data

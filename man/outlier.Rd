@@ -34,18 +34,18 @@ Cook's Distance based on the Piecewise Linear Regression Model.}
 the \code{method} setting.}
 }
 \value{
-\item{data}{A single-case data frame with substituted outliers.}
-\item{dropped.n}{A list with the number of dropped data points for each
-single-case.} \item{dropped.mt}{A list with the measurement-times of dropped
-data points for each single-case (values are based on the \code{mt} variable
-of each single-case data frame).} \item{sd.matrix}{A list with a matrix for
-each case with values for the upper and lower boundaries based on the
-standard deviation.} \item{ci.matrix}{A list with a matrix for each
-single-case with values for the upper and lower boundaries based on the
-confidence interval.} \item{cook}{A list of Cook's Distances for each
-measurement of each single-case.} \item{criteria}{Criteria used for outlier
-analysis.} \item{N}{Number of single-cases.} \item{case.names}{Case
-identifier.}
+\tabular{ll}{
+    \tab  \cr
+   \code{data} \tab A single-case data frame with substituted outliers. \cr
+   \code{dropped.n} \tab A list with the number of dropped data points for each single-case. \cr
+   \code{dropped.mt} \tab A list with the measurement-times of dropped data points for each single-case (values are based on the mt variable of each single-case data frame). \cr
+   \code{sd.matrix} \tab A list with a matrix for each case with values for the upper and lower boundaries based on the standard deviation. \cr
+   \code{ci.matrix} \tab A list with a matrix for each single-case with values for the upper and lower boundaries based on the confidence interval. \cr
+   \code{cook} \tab A list of Cook's Distances for each measurement of each single-case. \cr
+   \code{criteria} \tab Criteria used for outlier analysis. \cr
+   \code{N} \tab Number of single-cases. \cr
+   \code{case.names} \tab Case identifier. \cr
+}
 }
 \description{
 Identifies and drops outliers within a single-case data frame (scdf).

@@ -58,6 +58,7 @@ tab_load <- tabPanel(
     mainPanel(
       verbatimTextOutput("load_messages"),
       verbatimTextOutput("load_output")
+      #htmlOutput("load_html_output")
     )
   )
 )

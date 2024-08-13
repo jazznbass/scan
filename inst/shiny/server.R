@@ -41,8 +41,12 @@ server <- function(input, output, session) {
         cat(paste0("loaded example ", input$scdf_example))
       )
       output$load_output <- renderPrint({
-        do.call("summary", list(my_scdf()))
+         do.call("summary", list(my_scdf()))
       })
+      #output$load_html_output <- renderUI({
+      #   x <- do.call("summary", list(my_scdf()))
+      #   export(x) |> HTML()
+      #})
       output$scdf_messages <- renderPrint(cat(""))
     } else {
       my_scdf(NULL)

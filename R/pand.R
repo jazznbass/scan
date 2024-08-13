@@ -40,16 +40,22 @@
 #'@inheritParams .inheritParams
 #'@param method Either `"sort"`" or `"minimum"`. See details.
 #'@order 1
-#'@return \item{pand}{Percentage of all non-overlapping data.} \item{phi}{Effect
-#'  size Phi based on expected and observed values.}
-#' \item{perc_overlap}{Percentage of overlapping data points.} \item{overlaps}{Number of
-#' overlapping data points.} \item{n}{Number of data points.} \item{N}{Number
-#' of cases.} \item{n_a}{Number of data points in phase A.} \item{n_b}{Number of
-#' data points in phase B.} \item{matrix}{2x2 frequency
-#' matrix of phase A and B comparisons.} \item{matrix_counts}{2x2 counts matrix
-#' of phase A and B comparisons.} \item{chi_test}{A Chi-squared analysis of expected and observed data
-#' ([chisq.test()]).} \item{fisher_test}{A Fisher exact test analysis of expected and observed data
-#' ([fisher.test()]).}
+#'@return 
+#'  |  |  |
+#'  | --- | --- |
+#'  | `pand` | Percentage of all non-overlapping data. |
+#'  | `method` | Calculation method. |
+#'  | `phi` | Effect size Phi based on expected and observed values. | 
+#'  | `perc_overlap` | Percentage of overlapping data points. | 
+#'  | `overlaps` | Number of overlapping data points. |
+#'  | `n` | Number of data points. |
+#'  | `N` | Number of cases. | 
+#'  | `n_a` | Number of data points in phase A. | 
+#'  | `n_b` | Number of data points in phase B. | 
+#'  | `matrix` | 2x2 frequency matrix of phase A and B comparisons. |
+#'  | `matrix_counts` | 2x2 counts matrix of phase A and B comparisons. |
+#'  | `chi_test` | A Chi-squared analysis of expected and observed data (chisq.test()). | 
+#'  | `fisher_test` | A Fisher exact test analysis of expected and observed data (fisher.test()). | 
 #'@author Juergen Wilbert
 #'@family overlap functions
 #'@references Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage
