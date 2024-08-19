@@ -31,12 +31,12 @@ providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(
 is \code{phases = c(1,2)}.}
 }
 \value{
-\item{PET}{Percent exceeding the trend.} \item{PET.ci}{Percent
-exceeding the upper / lower 95\\%-CI boundary.} \item{p}{P value of Binomial
-Test.} \item{ci.percent}{Width of confidence interval in percent.}
-\item{se.factors}{Standard error.} \item{N}{Number of cases.}
-\item{decreasing}{Logical argument from function call (see \code{Arguments}
-above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
+\tabular{ll}{
+    \tab  \cr
+   \code{PET} \tab Percent exceeding the trend. \cr
+   \code{ci} \tab Width of confidence interval. \cr
+   \code{decreasing} \tab Logical argument from function call (see Arguments above). \cr
+}
 }
 \description{
 The \code{pet} function returns the percentage of Phase B data points that exceed

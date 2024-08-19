@@ -3,7 +3,7 @@
 \name{plot.scdf}
 \alias{plot.scdf}
 \alias{plotSC}
-\title{Plot single-case data}
+\title{(Deprecated) Plot single-case data}
 \usage{
 \method{plot}{scdf}(...)
 
@@ -144,10 +144,6 @@ dat <- random_scdf(design = design(3))
 plot(dat, marks = list(positions = list(c(2,4,5),c(1,2,3),c(7,8,9)), col = "blue",
        cex = 1.4), style = c("grid", "annotate", "tiny"))
 
-}
-\seealso{
-\code{\link{style_plot}}, \code{\link{describeSC}},
-\code{\link{overlapSC}}
 }
 \author{
 Juergen Wilbert

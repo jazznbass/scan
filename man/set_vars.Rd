@@ -29,8 +29,8 @@ format.}
 Set analysis variables in an scdf
 }
 \examples{
-exampleAB_add \%>\% 
-  set_dvar("depression") \%>\%
+exampleAB_add |>
+  set_dvar("depression") |>
   describe()
 }
 \seealso{

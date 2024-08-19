@@ -97,7 +97,10 @@ export <- function (object, ...) {
 
 .add_footnote <- function(x, footnote) {
   if (length(footnote) > 1) {
-    footnote <- paste0(footnote, collapse = "; ") |> paste0(".")
+    footnote <- paste0(
+      footnote, 
+      collapse = getOption("scan.export.footnote.collapse")
+    ) |> paste0(".")
   }
   if (inherits(x, "kableExtra")) {
     footnote <- gsub("<br>", "\n", footnote)
@@ -174,7 +177,11 @@ export_table <- function(x,
   if (!is.null(footnote) && 
       !identical(footnote, "") && 
       !identical(footnote, NA)) {
-    footnote <- paste0("*Note.* ", paste0(footnote, collapse = ". "), ".")
+    footnote <- paste0(
+      "*Note.* ", 
+      paste0(footnote, collapse = getOption("scan.export.footnote.collapse")), 
+      "."
+    )
   }
   
   if (!inherits(x, "data.frame")) {

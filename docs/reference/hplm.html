@@ -284,28 +284,9 @@ publication tables.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <dl><dt>model</dt>
-<dd><p>List containing infromation about the applied model</p></dd>
+    
 
-<dt>N</dt>
-<dd><p>Number of single-cases.</p></dd>
- <dt>formla</dt>
-<dd><p>A list containing the fixed
-and the random formulas of the hplm model.</p></dd>
- <dt>hplm</dt>
-<dd><p>Object of class lme
-contaning the multilevel model</p></dd>
- <dt>model.0</dt>
-<dd><p>Object of class lme containing
-the Zero Model.</p></dd>
- <dt>ICC</dt>
-<dd><p>List containing intraclass correlation and test
-parameters.</p></dd>
- <dt>model.without</dt>
-<dd><p>Object of class gls containing the fixed
-effect model.</p></dd>
-
-</dl></div>
+<table class="table table"><tr><td></td><td></td></tr><tr><td><code>model</code></td><td>List containing infromation about the applied model.</td></tr><tr><td><code>N</code></td><td>Number of single-cases.</td></tr><tr><td><code>formula</code></td><td>A list containing the fixed and the random formulas of the hplm model.</td></tr><tr><td><code>hplm</code></td><td>Object of class lme contaning the multilevel model.</td></tr><tr><td><code>model.0</code></td><td>Object of class lme containing the Zero Model.</td></tr><tr><td><code>ICC</code></td><td>List containing intraclass correlation and test parameters.</td></tr><tr><td><code>model.without</code></td><td>Object of class gls containing the fixed effect model.</td></tr><tr><td><code>contrast</code></td><td>List with contrast definitions.</td></tr></table></div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
     
@@ -355,8 +336,8 @@ effect model.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residual       5.290</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Analyzing with additional L2 variables</span></span></span>
-<span class="r-in"><span><span class="va">Leidig2018</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="add_l2.html">add_l2</a></span><span class="op">(</span><span class="va">Leidig2018_l2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">Leidig2018</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="add_l2.html">add_l2</a></span><span class="op">(</span><span class="va">Leidig2018_l2</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">hplm</span><span class="op">(</span>update.fixed <span class="op">=</span> <span class="va">.</span><span class="op">~</span><span class="va">.</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">migration</span> <span class="op">+</span> <span class="va">ITRF_TOTAL</span><span class="op">*</span><span class="va">phaseB</span>,</span></span>
 <span class="r-in"><span>       slope <span class="op">=</span> <span class="cn">FALSE</span>, random.slopes <span class="op">=</span> <span class="cn">FALSE</span>, lr.test <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>

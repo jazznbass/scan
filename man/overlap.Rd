@@ -29,11 +29,13 @@ providing a list with two elements. E.g., \code{phases = list(A = c(1,3), B = c(
 is \code{phases = c(1,2)}.}
 }
 \value{
-\item{overlap}{A data frame consisting of the following indices for
-each single-case for all cases: PND, PEM, PET, NAP, PAND, IRD, Tau-U (A vs. B -
-Trend A), Diff_mean, Diff_trend, SMD, Hedges-g.}
-\item{phases.A}{Selection for A phase.} \item{phases.B}{Selection for B
-phase.} \item{design}{Phase design.}
+\tabular{ll}{
+    \tab  \cr
+   \code{overlap} \tab A data frame consisting of the following indices for each single-case for all cases: PND, PEM, PET, NAP, PAND, IRD, Tau-U (A vs. B - Trend A), Diff_mean, Diff_trend, SMD, Hedges-g. \cr
+   \code{phases.A} \tab Selection for A phase. \cr
+   \code{phases.B} \tab Selection for B phase. \cr
+   \code{design} \tab Phase design. \cr
+}
 }
 \description{
 The \code{overlap} function provides the most common overlap indices for

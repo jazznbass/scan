@@ -108,45 +108,15 @@ the <code>method</code> setting.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <dl><dt>data</dt>
-<dd><p>A single-case data frame with substituted outliers.</p></dd>
+    
 
-<dt>dropped.n</dt>
-<dd><p>A list with the number of dropped data points for each
-single-case.</p></dd>
- <dt>dropped.mt</dt>
-<dd><p>A list with the measurement-times of dropped
-data points for each single-case (values are based on the <code>mt</code> variable
-of each single-case data frame).</p></dd>
- <dt>sd.matrix</dt>
-<dd><p>A list with a matrix for
-each case with values for the upper and lower boundaries based on the
-standard deviation.</p></dd>
- <dt>ci.matrix</dt>
-<dd><p>A list with a matrix for each
-single-case with values for the upper and lower boundaries based on the
-confidence interval.</p></dd>
- <dt>cook</dt>
-<dd><p>A list of Cook's Distances for each
-measurement of each single-case.</p></dd>
- <dt>criteria</dt>
-<dd><p>Criteria used for outlier
-analysis.</p></dd>
- <dt>N</dt>
-<dd><p>Number of single-cases.</p></dd>
- <dt>case.names</dt>
-<dd><p>Case
-identifier.</p></dd>
-
-</dl></div>
+<table class="table table"><tr><td></td><td></td></tr><tr><td><code>data</code></td><td>A single-case data frame with substituted outliers.</td></tr><tr><td><code>dropped.n</code></td><td>A list with the number of dropped data points for each single-case.</td></tr><tr><td><code>dropped.mt</code></td><td>A list with the measurement-times of dropped data points for each single-case (values are based on the mt variable of each single-case data frame).</td></tr><tr><td><code>sd.matrix</code></td><td>A list with a matrix for each case with values for the upper and lower boundaries based on the standard deviation.</td></tr><tr><td><code>ci.matrix</code></td><td>A list with a matrix for each single-case with values for the upper and lower boundaries based on the confidence interval.</td></tr><tr><td><code>cook</code></td><td>A list of Cook's Distances for each measurement of each single-case.</td></tr><tr><td><code>criteria</code></td><td>Criteria used for outlier analysis.</td></tr><tr><td><code>N</code></td><td>Number of single-cases.</td></tr><tr><td><code>case.names</code></td><td>Case identifier.</td></tr></table></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>For <code>method = "SD"</code>, <code>criteria = 2</code> would refer t0 two
-standard deviations. For <code>method = "MAD"</code>, <code>criteria = 3.5</code> would
-refer to 3.5 times the mean average deviation. For <code>method = "CI"</code>,
-<code>criteria = 0.99</code> would refer to a 99 percent confidence interval. For
-<code>method = "cook"</code>, <code>criteria = "4/n"</code> would refer to a Cook's
-Distance greater than 4/n.</p>
+    <p>For <code>method = "SD"</code>, <code>criteria = 2</code> would refer t0 two standard
+deviations. For <code>method = "MAD"</code>, <code>criteria = 3.5</code> would refer to 3.5 times
+the mean average deviation. For <code>method = "CI"</code>, <code>criteria = 0.99</code> would
+refer to a 99 percent confidence interval. For <code>method = "cook"</code>, <code>criteria = "4/n"</code> would refer to a Cook's Distance greater than 4/n.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -176,14 +146,22 @@ Distance greater than 4/n.</p>
 <span class="r-in"><span><span class="co">## Identify outliers using 1.5 standard deviations as criterion</span></span></span>
 <span class="r-in"><span><span class="va">susanne</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span>level <span class="op">=</span> <span class="fl">1.0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res_outlier</span> <span class="op">&lt;-</span> <span class="fu">outlier</span><span class="op">(</span><span class="va">susanne</span>, method <span class="op">=</span> <span class="st">"SD"</span>, criteria <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">susanne</span>, marks <span class="op">=</span> <span class="va">res_outlier</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="outlier-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="va">res_outlier</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlier Analysis for Single-Case Data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Case Case1 : Dropped 2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Identify outliers in the original data from Grosche (2011)</span></span></span>
 <span class="r-in"><span><span class="co">## using Cook's Distance greater than 4/n as criterion</span></span></span>
 <span class="r-in"><span><span class="va">res_outlier</span> <span class="op">&lt;-</span> <span class="fu">outlier</span><span class="op">(</span><span class="va">Grosche2011</span>, method <span class="op">=</span> <span class="st">"Cook"</span>, criteria <span class="op">=</span> <span class="st">"4/n"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Grosche2011</span>, marks <span class="op">=</span> <span class="va">res_outlier</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="outlier-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="va">res_outlier</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlier Analysis for Single-Case Data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Case Eva : Dropped 1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Case Georg : Dropped 2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Case Olaf : Dropped 2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

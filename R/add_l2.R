@@ -14,7 +14,7 @@
 #' @family data manipulation functions
 #' @keywords transform
 #' @examples
-#' Leidig2018 %>% add_l2(Leidig2018_l2)
+#' Leidig2018 |> add_l2(Leidig2018_l2)
 #' @export
 add_l2 <- function(scdf,
                    data_l2,

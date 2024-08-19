@@ -16,6 +16,11 @@ scdf_attr <- function(x, var = NULL) {
 #' @param value set value
 #' @export
 "scdf_attr<-" <- function(x, var, value) {
+  
+  if (missing(var)) {
+    attr(x, opt("scdf")) <- value
+    return(x)
+  }
   scdf_attr <- attr(x, opt("scdf"))
   if (is.null(scdf_attr)) scdf_attr <- list()
   

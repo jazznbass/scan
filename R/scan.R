@@ -22,6 +22,7 @@
     scan.plot.style = "grid",
     scan.deprecated.warning = TRUE,
     scan.export.engine = "kable",
+    scan.export.footnote.collapse = "; ",
     scan.export.kable = list(digits = 2, linesep ="", booktab = TRUE),
     scan.export.kable_styling = list(
       bootstrap_options = c("bordered", "condensed"), 

@@ -6,9 +6,10 @@
 \usage{
 plot_rand(
   object,
-  xlab = NA,
-  ylab = "Frequency",
-  title = "Random distribution",
+  type = "hist",
+  xlab = NULL,
+  ylab = NULL,
+  title = NULL,
   text_observed = "observed",
   color = "lightgrey",
   ...
@@ -16,6 +17,8 @@ plot_rand(
 }
 \arguments{
 \item{object}{Object returned from the rand_test() function}
+
+\item{type}{'hist' or 'xy'.}
 
 \item{xlab}{Label for the x-axis.}
 

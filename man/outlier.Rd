@@ -34,41 +34,39 @@ Cook's Distance based on the Piecewise Linear Regression Model.}
 the \code{method} setting.}
 }
 \value{
-\item{data}{A single-case data frame with substituted outliers.}
-\item{dropped.n}{A list with the number of dropped data points for each
-single-case.} \item{dropped.mt}{A list with the measurement-times of dropped
-data points for each single-case (values are based on the \code{mt} variable
-of each single-case data frame).} \item{sd.matrix}{A list with a matrix for
-each case with values for the upper and lower boundaries based on the
-standard deviation.} \item{ci.matrix}{A list with a matrix for each
-single-case with values for the upper and lower boundaries based on the
-confidence interval.} \item{cook}{A list of Cook's Distances for each
-measurement of each single-case.} \item{criteria}{Criteria used for outlier
-analysis.} \item{N}{Number of single-cases.} \item{case.names}{Case
-identifier.}
+\tabular{ll}{
+    \tab  \cr
+   \code{data} \tab A single-case data frame with substituted outliers. \cr
+   \code{dropped.n} \tab A list with the number of dropped data points for each single-case. \cr
+   \code{dropped.mt} \tab A list with the measurement-times of dropped data points for each single-case (values are based on the mt variable of each single-case data frame). \cr
+   \code{sd.matrix} \tab A list with a matrix for each case with values for the upper and lower boundaries based on the standard deviation. \cr
+   \code{ci.matrix} \tab A list with a matrix for each single-case with values for the upper and lower boundaries based on the confidence interval. \cr
+   \code{cook} \tab A list of Cook's Distances for each measurement of each single-case. \cr
+   \code{criteria} \tab Criteria used for outlier analysis. \cr
+   \code{N} \tab Number of single-cases. \cr
+   \code{case.names} \tab Case identifier. \cr
+}
 }
 \description{
 Identifies and drops outliers within a single-case data frame (scdf).
 }
 \details{
-For \code{method = "SD"}, \code{criteria = 2} would refer t0 two
-standard deviations. For \code{method = "MAD"}, \code{criteria = 3.5} would
-refer to 3.5 times the mean average deviation. For \code{method = "CI"},
-\code{criteria = 0.99} would refer to a 99 percent confidence interval. For
-\code{method = "cook"}, \code{criteria = "4/n"} would refer to a Cook's
-Distance greater than 4/n.
+For \code{method = "SD"}, \code{criteria = 2} would refer t0 two standard
+deviations. For \code{method = "MAD"}, \code{criteria = 3.5} would refer to 3.5 times
+the mean average deviation. For \code{method = "CI"}, \code{criteria = 0.99} would
+refer to a 99 percent confidence interval. For \code{method = "cook"}, \code{criteria = "4/n"} would refer to a Cook's Distance greater than 4/n.
 }
 \examples{
 
 ## Identify outliers using 1.5 standard deviations as criterion
 susanne <- random_scdf(level = 1.0)
 res_outlier <- outlier(susanne, method = "SD", criteria = 1.5)
-plot(susanne, marks = res_outlier)
+res_outlier
 
 ## Identify outliers in the original data from Grosche (2011)
 ## using Cook's Distance greater than 4/n as criterion
 res_outlier <- outlier(Grosche2011, method = "Cook", criteria = "4/n")
-plot(Grosche2011, marks = res_outlier)
+res_outlier
 
 }
 \seealso{

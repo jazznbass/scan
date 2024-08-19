@@ -162,9 +162,13 @@ values of a numeric vector.</p>
 <span class="r-in"><span>  <span class="st">"Local regression"</span> <span class="op">=</span> <span class="fu">smooth_cases</span><span class="op">(</span><span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span>, method <span class="op">=</span> <span class="st">"regression"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>This function is deprecated. It might be dropped without any further notice in a future update of scan.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use function 'scplot' from the package 'scplot' instead of 'plot'.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>This function is deprecated. It might be dropped without any further notice in a future update of scan.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use function 'scplot' from the package 'scplot' instead of 'style_plot'.</span>
 <span class="r-plt img"><img src="smooth_cases-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span></span>
+<span class="r-in"><span><span class="va">Huber2014</span><span class="op">$</span><span class="va">Berta</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"compliance (moving median)"</span> <span class="op">=</span> <span class="fu"><a href="transform.scdf.html">moving_median</a></span><span class="op">(</span><span class="va">compliance</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"compliance (moving mean)"</span> <span class="op">=</span> <span class="fu"><a href="transform.scdf.html">moving_mean</a></span><span class="op">(</span><span class="va">compliance</span><span class="op">)</span>,</span></span>

@@ -1,6 +1,6 @@
 #' Select and combine phases for overlap analyses
 #'
-#' Useful when working with %>% operators.
+#' Useful when working with pipe operators.
 #'
 #' @inheritParams .inheritParams
 #' @param A Selection of the A phase
@@ -10,8 +10,8 @@
 #'   of the recombined phases.
 #' @return An scdf with selected phases
 #' @examples
-#' exampleA1B1A2B2_zvt %>%
-#'   select_phases(A = c(1, 3), B = c(2, 4)) %>%
+#' exampleA1B1A2B2_zvt |>
+#'   select_phases(A = c(1, 3), B = c(2, 4)) |>
 #'   overlap()
 #' @export
 select_phases <- function(data, A, B, phase_names = "auto") {

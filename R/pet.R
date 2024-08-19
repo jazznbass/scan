@@ -8,12 +8,12 @@
 #'
 #' @inheritParams .inheritParams
 #' @param ci Width of the confidence interval. Default is `ci = 0.95`.
-#' @return \item{PET}{Percent exceeding the trend.} \item{PET.ci}{Percent
-#'   exceeding the upper / lower 95\%-CI boundary.} \item{p}{P value of Binomial
-#'   Test.} \item{ci.percent}{Width of confidence interval in percent.}
-#'   \item{se.factors}{Standard error.} \item{N}{Number of cases.}
-#' \item{decreasing}{Logical argument from function call (see \code{Arguments}
-#' above).} \item{case.names}{Assigned name of single-case.} \item{phases}{-}
+#' @return 
+#'  |  |  |
+#'  | --- | --- |
+#'  | `PET` | Percent exceeding the trend. |
+#'  | `ci` | Width of confidence interval. |
+#'  | `decreasing` | Logical argument from function call (see Arguments above). | 
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @examples
@@ -41,10 +41,10 @@ pet <- function(data,
   
   N <- length(data)
   
-  if (ci != 0) se.factor <- qnorm(ci) else se.factor <- 0 
+  if (ci != 0) se_factor <- qnorm(ci) else se_factor <- 0 
   
   pet    <- rep(NA, N)
-  pet.ci <- rep(NA, N)
+  pet_ci <- rep(NA, N)
   p      <- rep(NA, N)
   
   for(i in 1:N) {
@@ -58,13 +58,13 @@ pet <- function(data,
     res <- predict(model, B, se.fit = TRUE)
     nB <- nrow(B)
     if(!decreasing) {
-      pet.ci[i] <- mean(B[, dvar] > (res$fit + res$se.fit * se.factor)) * 100
+      pet_ci[i] <- mean(B[, dvar] > (res$fit + res$se.fit * se_factor)) * 100
       pet[i]    <- mean(B[, dvar] > res$fit)*100
       p[i]      <- binom.test(
         sum(B[, dvar] > res$fit), nB, alternative = "greater"
       )$p.value
     } else {
-      pet.ci[i] <- mean(B[, dvar] < (res$fit - res$se.fit * se.factor)) * 100
+      pet_ci[i] <- mean(B[, dvar] < (res$fit - res$se.fit * se_factor)) * 100
       pet[i] <- mean(B[, dvar] < res$fit) * 100
       p[i] <- binom.test(
         sum(B[, dvar] < res$fit), nB, alternative = "greater"
@@ -75,15 +75,14 @@ pet <- function(data,
   pet <- data.frame(
     Case = revise_names(data),
     PET = pet, 
-    "PET CI" = pet.ci, 
+    "PET CI" = pet_ci, 
     binom.p = p, 
     check.names = FALSE
   )
   
   out <- list(
     PET = pet,
-    ci.percent = ci * 100, 
-    se.factors = se.factor, 
+    ci = ci,
     decreasing = decreasing
   )
   class(out) <- c("sc_pet")

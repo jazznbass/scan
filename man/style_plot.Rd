@@ -2,7 +2,7 @@
 % Please edit documentation in R/style_plot.R
 \name{style_plot}
 \alias{style_plot}
-\title{Create styles for single-case data plots}
+\title{(Deprecated) Create styles for single-case data plots}
 \usage{
 style_plot(style = "default", ...)
 }

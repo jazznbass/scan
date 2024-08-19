@@ -12,8 +12,12 @@
 #' * nap - 100}).
 #'
 #' @inheritParams .inheritParams
-#' @return \item{nap}{A data frame with NAP and additional values for each
-#'   case.} \item{N}{Number of cases.}
+#' @return 
+#'  |  |  |
+#'  | --- | --- |
+#'  | `nap` | A data frame with NAP and additional values for each case. |
+#'  | `N` | Number of cases. |
+#'  
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @references Parker, R. I., & Vannest, K. (2009). An improved effect size for

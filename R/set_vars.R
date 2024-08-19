@@ -6,8 +6,8 @@
 #' @param pvar Character string. Name of the phase variable.
 #' @family data manipulation functions
 #' @examples 
-#' exampleAB_add %>% 
-#'   set_dvar("depression") %>%
+#' exampleAB_add |>
+#'   set_dvar("depression") |>
 #'   describe()
 #' @export
 

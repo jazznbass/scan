@@ -26,7 +26,7 @@ This function is mainly used to filter rows by a logical expression. It has
 also arguments to filter variables and cases.
 }
 \examples{
-exampleAB \%>\%
+exampleAB |>
   subset((values < 60 & phase == "A") | (values >= 60 & phase == "B"))
 subset(exampleAB_add, select = c(-cigarrets, -depression))
 subset(exampleAB, cases = c(Karolina, Johanna))

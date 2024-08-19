@@ -81,8 +81,13 @@ If set to "auto" (default), values are predefined.}
 \item{std}{If TRUE, a table with standardized estimates is included.}
 }
 \value{
-\item{model}{Character string from function call (see arguments
-above).} \item{full.model}{Full regression model list.}
+\tabular{ll}{
+    \tab  \cr
+   \code{model} \tab Character string from function call (see arguments above). \cr
+   \code{contrast} \tab List with contrast definitions. \cr
+   \code{full.model} \tab Full regression model list. \cr
+   \code{formula} \tab Formula of the mplm model. \cr
+}
 }
 \description{
 The \code{\link[=mplm]{mplm()}} function computes a multivariate piecewise regression model.

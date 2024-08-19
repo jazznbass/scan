@@ -5,10 +5,11 @@
 #' `SCRT` package (Bulte & Onghena, 2009, 2012), but rewritten and extended for
 #' the use in AB designs.
 #'
+#' # Details
 #'
-#' @inheritParams .inheritParams
-#' @param statistic Defines the statistic on which the comparison of phases A
-#'   and B is based on. Default setting is `statistic = "Mean B-A"`. The
+#' ## Predefinded statisic
+#'
+#' Use the `statistic` argument to choose a predefnied statistic. The
 #' following comparisons are possible: \itemize{ \item`Mean A-B`: Uses
 #' the difference between the mean of phase A and the mean of phase B. This is
 #' appropriate if a decrease of scores was expected for phase B.
@@ -18,9 +19,28 @@
 #' the difference between the means of phases A and B.  \item`Median
 #' A-B`: The same as `Mean A-B`, but based on the median.
 #' \item`Median B-A`: The same as `Mean B-A`, but based on the
-#' median.  \item`SMD hedges / SMD glass`: Standardizes mean difference of B-A 
+#' median.  \item`SMD hedges / SMD glass`: Standardizes mean difference of B-A
 #' as Hedges's g or Glass' delta. \item`NAP`: Non-overlap of all pairs.
 #' \item`W-test`: Wilcoxon-test statistic W.\item`T-test`: T-test statistic t.}
+#'
+#' ## Create own statistic function
+#'
+#' Use the `statistic_function` argument to proved your own function in a list.
+#' This list must have an element named `statistic` with a function that takes
+#' two arguments `a` and `b` and returns a single numeric value.  E.g.
+#' `list(statistic = function(a, b) mean(a) - mean(b)`. A second element of the
+#' list is named `aggregate` which takes a function with one numeric argument
+#' that returns a numeric argument. This function is used to aggregate the
+#' values of a multiple case design. If you do not provide this element, it uses
+#' the default `function(x) sum(x)/length(x)`. The third optional argument is
+#' `name` which provides a name for your user function.
+#'
+#' @inheritParams .inheritParams
+#' @param statistic Defines the statistic on which the comparison of phases A
+#'   and B is based on. Default setting is `statistic = "Mean B-A"`. See
+#'   details.
+#' @param statistic_function A list with a user defined function to calculate
+#'   the statistic. When set, overwrites the `statistic` argument. See details.
 #' @param number Sample size of the randomization distribution. The exactness of
 #'   the p-value can not exceed \eqn{1/number} (i.e., `number = 100` results in
 #'   p-values with an exactness of one percent). Default is `number = 500`. For
@@ -69,6 +89,7 @@
 #' the number of possible combinations (under the given restrictions) undercuts
 #' the requested `number` of combinations.} \item{ecxlude.equal}{see argument
 #' above}
+#'
 #' @author Juergen Wilbert
 #' @references Bulte, I., & Onghena, P. (2009). Randomization tests for
 #'   multiple-baseline designs: An extension of the SCRT-R package.
@@ -92,6 +113,7 @@ rand_test <- function (data, dvar, pvar,
                                      "W-test", "T-test", 
                                      "NAP", "NAP decreasing",
                                      "Slope B-A","Slope A-B"), 
+                       statistic_function = NULL,
                        number = 500, 
                        complete = FALSE, 
                        limit = 5, 
@@ -137,28 +159,28 @@ rand_test <- function (data, dvar, pvar,
   #obs.B.start <- unlist(lapply(a, function(x) length(x) + 1))
   
   if (is.na(startpoints[1])) {
-    pos.startpts <- lapply(mts, function(x) (limit[1] + 1):(x - limit[2] + 1))
+    pos_startpts <- lapply(mts, function(x) (limit[1] + 1):(x - limit[2] + 1))
   } else {
-    pos.startpts <- lapply(mts, function(x) startpoints)
+    pos_startpts <- lapply(mts, function(x) startpoints)
   }
   
   ### posible combinations
   
-  possible.combinations <- lapply(pos.startpts, length)
-  possible.combinations <- cumprod(unlist(possible.combinations))[n_cases]	
+  possible_combinations <- lapply(pos_startpts, length)
+  possible_combinations <- cumprod(unlist(possible_combinations))[n_cases]	
   
-  auto.corrected.number <- FALSE
-  if (!complete && possible.combinations <= number) {
-    auto.corrected.number <- TRUE
+  auto_corrected_number <- FALSE
+  if (!complete && possible_combinations <= number) {
+    auto_corrected_number <- TRUE
     complete <- TRUE
   }
   
   if (!complete) {
-    startpts <- lapply(pos.startpts, function(x) sample(x, number, replace = TRUE))
+    startpts <- lapply(pos_startpts, function(x) sample(x, number, replace = TRUE))
     startpts <- matrix(unlist(startpts), nrow = number, ncol = n_cases)
   }
   if (complete) {
-    startpts <- expand.grid(pos.startpts)
+    startpts <- expand.grid(pos_startpts)
     number   <- nrow(startpts)
   }
   
@@ -182,6 +204,21 @@ rand_test <- function (data, dvar, pvar,
   
 # Functions for phase differences -----------------------------------------
 
+  if (!is.null(statistic_function)) {
+    
+    if (is.null(statistic_function$aggregate)) 
+      statistic_function$aggregate <- function(x) sum(x) / length(x)
+    
+    res <- rand_test_statistic(rnd_a, rnd_b, a, b,
+      statistic = statistic_function$statistic,
+      args_statistic = NULL,
+      aggregate = statistic_function$aggregate
+    )
+    
+    if (is.null(statistic_function$name)) statistic_function$name <- ""
+    statistic <- paste0("user defined function ", statistic_function$name)
+  }
+  
   if (statistic == "SMD hedges") {
     res <- rand_test_statistic(rnd_a, rnd_b, a, b,
       statistic = .opt$rand_test$smd,
@@ -308,14 +345,14 @@ rand_test <- function (data, dvar, pvar,
   }   
   
 # p value -----------------------------------------------------------------
-
+  
   if (testdirection == "greater") {
     test <- if (!exclude.equal) res$dist >= res$obs_stat else res$dist > res$obs_stat
   } else {
     test <- if (!exclude.equal) res$dist <= res$obs_stat else res$dist < res$obs_stat
   }
   
-  p.value <- sum(test) / number
+  p_value <- sum(test) / number
   
 # return ------------------------------------------------------------------
 
@@ -331,14 +368,14 @@ rand_test <- function (data, dvar, pvar,
       ylab = "Frequency", main = "Random distribution", col = "lightgrey"
     )
     abline(v = res$obs_stat, lty = 2, lwd = 2, col = "grey") 
-    if (p.value < 0.5) pos <- 2 else pos <- 4
+    if (p_value < 0.5) pos <- 2 else pos <- 4
     text(res$obs_stat, ylim, "observed", pos = pos)
   }
   
-  Z <- (res$obs_stat - mean(res$dist, na.rm = TRUE)) / sd(res$dist, na.rm = TRUE)
-  p.Z.single <- if (testdirection == "greater") 1 - pnorm(Z) else pnorm(Z)
+  z <- (res$obs_stat - mean(res$dist, na.rm = TRUE)) / sd(res$dist, na.rm = TRUE)
+  p_z_single <- if (testdirection == "greater") 1 - pnorm(z) else pnorm(z)
     
-  possible.combinations <- cumprod(unlist(lapply(pos.startpts, length)))[n_cases]
+  possible_combinations <- cumprod(unlist(lapply(pos_startpts, length)))[n_cases]
 
   out <- list(
     statistic = statistic, 
@@ -349,15 +386,16 @@ rand_test <- function (data, dvar, pvar,
     n2 = length(unlist(b)), 
     limit = limit, 
     startpoints = startpoints, 
-    p.value = p.value, 
+    p.value = p_value, 
     number = number, 
     complete = complete, 
     observed.statistic = res$obs_stat, 
-    Z = Z, 
-    p.Z.single = p.Z.single, 
+    Z = z, 
+    p.Z.single = p_z_single, 
     distribution = res$dist, 
-    possible.combinations = possible.combinations, 
-    auto.corrected.number = auto.corrected.number,
+    distribution_startpoints = startpts,
+    possible.combinations = possible_combinations, 
+    auto.corrected.number = auto_corrected_number,
     exclude.equal = exclude.equal,
     testdirection = testdirection
   )
@@ -385,7 +423,10 @@ rand_test_statistic <- function(rnd_a, rnd_b, a, b,
   dist <- apply(ma, 1, aggregate)
   
   dat <- mapply(statistic, a = a, b = b, MoreArgs = args_statistic)
-  list(obs_stat = aggregate(dat), dist = dist)
+  list(
+    obs_stat = aggregate(dat), 
+    dist = dist
+  )
 }  
 
 

@@ -3,55 +3,20 @@
 %   R/write_scdf.R
 \name{deprecated-functions}
 \alias{deprecated-functions}
-\alias{design_rSC}
-\alias{longSCDF}
-\alias{corrected_tauSC}
-\alias{trendSC}
-\alias{truncateSC}
-\alias{style_plotSC}
-\alias{style.plotSC}
-\alias{smoothSC}
-\alias{shiftSC}
 \alias{tauUSC}
-\alias{describeSC}
-\alias{rankSC}
 \alias{power_testSC}
 \alias{fillmissingSC}
 \alias{overlapSC}
 \alias{randSC}
 \alias{rand.test}
-\alias{autocorrSC}
 \alias{rciSC}
-\alias{outlierSC}
 \alias{rSC}
 \alias{readSC.excel}
 \alias{readSC}
 \alias{writeSC}
 \title{List of old deprecated function names}
 \usage{
-design_rSC(...)
-
-longSCDF(...)
-
-corrected_tauSC(...)
-
-trendSC(...)
-
-truncateSC(...)
-
-style_plotSC(...)
-
-style.plotSC(...)
-
-smoothSC(...)
-
-shiftSC(...)
-
 tauUSC(...)
-
-describeSC(...)
-
-rankSC(...)
 
 power_testSC(...)
 
@@ -63,11 +28,7 @@ randSC(...)
 
 rand.test(...)
 
-autocorrSC(...)
-
 rciSC(...)
-
-outlierSC(...)
 
 rSC(...)
 

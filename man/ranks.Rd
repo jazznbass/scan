@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprec-ranks.R
 \name{ranks}
 \alias{ranks}
-\title{Rank-transformation of single-case data files}
+\title{(Deprecated) Rank-transformation of single-case data files}
 \usage{
 ranks(data, var, grand = TRUE, ...)
 }
@@ -27,7 +27,14 @@ replaced with ranks.
 \code{\link{transform.scdf}} function.}
 }
 \examples{
-ranks(Huber2014, var = "compliance")
+# The ranks function is deprecated. Please use transform:
+res1 <- ranks(Huber2014, var = "compliance")
+res2 <- transform(Huber2014, across_cases(compliance = rank(compliance, na.last="keep")))
+identical(res1, res2)
+
+res1 <- ranks(Huber2014, var = "compliance", grand = FALSE)
+res2 <- transform(Huber2014, compliance = rank(compliance, na.last="keep"))
+identical(res1, res2)
 }
 \seealso{
 Other data manipulation functions: 

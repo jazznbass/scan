@@ -39,10 +39,13 @@ opt <- function(x) {
 .opt$tip <- list(
     "Visit the free online book on scan at: https://jazznbass.github.io/scan-Book/",
     "For information on citing scan, type citation(\"scan\").",
+    "Please cite splot (type 'citation(\"scplot\")' for more information.",
     "Start the graphical user interface of scan with shinyscan().",
     "Post a question or improvement idea on scan at https://github.com/jazznbass/scan/discussions",
     "Post issues at https://github.com/jazznbass/scan/issues",
-    "Find the online help-pages at https://jazznbass.github.io/scan/"
+    "Find the online help-pages at https://jazznbass.github.io/scan/",
+    "The addon package 'scplot' provides sophisticated graphs for single-case data.",
+    "Set 'options(scan.export.engine = \"gt\")' and try out the improved table engine for 'export()'."
   )
 
 .opt$startup_message <- paste0(

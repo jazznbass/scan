@@ -21,8 +21,8 @@
 #' plm(ex)
 #' 
 #' # Please use transform instead:
-#' example_A24 %>%
-#'   transform(year = year - 1996) %>%
+#' example_A24 |>
+#'   transform(year = year - 1996) |>
 #'   plm()
 shift <- function(data, value, var) {
   .deprecated_warning("transform", "shift")

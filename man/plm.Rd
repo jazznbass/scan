@@ -40,7 +40,7 @@ the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{AR}{Maximal lag of autoregression. Modeled based on the
+\item{AR}{Maximal lag of autoregression. Modelled based on the
 Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
 argument must be set to \code{family = "gaussian"}.}
 
@@ -139,16 +139,16 @@ plm(dat, slope = FALSE, contrast = "preceding")
 plm(dat, slope = FALSE, trend = FALSE, contrast = "preceding")
 
 ## A poisson regression
-example_A24 \%>\%
+example_A24 |>
   plm(family = "poisson")
 
 ## A binomial regression (frequencies as dependent variable)
 plm(exampleAB_score$Christiano, family = "binomial", var_trials = "trials")
 
 ## A binomial regression (percentage as dependent variable)
-exampleAB_score$Christiano \%>\%
-  transform(percentage = values/trials) \%>\%
-  set_dvar("percentage") \%>\%
+exampleAB_score$Christiano |>
+  transform(percentage = values/trials) |>
+  set_dvar("percentage") |>
   plm(family = "binomial", var_trials = "trials", dvar_percentage = TRUE)
 }
 \references{

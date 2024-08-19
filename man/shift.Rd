@@ -30,8 +30,8 @@ ex <- shift(example_A24, value = -1996)
 plm(ex)
 
 # Please use transform instead:
-example_A24 \%>\%
-  transform(year = year - 1996) \%>\%
+example_A24 |>
+  transform(year = year - 1996) |>
   plm()
 }
 \seealso{

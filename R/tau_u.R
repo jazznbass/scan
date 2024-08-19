@@ -9,7 +9,6 @@
 #'   `"parker"` calculates the number of possible pairs as described in Parker
 #'   et al. (2011) which might lead to tau-U values greater than 1. `"tarlow"`
 #'   follows an online calculator and R code developed by Tarlow (2017).
-#'   
 #' @param meta_analyses If TRUE, a meta analysis is conducted.
 #' @param meta_weight_method String to specify the method for calculating the
 #'   weights of the studies. Either "tau" or "z".
@@ -69,7 +68,7 @@
 #'
 #' ## Replicate  tau-U calculation from Parker et al. (2011)
 #' bob <- scdf(c(A = 2, 3, 5, 3, B = 4, 5, 5, 7, 6), name = "Bob")
-#' res <- tau_u(bob, method = "parker", tau_method = "a")
+#' res <- tau_u(bob, method = "parker")
 #' print(res, complete = TRUE)
 #'
 #' ## Request tau-U for all single-cases from the Grosche2011 data set

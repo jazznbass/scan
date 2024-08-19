@@ -58,6 +58,7 @@ tab_load <- tabPanel(
     mainPanel(
       verbatimTextOutput("load_messages"),
       verbatimTextOutput("load_output")
+      #htmlOutput("load_html_output")
     )
   )
 )
@@ -226,6 +227,7 @@ tab_power_test <- tabPanel(
         "pt_method", "Method(s)", 
         choices = res$choices$pt_method,selected = "plm_level"
       ),
+      textInput("pt_method_user", "User method", value = ""),
       selectInput(
        "pt_effect", "Null effect for", choices = c("level", "slope")
       ),
