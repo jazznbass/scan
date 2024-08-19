@@ -1,7 +1,8 @@
 # scan 0.61.999
 
-## New
+## New functions / features
 
+- `tau_u()`: New method `"tarlow"` calculates Tau-U as implemented in an R code and online calculator by Tarlow (2017). Here, tau values are calculated as in the `method = "complete", continuity_correction = TRUE, tau_method = "a"`. Inferential statistics are calculated based an tau b and the standard deviation for S is derived directly from Kendall's Tau B analysis (different from the `parker` and `complete` methods). 
 - `rand_test()`: It is now possible to provide new functions for calculating the statistic directly with a list to the `statistic_function` argument. This list must have an element named `statistic` with a function that takes two arguments `a` and `b` and returns a single numeric value. A second element of the list is named `aggregate` which takes a function with one numeric argument that returns a numeric argument. This function is used to aggregate the values of a multiple case design. If you do not provide this element, it uses the default `function(x) sum(x)/length(x)`. The third optional argument is `name` which provides a name for your user function.
 
 ```r
@@ -31,10 +32,11 @@ Leidig2018[4] |>
 - `na.omit.scdf()`: scdf method for generic `na.omit()`. Removes any row with a missing value from an scdf.
 
 
-## Changes
+## Corrections / Changes 
 
-- `tau_u()`: New method `"tarlow"` calculates Tau-U as implemented in an R code and online calculator by Tarlow (2017). Here, tau values are calculated as in the `method = "complete", continuity_correction = TRUE, tau_method = "a"`. Inferential statistics are calculated based an tau b and the standard deviation for S is derived directly from Kendall's Tau B analysis (different from the `parker` and `complete` methods). 
+- `scdf()`: Throws an error when argument `phase_starts` is set and the beginning of the first phase is not the first measurement.
 - `tau_u()`: Method `"parker"` ignores the `tau_method` setting and sets `continuity_correction = FALSE`. This follows the Parker (2011) paper. There, the inferential statistics are calculated using Kendall's Tau b while the actual Tau calculation applies Kendall's Tau a (without ties).
+
 
 ## Solved bugs
 

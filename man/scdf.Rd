@@ -95,6 +95,12 @@ klaas <- scdf(
   phase_design = c(A = 5, B = 6), name = "Klaas"
 )
 
+# Alternative coding 3:
+klaas <- scdf(
+  c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
+  phase_starts = c(A = 1, B = 7), name = "Klaas"
+)
+
 ## Unfortunately in a similar study there were no data collected on
 ## days 3 and 9. Use NA to pass them to the function:
 emmi <- scdf(c(5, 7, NA, 5, 7, 12, 16, 18, NA, 14, 19),

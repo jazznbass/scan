@@ -68,7 +68,7 @@
 #'
 #' ## Replicate  tau-U calculation from Parker et al. (2011)
 #' bob <- scdf(c(A = 2, 3, 5, 3, B = 4, 5, 5, 7, 6), name = "Bob")
-#' res <- tau_u(bob, method = "parker", tau_method = "a")
+#' res <- tau_u(bob, method = "parker")
 #' print(res, complete = TRUE)
 #'
 #' ## Request tau-U for all single-cases from the Grosche2011 data set

@@ -44,6 +44,7 @@ reference:
   - as_scdf
   - as.data.frame.scdf
   - combine
+  - na.omit.scdf
   - starts_with("coef")
   - fill_missing
   - sample_names
