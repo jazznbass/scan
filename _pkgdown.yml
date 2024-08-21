@@ -82,6 +82,7 @@ reference:
   - rand_test
   - rci
   - smd
+  - between_smd
   - tau_u
   - trend
 - subtitle: Building graphs, tables etc.
