@@ -24,7 +24,9 @@
     vars <- names(data[[case]])
     if (na.rm) data[[case]] <- data[[case]][!is.na(data[[case]][[dvar]]), ]
     if (!is.factor(data[[case]][[pvar]])) {
-      data[[case]][[pvar]] <- as.factor(data[[case]][[pvar]])
+      data[[case]][[pvar]] <- factor(
+        data[[case]][[pvar]], levels = unique(data[[case]][[pvar]])
+      )
     }
     data[[case]][[pvar]] <- droplevels(data[[case]][[pvar]])
   }
