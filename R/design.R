@@ -82,6 +82,8 @@
 #'   the length of the vector, values are repeated.
 #' @param distribution Distribution of the criteria varible. Default is
 #'   `"normal"`. Possible values are `"normal"`, `"binomial"`, and `"poisson"`.
+#' @param random_start_value If TRUE, the start_values are randomized based on
+#'   the distribution.
 #' @return An object of class sc_design.
 #' @family mc functions
 #' @author Juergen Wibert
@@ -116,6 +118,7 @@ design <- function(n = 1,
                    missing_prop = 0, 
                    distribution = c("normal", "gaussian", "poisson", 
                                     "binomial"),
+                   random_start_value = FALSE,
                    n_trials = NULL,
                    mt = NULL, 
                    B_start = NULL,
@@ -144,7 +147,6 @@ design <- function(n = 1,
   if (is.list(s)) s <- unlist(s)
   if (is.list(rtt)) rtt <- unlist(rtt)
   
-  
   check_args(
     one_of(distribution, c("normal", "gaussian", "poisson", "binomial")),
     not(distribution == "binomial" && is.null(n_trials),
@@ -153,6 +155,9 @@ design <- function(n = 1,
         "Binomial distributions but start_values outside [0,1]."),
     not(any(B_start < 1) && any(B_start >= 1), 
         "B_start with values below and above 1."),
+    not(random_start_value && length(start_value) > 1,
+            "Multiple start_values are given when random_start_value ",
+            "is set to TRUE."),
     within(extreme_prop, 0, 1),
     within(missing_prop, 0, 1)
   )
@@ -175,6 +180,17 @@ design <- function(n = 1,
     }
   }
 
+  if (random_start_value) {
+    if (distribution %in% c("normal", "gaussian")) {
+      start_value <- rnorm(n, start_value[1], s[1])
+    }
+    if (distribution == "poisson") {
+      start_value <- rpois(n, start_value[1])
+    }
+    if (distribution == "binomial") {
+      start_value <- rbinom(n, n_trials, start_value[1])
+    }
+  }
   if (length(start_value) != n) start_value <- rep(start_value, length = n)
   if (length(s) != n) s <- rep(s, length = n)
   if (length(rtt) != n) rtt <- rep(rtt, length = n)
