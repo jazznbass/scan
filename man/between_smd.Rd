@@ -9,10 +9,12 @@ between_smd(data, ...)
 \arguments{
 \item{data}{Either an scdf or an object returned from the \code{\link[=hplm]{hplm()}} function.}
 
-\item{...}{When data is an scdf, further design parameters passed to the \code{\link[=hplm]{hplm()}} function.}
+\item{...}{When data is an scdf, further design parameters passed to the
+\code{\link[=hplm]{hplm()}} function.}
 }
 \description{
-Calculates a standardized mean difference from a multilevel model as described in Pustejovsky et al. (2014)
+Calculates a standardized mean difference from a multilevel model as
+described in Pustejovsky et al. (2014)
 }
 \examples{
 des <- design(
