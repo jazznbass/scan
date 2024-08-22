@@ -1,10 +1,12 @@
 #' Between-Case Standardized Mean Difference
-#' 
-#' Calculates a standardized mean difference from a multilevel model as described in Pustejovsky et al. (2014)
-#' 
+#'
+#' Calculates a standardized mean difference from a multilevel model as
+#' described in Pustejovsky et al. (2014)
+#'
 #' @inheritParams .inheritParams
 #' @param data Either an scdf or an object returned from the [hplm()] function.
-#' @param ... When data is an scdf, further design parameters passed to the [hplm()] function.
+#' @param ... When data is an scdf, further design parameters passed to the
+#'   [hplm()] function.
 #' @references 
 #' Pustejovsky, J. E., Hedges, L. V., & Shadish, W. R. (2014). Design-Comparable Effect Sizes in Multiple Baseline Designs: A General Modeling Framework. Journal of Educational and Behavioral Statistics, 39(5), 368–393. https://doi.org/10.3102/1076998614547577
 #' @examples
@@ -39,7 +41,8 @@ between_smd <- function(data,
   structure(
     list(
       bc_smd = data.frame(
-        Effect = names(bc_smd), "BC-SMD" = bc_smd,# "Rand intercept" = a / sqrt(inter),
+        Effect = names(bc_smd), "BC-SMD" = bc_smd,
+        "Only random intercept" = a / sqrt(inter),
         check.names = FALSE
       ),
       model = model
