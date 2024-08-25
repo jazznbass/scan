@@ -77,6 +77,7 @@ Other data manipulation functions:
 \code{\link{fill_missing}()},
 \code{\link{moving_median}()},
 \code{\link{ranks}()},
+\code{\link{rescale}()},
 \code{\link{scdf}()},
 \code{\link{select_cases}()},
 \code{\link{set_vars}()},

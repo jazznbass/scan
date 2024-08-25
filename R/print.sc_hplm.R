@@ -61,7 +61,7 @@ print.sc_hplm <- function(x, ..., smd = FALSE, casewise = FALSE) {
   
   if (smd) {
     cat("\nBetween-Case Standardized Mean Difference\n\n")
-    print(between_smd(x)$bc_smd, row.names = FALSE)
+    print(round_numeric(between_smd(x)$bc_smd, 2), row.names = FALSE)
     
   }
   

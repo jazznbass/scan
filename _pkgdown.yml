@@ -53,6 +53,7 @@ reference:
   - set_vars
   - subset.scdf
   - transform.scdf
+  - rescale
   - is.scdf
   - shinyscan
 - subtitle: Export and import

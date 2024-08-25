@@ -157,17 +157,17 @@ hplm <- function(data, dvar, pvar, mvar,
     ))
   }
   out$formula <- list(fixed = fixed, random = random)
-  
-# lme hplm model ----------------------------------------------------------
 
+# lme hplm model ----------------------------------------------------------
+  
   out$hplm <- lme(
-    fixed = fixed, 
-    random = random, 
-    data = dat, 
-    na.action = na.omit, 
-    method = method, 
-    control = control, 
-    keep.data = FALSE, 
+    fixed = fixed,
+    random = random,
+    data = dat,
+    na.action = na.omit,
+    method = method,
+    control = control,
+    keep.data = FALSE,
     ...
   )
   
@@ -197,9 +197,10 @@ hplm <- function(data, dvar, pvar, mvar,
     
     # lme
     for(i in 1:length(random_ir)) {
+      
       out$random_ir$restricted[[i]] <- lme(
-        fixed = fixed, random = random_ir[i], data = dat, 
-        na.action = na.omit, method = method, control=control, 
+        fixed = fixed, random = random_ir[i], data = dat,
+        na.action = na.omit, method = method, control=control,
         keep.data = FALSE, ...)
       
       out$random_ir$restricted[[i]]$call$fixed <- fixed
@@ -217,7 +218,7 @@ hplm <- function(data, dvar, pvar, mvar,
     .formula.null <- as.formula(paste0(dvar, " ~ 1"))
     out$model.0 <- lme(
       .formula.null, random =~1|case, data = dat, 
-      method = method, na.action=na.omit, control = control
+      method = method, na.action = na.omit, control = control
     )
     out$model.0$call$fixed <- .formula.null
     

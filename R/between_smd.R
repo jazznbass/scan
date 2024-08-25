@@ -3,7 +3,6 @@
 #' Calculates a standardized mean difference from a multilevel model as
 #' described in Pustejovsky et al. (2014)
 #'
-#' @inheritParams .inheritParams
 #' @param data Either an scdf or an object returned from the [hplm()] function.
 #' @param ... When data is an scdf, further design parameters passed to the
 #'   [hplm()] function.

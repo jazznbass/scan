@@ -35,7 +35,7 @@ hplm(
   ...
 )
 
-\method{print}{sc_hplm}(x, ..., casewise = FALSE)
+\method{print}{sc_hplm}(x, ..., smd = FALSE, casewise = FALSE)
 
 \method{export}{sc_hplm}(
   object,
@@ -129,6 +129,8 @@ variables belong to.}
 \item{...}{Further arguments passed to the lme function.}
 
 \item{x}{An object returned by \code{\link[=hplm]{hplm()}}}
+
+\item{smd}{If TRUE, reports between-case standardized mean differences.}
 
 \item{casewise}{Returns the estimations for each case}
 
