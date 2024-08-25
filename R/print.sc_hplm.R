@@ -4,7 +4,7 @@
 #' @order 2
 #' @param x An object returned by [hplm()]
 #' @export
-print.sc_hplm <- function(x, ..., smd = FALSE, casewise = FALSE) {
+print.sc_hplm <- function(x, digits = 3, ..., smd = FALSE, casewise = FALSE) {
   cat("Hierarchical Piecewise Linear Regression\n\n")
   cat("Estimation method", x$model$estimation.method,"\n")
   cat("Contrast model: ", 
@@ -28,10 +28,7 @@ print.sc_hplm <- function(x, ..., smd = FALSE, casewise = FALSE) {
   
   row.names(md) <- .plm.row.names(row.names(md), x)
   
-  md$B  <- round(md$B,  3)
-  md$SE <- round(md$SE, 3)
-  md$t  <- round(md$t,  3)
-  md$p  <- round(md$p,  3)
+  md <- round_numeric(md, digits)
   
   out$ttable <- md
   
@@ -39,8 +36,8 @@ print.sc_hplm <- function(x, ..., smd = FALSE, casewise = FALSE) {
   print(md)
   
   cat("\nRandom effects (",deparse(x$model$random),")\n\n", sep = "")
-  SD <- round(as.numeric(VarCorr(x$hplm)[,"StdDev"]), 3)
-  md <- data.frame("EstimateSD" = SD)
+  sd <- round(as.numeric(VarCorr(x$hplm)[,"StdDev"]), 3)
+  md <- data.frame("EstimateSD" = sd)
   rownames(md) <- names(VarCorr(x$hplm)[, 2])
   
   row.names(md) <- .plm.row.names(row.names(md), x)
@@ -52,16 +49,16 @@ print.sc_hplm <- function(x, ..., smd = FALSE, casewise = FALSE) {
       x$LR.test[[1]]$df <- NA
     }
     
-    md$L  <- c(round(unlist(lapply(x$LR.test, function(x) x$L.Ratio[2])), 2), NA)
+    md$L  <- c(unlist(lapply(x$LR.test, function(x) x$L.Ratio[2])), NA)
     md$df <- c(unlist(lapply(x$LR.test,       function(x) x$df[2] - x$df[1])), NA)
-    md$p  <- c(round(unlist(lapply(x$LR.test, function(x) x$"p-value"[2])), 3), NA)
+    md$p  <- c(unlist(lapply(x$LR.test, function(x) x$"p-value"[2])), NA)
   }
   
-  print(md, na.print = "-", ...)
+  print(format_table(md, digits = digits, integer = "df"), ...)
   
   if (smd) {
     cat("\nBetween-Case Standardized Mean Difference\n\n")
-    print(round_numeric(between_smd(x)$bc_smd, 2), row.names = FALSE)
+    print(between_smd(x)$bc_smd, digits = digits, row.names = FALSE)
     
   }
   
