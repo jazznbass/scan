@@ -146,6 +146,7 @@ random_scdf <- function(design = NULL,
       values = measured_values, 
       mt = 1:mt
     )
+    df$phase <- factor(df$phase, levels = unique(df$phase))
     
     if (design$distribution == "binomial") 
       df$trials <- rep(design$n_trials, mt)
@@ -170,9 +171,3 @@ random_scdf <- function(design = NULL,
   out
 }
 
-#' @rdname deprecated-functions
-#' @export
-rSC <- function(...) {
-  .deprecated_warning("random_scdf", "rSC")
-  random_scdf(...)
-}

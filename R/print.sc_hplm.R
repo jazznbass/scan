@@ -1,9 +1,10 @@
 #' @describeIn hplm Print results
 #' @param casewise Returns the effect estimations for each case
+#' @param smd If TRUE, reports between-case standardized mean differences.
 #' @order 2
 #' @param x An object returned by [hplm()]
 #' @export
-print.sc_hplm <- function(x, ..., casewise = FALSE) {
+print.sc_hplm <- function(x, ..., smd = FALSE, casewise = FALSE) {
   cat("Hierarchical Piecewise Linear Regression\n\n")
   cat("Estimation method", x$model$estimation.method,"\n")
   cat("Contrast model: ", 
@@ -57,6 +58,12 @@ print.sc_hplm <- function(x, ..., casewise = FALSE) {
   }
   
   print(md, na.print = "-", ...)
+  
+  if (smd) {
+    cat("\nBetween-Case Standardized Mean Difference\n\n")
+    print(round_numeric(between_smd(x)$bc_smd, 2), row.names = FALSE)
+    
+  }
   
   if (casewise) {
     cat("\nCasewise estimation of effects\n\n")

@@ -58,3 +58,10 @@ rciSC <- function(...) {
 }
 
 
+#' @rdname deprecated-functions
+#' @export
+rSC <- function(...) {
+  .deprecated_warning("random_scdf", "rSC")
+  random_scdf(...)
+}
+

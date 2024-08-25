@@ -34,6 +34,9 @@
     <loc>/reference/batch_apply.html</loc>
   </url>
   <url>
+    <loc>/reference/between_smd.html</loc>
+  </url>
+  <url>
     <loc>/reference/cdc.html</loc>
   </url>
   <url>
@@ -146,6 +149,9 @@
   </url>
   <url>
     <loc>/reference/read_scdf.html</loc>
+  </url>
+  <url>
+    <loc>/reference/rescale.html</loc>
   </url>
   <url>
     <loc>/reference/sample_names.html</loc>

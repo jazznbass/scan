@@ -146,6 +146,7 @@ Other data manipulation functions:
 \code{\link{moving_median}()},
 \code{\link{outlier}()},
 \code{\link{ranks}()},
+\code{\link{rescale}()},
 \code{\link{select_cases}()},
 \code{\link{set_vars}()},
 \code{\link{shift}()},

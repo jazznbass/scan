@@ -5,6 +5,7 @@
   inter <- ""
   phase <- ""
   mt    <- ""
+  
   if (slope) {
     inter <- paste0(var_inter, collapse = "+")
     inter <- paste0("+ ", inter)

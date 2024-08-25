@@ -53,6 +53,7 @@ reference:
   - set_vars
   - subset.scdf
   - transform.scdf
+  - rescale
   - is.scdf
   - shinyscan
 - subtitle: Export and import
@@ -82,6 +83,7 @@ reference:
   - rand_test
   - rci
   - smd
+  - between_smd
   - tau_u
   - trend
 - subtitle: Building graphs, tables etc.

@@ -61,6 +61,12 @@
 <div class="section level3">
 <h3 id="new-functions--features-0-61-999">New functions / features<a class="anchor" aria-label="anchor" href="#new-functions--features-0-61-999"></a></h3>
 <ul><li>
+<code><a href="../reference/rescale.html">rescale()</a></code>: New function as a helper for getting standardized estimators in regression models. e.g. <code>exampleAB |&gt; rescale() |&gt; hplm()</code>.</li>
+<li>
+<code><a href="../reference/between_smd.html">between_smd()</a></code>: Calculates between case standardized mean differences as proposed by Pustejovsky et. aL (2014). Can take complex hplm models as a basis.</li>
+<li>
+<code><a href="../reference/hplm.html">print.sc_hplm()</a></code>: New argument <code>smd</code>. If set TRUE, between case smd results are reported.</li>
+<li>
 <code><a href="../reference/tau_u.html">tau_u()</a></code>: New method <code>"tarlow"</code> calculates Tau-U as implemented in an R code and online calculator by Tarlow (2017). Here, tau values are calculated as in the <code>method = "complete", continuity_correction = TRUE, tau_method = "a"</code>. Inferential statistics are calculated based an tau b and the standard deviation for S is derived directly from Kendall’s Tau B analysis (different from the <code>parker</code> and <code>complete</code> methods).</li>
 <li>
 <code><a href="../reference/rand_test.html">rand_test()</a></code>: It is now possible to provide new functions for calculating the statistic directly with a list to the <code>statistic_function</code> argument. This list must have an element named <code>statistic</code> with a function that takes two arguments <code>a</code> and <code>b</code> and returns a single numeric value. A second element of the list is named <code>aggregate</code> which takes a function with one numeric argument that returns a numeric argument. This function is used to aggregate the values of a multiple case design. If you do not provide this element, it uses the default <code>function(x) sum(x)/length(x)</code>. The third optional argument is <code>name</code> which provides a name for your user function.</li>

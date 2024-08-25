@@ -17,6 +17,7 @@ design(
   extreme_range = c(-4, -3),
   missing_prop = 0,
   distribution = c("normal", "gaussian", "poisson", "binomial"),
+  random_start_value = FALSE,
   n_trials = NULL,
   mt = NULL,
   B_start = NULL,
@@ -101,6 +102,9 @@ the length of the vector, values are repeated.}
 
 \item{distribution}{Distribution of the criteria varible. Default is
 \code{"normal"}. Possible values are \code{"normal"}, \code{"binomial"}, and \code{"poisson"}.}
+
+\item{random_start_value}{If TRUE, the start_values are randomized based on
+the distribution.}
 
 \item{n_trials}{If \code{distribution} (see below) is \code{"binomial"}, \code{n_trials} is
 the number of trials/observations/items.}

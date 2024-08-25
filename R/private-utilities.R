@@ -87,13 +87,13 @@ revise_names <- function(x, n) {
     n <- length(x)
     if (!is.character(x)) x <- names(x)
   }
+
   if (is.null(x)) {
-    x <- opt("names_default")[1:n]
+    x <- paste0("Case", 1:n)
   } else {
     nonames <- which(is.na(x))
-    x[nonames] <- opt("names_default")[nonames]
+    x[nonames] <- paste0("Case", nonames)
   }
-  
   x
 }
 
