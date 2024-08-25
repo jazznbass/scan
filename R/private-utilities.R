@@ -133,3 +133,37 @@ round_numeric <- function(df, digits = 0) {
   df[, id] <- round(df[, id], digits)
   df
 }
+
+format_table <- function(df, 
+                         digits = 3, 
+                         min_digits = digits, 
+                         na_replace = "", 
+                         integer = NULL,
+                         nice_p = NULL) {
+  
+  if (!is.null(nice_p)) df[[nice_p]] <- .nice_p(df[[nice_p]])
+  
+  # Apply rounding and formatting to each column
+  df_rounded <- as.data.frame(lapply(names(df), function(col) {
+    x <- df[[col]]
+    
+    if (col %in% integer && is.numeric(x)) {
+      # For columns specified in the 'integer' argument, round to the nearest integer
+      formatted <- format(round(x), nsmall = 0)
+      formatted[is.na(x)] <- na_replace
+      return(formatted)
+    } else if (is.numeric(x)) {
+      # For other numeric columns, round to the specified number of decimal places
+      formatted <- format(round(x, digits), nsmall = min_digits)
+      formatted[is.na(x)] <- na_replace
+      return(formatted)
+    } else {
+      return(x)
+    }
+  }))
+  
+  # Convert the list back to a data frame
+  names(df_rounded) <- names(df)
+  row.names(df_rounded) <- row.names(df)
+  df_rounded
+}
