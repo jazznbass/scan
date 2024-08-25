@@ -35,7 +35,7 @@ hplm(
   ...
 )
 
-\method{print}{sc_hplm}(x, ..., smd = FALSE, casewise = FALSE)
+\method{print}{sc_hplm}(x, digits = 3, ..., smd = FALSE, casewise = FALSE)
 
 \method{export}{sc_hplm}(
   object,
