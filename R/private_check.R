@@ -1,10 +1,17 @@
 
 check_args <- function(...) {
-  expressions <- substitute(list(...))
   
+  if (!opt("check_arguments")) {
+    return()
+  }
+ 
+  expressions <- substitute(list(...))
+
   env <- new.env(parent = parent.frame()) 
   
-  env$is_true <- function(condition, ...) {
+  env$call <- sys.call(-1)
+  
+  env$is_true <- function(condition, ..., .warning = FALSE) {
     
     if (isFALSE(condition)) {
       message <- paste0(...)
@@ -13,13 +20,13 @@ check_args <- function(...) {
           "Argument ", as.character(match.call()[2]), " is ill defined."
         )
       }
-      return(message) 
+      return(list(pass = FALSE, msg = message, warning = .warning) )
     } else {
-      return(TRUE)
+      return(list(pass = TRUE))
     }
   }
   
-  env$has_length <- function(arg, l, msg) {
+  env$has_length <- function(arg, l, msg, .warning = FALSE) {
     if (missing(msg)) 
       msg <- paste0(
         "Argument ", as.character(match.call()[2]), " not of length ", l, "."
@@ -27,9 +34,9 @@ check_args <- function(...) {
     env$is_true(length(arg) == l, msg)
   }
   
-  env$not <- function(condition, ...) env$is_true(!condition, ...)
+  env$not <- function(condition, ..., .warning = FALSE) env$is_true(!condition, ...)
   
-  env$one_of <- function(arg, ...) {
+  env$one_of <- function(arg, ..., .warning = FALSE) {
     match <- c(...)
     msg <- paste0("'", match, "'")
     if (length(match) == 2) msg <- paste0(msg, collapse = " or ")
@@ -42,8 +49,10 @@ check_args <- function(...) {
     )
   }
   
-  env$by_call <- function(arg, fn) {
-    args <- formals(fn)
+  env$by_call <- function(arg, .warning = FALSE) {
+    
+    args <- formals(as.character(env$call[[1]]))
+   
     id <- which(names(args) == as.character(match.call()[2]))
     if (length(id) == 0) stop("by_call has no matching arg.")
     match <- eval(args[[id]])
@@ -56,7 +65,7 @@ check_args <- function(...) {
     )
   }
   
-  env$within <- function(arg, lower, upper) {
+  env$within <- function(arg, lower, upper, .warning = FALSE) {
     env$is_true(
       arg >= lower && arg <= upper, 
       "Argument ",
@@ -65,7 +74,7 @@ check_args <- function(...) {
     ) 
   }
   
-  env$at_least <- function(arg, lower, msg) {
+  env$at_least <- function(arg, lower, msg, .warning = FALSE) {
     
     if (missing(msg)) {
       msg <- paste0(
@@ -78,7 +87,7 @@ check_args <- function(...) {
     env$is_true(arg >= lower, msg) 
   }
   
-  env$at_most <- function(arg, upper, msg) {
+  env$at_most <- function(arg, upper, msg, .warning = FALSE) {
     if(missing(msg)) {
       msg <- paste0(
         "Argument ",
@@ -89,7 +98,7 @@ check_args <- function(...) {
     env$is_true(arg <= upper, msg) 
   }
   
-  env$by_class <- function(param, class, ...) {
+  env$by_class <- function(param, class, ..., .warning = FALSE) {
     env$is_true(
       inherits(param, class), 
       "Argument ", 
@@ -97,22 +106,62 @@ check_args <- function(...) {
     )
   }
   
-  env$is_logical <- function(param) {
+  env$is_logical <- function(param, .warning = FALSE) {
     env$is_true(
       is.logical(param), 
       "Argument ", as.character(match.call()[2]), " is not logical."
     )
   }
   
-  out <- vector("list", length(expressions) - 1)
-  for(i in 2:length(expressions)) {
-    out[i - 1] <- eval(expressions[c(1, i)], envir = env)
+  env$is_deprecated <- function() {
+    .call <- env$call
+    defaults <- formals(as.character(.call[[1]]))
+    .call <- as.list(.call)
+    id_deprecated <- names(defaults)[
+      sapply(defaults, function(x) identical(x, "deprecated")) |> which()
+    ]
+    id <- which(names(.call) %in% id_deprecated)
+  
+    if (length(id) > 0) {
+      message <- paste0(
+        if (length(id) > 1) "Arguments " else "Argument ", 
+        paste0("'", names(.call)[id], "'", collapse = ", "),
+        if (length(id) > 1) " are " else " is ", 
+        "deprecated"
+      )
+      return(list(pass = FALSE, msg = message, warning = TRUE) )
+    }
+    return(list(pass = TRUE))
   }
-  out <- out[sapply(out, function(x) if (!isTRUE(x)) TRUE else FALSE)]
+  
+  out <- vector("list", length(expressions))
   
   if (length(out) > 0) {
-    out <- paste0(1:length(out), ": ", unlist(out), "\n")
-    stop("\n", out, call. = FALSE)
+    for(i in 2:length(expressions)) {
+      out[i - 1] <- eval(expressions[c(1, i)], envir = env)
+    }
+  }  
+
+  out[length(out)] <- list(eval(str2lang("is_deprecated()"), envir = env))
+
+  out <- out[sapply(out, function(x) if (!isTRUE(x$pass)) TRUE else FALSE)]
+
+  error_msg <- lapply(out, function(x) {
+    if (!x$warning) x$msg else NULL
+  }) |> unlist()
+  
+  warning_msg <- lapply(out, function(x) {
+    if (x$warning) x$msg else NULL
+  }) |> unlist()
+  
+  if (length(warning_msg) > 0) {
+    warning_msg <- paste0(1:length(warning_msg), ": ", warning_msg, "\n")
+    warning(warning_msg, call. = FALSE)
+  }
+  
+  if (length(error_msg) > 0) {
+    error_msg <- paste0(1:length(error_msg), ": ", error_msg, "\n")
+    stop("\n", error_msg, call. = FALSE)
   }
 }
 
