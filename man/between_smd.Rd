@@ -15,7 +15,10 @@ between_smd(data, ...)
 \item{...}{When data is an scdf, further design parameters passed to the
 \code{\link[=hplm]{hplm()}} function.}
 
-\item{x}{An object returned by \code{\link[=baseline_smd]{baseline_smd()}}}
+\item{x}{An object returned by \code{baseline_smd()}.}
+
+\item{digits}{The minimum number of significant digits to be use.
+If set to "auto" (default), values are predefined.}
 }
 \description{
 Calculates a standardized mean difference from a multilevel model as

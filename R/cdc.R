@@ -71,7 +71,7 @@ cdc <- function(data,
 
   check_args(
     by_class(decreasing, "logical"),
-    by_call(trend_method, "cdc"),
+    by_call(trend_method),
     within(conservative, 0, 1)
   )
 

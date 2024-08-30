@@ -87,10 +87,10 @@ tau_u <- function(data, dvar, pvar,
 
   # validity check ----
   check_args(
-    by_call(tau_method, "tau_u"),
-    by_call(ci_method, "tau_u"),
-    by_call(method, "tau_u"),
-    by_call(meta_weight_method, "tau_u"),
+    by_call(tau_method),
+    by_call(ci_method),
+    by_call(method),
+    by_call(meta_weight_method),
     within(ci, 0, 1)
   )
   

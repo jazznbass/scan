@@ -93,6 +93,6 @@
     return(summary(full)$coef[4, 1])
   if (type == "model")
     return(full)
-  
+  stop("Wrong type:", type)
 }
 

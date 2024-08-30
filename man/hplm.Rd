@@ -130,6 +130,9 @@ variables belong to.}
 
 \item{x}{An object returned by \code{\link[=hplm]{hplm()}}}
 
+\item{digits}{The minimum number of significant digits to be use.
+If set to "auto" (default), values are predefined.}
+
 \item{smd}{If TRUE, reports between-case standardized mean differences.}
 
 \item{casewise}{Returns the estimations for each case}

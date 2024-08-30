@@ -42,7 +42,7 @@ parameters of the model are \code{values}, \code{mt} and \code{phase}.}
 \value{
 \item{trend}{A matrix containing the results (Intercept, B and beta)
 of separate regression models for phase A, phase B, and the whole data.}
-\item{offset}{Numeric argument from function call (see arguments
+\item{first_mt}{Numeric argument from function call (see arguments
 section).}
 }
 \description{
@@ -60,11 +60,16 @@ matthea <- random_scdf(design)
 trend(matthea)
 
 ## Besides the linear and squared regression models compute two custom models:
-## a) a cubic model, and b) the values predicted by the natural logarithm of the
+## a) a cubic model, and 
+## b) the values predicted by the natural logarithm of the
 ## measurement time.
 design <- design(slope = 0.3)
 ben <- random_scdf(design)
-trend(ben, offset = 0, model = c("Cubic" = values ~ I(mt^3), "Log Time" = values ~ log(mt)))
+trend(
+  ben, 
+  model = list("Cubic" = values ~ mt^3, "Log Time" = values ~ log(mt)), 
+  first_mt = 1 # must be set to 1 because log(0) would be -Inf
+)
 
 }
 \seealso{

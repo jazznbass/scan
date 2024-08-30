@@ -1,4 +1,5 @@
 #' @describeIn hplm Print results
+#' @inheritParams print.sc
 #' @param casewise Returns the effect estimations for each case
 #' @param smd If TRUE, reports between-case standardized mean differences.
 #' @order 2
