@@ -8,8 +8,10 @@ check_args <- function(...) {
   expressions <- substitute(list(...))
 
   env <- new.env(parent = parent.frame()) 
-  
-  env$call <- sys.call(-1)
+ 
+  env$call <- as.call(
+    as.list(parse(text = gsub("^[^:]+::", "", deparse(sys.call(-1)))))
+  )[[1]]
   
   env$is_true <- function(condition, ..., .warning = FALSE) {
     
