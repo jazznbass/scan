@@ -89,7 +89,8 @@ pand <- function(data, dvar, pvar,
   
   
   check_args(
-    by_call(method, "pand")
+    
+    by_call(method)
   )
   method <- method[1]
 

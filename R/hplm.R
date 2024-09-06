@@ -82,9 +82,9 @@ hplm <- function(data, dvar, pvar, mvar,
                  ...) {
 
   check_args(
-    by_call(model, "hplm"),
-    by_call(method, "hplm"),
-    by_call(contrast, "hplm")
+    by_call(model),
+    by_call(method),
+    by_call(contrast)
   )
   model <- model[1]
   method <- method[1]

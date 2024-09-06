@@ -156,8 +156,8 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
     )
   }
   
-  if (getOption("scan.export.engine") == "kable") {
-    table <- export_table(
+  if (getOption("scan.export.engine") == "gt") {
+    table <- export_table_gt(
       out, title = caption, footnote = footnote, 
       decimals = round
     )

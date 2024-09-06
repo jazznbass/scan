@@ -46,10 +46,10 @@ mplm <- function(data, dvar, mvar, pvar,
                  ...) {
  
   check_args(
-    by_call(model, "mplm"),
-    by_call(contrast, "mplm"),
-    by_call(contrast_level, "mplm"),
-    by_call(contrast_slope, "mplm")
+    by_call(model),
+    by_call(contrast),
+    by_call(contrast_level),
+    by_call(contrast_slope)
   )
   model <- model[1]
   contrast <- contrast[1]

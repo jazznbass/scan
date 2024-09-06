@@ -42,7 +42,8 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   
   # validity check ----
   check_args(
-    by_call(tau_method, "corrected_tau"),
+    
+    by_call(tau_method),
     within(alpha, 0, 1),
     is_logical(continuity),
     is_logical(repeated)

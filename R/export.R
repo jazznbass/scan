@@ -120,7 +120,7 @@ export <- function (object, ...) {
                           ...) {
   
   if (getOption("scan.export.engine") == "gt") {
-    table <- export_table(
+    table <- export_table_gt(
       x, 
       title = caption, 
       footnote = footnote,
@@ -155,15 +155,15 @@ export <- function (object, ...) {
 
 ###### gt ####
 
-export_table <- function(x, 
-                         title = NULL, 
-                         footnote = NULL, 
-                         spanner = NULL,
-                         row_group = NULL,
-                         rownames = FALSE,
-                         cols_label = NULL,
-                         decimals = NULL,
-                         ...) {
+export_table_gt <- function(x, 
+                            title = NULL, 
+                            footnote = NULL, 
+                            spanner = NULL,
+                            row_group = NULL,
+                            rownames = FALSE,
+                            cols_label = NULL,
+                            decimals = NULL,
+                            ...) {
           
   
   while(TRUE) {

@@ -35,7 +35,7 @@ hplm(
   ...
 )
 
-\method{print}{sc_hplm}(x, ..., smd = FALSE, casewise = FALSE)
+\method{print}{sc_hplm}(x, digits = 3, ..., smd = FALSE, casewise = FALSE)
 
 \method{export}{sc_hplm}(
   object,
@@ -129,6 +129,9 @@ variables belong to.}
 \item{...}{Further arguments passed to the lme function.}
 
 \item{x}{An object returned by \code{\link[=hplm]{hplm()}}}
+
+\item{digits}{The minimum number of significant digits to be use.
+If set to "auto" (default), values are predefined.}
 
 \item{smd}{If TRUE, reports between-case standardized mean differences.}
 

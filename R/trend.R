@@ -18,7 +18,7 @@
 #'   parameters of the model are `values`, `mt` and `phase`.
 #' @return \item{trend}{A matrix containing the results (Intercept, B and beta)
 #'   of separate regression models for phase A, phase B, and the whole data.}
-#' \item{offset}{Numeric argument from function call (see arguments
+#' \item{first_mt}{Numeric argument from function call (see arguments
 #' section).}
 #' @author Juergen Wilbert
 #' @seealso [describe()]
@@ -31,11 +31,16 @@
 #' trend(matthea)
 #'
 #' ## Besides the linear and squared regression models compute two custom models:
-#' ## a) a cubic model, and b) the values predicted by the natural logarithm of the
+#' ## a) a cubic model, and 
+#' ## b) the values predicted by the natural logarithm of the
 #' ## measurement time.
 #' design <- design(slope = 0.3)
 #' ben <- random_scdf(design)
-#' trend(ben, offset = 0, model = c("Cubic" = values ~ I(mt^3), "Log Time" = values ~ log(mt)))
+#' trend(
+#'   ben, 
+#'   model = list("Cubic" = values ~ mt^3, "Log Time" = values ~ log(mt)), 
+#'   first_mt = 1 # must be set to 1 because log(0) would be -Inf
+#' )
 #'
 #' @export
 trend <- function(data, dvar, pvar, mvar, 
@@ -43,6 +48,9 @@ trend <- function(data, dvar, pvar, mvar,
                   first_mt = 0,
                   model = NULL) {
 
+  check_args(
+    has_length(data, 1, "trend can not be applied to more than one case.")
+  )
   
   if (is.numeric(offset)) first_mt <- offset + 1
   
@@ -52,13 +60,6 @@ trend <- function(data, dvar, pvar, mvar,
   if (missing(mvar)) mvar <- mt(data) else  mt(data) <- mvar
   
   data <- .prepare_scdf(data)
-
-  phase <- NULL
-  N <- length(data)
-  if(N > 1) {
-    stop("Multiple single-cases are given. ",          
-         "Calculations can only be applied to one single-case data set.\n")
-  }
   data <- data[[1]]
   
   design <- rle(as.character(data[, pvar]))$values
@@ -72,44 +73,44 @@ trend <- function(data, dvar, pvar, mvar,
   
   phases <- .phasestructure(data, pvar = pvar)
   
-  fomulas <- c(
-    formula(paste0(dvar, " ~ ", mvar)) , 
-    formula(paste0(dvar, " ~ I(", mvar, "^2)"))
+  formulas <- c(
+    "Linear" = formula(paste0(dvar, " ~ ", mvar)) , 
+    "Quadratic" = formula(paste0(dvar, " ~ I(", mvar, "^2)"))
   )
-  fomulas_names <- c("Linear", "Quadratic")
+  formulas_names <- c("Linear", "Quadratic")
   if(!is.null(model)) {
-    fomulas <- c(fomulas, model)
-    fomulas_names <- c(fomulas_names, names(model))
+    formulas <- c(formulas, model)
+    formulas_names <- names(formulas)#c(formulas_names, names(model))
   }
   tmp <- length(design) + 1
-  rows <- paste0(paste0(rep(fomulas_names, each = tmp), "."), c("ALL", design))
+  rows <- paste0(paste0(rep(formulas_names, each = tmp), "."), c("ALL", design))
   
   ma <- matrix(NA, nrow = length(rows), ncol = 3)
   row.names(ma) <- rows
   colnames(ma) <- c("Intercept", "B", "Beta")
   ma <- as.data.frame(ma)
   
-  for(i_formula in 1:length(fomulas)) {
+  for(i_formula in 1:length(formulas)) {
     data_phase <- data
     mvar_correction <- min(data_phase[[mvar]], na.rm = TRUE) - first_mt
     data_phase[[mvar]] <- data_phase[[mvar]] - mvar_correction
     
-    .row <- which(rows == paste0(fomulas_names[i_formula], ".ALL"))
-    ma[.row, 1:3] <- .beta_weights(lm(fomulas[[i_formula]], data = data_phase))
+    .row <- which(rows == paste0(formulas_names[i_formula], ".ALL"))
+    ma[.row, 1:3] <- .beta_weights(lm(formulas[[i_formula]], data = data_phase))
     for(p in 1:length(design)) {
       data_phase <- data[phases$start[p]:phases$stop[p], ]
       mvar_correction <- min(data_phase[[mvar]], na.rm = TRUE) - first_mt
       data_phase[[mvar]] <- data_phase[[mvar]] - mvar_correction 
-      .row <- which(rows == paste0(fomulas_names[i_formula], ".", design[p]))
-      ma[.row, 1:3] <- .beta_weights(lm(fomulas[[i_formula]], data=data_phase))
+      .row <- which(rows == paste0(formulas_names[i_formula], ".", design[p]))
+      ma[.row, 1:3] <- .beta_weights(lm(formulas[[i_formula]], data=data_phase))
     }
   }
   
   out <- list(
     trend = ma, 
-    offset = offset, 
     first_mt = first_mt,
-    formulas = fomulas_names, 
+    formulas = formulas, 
+    offset = offset, 
     design = design
   )
   class(out) <- c("sc_trend")
