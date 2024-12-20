@@ -65,6 +65,8 @@
 <li>
 <code><a href="../reference/between_smd.html">between_smd()</a></code>: Calculates between case standardized mean differences as proposed by Pustejovsky et. aL (2014). Can take complex hplm models as a basis.</li>
 <li>
+<code><a href="../reference/design.html">design()</a></code>: Argument <code>random_start_values</code> randomly assigns start values for each case based on the distribution (<code>normal</code>, <code>poisson</code> or <code>binomial</code>) and the respective parameters (<code>start_values</code>, <code>s</code>, <code>n_trials</code>).</li>
+<li>
 <code><a href="../reference/hplm.html">print.sc_hplm()</a></code>: New argument <code>smd</code>. If set TRUE, between case smd results are reported.</li>
 <li>
 <code><a href="../reference/tau_u.html">tau_u()</a></code>: New method <code>"tarlow"</code> calculates Tau-U as implemented in an R code and online calculator by Tarlow (2017). Here, tau values are calculated as in the <code>method = "complete", continuity_correction = TRUE, tau_method = "a"</code>. Inferential statistics are calculated based an tau b and the standard deviation for S is derived directly from Kendall’s Tau B analysis (different from the <code>parker</code> and <code>complete</code> methods).</li>
@@ -101,6 +103,8 @@
 <code><a href="../reference/scdf.html">scdf()</a></code>: Throws an error when argument <code>phase_starts</code> is set and the beginning of the first phase is not the first measurement.</li>
 <li>
 <code><a href="../reference/tau_u.html">tau_u()</a></code>: Method <code>"parker"</code> ignores the <code>tau_method</code> setting and sets <code>continuity_correction = FALSE</code>. This follows the Parker (2011) paper. There, the inferential statistics are calculated using Kendall’s Tau b while the actual Tau calculation applies Kendall’s Tau a (without ties).</li>
+<li>
+<code><a href="../reference/rand_test.html">rand_test()</a></code>: Missing values in the dependent variable are now removed before calculations.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="solved-bugs-0-61-999">Solved bugs<a class="anchor" aria-label="anchor" href="#solved-bugs-0-61-999"></a></h3>

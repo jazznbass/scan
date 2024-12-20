@@ -91,7 +91,7 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for sc_hplm</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, smd <span class="op">=</span> <span class="cn">FALSE</span>, casewise <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span>, smd <span class="op">=</span> <span class="cn">FALSE</span>, casewise <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for sc_hplm</span></span>
 <span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span></span>
@@ -238,6 +238,11 @@ variables belong to.</p></dd>
 
 <dt>x</dt>
 <dd><p>An object returned by <code>hplm()</code></p></dd>
+
+
+<dt>digits</dt>
+<dd><p>The minimum number of significant digits to be use.
+If set to "auto" (default), values are predefined.</p></dd>
 
 
 <dt>smd</dt>
