@@ -167,7 +167,7 @@ lme4_hplm <- function(data, dvar, pvar, mvar,
     ...
   )
   browser()
-  out$hplm$call$fixed <- fixed
+  #out$hplm$call$fixed <- fixed
 
 # LR tests ----------------------------------------------------------------
 

@@ -172,7 +172,8 @@ hplm <- function(data, dvar, pvar, mvar,
   )
   
   out$hplm$call$fixed <- fixed
-
+  out$hplm$call$random <- random
+  
 # LR tests ----------------------------------------------------------------
 
   if (lr.test) {
