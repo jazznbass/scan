@@ -139,7 +139,7 @@ rand_test <- function (data, dvar, pvar,
   dv(data) <- dvar
   phase(data) <- pvar
   
-  data <- .prepare_scdf(data)
+  data <- .prepare_scdf(data, na.rm = TRUE)
   
   keep <- recombine_phases(data, phases = phases)
   data <- keep$data
