@@ -33,7 +33,8 @@ described in Pustejovsky et al. (2014)
 des <- design(
   n = 150,
   phase_design = list(A = 10, B = 10, A2 = 10, B2 = 10, c = 10),
-  level = list(B = 1, A2 = 0, B2 = 1, c = 1)
+  level = list(B = 1, A2 = 0, B2 = 1, c = 1),
+  random_start_value = TRUE
 )
 study <- random_scdf(des)
 between_smd(study)

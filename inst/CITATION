@@ -5,12 +5,12 @@ bibentry(
   shorttitle   = "scan",
   publisher    = "CRAN",
   author       =  c(as.person("Jürgen Wilbert"), as.person("Timo Lüke")),
-  year         = "2023",
+  year         = "2025",
   url          = "https://CRAN.R-project.org/package=scan",
   textVersion  = paste0( 
-    "Wilbert, J. & Lüke, T. (2023). ",
+    "Wilbert, J. & Lüke, T. (2025). ",
     "Scan: Single-Case Data Analyses for Single and Multiple Baseline Designs. ",
-    "(0.60) [English]. CRAN. ",
+    "(0.62) [English]. CRAN. ",
     "https://CRAN.R-project.org/package=scan."
   )
 )

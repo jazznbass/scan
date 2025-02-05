@@ -12,7 +12,8 @@
 #' des <- design(
 #'   n = 150,
 #'   phase_design = list(A = 10, B = 10, A2 = 10, B2 = 10, c = 10),
-#'   level = list(B = 1, A2 = 0, B2 = 1, c = 1)
+#'   level = list(B = 1, A2 = 0, B2 = 1, c = 1),
+#'   random_start_value = TRUE
 #' )
 #' study <- random_scdf(des)
 #' between_smd(study)
@@ -33,8 +34,8 @@ between_smd <- function(data,
   
   ids <- which(startsWith(names(model$hplm$coefficients$fixed), "phase"))
   a <- model$hplm$coefficients$fixed[ids]
-  resid <- as.numeric(VarCorr(model$hplm)["Residual", "Variance"])
-  inter <- as.numeric(VarCorr(model$hplm)["(Intercept)", "Variance"])
+  resid <- as.numeric(nlme::VarCorr(model$hplm)["Residual", "Variance"])
+  inter <- as.numeric(nlme::VarCorr(model$hplm)["(Intercept)", "Variance"])
   bc_smd <- a / sqrt(sum(resid, inter))
 
   structure(
