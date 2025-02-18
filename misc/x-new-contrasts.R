@@ -1,13 +1,13 @@
-.add_model_dummies <- function(data, model, 
-                               dvar = dv(data), 
-                               pvar = phase(data), 
-                               mvar = mt(data),
-                               contrast_level,
-                               contrast_slope) {
+.add_dummy_variables <- function(data, model, 
+                                dvar = dv(data), 
+                                pvar = phase(data), 
+                                mvar = mt(data),
+                                contrast_level,
+                                contrast_slope) {
   
   
   for(case in 1:length(data)) {
-    dat_dummy <- .plm_dummy(
+    dat_dummy <- .create_dummies(
       data[[case]], 
       model = model, 
       dvar = dvar, 
@@ -26,7 +26,7 @@
   out
 }
 
-.plm_dummy <- function(data, 
+.create_dummies <- function(data, 
                        dvar = "values", 
                        pvar = "phase", 
                        mvar = "mt",
@@ -61,7 +61,7 @@
   colnames(contr) <- levels(data[[pvar]])[-1]
   contrasts(data[[pvar]])<- contr 
   
-  add <- .create_dummy(data[[pvar]])
+  add <- .create_phase_dummies(data[[pvar]])
   out <- cbind(out, add)
   
   #dummy slopes
@@ -77,7 +77,7 @@
   row.names(contr) <- levels(data[[pvar]])
   colnames(contr) <- levels(data[[pvar]])[-1]
   
-  add <- .create_dummy_slopes(data[[pvar]], mt, contr, model)
+  add <- .create_slope_dummies(data[[pvar]], mt, contr, model)
   out <- cbind(out, add)
   
   out
@@ -89,7 +89,7 @@ contr.cum <- function(n) {
   matrix(out, ncol = n-1)
 }
 
-.create_dummy <- function(fac, contrast, var_name = "phase") {
+.create_phase_dummies <- function(fac, contrast, var_name = "phase") {
   
   if (missing(contrast)) contrast <- contrasts(fac)
   if(is.null(colnames(contrast))) {
@@ -119,7 +119,7 @@ contr.cum <- function(n) {
   df
 }
 
-.create_dummy_slopes <- function(phase, mt, contrast, model, var_name = "inter") {
+.create_slope_dummies <- function(phase, mt, contrast, model, var_name = opt("inter_dummy")) {
   
   if(is.null(colnames(contrast))) {
     dummy_names <- paste0(var_name, 1:ncol(contrast))

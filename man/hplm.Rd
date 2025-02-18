@@ -35,7 +35,7 @@ hplm(
   ...
 )
 
-\method{print}{sc_hplm}(x, digits = 3, ..., smd = FALSE, casewise = FALSE)
+\method{print}{sc_hplm}(x, digits = 3, smd = FALSE, casewise = FALSE, ...)
 
 \method{export}{sc_hplm}(
   object,
@@ -121,8 +121,8 @@ into the regression model.}
 \item{update.fixed}{An easier way to change the fixed model part
 (e.g., \code{. ~ . + newvariable}).}
 
-\item{data.l2}{A dataframe providing additional variables at Level 2. The
-scdf File has to have names for all cases and the Level 2 dataframe has to
+\item{data.l2}{A data frame providing additional variables at Level 2. The
+scdf File has to have names for all cases and the Level 2 data frame has to
 have a column named 'cases' with the names of the cases the Level 2
 variables belong to.}
 
@@ -166,7 +166,7 @@ publication tables.}
    \code{N} \tab Number of single-cases. \cr
    \code{formula} \tab A list containing the fixed and the random formulas of the hplm model. \cr
    \code{hplm} \tab Object of class lme contaning the multilevel model. \cr
-   \code{model.0} \tab Object of class lme containing the Zero Model. \cr
+   \code{model.0} \tab Object of class lme containing the zero model. \cr
    \code{ICC} \tab List containing intraclass correlation and test parameters. \cr
    \code{model.without} \tab Object of class gls containing the fixed effect model. \cr
    \code{contrast} \tab List with contrast definitions. \cr
@@ -200,6 +200,7 @@ Leidig2018 |>
 \seealso{
 Other regression functions: 
 \code{\link{autocorr}()},
+\code{\link{bplm}()},
 \code{\link{corrected_tau}()},
 \code{\link{mplm}()},
 \code{\link{plm}()},

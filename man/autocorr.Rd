@@ -40,6 +40,7 @@ autocorr(Huber2014, lag_max = 2)
 \code{\link[=acf]{acf()}}
 
 Other regression functions: 
+\code{\link{bplm}()},
 \code{\link{corrected_tau}()},
 \code{\link{hplm}()},
 \code{\link{mplm}()},

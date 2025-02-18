@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.62.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.62.999</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'sc_hplm'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span>, smd <span class="op">=</span> <span class="cn">FALSE</span>, casewise <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, smd <span class="op">=</span> <span class="cn">FALSE</span>, casewise <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'sc_hplm'</span></span>
 <span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span></span>
@@ -204,8 +204,8 @@ into the regression model.</p></dd>
 
 
 <dt id="arg-data-l-">data.l2<a class="anchor" aria-label="anchor" href="#arg-data-l-"></a></dt>
-<dd><p>A dataframe providing additional variables at Level 2. The
-scdf File has to have names for all cases and the Level 2 dataframe has to
+<dd><p>A data frame providing additional variables at Level 2. The
+scdf File has to have names for all cases and the Level 2 data frame has to
 have a column named 'cases' with the names of the cases the Level 2
 variables belong to.</p></dd>
 
@@ -272,7 +272,7 @@ publication tables.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
 
-<table class="table table"><tr><td></td><td></td></tr><tr><td><code>model</code></td><td>List containing infromation about the applied model.</td></tr><tr><td><code>N</code></td><td>Number of single-cases.</td></tr><tr><td><code>formula</code></td><td>A list containing the fixed and the random formulas of the hplm model.</td></tr><tr><td><code>hplm</code></td><td>Object of class lme contaning the multilevel model.</td></tr><tr><td><code>model.0</code></td><td>Object of class lme containing the Zero Model.</td></tr><tr><td><code>ICC</code></td><td>List containing intraclass correlation and test parameters.</td></tr><tr><td><code>model.without</code></td><td>Object of class gls containing the fixed effect model.</td></tr><tr><td><code>contrast</code></td><td>List with contrast definitions.</td></tr></table></div>
+<table class="table table"><tr><td></td><td></td></tr><tr><td><code>model</code></td><td>List containing infromation about the applied model.</td></tr><tr><td><code>N</code></td><td>Number of single-cases.</td></tr><tr><td><code>formula</code></td><td>A list containing the fixed and the random formulas of the hplm model.</td></tr><tr><td><code>hplm</code></td><td>Object of class lme contaning the multilevel model.</td></tr><tr><td><code>model.0</code></td><td>Object of class lme containing the zero model.</td></tr><tr><td><code>ICC</code></td><td>List containing intraclass correlation and test parameters.</td></tr><tr><td><code>model.without</code></td><td>Object of class gls containing the fixed effect model.</td></tr><tr><td><code>contrast</code></td><td>List with contrast definitions.</td></tr></table></div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
@@ -284,6 +284,7 @@ publication tables.</p></dd>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other regression functions:
 <code><a href="autocorr.html">autocorr</a>()</code>,
+<code><a href="bplm.html">bplm</a>()</code>,
 <code><a href="corrected_tau.html">corrected_tau</a>()</code>,
 <code><a href="mplm.html">mplm</a>()</code>,
 <code><a href="plm.html">plm</a>()</code>,
@@ -309,17 +310,17 @@ publication tables.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects (values ~ 1 + mt + phaseB + interB)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    B    SE   df      t p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     48.398 1.496 1328 32.351 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt       0.579 0.116 1328  5.007 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B 14.038 0.655 1328 21.442 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B  0.902 0.119 1328  7.589 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             B    SE   df      t p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              48.398 1.496 1328 32.351 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)              0.579 0.116 1328  5.007 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB) 14.038 0.655 1328 21.442 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)  0.902 0.119 1328  7.589 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random effects (~1 | case)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           EstimateSD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     10.073</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual       5.290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               SD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept 10.073</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual   5.290</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Analyzing with additional L2 variables</span></span></span>
 <span class="r-in"><span><span class="va">Leidig2018</span> <span class="op">|&gt;</span></span></span>
@@ -337,20 +338,20 @@ publication tables.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects (academic_engagement ~ mt + phaseB + gender + migration + ITRF_TOTAL +     phaseB:ITRF_TOTAL)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               B    SE   df      t     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                 3.751 0.262 2376 14.302 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt                  0.004 0.001 2376  6.019 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B             0.667 0.098 2376  6.808 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gender                   -0.020 0.301   31 -0.067 0.947</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> migration                -0.300 0.193   31 -1.556 0.130</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ITRF_TOTAL               -0.035 0.013   31 -2.674 0.012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B:ITRF_TOTAL -0.001 0.005 2376 -0.279 0.780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                        B    SE   df      t     p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                          3.751 0.262 2376 14.302 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)                         0.004 0.001 2376  6.019 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)             0.667 0.098 2376  6.808 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gender                            -0.020 0.301   31 -0.067 0.947</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> migration                         -0.300 0.193   31 -1.556 0.130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ITRF_TOTAL                        -0.035 0.013   31 -2.674 0.012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB):ITRF_TOTAL -0.001 0.005 2376 -0.279 0.780</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random effects (~1 | case)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           EstimateSD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept      0.557</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual       0.785</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              SD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept 0.557</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual  0.785</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

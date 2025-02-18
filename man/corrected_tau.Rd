@@ -76,6 +76,7 @@ Modification, 41(4)}, 427–467. https://doi.org/10.1177/0145445516676750
 \seealso{
 Other regression functions: 
 \code{\link{autocorr}()},
+\code{\link{bplm}()},
 \code{\link{hplm}()},
 \code{\link{mplm}()},
 \code{\link{plm}()},

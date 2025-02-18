@@ -77,6 +77,7 @@ trend(
 
 Other regression functions: 
 \code{\link{autocorr}()},
+\code{\link{bplm}()},
 \code{\link{corrected_tau}()},
 \code{\link{hplm}()},
 \code{\link{mplm}()},
