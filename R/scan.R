@@ -20,6 +20,7 @@
     scan.print.bar   = "|",
     scan.print.scdf.name = TRUE,
     scan.plot.style = "grid",
+    scan.rename.predictors = "full",
     scan.deprecated.warning = TRUE,
     scan.export.engine = "kable",
     scan.export.footnote.collapse = "; ",
