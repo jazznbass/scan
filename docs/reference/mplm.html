@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.62.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.62.999</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -168,6 +168,7 @@ If set to "auto" (default), values are predefined.</p></dd>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other regression functions:
 <code><a href="autocorr.html">autocorr</a>()</code>,
+<code><a href="bplm.html">bplm</a>()</code>,
 <code><a href="corrected_tau.html">corrected_tau</a>()</code>,
 <code><a href="hplm.html">hplm</a>()</code>,
 <code><a href="plm.html">plm</a>()</code>,
@@ -189,20 +190,20 @@ If set to "auto" (default), values are predefined.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               academic_engagement disruptive_behavior</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                 2.771              0.8493</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend                      -0.216              0.0822</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B               2.340             -1.3898</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B               0.219             -0.0803</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        academic_engagement disruptive_behavior</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                            2.771              0.8493</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)                          -0.216              0.0822</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)               2.340             -1.3898</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)               0.219             -0.0803</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: y ~ 1 + mt + phaseB + interB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Type III MANOVA Tests: Pillai test statistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Df test stat approx F num Df den Df  Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)    1    0.2841    15.48      2     78 2.2e-06 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend          1    0.0317     1.28      2     78 0.28519    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B  1    0.1905     9.18      2     78 0.00026 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B  1    0.0315     1.27      2     78 0.28737    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        Df test stat approx F num Df den Df  Pr(&gt;F)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept               1    0.2841    15.48      2     78 2.2e-06 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)              1    0.0317     1.28      2     78 0.28519    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)  1    0.1905     9.18      2     78 0.00026 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)  1    0.0315     1.27      2     78 0.28737    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -215,27 +216,27 @@ If set to "auto" (default), values are predefined.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               academic_engagement disruptive_behavior</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                 2.771              0.8493</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend                      -0.216              0.0822</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B               2.340             -1.3898</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B               0.219             -0.0803</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        academic_engagement disruptive_behavior</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                            2.771              0.8493</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)                          -0.216              0.0822</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)               2.340             -1.3898</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)               0.219             -0.0803</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Standardized coefficients: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               academic_engagement disruptive_behavior</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                 0.000               0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend                      -5.979               5.107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B               0.576              -0.767</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B               5.950              -4.897</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        academic_engagement disruptive_behavior</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                            0.000               0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)                          -5.979               5.107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)               0.576              -0.767</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)               5.950              -4.897</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: y ~ 1 + mt + phaseB + interB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Type III MANOVA Tests: Pillai test statistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Df test stat approx F num Df den Df  Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)    1    0.2841    15.48      2     78 2.2e-06 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend          1    0.0317     1.28      2     78 0.28519    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level Phase B  1    0.1905     9.18      2     78 0.00026 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope Phase B  1    0.0315     1.27      2     78 0.28737    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        Df test stat approx F num Df den Df  Pr(&gt;F)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept               1    0.2841    15.48      2     78 2.2e-06 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)              1    0.0317     1.28      2     78 0.28519    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)  1    0.1905     9.18      2     78 0.00026 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)  1    0.0315     1.27      2     78 0.28737    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

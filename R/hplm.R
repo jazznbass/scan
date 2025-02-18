@@ -27,8 +27,8 @@
 #' @param random The random part of the model.
 #' @param update.fixed An easier way to change the fixed model part
 #'   (e.g., `. ~ . + newvariable`).
-#' @param data.l2 A dataframe providing additional variables at Level 2. The
-#'   scdf File has to have names for all cases and the Level 2 dataframe has to
+#' @param data.l2 A data frame providing additional variables at Level 2. The
+#'   scdf File has to have names for all cases and the Level 2 data frame has to
 #'   have a column named 'cases' with the names of the cases the Level 2
 #'   variables belong to.
 #' @param ... Further arguments passed to the lme function.
@@ -39,7 +39,7 @@
 #'  | `N` | Number of single-cases. |
 #'  | `formula` |A list containing the fixed and the random formulas of the hplm model. |
 #'  | `hplm` | Object of class lme contaning the multilevel model. |
-#'  | `model.0` | Object of class lme containing the Zero Model. |
+#'  | `model.0` | Object of class lme containing the zero model. |
 #'  | `ICC` | List containing intraclass correlation and test parameters. |
 #'  | `model.without` | Object of class gls containing the fixed effect model. |
 #'  | `contrast` | List with contrast definitions. |
@@ -90,14 +90,14 @@ hplm <- function(data, dvar, pvar, mvar,
   method <- method[1]
   contrast <- contrast[1]
   
-  if (is.na(contrast_level)) contrast_level <- contrast
-  if (is.na(contrast_slope)) contrast_slope <- contrast
-  
   if (model == "JW") {
     contrast_level <- "preceding"
     contrast_slope <- "preceding"
     model <- "B&L-B"
   }
+  
+  if (is.na(contrast_level)) contrast_level <- contrast
+  if (is.na(contrast_slope)) contrast_slope <- contrast
 
   if (random.slopes) {
     random_trend <- trend
@@ -124,7 +124,7 @@ hplm <- function(data, dvar, pvar, mvar,
 
 # interaction and dummy coding and L2 --------------------------------------
 
-  tmp_model <- .add_model_dummies(
+  tmp_model <- .add_dummy_variables(
     data = dat, model = model, 
     contrast_level = contrast_level, contrast_slope = contrast_slope
   )
@@ -136,9 +136,9 @@ hplm <- function(data, dvar, pvar, mvar,
 # create formulas ---------------------------------------------------------
 
   if (is.null(fixed)) {
-    fixed <- as.formula(.create_fixed_formula(
+    fixed <- .create_fixed_formula(
       dvar, mvar, slope, level, trend, tmp_model$var_phase, tmp_model$var_inter
-    ))
+    )
   }
   if (!is.null(update.fixed)) fixed <- update(fixed, update.fixed)
   
@@ -147,14 +147,16 @@ hplm <- function(data, dvar, pvar, mvar,
     random.slopes <- TRUE
   }
   
-  if (!random.slopes && is.null(random)) random <- as.formula("~1|case")
+  if (!random.slopes && is.null(random)) 
+    random <- as.formula("~1|case")
   
   if (is.null(random)) {
-    random <- as.formula(.create_random_formula(
+    random <- .create_random_formula(
       mvar, 
       random_slope, random_level, random_trend, 
-      tmp_model$var_phase, tmp_model$var_inter
-    ))
+      tmp_model$var_phase, 
+      tmp_model$var_inter
+    )
   }
   out$formula <- list(fixed = fixed, random = random)
 
@@ -215,6 +217,8 @@ hplm <- function(data, dvar, pvar, mvar,
     attr(out$random_ir, "parameters") <- c("Intercept", pred_rand)
   }
   
+# ICC ---------
+  
   if (ICC) {
     .formula.null <- as.formula(paste0(dvar, " ~ 1"))
     out$model.0 <- lme(
@@ -234,6 +238,8 @@ hplm <- function(data, dvar, pvar, mvar,
     out$ICC$L <- dif$L.Ratio[2]
     out$ICC$p <- dif$"p-value"[2]
   } 
+  
+# out ---
   
   out$model$fixed  <- fixed
   out$model$random <- random

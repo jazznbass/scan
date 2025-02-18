@@ -43,13 +43,13 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   summary_model <- summary(object$hplm)
   
   out <- as.data.frame(summary(object$hplm)$tTable)
-  row.names(out) <- .plm.row.names(row.names(out), object)
+  row.names(out) <- rename_predictors(row.names(out), object)
   colnames(out) <- c("B", "SE", "df", "t", "p")
   
   md <- data.frame(
     "SD" = round(as.numeric(VarCorr(object$hplm)[, "StdDev"]), 3)
   )
-  rownames(md) <- .plm.row.names(names(VarCorr(object$hplm)[, 2]), object)
+  row.names(md) <- rename_predictors(names(VarCorr(object$hplm)[, 2]), object)
   
   if (object$model$lr.test) {
     if (is.null(object$LR.test[[1]]$L.Ratio)) {

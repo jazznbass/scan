@@ -15,6 +15,7 @@
 #' @import mblm
 #' @import methods
 #' @import gt
+#' @import MCMCglmm
 #' @importFrom car Anova
 #' @importFrom utils install.packages read.csv
 #' @keywords internal

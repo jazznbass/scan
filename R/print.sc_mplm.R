@@ -24,21 +24,15 @@ print.sc_mplm <- function(x, digits = "auto", std = FALSE, ...) {
     names(coef) <- attr(x, opt("dv"))
   }
   
-  rownames(coef) <- gsub("(Intercept)", "Intercept", rownames(coef))
-  rownames(coef) <- gsub("mt", "Trend", rownames(coef))
-  rownames(coef) <- gsub("phase", "Level Phase ", rownames(coef))
-  rownames(coef) <- gsub("inter", "Slope Phase ", rownames(coef))
-  
+  row.names(coef) <- rename_predictors(row.names(coef), x)
+
   cat("Coefficients: \n")
   print(coef, digits = digits, ...)
   
   if (isTRUE(std)) { 
     coef_std <- x$full.model$coef_std
-    rownames(coef_std) <- gsub("(Intercept)", "Intercept", rownames(coef_std))
-    rownames(coef_std) <- gsub("mt", "Trend", rownames(coef_std))
-    rownames(coef_std) <- gsub("phase", "Level Phase ", rownames(coef_std))
-    rownames(coef_std) <- gsub("inter", "Slope Phase ", rownames(coef_std))
-    
+    row.names(coef_std) <- rename_predictors(row.names(coef_std), x)
+
     cat("\nStandardized coefficients: \n")
     print(coef_std, digits = digits, ...)
   }
@@ -47,22 +41,14 @@ print.sc_mplm <- function(x, digits = "auto", std = FALSE, ...) {
   cat("Formula: ")
   print(x$formula, showEnv = FALSE)
   res <- car::Anova(x$full.model, type = 3)
+  
   if (!is.null(res$terms)) {
-    res$terms <- gsub("(Intercept)", "Intercept", res$terms)
-    res$terms <- gsub("mt", "Trend", res$terms)
-    res$terms <- gsub("phase", "Level Phase ", res$terms)
-    res$terms <- gsub("inter", "Slope Phase ", res$terms)
+    res$terms <- rename_predictors(res$terms, x)
   } else {
-    rn <- attr(res, "row.names")
-    rn <- gsub("(Intercept)", "Intercept", rn)
-    rn <- gsub("mt", "Trend", rn)
-    rn <- gsub("phase", "Level Phase ", rn)
-    rn <- gsub("inter", "Slope Phase ", rn)
-    attr(res, "row.names") <- rn
+    row.names(res) <- rename_predictors(row.names(res), x)
   }
     
   print(res, digits = digits, ...)
   .note_vars(x)
-  
 }
 

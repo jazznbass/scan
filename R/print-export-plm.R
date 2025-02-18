@@ -197,7 +197,7 @@ export.sc_plm <- function(object,
     out$R2 <- c(rep("", inter_incl), format(round(x$r.squares, 3)))
   }
   
-  row.names(out) <- .plm.row.names(row.names(out), x)
+  row.names(out) <- rename_predictors(row.names(out), x)
   
   colnames(out) <- if (is.null(x$r.squares)) {
     c("B", "2.5%", "97.5%", "SE", "t", "p")

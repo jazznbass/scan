@@ -21,7 +21,7 @@ coef.sc_plm <- function(object, ...) {
 coef.sc_hplm <- function(object, casewise = FALSE, ...) {
   if (casewise) {
     out <- coef(object$hplm)
-    names(out) <- .plm.row.names(names(out), object)
+    names(out) <- rename_predictors(names(out), object)
     out <- cbind(Case = row.names(out), out)
     row.names(out) <- NULL
     return(out)

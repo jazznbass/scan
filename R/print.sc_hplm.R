@@ -5,7 +5,11 @@
 #' @order 2
 #' @param x An object returned by [hplm()]
 #' @export
-print.sc_hplm <- function(x, digits = 3, ..., smd = FALSE, casewise = FALSE) {
+print.sc_hplm <- function(x, 
+                          digits = 3, 
+                          smd = FALSE, 
+                          casewise = FALSE,
+                          ...) {
   cat("Hierarchical Piecewise Linear Regression\n\n")
   cat("Estimation method", x$model$estimation.method,"\n")
   cat("Contrast model: ", 
@@ -24,10 +28,9 @@ print.sc_hplm <- function(x, digits = 3, ..., smd = FALSE, casewise = FALSE) {
   }
   
   md <- as.data.frame(summary(x$hplm)$tTable)
-  
   colnames(md) <- c("B", "SE", "df", "t", "p")
   
-  row.names(md) <- .plm.row.names(row.names(md), x)
+  row.names(md) <- rename_predictors(row.names(md), x)
   
   md <- round_numeric(md, digits)
   
@@ -38,10 +41,9 @@ print.sc_hplm <- function(x, digits = 3, ..., smd = FALSE, casewise = FALSE) {
   
   cat("\nRandom effects (",deparse(x$model$random),")\n\n", sep = "")
   sd <- round(as.numeric(VarCorr(x$hplm)[,"StdDev"]), 3)
-  md <- data.frame("EstimateSD" = sd)
-  rownames(md) <- names(VarCorr(x$hplm)[, 2])
   
-  row.names(md) <- .plm.row.names(row.names(md), x)
+  md <- data.frame("SD" = sd)
+  row.names(md) <- rename_predictors(names(VarCorr(x$hplm)[, 2]), x)
   
   if (x$model$lr.test) {
     if (is.null(x$LR.test[[1]]$L.Ratio)) {
@@ -56,6 +58,20 @@ print.sc_hplm <- function(x, digits = 3, ..., smd = FALSE, casewise = FALSE) {
   }
   
   print(format_table(md, digits = digits, integer = "df"), ...)
+  
+  cov_matrix <- getVarCov(x$hplm)
+  var_sd <- sqrt(diag(cov_matrix))
+  cor_matrix <- cov_matrix / (var_sd %o% var_sd)
+  cor_matrix <- as.data.frame(round(cor_matrix[,], 2))
+  row.names(cor_matrix) <- rename_predictors(rownames(cor_matrix), x)
+  colnames(cor_matrix) <- rename_predictors(colnames(cor_matrix), x)
+  cor_matrix[upper.tri(cor_matrix, diag = TRUE)] <- ""
+  cor_matrix <- cor_matrix[-1,-ncol(cor_matrix)]
+  
+  if (nrow(cor_matrix) > 0) {
+    cat("\nCorrelation:\n")
+    print(cor_matrix)
+  }
   
   if (smd) {
     cat("\nBetween-Case Standardized Mean Difference\n\n")

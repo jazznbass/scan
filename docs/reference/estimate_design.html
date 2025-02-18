@@ -13,7 +13,7 @@ procedures."><meta property="og:image" content="/logo.png"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.62.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.62.999</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -157,16 +157,16 @@ reliability for each case.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects (values ~ 1 + mt + phaseB)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    B    SE  df       t     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     50.004 0.079 188 633.489 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt      -0.024 0.009 188  -2.579 0.011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B  1.010 0.125 188   8.088 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             B    SE  df       t     p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              50.004 0.079 188 633.489 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)             -0.024 0.009 188  -2.579 0.011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)  1.010 0.125 188   8.088 0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random effects (~1 | case)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           EstimateSD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept      0.088</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual       0.501</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              SD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept 0.088</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual  0.501</span>
 <span class="r-in"><span><span class="fu"><a href="hplm.html">hplm</a></span><span class="op">(</span><span class="va">scdf_est</span>, slope <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hierarchical Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -178,16 +178,16 @@ reliability for each case.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects (values ~ 1 + mt + phaseB)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    B    SE  df       t     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept     50.068 0.120 188 416.805 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend mt      -0.028 0.012 188  -2.254 0.025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B  1.011 0.165 188   6.125 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             B    SE  df       t     p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              50.068 0.120 188 416.805 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)             -0.028 0.012 188  -2.254 0.025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)  1.011 0.165 188   6.125 0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random effects (~1 | case)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           EstimateSD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept      0.220</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual       0.662</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              SD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept 0.220</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual  0.662</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Also similar results for pand and randomization tests:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="pand.html">pand</a></span><span class="op">(</span><span class="va">scdf</span><span class="op">)</span></span></span>

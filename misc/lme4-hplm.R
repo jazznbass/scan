@@ -121,7 +121,7 @@ lme4_hplm <- function(data, dvar, pvar, mvar,
 
 # interaction and dummy coding and L2 --------------------------------------
 
-  tmp_model <- .add_model_dummies(
+  tmp_model <- .add_dummy_variables(
     data = dat, model = model, 
     contrast_level = contrast_level, contrast_slope = contrast_slope
   )

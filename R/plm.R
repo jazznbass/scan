@@ -134,14 +134,14 @@ plm <- function(data, dvar, pvar, mvar,
 
   data <- .prepare_scdf(data, na.rm = TRUE)
 
-  if (is.na(contrast_level)) contrast_level <- contrast
-  if (is.na(contrast_slope)) contrast_slope <- contrast
-  
   if (model == "JW") {
     contrast_level <- "preceding"
     contrast_slope <- "preceding"
     model <- "B&L-B"
   }
+  
+  if (is.na(contrast_level)) contrast_level <- contrast
+  if (is.na(contrast_slope)) contrast_slope <- contrast
   
   if (family != "gaussian") r_squared = FALSE
   
@@ -149,19 +149,19 @@ plm <- function(data, dvar, pvar, mvar,
   
   # formula definition ------------------------------------------------------
   
-  tmp_model <- .add_model_dummies(
-    data = data, model = model, 
+  tmp_model <- .add_dummy_variables(
+    data = data, 
+    model = model, 
     contrast_level = contrast_level, contrast_slope = contrast_slope
   )
 
   data  <- tmp_model$data[[1]]
   
   if(is.null(formula)) {
-    tmp <- .create_fixed_formula(
+    formula <- .create_fixed_formula(
       dvar, mvar, slope, level, trend, 
       tmp_model$var_phase, tmp_model$var_inter
     ) 
-    formula <- as.formula(tmp)
   } 
   
   if(!is.null(update)) formula <- update(formula, update)

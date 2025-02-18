@@ -56,15 +56,15 @@ mplm <- function(data, dvar, mvar, pvar,
   contrast_level <- contrast_level[1]
   contrast_slope <- contrast_slope[1]
   
-  if (is.na(contrast_level)) contrast_level <- contrast
-  if (is.na(contrast_slope)) contrast_slope <- contrast
-  
   if (model == "JW") {
     contrast_level <- "preceding"
     contrast_slope <- "preceding"
     model <- "B&L-B"
   }
-
+  
+  if (is.na(contrast_level)) contrast_level <- contrast
+  if (is.na(contrast_slope)) contrast_slope <- contrast
+  
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
@@ -78,26 +78,32 @@ mplm <- function(data, dvar, mvar, pvar,
   }
 
   ### model definition
-  tmp_model <- .add_model_dummies(
-    data = data, model = model, 
-    contrast_level = contrast_level, contrast_slope = contrast_slope
+  tmp_model <- .add_dummy_variables(
+    data = data, 
+    model = model, 
+    contrast_level = contrast_level, 
+    contrast_slope = contrast_slope
   )
   
   data <- tmp_model$data[[1]]
 
   if (is.null(formula)) {
-    formula <- .create_fixed_formula(
-      dvar = "y", mvar = mvar, slope = slope, level = level, trend = trend, 
-      var_phase = tmp_model$var_phase, var_inter = tmp_model$var_inter
+    formula_fixed <- .create_fixed_formula(
+      dvar = "y", 
+      mvar = mvar, 
+      slope = slope, 
+      level = level, 
+      trend = trend, 
+      var_phase = tmp_model$var_phase, 
+      var_inter = tmp_model$var_inter
     )
-    formula <- as.formula(formula)
   }
 
   if (!is.null(update)) formula <- update(formula, update)
 
   y <- as.matrix(data[, dvar])
-
-  full <- lm(formula, data = data, na.action = na.action, ...)
+ 
+  full <- lm(formula_fixed, data = data, na.action = na.action, ...)
   full$coef_std <- .std_lm(full)
   
   out <- structure(
@@ -105,7 +111,7 @@ mplm <- function(data, dvar, mvar, pvar,
       model = model, 
       contrast = list(level = contrast_level, slope = contrast_slope), 
       full.model = full, 
-      formula = formula
+      formula = formula_fixed
     ),
     class = c("sc_mplm")
   )
