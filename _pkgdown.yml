@@ -43,6 +43,7 @@ reference:
   - add_l2
   - as_scdf
   - as.data.frame.scdf
+  - add_dummy_variables
   - combine
   - na.omit.scdf
   - starts_with("coef")
@@ -70,6 +71,7 @@ reference:
   - describe
   - hplm
   - mplm
+  - bplm
   - nap
   - outlier
   - overlap

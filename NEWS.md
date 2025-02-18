@@ -1,3 +1,12 @@
+# scan 0.62.999
+
+## New functions / features
+
+- `bplm()`: Bayesian piecewise regression model. Applies a Markov Chain Monte Carlo sampler from the MCMCglmm package.
+- `hplm()`: Adds inter correlation of random variables to the print output.
+- `add_dummy_variables()`: Helper function that adds dummy variables necessary to calculate a plm to an scdf. 
+- new option: `scan.scan.rename.predictors` can be set to `no`, `concise`, or `full`. Changes how predictors of regression models are renamed.
+
 # scan 0.62.0
 
 ## New functions / features

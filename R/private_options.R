@@ -17,6 +17,8 @@ opt <- function(x) {
   case_name    = "name",
   info         = "info",
   author       = "author",
+  inter_dummy = "inter",
+  phase_dummy = "phase",
   rigorous_class_check = TRUE,
   check_arguments = TRUE,
   names_default = paste0("Case", 1:500),

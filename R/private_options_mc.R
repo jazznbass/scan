@@ -21,20 +21,20 @@
   },
   tauU = function(x) {
     if (length(x) > 1) stop("Use 'tauU_meta' for multiple case designs.", call. = FALSE)
-    res <- tau_u(x, method = "parker", meta_analyses = FALSE)$table[[1]]
+    res <- tau_u(x, method = "tarlow", meta_analyses = FALSE)$table[[1]]
     res[which(row.names(res) == "A vs. B - Trend A"), which(names(res) == "p")]
   },
   tauU_slope = function(x) {
     if (length(x) > 1) stop("Use 'tauU_slope_meta' for multiple case designs.", call. = FALSE)
-    res <- tau_u(x, method = "parker", meta_analyses = FALSE)$table[[1]]
+    res <- tau_u(x, method = "tarlow", meta_analyses = FALSE)$table[[1]]
     res[which(row.names(res) == "A vs. B + Trend B - Trend A"), which(names(res) == "p")]
   },
   tauU_meta = function(x) {
-    res <- tau_u(x, method = "parker")$Overall_tau_u
+    res <- tau_u(x, method = "tarlow")$Overall_tau_u
     res[which(res$Model == "A vs. B - Trend A"), which(names(res) == "p")]
   },
   tauU_slope_meta = function(x) {
-    res <- tau_u(x, method = "parker")$Overall_tau_u
+    res <- tau_u(x, method = "tarlow")$Overall_tau_u
     res[which(res$Model == "A vs. B + Trend B - Trend A"), which(names(res) == "p")]
   },
   base_tau = function(x) corrected_tau(x)$p,
