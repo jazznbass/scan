@@ -26,7 +26,7 @@
 \alias{print.sc_trend}
 \title{Print methods for scan objects}
 \usage{
-\method{print}{sc_plm}(x, lag_max = 3, ...)
+\method{print}{sc_plm}(x, lag_max = 3, ci = 0.95, q = FALSE, ...)
 
 \method{print}{sc_ac}(x, digits = "auto", ...)
 
@@ -65,6 +65,11 @@
 
 \item{lag_max}{Maximum lag to be reported for autocorrelation of residuals.
 Default is \code{3}. Set \code{FALSE} for no report of autocorrelations.}
+
+\item{ci}{Print confidence intervals. Either FALSE, TRUE or a number
+between 0 and 1 (0.90 for a 90\% intervals).}
+
+\item{q}{Logical. If set \code{TRUE}, Yule's Q is reported.}
 
 \item{...}{Further parameters passed to the print function}
 
