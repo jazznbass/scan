@@ -188,7 +188,11 @@ plm <- function(data, dvar, pvar, mvar,
     }
     
     if (family == "binomial") {
-      trials <- data[[var_trials]]  
+      if (is.character(var_trials)) {
+        trials <- data[[var_trials]]
+      } else {
+        trials <- rep(var_trials, length(data[[dvar]]))
+      }
       if (!dvar_percentage) data[[dvar]] <- data[[dvar]] / trials
       full <- glm(
         formula_full, data = data, family = family, na.action = na.action, 

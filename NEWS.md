@@ -7,6 +7,14 @@
 - `add_dummy_variables()`: Helper function that adds dummy variables necessary to calculate a plm to an scdf. 
 - new option: `scan.scan.rename.predictors` can be set to `no`, `concise`, or `full`. Changes how predictors of regression models are renamed.
 
+## Solved bugs
+
+- `plm()`: setting `var_trials` to a constant throws an error.
+
+## Corrections / Changes
+
+- `print.sc_plm() / export.sc_plm()`: New argument `ci` for specifying a confidence interval. Either `FALSE`, `TRUE` or a number between 0 and 1 (0.90 for a 90% intervals).
+
 # scan 0.62.0
 
 ## New functions / features

@@ -1,9 +1,12 @@
 #' @rdname print.sc
 #' @param lag_max Maximum lag to be reported for autocorrelation of residuals.
 #'   Default is `3`. Set `FALSE` for no report of autocorrelations.
+#' @param ci Print confidence intervals. Either FALSE, TRUE or a number 
+#' between 0 and 1 (0.90 for a 90% intervals).
+#' @param q Logical. If set `TRUE`, Yule's Q is reported.
 #' @export
 #' 
-print.sc_plm <- function(x, lag_max = 3, ...) {
+print.sc_plm <- function(x, lag_max = 3, ci = 0.95, q = FALSE, ...) {
   cat("Piecewise Regression Analysis\n\n")
   cat(
     "Contrast model: ", 
@@ -35,7 +38,7 @@ print.sc_plm <- function(x, lag_max = 3, ...) {
     )	
   }
   
-  out <- .prepare_plm_coef(x)
+  out <- .prepare_plm_coef(x, ci = ci, q = q)
   print(out)
   
   cat("\n")
@@ -66,7 +69,7 @@ print.sc_plm <- function(x, lag_max = 3, ...) {
   }
   print(x$formula, showEnv = FALSE)
   if (x$family == "binomial") {
-    cat("weights = ", x$var_trials)
+    cat("weights =", x$var_trials)
   }
   cat("\n")
 }
@@ -74,6 +77,9 @@ print.sc_plm <- function(x, lag_max = 3, ...) {
 #' @rdname export
 #' @param nice If set TRUE (default) output values are rounded and optimized for
 #' publication tables.
+#' @param ci Print confidence intervals. Either FALSE, TRUE or a number 
+#' between 0 and 1 (0.90 for a 90% intervals).
+#' @param q Logical. If set `TRUE`, Yule's Q is reported.
 #' @export
 export.sc_plm <- function(object, 
                           caption = NA, 
@@ -82,6 +88,8 @@ export.sc_plm <- function(object,
                           kable_styling_options = list(), 
                           kable_options = list(), 
                           nice = TRUE,
+                          ci = 0.95,
+                          q = FALSE,
                           ...) {
   
   kable_options <- .join_kabel(kable_options)
@@ -94,14 +102,14 @@ export.sc_plm <- function(object,
     )
   }
   
-  out <- .prepare_plm_coef(object)
+  out <- .prepare_plm_coef(object, ci = ci, q = q)
   
   if (nice) out$p <- .nice_p(out$p)
   
   out <- cbind(Parameter = rownames(out), out, stringsAsFactors = FALSE)
   rownames(out) <- NULL
   
-  if (object$family == "poisson" || object$family == "nbinomial") {
+  if (object$family %in% c("poisson", "binomial", "nbinomial")) {
     Chi <- object$full$null.deviance - object$full$deviance
     DF <- object$full$df.null - object$full$df.residual
     F_test <- sprintf(
@@ -122,7 +130,7 @@ export.sc_plm <- function(object,
       object$F.test["R2"], object$F.test["R2.adj"]
     )
   }
-  
+
   if (is.na(footnote)) footnote <- F_test
   
   if (getOption("scan.export.engine") == "gt") {
@@ -167,52 +175,69 @@ export.sc_plm <- function(object,
 
 # helper functions -----
 
-.prepare_plm_coef <- function(x) {
+.prepare_plm_coef <- function(x, ci, q) {
   
   if (x$ar == 0) out <- summary(x$full.model)$coefficients
   if (x$ar  > 0) out <- summary(x$full.model)$tTable
 
   inter_incl <- if (attr(x$full.model$terms, "intercept")) TRUE else FALSE
-  
-  ci <- suppressMessages(confint(x$full))
-  param_filter <- apply(ci, 1, function(x) if(!all(is.na(x))) TRUE else FALSE)
-  ci <- ci[param_filter, ]
-  
-  if (nrow(out) == 1) {
-    out <- cbind(
-      out[, 1, drop = FALSE], 
-      t(ci), 
-      out[, 2:4, drop = FALSE]
-    )
-  } else out <- cbind(
-    out[,1], 
-    ci, 
-    out[, 2:4]
-  )
-  
+
   out <- round(out, 3)
   out <- as.data.frame(out)
-  if (!is.null(x$r.squares)) {
-    x$r.squares <- x$r.squares[c(param_filter[-1])]
-    out$R2 <- c(rep("", inter_incl), format(round(x$r.squares, 3)))
+  names(out)[1:4] <- c("B", "SE", "t", "p")
+  
+  if (identical(ci, FALSE)) {
+    
+    if (!is.null(x$r.squares)) {
+      out[["delta R\u00b2"]] <- c(
+        rep("", inter_incl), 
+        format(round(x$r.squares, 3))
+      )
+    }
+    
+    if (x$family == "poisson" || x$family == "binomial") {
+      OR <- exp(out[, "B"])
+      out <- cbind(out[, c("B", "SE", "t", "p")],  "OR" = round(OR, 3))
+      if (q) {
+        Q <- (OR - 1) / (OR + 1)
+        out <- cbind(out, "Q" = round(Q, 2))
+      }
+    }
   }
   
-  row.names(out) <- rename_predictors(row.names(out), x)
+  if (!identical(ci, FALSE)) {
+    if (isTRUE(ci)) ci <- 0.95
   
-  colnames(out) <- if (is.null(x$r.squares)) {
-    c("B", "2.5%", "97.5%", "SE", "t", "p")
-  } else {
-    c("B", "2.5%", "97.5%", "SE", "t", "p", "delta R\u00b2")
-  }  
-  
-  if (x$family == "poisson" || x$family == "binomial") {
-    OR <- exp(out[, 1:3])
-    Q <- (OR - 1) / (OR + 1)
-    out <- cbind(out[, -7], round(OR, 3), round(Q, 2))
-    colnames(out) <- c(
-      "B", "2.5%", "97.5%", "SE", "t", "p", "Odds Ratio", 
-      " 2.5% ", " 97.5% ", "Yule's Q", "  2.5%  ", "  97.5%  "
-    )		
-  }
+    str_ci <- paste0(round(c((1 - ci) / 2, ci + ((1 - ci) / 2)) * 100, 2), "%")
+    
+    ci <- suppressMessages(confint(x$full, level = ci))
+    param_filter <- apply(
+      ci, 1, function(x) if(!all(is.na(x))) TRUE else FALSE
+    )
+    ci <- round(ci[param_filter, ], 3)
+    if (nrow(out) == 1) ci <- t(ci)
+    out <- cbind(out[, 1, drop = FALSE], ci, out[, 2:4, drop = FALSE])
+
+    names(out) <- c("B", str_ci, "SE", "t", "p")
+    
+    if (!is.null(x$r.squares)) {
+      x$r.squares <- x$r.squares[c(param_filter[-1])]
+      out[["delta R\u00b2"]] <- c(rep("", inter_incl), format(round(x$r.squares, 3)))
+    }
+    
+    if (x$family == "poisson" || x$family == "binomial") {
+      OR <- exp(out[, 1:3])
+      out <- cbind(out[, 1:6], round(OR, 3))
+      names(out)[7:9] <- c("OR", paste0(" ", str_ci)) 
+      
+      if(q) {
+        Q <- (OR - 1) / (OR + 1)
+        out <- cbind(out, round(Q, 2))
+        names(out)[10:12] <- c("Q", paste0("  ", str_ci))  
+      }
+       
+    }
+  } 
+  rownames(out) <- rename_predictors(rownames(out), x)
   out
 }
