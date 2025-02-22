@@ -202,9 +202,15 @@ hplm <- function(data, dvar, pvar, mvar,
     for(i in 1:length(random_ir)) {
       
       out$random_ir$restricted[[i]] <- lme(
-        fixed = fixed, random = random_ir[i], data = dat,
-        na.action = na.omit, method = method, control=control,
-        keep.data = FALSE, ...)
+        fixed = fixed, 
+        random = random_ir[i], 
+        data = dat,
+        na.action = na.omit, 
+        method = method, 
+        control=control,
+        keep.data = FALSE, 
+        ...
+      )
       
       out$random_ir$restricted[[i]]$call$fixed <- fixed
     }

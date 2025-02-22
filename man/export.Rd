@@ -164,6 +164,8 @@ export(object, ...)
   kable_styling_options = list(),
   kable_options = list(),
   nice = TRUE,
+  ci = 0.95,
+  q = FALSE,
   ...
 )
 }
@@ -205,6 +207,11 @@ central variables.}
 
 \item{nice}{If set TRUE (default) output values are rounded and optimized for
 publication tables.}
+
+\item{ci}{Print confidence intervals. Either FALSE, TRUE or a number
+between 0 and 1 (0.90 for a 90\% intervals).}
+
+\item{q}{Logical. If set \code{TRUE}, Yule's Q is reported.}
 }
 \value{
 Returns or displays a specially formatted html (or latex) file.
