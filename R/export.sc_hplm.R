@@ -4,7 +4,10 @@
 #' @param nice If set TRUE (default) output values are rounded and optimized for
 #' publication tables.
 #' @export
-export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
+export.sc_hplm <- function(object, 
+                           caption = NA, 
+                           footnote = NA, 
+                           filename = NA,
                            kable_styling_options = list(), 
                            kable_options = list(), 
                            round = 2,
@@ -40,41 +43,14 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
     return(out)
   }
   
-  summary_model <- summary(object$hplm)
+  results <- .output_hplm(object)
   
-  out <- as.data.frame(summary(object$hplm)$tTable)
-  row.names(out) <- rename_predictors(row.names(out), object)
-  colnames(out) <- c("B", "SE", "df", "t", "p")
-  
-  md <- data.frame(
-    "SD" = round(as.numeric(VarCorr(object$hplm)[, "StdDev"]), 3)
-  )
-  row.names(md) <- rename_predictors(names(VarCorr(object$hplm)[, 2]), object)
-  
-  if (object$model$lr.test) {
-    if (is.null(object$LR.test[[1]]$L.Ratio)) {
-      object$LR.test[[1]]$L.Ratio <- NA
-      object$LR.test[[1]]$"p-value" <- NA
-      object$LR.test[[1]]$df <- NA
-    }
-    
-    md$L <- c(
-      round(unlist(lapply(object$LR.test, function(x) x$L.Ratio[2])), 2), 
-      NA
-    )
-    md$df <- c(
-      unlist(lapply(object$LR.test, function(x) {x$df[2] - x$df[1]})), 
-      NA
-    )
-    md$p <- c(
-      round(unlist(lapply(object$LR.test, function(x) x$"p-value"[2])), 3), 
-      NA
-    )
-  }
+  out <- results$fixed
+  dat_random <- results$random
   
   if (nice) {
     out$p <- .nice_p(out$p)
-    if (!is.null(md$p)) md$p <- .nice_p(md$p)
+    if (!is.null(dat_random$p)) dat_random$p <- .nice_p(dat_random$p)
   }
   
   out[, ] <- lapply(out[, ], function(x)
@@ -82,29 +58,39 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
   )
   out <- cbind(Predictors = rownames(out), out, stringsAsFactors = FALSE)
   rownames(out) <- NULL
-  md[, ] <- lapply(md, function(x)
+  dat_random[, ] <- lapply(dat_random, function(x)
     if (inherits(x, "numeric")) as.character(round(x, round)) else x
   )
-  md <- cbind(" " = rownames(md), md, stringsAsFactors = FALSE)
-  rownames(md) <- NULL
+  dat_random <- cbind(
+    " " = rownames(dat_random), 
+    dat_random, 
+    stringsAsFactors = FALSE
+  )
+  rownames(dat_random) <- NULL
   
   nrow_out <- nrow(out)
-  tmp_row <- (nrow_out + 1):(nrow_out + nrow(md) + 1 + 3)
+  nrow_random <- nrow(dat_random)
+  tmp_row <- (nrow_out + 1):(nrow_out + nrow_random + 1 + 3)
   out[tmp_row, ] <- ""
   
-  tmp_row <- (nrow_out + 1):(nrow_out + nrow(md) + 1)
-  out[tmp_row, 1:ncol(md)] <- rbind(colnames(md), md, stringsAsFactors = FALSE)
-  
-  out[nrow_out + nrow(md) + 2, 1:2] <- c(
-    "AIC", as.character(round(summary_model$AIC, 1))
+  tmp_row <- (nrow_out + 1):(nrow_out + nrow_random + 1)
+  out[tmp_row, 1:ncol(dat_random)] <- rbind(
+    colnames(dat_random), 
+    dat_random, 
+    stringsAsFactors = FALSE
   )
-  out[nrow_out + nrow(md) + 3, 1:2] <- c(
-    "BIC", as.character(round(summary_model$BIC, 1))
+  
+  out[nrow_out + nrow_random + 2, 1:2] <- c(
+    "AIC", as.character(round(results$AIC, 1))
+  )
+  out[nrow_out + nrow_random + 3, 1:2] <- c(
+    "BIC", as.character(round(results$BIC, 1))
   )
   if (!is.null(object$ICC)) {
-    out[nrow_out + nrow(md) + 4, 1:4] <-
+    out[nrow_out + nrow_random + 4, 1:4] <-
       c(
-        "ICC", as.character(round(object$ICC$value, 2)),
+        "ICC", 
+        as.character(round(object$ICC$value, 2)),
         paste0("L = ", round(object$ICC$L, 1)),
         paste0("p ", .nice_p(object$ICC$p))
       )
@@ -128,7 +114,7 @@ export.sc_hplm <- function(object, caption = NA, footnote = NA, filename = NA,
       #pack_rows("Fixed effects", 1, nrow_out, indent = FALSE) |>
       pack_rows("\nRandom effects", nrow_out + 1, nrow(out), indent = FALSE) |>
       pack_rows("\nModel", nrow(out) - 2, nrow(out), indent = FALSE) |>
-      #row_spec(nrow_out + nrow(md) + 1, hline_after = TRUE) |>
+      #row_spec(nrow_out + nrow(dat_random) + 1, hline_after = TRUE) |>
       row_spec(nrow_out, hline_after = TRUE)
   }
       
