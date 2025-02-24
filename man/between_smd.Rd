@@ -5,24 +5,39 @@
 \alias{print.sc_bcsmd}
 \title{Between-Case Standardized Mean Difference}
 \usage{
-between_smd(data, ...)
+between_smd(data, include_residuals = TRUE, model = "frequentist", ...)
 
 \method{print}{sc_bcsmd}(x, digits = 2, ...)
 }
 \arguments{
-\item{data}{Either an scdf or an object returned from the \code{\link[=hplm]{hplm()}} function.}
+\item{data}{Either an scdf or an object returned from the \code{\link[=hplm]{hplm()}} or
+\code{\link[=bplm]{bplm()}} function.}
 
-\item{...}{When data is an scdf, further design parameters passed to the
-\code{\link[=hplm]{hplm()}} function.}
+\item{include_residuals}{Logical. See details.}
+
+\item{model}{Either \code{"ml"} or \code{"bayesian"}.}
+
+\item{...}{Further arguments passed to the \code{\link[=hplm]{hplm()}} or \code{\link[=bplm]{bplm()}}function.}
 
 \item{x}{An object returned by \code{baseline_smd()}.}
 
 \item{digits}{The minimum number of significant digits to be use.
 If set to "auto" (default), values are predefined.}
 }
+\value{
+An object of class sc_bcsmd.
+}
 \description{
 Calculates a standardized mean difference from a multilevel model as
 described in Pustejovsky et al. (2014)
+}
+\details{
+The BC-SMD is calculate as \verb{BC-SMD = Phase difference / sqrt(residual + random_intercept)}. This is most closely related to Cohen's \emph{d}. If you want
+to have the most exact estimation based on the between case variance, you
+have to exclude the residual variance by setting the argument
+\code{include_residuals = FALSE} you get \verb{BC-SMD = Phase difference / sqrt(random_intercept)}. The 'base' model only includes the phase level as a
+predictor like originally proposed by Hedges et al. Whereas the 'Full plm'
+model includes the trend and the phase slope as additional predictors.
 }
 \section{Functions}{
 \itemize{
@@ -30,19 +45,30 @@ described in Pustejovsky et al. (2014)
 
 }}
 \examples{
+## Create a example scdf:
 des <- design(
   n = 150,
-  phase_design = list(A = 10, B = 10, A2 = 10, B2 = 10, c = 10),
-  level = list(B = 1, A2 = 0, B2 = 1, c = 1),
+  phase_design = list(A1 = 10, B1 = 10, A2 = 10, B2 = 10, C = 10),
+  level = list(B1 = 1, A2 = 0, B2 = 1, C = 1),
+  rtt = 0.7,
   random_start_value = TRUE
 )
 study <- random_scdf(des)
+
+## Standard BC-SMD return:
 between_smd(study)
 
-model <- hplm(study, slope = FALSE, contrast_level = "preceding")
+## Specify the model and provide an hplm object:
+model <- hplm(study, contrast_level = "preceding", slope = FALSE,  trend = FALSE)
 between_smd(model)
+
+## excluding the residuals gives a more accruate estimation:
+between_smd(model, include_residuals = FALSE)
 
 }
 \references{
-Pustejovsky, J. E., Hedges, L. V., & Shadish, W. R. (2014). Design-Comparable Effect Sizes in Multiple Baseline Designs: A General Modeling Framework. Journal of Educational and Behavioral Statistics, 39(5), 368–393. https://doi.org/10.3102/1076998614547577
+Pustejovsky, J. E., Hedges, L. V., & Shadish, W. R. (2014).
+Design-Comparable Effect Sizes in Multiple Baseline Designs: A General
+Modeling Framework. Journal of Educational and Behavioral Statistics,
+39(5), 368–393. https://doi.org/10.3102/1076998614547577
 }

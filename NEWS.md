@@ -2,17 +2,19 @@
 
 ## New functions / features
 
-- `bplm()`: Bayesian piecewise regression model. Applies a Markov Chain Monte Carlo sampler from the MCMCglmm package.
+- `bplm()`: Bayesian piecewise regression model. Applies a Markov Chain Monte Carlo sampler from the MCMCglmm package. With export method.
 - `hplm()`: Adds inter correlation of random variables to the print output.
 - `add_dummy_variables()`: Helper function that adds dummy variables necessary to calculate a plm to an scdf. 
-- new option: `scan.scan.rename.predictors` can be set to `no`, `concise`, or `full`. Changes how predictors of regression models are renamed.
+- new option: `scan.rename.predictors` can be set to `no`, `concise`, or `full`. Changes how predictors of regression models are renamed.
+- `between_smd()`: Added support for Bayesian regressions `model = "bayesian"` or providing an object returned from the `bplm()` function.
 
 ## Solved bugs
 
-- `plm()`: setting `var_trials` to a constant throws an error.
+- `plm()`: setting `var_trials` to a constant threw an error.
 
 ## Corrections / Changes
 
+- `between_smd()`: Reworked the function output to avoid confusion. A 'pure' between case smd estimation is provided when the argument `include_residuals = FALSE` is set.
 - `print.sc_plm() / export.sc_plm()`: New argument `ci` for specifying a confidence interval. Either `FALSE`, `TRUE` or a number between 0 and 1 (0.90 for a 90% intervals).
 
 # scan 0.62.0
