@@ -1,28 +1,30 @@
 #' Bayesian Piecewise Linear Model
 #'
-#' Computes a bayesian (hierarchical) piecewise linear model based on a Markov 
+#' Computes a bayesian (hierarchical) piecewise linear model based on a Markov
 #' chain Monte Carlo sampler.
 #'
 #' @inheritParams .inheritParams
 #' @order 1
-#' @param random_trend If TRUE, includes a random trend trend effect.
-#' @param random_level If TRUE, includes a random level trend effect.
-#' @param random_slope If TRUE, includes a random slope trend effect.
-#' @param fixed Defaults to the fixed part of the standard piecewise regression
+#' @param random_trend If TRUE, includes a random trend effect.
+#' @param random_level If TRUE, includes a random level effect.
+#' @param random_slope If TRUE, includes a random slope effect.
+#' @param fixed A formula that overwrites the automatically created fixed part
+#'   of the regression model that defaults to the standard piecewise regression
 #'   model. The parameter phase followed by the phase name (e.g., phaseB)
 #'   indicates the level effect of the corresponding phase. The parameter
 #'   'inter' followed by the phase name (e.g., interB) adresses the slope effect
 #'   based on the method provide in the model argument (e.g., "B&L-B"). The
 #'   formula can be changed for example to include further L1 or L2 variables
 #'   into the regression model.
-#' @param random The random part of the model.
-#' @param update_fixed An easier way to change the fixed model part
-#'   (e.g., `. ~ . + newvariable`).
+#' @param random A formula that overwrites the automatically created random part
+#'   of the regression model.
+#' @param update_fixed An easier way to change the fixed model part (e.g., `. ~
+#'   . + newvariable`).
 #' @param ... Further arguments passed to the mcmcglmm function.
 #' @return An object of class `sc_bplm`.
 #'  |  |  |
 #'  | --- | --- |
-#'  | `model` | List containing infromation about the applied model. |
+#'  | `model` | List containing information about the applied model. |
 #'  | `N` | Number of single-cases. |
 #'  | `formula` |A list containing the fixed and the random formulas of the hplm model. |
 #'  | `mcmglmm` | Object of class MCMglmm. |
@@ -30,7 +32,8 @@
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @examples
-#' # bplm(Leidig2018)
+#' bplm(exampleAB_50)
+#' bplm(exampleAB_50, random_level = TRUE)
 #' @export
 
 bplm <- function(data, dvar, pvar, mvar, 
@@ -134,127 +137,3 @@ bplm <- function(data, dvar, pvar, mvar,
   out
 }
 
-#' @describeIn bplm Print results
-#' @inheritParams print.sc
-#' @order 2
-#' @param x An object returned by [bplm()]
-#' @export
-print.sc_bplm <- function(x, digits = 3, ...) {
-  cat("Bayesian Piecewise Linear Regression\n\n")
-  cat("Contrast model: ", 
-      x$model$interaction.method, " (", 
-      paste0(names(x$contrast), ": ",x$contrast, collapse = ", "), 
-      ")\n", sep = "")
-  
-  if (x$N > 1) cat(x$N, "Cases\n\n")
-  
-  out <- list()
-
-  model_summary <- summary(x$mcmc)
-  
-  cat("Deviance Information Criteron:", model_summary$DIC, "\n\n")
-  
-  # B-structure -----
-  
-  cat("B-structure - Fixed effects (",deparse(model_summary$fixed.formula),")\n\n", sep = "")
-  
-  md <- as.data.frame(model_summary$solutions)
-  colnames(md) <- c("B", "l-95% CI", "u-95% CI", "eff.samp", "p")
-  row.names(md) <- rename_predictors(row.names(md), x)
-  print(round_numeric(md, digits))
-  
-  # G-structure -----
-  
-  if (!is.null(x$model$random)) {
-    cat(
-      "\nG-Structure - Random effects (",
-      deparse(model_summary$random.formula),
-      ")\n\n", 
-      sep = ""
-    )
-    
-    #vcv <- x$mcmc$VCV[, grep("case", colnames(x$mcmc$VCV))]
-    #G_structure <- apply(vcv, 2, function(x) {
-    #  c(mean = mean(x), lower = quantile(x, 0.025), upper = quantile(x, 0.975))
-    #})
-    #G_structure <- as.data.frame(t(G_structure))
-    #G_matrix <- posterior.mode(vcv) |> as.data.frame()
-    G_structure <- model_summary$Gcovariances |> as.data.frame()
-    
-    row.names(G_structure) <- rename_predictors(row.names(G_structure), x)
-    row.names(G_structure) <- gsub(".case", "", row.names(G_structure))
-    row.names(G_structure) <- gsub("case", "Intercept", row.names(G_structure))
-    G_structure <- cbind(Parameter = row.names(G_structure), G_structure)
-    row.names(G_structure) <- NULL
-    
-    G_structure <- G_structure[, -5]
-    
-    if (nrow(G_structure) > 1) {
-      matching_elements <- grepl("^(.*):\\1$", G_structure$Parameter)
-      G_structure_variance <- G_structure[matching_elements, ]
-      G_structure_covariance <- G_structure[!matching_elements, ]
-      
-      G_structure_variance$Parameter <- sub(":.*", "", G_structure_variance$Parameter)
-      
-      G_structure_covariance$Parameter <- sapply(
-        strsplit(G_structure_covariance$Parameter, ":", fixed = TRUE), 
-        function(y) paste(sort(y), collapse = ":")
-      )
-      
-      G_structure_covariance <- 
-        G_structure_covariance[duplicated(G_structure_covariance$Parameter), ]
-      
-      names(G_structure_variance) <- c("Parameter", "SD", "lower 95% CI", "upper 95% CI") 
-      names(G_structure_covariance) <- c("Parameter", "Correlation", "lower 95% CI", "upper 95% CI") 
-      
-      #cat("Standard deviation\n")
-      G_structure_variance[, 2:4] <- sqrt(G_structure_variance[, 2:4])
-      
-      print(
-        round_numeric(G_structure_variance, 3), 
-        row.names = FALSE, 
-        ...
-      )
-      
-      cat("\nCorrelation\n")
-      
-      #print(G_structure_covariance, row.names = FALSE, ...)
-      cor_vars <- strsplit(G_structure_covariance$Parameter, ":", fixed = TRUE)
-      
-      std_covar <- sapply(cor_vars, function(x) {
-        var1 <- which(G_structure_variance$Parameter == x[1])
-        var2 <- which(G_structure_variance$Parameter == x[2])
-        G_structure_variance$SD[var1] * G_structure_variance$SD[var2]
-      })
-      
-      
-      for (i in 1:nrow(G_structure_covariance)) {
-        G_structure_covariance[i, 2:4] <- G_structure_covariance[i,2:4] / std_covar[i]  
-      }
-      
-      print(
-        round_numeric(G_structure_covariance, 3), 
-        row.names = FALSE, 
-        ...
-      )
-      
-    } else {
-      names(G_structure) <- c("Parameter", "SD", "lower 95% CI", "upper 95% CI") 
-      G_structure[, 2:4] <- sqrt(G_structure[, 2:4])
-      #cat("Standard deviation\n")
-      print(
-        round_numeric(G_structure, 3), 
-        row.names = FALSE, 
-        ...
-      )
-      
-    }
-    
-    cat("\nR-Structure - Residulas\n\n")
-    R_structure <- model_summary$Rcovariances[, -4]
-    names(R_structure) <- c("SD", "lower 95% CI", "upper 95% CI") 
-    print(round(sqrt(R_structure), 3), ...)
-    
-  }
- 
-}

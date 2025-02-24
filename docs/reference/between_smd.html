@@ -42,7 +42,7 @@ described in Pustejovsky et al. (2014)</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">between_smd</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">between_smd</span><span class="op">(</span><span class="va">data</span>, include_residuals <span class="op">=</span> <span class="cn">TRUE</span>, model <span class="op">=</span> <span class="st">"frequentist"</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'sc_bcsmd'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -53,12 +53,20 @@ described in Pustejovsky et al. (2014)</p>
 
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>Either an scdf or an object returned from the <code><a href="hplm.html">hplm()</a></code> function.</p></dd>
+<dd><p>Either an scdf or an object returned from the <code><a href="hplm.html">hplm()</a></code> or
+<code><a href="bplm.html">bplm()</a></code> function.</p></dd>
+
+
+<dt id="arg-include-residuals">include_residuals<a class="anchor" aria-label="anchor" href="#arg-include-residuals"></a></dt>
+<dd><p>Logical. See details.</p></dd>
+
+
+<dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
+<dd><p>Either <code>"ml"</code> or <code>"bayesian"</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>When data is an scdf, further design parameters passed to the
-<code><a href="hplm.html">hplm()</a></code> function.</p></dd>
+<dd><p>Further arguments passed to the <code><a href="hplm.html">hplm()</a></code> or <code><a href="bplm.html">bplm()</a></code>function.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
@@ -71,42 +79,71 @@ If set to "auto" (default), values are predefined.</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An object of class sc_bcsmd.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The BC-SMD is calculate as <code>BC-SMD = Phase difference / sqrt(residual + random_intercept)</code>. This is most closely related to Cohen's <em>d</em>. If you want
+to have the most exact estimation based on the between case variance, you
+have to exclude the residual variance by setting the argument
+<code>include_residuals = FALSE</code> you get <code>BC-SMD = Phase difference / sqrt(random_intercept)</code>. The 'base' model only includes the phase level as a
+predictor like originally proposed by Hedges et al. Whereas the 'Full plm'
+model includes the trend and the phase slope as additional predictors.</p>
+    </div>
+    <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
 <ul><li><p><code>print(sc_bcsmd)</code>: Print results</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Pustejovsky, J. E., Hedges, L. V., &amp; Shadish, W. R. (2014). Design-Comparable Effect Sizes in Multiple Baseline Designs: A General Modeling Framework. Journal of Educational and Behavioral Statistics, 39(5), 368–393. https://doi.org/10.3102/1076998614547577</p>
+    <p>Pustejovsky, J. E., Hedges, L. V., &amp; Shadish, W. R. (2014).
+Design-Comparable Effect Sizes in Multiple Baseline Designs: A General
+Modeling Framework. Journal of Educational and Behavioral Statistics,
+39(5), 368–393. https://doi.org/10.3102/1076998614547577</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">des</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Create a example scdf:</span></span></span>
+<span class="r-in"><span><span class="va">des</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  n <span class="op">=</span> <span class="fl">150</span>,</span></span>
-<span class="r-in"><span>  phase_design <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">10</span>, B <span class="op">=</span> <span class="fl">10</span>, A2 <span class="op">=</span> <span class="fl">10</span>, B2 <span class="op">=</span> <span class="fl">10</span>, c <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>B <span class="op">=</span> <span class="fl">1</span>, A2 <span class="op">=</span> <span class="fl">0</span>, B2 <span class="op">=</span> <span class="fl">1</span>, c <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  phase_design <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>A1 <span class="op">=</span> <span class="fl">10</span>, B1 <span class="op">=</span> <span class="fl">10</span>, A2 <span class="op">=</span> <span class="fl">10</span>, B2 <span class="op">=</span> <span class="fl">10</span>, C <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>B1 <span class="op">=</span> <span class="fl">1</span>, A2 <span class="op">=</span> <span class="fl">0</span>, B2 <span class="op">=</span> <span class="fl">1</span>, C <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  rtt <span class="op">=</span> <span class="fl">0.7</span>,</span></span>
 <span class="r-in"><span>  random_start_value <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="va">des</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Standard BC-SMD return:</span></span></span>
 <span class="r-in"><span><span class="fu">between_smd</span><span class="op">(</span><span class="va">study</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Between-Case Standardized Mean Difference</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect BC-SMD Only random intercept</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   phaseB   0.88                  0.98</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseA2   0.86                  0.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseB2   1.76                  1.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   phasec   2.59                  2.87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model: frequentist </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Model phaseB1 phaseA2 phaseB2 phaseC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Base    0.82    0.82    1.65   2.47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Full plm    0.83    0.80    1.65   2.41</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="hplm.html">hplm</a></span><span class="op">(</span><span class="va">study</span>, slope <span class="op">=</span> <span class="cn">FALSE</span>, contrast_level <span class="op">=</span> <span class="st">"preceding"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## Specify the model and provide an hplm object:</span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="hplm.html">hplm</a></span><span class="op">(</span><span class="va">study</span>, contrast_level <span class="op">=</span> <span class="st">"preceding"</span>, slope <span class="op">=</span> <span class="cn">FALSE</span>,  trend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">between_smd</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Between-Case Standardized Mean Difference</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect BC-SMD Only random intercept</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   phaseB   0.88                  0.97</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseA2   0.01                  0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseB2   0.89                  0.99</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   phasec   0.88                  0.98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model: frequentist </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Model phaseB1 phaseA2 phaseB2 phaseC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Provided    0.82       0    0.83   0.82</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## excluding the residuals gives a more accruate estimation:</span></span></span>
+<span class="r-in"><span><span class="fu">between_smd</span><span class="op">(</span><span class="va">model</span>, include_residuals <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Between-Case Standardized Mean Difference</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model: frequentist </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Model phaseB1 phaseA2 phaseB2 phaseC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Provided    0.97       0    0.98   0.97</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

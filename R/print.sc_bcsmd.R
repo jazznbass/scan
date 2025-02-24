@@ -6,7 +6,10 @@
 print.sc_bcsmd <- function(x, digits = 2, ...) {
   cat("Between-Case Standardized Mean Difference\n\n")
 
+  cat("Model:", x$model, "\n\n")
   
-  print(round_numeric(x$bc_smd, digits), row.names = FALSE)
+  bc_smd <- round_numeric(x$bc_smd, digits)
+  #names(bc_smd) <- rename_predictors(names(bc_smd), x)
+  print(bc_smd, row.names = FALSE)
 }
 

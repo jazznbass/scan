@@ -201,6 +201,8 @@ for pdf/latex output.</p>
 <span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  nice <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  q <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -273,6 +275,15 @@ central variables.</p></dd>
 <dt id="arg-nice">nice<a class="anchor" aria-label="anchor" href="#arg-nice"></a></dt>
 <dd><p>If set TRUE (default) output values are rounded and optimized for
 publication tables.</p></dd>
+
+
+<dt id="arg-ci">ci<a class="anchor" aria-label="anchor" href="#arg-ci"></a></dt>
+<dd><p>Print confidence intervals. Either FALSE, TRUE or a number
+between 0 and 1 (0.90 for a 90% intervals).</p></dd>
+
+
+<dt id="arg-q">q<a class="anchor" aria-label="anchor" href="#arg-q"></a></dt>
+<dd><p>Logical. If set <code>TRUE</code>, Yule's Q is reported.</p></dd>
 
 </dl></div>
     <div class="section level2">
