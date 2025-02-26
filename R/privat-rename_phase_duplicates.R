@@ -15,3 +15,10 @@ rename_phase_duplicates <- function(phase) {
   ) |> unlist()
   as.factor(new_phase)
 }
+
+rownames_to_first_column <- function(x, name = "Rownames") {
+  x <- cbind(.rownames = rownames(x), x)
+  rownames(x) <- NULL
+  names(x)[1] <- name
+  x
+}
