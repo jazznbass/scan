@@ -17,7 +17,7 @@ print.sc_plm <- function(x, lag_max = 3, ci = 0.95, q = FALSE, ...) {
   
   cat("Fitted a", x$family, "distribution.\n")		
   
-  results <- .output_plm(x, ci = ci, q = q, lag_max)
+  results <- .output_plm(x, ci = ci, q = q, lag_max = lag_max, format = "print")
   
   if (x$ar > 0) {
     cat(
@@ -67,26 +67,29 @@ export.sc_plm <- function(object,
     )
   }
   
-  results <- .output_plm(object, ci = ci, q = q)
+  results <- .output_plm(object, ci = ci, q = q, format = "export")
   
   out <- results$table
   out <- rownames_to_first_column(out, "Parameter")
   
   if (nice) out$p <- .nice_p(out$p)
   
-  if (is.na(footnote)) footnote <- paste0(
-    results$fit, "; AIC = ", round(results$aic)
+  if (is.na(footnote)) footnote <- c(
+    paste0(results$fit), 
+    paste0("AIC = ", round(results$aic)),
+    "LL = lower limit",
+    "UL = upper limit"
   )
   
   if (getOption("scan.export.engine") == "gt") {
-    if (object$family == "gaussian") {
-      spanner <- list("CI(95%)" = 3:4)
-    }
-    
+    spanner <- list("CI" = 3:4)
     if (object$family %in% c("poisson", "nbinomial")) {
-      spanner <- list("CI(95%)" = 3:4, " CI(95%) " = 9:10)
-      if (q) spanner[["  CI(95%)  "]]  <- 12:13
+      spanner[[" CI "]]  <- 9:10
+      if (q) spanner[["  CI  "]]  <- 12:13
     }
+    names(spanner) <- gsub(
+      "CI", paste0("CI(", ci * 100, "%)"), x = names(spanner)
+    )
   }
 
   table <- .create_table(
@@ -99,15 +102,19 @@ export.sc_plm <- function(object,
   )
   
   if (getOption("scan.export.engine") == "kable") {
-    if (object$family == "gaussian") {
-      table <- add_header_above(table, c(" " = 2, "CI(95%)" = 2, " " = 4))
+    spanner <- c(" " = 2, "CI" = 2, " " = 4)
+  
+    if (object$family %in% c("poisson", "nbinomial")) {
+      spanner <- c(spanner, "CI" = 2)
+      if (q) spanner <- c(spanner, " " = 1, "CI" = 2)
     }
     
-    if (object$family %in% c("poisson", "nbinomial")) {
-      spanner <- c(" " = 2, "CI(95%)" = 2, " " = 4, "CI(95%)" = 2)
-      if (q) spanner <- c(spanner, " " = 1, "CI(95%)" = 2)
-      table <- add_header_above(table, spanner)
-    }
+    names(spanner) <- gsub(
+      "CI", paste0("CI(", ci * 100, "%)"), x = names(spanner)
+    )
+    
+    table <- add_header_above(table, spanner)
+    
   }
 
   
@@ -118,7 +125,7 @@ export.sc_plm <- function(object,
   
 }
 
-.output_plm <- function(x, ci, q, lag_max = 0) {
+.output_plm <- function(x, ci, q, lag_max = 0, format) {
   
   out <- list()
   
@@ -168,10 +175,14 @@ export.sc_plm <- function(object,
     }
   }
   
+  ## ci ----
   if (!identical(ci, FALSE)) {
     if (isTRUE(ci)) ci <- 0.95
     
-    str_ci <- paste0(round(c((1 - ci) / 2, ci + ((1 - ci) / 2)) * 100, 2), "%")
+    #str_ci <- paste0(round(c((1 - ci) / 2, ci + ((1 - ci) / 2)) * 100, 2), "%")
+    
+    if (format == "print") str_ci <- paste0(c("LL", "UL"), "-CI", ci * 100, "%")
+    if (format == "export") str_ci <- c("LL", "UL")
     
     ci <- suppressMessages(confint(x$full, level = ci))
     param_filter <- apply(

@@ -2,6 +2,8 @@
 
 S3method("$",scdf)
 S3method("[",scdf)
+S3method(anova,sc_hplm)
+S3method(anova,sc_plm)
 S3method(as.data.frame,scdf)
 S3method(c,scdf)
 S3method(coef,sc_hplm)

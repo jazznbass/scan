@@ -143,7 +143,13 @@ chain Monte Carlo sampler.
 
 }}
 \examples{
+# plm regression
+bplm(example_A24)
+
+# Multilevel plm regression with random intercept
 bplm(exampleAB_50)
+
+# Adding a random slope
 bplm(exampleAB_50, random_level = TRUE)
 }
 \seealso{

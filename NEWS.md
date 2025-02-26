@@ -7,6 +7,7 @@
 - `add_dummy_variables()`: Helper function that adds dummy variables necessary to calculate a plm to an scdf. 
 - new option: `scan.rename.predictors` can be set to `no`, `concise`, or `full`. Changes how predictors of regression models are renamed.
 - `between_smd()`: Added support for Bayesian regressions `model = "bayesian"` or providing an object returned from the `bplm()` function.
+- `anova.plm() anova.hplm()`: Methods for likelihood ratio model comparison.
 
 ## Solved bugs
 
