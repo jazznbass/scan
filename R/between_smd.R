@@ -115,8 +115,8 @@ between_smd <- function(data,
   if (model == "bayesian") out <- lapply(models, extract_bc_smd_bayes)
   
   out <- as.data.frame(do.call(rbind, out), check.names = FALSE)
-  out <- cbind("Model" = rownames(out), out)
-  rownames(out) <- NULL
+  
+  out <- rownames_to_first_column(out, "Model")
   
   out <- list(
     bc_smd = out,

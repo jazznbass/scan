@@ -13,7 +13,7 @@ is given as a time variable (see example below)."><meta property="og:image" cont
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.62.999</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.63.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,9 +104,9 @@ Defaults to the measurement time variable.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 19) = 46.74; p = 0.000; R² = 0.881; Adjusted R² = 0.862</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 19) = 46.74; p = 0.000; R² = 0.881; Adjusted R² = 0.862; AIC = 221.5733</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               B     2.5%    97.5%     SE      t     p delta R²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               B LL-CI95% UL-CI95%     SE      t     p delta R²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept               258.714  223.364  294.065 18.036 14.344 0.000         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend (year)              1.857   -7.947   11.662  5.002  0.371 0.715    0.001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB) -150.383 -200.743 -100.024 25.694 -5.853 0.000    0.215</span>
@@ -119,8 +119,7 @@ Defaults to the measurement time variable.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    3 -0.10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 0.99; p = 0.804 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: injuries ~ 1 + year + phaseB + interB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: injuries ~ 1 + year + phaseB + interB </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Please use transform instead:</span></span></span>
 <span class="r-in"><span><span class="va">example_A24</span> <span class="op">|&gt;</span></span></span>
@@ -131,9 +130,9 @@ Defaults to the measurement time variable.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 19) = 46.74; p = 0.000; R² = 0.881; Adjusted R² = 0.862</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 19) = 46.74; p = 0.000; R² = 0.881; Adjusted R² = 0.862; AIC = 221.5733</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               B     2.5%    97.5%     SE      t     p delta R²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               B LL-CI95% UL-CI95%     SE      t     p delta R²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept               258.714  223.364  294.065 18.036 14.344 0.000         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend (year)              1.857   -7.947   11.662  5.002  0.371 0.715    0.001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB) -150.383 -200.743 -100.024 25.694 -5.853 0.000    0.215</span>
@@ -146,8 +145,7 @@ Defaults to the measurement time variable.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    3 -0.10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 0.99; p = 0.804 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: injuries ~ 1 + year + phaseB + interB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: injuries ~ 1 + year + phaseB + interB </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

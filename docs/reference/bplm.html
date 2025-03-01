@@ -9,7 +9,7 @@ chain Monte Carlo sampler."><meta property="og:image" content="/logo.png"></head
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.62.999</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.63.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -243,61 +243,84 @@ publication tables.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">bplm</span><span class="op">(</span><span class="va">exampleAB_50</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># plm regression</span></span></span>
+<span class="r-in"><span><span class="fu">bplm</span><span class="op">(</span><span class="va">example_A24</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bayesian Piecewise Linear Regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W (level: first, slope: first)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deviance Information Criterion: 221.87 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B-structure - Fixed effects (injuries ~ 1 + year + phaseB + interB)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               B lower 95% CI upper 95% CI sample size     p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept               258.493      225.124      300.038    1192.152 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (year)              2.032       -7.538       12.150    1000.000 0.666</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB) -150.934     -206.970     -104.339    1107.750 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)   -1.965      -11.167        9.533    1000.000 0.704</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R-Structure - Residuals</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           SD lower 95% CI upper 95% CI </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       28.059       19.024       37.313 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Multilevel plm regression with random intercept</span></span></span>
+<span class="r-in"><span><span class="fu">bplm</span><span class="op">(</span><span class="va">exampleAB_50</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bayesian Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W (level: first, slope: first)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Deviance Information Criteron: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deviance Information Criterion: 8574.422 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> B-structure - Fixed effects (values ~ 1 + mt + phaseB + interB)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             B lower 95% CI upper 95% CI sample size     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              48.394       45.488       51.104    1000.000 0.001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)              0.573        0.326        0.781    1000.000 0.001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB) 14.090       12.858       15.442     904.609 0.001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)  0.910        0.683        1.150    1000.000 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              48.393       45.233       51.379        1000 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)              0.582        0.355        0.801        1000 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB) 14.040       12.836       15.280        1000 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)  0.898        0.655        1.114        1000 0.001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> G-Structure - Random effects (~case)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Parameter    SD lower 95% CI upper 95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Intercept 10.28        8.485       12.541</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Parameter     SD lower 95% CI upper 95% CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Intercept 10.277        8.134       12.275</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> R-Structure - Residuals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           SD lower 95% CI upper 95% CI </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        5.294        5.095        5.494 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        5.290        5.104        5.506 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Adding a random slope</span></span></span>
 <span class="r-in"><span><span class="fu">bplm</span><span class="op">(</span><span class="va">exampleAB_50</span>, random_level <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bayesian Piecewise Linear Regression</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W (level: first, slope: first)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Deviance Information Criteron: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Deviance Information Criterion: 8459.913 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> B-structure - Fixed effects (values ~ 1 + mt + phaseB + interB)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             B lower 95% CI upper 95% CI sample size     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              48.243       45.367       51.070     882.701 0.001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)              0.619        0.405        0.836    1000.000 0.001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB) 13.872       12.238       15.481    1000.000 0.001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)  0.867        0.652        1.099    1000.000 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              48.191       45.357       50.718        1000 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)              0.623        0.429        0.858        1000 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB) 13.831       12.121       15.487        1000 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)  0.862        0.628        1.076        1000 0.001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> G-Structure - Random effects (~us(1 + phaseB):case)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Parameter    SD lower 95% CI upper 95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Intercept 9.765        7.555       11.701</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Level phase B (phaseB) 3.989        2.909        4.968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Intercept 9.783        7.557       11.708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Level phase B (phaseB) 3.962        2.725        4.915</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Correlation</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         Parameter Correlation lower 95% CI upper 95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Intercept:Level phase B (phaseB)       0.073       -0.296        0.405</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Intercept:Level phase B (phaseB)       0.073       -0.252        0.454</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> R-Structure - Residuals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           SD lower 95% CI upper 95% CI </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        5.014        4.821        5.210 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        5.011        4.799        5.196 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -14,13 +14,15 @@ print.sc_bplm <- function(x, digits = 3, ...) {
   
   out <- .output_bplm(x)
   
-  cat("Deviance Information Criteron:", out$DIC, "\n\n")
+  cat("Deviance Information Criterion:", out$dic, "\n\n")
   
   cat("B-structure - Fixed effects (", out$formula$fixed, ")\n\n", sep = "")
   print(round_numeric(out$fixed, digits))
   
-  cat("\nG-Structure - Random effects (", out$formula$random, ")\n\n", sep = "")
-  print(round_numeric(out$random, digits), row.names = FALSE, ...)
+  if (!is.null(out$random)) {
+    cat("\nG-Structure - Random effects (", out$formula$random, ")\n\n", sep = "")
+    print(round_numeric(out$random, digits), row.names = FALSE, ...)
+  }
   
   if (!is.null(out$correlation)) {
     cat("\nCorrelation\n")
@@ -53,10 +55,17 @@ export.sc_bplm <- function(object,
   kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (is.na(caption)) {
-    caption <- paste0(
-      "Bayesian Piecewise Linear Regression predicting variable '", 
-      attr(object, opt("dv")),  "'"
-    )
+    if (object$N == 1) {
+      caption <- paste0(
+        "Bayesian Piecewise Linear Regression predicting variable '", 
+        attr(object, opt("dv")),  "'"
+      )
+    } else {
+      caption <- paste0(
+        "Bayesian Multilevel Piecewise Linear Regression predicting variable '", 
+        attr(object, opt("dv")),  "'"
+      )
+    }
   }
   
   footnote <- c(
@@ -96,19 +105,22 @@ export.sc_bplm <- function(object,
   rownames(out) <- NULL
 
   # add G-structure -----
-  names(dat_g)[1] <- " "
-  dat_g[, ] <- lapply(dat_g, function(x)
-    if (inherits(x, "numeric")) as.character(round(x, round)) else x
-  )
- 
-  tmp_row <- (nrow_b + 1):(nrow_b + nrow_g + 1)
-  out[tmp_row, ] <- ""
   
-  out[tmp_row, 1:ncol(dat_r)] <- rbind(
-    colnames(dat_g), 
-    dat_g, 
-    stringsAsFactors = FALSE
-  )
+  if (!is.null(results$random)) {
+    names(dat_g)[1] <- " "
+    dat_g[, ] <- lapply(dat_g, function(x)
+      if (inherits(x, "numeric")) as.character(round(x, round)) else x
+    )
+    
+    tmp_row <- (nrow_b + 1):(nrow_b + nrow_g + 1)
+    out[tmp_row, ] <- ""
+    
+    out[tmp_row, 1:ncol(dat_r)] <- rbind(
+      colnames(dat_g), 
+      dat_g, 
+      stringsAsFactors = FALSE
+    )
+  }
  
   # add R-structure -----
 
@@ -130,29 +142,52 @@ export.sc_bplm <- function(object,
     "DIC", as.character(round(results$dic, 1))
   )
 
+  row_group <- if (!is.null(results$random)) {
+    list(
+      "Fixed effects (B-Structure)" = 1:nrow_b,
+      "Random effects (G-Structure)" = (nrow_b + 1) : (nrow_b + nrow_g + 1),
+      "Residuals (R-Structure)" = (nrow_b + nrow_g + 2) : (nrow_b + nrow_g + nrow_r + 2),
+      "Model" = (nrow_b + nrow_g + nrow_r + 2) : nrow(out)
+    )
+  } else {
+    list(
+      "Fixed effects (B-Structure)" = 1:nrow_b,
+      "Residuals (R-Structure)" = (nrow_b + 1) : (nrow_b + nrow_r + 1),
+      "Model" = (nrow_b + nrow_r + 1) : nrow(out)
+    )
+  }
+  
+  
   table <- .create_table(
     out,
     kable_options,
     kable_styling_options,
     caption = caption,
     footnote = footnote,
-    row_group = list(
-      "Fixed effects (B-Structure)" = 1:nrow_b,
-      "Random effects (G-Structure)" = (nrow_b + 1) : (nrow_b + nrow_g + 1),
-      "Residuals (R-Structure)" = (nrow_b + nrow_g + 2) : (nrow_b + nrow_g + nrow_r + 2),
-      "Model" = (nrow_b + nrow_g + nrow_r + 2) : nrow(out)
-    )
+    row_group = row_group
   )
 
   if (getOption("scan.export.engine") == "kable") {
-    table <- table |>
-      #pack_rows("Fixed effects", 1, nrow_out, indent = FALSE) |>
-      pack_rows("\nRandom effects (G-Structure)", nrow_b + 1, nrow_b + nrow_g  + 1, indent = FALSE) |>
-      pack_rows("\nResiduals (R-Structure)", nrow_b + nrow_g + 2, nrow_b + nrow_g + nrow_r + 2, indent = FALSE) |>
-      pack_rows("\nModel", nrow(out), nrow(out), indent = FALSE) |>
-      #row_spec(nrow_out + nrow(dat_g) + 1, hline_after = TRUE) |>
-      row_spec(nrow_b, hline_after = TRUE) |> 
-      row_spec(nrow_b + nrow_g + 1, hline_after = TRUE)
+    if (!is.null(results$random)) {
+      table <- table |>
+        #pack_rows("Fixed effects", 1, nrow_out, indent = FALSE) |>
+        pack_rows("\nRandom effects (G-Structure)", nrow_b + 1, nrow_b + nrow_g  + 1, indent = FALSE) |>
+        pack_rows("\nResiduals (R-Structure)", nrow_b + nrow_g + 2, nrow_b + nrow_g + nrow_r + 2, indent = FALSE) |>
+        pack_rows("\nModel", nrow(out), nrow(out), indent = FALSE) |>
+        #row_spec(nrow_out + nrow(dat_g) + 1, hline_after = TRUE) |>
+        row_spec(nrow_b, hline_after = TRUE) |> 
+        row_spec(nrow_b + nrow_g + 1, hline_after = TRUE)
+    }
+    
+    if (is.null(results$random)) {
+      table <- table |>
+        #pack_rows("\nRandom effects (G-Structure)", nrow_b + 1, nrow_b + nrow_g  + 1, indent = FALSE) |>
+        pack_rows("\nResiduals (R-Structure)", nrow_b + 1, nrow_b + nrow_r + 1, indent = FALSE) |>
+        pack_rows("\nModel", nrow(out), nrow(out), indent = FALSE) |>
+        #row_spec(nrow_out + nrow(dat_g) + 1, hline_after = TRUE) |>
+        row_spec(nrow_b, hline_after = TRUE) 
+    }
+    
   }
   
   if (!is.na(filename)) .save_export(table, filename)
@@ -245,11 +280,11 @@ export.sc_bplm <- function(object,
       
     }
     
-    R_structure <- model_summary$Rcovariances[, -4]
-    names(R_structure) <- c("SD", "lower 95% CI", "upper 95% CI") 
-    out$residuals <- sqrt(R_structure)
-    
   }
+  
+  R_structure <- model_summary$Rcovariances[, -4]
+  names(R_structure) <- c("SD", "lower 95% CI", "upper 95% CI") 
+  out$residuals <- sqrt(R_structure)
   
   out
 }

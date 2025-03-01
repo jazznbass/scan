@@ -129,7 +129,6 @@ export <- function (object, ...) {
     return(table)
   }
   
-  
   rownames(x) <- NULL
   
   if (!is.null(align)) options$align <- align

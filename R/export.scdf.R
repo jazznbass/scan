@@ -31,9 +31,15 @@ export.scdf <- function(object,
   
   N <- cases <- length(object)
   
-  if (is.na(caption)) 
-    caption <- paste("Single case data frame with", number_word(N), "cases")
-  
+  if (is.na(caption)) {
+    if (N > 1) {
+      caption <- paste("Single case data frame with", number_word(N), "cases")
+    } else {
+      caption <- paste("Single case data frame for case", names(object))
+    }
+    
+  }
+      
   if (missing(cols)) {
     cols <- names(object[[1]])
   }
@@ -59,11 +65,17 @@ export.scdf <- function(object,
   
   kable_options$align <- rep("c", ncol(out))
   
-  spanner <- setNames(vector("list", N), names(object))
   n_vars <- ncol(out) / N
-  for(i in 1:N) {
-    spanner[[i]] <- ((i - 1) * n_vars + 1) : ((i - 1) * n_vars + n_vars)
-  }
+  
+  if (N > 1) {
+    spanner <- setNames(vector("list", N), names(object))
+    for(i in 1:N) {
+      spanner[[i]] <- ((i - 1) * n_vars + 1) : ((i - 1) * n_vars + n_vars)
+    }
+    
+  } else {
+    spanner <- NULL
+  } 
   
   table <- .create_table(
     out, 
@@ -76,9 +88,11 @@ export.scdf <- function(object,
   )
   
   if (getOption("scan.export.engine") == "kable") {
-    case_names <- rep(n_vars, N)
-    names(case_names) <- names(object)
-    table <- add_header_above(table, case_names)
+    if (N > 1) { 
+      case_names <- rep(n_vars, N)
+      names(case_names) <- names(object)
+      table <- add_header_above(table, case_names)
+    }
   }
   
   # finish ------------------------------------------------------------------
