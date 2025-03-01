@@ -1,0 +1,42 @@
+Package: scan
+Type: Package
+Title: Single-Case Data Analyses for Single and Multiple Baseline
+        Designs
+Version: 0.63.0
+Date: 2025-03-01
+Authors@R: c(
+  person("Juergen", "Wilbert", email = "juergen.wilbert@uni-muenster.de", 
+    role = c("cre", "aut"), comment = c(ORCID = "0000-0002-8392-2873")), 
+  person("Timo", "Lueke", email = "timo.lueke@uni-graz.at", role = "aut", 
+    comment = c(ORCID = "0000-0002-2603-7341")))
+Depends: R (>= 4.1.0)
+Imports: stats, nlme, MCMCglmm, utils, methods, graphics, car, gt,
+        knitr, kableExtra, readxl, mblm, magrittr
+Suggests: testthat (>= 3.0.0), shiny, yaml, scplot
+Description: A collection of procedures for analysing, visualising, 
+  and managing single-case data. These include piecewise linear regression 
+  models, multilevel models, overlap indices ('PND', 'PEM', 'PAND', 'PET', 'tau-u', 
+  'baseline corrected tau', 'CDC'), and randomization tests. Data preparation functions 
+  support outlier detection, handling missing values, scaling, and custom transformations. 
+  An export function helps to generate 
+  html, word, and latex tables in a publication friendly style. More details can be 
+  found in the online book 'Analyzing single-case data with R and scan', Juergen Wilbert (2025)
+  <https://jazznbass.github.io/scan-Book/>.
+License: GPL (>= 3)
+URL: https://github.com/jazznbass/scan/,
+        https://jazznbass.github.io/scan-Book/,
+        https://github.com/jazznbass/scan
+BugReports: https://github.com/jazznbass/scan/issues
+LazyData: true
+Encoding: UTF-8
+RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3
+RemoteType: local
+RemoteUrl: /Users/wilbert/Documents/GitHub/scan
+NeedsCompilation: no
+Packaged: 2025-03-01 10:09:04 UTC; wilbert
+Author: Juergen Wilbert [cre, aut] (<https://orcid.org/0000-0002-8392-2873>),
+  Timo Lueke [aut] (<https://orcid.org/0000-0002-2603-7341>)
+Maintainer: Juergen Wilbert <juergen.wilbert@uni-muenster.de>
+Built: R 4.4.2; ; 2025-03-01 10:09:04 UTC; unix

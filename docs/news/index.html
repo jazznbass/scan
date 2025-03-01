@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.62.999</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.63.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,9 +33,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.62.999" id="scan-062999">scan 0.62.999<a class="anchor" aria-label="anchor" href="#scan-062999"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.63.0" id="scan-0630">scan 0.63.0<a class="anchor" aria-label="anchor" href="#scan-0630"></a></h2>
 <div class="section level3">
-<h3 id="new-functions--features-0-62-999">New functions / features<a class="anchor" aria-label="anchor" href="#new-functions--features-0-62-999"></a></h3>
+<h3 id="new-functions--features-0-63-0">New functions / features<a class="anchor" aria-label="anchor" href="#new-functions--features-0-63-0"></a></h3>
 <ul><li>
 <code><a href="../reference/bplm.html">bplm()</a></code>: Bayesian piecewise regression model. Applies a Markov Chain Monte Carlo sampler from the MCMCglmm package. With export method.</li>
 <li>
@@ -45,14 +45,16 @@
 <li>new option: <code>scan.rename.predictors</code> can be set to <code>no</code>, <code>concise</code>, or <code>full</code>. Changes how predictors of regression models are renamed.</li>
 <li>
 <code><a href="../reference/between_smd.html">between_smd()</a></code>: Added support for Bayesian regressions <code>model = "bayesian"</code> or providing an object returned from the <code><a href="../reference/bplm.html">bplm()</a></code> function.</li>
+<li>
+<code>anova.plm() anova.hplm()</code>: Methods for likelihood ratio model comparison.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="solved-bugs-0-62-999">Solved bugs<a class="anchor" aria-label="anchor" href="#solved-bugs-0-62-999"></a></h3>
+<h3 id="solved-bugs-0-63-0">Solved bugs<a class="anchor" aria-label="anchor" href="#solved-bugs-0-63-0"></a></h3>
 <ul><li>
 <code><a href="../reference/plm.html">plm()</a></code>: setting <code>var_trials</code> to a constant threw an error.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="corrections--changes-0-62-999">Corrections / Changes<a class="anchor" aria-label="anchor" href="#corrections--changes-0-62-999"></a></h3>
+<h3 id="corrections--changes-0-63-0">Corrections / Changes<a class="anchor" aria-label="anchor" href="#corrections--changes-0-63-0"></a></h3>
 <ul><li>
 <code><a href="../reference/between_smd.html">between_smd()</a></code>: Reworked the function output to avoid confusion. A ‘pure’ between case smd estimation is provided when the argument <code>include_residuals = FALSE</code> is set.</li>
 <li>

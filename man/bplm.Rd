@@ -147,10 +147,10 @@ chain Monte Carlo sampler.
 bplm(example_A24)
 
 # Multilevel plm regression with random intercept
-bplm(exampleAB_50)
+bplm(exampleAB_50, nitt = 5000)
 
 # Adding a random slope
-bplm(exampleAB_50, random_level = TRUE)
+bplm(exampleAB_50, random_level = TRUE, nitt = 5000)
 }
 \seealso{
 Other regression functions: 

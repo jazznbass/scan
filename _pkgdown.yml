@@ -64,6 +64,7 @@ reference:
   - write_scdf
 - subtitle: Single-case data analysis
 - contents:
+  - anova.sc_plm
   - autocorr
   - batch_apply
   - cdc
