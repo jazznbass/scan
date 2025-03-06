@@ -15,7 +15,9 @@
 #' @export
 anova.sc_plm <- function(object, ...) {
   models <- list(...)
-  models <- lapply(models, function(x) x$full.model)
+  models <- lapply(models, function(x) {
+    if (inherits(x, "sc_plm")) x$full.model else x
+  })
   models <- c(list(object$full.model), models)
   
   do.call(anova, models)
@@ -26,8 +28,23 @@ anova.sc_plm <- function(object, ...) {
 #' @export
 anova.sc_hplm <- function(object, ...) {
   models <- list(...)
-  models <- lapply(models, function(x) x$hplm)
+  models <- lapply(models, function(x) {
+    if (inherits(x, "sc_hplm")) x$hplm else x
+  })
   models <- c(list(object$hplm), models)
+  
+  do.call(anova, models)
+  
+}
+
+#' @rdname anova.sc_mplm
+#' @export
+anova.sc_mplm <- function(object, ...) {
+  models <- list(...)
+  models <- lapply(models, function(x) {
+    if (inherits(x, "sc_mplm")) x$full.model else x
+  })
+  models <- c(list(object$mplm), models)
   
   do.call(anova, models)
   
