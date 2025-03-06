@@ -1,3 +1,7 @@
+# scan 0.63.999
+
+- `anova()`: Implemented functinality of further arguments of the generic anova functions.
+
 # scan 0.63.0
 
 ## New functions / features
