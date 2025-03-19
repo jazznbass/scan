@@ -88,7 +88,7 @@ mplm <- function(data, dvar, mvar, pvar,
   data <- tmp_model$data[[1]]
 
   if (is.null(formula)) {
-    formula_fixed <- .create_fixed_formula(
+    formula <- .create_fixed_formula(
       dvar = "y", 
       mvar = mvar, 
       slope = slope, 
@@ -103,7 +103,7 @@ mplm <- function(data, dvar, mvar, pvar,
 
   y <- as.matrix(data[, dvar])
  
-  full <- lm(formula_fixed, data = data, na.action = na.action, ...)
+  full <- lm(formula, data = data, na.action = na.action, ...)
   full$coef_std <- .std_lm(full)
   
   out <- structure(
@@ -111,7 +111,7 @@ mplm <- function(data, dvar, mvar, pvar,
       model = model, 
       contrast = list(level = contrast_level, slope = contrast_slope), 
       full.model = full, 
-      formula = formula_fixed
+      formula = formula
     ),
     class = c("sc_mplm")
   )

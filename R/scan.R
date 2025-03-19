@@ -21,6 +21,8 @@
     scan.print.scdf.name = TRUE,
     scan.plot.style = "grid",
     scan.rename.predictors = "full",
+    scan.string.dummy.slope = "inter",
+    scan.string.dummy.phase = "phase",
     scan.deprecated.warning = TRUE,
     scan.export.engine = "kable",
     scan.export.footnote.collapse = "; ",

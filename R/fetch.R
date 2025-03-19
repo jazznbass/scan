@@ -28,7 +28,7 @@ fetch.sc_hplm <- function(object, what = "model", ...) {
 #' @export
 fetch.sc_bplm <- function(object, what = "model", ...) {
   if (what == "model") {
-    return(object$bplm)
+    return(object$mcmcglmm)
   }
 }
 

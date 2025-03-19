@@ -127,7 +127,7 @@ contr.cum <- function(n) {
 
 .create_phase_dummies <- function(fac, 
                           contrast, 
-                          var_name = opt("phase_dummy")) {
+                          var_name = getOption("scan.string.dummy.phase")) {
   
   if (missing(contrast)) contrast <- contrasts(fac)
   if(is.null(colnames(contrast))) {
@@ -159,7 +159,7 @@ contr.cum <- function(n) {
                                   mt, 
                                   contrast, 
                                   model, 
-                                  var_name = opt("inter_dummy")) {
+                                  var_name = getOption("scan.string.dummy.slope")) {
   
   if(is.null(colnames(contrast))) {
     dummy_names <- paste0(var_name, 1:ncol(contrast))
