@@ -243,7 +243,12 @@ plm <- function(data, dvar, pvar, mvar,
     MQSA <- (QST - QSE) / df_effect
     MQSE <- QSE / df_residuals
     F <- MQSA / MQSE
-    p <- pf(F, df_effect, df_residuals, lower.tail = FALSE)
+    
+    if (!is.infinite(F)) {
+      p <- pf(F, df_effect, df_residuals, lower.tail = FALSE)
+    } else {
+      p <- NULL
+    }
     
     total_variance <- var(data[[dvar]])
     r2 <- 1 - (var(full$residuals) / total_variance)

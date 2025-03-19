@@ -138,11 +138,15 @@ export.sc_plm <- function(object,
       df, chi, 1 - pchisq(chi, df = df)
     )
   } else {
-    out$fit <- sprintf(
-      "F(%d, %d) = %.2f; p = %0.3f; R\u00b2 = %0.3f; Adjusted R\u00b2 = %0.3f", 
-      x$F.test["df1"], x$F.test["df2"], x$F.test["F"], 
-      x$F.test["p"],   x$F.test["R2"],  x$F.test["R2.adj"]
-    )
+    out$fit <- if (x$F.test["df1"] == 0) {
+      "Null model" 
+    } else {
+      sprintf(
+        "F(%d, %d) = %.2f; p = %0.3f; R\u00b2 = %0.3f; Adjusted R\u00b2 = %0.3f", 
+        x$F.test["df1"], x$F.test["df2"], x$F.test["F"], 
+        x$F.test["p"],   x$F.test["R2"],  x$F.test["R2.adj"]
+      )
+    }
   }
   
   ## coef table ----
@@ -185,6 +189,8 @@ export.sc_plm <- function(object,
     if (format == "export") str_ci <- c("LL", "UL")
     
     ci <- suppressMessages(confint(x$full, level = ci))
+    
+    if (length(ci) == 2) ci <- matrix(ci, ncol = 2)
     param_filter <- apply(
       ci, 1, function(x) if(!all(is.na(x))) TRUE else FALSE
     )

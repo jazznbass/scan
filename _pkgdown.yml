@@ -46,6 +46,7 @@ reference:
   - add_dummy_variables
   - combine
   - na.omit.scdf
+  - fetch
   - starts_with("coef")
   - fill_missing
   - sample_names

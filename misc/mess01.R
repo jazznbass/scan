@@ -1,5 +1,33 @@
 
-# 2024-08-29
+# 2025-03-04 ---- own functions in power test ----
+
+mc_function <-  function(x) {
+  res <- summary(hplm(x, slope = FALSE, trend = FALSE  ,random.slopes=FALSE, ICC=FALSE)$hplm)$tTable
+  res[2, 5]
+}
+
+
+design <- design(
+  n = 16, phase_design = list(A = 2, B = 4), 
+  trend = 0, level = list(1), slope = list(0), 
+  start_value = 50, rtt = 0.7, distribution = "normal"
+)
+
+res <- power_test(design, method = list(hplm_only_level = mc_function, hplm_full = "hplm_level"), effect = "level", n_sim = 1000)
+
+
+res <- power_test(design, method = list(hplm = mc_function), effect = "level", n_sim = 1000)
+
+print(res, digits = 2)
+
+
+summary(hplm(Leidig2018, slope = FALSE, trend = FALSE  ,random.slopes=FALSE, ICC=FALSE)$hplm)$tTable
+
+random_scdf(design) |> select_cases(1:4) |> scplot()
+random_scdf(design) %>% hplm(.,slope = TRUE, trend = TRUE  ,random.slopes=FALSE, ICC=FALSE)
+
+
+
 
 
 
