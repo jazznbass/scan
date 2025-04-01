@@ -74,10 +74,10 @@ a statistical function.
 }
 \details{
 Based on a \code{\link[=design]{design()}} object, a large number of single-cases are generated
-and re-analyzed with a provided statistical function. The proportion of
-significant analyzes is the test power. In a second step, a specified effect
+and re-analysed with a provided statistical function. The proportion of
+significant analyses is the test power. In a second step, a specified effect
 of the design object is set to 0 and again single-cases are generated and
-reanalyzed. The proportion of significant analyzes is the alpha error
+re-analysed. The proportion of significant analyses is the alpha error
 probability.
 }
 \examples{
