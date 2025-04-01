@@ -3,7 +3,7 @@
 %   R/export.sc_nap.R, R/export.sc_overlap.R, R/export.sc_pem.R,
 %   R/export.sc_pet.R, R/export.sc_pnd.R, R/export.sc_power.R,
 %   R/export.sc_smd.R, R/export.sc_trend.R, R/export.scdf.R,
-%   R/export.scdf_summary.R, R/print-export-plm.R
+%   R/export.scdf_summary.R, R/print-export-plm.R, R/print.sc_mplm.R
 \name{export}
 \alias{export}
 \alias{export.sc_desc}
@@ -18,6 +18,7 @@
 \alias{export.scdf}
 \alias{export.scdf_summary}
 \alias{export.sc_plm}
+\alias{export.sc_mplm}
 \title{Export scan objects to html or latex}
 \usage{
 export(object, ...)
@@ -168,6 +169,19 @@ export(object, ...)
   q = FALSE,
   ...
 )
+
+\method{export}{sc_mplm}(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  kable_styling_options = list(),
+  kable_options = list(),
+  nice = TRUE,
+  std = FALSE,
+  decimals = 2,
+  ...
+)
 }
 \arguments{
 \item{object}{An scdf or an object exported from a scan function.}
@@ -212,6 +226,8 @@ publication tables.}
 between 0 and 1 (0.90 for a 90\% intervals).}
 
 \item{q}{Logical. If set \code{TRUE}, Yule's Q is reported.}
+
+\item{std}{If TRUE, a table with standardized estimates is included.}
 }
 \value{
 Returns or displays a specially formatted html (or latex) file.

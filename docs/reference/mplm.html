@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.64.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.64.999</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -188,60 +188,42 @@ If set to "auto" (default), values are predefined.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate piecewise linear model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W level = first, slope = first</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Type III MANOVA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Pillai = 0.35; F(6, 158) = 5.57; p = 0.000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        academic_engagement disruptive_behavior</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                            2.771              0.8493</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)                          -0.216              0.0822</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)               2.340             -1.3898</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)               0.219             -0.0803</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        academic_engagement disruptive_behavior Pillai      F</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                            2.771               0.849  0.284 15.475</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)                          -0.216               0.082  0.032  1.275</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)               2.340              -1.390  0.190  9.176</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)               0.219              -0.080  0.031  1.267</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)             0.285</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB) 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB) 0.287</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: y ~ 1 + mt + phaseB + interB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Type III MANOVA Tests: Pillai test statistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        Df test stat approx F num Df den Df  Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept               1    0.2841    15.48      2     78 2.2e-06 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)              1    0.0317     1.28      2     78 0.28519    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)  1    0.1905     9.18      2     78 0.00026 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)  1    0.0315     1.27      2     78 0.28737    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> The following variables were used in this analysis:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 'academic_engagement/ disruptive_behavior' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</span>
 <span class="r-in"><span><span class="co">## also report standardized coefficients:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span>, std <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate piecewise linear model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W level = first, slope = first</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Type III MANOVA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Pillai = 0.35; F(6, 158) = 5.57; p = 0.000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        academic_engagement disruptive_behavior</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                            2.771              0.8493</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)                          -0.216              0.0822</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)               2.340             -1.3898</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)               0.219             -0.0803</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        academic_engagement disruptive_behavior Pillai      F</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                            0.000               0.000  0.284 15.475</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)                          -5.979               5.107  0.032  1.275</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)               0.576              -0.767  0.190  9.176</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)               5.950              -4.897  0.031  1.267</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)             0.285</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB) 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB) 0.287</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standardized coefficients: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        academic_engagement disruptive_behavior</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                            0.000               0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)                          -5.979               5.107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)               0.576              -0.767</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)               5.950              -4.897</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients are standardized</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: y ~ 1 + mt + phaseB + interB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Type III MANOVA Tests: Pillai test statistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        Df test stat approx F num Df den Df  Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept               1    0.2841    15.48      2     78 2.2e-06 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)              1    0.0317     1.28      2     78 0.28519    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)  1    0.1905     9.18      2     78 0.00026 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)  1    0.0315     1.27      2     78 0.28737    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> The following variables were used in this analysis:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 'academic_engagement/ disruptive_behavior' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

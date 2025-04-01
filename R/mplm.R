@@ -106,11 +106,14 @@ mplm <- function(data, dvar, mvar, pvar,
   full <- lm(formula, data = data, na.action = na.action, ...)
   full$coef_std <- .std_lm(full)
   
+  null <- lm(y ~ 1, na.action = na.action, ...)
+  
   out <- structure(
     list(
       model = model, 
       contrast = list(level = contrast_level, slope = contrast_slope), 
-      full.model = full, 
+      full.model = full,
+      null_model = null,
       formula = formula
     ),
     class = c("sc_mplm")
