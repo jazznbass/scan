@@ -1,3 +1,19 @@
+# scan 0.64.999
+
+## New features
+
+- `mplm()`: Reworked the function and its output. Now provides global F test and a more integrated depiction of the coefficients. Added export() method.
+- `plm()/print.sc_plm()`: either print partial or delta (incremental), or both R squared: 
+
+```r
+res <- plm(exampleAB$Johanna)
+print(res, r_squared = c("delta", "partial"))
+```
+
+## Corrections
+
+- `plm()`: Corrected calculation for model fit F statistic and R2 for models without an intercept
+
 # scan 0.64.0
 
 ## New functions
@@ -13,11 +29,8 @@ fetch(mod)
 ## New features
 
 - `anova()`: Implemented functionality of further arguments of the generic anova functions.
-- `mplm()`: Reworked the function and its output. Now provides global F test and a more integrated depiction of the coefficients. Added export() method.
 - `options(scan.string.dummy.phase = "phase")`: can be renamed to avoid name conflicts in the output of regression models.
 - `options(scan.string.dummy.slope = "inter")`: can be renamed to avoid name conflicts in the output of regression models.
-
-
 
 # scan 0.63.0
 

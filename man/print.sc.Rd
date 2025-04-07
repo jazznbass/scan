@@ -26,7 +26,14 @@
 \alias{print.sc_trend}
 \title{Print methods for scan objects}
 \usage{
-\method{print}{sc_plm}(x, lag_max = 3, ci = 0.95, q = FALSE, ...)
+\method{print}{sc_plm}(
+  x,
+  lag_max = 3,
+  ci = 0.95,
+  q = FALSE,
+  r_squared = getOption("scan.rsquared"),
+  ...
+)
 
 \method{print}{sc_ac}(x, digits = "auto", ...)
 
@@ -70,6 +77,8 @@ Default is \code{3}. Set \code{FALSE} for no report of autocorrelations.}
 between 0 and 1 (0.90 for a 90\% intervals).}
 
 \item{q}{Logical. If set \code{TRUE}, Yule's Q is reported.}
+
+\item{r_squared}{Either "delta", "partial", or "none".}
 
 \item{...}{Further parameters passed to the print function}
 
