@@ -147,6 +147,8 @@ plm <- function(data, dvar, pvar, mvar,
   
   original_attr <- attributes(data)[[opt("scdf")]]
   
+  regmodel <- if (AR == 0) "glm" else "gls"
+  
   # formula definition ------------------------------------------------------
   
   tmp_model <- .add_dummy_variables(
@@ -179,7 +181,7 @@ plm <- function(data, dvar, pvar, mvar,
   
   # glm models --------------------------------------------------------------
   
-  if(AR == 0) {
+  if(regmodel == "glm") {
     
     if (family != "binomial") {
       full <- glm(
@@ -200,9 +202,6 @@ plm <- function(data, dvar, pvar, mvar,
       )
     }
     
-    df_residuals <- full$df.residual
-    df_intercept <- if (attr(full$terms, "intercept")) 1 else 0
-    
     if (r_squared) {
       restricted.models <- lapply(
         formulas_restricted, 
@@ -212,13 +211,11 @@ plm <- function(data, dvar, pvar, mvar,
     }
   }
   
-  if(AR > 0) {
+  if(regmodel == "gls") {
     full <- gls(
       formula_full, data = data, correlation = corARMA(p = AR), 
       method = "ML", na.action = na.action
     )
-    df_residuals <- full$dims$N - full$dims$p
-    df_intercept <- if ("(Intercept)" %in% names(full$parAssign)) 1 else 0
     
     if (r_squared) {
       restricted.models <- lapply(
@@ -235,40 +232,77 @@ plm <- function(data, dvar, pvar, mvar,
   # F and R-Squared ---------------------------------------------------------
   
   if (family == "gaussian") {
-    n <- length(full$residuals)
-    df_effect <- n - 1 - df_residuals
     
-    QSE <- sum(full$residuals^2, na.rm = TRUE)
-    QST <- sum((data[[dvar]] - mean(data[[dvar]]))^2)
-    MQSA <- (QST - QSE) / df_effect
-    MQSE <- QSE / df_residuals
-    F <- MQSA / MQSE
+    if (regmodel == "gls") {
+      df_residuals <- full$dims$N - full$dims$p
+      df_intercept <- if ("(Intercept)" %in% names(coef(full))) 1 else 0
+      y <- fitted(full) + residuals(full)#model.response(model.frame(full))
+    }
+   
+    if (regmodel == "glm") {
+      df_residuals <- full$df.residual
+      df_intercept <- if (attr(full$terms, "intercept")) 1 else 0
+      y <- model.response(model.frame(full))
+    }
+   
+    residuals <- as.numeric(resid(full))
+    n <- length(residuals)
+    #df_effect <- n - 1 - df_residuals
+    df_model <- length(coef(full))
+    df_effect <- df_model - df_intercept
+
+    qse <- sum(residuals^2)
     
-    if (!is.infinite(F)) {
-      p <- pf(F, df_effect, df_residuals, lower.tail = FALSE)
+    if (df_intercept == 1) {
+      qst <- sum((y - mean(y))^2)
+    } else {
+      qst <- sum(y^2)
+    }
+    
+    mqsa <- (qst - qse) / df_effect
+    mqse <- qse / df_residuals
+    f_value <- mqsa / mqse
+   
+    if (!is.infinite(f_value)) {
+      p <- pf(f_value, df_effect, df_residuals, lower.tail = FALSE)
     } else {
       p <- NULL
     }
     
-    total_variance <- var(data[[dvar]])
-    r2 <- 1 - (var(full$residuals) / total_variance)
+    if (df_intercept == 1) {
+      total_variance <- qst / (n - 1) # identical to var(y)
+      mse <- var(residuals)
+    } else {
+      total_variance <- qst / n
+      mse <- sum(residuals^2) / n
+    }
+    
+    r2 <- 1 - mse / total_variance
     r2_adj <- 1 - (1 - r2) * ((n - df_intercept) / df_residuals)
     
+    f_test <- c(
+      F = f_value, 
+      df1 = df_effect, 
+      df2 = df_residuals, 
+      p = p, 
+      R2 = r2, 
+      R2.adj = r2_adj
+    )
+
     if (r_squared) {
       r_squares <- lapply(restricted.models, function(x) 
-        r2 - (1 - (var(x$residuals, na.rm = TRUE) / total_variance))
+        r2 - (1 - (var(resid(x), na.rm = TRUE) / total_variance))
       )
       r_squares <- unlist(r_squares)
-    } else r_squares <- NA
+    } else {
+      r_squares <- NA
+    }
     
-    F_test <- c(
-      F = F, df1 = df_effect, df2 = df_residuals, p = p, 
-      R2 = r2, R2.adj = r2_adj
-    )
+ 
   }
   
   if (family != "gaussian") {
-    F_test <- NA
+    f_test <- NA
     r_squares <- NA
   }
   
@@ -280,7 +314,7 @@ plm <- function(data, dvar, pvar, mvar,
     formula = formula_full, 
     model = model, 
     contrast = list(level = contrast_level, slope = contrast_slope),
-    F.test = F_test, 
+    F.test = f_test, 
     r.squares = r_squares, 
     ar = AR, 
     family = family, 

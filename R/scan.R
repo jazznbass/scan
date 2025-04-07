@@ -21,6 +21,7 @@
     scan.print.scdf.name = TRUE,
     scan.plot.style = "grid",
     scan.rename.predictors = "full",
+    scan.rsquared = "delta",
     scan.string.dummy.slope = "inter",
     scan.string.dummy.phase = "phase",
     scan.deprecated.warning = TRUE,

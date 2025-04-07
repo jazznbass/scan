@@ -3,6 +3,16 @@
 ## New features
 
 - `mplm()`: Reworked the function and its output. Now provides global F test and a more integrated depiction of the coefficients. Added export() method.
+- `plm()/print.sc_plm()`: either print partial or delta (incremental), or both R squared: 
+
+```r
+res <- plm(exampleAB$Johanna)
+print(res, r_squared = c("delta", "partial"))
+```
+
+## Corrections
+
+- `plm()`: Corrected calculation for model fit F statistic and R2 for models without an intercept
 
 # scan 0.64.0
 

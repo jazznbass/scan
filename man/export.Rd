@@ -167,6 +167,7 @@ export(object, ...)
   nice = TRUE,
   ci = 0.95,
   q = FALSE,
+  r_squared = getOption("scan.rsquared"),
   ...
 )
 
@@ -228,6 +229,8 @@ between 0 and 1 (0.90 for a 90\% intervals).}
 \item{q}{Logical. If set \code{TRUE}, Yule's Q is reported.}
 
 \item{std}{If TRUE, a table with standardized estimates is included.}
+
+\item{r_sqaured}{Either "delta", "partial", or "none".}
 }
 \value{
 Returns or displays a specially formatted html (or latex) file.
