@@ -33,10 +33,13 @@
 #'   model.
 #' @param slope A logical indicating if a slope parameters is included in the
 #'   model.
+#' @param nice If set TRUE (default) output values are rounded and optimized for
+#'  publication tables.
 #' @param ... Further arguments passed to the function.
 #' @keywords internal
 .inheritParams <- function(data, scdf, dvar, mvar, pvar, decreasing, 
                            phases, model, contrast, contrast_level, 
-                           contrast_slope, trend, level, slope, ...) {
+                           contrast_slope, trend, level, slope, nice,
+                           ...) {
   
 } 

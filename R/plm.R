@@ -4,6 +4,7 @@
 #' McKean, 2000).
 #'
 #' @inheritParams .inheritParams
+#' @order 1
 #' @param AR Maximal lag of autoregression. Modelled based on the
 #'   Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
 #'   argument must be set to `family = "gaussian"`.

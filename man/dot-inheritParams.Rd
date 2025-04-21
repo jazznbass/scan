@@ -19,6 +19,7 @@
   trend,
   level,
   slope,
+  nice,
   ...
 )
 }
@@ -68,6 +69,9 @@ model.}
 
 \item{slope}{A logical indicating if a slope parameters is included in the
 model.}
+
+\item{nice}{If set TRUE (default) output values are rounded and optimized for
+publication tables.}
 
 \item{...}{Further arguments passed to the function.}
 }

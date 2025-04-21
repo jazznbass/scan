@@ -3,7 +3,7 @@
 %   R/export.sc_nap.R, R/export.sc_overlap.R, R/export.sc_pem.R,
 %   R/export.sc_pet.R, R/export.sc_pnd.R, R/export.sc_power.R,
 %   R/export.sc_smd.R, R/export.sc_trend.R, R/export.scdf.R,
-%   R/export.scdf_summary.R, R/print-export-plm.R, R/print.sc_mplm.R
+%   R/export.scdf_summary.R
 \name{export}
 \alias{export}
 \alias{export.sc_desc}
@@ -17,8 +17,6 @@
 \alias{export.sc_trend}
 \alias{export.scdf}
 \alias{export.scdf_summary}
-\alias{export.sc_plm}
-\alias{export.sc_mplm}
 \title{Export scan objects to html or latex}
 \usage{
 export(object, ...)
@@ -156,33 +154,6 @@ export(object, ...)
   round = 2,
   ...
 )
-
-\method{export}{sc_plm}(
-  object,
-  caption = NA,
-  footnote = NA,
-  filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
-  nice = TRUE,
-  ci = 0.95,
-  q = FALSE,
-  r_squared = getOption("scan.rsquared"),
-  ...
-)
-
-\method{export}{sc_mplm}(
-  object,
-  caption = NA,
-  footnote = NA,
-  filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
-  nice = TRUE,
-  std = FALSE,
-  decimals = 2,
-  ...
-)
 }
 \arguments{
 \item{object}{An scdf or an object exported from a scan function.}
@@ -219,18 +190,6 @@ accordingly.}
 \item{cols}{Defines which columns are included when exporting an scdf. It is
 either a vector of variable names or the string "main" will select the
 central variables.}
-
-\item{nice}{If set TRUE (default) output values are rounded and optimized for
-publication tables.}
-
-\item{ci}{Print confidence intervals. Either FALSE, TRUE or a number
-between 0 and 1 (0.90 for a 90\% intervals).}
-
-\item{q}{Logical. If set \code{TRUE}, Yule's Q is reported.}
-
-\item{std}{If TRUE, a table with standardized estimates is included.}
-
-\item{r_sqaured}{Either "delta", "partial", or "none".}
 }
 \value{
 Returns or displays a specially formatted html (or latex) file.

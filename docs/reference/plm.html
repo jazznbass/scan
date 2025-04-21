@@ -31,7 +31,7 @@ McKean, 2000)."><meta property="og:image" content="/logo.png"></head><body>
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Piecewise linear model / piecewise regression</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/plm.R" class="external-link"><code>R/plm.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/plm.R" class="external-link"><code>R/plm.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print-export-plm.R" class="external-link"><code>R/print-export-plm.R</code></a></small>
       <div class="d-none name"><code>plm.Rd</code></div>
     </div>
 
@@ -62,6 +62,31 @@ McKean, 2000).</p>
 <span>  r_squared <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  var_trials <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dvar_percentage <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'sc_plm'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  lag_max <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  q <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  r_squared <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"scan.rsquared"</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'sc_plm'</span></span>
+<span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  kable_styling_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  kable_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  nice <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  q <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  r_squared <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"scan.rsquared"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -155,8 +180,7 @@ for example to include further variables into the regression model.</p></dd>
 
 
 <dt id="arg-r-squared">r_squared<a class="anchor" aria-label="anchor" href="#arg-r-squared"></a></dt>
-<dd><p>Logical. If TRUE, delta r_squares will be calculated for
-each predictor.</p></dd>
+<dd><p>Either "delta", "partial", or "none".</p></dd>
 
 
 <dt id="arg-var-trials">var_trials<a class="anchor" aria-label="anchor" href="#arg-var-trials"></a></dt>
@@ -173,6 +197,57 @@ dvar is assumed to represent counts.</p></dd>
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Further arguments passed to the glm function.</p></dd>
+
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>Object</p></dd>
+
+
+<dt id="arg-lag-max">lag_max<a class="anchor" aria-label="anchor" href="#arg-lag-max"></a></dt>
+<dd><p>Maximum lag to be reported for autocorrelation of residuals.
+Default is <code>3</code>. Set <code>FALSE</code> for no report of autocorrelations.</p></dd>
+
+
+<dt id="arg-ci">ci<a class="anchor" aria-label="anchor" href="#arg-ci"></a></dt>
+<dd><p>Print confidence intervals. Either FALSE, TRUE or a number
+between 0 and 1 (0.90 for a 90% intervals).</p></dd>
+
+
+<dt id="arg-q">q<a class="anchor" aria-label="anchor" href="#arg-q"></a></dt>
+<dd><p>Logical. If set <code>TRUE</code>, Yule's Q is reported.</p></dd>
+
+
+<dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
+<dd><p>An scdf or an object exported from a scan function.</p></dd>
+
+
+<dt id="arg-caption">caption<a class="anchor" aria-label="anchor" href="#arg-caption"></a></dt>
+<dd><p>Character string with table caption. If left NA (default) a
+caption will be created based on the exported object.</p></dd>
+
+
+<dt id="arg-footnote">footnote<a class="anchor" aria-label="anchor" href="#arg-footnote"></a></dt>
+<dd><p>Character string with table footnote. If left NA (default) a
+footnote will be created based on the exported object.</p></dd>
+
+
+<dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
+<dd><p>String containing the file name. If a filename is given the
+output will be written to that file.</p></dd>
+
+
+<dt id="arg-kable-styling-options">kable_styling_options<a class="anchor" aria-label="anchor" href="#arg-kable-styling-options"></a></dt>
+<dd><p>list with arguments passed to the kable_styling
+function.</p></dd>
+
+
+<dt id="arg-kable-options">kable_options<a class="anchor" aria-label="anchor" href="#arg-kable-options"></a></dt>
+<dd><p>list with arguments passed to the kable function.</p></dd>
+
+
+<dt id="arg-nice">nice<a class="anchor" aria-label="anchor" href="#arg-nice"></a></dt>
+<dd><p>If set TRUE (default) output values are rounded and optimized for
+publication tables.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -205,6 +280,12 @@ above).</p></dd>
 <dd><p>Full regression model list from the gls or glm function.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
+
+<ul><li><p><code>print(sc_plm)</code>: Print</p></li>
+<li><p><code>export(sc_plm)</code>: Export results as html table (see <code><a href="export.html">export()</a></code>)</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Beretvas, S., &amp; Chung, H. (2008). An evaluation of modified
@@ -421,6 +502,102 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: percentage ~ 1 + mt + phaseB + interB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> weights = trials </span>
+<span class="r-in"><span><span class="co">## Print</span></span></span>
+<span class="r-in"><span><span class="fu">plm</span><span class="op">(</span><span class="va">exampleAB</span><span class="op">$</span><span class="va">Johanna</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>ci <span class="op">=</span> <span class="fl">0.9</span>, r_squared <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"delta"</span>, <span class="st">"partial"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Piecewise Regression Analysis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level = first, slope = first</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 16) = 28.69; p = 0.000; R² = 0.843; Adjusted R² = 0.814; AIC = 126.8444</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             B LL-CI90% UL-CI90%    SE      t     p delta R²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              54.400   48.002   60.798 3.890 13.986 0.000         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)              0.100   -2.512    2.712 1.588  0.063 0.951    0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)  7.858   -1.709   17.426 5.816  1.351 0.195    0.018</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)  1.525   -1.133    4.183 1.616  0.944 0.359    0.009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        partial R²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Trend (mt)                  0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Level phase B (phaseB)      0.102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)      0.053</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Autocorrelations of the residuals</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  lag    cr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1 -0.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2 -0.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3 -0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 2.84; p = 0.417 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: values ~ 1 + mt + phaseB + interB </span>
+<span class="r-in"><span><span class="co">## Export</span></span></span>
+<span class="r-in"><span><span class="fu">plm</span><span class="op">(</span><span class="va">exampleAB</span><span class="op">$</span><span class="va">Johanna</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="export.html">export</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;table class=" lightable-classic" style="width: auto !important; border-bottom: 0;"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;caption&gt;Piecewise-regression model predicting 'values'&lt;/caption&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;thead&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="2"&gt;&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;CI(95%)&lt;/div&gt;&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="4"&gt;&lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;th style="text-align:left;"&gt; Parameter &lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;th style="text-align:center;"&gt; B &lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;th style="text-align:center;"&gt; LL &lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;th style="text-align:center;"&gt; UL &lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;th style="text-align:center;"&gt; SE &lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;th style="text-align:center;"&gt; t &lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;th style="text-align:center;"&gt; p &lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;th style="text-align:center;"&gt; delta R² &lt;/th&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;/thead&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tbody&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Intercept &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 54.40 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 46.78 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 62.02 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 3.89 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 13.99 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; &amp;lt;.001 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt;  &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Trend (mt) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 0.10 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; -3.01 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 3.21 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 1.59 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 0.06 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; .95 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 0.000 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Level phase B (phaseB) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 7.86 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; -3.54 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 19.26 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 5.82 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 1.35 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; .19 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 0.018 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Slope phase B (interB) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 1.52 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; -1.64 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 4.69 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 1.62 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 0.94 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; .35 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 0.009 &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/tbody&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tfoot&gt;&lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;span style="font-style: italic;"&gt;Note: &lt;/span&gt; &lt;sup&gt;&lt;/sup&gt; F(3, 16) = 28.69; p = 0.000; R² = 0.843; Adjusted R² = 0.814; AIC = 127; LL = lower limit; UL = upper limit.&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/table&gt;</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

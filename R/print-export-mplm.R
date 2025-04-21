@@ -168,13 +168,9 @@ Pillai <- function (eig, q, df.res) {
   c(test, (tmp2/tmp1 * test)/(s - test), s * tmp1, s * tmp2)
 }
 
-#' @rdname export
-#' @param nice If set TRUE (default) output values are rounded and optimized for
-#' publication tables.
-#' @param ci Print confidence intervals. Either FALSE, TRUE or a number 
-#' between 0 and 1 (0.90 for a 90% intervals).
+#' @describeIn mplm Export results as html
+#' @inheritParams export
 #' @param std If TRUE, a table with standardized estimates is included.
-#' @param q Logical. If set `TRUE`, Yule's Q is reported.
 #' @export
 export.sc_mplm <- function(object, 
                           caption = NA, 
