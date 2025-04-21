@@ -1,10 +1,16 @@
-#' @rdname print.sc
+#' @describeIn plm Print
+#' @order 2
+#' @inheritParams print.sc
 #' @param lag_max Maximum lag to be reported for autocorrelation of residuals.
 #'   Default is `3`. Set `FALSE` for no report of autocorrelations.
 #' @param ci Print confidence intervals. Either FALSE, TRUE or a number 
-#' between 0 and 1 (0.90 for a 90% intervals).
+#'   between 0 and 1 (0.90 for a 90% intervals).
 #' @param q Logical. If set `TRUE`, Yule's Q is reported.
 #' @param r_squared Either "delta", "partial", or "none".
+#' @examples
+#' ## Print
+#' plm(exampleAB$Johanna) |> 
+#'   print(ci = 0.9, r_squared = c("delta", "partial"))
 #' @export
 #' 
 print.sc_plm <- function(x, 
@@ -49,13 +55,17 @@ print.sc_plm <- function(x,
   cat("Formula:", results$formula, "\n")
 }
 
-#' @rdname export
-#' @param nice If set TRUE (default) output values are rounded and optimized for
-#' publication tables.
+#' @describeIn plm Export results as html table (see [export()])
+#' @order 3
+#' @inheritParams export
 #' @param ci Print confidence intervals. Either FALSE, TRUE or a number 
-#' between 0 and 1 (0.90 for a 90% intervals).
+#'   between 0 and 1 (0.90 for a 90% intervals).
 #' @param q Logical. If set `TRUE`, Yule's Q is reported.
-#' @param r_sqaured Either "delta", "partial", or "none".
+#' @param r_squared Either "delta", "partial", or "none".
+#' @examples
+#' ## Export
+#' plm(exampleAB$Johanna) |> export()
+#' 
 #' @export
 export.sc_plm <- function(object, 
                           caption = NA, 
@@ -135,8 +145,8 @@ export.sc_plm <- function(object,
   # finish ------------------------------------------------------------------
   
   if (!is.na(filename)) .save_export(table, filename)
-  table
   
+  table
 }
 
 .output_plm <- function(x, 

@@ -38,8 +38,6 @@ print.sc_bplm <- function(x, digits = 3, ...) {
 #' @describeIn bplm Export results as html table (see [export()])
 #' @order 3
 #' @inheritParams export
-#' @param nice If set TRUE (default) output values are rounded and optimized for
-#' publication tables.
 #' @export
 export.sc_bplm <- function(object, 
                            caption = NA, 
@@ -50,6 +48,14 @@ export.sc_bplm <- function(object,
                            round = 2,
                            nice = TRUE,
                            ...) {
+  
+  # args <- list(...)
+  # if (any("kable_options" %in% names(args))) {
+  #   kable_options <- .join_kabel(args$kable_options)
+  # }
+  # if (any("kable_styling_options" %in% names(args))) {
+  #   kable_styling_options <- .join_kabel_styling(args$kable_styling_options)
+  # }
   
   kable_options <- .join_kabel(kable_options)
   kable_styling_options <- .join_kabel_styling(kable_styling_options)

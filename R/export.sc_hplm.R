@@ -1,8 +1,6 @@
 #' @describeIn hplm Export results as html table (see [export()])
 #' @order 3
 #' @inheritParams export
-#' @param nice If set TRUE (default) output values are rounded and optimized for
-#' publication tables.
 #' @export
 export.sc_hplm <- function(object, 
                            caption = NA, 
@@ -37,8 +35,7 @@ export.sc_hplm <- function(object,
       object, caption, footnote, filename ,
       kable_styling_options, 
       kable_options, 
-      round,
-      ...
+      round
     )
     return(out)
   }
@@ -127,8 +124,7 @@ export.sc_hplm <- function(object,
 .export_casewise <- function(object, caption = NA, footnote = NA, filename = NA,
                              kable_styling_options = list(), 
                              kable_options = list(), 
-                             round = 2,
-                             ...) {
+                             round = 2) {
   
   out <- coef(object, casewise = TRUE)
   
