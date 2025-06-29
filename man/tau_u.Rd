@@ -35,8 +35,6 @@ tau_u(
   footnote = NA,
   filename = NA,
   select = "auto",
-  kable_styling_options = list(),
-  kable_options = list(),
   meta = FALSE,
   round = 3,
   decimals = 3,
@@ -106,11 +104,6 @@ footnote will be created based on the exported object.}
 
 \item{filename}{String containing the file name. If a filename is given the
 output will be written to that file.}
-
-\item{kable_styling_options}{list with arguments passed to the kable_styling
-function.}
-
-\item{kable_options}{list with arguments passed to the kable function.}
 
 \item{meta}{If TRUE, the results of the meta analysis will be exported. If
 FALSE, each single-case is exported.}

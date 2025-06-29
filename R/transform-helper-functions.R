@@ -38,5 +38,11 @@ all_cases <- function(...) {
   # a helper function
 }
 
+#' @export
+#' @rdname transform.scdf
+rowwise <- function(...) {
+  # a helper function
+}
+
 
 

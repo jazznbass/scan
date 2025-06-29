@@ -225,13 +225,8 @@ export.sc_pand <- function(object,
                            caption = NA, 
                            footnote = NA, 
                            filename = NA,
-                           kable_styling_options = list(), 
-                           kable_options = list(), 
                            round = 1,
                            ...) {
-  
-  kable_options <- .join_kabel(kable_options)
-  kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (is.na(caption)) {
     caption <- c("Percentage of all non-overlapping data (PAND)")
@@ -274,12 +269,15 @@ export.sc_pand <- function(object,
   )
   names(out) <- c(" ", "  ", "A", "B", "Total")
 
-  kable_options$align <- c("l", "r", "c", "c", "c")
+  opts <- options(knitr.kable.NA = "")
+  options(scan.export.kable = c(
+    list(align = c("l", "r", "c", "c", "c")), 
+    getOption("scan.export.kable")
+  ))
+  
   
   table <- .create_table(
     out, 
-    kable_options, 
-    kable_styling_options, 
     caption = caption,
     footnote = footnote,
     spanner = list("Expected" = 3:5),
@@ -297,6 +295,9 @@ export.sc_pand <- function(object,
   # finish ------------------------------------------------------------------
   
   if (!is.na(filename)) .save_export(table, filename)
+  
+  options(opts)
+  
   table
 }
 

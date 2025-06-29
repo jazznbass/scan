@@ -7,37 +7,30 @@
 \title{Single case data frame}
 \usage{
 scdf(
-  values,
-  B_start,
-  mt,
-  phase,
-  phase_design = NULL,
+  ...,
+  B_start = NULL,
   phase_starts = NULL,
+  phase_design = NULL,
   name = NULL,
   dvar = "values",
   pvar = "phase",
-  mvar = "mt",
-  ...
+  mvar = "mt"
 )
 }
 \arguments{
-\item{values}{A vector containing measurement values of the dependent
-variable.}
+\item{...}{One or more vectors representing measurement variables. See the
+\emph{Details} section.}
 
-\item{B_start}{The first measurement of phase B (simple coding if
-design is strictly AB).}
+\item{B_start}{The first measurement point of phase B (simple coding; only
+applicable if the design follows a strict AB pattern).}
 
-\item{mt}{A vector defining measurement times. Default is \verb{mt = (1,2,3,...,n)}.}
+\item{phase_starts}{A named vector defining the label and measurement time of
+each phase start. For example: \code{phase_starts = c(A1 = 1, B1 = 6, A2 = 14, B2 = 19)}.}
 
-\item{phase}{A vector defining phase assignments.}
+\item{phase_design}{A named vector defining the length and label of each
+phase. For example: \code{phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.}
 
-\item{phase_design}{A list defining the length and label of
-each phase. E.g., \code{phase_design = c(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}.}
-
-\item{phase_starts}{A vector defining the label and measurement time of each
-phase start. E.g., \code{phase_starts = c(A1 = 1, B1 = 6, A2 = 14, B2 = 19)}.}
-
-\item{name}{A name for the case.}
+\item{name}{Optional name for the case.}
 
 \item{dvar}{Character string with the name of the dependent variable.
 Defaults to the attributes in the scdf file.}
@@ -47,33 +40,34 @@ the attributes in the scdf file.}
 
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
-
-\item{...}{Additional variables. E.g., \verb{teacher = c(0,1,0,1,0,0,1), lesson = c(1,3,4,5,2,3)}.}
 }
 \value{
-Returns a single-case data frame \code{scdf} suitable for all
-functions of the \code{scan} package. Multiple data sets (e.g. from
-Multiple Baseline Designs) can be listed.
+Returns a single-case data frame \code{scdf} suitable for all functions in
+the \code{scan} package.
 }
 \description{
-\code{scdf()} is the constructor for the \code{scdf} class. It stores single-case study
-data with one or more single-cases.
+\code{scdf()} is the constructor for objects of class \code{scdf}. It stores data from
+single-case studies with one or more cases in a structured format suitable
+for analysis with the \code{scan} package.
 }
 \details{
-If the dependent variable is a named vector then the names are
-extracted to create a phase design (e.g., \code{values = c(A = 2,3,5,4,3, B = 6,5,4,3)} will create an AB phase design with five and four measurements).
-An scdf contains several attributes: \code{dvar} The name of the dependent
-variable. \code{phase} The name of the phase variable. \code{mt} The name
-of the measurement time variable. \code{author} Information on the author
-of the data. \code{info} Further information on the data. E.g., a
-publication. \verb{dvar, phase}, and \code{mt} are the defaults most of the
-\code{scan} function use. You can change the values of the attributes with
-the \code{scdf_attr} function (e.g., \code{scdf_attr(exampleAB_add, "dvar") <- "depression"} defines depression as the dependent variable. Please
-notice that all \code{scan} functions have arguments to define \code{dvar},
-\code{phase}, and \code{mt} for a given analysis.
+If no variable matching the name of the dependent variable is
+provided (the default name is \code{values}, which can be changed via the \code{dvar}
+argument), and the first provided variable is unnamed, that variable will
+be interpreted as the dependent variable.
+
+If no measurement-time variable is provided (default name \code{mt},
+configurable via the \code{mvar} argument), measurement times are automatically
+defined as a sequence \verb{(1, 2, 3, ..., n)}.
+
+If the dependent variable is a \strong{named vector}, the names will be used to
+define a phase design. For example, \code{values = c(A = 2, 3, 5, 4, 3, B = 6, 5, 4, 3)} will be interpreted as an AB phase design with five measurements
+in phase A and four in phase B.
+
+If a vector matching the name of the phase variable is provided, it will be
+used to define the phase design directly.
 }
 \examples{
-
 ## Scores on a letter naming task were collected on eleven days in a row.
 ## The intervention started after the fifth measurement,
 ## so the first B phase measurement was 6 (B_start = 6).
@@ -83,19 +77,19 @@ klaas <- scdf(
 )
 describe(klaas)
 
-# Alternative coding 1:
+# Alternative: using named vector
 klaas <- scdf(
   c(A = 5, 7, 8, 5, 7, B = 12, 16, 18, 15, 14, 19),
   name = "Klaas"
 )
 
-# Alternative coding 2:
+# Alternative: using phase_design
 klaas <- scdf(
   c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
   phase_design = c(A = 5, B = 6), name = "Klaas"
 )
 
-# Alternative coding 3:
+# Alternative: using phase_starts
 klaas <- scdf(
   c(5, 7, 8, 5, 7, 12, 16, 18, 15, 14, 19),
   phase_starts = c(A = 1, B = 7), name = "Klaas"
@@ -114,9 +108,9 @@ describe(emmi)
 ## further conjoined analyses.
 charlotte <- scdf(c(A = 5, 7, 10, 5, 12, B = 7, 10, 18, 15, 14, 19))
 theresa <- scdf(c(A = 3, 4, 3, 5, B = 7, 4, 7, 9, 8, 10, 12))
-antonia <- scdf(c(A = 9, 8, 8, 7, 5, 7, B = 6, 14, 15, 12, 16))
-mbd <- c(charlotte, theresa, antonia)
-names(mbd) <- c("Charlotte", "Theresa", "Antonia")
+tonia <- scdf(c(A = 9, 8, 8, 7, 5, 7, B = 6, 14, 15, 12, 16))
+mbd <- c(charlotte, theresa, tonia)
+names(mbd) <- c("Charlotte", "Theresa", "Tonia")
 overlap(mbd)
 
 ## In a classroom-based intervention it was not possible to measure outcomes
@@ -136,6 +130,7 @@ jim <- scdf(
   phase_design = c(A1 = 3, B1 = 3, A2 = 3, B2 = 3), dvar = "zvt"
 )
 overlap(jim, phases = list(c("A1", "A2"), c("B1", "B2")))
+
 }
 \seealso{
 Other data manipulation functions: 

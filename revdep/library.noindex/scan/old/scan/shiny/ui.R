@@ -88,7 +88,7 @@ tab_transform <- tabPanel(
       ),
       
       textInput(
-        "subset", "Filter measurments",
+        "subset", "Filter measurements",
         placeholder = 'e.g.: mt > mean(values[phase == "A"])'
       ),
       textAreaInput(
@@ -297,6 +297,10 @@ tab_settings <- tabPanel(
       h3("Stats"),
       radioButtons(
         "stats_default", "Syntax with defaults", choices = c("No", "Yes"),
+        inline = TRUE
+      ),
+      radioButtons(
+        "rename_predictors", "Rename predictors", choices = c("full", "concise", "no"),
         inline = TRUE
       ),
       radioButtons(

@@ -1,13 +1,67 @@
+# scan 0.65
+
+## New function
+
+- `rowwise()`: A new helper function for `transform()` that allows to make calculations rowwise:
+
+```.r
+ex <- exampleAB_add; ex[[1]]$wellbeing[c(3, 6)] <- NA
+transform(
+  ex, 
+  mean_dv = rowwise(mean(c(wellbeing, cigarrets, depression), na.rm = TRUE))
+)
+```
+
+## New features
+
+- `mplm()`: Reworked the function and its output. Now provides global F test and a more integrated depiction of the coefficients. Added export() method.
+- `plm()/print.sc_plm()`: either print partial or delta (incremental), or both R squared: 
+
+```r
+plm(exampleAB$Johanna) |> 
+  print(r_squared = c("delta", "partial"))
+```
+
+## Corrections
+
+- `plm()`: Corrected calculation for model fit F statistic and R2 for models without an intercept
+- `scdf()`: Reported a false error message when the `phase.start` argument was used and mt started with 0.
+
+## Further changes
+
+- `scdf()`: Optimized code, function arguments, and help page.
+
+# scan 0.64.0
+
+## New functions
+
+- `fetch()`: General getter function to extract components from a scan object. It takes a scan object and and an optional argument and returns sub-objects. 
+For now, it extracts the regression object of class glm, lm, lme from the respective plm, hplm, and mplm objects:
+
+```r
+mod <- plm(exampleAB$Johanna)
+fetch(mod)
+```
+
+## New features
+
+- `anova()`: Implemented functionality of further arguments of the generic anova functions.
+- `options(scan.string.dummy.phase = "phase")`: can be renamed to avoid name conflicts in the output of regression models.
+- `options(scan.string.dummy.slope = "inter")`: can be renamed to avoid name conflicts in the output of regression models.
+
 # scan 0.63.0
 
-## New functions / features
+## New functions
 
 - `bplm()`: Bayesian piecewise regression model. Applies a Markov Chain Monte Carlo sampler from the MCMCglmm package. With export method.
-- `hplm()`: Adds inter correlation of random variables to the print output.
 - `add_dummy_variables()`: Helper function that adds dummy variables necessary to calculate a plm to an scdf. 
+- `anova.plm() anova.hplm()`: Methods for likelihood ratio model comparison.
+
+## New features
+
+- `hplm()`: Adds inter correlation of random variables to the print output.
 - new option: `scan.rename.predictors` can be set to `no`, `concise`, or `full`. Changes how predictors of regression models are renamed.
 - `between_smd()`: Added support for Bayesian regressions `model = "bayesian"` or providing an object returned from the `bplm()` function.
-- `anova.plm() anova.hplm()`: Methods for likelihood ratio model comparison.
 
 ## Solved bugs
 
@@ -24,6 +78,10 @@
 
 - `rescale()`: New function as a helper for getting standardized estimators in regression models. e.g. `exampleAB |> rescale() |> hplm()`.
 - `between_smd()`: Calculates between case standardized mean differences as proposed by Pustejovsky et. aL (2014). Can take complex hplm models as a basis.
+- `na.omit.scdf()`: scdf method for generic `na.omit()`. Removes any row with a missing value from an scdf.
+
+## New features
+
 - `design()`: Argument `random_start_values` randomly assigns start values for each case based on the distribution (`normal`, `poisson` or `binomial`) and the respective parameters (`start_values`, `s`, `n_trials`).
 - `print.sc_hplm()`: New argument `smd`. If set TRUE, between case smd results are reported.
 - `tau_u()`: New method `"tarlow"` calculates Tau-U as implemented in an R code and online calculator by Tarlow (2017). Here, tau values are calculated as in the `method = "complete", continuity_correction = TRUE, tau_method = "a"`. Inferential statistics are calculated based on tau b and the standard deviation for S is derived directly from Kendall's Tau B analysis (different from the `parker` and `complete` methods). 
@@ -51,9 +109,6 @@ Leidig2018[4] |>
   rand_test(complete = TRUE, limit = 1, statistic = "SMD glass") |> 
   plot_rand(type = "xy")
 ```
-
-
-- `na.omit.scdf()`: scdf method for generic `na.omit()`. Removes any row with a missing value from an scdf.
 
 
 ## Corrections / Changes 

@@ -446,6 +446,8 @@ server <- function(input, output, session) {
     args <- args$names
     #print(full_args$values)
     #print(values)
+    options(scan.rename.predictors = input$rename_predictors)
+    
     if (input$stats_default == "No") {
       id_default <- mapply(
         function(origin, new) {

@@ -39,7 +39,7 @@ res$choices$scplot_examples <- c(
 "Max A" = 'add_statline("max", phase = "A")',
 "Means" = 'add_statline("mean")',
 "Medians" = 'add_statline("median")',
-"Moving average" = 'add_statline("movingMean")',
+"Moving average" = 'add_statline("moving mean")',
 "Smoothed line" = 'add_statline("loess", span = 0.4)'
 )
 

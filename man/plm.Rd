@@ -43,8 +43,6 @@ plm(
   caption = NA,
   footnote = NA,
   filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
   nice = TRUE,
   ci = 0.95,
   q = FALSE,
@@ -137,11 +135,6 @@ footnote will be created based on the exported object.}
 
 \item{filename}{String containing the file name. If a filename is given the
 output will be written to that file.}
-
-\item{kable_styling_options}{list with arguments passed to the kable_styling
-function.}
-
-\item{kable_options}{list with arguments passed to the kable function.}
 
 \item{nice}{If set TRUE (default) output values are rounded and optimized for
 publication tables.}
