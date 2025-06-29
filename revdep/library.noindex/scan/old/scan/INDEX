@@ -1,10 +1,13 @@
+add_dummy_variables     Add Dummy Variables for Piecewise Linear Models
 add_l2                  Add level-2 data
+anova.sc_plm            ANOVA Table for Piecewise Linear Models
 as.data.frame.scdf      Creating a long format data frame from several
                         single-case data frames (scdf).
 as_scdf                 as_scdf
 autocorr                Autocorrelation for single-case data
 batch_apply             Apply a function to each element in an scdf.
 between_smd             Between-Case Standardized Mean Difference
+bplm                    Bayesian Piecewise Linear Model
 cdc                     Conservative Dual-Criterion Method
 coef.sc_plm             Extract coefficients from plm/hplm objects
 combine                 Combine single-case data frames
@@ -14,6 +17,8 @@ describe                Descriptive statistics for single-case data
 design                  Generate a single-case design matrix
 estimate_design         Estimate single-case design
 export                  Export scan objects to html or latex
+fetch                   Fetches elements from scan objects Getter
+                        function for scan objects
 fill_missing            Replacing missing measurement times in
                         single-case data
 hplm                    Hierarchical piecewise linear model / piecewise

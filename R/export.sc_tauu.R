@@ -10,20 +10,13 @@ export.sc_tauu <- function(object,
                            caption = NA, 
                            footnote = NA, 
                            filename = NA,
-                           select = "auto", 
-                           kable_styling_options = list(), 
-                           kable_options = list(),
+                           select = "auto",
                            meta = FALSE,
                            round = 3,
                            decimals = 3,
                            ...) {
   
-  kable_options <- .join_kabel(kable_options)
-  kable_styling_options <- .join_kabel_styling(kable_styling_options)
-  
   if (is.na(caption)) {
-    #A <- object$design[object$phases.A]
-    #B <- object$design[object$phases.B]
     if (meta) 
       caption <- c("Overall Tau-U") 
     else 
@@ -59,7 +52,6 @@ export.sc_tauu <- function(object,
     Model <- rep(names_models, length = nrow(out)) 
     Case <- lapply(names(tables), function(x) c(x, rep(" ", 6))) |> unlist()
     out <- cbind(Case, Model, out)
-    kable_options$align <- c("l", "l", rep("c", ncol(out) - 2))
     
     if (identical(select, "auto")) {
         select <- c("Case", "Model", "Tau", "CI lower", "CI upper", "Z", "p")
@@ -94,24 +86,22 @@ export.sc_tauu <- function(object,
   
   out$p <- .nice_p(out$p)
   out <- .select(out, select)
-  opts <- options(knitr.kable.NA = "")
   
-
+  opts <- options()
+  
+  tmp <- getOption("scan.export.kable")
+  tmp$align <- c("l", "l", rep("c", ncol(out) - 2)) 
+  options(scan.export.kable = tmp)
+  options(knitr.kable.NA = "")
+  
   table <- .create_table(
     out, 
-    kable_options, 
-    kable_styling_options, 
     caption = caption,
     footnote = footnote,
     row_group = row_group,
     decimals = decimals,
     ...
   )
-  
-  #if (!meta) {
-  #  table <- add_indent(table, (1:nrow(out))[-(1:(nrow(out)/7) * 7 - 6)])
-  #}
-  
   
   options(opts)
   # finish ------------------------------------------------------------------

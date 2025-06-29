@@ -17,6 +17,8 @@ describe                Descriptive statistics for single-case data
 design                  Generate a single-case design matrix
 estimate_design         Estimate single-case design
 export                  Export scan objects to html or latex
+fetch                   Fetches elements from scan objects Getter
+                        function for scan objects
 fill_missing            Replacing missing measurement times in
                         single-case data
 hplm                    Hierarchical piecewise linear model / piecewise

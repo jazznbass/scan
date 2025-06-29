@@ -2,8 +2,8 @@ Package: scan
 Type: Package
 Title: Single-Case Data Analyses for Single and Multiple Baseline
         Designs
-Version: 0.63.0
-Date: 2025-03-01
+Version: 0.65
+Date: 2025-06-29
 Authors@R: c(
   person("Juergen", "Wilbert", email = "juergen.wilbert@uni-muenster.de", 
     role = c("cre", "aut"), comment = c(ORCID = "0000-0002-8392-2873")), 
@@ -35,8 +35,9 @@ Config/testthat/edition: 3
 RemoteType: local
 RemoteUrl: /Users/wilbert/Documents/GitHub/scan
 NeedsCompilation: no
-Packaged: 2025-03-01 10:09:04 UTC; wilbert
-Author: Juergen Wilbert [cre, aut] (<https://orcid.org/0000-0002-8392-2873>),
-  Timo Lueke [aut] (<https://orcid.org/0000-0002-2603-7341>)
+Packaged: 2025-06-29 12:50:36 UTC; wilbert
+Author: Juergen Wilbert [cre, aut] (ORCID:
+    <https://orcid.org/0000-0002-8392-2873>),
+  Timo Lueke [aut] (ORCID: <https://orcid.org/0000-0002-2603-7341>)
 Maintainer: Juergen Wilbert <juergen.wilbert@uni-muenster.de>
-Built: R 4.4.2; ; 2025-03-01 10:09:04 UTC; unix
+Built: R 4.5.0; ; 2025-06-29 12:50:36 UTC; unix

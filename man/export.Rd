@@ -26,8 +26,6 @@ export(object, ...)
   caption = NA,
   footnote = NA,
   filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
   flip = FALSE,
   round = 2,
   ...
@@ -38,8 +36,6 @@ export(object, ...)
   caption = NA,
   footnote = NA,
   filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
   select = c("Case", "NAP", "NAP Rescaled", "w", "p", "d", "R²"),
   round = 2,
   ...
@@ -50,58 +46,27 @@ export(object, ...)
   caption = NA,
   footnote = NULL,
   filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
   round = 2,
   decimals = 2,
   flip = FALSE,
   ...
 )
 
-\method{export}{sc_pem}(
-  object,
-  caption = NA,
-  footnote = NA,
-  filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
-  round = 2,
-  ...
-)
+\method{export}{sc_pem}(object, caption = NA, footnote = NA, filename = NA, round = 2, ...)
 
-\method{export}{sc_pet}(
-  object,
-  caption = NA,
-  footnote = NA,
-  filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
-  round = 1,
-  ...
-)
+\method{export}{sc_pet}(object, caption = NA, footnote = NA, filename = NA, round = 1, ...)
 
 \method{export}{sc_pnd}(
   object,
   caption = NA,
   footnote = NA,
   filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
   select = c("Case", "PND", "Total", "Exceeds"),
   round = 2,
   ...
 )
 
-\method{export}{sc_power}(
-  object,
-  caption = NA,
-  footnote = NA,
-  filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
-  round = 3,
-  ...
-)
+\method{export}{sc_power}(object, caption = NA, footnote = NA, filename = NA, round = 3, ...)
 
 \method{export}{sc_smd}(
   object,
@@ -111,8 +76,6 @@ export(object, ...)
   select = c("Case", `Mean A` = "mA", `Mean B` = "mB", `SD A` = "sdA", `SD B` = "sdB",
     `SD Cohen` = "sd cohen", `SD Hedges` = "sd hedges", "Glass' delta", "Hedges' g",
     "Hedges' g correction", "Hedges' g durlak correction", "Cohen's d"),
-  kable_styling_options = list(),
-  kable_options = list(),
   round = 2,
   decimals = 2,
   flip = FALSE,
@@ -124,8 +87,6 @@ export(object, ...)
   caption = NA,
   footnote = NA,
   filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
   round = 2,
   decimals = 2,
   ...
@@ -137,23 +98,12 @@ export(object, ...)
   caption = NA,
   footnote = NA,
   filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
   cols,
   round = 2,
   ...
 )
 
-\method{export}{scdf_summary}(
-  object,
-  caption = NA,
-  footnote = NA,
-  filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
-  round = 2,
-  ...
-)
+\method{export}{scdf_summary}(object, caption = NA, footnote = NA, filename = NA, round = 2, ...)
 }
 \arguments{
 \item{object}{An scdf or an object exported from a scan function.}
@@ -168,11 +118,6 @@ footnote will be created based on the exported object.}
 
 \item{filename}{String containing the file name. If a filename is given the
 output will be written to that file.}
-
-\item{kable_styling_options}{list with arguments passed to the kable_styling
-function.}
-
-\item{kable_options}{list with arguments passed to the kable function.}
 
 \item{flip}{If TRUE, some objects are exported with rows and columns flipped.}
 

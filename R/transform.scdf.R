@@ -6,15 +6,17 @@
 #' This function is a method of the generic transform function. Unlike the
 #' generic function, it calculates expressions serially. This means that the
 #' results of the calculation of one expression are the basis for the following
-#' computations. The \code{n} function returns the number of measurements in a
-#' case. The \code{all_cases} function is a helper function that extracts the
-#' values of a variable from all cases. It takes an expression as an argument.
-#' For example, \code{mean(all_cases(values))} calculates the mean of the values
-#' from all cases. \code{mean(all_cases(values[phase == "A"]))} will calculate
-#' the mean of all values where phase is A. The function \code{across_cases}
-#' allows to calculate new variables or replace existing variables across all
-#' cases. E.g., \code{across_cases(values_ranked = rank(values, na.last =
-#' "keep"))} will calculate a new variable with values ranked across all cases.
+#' computations. The `n` function returns the number of measurements in a case.
+#' The `all_cases` function is a helper function that extracts the values of a
+#' variable from all cases. It takes an expression as an argument. For example,
+#' `mean(all_cases(values))` calculates the mean of the values from all cases.
+#' `mean(all_cases(values[phase == "A"]))` will calculate the mean of all values
+#' where phase is A. `rowwise` applies a calculation separately for each row
+#' (e.g. `sum = rowwise(sum(values, mt, na.rm = TRUE))`). The function
+#' `across_cases` allows to calculate new variables or replace existing
+#' variables across all cases. E.g., `across_cases(values_ranked = rank(values,
+#' na.last = "keep"))` will calculate a new variable with values ranked across
+#' all cases.
 #'
 #' @param _data An scdf.
 #' @param ... Expressions.
@@ -108,16 +110,35 @@ transform.scdf <- function(`_data`, ...) {
       `_data` <- suppressMessages(as_scdf(.df))
       #attributes(`_data`) <- original_attr
     } else {
+      # For across case calculations
       .df <- as.data.frame(`_data`)
+      
+      # case by case loop
       for(i_case in seq_along(`_data`)) {
         .list_env <- as.list(`_data`[[i_case]])
+        
+        ## additional functions all(), all_cases() and n()
         .list_env$all_cases <- .list_env$all <- function(x) {
           x <- substitute(x)
           eval(x, .df)
         }
         .list_env$n <- function() {nrow(`_data`[[i_case]])}
+        .list_env$rowwise <- function(expr) {
+          expr <- substitute(expr)
+          out <- c()
+          for(i_row in 1:nrow(`_data`[[i_case]])) {
+            out <- c(out, eval(expr, `_data`[[i_case]][i_row, ]))
+          }
+          out
+        }
+        
+        # compute new variable
         new <- eval(expressions[c(1,i_expression)], .list_env, parent.frame())
+        
+        # Add new variable
         `_data`[[i_case]][[names(new)]] <- new[[1]]
+        
+        
       }
       .df <- as.data.frame(`_data`)
     }

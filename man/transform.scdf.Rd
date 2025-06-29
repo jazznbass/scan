@@ -8,6 +8,7 @@
 \alias{first_of}
 \alias{across_cases}
 \alias{all_cases}
+\alias{rowwise}
 \alias{transform.scdf}
 \title{Transform every single case of a single case data frame}
 \usage{
@@ -22,6 +23,8 @@ first_of(x, positions = 0)
 across_cases(...)
 
 all_cases(...)
+
+rowwise(...)
 
 \method{transform}{scdf}(`_data`, ...)
 }
@@ -52,15 +55,16 @@ useful to calculate or modify new variables.
 This function is a method of the generic transform function. Unlike the
 generic function, it calculates expressions serially. This means that the
 results of the calculation of one expression are the basis for the following
-computations. The \code{n} function returns the number of measurements in a
-case. The \code{all_cases} function is a helper function that extracts the
-values of a variable from all cases. It takes an expression as an argument.
-For example, \code{mean(all_cases(values))} calculates the mean of the values
-from all cases. \code{mean(all_cases(values[phase == "A"]))} will calculate
-the mean of all values where phase is A. The function \code{across_cases}
-allows to calculate new variables or replace existing variables across all
-cases. E.g., \code{across_cases(values_ranked = rank(values, na.last =
-"keep"))} will calculate a new variable with values ranked across all cases.
+computations. The \code{n} function returns the number of measurements in a case.
+The \code{all_cases} function is a helper function that extracts the values of a
+variable from all cases. It takes an expression as an argument. For example,
+\code{mean(all_cases(values))} calculates the mean of the values from all cases.
+\code{mean(all_cases(values[phase == "A"]))} will calculate the mean of all values
+where phase is A. \code{rowwise} applies a calculation separately for each row
+(e.g. \code{sum = rowwise(sum(values, mt, na.rm = TRUE))}). The function
+\code{across_cases} allows to calculate new variables or replace existing
+variables across all cases. E.g., \code{across_cases(values_ranked = rank(values, na.last = "keep"))} will calculate a new variable with values ranked across
+all cases.
 }
 \examples{
 ## Creates a single-case with frequency distributions. The proportion and

@@ -4,13 +4,8 @@ export.scdf_summary <- function(object,
                                 caption = NA, 
                                 footnote = NA, 
                                 filename = NA,
-                                kable_styling_options = list(), 
-                                kable_options = list(),
                                 round = 2, 
                                 ...) {
-  
-  kable_options <- .join_kabel(kable_options)
-  kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (is.na(footnote)) {
     footnote <- NULL
@@ -60,13 +55,14 @@ export.scdf_summary <- function(object,
     check.names = FALSE
   )
   
-  kable_options$align <- rep("c", ncol(out))
-  
+  opts <- options()
+  options(scan.export.kable = c(
+    list(align = rep("c", ncol(out))), 
+    getOption("scan.export.kable")
+  ))
   
   table <- .create_table(
     out, 
-    kable_options, 
-    kable_styling_options, 
     caption = caption,
     footnote = footnote,
     ...
@@ -75,6 +71,8 @@ export.scdf_summary <- function(object,
   # finish ------------------------------------------------------------------
   
   if (!is.na(filename)) .save_export(table, filename)
+  
+  options(opts)
   
   table
 }

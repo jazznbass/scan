@@ -42,8 +42,6 @@ hplm(
   caption = NA,
   footnote = NA,
   filename = NA,
-  kable_styling_options = list(),
-  kable_options = list(),
   round = 2,
   nice = TRUE,
   casewise = FALSE,
@@ -147,11 +145,6 @@ footnote will be created based on the exported object.}
 
 \item{filename}{String containing the file name. If a filename is given the
 output will be written to that file.}
-
-\item{kable_styling_options}{list with arguments passed to the kable_styling
-function.}
-
-\item{kable_options}{list with arguments passed to the kable function.}
 
 \item{round}{Integer passed to the digits argument internally used to round
 values.}

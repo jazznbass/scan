@@ -80,6 +80,7 @@ res$choices$fn_stats <- c(
   "Piecewise regression" = "plm",
   "Multivariate piecewise regression" = "mplm",
   "Hierarchical piecewise regression" = "hplm",
+  "Bayesian piecewise regression" = "bplm",
   "Conservative Dual-Criterion" = "cdc",
   "Tau U" = "tau_u",
   "Baseline corrected tau" = "corrected_tau",

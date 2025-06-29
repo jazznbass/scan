@@ -4,15 +4,10 @@ export.sc_overlap <- function(object,
                               caption = NA, 
                               footnote = NULL, 
                               filename = NA,
-                              kable_styling_options = list(), 
-                              kable_options = list(), 
                               round = 2,
                               decimals = 2,
                               flip = FALSE,
                               ...) {
-  
-  options <- .join_kabel(kable_options)
-  kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (is.na(caption)) caption <- paste0(
     "Overlap indices. ",
@@ -59,8 +54,6 @@ export.sc_overlap <- function(object,
   
   table <- .create_table(
     out, 
-    options, 
-    kable_styling_options, 
     caption = caption,
     footnote = footnote,
     decimals = decimals,

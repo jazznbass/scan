@@ -5,8 +5,6 @@ export.scdf <- function(object,
                         caption = NA, 
                         footnote = NA, 
                         filename = NA,
-                        kable_styling_options = list(), 
-                        kable_options = list(),
                         cols, 
                         round = 2, 
                         ...) {
@@ -17,9 +15,6 @@ export.scdf <- function(object,
     sink()
     return(export(out))
   }
-  
-  kable_options <- .join_kabel(kable_options)
-  kable_styling_options <- .join_kabel_styling(kable_styling_options)
   
   if (is.na(footnote)) {
     if (!is.null(scdf_attr(object, "info"))) 
@@ -63,8 +58,6 @@ export.scdf <- function(object,
   out <- as.data.frame(out)
   names(out) <- unlist(names[1:cases])
   
-  kable_options$align <- rep("c", ncol(out))
-  
   n_vars <- ncol(out) / N
   
   if (N > 1) {
@@ -72,15 +65,19 @@ export.scdf <- function(object,
     for(i in 1:N) {
       spanner[[i]] <- ((i - 1) * n_vars + 1) : ((i - 1) * n_vars + n_vars)
     }
-    
   } else {
     spanner <- NULL
   } 
   
+  opts <- options()
+  options(scan.export.kable = c(
+    list(align = rep("c", ncol(out))), 
+    getOption("scan.export.kable")
+  ))
+  
+  
   table <- .create_table(
     out, 
-    kable_options, 
-    kable_styling_options, 
     caption = caption,
     footnote = footnote,
     spanner = spanner,
@@ -98,6 +95,8 @@ export.scdf <- function(object,
   # finish ------------------------------------------------------------------
   
   if (!is.na(filename)) .save_export(table, filename)
+  
+  options(opts)
   
   table
 }

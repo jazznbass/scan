@@ -3,8 +3,12 @@ $.scdf	Subsetting
 %>%	pipe
 .inheritParams	dot-inheritParams
 across_cases	transform.scdf
+add_dummy_variables	add_dummy_variables
 add_l2	add_l2
 all_cases	transform.scdf
+anova.sc_hplm	anova.sc_plm
+anova.sc_mplm	anova.sc_plm
+anova.sc_plm	anova.sc_plm
 as.data.frame.scdf	as.data.frame.scdf
 as.scdf	scdf
 as_scdf	as_scdf
@@ -13,6 +17,7 @@ batch_apply	batch_apply
 Beretvas2008	example_data
 between_smd	between_smd
 Borckardt2014	example_data
+bplm	bplm
 byHeart2011	example_data
 c.scdf	combine
 cdc	cdc
@@ -46,6 +51,7 @@ example_data	example_data
 export	export
 export.scdf	export
 export.scdf_summary	export
+export.sc_bplm	bplm
 export.sc_desc	export
 export.sc_hplm	hplm
 export.sc_nap	export
@@ -59,6 +65,7 @@ export.sc_power	export
 export.sc_smd	export
 export.sc_tauu	tau_u
 export.sc_trend	export
+fetch	fetch
 fillmissingSC	deprecated-functions
 fill_missing	fill_missing
 first_of	transform.scdf
@@ -104,6 +111,7 @@ print.scdf	print.scdf
 print.sc_ac	print.sc
 print.sc_bcsmd	between_smd
 print.sc_bctau	print.sc
+print.sc_bplm	bplm
 print.sc_cdc	print.sc
 print.sc_desc	print.sc
 print.sc_design	print.sc

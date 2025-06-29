@@ -11,9 +11,6 @@
 #'   footnote will be created based on the exported object.
 #' @param filename String containing the file name. If a filename is given the
 #'   output will be written to that file.
-#' @param kable_options list with arguments passed to the kable function.
-#' @param kable_styling_options list with arguments passed to the kable_styling
-#'   function.
 #' @param cols Defines which columns are included when exporting an scdf. It is
 #'   either a vector of variable names or the string "main" will select the
 #'   central variables.
@@ -59,28 +56,28 @@ export <- function (object, ...) {
   df
 }
 
-.join_kabel <- function(kable_options) {
-  
-  default_kable <- getOption("scan.export.kable")
-  
-  tmp <- which(!(names(default_kable) %in% names(kable_options)))
-  kable_options <- c(kable_options, default_kable[tmp])
-  
-  kable_options
-} 
-
-.join_kabel_styling <- function(kable_styling_options) {
-  
-  default_kable_styling <- getOption("scan.export.kable_styling")
-  
-  tmp <- which(
-    !(names(default_kable_styling) %in% names(kable_styling_options))
-  )
-  
-  kable_styling_options <- c(kable_styling_options, default_kable_styling[tmp])
-  
-  kable_styling_options
-} 
+# .join_kabel <- function(kable_options) {
+#   
+#   default_kable <- getOption("scan.export.kable")
+#   
+#   tmp <- which(!(names(default_kable) %in% names(kable_options)))
+#   kable_options <- c(kable_options, default_kable[tmp])
+#   
+#   kable_options
+# } 
+# 
+# .join_kabel_styling <- function(kable_styling_options) {
+#   
+#   default_kable_styling <- getOption("scan.export.kable_styling")
+#   
+#   tmp <- which(
+#     !(names(default_kable_styling) %in% names(kable_styling_options))
+#   )
+#   
+#   kable_styling_options <- c(kable_styling_options, default_kable_styling[tmp])
+#   
+#   kable_styling_options
+# } 
 
 .save_export <- function(x, filename) {
   
@@ -112,8 +109,8 @@ export <- function (object, ...) {
 }
 
 .create_table <- function(x, 
-                          options, 
-                          kable_styling_args, 
+                          options = getOption("scan.export.kable"), 
+                          kable_styling_args = getOption("scan.export.kable_styling"), 
                           caption = NULL,
                           footnote = NULL,
                           align = NULL,

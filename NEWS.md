@@ -1,4 +1,16 @@
-# scan 0.64.999
+# scan 0.65.0
+
+## New function
+
+- `rowwise()`: A new helper function for `transform()` that allows to make calculations rowwise:
+
+```.r
+ex <- exampleAB_add; ex[[1]]$wellbeing[c(3, 6)] <- NA
+transform(
+  ex, 
+  mean_dv = rowwise(mean(c(wellbeing, cigarrets, depression), na.rm = TRUE))
+)
+```
 
 ## New features
 
@@ -6,13 +18,18 @@
 - `plm()/print.sc_plm()`: either print partial or delta (incremental), or both R squared: 
 
 ```r
-res <- plm(exampleAB$Johanna)
-print(res, r_squared = c("delta", "partial"))
+plm(exampleAB$Johanna) |> 
+  print(r_squared = c("delta", "partial"))
 ```
 
 ## Corrections
 
 - `plm()`: Corrected calculation for model fit F statistic and R2 for models without an intercept
+- `scdf()`: Reported a false error message when the `phase.start` argument was used and mt started with 0.
+
+## Further changes
+
+- `scdf()`: Optimized code, function arguments, and help page.
 
 # scan 0.64.0
 

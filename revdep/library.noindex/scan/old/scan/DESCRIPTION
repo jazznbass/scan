@@ -2,16 +2,16 @@ Package: scan
 Type: Package
 Title: Single-Case Data Analyses for Single and Multiple Baseline
         Designs
-Version: 0.62.0
-Date: 2025-02-05
+Version: 0.64.0
+Date: 2025-03-18
 Authors@R: c(
   person("Juergen", "Wilbert", email = "juergen.wilbert@uni-muenster.de", 
     role = c("cre", "aut"), comment = c(ORCID = "0000-0002-8392-2873")), 
   person("Timo", "Lueke", email = "timo.lueke@uni-graz.at", role = "aut", 
     comment = c(ORCID = "0000-0002-2603-7341")))
 Depends: R (>= 4.1.0)
-Imports: stats, nlme, utils, methods, graphics, car, gt, knitr,
-        kableExtra, readxl, mblm, magrittr
+Imports: stats, nlme, MCMCglmm, utils, methods, graphics, car, gt,
+        knitr, kableExtra, readxl, mblm, magrittr
 Suggests: testthat (>= 3.0.0), shiny, yaml, scplot
 Description: A collection of procedures for analysing, visualising, 
   and managing single-case data. These include piecewise linear regression 
@@ -32,10 +32,10 @@ Encoding: UTF-8
 RoxygenNote: 7.3.2
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2025-02-05 11:18:29 UTC; wilbert
+Packaged: 2025-03-19 07:23:21 UTC; wilbert
 Author: Juergen Wilbert [cre, aut] (<https://orcid.org/0000-0002-8392-2873>),
   Timo Lueke [aut] (<https://orcid.org/0000-0002-2603-7341>)
 Maintainer: Juergen Wilbert <juergen.wilbert@uni-muenster.de>
 Repository: CRAN
-Date/Publication: 2025-02-05 11:50:14 UTC
-Built: R 4.4.1; ; 2025-02-05 13:07:03 UTC; unix
+Date/Publication: 2025-03-19 07:50:02 UTC
+Built: R 4.5.0; ; 2025-04-02 23:45:20 UTC; unix
