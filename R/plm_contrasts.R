@@ -179,12 +179,13 @@ contr.cum <- function(n) {
     for(j in 1:length(phase_str$lengths)) {
       selection_phases <- levels(phase)[phase_str$start[j]:phase_str$stop[j]]
       id <- which(phase %in% selection_phases)
-      
+      mt_dummy <- (mt[id] - mt[id[1]])
       if (model %in% c("B&L-B")) 
-        df[[dummy_names[i]]][id] <- (mt[1:length(id)] - mt[1] + 1) * phase_str$values[j]
+        df[[dummy_names[i]]][id] <- (mt_dummy + 1) * phase_str$values[j] #check: (mt[1:length(id)] - mt[1] + 1) * phase_str$values[j]
       
+     
       if (model %in% c("H-M", "W"))
-        df[[dummy_names[i]]][id] <- (mt[1:length(id)] - mt[1]) * phase_str$values[j]
+        df[[dummy_names[i]]][id] <- mt_dummy * phase_str$values[j] #check: (mt[1:length(id)] - mt[1]) * phase_str$values[j]
     }
   }
   

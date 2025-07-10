@@ -133,7 +133,7 @@ plm <- function(data, dvar, pvar, mvar,
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
   if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
 
-  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .prepare_scdf(data)
 
   if (model == "JW") {
     contrast_level <- "preceding"
