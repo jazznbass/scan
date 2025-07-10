@@ -1,3 +1,9 @@
+# scan 0.65.1
+
+## Error correction
+
+- `plm()`: dummy slope values did falsely ignore missing values. That could lead to incorrect slope effect estimations.
+
 # scan 0.65.0
 
 ## New function
