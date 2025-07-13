@@ -146,8 +146,7 @@ footnote will be created based on the exported object.}
 \item{filename}{String containing the file name. If a filename is given the
 output will be written to that file.}
 
-\item{round}{Integer passed to the digits argument internally used to round
-values.}
+\item{round}{Integer passed to the digits argument used to round values.}
 
 \item{nice}{If set TRUE (default) output values are rounded and optimized for
 publication tables.}

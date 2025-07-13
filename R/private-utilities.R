@@ -49,20 +49,18 @@
 .phases_string <- function(A, B) {
   nomer_s = "phase "
   nomer_p = "phases "
-  a_part <- 
-    if (length(A) == 1)
-      paste0(nomer_s, A, collapse = "")
-  else 
-    paste0( c(nomer_p, A[1], paste0(" + ",A[-1]) ), 
-            collapse = "")
-  
-  b_part <- 
-    if (length(B) == 1)
-      paste0(nomer_s, B, collapse = "")
-  else 
-    paste0( c(nomer_p,B[1], paste0(" + ",B[-1])), 
-            collapse = "")
-  
+  a_part <- if (length(A) == 1) {
+    paste0(nomer_s, A, collapse = "")
+  } else {
+    paste0( c(nomer_p, A[1], paste0(" + ",A[-1]) ), collapse = "")
+  } 
+    
+  b_part <- if (length(B) == 1) {
+    paste0(nomer_s, B, collapse = "")
+  } else {
+    paste0( c(nomer_p,B[1], paste0(" + ",B[-1])), collapse = "")
+  }
+    
   out <- paste0(c("Comparing ", a_part, " against ", b_part), collapse ="")
   out
 }

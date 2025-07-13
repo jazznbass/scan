@@ -4,8 +4,8 @@ export.sc_trend <- function(object,
                             caption = NA, 
                             footnote = NA, 
                             filename = NA,
-                            round = 2,
-                            decimals = 2,
+                            round = 3,
+                            decimals = NULL,
                             ...) {
   
   if (is.na(caption)) caption <- c("Trend analysis")
@@ -19,13 +19,16 @@ export.sc_trend <- function(object,
   
   tmp.rownames <- rownames(out)
   rownames(out) <- NULL
-  for (tmp in object$formulas) {
+  
+  for (tmp in names(object$formulas)) {
     tmp.rownames <- gsub(paste0(tmp, "."), "", tmp.rownames)
   }
   out <- cbind(Phase = tmp.rownames, out)
   
+  out <- round_numeric(out, round)
+  
   row_group <- vector("list", length(object$formulas))
-  names(row_group) <- object$formulas
+  names(row_group) <- paste0(names(object$formulas), " (", object$formulas,")")
   
   for (i in 1:length(object$formulas)) {
     .start <- 1 + (i - 1) * (length(object$design) + 1)
@@ -37,6 +40,7 @@ export.sc_trend <- function(object,
     caption = caption,
     footnote = footnote,
     row_group = row_group,
+    round = round,
     decimals = decimals,
     ...
   )

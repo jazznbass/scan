@@ -46,6 +46,7 @@ plm(
   nice = TRUE,
   ci = 0.95,
   q = FALSE,
+  round = 2,
   r_squared = getOption("scan.rsquared"),
   ...
 )
@@ -138,6 +139,8 @@ output will be written to that file.}
 
 \item{nice}{If set TRUE (default) output values are rounded and optimized for
 publication tables.}
+
+\item{round}{Integer passed to the digits argument used to round values.}
 }
 \value{
 \item{formula}{plm formula. Uselful if you want to use the update or

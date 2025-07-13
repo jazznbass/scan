@@ -74,6 +74,7 @@ export.sc_plm <- function(object,
                           nice = TRUE,
                           ci = 0.95,
                           q = FALSE,
+                          round = 2,
                           r_squared = getOption("scan.rsquared"), 
                           ...) {
   
@@ -85,9 +86,10 @@ export.sc_plm <- function(object,
   
   results <- .output_plm(
     object, ci = ci, q = q, format = "export", 
+    round = round,
     r_squared = r_squared
   )
-  
+ 
   out <- results$table
   out <- rownames_to_first_column(out, "Parameter")
   
@@ -146,7 +148,7 @@ export.sc_plm <- function(object,
                         ci, q, 
                         lag_max = 0, 
                         format, 
-                        decimals = 3, 
+                        round = 3,
                         r_squared) {
   
   out <- list()
@@ -166,9 +168,9 @@ export.sc_plm <- function(object,
       "Null model" 
     } else {
       sprintf(
-        "F(%d, %d) = %.2f; p = %0.3f; R\u00b2 = %0.3f; Adjusted R\u00b2 = %0.3f", 
-        x$F.test["df1"], x$F.test["df2"], x$F.test["F"], 
-        x$F.test["p"],   x$F.test["R2"],  x$F.test["R2.adj"]
+       "F(%d, %d) = %.2f; p = %0.3f; R\u00b2 = %0.3f; Adjusted R\u00b2 = %0.3f",
+       x$F.test["df1"], x$F.test["df2"], x$F.test["F"],
+       x$F.test["p"],   x$F.test["R2"],  x$F.test["R2.adj"]
       )
     }
   }
@@ -181,8 +183,8 @@ export.sc_plm <- function(object,
   if (x$ar  > 0) out$table <- model_summary$tTable
   
   inter_incl <- if (attr(x$full.model$terms, "intercept")) TRUE else FALSE
-  
-  out$table <- round(out$table, decimals)
+ 
+  out$table <- round(out$table, round)
   out$table <- as.data.frame(out$table)
   names(out$table)[1:4] <- c("B", "SE", "t", "p")
   
@@ -213,7 +215,7 @@ export.sc_plm <- function(object,
     param_filter <- apply(
       ci, 1, function(x) if(!all(is.na(x))) TRUE else FALSE
     )
-    ci <- round(ci[param_filter, ], 3)
+    ci <- round(ci[param_filter, ], round)
     if (nrow(out$table) == 1) ci <- t(ci)
     out$table <- cbind(
       out$table[, 1, drop = FALSE], 
@@ -225,12 +227,12 @@ export.sc_plm <- function(object,
     
     if (x$family == "poisson" || x$family == "binomial") {
       OR <- exp(out$table[, 1:3])
-      out$table <- cbind(out$table[, 1:6], round(OR, 3))
+      out$table <- cbind(out$table[, 1:6], round(OR, round))
       names(out$table)[7:9] <- c("OR", paste0(" ", str_ci)) 
       
-      if(q) {
+      if (q) {
         Q <- (OR - 1) / (OR + 1)
-        out$table <- cbind(out$table, round(Q, 2))
+        out$table <- cbind(out$table, round(Q, round))
         names(out$table)[10:12] <- c("Q", paste0("  ", str_ci))  
       }
       
@@ -242,7 +244,7 @@ export.sc_plm <- function(object,
   if ("delta" %in% r_squared && report_r_squared) {
     x$r.squares <- x$r.squares[c(param_filter[-1])]
     out$table[["delta R\u00b2"]] <- c(
-      rep("", inter_incl), format(round(x$r.squares, decimals))
+      rep("", inter_incl), format(round(x$r.squares, round))
     )
   }
 
@@ -250,7 +252,7 @@ export.sc_plm <- function(object,
     r_squared_partial <- out$table$t^2 /(out$table$t^2 + model_summary$df.residual)
     if (inter_incl) r_squared_partial <- r_squared_partial[-1]
     out$table[["partial R\u00b2"]] <- c(
-      rep("", inter_incl), format(round(r_squared_partial, decimals))
+      rep("", inter_incl), format(round(r_squared_partial, round))
     )
   }
 
