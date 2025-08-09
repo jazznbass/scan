@@ -23,7 +23,47 @@ as_scdf <- function(object,
                     phase_names = NULL,
                     sort_cases = FALSE) {
 
+  
+  ## check file -----
+  error_msg <- character()
+
+  if (!dvar %in% names(object)) {
+    error_msg <- c(
+      error_msg,
+      paste0("Variable '", dvar, "' is missing.")
+    )
+  }
+
+  if (!mvar %in% names(object)) {
+    error_msg <- c(
+      error_msg,
+      paste0("Variable '", mvar, "' is missing.")
+    )
+  }
+  
+  if (!pvar %in% names(object)) {
+    error_msg <- c(
+      error_msg,
+      paste0("Variable '", pvar, "' is missing.")
+    )
+  }
+  
+  if (any(is.na(object[[cvar]])))
+    error_msg <- c(error_msg, paste0("Variable '", cvar, "' has a missing value."))
+  
+  if (any(is.na(object[[pvar]])))
+    error_msg <- c(error_msg, paste0("Variable '", pvar, "' has a missing value."))
+  
+
+  if (length(error_msg) > 0) {
+    error_msg <- paste0(1:length(error_msg), ": ", error_msg, "\n")
+    stop("\n", error_msg, call. = FALSE)
+  }
+
+  ##
+  
   on.exit(print_messages())
+  
   
   if (!cvar %in% names(object)) {
     add_message("Casename variable not found. Assuming one case.")
