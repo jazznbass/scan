@@ -27,9 +27,11 @@ or a data.frame.}
 \item{cvar}{Sets the variable name of the "case" variable. Defaults to
 \code{"case"}.}
 
-\item{pvar}{Sets the variable name of the "phase" variable. Defaults to \code{"phase"}.}
+\item{pvar}{Sets the variable name of the "phase" variable. Defaults to
+\code{"phase"}.}
 
-\item{dvar}{Sets the variable name of the "values" variable. Defaults to \code{"values"}.}
+\item{dvar}{Sets the variable name of the "values" variable. Defaults to
+\code{"values"}.}
 
 \item{mvar}{Sets the variable name of the "mt" variable. Defaults to \code{"mt"}.}
 

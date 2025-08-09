@@ -4,10 +4,12 @@
 \alias{shinyscan}
 \title{A Shiny app for scan}
 \usage{
-shinyscan(quiet = TRUE, ...)
+shinyscan(quiet = TRUE, browser = c("external", "viewer"), ...)
 }
 \arguments{
 \item{quiet}{If TRUE (default) does not report shiny messages in the console.}
+
+\item{browser}{c("external","viewer")}
 
 \item{\dots}{Further arguments passed to the \code{shiny::runApp()} function.}
 }
