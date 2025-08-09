@@ -1,3 +1,9 @@
+# scan 0.65.2
+
+- `as_scdf()`: added various checks for format errors with a respective error message. This is mainly helpful for external files that were inputed with `read_scdf()`.
+- Addin in R Studio is now renames to "Lauch Shiny-Scan" and finally works.
+- `shinyscan()`: New argument `browser`. The default "external" starts the shiny app in an external browser.
+
 # scan 0.65.1
 
 ## Error correction
