@@ -81,16 +81,17 @@
 } 
 
 revise_names <- function(x, n) {
+  
   if (missing(n)) {
     n <- length(x)
     if (!is.character(x)) x <- names(x)
   }
 
   if (is.null(x)) {
-    x <- paste0("Case", 1:n)
+    x <- paste0("[case #", 1:n, "]") # paste0("Case", 1:n)
   } else {
-    nonames <- which(is.na(x))
-    x[nonames] <- paste0("Case", nonames)
+    nonames <- which(is.na(x) | x == "")
+    x[nonames] <- paste0("[case #", nonames, "]") # paste0("Case", nonames)
   }
   x
 }
@@ -165,3 +166,6 @@ format_table <- function(df,
   row.names(df_rounded) <- row.names(df)
   df_rounded
 }
+
+
+str_ci <- function(ci) paste0(c("LL", "UL"), "-CI", ci * 100, "%")

@@ -1,3 +1,199 @@
+# MCMCglmm ----
+
+dat <- Leidig2018 |> 
+  add_dummy_variables( 
+    model = "W", 
+    contrast_level = "first", 
+    contrast_slope = "first"
+  ) |> 
+  as.data.frame()
+
+dat <- exampleAB$Johanna |> 
+  add_dummy_variables( 
+    model = "W", 
+    contrast_level = "first", 
+    contrast_slope = "first"
+  ) |> 
+  as.data.frame()
+
+library(MCMCglmm)
+model <- nlme::lme(academic_engagement~1+mt+phaseB+interB, random = ~1|case,data = dat, na.action = na.omit)
+summary(model)
+
+model2 <- MCMCglmm(academic_engagement~1+mt+phaseB+interB, 
+                   random = ~us(1+phaseB+interB):case,data = dat, verbose = FALSE)
+model2 <- MCMCglmm(values~1+mt+phaseB+interB, data = dat, verbose = FALSE)
+
+summary(model2, random = FALSE)
+
+bayesian_hplm(Leidig2018, random_level = TRUE, random_slope = TRUE)
+
+
+args <- list(...)
+if (!is.null(args$kable_options)) {
+  kable_options <- .join_kabel(args$kable_options)
+} else {
+  kable_options <- getOption("scan.export.kable")
+}
+
+if (!is.null(args$kable_styling_options)) {
+  kable_styling_options <- .join_kabel_styling(args$kable_styling_options)
+} else {
+  kable_styling_options <- getOption("scan.export.kable_styling")
+}
+
+
+# glm -----
+
+
+library(scan)
+library(scplot)
+
+scdf <- scdf(
+  values = c(
+    3.333333333, 3.333333333, 3.666666667, 4, 3.666666667, 4, 3.666666667, 4, 3.666666667, 3.666666667, 3.666666667, 3.666666667, 3.666666667,
+    3.666666667, 3.666666667, 4.666666667, 3.333333333, 3.333333333, 3.666666667, NA, 3.666666667, 3.666666667, 4, 3.666666667, NA, 4, 4, NA, NA,
+    3.666666667, NA, 3.333333333, 3.666666667, 3.666666667, 4, NA, 3.666666667, 3.666666667, 3.666666667, NA, 4, 4
+  ),
+  phase_design = c(A = 7, B = 21, C = 14)
+)
+
+plm(scdf) |> export()
+
+scdf |> add_dummy_variables() |> as.data.frame()->da1
+glm(values ~ mt + phaseB + phaseC + interB + interC, data = da1)
+
+scdf |> scan:::.prepare_scdf() |> add_dummy_variables() |> as.data.frame()->da1
+glm(values ~ mt + phaseB + phaseC + interB + interC, data = da1)
+
+scdf |> scan:::.prepare_scdf()
+
+scdf |> scan:::.prepare_scdf(na.rm = TRUE) ->scdf2
+
+add_dummy_variables(scdf2) |> as.data.frame()->da2
+glm(values ~ mt + phaseB + phaseC + interB + interC, data = da2)
+
+scdf |> na.omit() |> plm()
+
+
+# rowwise -------
+
+library(scan)
+
+ex <- exampleAB_add
+ex[[1]]$wellbeing[c(3, 6)] <- NA
+ex <- ex |> transform(
+  sum = rowwise(sum(wellbeing, cigarrets, depression, na.rm = TRUE))
+) |> 
+  set_dvar("sum")
+
+scplot(ex)
+
+
+scdf(
+  values = 1:30,
+  f2 = c(A = 1, 10:2, B = 11, 12:30),
+  f3 = 1:30,
+  dvar = c("f2")
+) |> scplot()
+names(ex)
+
+
+
+# -------
+
+library(scan)
+library(scplot)
+
+scdf <- scdf(
+  values = c(
+    3.333333333, 3.333333333, 3.666666667, 4, 3.666666667, 4, 3.666666667, 4, 3.666666667, 3.666666667, 3.666666667, 3.666666667, 3.666666667,
+    3.666666667, 3.666666667, 4.666666667, 3.333333333, 3.333333333, 3.666666667, NA, 3.666666667, 3.666666667, 4, 3.666666667, NA, 4, 4, NA, NA,
+    3.666666667, NA, 3.333333333, 3.666666667, 3.666666667, 4, NA, 3.666666667, 3.666666667, 3.666666667, NA, 4, 4
+  ),
+  phase_design = c(A = 7, B = 21, C = 14)
+)
+
+plm(scdf) |> export()
+
+scdf |> add_dummy_variables() |> as.data.frame()->da1
+glm(values ~ mt + phaseB + phaseC + interB + interC, data = da1)
+
+scdf |> scan:::.prepare_scdf() |> add_dummy_variables() |> as.data.frame()->da1
+glm(values ~ mt + phaseB + phaseC + interB + interC, data = da1)
+
+scdf |> scan:::.prepare_scdf()
+
+scdf |> scan:::.prepare_scdf(na.rm = TRUE) ->scdf2
+
+add_dummy_variables(scdf2) |> as.data.frame()->da2
+glm(values ~ mt + phaseB + phaseC + interB + interC, data = da2)
+
+scdf |> na.omit() |> plm()
+
+
+# add_model_stats() ------
+
+
+add_model_stats <- function(model, dvar = NULL, data = NULL) {
+  if (!inherits(model, "gls")) stop("This function is designed for gls() objects from nlme.")
+  
+  # Versuche, y aus den Originaldaten zu rekonstruieren
+  if (!is.null(data) && !is.null(dvar)) {
+    used_rows <- as.numeric(rownames(model.matrix(model)))  # robuste Zeilenauswahl
+    y <- data[[dvar]][used_rows]
+  } else {
+    y <- fitted(model) + resid(model)
+  }
+  
+  residuals <- resid(model)
+  fitted_vals <- fitted(model)
+  
+  n <- model$dims$N
+  df_model <- model$dims$p
+  
+  # Intercept vorhanden?
+  has_intercept <- "(Intercept)" %in% names(coef(model))
+  df_intercept <- as.integer(has_intercept)
+  df_effect <- df_model - df_intercept
+  df_residuals <- n - df_model
+  
+  # QSE
+  qse <- sum(residuals^2)
+  
+  # QST
+  if (has_intercept) {
+    qst <- sum((y - mean(y))^2)
+    total_variance <- qst / (n - 1)
+    mse <- var(residuals)
+  } else {
+    qst <- sum(y^2)
+    total_variance <- qst / n
+    mse <- sum(residuals^2) / n
+  }
+  
+  # F-Wert
+  mqsa <- (qst - qse) / df_effect
+  mqse <- qse / df_residuals
+  f_value <- mqsa / mqse
+  p_value <- if (!is.infinite(f_value)) pf(f_value, df_effect, df_residuals, lower.tail = FALSE) else NA
+  
+  # R2
+  r2 <- 1 - (mse / total_variance)
+  r2_adj <- 1 - (1 - r2) * ((n - df_intercept) / df_residuals)
+  
+  # Zusammenstellen und dem Objekt anhängen
+  stats <- list(
+    F = f_value,
+    df1 = df_effect,
+    df2 = df_residuals,
+    p = p_value,
+    R2 = r2,
+    R2.adj = r2_adj
+  )
+  
+  stats
+}
 
 # 2025-03-04 ---- own functions in power test ----
 

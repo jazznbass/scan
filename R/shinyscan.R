@@ -49,6 +49,11 @@ shinyscan <- function(quiet = TRUE, browser = c("external","viewer"), ...) {
     on.exit(options(old_opt), add = TRUE)
   }
   
+  if (identical(browser, "viewer")) {
+    old_opt <- options(shiny.launch.browser = FALSE)
+    on.exit(options(old_opt), add = TRUE)
+  }
+  
   shiny::runApp(
     system.file('shiny', package = 'scan'),
     quiet = quiet,

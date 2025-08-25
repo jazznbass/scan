@@ -1,8 +1,8 @@
 Package: scan
 Type: Package
 Title: Single-Case Data Analyses for Single and Multiple Baseline Designs
-Version: 0.65.3
-Date: 2025-08-09
+Version: 0.65.999
+Date: 2025-08-25
 Authors@R: c(
   person("Juergen", "Wilbert", email = "juergen.wilbert@uni-muenster.de", 
     role = c("cre", "aut"), comment = c(ORCID = "0000-0002-8392-2873")), 
@@ -30,13 +30,16 @@ Suggests:
   yaml,
   scplot
 Description: A collection of procedures for analysing, visualising, 
-  and managing single-case data. These include piecewise linear regression 
-  models, multilevel models, overlap indices ('PND', 'PEM', 'PAND', 'PET', 'tau-u', 
-  'baseline corrected tau', 'CDC'), and randomization tests. Data preparation functions 
-  support outlier detection, handling missing values, scaling, and custom transformations. 
-  An export function helps to generate 
-  html, word, and latex tables in a publication friendly style. More details can be 
-  found in the online book 'Analyzing single-case data with R and scan', Juergen Wilbert (2025)
+  and managing single-case data. These include regression models 
+  (multilevel, multivariate, bayesian), between case smd, overlap indices 
+  ('PND', 'PEM', 'PAND', 'PET', 'tau-u', 'IRD', 'baseline corrected tau', 'CDC'), 
+  and randomization tests. Data preparation functions support outlier detection, 
+  handling missing values, scaling, and custom transformations. 
+  An export function helps to generate html, word, and latex tables in a 
+  publication friendly style. A shiny app allows to use scan in a graphical 
+  userinterface.
+  More details can be found in the online book 'Analyzing single-case data with 
+  R and scan', Juergen Wilbert (2025)
   <https://jazznbass.github.io/scan-Book/>.
 License: GPL (>= 3)
 URL: https://github.com/jazznbass/scan/, https://jazznbass.github.io/scan-Book/, https://github.com/jazznbass/scan

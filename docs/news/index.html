@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.65.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.65.999</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,36 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.65.1" id="scan-0651">scan 0.65.1<a class="anchor" aria-label="anchor" href="#scan-0651"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.66.0" id="scan-0660">scan 0.66.0<a class="anchor" aria-label="anchor" href="#scan-0660"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-66-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-66-0"></a></h3>
+<ul><li>
+<code><a href="../reference/as_scdf.html">as_scdf()</a></code>: Add format checks with informative error messages.<br>
+(Mainly useful for externally loaded files via <code><a href="../reference/read_scdf.html">read_scdf()</a></code>.)</li>
+<li>
+<code><a href="../reference/shinyscan.html">shinyscan()</a></code>: New argument <code>browser</code>. Default <code>"external"</code> launches the Shiny app in an external browser.</li>
+<li>
+<code><a href="../reference/between_smd.html">between_smd()</a></code>:
+<ul><li>Stops if the <code>scdf</code> contains only one case.<br></li>
+<li>Redesigned outputs.<br></li>
+<li>Improved Bayesian analysis.<br></li>
+<li>Added confidence/credible intervals and new argument <code>ci</code>.</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="reworked-shiny-scan-app-0-66-0">Reworked Shiny Scan app<a class="anchor" aria-label="anchor" href="#reworked-shiny-scan-app-0-66-0"></a></h3>
+<ul><li>Switch to Bootstrap 5.</li>
+<li>Redesign the “Add case” workflow.</li>
+<li>Stats tab: auto-fill the “Output arguments” field when a statistics function is selected.</li>
+<li>Miscellaneous visual polish.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="error-correction-0-66-0">Error correction<a class="anchor" aria-label="anchor" href="#error-correction-0-66-0"></a></h3>
+<ul><li>Addin in R-Studio is now renames to “Lauch Shiny-Scan” and finally works.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.65.1" id="scan-0651">scan 0.65.1<a class="anchor" aria-label="anchor" href="#scan-0651"></a></h2><p class="text-muted">CRAN release: 2025-07-13</p>
 <div class="section level3">
 <h3 id="error-correction-0-65-1">Error correction<a class="anchor" aria-label="anchor" href="#error-correction-0-65-1"></a></h3>
 <ul><li>

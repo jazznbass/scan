@@ -206,7 +206,7 @@ export.sc_plm <- function(object,
     
     #str_ci <- paste0(round(c((1 - ci) / 2, ci + ((1 - ci) / 2)) * 100, 2), "%")
     
-    if (format == "print") str_ci <- paste0(c("LL", "UL"), "-CI", ci * 100, "%")
+    if (format == "print") str_ci <- str_ci(ci)
     if (format == "export") str_ci <- c("LL", "UL")
     
     ci <- suppressMessages(confint(x$full, level = ci))

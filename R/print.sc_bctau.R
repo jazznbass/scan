@@ -39,8 +39,9 @@ print.sc_bctau <- function(x, nice = TRUE, digits = "auto", ...) {
     cat(names(x$corrected_tau)[i], ":\n")
     print(x$corrected_tau[[i]][,-1], ...)
     cat("\n")
-    if (x$correction) cat("Baseline correction should be applied.\n\n")
-    if (!x$correction) cat("Baseline correction should not be applied.\n\n")
+ 
+    if (x$correction[[i]]) cat("Baseline correction should be applied.\n\n")
+    if (!x$correction[[i]]) cat("Baseline correction should not be applied.\n\n")
   }
   
 
