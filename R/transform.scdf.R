@@ -107,7 +107,9 @@ transform.scdf <- function(`_data`, ...) {
       
       new <- eval(expressions[c(1,i_expression)], .list_env, parent.frame())
       .df <- new[[1]]
+     
       `_data` <- suppressMessages(as_scdf(.df))
+     
       #attributes(`_data`) <- original_attr
     } else {
       # For across case calculations

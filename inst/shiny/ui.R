@@ -1,40 +1,37 @@
-source("resources.R")
+library(shiny)
+library(bslib)
 
-# data ------
-tab_scdf <- tabPanel(
+source("resources.R")  # assumes res$theme_light is a BS5 theme
+
+left_width <- 400
+
+# ---------- Data: New ----------
+tab_scdf <- nav_panel(
   "New",
-  sidebarLayout(
-    sidebarPanel(
-      textAreaInput(
-        "values", 
-        "Values (dependent variable)", 
-        placeholder = res$placeholder$values
-      ),
+  layout_sidebar(
+    sidebar = sidebar(
+      title = NULL, #"Case setup",
+      open  = "always", width = left_width,
+      selectInput("select_case", "Select case",
+                  choices = res$new_case, selected = res$new_case),
+      textAreaInput("new_values", "Values (dependent variable)",
+                    placeholder = res$placeholder$values, rows = 3),
       textInput("mt", "Measurement times", placeholder = res$placeholder$mt),
-      textAreaInput(
-        "variables", "Additional variables",
-        placeholder = res$placeholder$variables
-      ),
+      textAreaInput("new_variables", "Additional variables",
+                    placeholder = res$placeholder$variables, rows = 3),
       textInput("casename", "Case name", placeholder = "(optional)"),
-      actionButton("add_case", "Add case"),
-      actionButton("remove_case", "Remove case"),
-      actionButton("clear_cases", "Clear all cases"),
-      br(),
-      div(style="display:inline-block;",
-          radioButtons(
-            "remove_which", 
-            "Position", 
-            choices = c("last" = "last", "at:" = "at"), 
-            inline = TRUE
-          ),
-      ),
-      div(style="display:inline-block; padding-left: 0px",
-          numericInput("remove_at", "", min = 1,value = 1,width = "75px"),
-      ),
-      br(),
-      downloadButton("scdf_save", "Save scdf"),
+      
+      # Primary + secondary actions
+      div(class = "d-grid gap-2",
+          actionButton("save_case",   "Save case",    class = "btn-primary"),
+          actionButton("remove_case", "Remove case",  class = "btn-outline-secondary"),
+          actionButton("clear_cases", "Clear all cases",
+                       class = "btn-outline-secondary")),
+      tags$hr(),
+      downloadButton("scdf_save", "Save scdf", class = "btn-success")
     ),
-
+    
+    # main content
     mainPanel(
       verbatimTextOutput("scdf_messages"),
       verbatimTextOutput("scdf_output")
@@ -42,19 +39,19 @@ tab_scdf <- tabPanel(
   )
 )
 
-tab_load <- tabPanel(
+# ---------- Data: Load ----------
+tab_load <- nav_panel(
   "Load",
-  sidebarLayout(
-    sidebarPanel(
-      fileInput(
-        "upload", NULL, accept = c(".csv", ".rds", ".xlsx", ".xls", ".R", ".r"),
-        buttonLabel = "Open file"
-      ),
-      selectInput(
-        "scdf_example", "Choose example", choices = res$choices$examples,
-      ),
+  layout_sidebar(
+    sidebar = sidebar(
+      title = NULL, # "Import",
+      open  = "always", width = left_width,
+      fileInput("upload", NULL,
+                accept = c(".csv", ".rds", ".xlsx", ".xls", ".R", ".r"),
+                buttonLabel = "Open file"),
+      selectInput("scdf_example", "Choose example",
+                  choices = res$choices$examples)
     ),
-    
     mainPanel(
       verbatimTextOutput("load_messages"),
       verbatimTextOutput("load_output")
@@ -63,314 +60,259 @@ tab_load <- tabPanel(
   )
 )
 
-# Transform -----
-tab_transform <- tabPanel(
-  "Transform",
-  sidebarLayout(
-    sidebarPanel(
-      textInput(
-        "select_cases", "Select cases",
-        placeholder = "e.g.: 1, Anja, 3:5"
-      ),
-      div(style="display:inline-block; vertical-align: top",
-        textInput(
-          "select_phasesA", 
-          "Combine phases to A", 
-          placeholder = "(e.g.: 1)"
-        )
-      ),
-      div(style="display:inline-block; vertical-align: top; padding-left: 30px;",
-        textInput(
-          "select_phasesB", 
-          "Combine phases to B", 
-          placeholder = "(e.g.: 2,3)"
-        )
-      ),
-      
-      textInput(
-        "subset", "Filter measurements",
-        placeholder = 'e.g.: mt > mean(values[phase == "A"])'
-      ),
-      textAreaInput(
-        "transform", "Transform variables", rows = 5,
-        placeholder = res$placeholder$transform
-      ),
-      textInput(
-        "setdvar", "Set dependent variable", placeholder = "e.g.: depression"
-      ),
-      downloadButton("transformed_save", "Save transformed scdf"),
+# ---------- Transform ----------
+tab_transform <- layout_sidebar(
+  sidebar = sidebar(
+    title = NULL, # title = "Transform",
+    open  = "always", width = left_width,
+    textInput("select_cases", "Select cases",
+              placeholder = "e.g.: 1, Anja, 3:5"),
+    div(class = "d-flex gap-3",
+        textInput("select_phasesA", "Combine phases to A", placeholder = "(e.g.: 1)"),
+        textInput("select_phasesB", "Combine phases to B", placeholder = "(e.g.: 2,3)")
     ),
-    mainPanel(
-      verbatimTextOutput("transform_syntax"),
-      conditionalPanel(
-        'input.transform_output_format == "Text"', 
-        verbatimTextOutput("transform_scdf")
-      ),
-      conditionalPanel(
-        'input.transform_output_format == "Html"', htmlOutput("transform_html")
-      )
+    textInput("subset", "Filter measurements",
+              placeholder = 'e.g.: mt > mean(values[phase == "A"])'),
+    textAreaInput("transform", "Transform variables", rows = 5,
+                  placeholder = res$placeholder$transform),
+    textInput("setdvar", "Set dependent variable", placeholder = "e.g.: depression"),
+    downloadButton("transformed_save", "Save transformed scdf", class = "btn-success")
+  ),
+  mainPanel(
+    input_switch("transform_output_format",
+                 tags$span("Html output", class = "chklabel-big"),
+                 value = FALSE),
+    verbatimTextOutput("transform_syntax"),
+    conditionalPanel(
+      '!input.transform_output_format', 
+      verbatimTextOutput("transform_scdf")
+    ),
+    conditionalPanel(
+      'input.transform_output_format', htmlOutput("transform_html")
     )
   )
 )
 
-navbar_data <- navbarMenu(
-  "Data",
-  tab_scdf,
-  tab_load#,
-  #tabPanel(downloadButton("test_save", "Save", class = "align: left;")),
-  #tab_transform
-)
-
-# Stats -----
-tab_stats <- tabPanel(
-  "Stats",
-  sidebarLayout(
-    sidebarPanel(
-      selectInput(
-        "func",
-        "Statistic",
-        choices = res$choices$fn_stats
-      ),
-      uiOutput("stats_arguments")
-    ),
-    mainPanel(
-      div(
-        style="display:inline-block; vertical-align: top",
-        radioButtons(
-          "stats_out", "Output format", c("Text", "Html"), "Text",
-          inline = TRUE
+# ---------- Stats ----------
+tab_stats <- layout_sidebar(
+  sidebar = sidebar(
+    title = NULL, # title = "Statistic",
+    open  = "always", width = left_width,
+    selectInput("func", "Statistic", choices = res$choices$fn_stats),
+    uiOutput("stats_arguments")
+  ),
+  mainPanel(
+    fluidRow(
+      column(
+        width = 2,
+        input_switch(
+          "stats_out",
+          tags$span("Html output", class = "chklabel-big"),
+          FALSE
         )
       ),
-      div(
-        style="display:inline-block; vertical-align: top; padding-left: 30px;",
-        textInput(
-          "stats_print_arguments", 
+      column(
+        width = 6,
+        textAreaInput(
+          "stats_print_arguments",
           "Output arguments",
+          rows = 2,
+          width = "100%",
           placeholder = res$placeholder$stats_out_args
         )
       ),
-      div(
-        style="display:inline-block; vertical-align: top; padding-left: 30px;",
-        radioButtons(
-          "stats_export_flip", 
-          "Flip",
-          c(FALSE, TRUE),
-          inline = TRUE
+      column(
+        width = 2,
+        div(style = "margin-top: 25px;",  # Button optisch auf Höhe des Textfelds
+            downloadButton("stats_save", "Save output")
         )
-      ),
-      div(
-        style="display:inline-block; padding-left: 30px;",
-        downloadButton("stats_save", "Save output")
-      ),
-      hr(),
-      verbatimTextOutput("stats_syntax"),
-      conditionalPanel(
-        'input.stats_out == "Text"', verbatimTextOutput("stats_text")
-      ),
-      conditionalPanel(
-        'input.stats_out == "Html"', tableOutput("stats_html")
       )
-    )
-  )
-)
-
-# Plot -----
-tab_plot <- tabPanel(
-  "Plot",
-  sidebarLayout(
-    sidebarPanel(
-      textAreaInput(
-        "plot_arguments", "Arguments", value = "",rows = 5,
-        placeholder = res$placeholder$plot_arguments
-      ),
-      selectInput("scplot_examples", "Stats templates",
-          choices = names(res$choices$scplot_examples)
-      ),
-      selectInput("scplot_templates_design", "Design templates",
-                    choices = names(res$choices$scplot_templates_design)
-      ),
-      selectInput("scplot_templates_annotate", "Annotate templates",
-                  choices = names(res$choices$scplot_templates_annotate)
-      ),
-      downloadButton("saveplot", "Save plot", inline = FALSE)
     ),
-    mainPanel(
-      verbatimTextOutput("plot_syntax"),
-      plotOutput("plot_scdf", width = 1000,height = 800,)
+    hr(),
+    verbatimTextOutput("stats_syntax"),
+    conditionalPanel(
+      '!input.stats_out', verbatimTextOutput("stats_text")
+    ),
+    conditionalPanel(
+      'input.stats_out', tableOutput("stats_html")
     )
   )
 )
 
-# Power-test -----
-tab_power_test <- tabPanel(
-  "Power-test",
-  fluidRow(
-    column(2, div(style = res$div$pt,
-      h3("Case design"),
-      br(),
-      textInput("design_n", "n", value = 1),
-      textInput("design_phase", "Phase design", value = "A = 5, B = 15"),
-      textInput("design_trend", "Trend", value = "0.02"),
-      textInput("design_slope", "Slope", value = "0"),
-      textInput("design_level", "Level", value = "1"),
-      textInput("design_start", "Start value", value = 50),
-      #textInput("design_s", "Standard deviation", value = 10),
-      textInput("design_rtt", "Reliabiliy", value = 0.8),
-      selectInput("design_distribution", "Distribution", 
-                 choices = c("normal", "poisson", "binomial")
-      ),
-    )),
-    column(2, div(style = res$div$pt,
-      h3("Analysis"),
-      br(),
-      checkboxGroupInput(
-        "pt_method", "Method(s)", 
-        choices = res$choices$pt_method,selected = "plm_level"
-      ),
-      textInput("pt_method_user", "User method", value = ""),
-      selectInput(
-       "pt_effect", "Null effect for", choices = c("level", "slope")
-      ),
-      numericInput(
-        "pt_n", "Number of simulations", min = 30, max = 10000, value = 100
-      ),
-      textInput("pt_ci", "Confidence intervall", placeholder = "e.g.: 0.95"),   
-    )),
-    column(4, div(style = res$div$pt,
-      br(),
-      verbatimTextOutput("pt_syntax"),
-      actionButton("pt_compute", "Run"),
-      hr(),
-      verbatimTextOutput("pt_results", placeholder = TRUE)
-    )),
-    column(4, div(style = res$div$pt,
-      actionButton("desigh_plot_button", "Create plot example"),
-      plotOutput("plot_design", width = 600, height = 800)
-    )),
+# ---------- Plot ----------
+tab_plot <- layout_sidebar(
+  sidebar = sidebar(
+    title = NULL, # title = "Plot",
+    open  = "always", width = left_width,
+    textAreaInput("plot_arguments", "Arguments",
+                  value = "", rows = 5,
+                  placeholder = res$placeholder$plot_arguments),
+    selectInput("scplot_examples", "Stats templates",
+                choices = names(res$choices$scplot_examples)),
+    selectInput("scplot_templates_design", "Design templates",
+                choices = names(res$choices$scplot_templates_design)),
+    selectInput("scplot_templates_annotate", "Annotate templates",
+                choices = names(res$choices$scplot_templates_annotate)),
+    downloadButton("saveplot", "Save plot", class = "btn-success")
   ),
- 
-)
-
-# settings -----
-tab_settings <- tabPanel(
-  "Settings",
-  fluidRow(
-    column(2, div(
-      style = res$div$settings, 
-      h3("Data"),
-      radioButtons(
-        "scdf_output_format", "Show output as", 
-        choices = c("Summary", "Syntax"), 
-        inline = TRUE
-      ),
-      radioButtons(
-        "scdf_syntax_phase_structure", "Syntax phase structure", 
-        choices = c("phase_design" = FALSE, "inline" = TRUE), 
-        inline = TRUE
-      ),
-      textInput("scdf_save_prefix", "Prefix save filename", value = "scdf"),
-      radioButtons(
-       "scdf_save_format", "Save format", 
-       choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
-       inline = TRUE),
-      textInput("scdf_load_na", "Missing values in import file", value = '"", "NA"'),
-
-    )),
-    column(2, div(
-      style = res$div$settings, 
-      h3("Transform"),
-      radioButtons(
-        "transform_output_format", "Show output as", c("Text", "Html"), inline = TRUE
-      ),
-      textInput(
-        "transform_save_prefix", 
-        "Prefix save filename", 
-        value = "scdf-transformed"
-      ),
-      radioButtons(
-        "transform_save_format", "Save format", 
-        choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"), 
-        inline = TRUE)
-    )),
-    column(2, div(
-      style = res$div$settings, 
-      h3("Stats"),
-      radioButtons(
-        "stats_default", "Syntax with defaults", choices = c("No", "Yes"),
-        inline = TRUE
-      ),
-      radioButtons(
-        "rename_predictors", "Rename predictors", choices = c("full", "concise", "no"),
-        inline = TRUE
-      ),
-      radioButtons(
-        "format_output_stats", "Save format", choices = c("html", "docx", "text"),
-        inline = TRUE
-      ),
-      textInput("prefix_output_stats", "Prefix save filename", value = "scan-stat")
-    )),
-    column(2, div(
-      style = res$div$settings, 
-      h3("Plot"),
-      textInput("prefix_output_plot", "Prefix save filename", value = "scplot"),
-      numericInput("width", "Export width", value = 1600, min = 100, max = 4000),
-      numericInput("height", "Export height", value = 1200, min = 100, max = 4000),
-      numericInput("dpi", " Export dpi", value = 200, min = 50, max = 1200)
-    )),
-    column(2, div(
-      style = res$div$settings, 
-      h3("General"),
-      radioButtons(
-        "scan_export_engine", "Html engine", choices = c("gt", "kable"),
-        inline = TRUE
-      )
-    ))
+  mainPanel(
+    verbatimTextOutput("plot_syntax"),
+    plotOutput("plot_scdf", width = 1000,height = 800,)
   )
 )
 
-# Help -----
+# ---------- Power-test ----------
 
-navbar_help <- navbarMenu(
-  "Help",
-  tabPanel("Info",res$help_page),
-  tabPanel(
+card_design <- card(
+  card_body(
+    textInput("design_n", "n", value = 1),
+    textInput("design_phase", "Phase design", value = "A = 5, B = 15"),
+    textInput("design_trend", "Trend", value = "0.02"),
+    textInput("design_slope", "Slope", value = "0"),
+    textInput("design_level", "Level", value = "1"),
+    textInput("design_start", "Start value", value = 50),
+    textInput("design_rtt", "Reliabiliy", value = 0.8),
+    selectInput("design_distribution", "Distribution",
+                choices = c("normal", "poisson", "binomial"))
+  )
+)
+
+card_analysis <- card(
+  card_body(
+    checkboxGroupInput("pt_method", "Method(s)",
+                       choices = res$choices$pt_method, selected = "plm_level"),
+    textInput("pt_method_user", "User method", value = ""),
+    selectInput("pt_effect", "Null effect for", choices = c("level", "slope")),
+    numericInput("pt_n", "Number of simulations",
+                 min = 30, max = 10000, value = 100),
+    textInput("pt_ci", "Confidence interval", placeholder = "e.g.: 0.95")
+  )
+)
+
+card_run <- card(
+  card_body(
+    verbatimTextOutput("pt_syntax"),
+    input_task_button("pt_compute", "Run"),
+    #actionButton("pt_compute", "Run", class = "btn-primary"),
+    hr(),
+    verbatimTextOutput("pt_results", placeholder = TRUE)
+  ), height = "50vh"
+)
+
+card_plot <- card(
+  card_body(
+    actionButton("desigh_plot_button", "Create plot example"),
+    plotOutput("plot_design")#, width = 800, height = 800)
+  ), height = "50vh"
+)
+
+tab_power_test <- layout_columns(
+  col_widths = c(2, 3, 7),          # three equal columns (12-grid)
+  heights_equal = "row",            # equalize column heights in this row
+  # col 1
+  card_design,
+  # col 2
+  card_analysis,
+  # col 3: stack two half-height cards vertically
+  div(class = "d-flex flex-column gap-3 h-100",
+      card_run,
+      card_plot
+  )
+)
+
+# ---------- Settings ----------
+tab_settings <- layout_columns(
+  col_widths = c(2,2,2,2),
+  card(
+    card_header("Data"),
+    card_body(
+      input_switch("scdf_output_format", "Show scdf syntax", value = FALSE),
+      input_switch("scdf_syntax_phase_structure",
+                   tags$span("Phase structure inline", class = "chklabel-big"),
+                   value = FALSE),
+      textInput("scdf_save_prefix", "Prefix save filename", value = "scdf"),
+      radioButtons("scdf_save_format", "Save format",
+                   choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"),
+                   inline = TRUE),
+      textInput("scdf_load_na", "Missing values in import file", value = '"", "NA"')
+    )
+  ),
+  card(
+    card_header("Transform"),
+    card_body(
+      textInput("transform_save_prefix", "Prefix save filename",
+                value = "scdf-transformed"),
+      radioButtons("transform_save_format", "Save format",
+                   choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"),
+                   inline = TRUE)
+    )
+  ),
+  card(
+    card_header("Stats"),
+    card_body(
+      input_switch("stats_default",
+                   tags$span("Show defaults", class = "chklabel-big"),
+                   value = FALSE),
+      input_switch("stats_description",
+                   tags$span("Show short description", class = "chklabel-big"),
+                   value = TRUE),
+      radioButtons("rename_predictors", "Rename predictors",
+                   choices = c("full", "concise", "no"), inline = TRUE),
+      radioButtons("format_output_stats", "Save format",
+                   choices = c("html", "docx", "text"), inline = TRUE),
+      textInput("prefix_output_stats", "Prefix save filename", value = "scan-stat")
+    )
+  ),
+  card(
+    card_header("Plot"),
+    card_body(
+      textInput("prefix_output_plot", "Prefix save filename", value = "scplot"),
+      numericInput("width",  "Export width",  value = 1600, min = 100, max = 4000),
+      numericInput("height", "Export height", value = 1200, min = 100, max = 4000),
+      numericInput("dpi",    "Export dpi",    value = 200,  min = 50,  max = 1200)
+    )
+  ),
+  card(
+    card_header("General"),
+    card_body(
+      radioButtons("scan_export_engine", "Html engine",
+                   choices = c("gt", "kable"), inline = TRUE)
+    )
+  )
+)
+
+# ---------- Help ----------
+navbar_help <- nav_menu(
+  title = "Help",
+  nav_panel("Info", res$help_page),
+  nav_panel(
     "About",
     h4("Running:"),
-    h4(paste0(
-      "scan ",
-      utils::packageVersion("scan")," (",utils::packageDate('scan'), ")"
-    )),
-    h4(paste0(
-      "scplot ",
-      utils::packageVersion("scplot")," (",utils::packageDate('scplot'), ")"
-    )),
+    h4(paste0("scan ",   utils::packageVersion("scan"),   " (", utils::packageDate('scan'),   ")")),
+    h4(paste0("scplot ", utils::packageVersion("scplot"), " (", utils::packageDate('scplot'), ")")),
     hr(),
     h4("Please cite as:"),
-    h4({x<-citation("scan"); class(x)<-"list"; attributes(x[[1]])$textVersion}),
+    h4({x <- citation("scan"); class(x) <- "list"; attributes(x[[1]])$textVersion}),
     hr(),
-    h4("(c) Jürgen Wilbert, 2023")
+    h4("(c) Jürgen Wilbert, 2025")
   ),
-  tabPanel(title = "Quit")
+  nav_panel(title = "Quit")
 )
 
-# ui ------
-
-js <- HTML(
-  "Shiny.addCustomMessageHandler('closeWindow', function(data) {
-    eval(data.message)
-  });"
-)
+# ---------- UI ----------
+ui <- page_navbar(
+  title = "scan",
+  theme = res$theme_light,
+  navbar_options = navbar_options(class = "bg-primary", theme = "dark"),
   
-ui <- navbarPage(
-  id = "navpage",
-  title = "Shiny-Scan",
-  theme = "cerulean.min.css",
-  tags$head(tags$script(js)),
-  navbar_data,#tab_scdf,
-  tab_transform,
-  tab_stats, #navbar_analyses,
-  tab_plot,
-  tab_power_test,
-  tab_settings,
-  navbar_help
+  nav_menu("Data", tab_scdf, tab_load),
+  nav_panel("Transform",  tab_transform),
+  nav_panel("Stats",      tab_stats),
+  nav_panel("Plot",       tab_plot),
+  nav_panel("Power",      tab_power_test),
+  nav_panel("Settings",   tab_settings),
+  navbar_help,
+  
+  nav_spacer(),
+  nav_item(input_switch("darkmode", "Dark mode", value = FALSE))
 )

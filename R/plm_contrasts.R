@@ -175,10 +175,11 @@ contr.cum <- function(n) {
     class(phase_str) <- "list"
     phase_str$start <- c(1, cumsum(phase_str$lengths) + 1)[1:length(phase_str$lengths)]
     phase_str$stop  <- cumsum(phase_str$lengths)
-    
+
     for(j in 1:length(phase_str$lengths)) {
       selection_phases <- levels(phase)[phase_str$start[j]:phase_str$stop[j]]
       id <- which(phase %in% selection_phases)
+      
       mt_dummy <- (mt[id] - mt[id[1]])
       if (model %in% c("B&L-B")) 
         df[[dummy_names[i]]][id] <- (mt_dummy + 1) * phase_str$values[j] #check: (mt[1:length(id)] - mt[1] + 1) * phase_str$values[j]

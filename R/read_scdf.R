@@ -8,8 +8,10 @@
 #'   or a data.frame.
 #' @param cvar Sets the variable name of the "case" variable. Defaults to
 #'   `"case"`.
-#' @param pvar Sets the variable name of the "phase" variable. Defaults to `"phase"`.
-#' @param dvar Sets the variable name of the "values" variable. Defaults to `"values"`.
+#' @param pvar Sets the variable name of the "phase" variable. Defaults to
+#'   `"phase"`.
+#' @param dvar Sets the variable name of the "values" variable. Defaults to
+#'   `"values"`.
 #' @param mvar Sets the variable name of the "mt" variable. Defaults to `"mt"`.
 #' @param sort_cases,sort.labels If set TRUE, the resulting list is sorted by
 #'   label names (alphabetically increasing).
@@ -91,9 +93,9 @@ read_scdf <- function(file,
   if (type == "data") {
     dat <- as.data.frame(file)
   }
-  
+ 
   out <- as_scdf(
-    dat, 
+    object = dat, 
     sort_cases = sort_cases, 
     cvar = cvar, 
     pvar = pvar, 

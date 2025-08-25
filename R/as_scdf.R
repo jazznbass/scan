@@ -23,13 +23,8 @@ as_scdf <- function(object,
                     phase_names = NULL,
                     sort_cases = FALSE) {
 
-  on.exit(print_messages())
+  on.exit(print_messages(pretext = "Note:"))
   
-  if (!cvar %in% names(object)) {
-    add_message("Casename variable not found. Assuming one case.")
-    object[[cvar]] <- "unnamed"
-  }
-
   original_attr <- scdf_attr(object)
   if (!is.null(original_attr)) {
     pvar <- phase(object)
@@ -37,6 +32,22 @@ as_scdf <- function(object,
     mvar <- mt(object)
     add_message("Found scdf attributes and replaced function arguments.")
   }
+  
+  ## check file -----
+  
+  check_args(
+    is_true(dvar %in% names(object), "Variable '", dvar, "' is missing."),
+    is_true(mvar %in% names(object), "Variable '", mvar, "' is missing."),
+    is_true(pvar %in% names(object), "Variable '", pvar, "' is missing."),
+    not(any(is.na(object[[cvar]])), "Variable '", cvar, "' has a missing value."),
+    not(any(is.na(object[[pvar]])), "Variable '", pvar, "' has a missing value.")
+  )
+  
+  if (!cvar %in% names(object)) {
+    add_message("Casename variable not found. Assuming one case.")
+    object[[cvar]] <- "unnamed"
+  }
+
 
   if (!sort_cases) {
     object[[cvar]] <- factor(object[[cvar]], levels = unique(object[[cvar]]))

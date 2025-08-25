@@ -3,6 +3,7 @@
 #' Run a Shiny app with most of the scan functions.
 #'
 #' @param quiet If TRUE (default) does not report shiny messages in the console.
+#' @param browser c("external","viewer") 
 #' @param \dots Further arguments passed to the `shiny::runApp()` function.
 #' @details This function launches a shiny application.
 #'   You need to have `scplot` and `shiny` installed.
@@ -10,7 +11,7 @@
 #'   `shinyscan()` will ask to install missing packages.
 #'
 #' @export
-shinyscan <- function(quiet = TRUE, ...) {
+shinyscan <- function(quiet = TRUE, browser = c("external","viewer"), ...) {
   
   miss <- c()
   
@@ -42,6 +43,16 @@ shinyscan <- function(quiet = TRUE, ...) {
   #if (mode == "viewer") 
   #  options(shiny.launch.browser = .rs.invokeShinyPaneViewer)
   
+  browser <- match.arg(browser)
+  if (identical(browser, "external")) {
+    old_opt <- options(shiny.launch.browser = TRUE)
+    on.exit(options(old_opt), add = TRUE)
+  }
+  
+  if (identical(browser, "viewer")) {
+    old_opt <- options(shiny.launch.browser = FALSE)
+    on.exit(options(old_opt), add = TRUE)
+  }
   
   shiny::runApp(
     system.file('shiny', package = 'scan'),

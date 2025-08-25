@@ -87,8 +87,8 @@ export(object, ...)
   caption = NA,
   footnote = NA,
   filename = NA,
-  round = 2,
-  decimals = 2,
+  round = 3,
+  decimals = NULL,
   ...
 )
 
@@ -121,8 +121,7 @@ output will be written to that file.}
 
 \item{flip}{If TRUE, some objects are exported with rows and columns flipped.}
 
-\item{round}{Integer passed to the digits argument internally used to round
-values.}
+\item{round}{Integer passed to the digits argument used to round values.}
 
 \item{select}{A character vector containing the names of the variables to be
 included. If the vector is named, the variables will be renamed

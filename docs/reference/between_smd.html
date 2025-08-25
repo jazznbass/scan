@@ -9,7 +9,7 @@ described in Pustejovsky et al. (2014)"><meta property="og:image" content="/logo
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.65.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.65.999</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@ described in Pustejovsky et al. (2014)"><meta property="og:image" content="/logo
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Between-Case Standardized Mean Difference</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/between_smd.R" class="external-link"><code>R/between_smd.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print.sc_bcsmd.R" class="external-link"><code>R/print.sc_bcsmd.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/between_smd.R" class="external-link"><code>R/between_smd.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print-export-bcsmd.R" class="external-link"><code>R/print-export-bcsmd.R</code></a></small>
       <div class="d-none name"><code>between_smd.Rd</code></div>
     </div>
 
@@ -42,10 +42,27 @@ described in Pustejovsky et al. (2014)</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">between_smd</span><span class="op">(</span><span class="va">data</span>, include_residuals <span class="op">=</span> <span class="cn">TRUE</span>, model <span class="op">=</span> <span class="st">"frequentist"</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">between_smd</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"REML"</span>, <span class="st">"MCMCglmm"</span><span class="op">)</span>,</span>
+<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  include_residuals <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'sc_bcsmd'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'sc_bcsmd'</span></span>
+<span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -57,12 +74,19 @@ described in Pustejovsky et al. (2014)</p>
 <code><a href="bplm.html">bplm()</a></code> function.</p></dd>
 
 
+<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
+<dd><p>Either <code>"REML"</code> or "<code>MCMglmm"</code>. This indicated which
+statistical method is applied to calculate the model.</p></dd>
+
+
+<dt id="arg-ci">ci<a class="anchor" aria-label="anchor" href="#arg-ci"></a></dt>
+<dd><p>A numeric between 0 and 1 setting the width of the confidence
+interval (when method is REML) or the credible interval (when method is
+MCMCglmm). The default is <code>0.95</code> for a 95-percent interval.</p></dd>
+
+
 <dt id="arg-include-residuals">include_residuals<a class="anchor" aria-label="anchor" href="#arg-include-residuals"></a></dt>
 <dd><p>Logical. See details.</p></dd>
-
-
-<dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
-<dd><p>Either <code>"ml"</code> or <code>"bayesian"</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -76,6 +100,29 @@ described in Pustejovsky et al. (2014)</p>
 <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
 <dd><p>The minimum number of significant digits to be use.
 If set to "auto" (default), values are predefined.</p></dd>
+
+
+<dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
+<dd><p>An scdf or an object exported from a scan function.</p></dd>
+
+
+<dt id="arg-caption">caption<a class="anchor" aria-label="anchor" href="#arg-caption"></a></dt>
+<dd><p>Character string with table caption. If left NA (default) a
+caption will be created based on the exported object.</p></dd>
+
+
+<dt id="arg-footnote">footnote<a class="anchor" aria-label="anchor" href="#arg-footnote"></a></dt>
+<dd><p>Character string with table footnote. If left NA (default) a
+footnote will be created based on the exported object.</p></dd>
+
+
+<dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
+<dd><p>String containing the file name. If a filename is given the
+output will be written to that file.</p></dd>
+
+
+<dt id="arg-round">round<a class="anchor" aria-label="anchor" href="#arg-round"></a></dt>
+<dd><p>Integer passed to the digits argument used to round values.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -95,6 +142,7 @@ model includes the trend and the phase slope as additional predictors.</p>
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
 <ul><li><p><code>print(sc_bcsmd)</code>: Print results</p></li>
+<li><p><code>export(sc_bcsmd)</code>: export results</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -120,30 +168,49 @@ Modeling Framework. Journal of Educational and Behavioral Statistics,
 <span class="r-in"><span><span class="fu">between_smd</span><span class="op">(</span><span class="va">study</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Between-Case Standardized Mean Difference</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Model: frequentist </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Method: REML</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Base model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Model phaseB1 phaseA2 phaseB2 phaseC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Base    0.85    0.86    1.68   2.55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Full plm    0.87    0.96    1.90   2.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect BC-SMD   se LL-CI95% UL-CI95%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseB1   0.85 0.02     0.81     0.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseA2   0.86 0.02     0.82     0.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseB2   1.67 0.02     1.63     1.71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   phaseC   2.55 0.02     2.51     2.58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Full plm model</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect BC-SMD   se LL-CI95% UL-CI95%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseB1   0.87 0.04     0.79     0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseA2   0.95 0.08     0.79     1.11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseB2   1.89 0.13     1.64     2.15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   phaseC   2.90 0.18     2.55     3.24</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Specify the model and provide an hplm object:</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="hplm.html">hplm</a></span><span class="op">(</span><span class="va">study</span>, contrast_level <span class="op">=</span> <span class="st">"preceding"</span>, slope <span class="op">=</span> <span class="cn">FALSE</span>,  trend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">between_smd</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Between-Case Standardized Mean Difference</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Model: frequentist </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Method: REML</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Provided</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Model phaseB1 phaseA2 phaseB2 phaseC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Provided    0.85    0.01    0.82   0.87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect BC-SMD   se LL-CI95% UL-CI95%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseB1   0.85 0.02     0.81     0.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseA2   0.01 0.02    -0.03     0.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseB2   0.82 0.02     0.78     0.86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   phaseC   0.87 0.02     0.84     0.91</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## excluding the residuals gives a more accruate estimation:</span></span></span>
+<span class="r-in"><span><span class="co">## excluding the residuals gives a more accurate estimation:</span></span></span>
 <span class="r-in"><span><span class="fu">between_smd</span><span class="op">(</span><span class="va">model</span>, include_residuals <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Between-Case Standardized Mean Difference</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Model: frequentist </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Method: REML</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Provided</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Model phaseB1 phaseA2 phaseB2 phaseC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Provided    1.02    0.01    0.98   1.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect BC-SMD   se LL-CI95% UL-CI95%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseB1   1.02 0.02     0.97     1.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseA2   0.01 0.02    -0.04     0.06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  phaseB2   0.98 0.02     0.93     1.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   phaseC   1.05 0.02     1.00     1.09</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

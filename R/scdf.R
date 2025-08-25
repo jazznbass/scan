@@ -190,7 +190,11 @@ scdf <- function(...,
   )
   
   # return ----
-  
+  if (length(df[[pvar]]) != length(df[[dvar]])) {
+    stop(
+      "\nThe phase argument suggests ", length(df[[pvar]]), " measures but ",
+      length(df[[dvar]]), " measurements are available.", call. = FALSE)
+  }
   data <- list(as.data.frame(df))
   attributes(data) <- .default_attributes()
   dv(data) <- dvar

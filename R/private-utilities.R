@@ -49,20 +49,18 @@
 .phases_string <- function(A, B) {
   nomer_s = "phase "
   nomer_p = "phases "
-  a_part <- 
-    if (length(A) == 1)
-      paste0(nomer_s, A, collapse = "")
-  else 
-    paste0( c(nomer_p, A[1], paste0(" + ",A[-1]) ), 
-            collapse = "")
-  
-  b_part <- 
-    if (length(B) == 1)
-      paste0(nomer_s, B, collapse = "")
-  else 
-    paste0( c(nomer_p,B[1], paste0(" + ",B[-1])), 
-            collapse = "")
-  
+  a_part <- if (length(A) == 1) {
+    paste0(nomer_s, A, collapse = "")
+  } else {
+    paste0( c(nomer_p, A[1], paste0(" + ",A[-1]) ), collapse = "")
+  } 
+    
+  b_part <- if (length(B) == 1) {
+    paste0(nomer_s, B, collapse = "")
+  } else {
+    paste0( c(nomer_p,B[1], paste0(" + ",B[-1])), collapse = "")
+  }
+    
   out <- paste0(c("Comparing ", a_part, " against ", b_part), collapse ="")
   out
 }
@@ -83,16 +81,17 @@
 } 
 
 revise_names <- function(x, n) {
+  
   if (missing(n)) {
     n <- length(x)
     if (!is.character(x)) x <- names(x)
   }
 
   if (is.null(x)) {
-    x <- paste0("Case", 1:n)
+    x <- paste0("[case #", 1:n, "]") # paste0("Case", 1:n)
   } else {
-    nonames <- which(is.na(x))
-    x[nonames] <- paste0("Case", nonames)
+    nonames <- which(is.na(x) | x == "")
+    x[nonames] <- paste0("[case #", nonames, "]") # paste0("Case", nonames)
   }
   x
 }
@@ -167,3 +166,6 @@ format_table <- function(df,
   row.names(df_rounded) <- row.names(df)
   df_rounded
 }
+
+
+str_ci <- function(ci) paste0(c("LL", "UL"), "-CI", ci * 100, "%")

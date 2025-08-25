@@ -1,3 +1,27 @@
+# scan 0.66.0
+
+## New features
+
+- `as_scdf()`: Add format checks with informative error messages.  
+  (Mainly useful for externally loaded files via `read_scdf()`.)
+- `shinyscan()`: New argument `browser`. Default `"external"` launches the Shiny app in an external browser.
+- `between_smd()`:  
+  - Stops if the `scdf` contains only one case.  
+  - Redesigned outputs.  
+  - Improved Bayesian analysis.  
+  - Added confidence/credible intervals and new argument `ci`.
+
+## Reworked Shiny Scan app
+
+- Switch to Bootstrap 5.
+- Redesign the “Add case” workflow.
+- Stats tab: auto-fill the “Output arguments” field when a statistics function is selected.
+- Miscellaneous visual polish.
+
+## Error correction
+
+- Addin in R-Studio is now renames to "Lauch Shiny-Scan" and finally works.
+
 # scan 0.65.1
 
 ## Error correction

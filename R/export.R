@@ -15,8 +15,7 @@
 #'   either a vector of variable names or the string "main" will select the
 #'   central variables.
 #' @param flip If TRUE, some objects are exported with rows and columns flipped.
-#' @param round Integer passed to the digits argument internally used to round
-#'   values.
+#' @param round Integer passed to the digits argument used to round values.
 #' @param decimals Decimal places that are reported.
 #' @param select A character vector containing the names of the variables to be
 #'   included. If the vector is named, the variables will be renamed
@@ -188,7 +187,9 @@ export_table_gt <- function(x,
   
   out <- do.call(gt::gt, list(data = x))|> gt_apa_style()
   
-  if (!is.null(title)) out <- gt::tab_header(out, title = gt::md(title))
+  if (!is.null(title)) {
+    out <- gt::tab_header(out, title = md("**Table**"), subtitle = gt::md(title))
+  }
   if (!is.null(row_group)) {
     for(i in length(row_group):1)
       out <- gt::tab_row_group(
@@ -239,6 +240,7 @@ gt_apa_style <- function(gt_tbl) {
       heading.border.bottom.width = 3,
       heading.border.bottom.color = "black",
       heading.title.font.size = "100%",
+      heading.subtitle.font.size = "100%",
       column_labels.border.bottom.width = 2,
       column_labels.border.bottom.color = "black",
       column_labels.border.top.width = 3,
