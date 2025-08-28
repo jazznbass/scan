@@ -14,7 +14,8 @@ options(
     bootstrap_options = c("striped", "condensed"), 
     full_width = FALSE,
     position = "left"
-  )
+  ),
+  scan.export.title.prefix = NULL
 )
 
 res <- list()
@@ -186,9 +187,9 @@ res$msg$startup <-
 
 You can:
 
-1. create a new case (fill in 'values' and click 'save case')
-2. load a dataset (Data -> Load -> click 'Open file' to import an rds, csv, or excel file)
-3. choose an example scdf (Data -> Load -> choose from 'Choose example')
+1. load a dataset: click 'Choose file' to import an rds, csv, or excel file)
+2. choose an example scdf from 'Choose example')
+3. create a new case (Data -> New -> fill in 'values' and click 'save case')
 
 'exampleABC' is a good place to start.
 
@@ -294,5 +295,16 @@ correct_casenames <- function(x, string = FALSE) {
   x
 }
 
+guess_col <- function(cols, hints) {
+  hit <- which(tolower(cols) %in% hints)
+  if (length(hit)) cols[hit[1]] else cols[1]
+}
 
 n2br <- function(x) gsub("\n", "<br>", x)
+
+render_summary <- function(scdf) {
+  out <-  summary(scdf) |> export()
+  if (getOption("scan.export.engine") == "gt")
+    out <- out |> gt::as_raw_html(out)
+  HTML(out)
+}

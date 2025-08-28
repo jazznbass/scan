@@ -1,3 +1,40 @@
+
+# rescale (27.8.25)
+
+rescale(exampleAB_add, wellbeing, cigarrets, depression)
+
+hplm(exampleAB)
+study |> 
+  #transform(
+  #  session = session - 1
+  #  #session = center_at(session, condition == "treatment")
+#  ) |> 
+  hplm(
+    model = "W",method = "REML",
+    #weights = varIdent(form = ~ 1 | condition),
+    unequal_variances = TRUE,
+    random_trend = TRUE,
+    #correlation = corAR1(0.01, ~ session | case),
+    #correlation = corARMA(form = ~ session | case, p = 1, q = 0),#corAR1(0.01, ~ session | case)
+    control = lmeControl(msMaxIter = 50, apVar = FALSE, returnObject = TRUE),
+    ar = 1
+  ) |> 
+  export()# add_dummy_variables(model = "H-M") 
+
+a <- byHeart2011 %>%
+  transform(
+    values = set_na_at(values, phase == "A", 0:1),
+    values = set_na_at(values, phase == "B", -1:0)
+  )
+
+b <- byHeart2011 %>%
+  transform(
+    values = replace(values, which(phase == "A")[1] + 0:1, NA),
+    values = replace(values, which(phase == "B")[1] + -1:0, NA)
+  )
+
+identical(a,b)
+
 # MCMCglmm ----
 
 dat <- Leidig2018 |> 

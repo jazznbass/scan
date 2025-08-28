@@ -46,16 +46,28 @@ tab_load <- nav_panel(
     sidebar = sidebar(
       title = NULL, # "Import",
       open  = "always", width = left_width,
+      selectInput("scdf_example", "Choose example",
+                  choices = res$choices$examples),
+      tags$hr(),
       fileInput("upload", NULL,
                 accept = c(".csv", ".rds", ".xlsx", ".xls", ".R", ".r"),
-                buttonLabel = "Open file"),
-      selectInput("scdf_example", "Choose example",
-                  choices = res$choices$examples)
+                buttonLabel = "Choose file"),
+      selectInput("scdf_load_cvar", "Case variable",
+                  choices = "case"),
+      selectInput("scdf_load_pvar", "Phase variable",
+                  choices = "phase"),
+      selectInput("scdf_load_dvar", "Dependent variable",
+                  choices = "values"),
+      selectInput("scdf_load_mvar", "Measurement time variable",
+                  choices = "mt"),
+      textInput("scdf_load_na", "Missing values", value = '"", "NA"'),
+      actionButton("scdf_import",   "Import scdf",    class = "btn-primary")
     ),
     mainPanel(
       verbatimTextOutput("load_messages"),
-      verbatimTextOutput("load_output")
-      #htmlOutput("load_html_output")
+      verbatimTextOutput("load_output"),
+      htmlOutput("load_output_html")#,
+      #tableOutput("load_output_table")
     )
   )
 )
@@ -129,6 +141,10 @@ tab_stats <- layout_sidebar(
       )
     ),
     hr(),
+    
+    conditionalPanel(
+      'input.stats_description', htmlOutput("stats_description")
+    ),
     verbatimTextOutput("stats_syntax"),
     conditionalPanel(
       '!input.stats_out', verbatimTextOutput("stats_text")
@@ -233,8 +249,7 @@ tab_settings <- layout_columns(
       textInput("scdf_save_prefix", "Prefix save filename", value = "scdf"),
       radioButtons("scdf_save_format", "Save format",
                    choices = c("R object" = ".rds", "R syntax" = ".R", "csv" = ".csv"),
-                   inline = TRUE),
-      textInput("scdf_load_na", "Missing values in import file", value = '"", "NA"')
+                   inline = TRUE)
     )
   ),
   card(
@@ -250,12 +265,12 @@ tab_settings <- layout_columns(
   card(
     card_header("Stats"),
     card_body(
+      input_switch("stats_description",
+                   tags$span("Show short description", class = "chklabel-big"),
+                   value = FALSE),
       input_switch("stats_default",
                    tags$span("Show defaults", class = "chklabel-big"),
                    value = FALSE),
-      input_switch("stats_description",
-                   tags$span("Show short description", class = "chklabel-big"),
-                   value = TRUE),
       radioButtons("rename_predictors", "Rename predictors",
                    choices = c("full", "concise", "no"), inline = TRUE),
       radioButtons("format_output_stats", "Save format",
@@ -302,10 +317,11 @@ navbar_help <- nav_menu(
 # ---------- UI ----------
 ui <- page_navbar(
   title = "scan",
+  id = "scan",
   theme = res$theme_light,
   navbar_options = navbar_options(class = "bg-primary", theme = "dark"),
   
-  nav_menu("Data", tab_scdf, tab_load),
+  nav_menu("Data", tab_load, tab_scdf),
   nav_panel("Transform",  tab_transform),
   nav_panel("Stats",      tab_stats),
   nav_panel("Plot",       tab_plot),
