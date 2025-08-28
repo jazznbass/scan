@@ -71,7 +71,7 @@ read_scdf <- function(file,
   }
   
   if (is.na(type)) {
-    type <- substring(file, regexpr("\\.([[:alnum:]]+)$", file) + 1)
+    type <- tolower(tools::file_ext(file))#substring(file, regexpr("\\.([[:alnum:]]+)$", file) + 1)
   }
   
   if (type == "csv") {
