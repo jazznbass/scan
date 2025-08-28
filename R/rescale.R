@@ -31,35 +31,29 @@ rescale <- function(data,
   vars <- vars[-1]
   
   if (length(vars) == 0) {
-    vars <- sapply(data[[1]], \(x) is.numeric(x)) |> which()
+    vars <- sapply(data[[1]], function(x) is.numeric(x)) |> which()
     vars <- names(data[[1]])[vars]
     message(paste0("Rescaled ", paste0(vars, collapse = ", ")))
   }
- 
-  means <- c()
-  sds <- c()
-  for (i in 1:length(vars)) {
-    means <- c(
-      means, 
-      mean(unlist(lapply(data, function(x) x[, vars[i]])), na.rm = TRUE)
-    )
-    sds <- c(
-      sds, 
-      sd(unlist(lapply(data, function(x) x[, vars[i]])), na.rm = TRUE)
-    )
-  }
+  
+  m_sd <- vapply(vars, function(x) {
+      y <- unlist(lapply(data, function(case) case[[x]]))
+      c(mean(y, na.rm = TRUE), sd(y, na.rm = TRUE))
+    },
+    FUN.VALUE = double(2)
+  ) 
 
   for (case in 1:N) {
     for (i in 1:length(vars)) {
       values <- data[[case]][, vars[i]]
       if (!is.null(m) && !is.null(sd)) {
-        data[[case]][, vars[i]] <- (values - means[i]) / sds[i] * sd + m
+        data[[case]][, vars[i]] <- (values - m_sd[1, i]) / m_sd[2, i] * sd + m
       }
       if (!is.null(m) && is.null(sd)) {
-        data[[case]][, vars[i]] <- (values - means[i]) + m
+        data[[case]][, vars[i]] <- (values - m_sd[1, i]) + m
       }
       if (is.null(m) && !is.null(sd)) {
-        data[[case]][, vars[i]] <- ((values - means[i]) / sds[i] * sd) + means[i]
+        data[[case]][, vars[i]] <- ((values - m_sd[1, i]) / m_sd[2, i] * sd) + m_sd[1, i]
       }
     }
   }

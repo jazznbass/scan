@@ -48,6 +48,10 @@ useful to calculate or modify new variables.</p>
 <span></span>
 <span><span class="fu">local_regression</span><span class="op">(</span><span class="va">x</span>, mt <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, f <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">set_na_at</span><span class="op">(</span><span class="va">x</span>, <span class="va">first_of</span>, positions <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">center_at</span><span class="op">(</span><span class="va">x</span>, at <span class="op">=</span> <span class="cn">TRUE</span>, shift <span class="op">=</span> <span class="fl">0</span>, part <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">first_of</span><span class="op">(</span><span class="va">x</span>, positions <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">across_cases</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
@@ -80,9 +84,33 @@ useful to calculate or modify new variables.</p>
 <dd><p>the proportion of surrounding data influencing each data point.</p></dd>
 
 
+<dt id="arg-first-of">first_of<a class="anchor" aria-label="anchor" href="#arg-first-of"></a></dt>
+<dd><p>A logical vector</p></dd>
+
+
 <dt id="arg-positions">positions<a class="anchor" aria-label="anchor" href="#arg-positions"></a></dt>
 <dd><p>A numeric vector with relative positions to the first
 appearance of a TRUE value in x.</p></dd>
+
+
+<dt id="arg-at">at<a class="anchor" aria-label="anchor" href="#arg-at"></a></dt>
+<dd><p>A logical vector. E.g. <code>phase == "A"</code>. The first TRUE value of that
+vector is the target position for centring. By default, this is the first
+position.</p></dd>
+
+
+<dt id="arg-shift">shift<a class="anchor" aria-label="anchor" href="#arg-shift"></a></dt>
+<dd><p>A value indicating a shift in measurement times for centring.
+E.g. <code>shift = 4</code> will centre four measurement-times after the position
+defined by the <code>at</code> and <code>part</code> arguments.</p></dd>
+
+
+<dt id="arg-part">part<a class="anchor" aria-label="anchor" href="#arg-part"></a></dt>
+<dd><p>A numeric value between 0 and 1. <code>0</code> refers to the first <code>TRUE</code>
+in the <code>at</code> vector, <code>1</code> to the last, and <code>0.5</code> to the midpoint of the
+sequence of <code>TRUE</code> values. E.g. if you want to centre at the middle of
+phase A, set <code>at = phase == A, part = 0.5</code>. Note: decimals are rounded to
+integers.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -99,20 +127,20 @@ appearance of a TRUE value in x.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function is a method of the generic transform function. Unlike the
-generic function, it calculates expressions serially. This means that the
-results of the calculation of one expression are the basis for the following
-computations. The <code>n</code> function returns the number of measurements in a case.
-The <code>all_cases</code> function is a helper function that extracts the values of a
-variable from all cases. It takes an expression as an argument. For example,
-<code>mean(all_cases(values))</code> calculates the mean of the values from all cases.
-<code>mean(all_cases(values[phase == "A"]))</code> will calculate the mean of all values
-where phase is A. <code>rowwise</code> applies a calculation separately for each row
-(e.g. <code>sum = rowwise(sum(values, mt, na.rm = TRUE))</code>). The function
-<code>across_cases</code> allows to calculate new variables or replace existing
-variables across all cases. E.g., <code>across_cases(values_ranked = rank(values, na.last = "keep"))</code> will calculate a new variable with values ranked across
-all cases.</p>
-    </div>
+    <p>This function is a method of the generic <code><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform()</a></code> function.
+Unlike the generic version, expressions are evaluated <strong>serially</strong>:
+the result of one expression is used as the basis for subsequent computations.</p>
+<p>Several helper functions can be used inside expressions:</p><ul><li><p><strong><code>n()</code></strong>: returns the number of measurements in a case.</p></li>
+<li><p><strong><code>all_cases()</code></strong>: extracts the values of a variable across all cases.
+Takes an expression as argument.
+For example:</p><ul><li><p><code>mean(all_cases(values))</code> calculates the mean of <code>values</code> across all cases.</p></li>
+<li><p><code>mean(all_cases(values[phase == "A"]))</code> calculates the mean of all values where <code>phase == "A"</code>.</p></li>
+</ul></li>
+<li><p><strong><code>rowwise()</code></strong>: applies a calculation separately to each row.
+Example: <code>rowwise(sum(values, mt, na.rm = TRUE))</code>.</p></li>
+<li><p><strong><code>across_cases()</code></strong>: creates new variables or replaces existing ones across all cases.
+Example: <code>across_cases(values_ranked = rank(values, na.last = "keep"))</code></p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other data manipulation functions:
@@ -324,8 +352,8 @@ all cases.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">byHeart2011</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/replace.html" class="external-link">replace</a></span><span class="op">(</span><span class="va">values</span>, <span class="fu">first_of</span><span class="op">(</span><span class="va">phase</span> <span class="op">==</span> <span class="st">"A"</span>, <span class="fl">0</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span>, <span class="cn">NA</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/replace.html" class="external-link">replace</a></span><span class="op">(</span><span class="va">values</span>, <span class="fu">first_of</span><span class="op">(</span><span class="va">phase</span> <span class="op">==</span> <span class="st">"B"</span>, <span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">0</span><span class="op">)</span>, <span class="cn">NA</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    values <span class="op">=</span> <span class="fu">set_na_at</span><span class="op">(</span><span class="va">values</span>, <span class="va">phase</span> <span class="op">==</span> <span class="st">"A"</span>, <span class="fl">0</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    values <span class="op">=</span> <span class="fu">set_na_at</span><span class="op">(</span><span class="va">values</span>, <span class="va">phase</span> <span class="op">==</span> <span class="st">"B"</span>, <span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with 11 cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

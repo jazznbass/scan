@@ -8,12 +8,10 @@ export.scdf_summary <- function(object,
                                 ...) {
   
   if (is.na(footnote)) {
-    footnote <- NULL
-    if (!is.null(scdf_attr(object, "info"))) 
-      footnote <- scdf_attr(object, "info")
-    if (!is.null(scdf_attr(object, "author"))) {
-      footnote <- paste(footnote, "\nAuthor:", scdf_attr(object, "author"))
-    }
+    footnote <- c(
+      if (!is.null(scdf_attr(object, "info"))) scdf_attr(object, "info"),
+      if (!is.null(scdf_attr(object, "author"))) paste("Author:", scdf_attr(object, "author"))
+    )
     
     names <- names(object[[1]])
     id_dv <- which(names == dv(object))
@@ -25,7 +23,7 @@ export.scdf_summary <- function(object,
     str_vars <- paste(names[c(
       id_dv, id_phase, id_mt, (1:length(names))[-c(id_dv, id_phase, id_mt)]
     )], collapse = "<br>")
-    footnote <- c(footnote, paste0("<br>Variable names:<br>", str_vars, collapse = "<br>")
+    footnote <- c(footnote, paste0("<br><br><b>Variable names:</b><br>", str_vars, collapse = "<br>")
     )
   }
   

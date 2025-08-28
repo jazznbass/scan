@@ -144,7 +144,7 @@ plm <- function(data, dvar, pvar, mvar,
   if (is.na(contrast_level)) contrast_level <- contrast
   if (is.na(contrast_slope)) contrast_slope <- contrast
   
-  if (family != "gaussian") r_squared = FALSE
+  if (family != "gaussian") r_squared <- FALSE
   
   original_attr <- attributes(data)[[opt("scdf")]]
   
@@ -155,7 +155,8 @@ plm <- function(data, dvar, pvar, mvar,
   tmp_model <- .add_dummy_variables(
     data = data, 
     model = model, 
-    contrast_level = contrast_level, contrast_slope = contrast_slope
+    contrast_level = contrast_level, 
+    contrast_slope = contrast_slope
   )
 
   data  <- tmp_model$data[[1]]
@@ -169,12 +170,15 @@ plm <- function(data, dvar, pvar, mvar,
   
   if(!is.null(update)) formula <- update(formula, update)
   
-  predictors <- as.character(formula[3])
-  predictors <- unlist(strsplit(predictors, "\\+"))
-  predictors <- trimws(predictors)
-  if(!is.na(match("1", predictors)))
-    predictors <- predictors[-match("1", predictors)]
+  term_labels <- attr(terms(formula), "term.labels")
+  predictors  <- if (length(term_labels)) term_labels else character(0)
   
+  #predictors <- as.character(formula[3])
+  #predictors <- unlist(strsplit(predictors, "\\+"))
+  #predictors <- trimws(predictors)
+  #if(!is.na(match("1", predictors)))
+  #  predictors <- predictors[-match("1", predictors)]
+ 
   formula_full <- formula
   formulas_restricted  <- sapply(
     predictors, function(x) update(formula, formula(paste0(".~. - ", x)))

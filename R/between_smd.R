@@ -58,7 +58,9 @@ between_smd <- function(data,
   
   
   check_args(
-    by_call(method)
+    by_call(method),
+    within(ci, 0, 1),
+    is_logical(include_residuals)
   )
   
   method <- method[1]

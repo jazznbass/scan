@@ -2,6 +2,7 @@
 #'
 #' Run a Shiny app with most of the scan functions.
 #'
+#' @param scdf If you provide an *scdf* here, it will be loaded at startup.
 #' @param quiet If TRUE (default) does not report shiny messages in the console.
 #' @param browser c("external","viewer") 
 #' @param \dots Further arguments passed to the `shiny::runApp()` function.
@@ -11,55 +12,50 @@
 #'   `shinyscan()` will ask to install missing packages.
 #'
 #' @export
-shinyscan <- function(quiet = TRUE, browser = c("external","viewer"), ...) {
+shinyscan <- function(scdf = NULL,
+                      quiet = TRUE, 
+                      browser = c("external", "viewer"), 
+                      ...) {
+  
+  check_args(
+    by_call(browser),
+    by_class(scdf, "scdf")
+  )
+  
+  browser <- browser[1]
   
   miss <- c()
+  if (!requireNamespace("scplot", quietly = TRUE)) miss <- c(miss, "scplot")
+  if (!requireNamespace("shiny",  quietly = TRUE)) miss <- c(miss,  "shiny")
   
-  if (!requireNamespace("scplot", quietly = TRUE)) {
-    miss <- c(miss, "scplot")
-  }
-  if (!requireNamespace("shiny", quietly = TRUE)) {
-    miss <- c(miss, "shiny")
-  }
-  
-  if (length(miss > 0)) {
-    cat("shinyscan needs the following additional packages to run: \n", 
-        paste0(miss, collapse = ", "), "\n")
-    res <- readline("Enter `y` to install the packages: ")
-    cat("(if you encounter problems with the installation, restart R and try again to install the packages.")
-    if (res %in% c("y", "Y")) {
-      install.packages(miss)
+  if (length(miss) > 0) {
+    message("shinyscan needs: ", paste(miss, collapse = ", "))
+    ans <- utils::askYesNo("Install missing packages now?")
+    if (isTRUE(ans)) {
+      install.packages(miss) 
     } else {
-      stop("Packages missing")
+      stop("Packages missing.", call. = FALSE)
     }
   }
   
-  #prev <- getOption("shiny.launch.browser")
-  
-  #if (mode == "browser") 
-  ##  options(shiny.launch.browser = .rs.invokeShinyWindowExternal)
-  #if (mode == "window") 
-  #  options(shiny.launch.browser = .rs.invokeShinyWindowViewer)
-  #if (mode == "viewer") 
-  #  options(shiny.launch.browser = .rs.invokeShinyPaneViewer)
-  
   browser <- match.arg(browser)
-  if (identical(browser, "external")) {
-    old_opt <- options(shiny.launch.browser = TRUE)
-    on.exit(options(old_opt), add = TRUE)
+  
+  old_opt <- if (identical(browser, "external")) {
+    options(shiny.launch.browser = TRUE)
+  } else {
+    options(shiny.launch.browser = FALSE)
+  }
+
+  if (!is.null(scdf)) {
+    old_opt <- options(scan.shinyscan.initial = scdf)
   }
   
-  if (identical(browser, "viewer")) {
-    old_opt <- options(shiny.launch.browser = FALSE)
-    on.exit(options(old_opt), add = TRUE)
-  }
+  on.exit(options(old_opt), add = TRUE)
   
-  shiny::runApp(
-    system.file('shiny', package = 'scan'),
-    quiet = quiet,
-    ...
-  )
+  app_dir <- system.file("shiny_scan", package = "scan")
+  if (app_dir == "") 
+    stop("Cannot find inst/shiny_scan in installed package.", call. = FALSE)
   
-  #options(shiny.launch.browser = prev)
+  shiny::runApp(app_dir, quiet = quiet, ...)
   
 }

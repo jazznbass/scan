@@ -169,3 +169,20 @@ format_table <- function(df,
 
 
 str_ci <- function(ci) paste0(c("LL", "UL"), "-CI", ci * 100, "%")
+
+str_contrasts <- function(method, contrasts) {
+  c(
+    paste0("Slope estimation method = ", method),
+    if (identical(contrasts[[1]], contrasts[[2]])) {
+      paste0("Contrasts for the level and slope effects are coded with the ", 
+           contrasts[1], " phase as the reference")
+    } else {
+      c(paste0("Contrasts for the level-effect are coded with the ", 
+               contrasts[1], " phase as the reference"),
+      paste0("Contrasts for the slope-effect are coded with the ", 
+             contrasts[2], " phase as the reference"))
+    }
+  )
+}
+
+

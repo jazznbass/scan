@@ -5,6 +5,8 @@
 \alias{moving_median}
 \alias{moving_mean}
 \alias{local_regression}
+\alias{set_na_at}
+\alias{center_at}
 \alias{first_of}
 \alias{across_cases}
 \alias{all_cases}
@@ -17,6 +19,10 @@ moving_median(x, lag = 1)
 moving_mean(x, lag = 1)
 
 local_regression(x, mt = 1:length(x), f = 0.2)
+
+set_na_at(x, first_of, positions = 0)
+
+center_at(x, at = TRUE, shift = 0, part = 0)
 
 first_of(x, positions = 0)
 
@@ -37,8 +43,24 @@ rowwise(...)
 
 \item{f}{the proportion of surrounding data influencing each data point.}
 
+\item{first_of}{A logical vector}
+
 \item{positions}{A numeric vector with relative positions to the first
 appearance of a TRUE value in x.}
+
+\item{at}{A logical vector. E.g. \code{phase == "A"}. The first TRUE value of that
+vector is the target position for centring. By default, this is the first
+position.}
+
+\item{shift}{A value indicating a shift in measurement times for centring.
+E.g. \code{shift = 4} will centre four measurement-times after the position
+defined by the \code{at} and \code{part} arguments.}
+
+\item{part}{A numeric value between 0 and 1. \code{0} refers to the first \code{TRUE}
+in the \code{at} vector, \code{1} to the last, and \code{0.5} to the midpoint of the
+sequence of \code{TRUE} values. E.g. if you want to centre at the middle of
+phase A, set \verb{at = phase == A, part = 0.5}. Note: decimals are rounded to
+integers.}
 
 \item{...}{Expressions.}
 
@@ -52,19 +74,25 @@ Takes an scdf and applies transformations to each individual case. This is
 useful to calculate or modify new variables.
 }
 \details{
-This function is a method of the generic transform function. Unlike the
-generic function, it calculates expressions serially. This means that the
-results of the calculation of one expression are the basis for the following
-computations. The \code{n} function returns the number of measurements in a case.
-The \code{all_cases} function is a helper function that extracts the values of a
-variable from all cases. It takes an expression as an argument. For example,
-\code{mean(all_cases(values))} calculates the mean of the values from all cases.
-\code{mean(all_cases(values[phase == "A"]))} will calculate the mean of all values
-where phase is A. \code{rowwise} applies a calculation separately for each row
-(e.g. \code{sum = rowwise(sum(values, mt, na.rm = TRUE))}). The function
-\code{across_cases} allows to calculate new variables or replace existing
-variables across all cases. E.g., \code{across_cases(values_ranked = rank(values, na.last = "keep"))} will calculate a new variable with values ranked across
-all cases.
+This function is a method of the generic \code{transform()} function.
+Unlike the generic version, expressions are evaluated \strong{serially}:
+the result of one expression is used as the basis for subsequent computations.
+
+Several helper functions can be used inside expressions:
+\itemize{
+\item \strong{\code{n()}}: returns the number of measurements in a case.
+\item \strong{\code{all_cases()}}: extracts the values of a variable across all cases.
+Takes an expression as argument.
+For example:
+\itemize{
+\item \code{mean(all_cases(values))} calculates the mean of \code{values} across all cases.
+\item \code{mean(all_cases(values[phase == "A"]))} calculates the mean of all values where \code{phase == "A"}.
+}
+\item \strong{\code{rowwise()}}: applies a calculation separately to each row.
+Example: \code{rowwise(sum(values, mt, na.rm = TRUE))}.
+\item \strong{\code{across_cases()}}: creates new variables or replaces existing ones across all cases.
+Example: \code{across_cases(values_ranked = rank(values, na.last = "keep"))}
+}
 }
 \examples{
 ## Creates a single-case with frequency distributions. The proportion and
@@ -123,8 +151,8 @@ transform(
 
 byHeart2011 |>
   transform(
-    values = replace(values, first_of(phase == "A", 0:1), NA),
-    values = replace(values, first_of(phase == "B", -1:0), NA)
+    values = set_na_at(values, phase == "A", 0:1),
+    values = set_na_at(values, phase == "B", -1:0)
   )
 }
 \seealso{

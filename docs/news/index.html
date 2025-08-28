@@ -48,12 +48,24 @@
 <li>Improved Bayesian analysis.<br></li>
 <li>Added confidence/credible intervals and new argument <code>ci</code>.</li>
 </ul></li>
+<li>
+<code><a href="../reference/hplm.html">hplm()</a></code>:
+<ul><li>Argument <code>ar</code> sets a auto-regression parameter for correlated residuals.</li>
+<li>Argument <code>unequal_variances</code> weights the estimations by within phase variances.</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-shiny-app-for-iporting-data-0-66-0">New shiny app for iporting data<a class="anchor" aria-label="anchor" href="#new-shiny-app-for-iporting-data-0-66-0"></a></h3>
+<ul><li>
+<code><a href="../reference/import_scdf.html">import_scdf()</a></code>: opens a small import menu. Also available as an addin in R Studio</li>
 </ul></div>
 <div class="section level3">
 <h3 id="reworked-shiny-scan-app-0-66-0">Reworked Shiny Scan app<a class="anchor" aria-label="anchor" href="#reworked-shiny-scan-app-0-66-0"></a></h3>
-<ul><li>Switch to Bootstrap 5.</li>
-<li>Redesign the “Add case” workflow.</li>
+<ul><li>Redesign the “Add case” workflow.</li>
+<li>Added an import procedure to choose variable names at import.</li>
+<li>Now it is possible to start shinyscan with an scdf object and directly start to analyse it <code>shinyscan(exampleABC)</code>.</li>
 <li>Stats tab: auto-fill the “Output arguments” field when a statistics function is selected.</li>
+<li>Switch to Bootstrap 5.</li>
 <li>Miscellaneous visual polish.</li>
 </ul></div>
 <div class="section level3">
