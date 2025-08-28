@@ -3,3 +3,9 @@ Description: Start the scan Shiny app
 Binding: shinyscan
 Interactive: true
 
+Name: scdf Import
+Description: Import single-case data and map columns to scdf.
+Binding: import_scdf
+Interactive: true
+
+
