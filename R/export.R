@@ -158,6 +158,7 @@ export_table_gt <- function(x,
                             rownames = FALSE,
                             cols_label = NULL,
                             decimals = NULL,
+                            prefix_title = getOption("scan.export.title.prefix"),
                             ...) {
           
   
@@ -188,7 +189,12 @@ export_table_gt <- function(x,
   out <- do.call(gt::gt, list(data = x))|> gt_apa_style()
   
   if (!is.null(title)) {
-    out <- gt::tab_header(out, title = md("**Table**"), subtitle = gt::md(title))
+    if (!is.null(prefix_title)) {
+      out <- gt::tab_header(out, title = prefix_title, subtitle = gt::md(title))
+    } else {
+      out <- gt::tab_header(out, title = gt::md(title))
+    }
+      
   }
   if (!is.null(row_group)) {
     for(i in length(row_group):1)
