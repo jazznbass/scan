@@ -62,9 +62,8 @@ export.sc_bplm <- function(object,
   }
   
   footnote <- c(
-    paste0("Slope estimation method: ", object$model$interaction.method),
-    paste0(names(x$contrast), ": ",x$contrast, collapse = ", "),
-    paste0(object$N, " cases")
+    str_contrasts(object$model$interaction.method, object$contrast),
+    paste0("N = ", object$N, " cases")
   )
 
   results <- .output_bplm(object)

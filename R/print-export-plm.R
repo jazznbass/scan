@@ -99,7 +99,8 @@ export.sc_plm <- function(object,
     paste0(results$fit), 
     paste0("AIC = ", round(results$aic)),
     "LL = lower limit",
-    "UL = upper limit"
+    "UL = upper limit",
+    str_contrasts(object$model, object$contrast)
   )
   
   if (getOption("scan.export.engine") == "gt") {
