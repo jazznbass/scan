@@ -29,7 +29,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Hierarchical piecewise linear model / piecewise regression</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/hplm.R" class="external-link"><code>R/hplm.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print.sc_hplm.R" class="external-link"><code>R/print.sc_hplm.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.sc_hplm.R" class="external-link"><code>R/export.sc_hplm.R</code></a>, and 1 more</small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/hplm.R" class="external-link"><code>R/hplm.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print-export-hplm.R" class="external-link"><code>R/print-export-hplm.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/coefficents.sc_plm.R" class="external-link"><code>R/coefficents.sc_plm.R</code></a></small>
       <div class="d-none name"><code>hplm.Rd</code></div>
     </div>
 
@@ -61,13 +61,15 @@
 <span>  random_slope <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  fixed <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  random <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ar <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  unequal_variances <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  update.fixed <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data.l2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'sc_hplm'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, smd <span class="op">=</span> <span class="cn">FALSE</span>, casewise <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, bcsmd <span class="op">=</span> <span class="cn">FALSE</span>, casewise <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'sc_hplm'</span></span>
 <span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span></span>
@@ -196,9 +198,18 @@ into the regression model.</p></dd>
 <dd><p>The random part of the model.</p></dd>
 
 
+<dt id="arg-ar">ar<a class="anchor" aria-label="anchor" href="#arg-ar"></a></dt>
+<dd><p>Maximal lag of autoregression. Modelled based on the
+Autoregressive-Moving Average (ARMA) function.</p></dd>
+
+
+<dt id="arg-unequal-variances">unequal_variances<a class="anchor" aria-label="anchor" href="#arg-unequal-variances"></a></dt>
+<dd><p>Logical. If set TRUE, estimations are weighted by
+phase variances.</p></dd>
+
+
 <dt id="arg-update-fixed">update.fixed<a class="anchor" aria-label="anchor" href="#arg-update-fixed"></a></dt>
-<dd><p>An easier way to change the fixed model part
-(e.g., <code>. ~ . + newvariable</code>).</p></dd>
+<dd><p>An easier way to change the fixed model part (e.g., <code>. ~ . + newvariable</code>).</p></dd>
 
 
 <dt id="arg-data-l-">data.l2<a class="anchor" aria-label="anchor" href="#arg-data-l-"></a></dt>
@@ -221,7 +232,7 @@ variables belong to.</p></dd>
 If set to "auto" (default), values are predefined.</p></dd>
 
 
-<dt id="arg-smd">smd<a class="anchor" aria-label="anchor" href="#arg-smd"></a></dt>
+<dt id="arg-bcsmd">bcsmd<a class="anchor" aria-label="anchor" href="#arg-bcsmd"></a></dt>
 <dd><p>If TRUE, reports between-case standardized mean differences.</p></dd>
 
 
@@ -259,8 +270,15 @@ publication tables.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-
-<table class="table table"><tr><td></td><td></td></tr><tr><td><code>model</code></td><td>List containing infromation about the applied model.</td></tr><tr><td><code>N</code></td><td>Number of single-cases.</td></tr><tr><td><code>formula</code></td><td>A list containing the fixed and the random formulas of the hplm model.</td></tr><tr><td><code>hplm</code></td><td>Object of class lme contaning the multilevel model.</td></tr><tr><td><code>model.0</code></td><td>Object of class lme containing the zero model.</td></tr><tr><td><code>ICC</code></td><td>List containing intraclass correlation and test parameters.</td></tr><tr><td><code>model.without</code></td><td>Object of class gls containing the fixed effect model.</td></tr><tr><td><code>contrast</code></td><td>List with contrast definitions.</td></tr></table></div>
+    <p>|  |  | | — | — | | <code>model</code> | List containing infromation about
+the applied model. | | <code>N</code> | Number of single-cases. | | <code>formula</code> |A list
+containing the fixed and the random formulas of the hplm model. | | <code>hplm</code> |
+Object of class lme contaning the multilevel model. | | <code>model.0</code> | Object of
+class lme containing the zero model. | | <code>ICC</code> | List containing intraclass
+correlation and test parameters. | | <code>model.without</code> | Object of class gls
+containing the fixed effect model. | | <code>contrast</code> | List with contrast
+definitions. |</p>
+    </div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 

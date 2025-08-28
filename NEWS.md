@@ -10,12 +10,22 @@
   - Redesigned outputs.  
   - Improved Bayesian analysis.  
   - Added confidence/credible intervals and new argument `ci`.
+- `hplm()`: 
+  - Argument `ar` sets a auto-regression parameter for correlated residuals.
+  - Argument `unequal_variances` weights the estimations by within phase variances.
+
+## New shiny app for importing data
+
+- `import_scdf()`: opens a small import menu. Also available as an addin in R Studio.
 
 ## Reworked Shiny Scan app
 
-- Switch to Bootstrap 5.
 - Redesign the “Add case” workflow.
+- Added an import procedure to choose variable names at import.
+- Now it is possible to start shinyscan with an scdf object and directly start to analyse it `shinyscan(exampleABC)`.
 - Stats tab: auto-fill the “Output arguments” field when a statistics function is selected.
+- Stats tab/ Settings tab: "Description" switch in settings can be set to provide additional short descriptions for each stats function.
+- Switch to Bootstrap 5.
 - Miscellaneous visual polish.
 
 ## Error correction

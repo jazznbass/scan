@@ -58,6 +58,7 @@ reference:
   - rescale
   - is.scdf
   - shinyscan
+  - import_scdf
 - subtitle: Export and import
   contents:
   - convert
