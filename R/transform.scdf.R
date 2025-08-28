@@ -3,20 +3,22 @@
 #' Takes an scdf and applies transformations to each individual case. This is
 #' useful to calculate or modify new variables.
 #'
-#' This function is a method of the generic transform function. Unlike the
-#' generic function, it calculates expressions serially. This means that the
-#' results of the calculation of one expression are the basis for the following
-#' computations. The `n` function returns the number of measurements in a case.
-#' The `all_cases` function is a helper function that extracts the values of a
-#' variable from all cases. It takes an expression as an argument. For example,
-#' `mean(all_cases(values))` calculates the mean of the values from all cases.
-#' `mean(all_cases(values[phase == "A"]))` will calculate the mean of all values
-#' where phase is A. `rowwise` applies a calculation separately for each row
-#' (e.g. `sum = rowwise(sum(values, mt, na.rm = TRUE))`). The function
-#' `across_cases` allows to calculate new variables or replace existing
-#' variables across all cases. E.g., `across_cases(values_ranked = rank(values,
-#' na.last = "keep"))` will calculate a new variable with values ranked across
-#' all cases.
+#' This function is a method of the generic `transform()` function.  
+#' Unlike the generic version, expressions are evaluated **serially**:  
+#' the result of one expression is used as the basis for subsequent computations.  
+#'
+#' Several helper functions can be used inside expressions:
+#'
+#' - **`n()`**: returns the number of measurements in a case.  
+#' - **`all_cases()`**: extracts the values of a variable across all cases.  
+#'   Takes an expression as argument.  
+#'   For example:  
+#'   - `mean(all_cases(values))` calculates the mean of `values` across all cases.  
+#'   - `mean(all_cases(values[phase == "A"]))` calculates the mean of all values where `phase == "A"`.  
+#' - **`rowwise()`**: applies a calculation separately to each row.  
+#'   Example: `rowwise(sum(values, mt, na.rm = TRUE))`.  
+#' - **`across_cases()`**: creates new variables or replaces existing ones across all cases.  
+#'   Example: `across_cases(values_ranked = rank(values, na.last = "keep"))` 
 #'
 #' @param _data An scdf.
 #' @param ... Expressions.
@@ -80,8 +82,8 @@
 #'
 #' byHeart2011 |>
 #'   transform(
-#'     values = replace(values, first_of(phase == "A", 0:1), NA),
-#'     values = replace(values, first_of(phase == "B", -1:0), NA)
+#'     values = set_na_at(values, phase == "A", 0:1),
+#'     values = set_na_at(values, phase == "B", -1:0)
 #'   )
 #' @export
 transform.scdf <- function(`_data`, ...) {
@@ -93,7 +95,7 @@ transform.scdf <- function(`_data`, ...) {
     
     if(startsWith(deparse(expressions[[i_expression]]), "across_cases(")) {
       .list_env <- as.list(.df)
-      
+     
       # across cases
       .list_env$across_cases <- function(...) {
         exp_across <- substitute(list(...))
