@@ -25,24 +25,25 @@
 #'   formula can be changed for example to include further L1 or L2 variables
 #'   into the regression model.
 #' @param random The random part of the model.
-#' @param update.fixed An easier way to change the fixed model part
-#'   (e.g., `. ~ . + newvariable`).
+#' @param ar Maximal lag of autoregression. Modelled based on the
+#'   Autoregressive-Moving Average (ARMA) function.
+#' @param unequal_variances Logical. If set TRUE, estimations are weighted by
+#'   phase variances.
+#' @param update.fixed An easier way to change the fixed model part (e.g., `. ~
+#'   . + newvariable`).
 #' @param data.l2 A data frame providing additional variables at Level 2. The
 #'   scdf File has to have names for all cases and the Level 2 data frame has to
 #'   have a column named 'cases' with the names of the cases the Level 2
 #'   variables belong to.
 #' @param ... Further arguments passed to the lme function.
-#' @return 
-#'  |  |  |
-#'  | --- | --- |
-#'  | `model` | List containing infromation about the applied model. |
-#'  | `N` | Number of single-cases. |
-#'  | `formula` |A list containing the fixed and the random formulas of the hplm model. |
-#'  | `hplm` | Object of class lme contaning the multilevel model. |
-#'  | `model.0` | Object of class lme containing the zero model. |
-#'  | `ICC` | List containing intraclass correlation and test parameters. |
-#'  | `model.without` | Object of class gls containing the fixed effect model. |
-#'  | `contrast` | List with contrast definitions. |
+#' @return |  |  | | --- | --- | | `model` | List containing infromation about
+#' the applied model. | | `N` | Number of single-cases. | | `formula` |A list
+#' containing the fixed and the random formulas of the hplm model. | | `hplm` |
+#' Object of class lme contaning the multilevel model. | | `model.0` | Object of
+#' class lme containing the zero model. | | `ICC` | List containing intraclass
+#' correlation and test parameters. | | `model.without` | Object of class gls
+#' containing the fixed effect model. | | `contrast` | List with contrast
+#' definitions. |
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @examples
@@ -77,14 +78,24 @@ hplm <- function(data, dvar, pvar, mvar,
                  random_slope = FALSE, 
                  fixed = NULL, 
                  random = NULL, 
+                 ar = 0,
+                 unequal_variances = FALSE,
                  update.fixed = NULL, 
                  data.l2 = NULL, 
                  ...) {
 
+  args_add <- list(...)
+  
   check_args(
     by_call(model),
     by_call(method),
-    by_call(contrast)
+    by_call(contrast),
+    not(ar > 0 && "correlation" %in% names(args_add), 
+        "ar and correlation arguments defined at the same time."
+    ),
+    not(unequal_variances && "weights" %in% names(args_add), 
+        "unequal_variances and weights arguments defined at the same time."
+    )
   )
   model <- model[1]
   method <- method[1]
@@ -160,21 +171,46 @@ hplm <- function(data, dvar, pvar, mvar,
   }
   out$formula <- list(fixed = fixed, random = random)
 
-# lme hplm model ----------------------------------------------------------
+  if (ar > 0) {
+    args_add$correlation <- corARMA(
+      form = as.formula(paste0("~", mvar, " | case")), 
+      p = ar, q = 0
+    )
+  }
   
-  out$hplm <- lme(
+  if (unequal_variances) {
+    args_add$weights <- varIdent(form = as.formula(paste0("~ 1 | ", pvar)))
+  }
+  
+  args <- list(
     fixed = fixed,
     random = random,
     data = dat,
     na.action = na.omit,
     method = method,
     control = control,
-    keep.data = FALSE,
-    ...
+    keep.data = FALSE
   )
+  args <- c(args, args_add)
+ 
+# lme hplm model ----------------------------------------------------------
+  out$hplm <- do.call(lme, args) 
   
+  # check:
+  #out$hplm <- lme(
+  #  fixed = fixed,
+  #  random = random,
+  #  data = dat,
+  #  na.action = na.omit,
+  #  method = method,
+  #  control = control,
+  #  keep.data = FALSE,
+  #  ...
+  #)
+
   out$hplm$call$fixed <- fixed
   out$hplm$call$random <- random
+  out$hplm$call$data <- str2lang("dat")
   
 # LR tests ----------------------------------------------------------------
 
@@ -201,17 +237,23 @@ hplm <- function(data, dvar, pvar, mvar,
     # lme
     for(i in 1:length(random_ir)) {
       
-      out$random_ir$restricted[[i]] <- lme(
-        fixed = fixed, 
-        random = random_ir[i], 
-        data = dat,
-        na.action = na.omit, 
-        method = method, 
-        control=control,
-        keep.data = FALSE, 
-        ...
-      )
+      args_restricted <- args
+      args_restricted$random <- random_ir[i]
       
+      out$random_ir$restricted[[i]] <- do.call(lme, args_restricted)
+      out$random_ir$restricted[[i]]$call$data <- str2lang("dat")
+      # check:
+      # out$random_ir$restricted[[i]] <- lme(
+      #   fixed = fixed, 
+      #   random = random_ir[i], 
+      #   data = dat,
+      #   na.action = na.omit, 
+      #   method = method, 
+      #   control=control,
+      #   keep.data = FALSE, 
+      #   ...
+      # )
+      out$random_ir$restricted[[i]]$call$data <- str2lang("dat")
       out$random_ir$restricted[[i]]$call$fixed <- fixed
     }
     out$LR.test <- list()
@@ -249,6 +291,8 @@ hplm <- function(data, dvar, pvar, mvar,
   
   out$model$fixed  <- fixed
   out$model$random <- random
+  out$model$ar <- ar
+  out$model$unequal_variances <- unequal_variances
   out$contrast <- list(level = contrast_level, slope = contrast_slope)
   
   class(out) <- c("sc_hplm")
