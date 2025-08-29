@@ -15,6 +15,7 @@ options(
     full_width = FALSE,
     position = "left"
   ),
+  scan.export.engine = "gt",
   scan.export.title.prefix = NULL
 )
 
