@@ -18,8 +18,7 @@ shinyscan <- function(scdf = NULL,
                       ...) {
   
   check_args(
-    by_call(browser),
-    by_class(scdf, "scdf")
+    by_call(browser)
   )
   
   browser <- browser[1]
@@ -46,7 +45,7 @@ shinyscan <- function(scdf = NULL,
     options(shiny.launch.browser = FALSE)
   }
 
-  if (!is.null(scdf)) {
+  if (inherits(scdf, "scdf")) {
     old_opt <- options(scan.shinyscan.initial = scdf)
   }
   

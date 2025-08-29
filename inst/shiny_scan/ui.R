@@ -1,5 +1,3 @@
-library(shiny)
-library(bslib)
 
 source("resources.R")  # assumes res$theme_light is a BS5 theme
 
@@ -137,6 +135,14 @@ tab_stats <- layout_sidebar(
         width = 2,
         div(style = "margin-top: 25px;",  # Button optisch auf Höhe des Textfelds
             downloadButton("stats_save", "Save output")
+        )
+      ),
+      column(
+        width = 2,
+        input_switch(
+          "stats_batch",
+          tags$span("Case by case", class = "chklabel-big"),
+          FALSE
         )
       )
     ),

@@ -6,8 +6,8 @@
 #'
 #' @param n Number of cases to be designed (Default is `n = 1`).
 #' @param phase_design,phase.design A list defining the length and label of each
-#'   phase. E.g., `phase.length = list(A1 = 10, B1 = 10, A2 = 10, B2 = 10)`. Use
-#'   vectors if you want to define different values for each case `phase.length
+#'   phase. E.g., `phase_design = list(A1 = 10, B1 = 10, A2 = 10, B2 = 10)`. Use
+#'   vectors if you want to define different values for each case `phase_design
 #'   = list(A = c(10, 15), B = c(10, 15)`.
 #' @param mt,MT Number of measurements (in each study). Default is `mt = 20`.
 #' @param B_start,B.start Phase B starting point. The default setting `B_start =
@@ -130,7 +130,7 @@ design <- function(n = 1,
                    extreme.d,
                    missing.p) {
   
-  distribution <- match.arg(distribution)
+  ## take over deprecated variables ----
   
   if (!missing(m)) start_value <- m
   if (!missing(phase.design)) phase_design <- phase.design
@@ -139,6 +139,7 @@ design <- function(n = 1,
   if (!missing(extreme.d)) extreme_range <- extreme.d
   if (!missing(missing.p)) missing_prop <- missing.p
   if (!missing(B.start)) B_start <- B.start
+  
   out <- list()
   attr(out, "call") <- mget(names(formals()), sys.frame(sys.nframe()))
   
@@ -146,9 +147,17 @@ design <- function(n = 1,
   if (is.list(trend)) trend <- unlist(trend)
   if (is.list(s)) s <- unlist(s)
   if (is.list(rtt)) rtt <- unlist(rtt)
+  if (!is.list(phase_design)) phase_design <- as.list(phase_design)
+    
+  distribution <- distribution[1]
   
+  ## intial checks ----
   check_args(
-    one_of(distribution, c("normal", "gaussian", "poisson", "binomial")),
+    as_deprecated("m" = "start_value", "phase.design" = "phase_design", 
+                  "MT" = "mt", "B.start" = "B_start", 
+                  "extreme.p" = "extreme_prop", "extreme.d" = "extreme_range", 
+                  "missing.p" = "missing_prop"),
+    by_call(distribution),
     not(distribution == "binomial" && is.null(n_trials),
         "Binomial distributions but n_trials not defined."),
     not(distribution=="binomial" && (any(start_value>1) || any(start_value<0)), 
@@ -162,6 +171,7 @@ design <- function(n = 1,
     within(missing_prop, 0, 1)
   )
   
+  ## B_start ----
   if (!is.null(B_start)) {
     mt <- rep(mt, length.out = n)
     if (B_start[1] == "rand") {
@@ -180,6 +190,7 @@ design <- function(n = 1,
     }
   }
 
+  ## start values ----
   if (random_start_value) {
     if (distribution %in% c("normal", "gaussian")) {
       start_value <- rnorm(n, start_value[1], s[1])
@@ -191,11 +202,14 @@ design <- function(n = 1,
       start_value <- rbinom(n, n_trials, start_value[1])
     }
   }
+  
+  ## recycle arguments ----
   if (length(start_value) != n) start_value <- rep(start_value, length = n)
   if (length(s) != n) s <- rep(s, length = n)
   if (length(rtt) != n) rtt <- rep(rtt, length = n)
   if (is.list(trend)) trend <- unlist(trend)
 
+  
   trend <- .check_design(trend, n)
   level <- .check_design(level, n)
   slope <- .check_design(slope, n)
@@ -215,6 +229,7 @@ design <- function(n = 1,
   out$distribution <- distribution
   out$n_trials <- n_trials
   
+  ## create design case by case ----
   for (case in 1:n) {
     design <- list()
     design$phase <- names(phase_design)
@@ -248,15 +263,19 @@ design <- function(n = 1,
   if (identical(case_effects, 0)) case_effects <- rep(0, phase_length)
   
   if (length(case_effects) == phase_length && case_effects[1] != 0) {
-    warning("Effect for first phase is not 0. Looks like a missspecification")
+    warning("Effect for first phase is not 0. Looks like a missspecification", call. = FALSE)
   }  
     
   if (length(case_effects) == phase_length - 1) 
     case_effects <- c(0, case_effects)
   
   if (length(case_effects) != phase_length) {
-    warning("The wrong number of phase effects defined. Looks like a ",
-            "missspecification")
+    warning(
+      as.character(match.call()[2]), ": the wrong number of phase ",
+      "effects defined. Should be ", phase_length, " is ", 
+      length(case_effects), 
+      call. = FALSE
+    )
   }  
   
   case_effects

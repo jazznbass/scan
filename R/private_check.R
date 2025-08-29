@@ -136,6 +136,29 @@ check_args <- function(...) {
     return(list(pass = TRUE))
   }
   
+  env$as_deprecated <- function(...) {
+    
+    test_args <- list(...)
+    .call <- env$call
+    defaults <- formals(as.character(.call[[1]]))
+    .call <- as.list(.call)
+    deprecated_args <- test_args[which(names(test_args) %in% names(.call))]
+    
+    if (length(deprecated_args) > 0) {
+      message <- paste0(
+        "Deprecated ",
+        if (length(deprecated_args) > 1) "arguments " else "argument ", 
+        paste0("'", names(deprecated_args), "'", collapse = ", "),
+        ". Use ",
+        paste0("'", unlist(deprecated_args), "'", collapse = ", "),
+        " instead"
+      )
+      return(list(pass = FALSE, msg = message, warning = TRUE) )
+    }
+    return(list(pass = TRUE))
+  }
+  
+  
   out <- vector("list", length(expressions))
   
   if (length(out) > 0) {
@@ -143,7 +166,7 @@ check_args <- function(...) {
       out[i - 1] <- eval(expressions[c(1, i)], envir = env)
     }
   }  
-
+  
   out[length(out)] <- list(eval(str2lang("is_deprecated()"), envir = env))
 
   out <- out[sapply(out, function(x) if (!isTRUE(x$pass)) TRUE else FALSE)]
@@ -172,7 +195,7 @@ check_args <- function(...) {
 utils::globalVariables(
   c(
     "by_class", "by_call", "not","within", "one_of", "has_length", "is_true",
-    "at_least", "at_most", "is_logical"
+    "at_least", "at_most", "is_logical", "as_deprecated"
   )
 )
 

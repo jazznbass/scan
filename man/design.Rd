@@ -34,8 +34,8 @@ design(
 \item{n}{Number of cases to be designed (Default is \code{n = 1}).}
 
 \item{phase_design, phase.design}{A list defining the length and label of each
-phase. E.g., \code{phase.length = list(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}. Use
-vectors if you want to define different values for each case \verb{phase.length = list(A = c(10, 15), B = c(10, 15)}.}
+phase. E.g., \code{phase_design = list(A1 = 10, B1 = 10, A2 = 10, B2 = 10)}. Use
+vectors if you want to define different values for each case \verb{phase_design = list(A = c(10, 15), B = c(10, 15)}.}
 
 \item{trend}{Defines the effect size of a trend added incrementally to each
 measurement across the whole data-set. To assign different trends to

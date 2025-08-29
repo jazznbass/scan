@@ -14,7 +14,7 @@ Useful links:
 \itemize{
   \item \url{https://github.com/jazznbass/scan/}
   \item \url{https://jazznbass.github.io/scan-Book/}
-  \item \url{https://github.com/jazznbass/scan}
+  \item \url{https://jazznbass.github.io/scan/}
   \item Report bugs at \url{https://github.com/jazznbass/scan/issues}
 }
 
