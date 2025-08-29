@@ -3,6 +3,7 @@ template:
   bootswatch: lumen
 
 destination: docs
+url: https://jazznbass.github.io/scan/
 
 navbar:
   structure:
@@ -19,6 +20,7 @@ navbar:
   components:
     home:
       icon: fas fa-home fa-lg
+      aria-label: Home
       href: index.html
     reference:
       text: Reference
@@ -28,6 +30,7 @@ navbar:
       href: news/index.html
     github:
       icon: fab fa-github fa-lg
+      aria-label: GitHub
       href: https://github.com/jazznbass/scan/
     scan-book:
       text: The book
@@ -37,7 +40,7 @@ navbar:
       href: https://jazznbass.github.io/scplot/
 
 reference:
-- subtitle: Coding and manipulation of single-case data frames
+- title: Coding and manipulation of single-case data frames
   contents:
   - scdf
   - add_l2
@@ -57,15 +60,20 @@ reference:
   - transform.scdf
   - rescale
   - is.scdf
+  
+- title: Shiny apps
+  contents:
   - shinyscan
   - import_scdf
-- subtitle: Export and import
+  
+- title: Export and import
   contents:
   - convert
   - read_scdf
   - write_scdf
-- subtitle: Single-case data analysis
-- contents:
+  
+- title: Single-case data analysis
+  contents:
   - anova.sc_plm
   - autocorr
   - batch_apply
@@ -91,7 +99,7 @@ reference:
   - between_smd
   - tau_u
   - trend
-- subtitle: Building graphs, tables etc.
+- title: Building graphs, tables etc.
   contents:
   - starts_with("export")
   - starts_with("print")
@@ -99,7 +107,7 @@ reference:
   - style_plot
   - plot_rand
   - summary.scdf
-- subtitle: Simulating data
+- title: Simulating data
   contents:
   - design
   - estimate_design
