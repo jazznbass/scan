@@ -154,7 +154,8 @@ export.sc_plm <- function(object,
   
   out <- list()
   
-  report_r_squared <- if (is.null(x$r.squares)) FALSE else TRUE
+  report_r_squared <- if (is.null(x$r.squares) || identical(x$r.squares, NA)) 
+    FALSE else TRUE
   
   out$aic <- x$full.model$aic
   if (x$family == "poisson" || x$family == "binomial") {

@@ -402,8 +402,7 @@ rand_test <- function (data, dvar, pvar,
   )
   
   class(out) <- c("sc_rand")
-  attr(out, opt("phase")) <- pvar
-  attr(out, opt("dv")) <- dvar
+  attributes(out)[opts("phase", "dv")] <- list(pvar, dvar)
   attr(out, "casenames") <- names(data)
   out
 

@@ -6,6 +6,12 @@ opt <- function(x) {
   out
 }
 
+opts <- function(...) {
+  out <- .opt[c(...)] |> unlist()
+  if (is.null(out)) stop("Options not all defined.")
+  out
+}
+
 
 # Basic options -----------------------------------------------------------
 

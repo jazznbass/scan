@@ -5,26 +5,29 @@ left_width <- 400
 
 # ---------- Data: New ----------
 tab_scdf <- nav_panel(
-  "New",
+  "New / Edit",
   layout_sidebar(
     sidebar = sidebar(
       title = NULL, #"Case setup",
       open  = "always", width = left_width,
-      selectInput("select_case", "Select case",
+      selectInput("new_select_case", "Select case",
                   choices = res$new_case, selected = res$new_case),
       textAreaInput("new_values", "Values (dependent variable)",
                     placeholder = res$placeholder$values, rows = 3),
-      textInput("mt", "Measurement times", placeholder = res$placeholder$mt),
+      textInput("new_mt", "Measurement times", placeholder = res$placeholder$mt),
       textAreaInput("new_variables", "Additional variables",
                     placeholder = res$placeholder$variables, rows = 3),
-      textInput("casename", "Case name", placeholder = "(optional)"),
+      textInput("new_casename", "Case name", placeholder = res$placeholder$casename),
       
       # Primary + secondary actions
       div(class = "d-grid gap-2",
-          actionButton("save_case",   "Save case",    class = "btn-primary"),
-          actionButton("remove_case", "Remove case",  class = "btn-outline-secondary"),
-          actionButton("clear_cases", "Clear all cases",
-                       class = "btn-outline-secondary")),
+          actionButton("new_save_case",   "Save case",    class = "btn-primary"),
+          actionButton("new_remove_case", "Remove case",  class = "btn-light"),
+          actionButton("new_clear_cases", "Clear all cases",
+                       class = "btn-warning"),
+          actionButton("new_clear_fields", "Clear input fields",
+                      class = "btn-dark")),
+    
       tags$hr(),
       downloadButton("scdf_save", "Save scdf", class = "btn-success")
     ),
@@ -43,29 +46,28 @@ tab_load <- nav_panel(
   layout_sidebar(
     sidebar = sidebar(
       title = NULL, # "Import",
-      open  = "always", width = left_width,
-      selectInput("scdf_example", "Choose example",
-                  choices = res$choices$examples),
+      open  = "always", 
+      width = left_width,
+      selectInput("scdf_example", "Choose example", choices = res$choices$examples),
       tags$hr(),
       fileInput("upload", NULL,
-                accept = c(".csv", ".rds", ".xlsx", ".xls", ".R", ".r"),
+                accept = c(".csv", ".rds", ".xlsx", ".xls", ".R", ".r", ".txt"),
                 buttonLabel = "Choose file"),
-      selectInput("scdf_load_cvar", "Case variable",
-                  choices = "case"),
-      selectInput("scdf_load_pvar", "Phase variable",
-                  choices = "phase"),
-      selectInput("scdf_load_dvar", "Dependent variable",
-                  choices = "values"),
-      selectInput("scdf_load_mvar", "Measurement time variable",
-                  choices = "mt"),
+      selectInput("scdf_load_cvar", "Case variable", choices = "case"),
+      selectInput("scdf_load_pvar", "Phase variable", choices = "phase"),
+      selectInput("scdf_load_dvar", "Dependent variable", choices = "values"),
+      selectInput("scdf_load_mvar", "Measurement time variable", choices = "mt"),
       textInput("scdf_load_na", "Missing values", value = '"", "NA"'),
+      selectInput("scdf_csv", "Separators (only for .csv and .txt files)", 
+                  choices = c("comma" = ",", "semicolon" = ";", "tab" = "\t", "space" = " ")
+      ),
+      tags$hr(),
       actionButton("scdf_import",   "Import scdf",    class = "btn-primary")
     ),
     mainPanel(
       verbatimTextOutput("load_messages"),
       verbatimTextOutput("load_output"),
-      htmlOutput("load_output_html")#,
-      #tableOutput("load_output_table")
+      htmlOutput("load_output_html")
     )
   )
 )
@@ -75,99 +77,64 @@ tab_transform <- layout_sidebar(
   sidebar = sidebar(
     title = NULL, # title = "Transform",
     open  = "always", width = left_width,
-    textInput("select_cases", "Select cases",
-              placeholder = "e.g.: 1, Anja, 3:5"),
+    textInput("select_cases", "Select cases", placeholder = "e.g.: 1, Anja, 3:5"),
     div(class = "d-flex gap-3",
         textInput("select_phasesA", "Combine phases to A", placeholder = "(e.g.: 1)"),
         textInput("select_phasesB", "Combine phases to B", placeholder = "(e.g.: 2,3)")
     ),
-    textInput("subset", "Filter measurements",
-              placeholder = 'e.g.: mt > mean(values[phase == "A"])'),
-    textAreaInput("transform", "Transform variables", rows = 5,
-                  placeholder = res$placeholder$transform),
+    textInput("subset", "Filter measurements", placeholder = 'e.g.: mt > mean(values[phase == "A"])'),
+    textAreaInput("transform", "Transform variables", rows = 5, placeholder = res$placeholder$transform),
     textInput("setdvar", "Set dependent variable", placeholder = "e.g.: depression"),
     downloadButton("transformed_save", "Save transformed scdf", class = "btn-success")
   ),
   mainPanel(
-    input_switch("transform_output_format",
-                 tags$span("Html output", class = "chklabel-big"),
-                 value = FALSE),
+    input_switch("transform_output_format", "HTML", value = FALSE),
     verbatimTextOutput("transform_syntax"),
     conditionalPanel(
-      '!input.transform_output_format', 
-      verbatimTextOutput("transform_scdf")
+      '!input.transform_output_format', verbatimTextOutput("transform_scdf")
     ),
-    conditionalPanel(
-      'input.transform_output_format', htmlOutput("transform_html")
-    )
+    conditionalPanel( 'input.transform_output_format', htmlOutput("transform_html"))
   )
 )
 
 # ---------- Stats ----------
 tab_stats <- layout_sidebar(
   sidebar = sidebar(
-    title = NULL, # title = "Statistic",
-    open  = "always", width = left_width,
+    title = NULL,
+    open  = "always", 
+    width = 400,
+    input_switch("stats_batch", "Case-by-case analyses", FALSE),
     selectInput("func", "Statistic", choices = res$choices$fn_stats),
     uiOutput("stats_arguments")
   ),
+ 
   mainPanel(
-    fluidRow(
-      column(
-        width = 2,
-        input_switch(
-          "stats_out",
-          tags$span("Html output", class = "chklabel-big"),
-          FALSE
-        )
-      ),
-      column(
-        width = 6,
-        textAreaInput(
-          "stats_print_arguments",
-          "Output arguments",
-          rows = 2,
-          width = "100%",
-          placeholder = res$placeholder$stats_out_args
-        )
-      ),
-      column(
-        width = 2,
-        div(style = "margin-top: 25px;",  # Button optisch auf Höhe des Textfelds
-            downloadButton("stats_save", "Save output")
-        )
-      ),
-      column(
-        width = 2,
-        input_switch(
-          "stats_batch",
-          tags$span("Case by case", class = "chklabel-big"),
-          FALSE
-        )
-      )
+    tags$head(tags$style(HTML("
+      .toolbar { display:flex; gap:16px; align-items:center; }
+      .toolbar .stretch { flex:1; }"
+    ))),
+    div(class = "toolbar",
+      div(class = "stretch", textAreaInput(
+        "stats_print_arguments", label = "Output arguments",
+        rows = 1, width = "100%", placeholder = res$placeholder$stats_out_args
+      )),
+      downloadButton("stats_save", label = "Save", class = "btn-success")
     ),
-    hr(),
-    
-    conditionalPanel(
-      'input.stats_description', htmlOutput("stats_description")
-    ),
+    input_switch("stats_out", "HTML", FALSE),
+    conditionalPanel('input.stats_description', htmlOutput("stats_description")),
     verbatimTextOutput("stats_syntax"),
-    conditionalPanel(
-      '!input.stats_out', verbatimTextOutput("stats_text")
-    ),
-    conditionalPanel(
-      'input.stats_out', tableOutput("stats_html")
-    )
+    conditionalPanel('!input.stats_out', verbatimTextOutput("stats_text")),
+    conditionalPanel('input.stats_out', tableOutput("stats_html"))
   )
 )
 
 # ---------- Plot ----------
 tab_plot <- layout_sidebar(
   sidebar = sidebar(
-    title = NULL, # title = "Plot",
-    open  = "always", width = left_width,
-    textAreaInput("plot_arguments", "Arguments",
-                  value = "", rows = 5,
+    title = NULL, 
+    open  = "always", 
+    width = left_width,
+    textAreaInput("plot_arguments", "Arguments", value = "", rows = 5,
                   placeholder = res$placeholder$plot_arguments),
     selectInput("scplot_examples", "Stats templates",
                 choices = names(res$choices$scplot_examples)),
@@ -179,7 +146,7 @@ tab_plot <- layout_sidebar(
   ),
   mainPanel(
     verbatimTextOutput("plot_syntax"),
-    plotOutput("plot_scdf", width = 1000,height = 800,)
+    plotOutput("plot_scdf", width = 1000, height = 800)
   )
 )
 
@@ -194,19 +161,16 @@ card_design <- card(
     textInput("design_level", "Level", value = "1"),
     textInput("design_start", "Start value", value = 50),
     textInput("design_rtt", "Reliabiliy", value = 0.8),
-    selectInput("design_distribution", "Distribution",
-                choices = c("normal", "poisson", "binomial"))
+    selectInput("design_distribution", "Distribution", choices = c("normal", "poisson", "binomial"))
   )
 )
 
 card_analysis <- card(
   card_body(
-    checkboxGroupInput("pt_method", "Method(s)",
-                       choices = res$choices$pt_method, selected = "plm_level"),
+    checkboxGroupInput("pt_method", "Method(s)", choices = res$choices$pt_method, selected = "plm_level"),
     textInput("pt_method_user", "User method", value = ""),
     selectInput("pt_effect", "Null effect for", choices = c("level", "slope")),
-    numericInput("pt_n", "Number of simulations",
-                 min = 30, max = 10000, value = 100),
+    numericInput("pt_n", "Number of simulations", min = 30, max = 10000, value = 100),
     textInput("pt_ci", "Confidence interval", placeholder = "e.g.: 0.95")
   )
 )
@@ -215,7 +179,6 @@ card_run <- card(
   card_body(
     verbatimTextOutput("pt_syntax"),
     input_task_button("pt_compute", "Run"),
-    #actionButton("pt_compute", "Run", class = "btn-primary"),
     hr(),
     verbatimTextOutput("pt_results", placeholder = TRUE)
   ), height = "50vh"
@@ -229,16 +192,16 @@ card_plot <- card(
 )
 
 tab_power_test <- layout_columns(
-  col_widths = c(2, 3, 7),          # three equal columns (12-grid)
-  heights_equal = "row",            # equalize column heights in this row
+  col_widths = c(2, 3, 7),
+  heights_equal = "row",
   # col 1
   card_design,
   # col 2
   card_analysis,
   # col 3: stack two half-height cards vertically
   div(class = "d-flex flex-column gap-3 h-100",
-      card_run,
-      card_plot
+    card_run,
+    card_plot
   )
 )
 
@@ -279,8 +242,7 @@ tab_settings <- layout_columns(
                    value = FALSE),
       radioButtons("rename_predictors", "Rename predictors",
                    choices = c("full", "concise", "no"), inline = TRUE),
-      radioButtons("format_output_stats", "Save format",
-                   choices = c("html", "docx", "text"), inline = TRUE),
+      input_switch("setting_output_docx", "Save html as docx", value = FALSE),
       textInput("prefix_output_stats", "Prefix save filename", value = "scan-stat")
     )
   ),
@@ -324,6 +286,9 @@ navbar_help <- nav_menu(
 ui <- page_navbar(
   title = "scan",
   id = "scan",
+  tags$head(
+    tags$link(rel = "icon", type = "image/png", href = "logo.png")
+  ),
   theme = res$theme_light,
   navbar_options = navbar_options(class = "bg-primary", theme = "dark"),
   

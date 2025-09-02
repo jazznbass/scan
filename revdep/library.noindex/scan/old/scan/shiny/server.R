@@ -62,8 +62,8 @@ server <- function(input, output, session) {
       new <- readLines(input$upload$datapath)
       new <- paste0(new, collapse = "\n")
       .tmp <- new.env()
-      eval(parse(text = new), envir = .tmp)
-      new <- .tmp$study
+      new <- eval(parse(text = new), envir = .tmp)
+      #new <- .tmp$study
     } else {
       na <- eval(str2lang(paste0("c(", input$scdf_load_na, ")")))
       new <- read_scdf(input$upload$datapath, na = na)
@@ -338,7 +338,7 @@ server <- function(input, output, session) {
       call<- paste0("export(results, ", flip, ", ", print_args, ")")
     } else call <- paste0("export(results,", flip ,")")
     tryCatch(
-      if (getOption("scan.export.engine") == "gt")
+      if (getOption("scan.export.engine") == "gt") 
         str2lang(call) |> eval() |> gt::as_raw_html() |> HTML()
       else
         str2lang(call) |> eval() |> print() |> as.character() |> HTML(),

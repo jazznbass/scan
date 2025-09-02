@@ -27,7 +27,7 @@
 #' Grosche2011filled <- fill_missing(Grosche2011)
 #' study <- c(Grosche2011[2], Grosche2011filled[2])
 #' names(study) <- c("Original", "Filled")
-#' plot(study)
+#' study
 #'
 #' ## Fill missing values in a single-case dataset that are NA
 #' Maggie <- random_scdf(design(level = list(0,1)), seed = 123)
@@ -37,7 +37,7 @@
 #' Maggie_f <- fill_missing(Maggie_n)
 #' study <- c(Maggie, Maggie_n, Maggie_f)
 #' names(study) <- c("original", "missing", "interpolated")
-#' plot(study, marks = list(positions = replace.positions), style = "grid2")
+#' study
 #'
 #' @export
 fill_missing <- function(data, dvar, mvar, 

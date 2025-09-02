@@ -1,15 +1,15 @@
 * using log directory ‘/Users/wilbert/Documents/GitHub/scan/revdep/checks.noindex/scplot/new/scplot.Rcheck’
-* using R version 4.5.0 (2025-04-11)
+* using R version 4.5.1 (2025-06-13)
 * using platform: aarch64-apple-darwin20
 * R was compiled by
-    Apple clang version 14.0.0 (clang-1400.0.29.202)
+    Apple clang version 16.0.0 (clang-1600.0.26.6)
     GNU Fortran (GCC) 14.2.0
-* running under: macOS Sequoia 15.5
+* running under: macOS Sequoia 15.6.1
 * using session charset: UTF-8
 * using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘scplot/DESCRIPTION’ ... OK
 * checking extension type ... Package
-* this is package ‘scplot’ version ‘0.5.1’
+* this is package ‘scplot’ version ‘0.6.0’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK

@@ -9,7 +9,7 @@ data."><meta property="og:image" content="https://jazznbass.github.io/scan/logo.
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.65.999</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.66.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,12 +116,26 @@ randomization test (<code><a href="rand_test.html">rand_test()</a></code>).</p>
 <span class="r-in"><span><span class="va">Grosche2011filled</span> <span class="op">&lt;-</span> <span class="fu">fill_missing</span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">Grosche2011filled</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Original"</span>, <span class="st">"Filled"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>This function is deprecated. It might be dropped without any further notice in a future update of scan.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use function 'scplot' from the package 'scplot' instead of 'plot'.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>This function is deprecated. It might be dropped without any further notice in a future update of scan.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use function 'scplot' from the package 'scplot' instead of 'style_plot'.</span>
-<span class="r-plt img"><img src="fill_missing-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="va">study</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with two cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Original: values mt phase │ Filled: values mt phase │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                13  0     A │             13  0     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              17.4  1     A │           17.4  1     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                13  6     A │          16.52  2     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              7.74 10     A │          15.64  3     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              8.82 13     A │          14.76  4     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               7.5 15     A │          13.88  5     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              5.82 36     A │             13  6     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              6.26 38     B │          11.69  7     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               5.6 41     B │          10.37  8     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             12.79 43     B │           9.05  9     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              9.17 48     B │           7.74 10     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             10.59 50     B │            8.1 11     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              9.23 55     B │           8.46 12     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             10.71 59     B │           8.82 13     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              7.61 62     B │           8.16 14     A │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 87 more rows</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Fill missing values in a single-case dataset that are NA</span></span></span>
 <span class="r-in"><span><span class="va">Maggie</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="fu"><a href="design.html">design</a></span><span class="op">(</span>level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span></span>
@@ -131,12 +145,27 @@ randomization test (<code><a href="rand_test.html">rand_test()</a></code>).</p>
 <span class="r-in"><span><span class="va">Maggie_f</span> <span class="op">&lt;-</span> <span class="fu">fill_missing</span><span class="op">(</span><span class="va">Maggie_n</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Maggie</span>, <span class="va">Maggie_n</span>, <span class="va">Maggie_f</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"missing"</span>, <span class="st">"interpolated"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">study</span>, marks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>positions <span class="op">=</span> <span class="va">replace.positions</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"grid2"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>This function is deprecated. It might be dropped without any further notice in a future update of scan.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use function 'scplot' from the package 'scplot' instead of 'plot'.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>This function is deprecated. It might be dropped without any further notice in a future update of scan.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use function 'scplot' from the package 'scplot' instead of 'style_plot'.</span>
-<span class="r-plt img"><img src="fill_missing-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="va">study</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with three cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  original: phase values mt │ missing: phase values mt │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                A   47.2  1 │              A   47.2  1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                A  48.85  2 │              A  48.85  2 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                A  57.79  3 │              A  57.79  3 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                A  50.35  4 │              A  50.35  4 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                A  50.65  5 │              A  50.65  5 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                B  68.58  6 │              B  68.58  6 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                B   62.3  7 │              B   62.3  7 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                B  53.67  8 │              B  53.67  8 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                B  56.57  9 │              B  56.57  9 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                B  57.77 10 │              B   &lt;NA&gt; 10 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                B  66.12 11 │              B  66.12 11 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                B   61.8 12 │              B   61.8 12 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                B     62 13 │              B     62 13 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                B  60.55 14 │              B  60.55 14 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                B  57.22 15 │              B  57.22 15 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to five more rows</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # One more case</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

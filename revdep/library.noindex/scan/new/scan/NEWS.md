@@ -1,4 +1,44 @@
-# scan 0.65
+# scan 0.66.0
+
+## New features
+
+- `as_scdf()`: Add format checks with informative error messages.  
+  (Mainly useful for externally loaded files via `read_scdf()`.)
+- `shinyscan()`: New argument `browser`. Default `"external"` launches the Shiny app in an external browser.
+- `between_smd()`:  
+  - Stops if the `scdf` contains only one case.  
+  - Redesigned outputs.  
+  - Improved Bayesian analysis.  
+  - Added confidence/credible intervals and new argument `ci`.
+- `hplm()`: 
+  - Argument `ar` sets a auto-regression parameter for correlated residuals.
+  - Argument `unequal_variances` weights the estimations by within phase variances.
+
+## New shiny app for importing data
+
+- `import_scdf()`: opens a small import menu. Also available as an addin in R Studio.
+
+## Reworked Shiny Scan app
+
+- Redesign the “Add case” workflow.
+- Added an import procedure to choose variable names at import.
+- Now it is possible to start shinyscan with an scdf object and directly start to analyse it `shinyscan(exampleABC)`.
+- Stats tab: auto-fill the “Output arguments” field when a statistics function is selected.
+- Stats tab/ Settings tab: "Description" switch in settings can be set to provide additional short descriptions for each stats function.
+- Switch to Bootstrap 5.
+- Miscellaneous visual polish.
+
+## Error correction
+
+- Addin in R-Studio is now renames to "Lauch Shiny-Scan" and finally works.
+
+# scan 0.65.1
+
+## Error correction
+
+- `plm()`: dummy slope values did falsely ignore missing values. That could lead to incorrect slope effect estimations.
+
+# scan 0.65.0
 
 ## New function
 

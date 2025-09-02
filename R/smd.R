@@ -90,9 +90,8 @@ smd <- function(data, dvar, pvar, mvar,
   class(out) <- c("sc_smd")
   
   source_attributes <- attributes(data_list)[[opt("scdf")]]
-  attr(out, opt("phase")) <- source_attributes[[opt("phase")]]
-  attr(out, opt("mt"))    <- source_attributes[[opt("mt")]]
-  attr(out, opt("dv"))    <- source_attributes[[opt("dv")]]
+  nm <- opts("phase", "mt", "dv")
+  attributes(out)[nm] <- source_attributes[nm]
   
   out
   

@@ -82,6 +82,3 @@ export.sc_bcsmd <- function(object,
   if (!is.na(filename)) .save_export(table, filename)
   table
 }
-
-
-

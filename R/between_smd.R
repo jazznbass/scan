@@ -216,8 +216,7 @@ between_smd <- function(data,
   )
  
   class(out) <- "sc_bcsmd"
-  attr(out, opt("phase")) <- attr(models[[1]], opt("phase"))
-  attr(out, opt("mt"))    <- attr(models[[1]], opt("mt"))
-  attr(out, opt("dv"))    <- attr(models[[1]], opt("dv"))
+  nm <- opts("phase", "mt", "dv")
+  attributes(out)[nm] <- models[[1]][nm]
   out
 }

@@ -195,6 +195,24 @@ scplot(res, effect = 3)
 
 
 cleanEx()
+nameEx("scplot_rand")
+### * scplot_rand
+
+flush(stderr()); flush(stdout())
+
+### Name: scplot_rand
+### Title: Random start position plot Plot of statistics for random phase B
+###   start positions
+### Aliases: scplot_rand
+
+### ** Examples
+
+scplot_rand(scan::byHeart2011[1:5])
+
+
+
+
+cleanEx()
 nameEx("set_background")
 ### * set_background
 
