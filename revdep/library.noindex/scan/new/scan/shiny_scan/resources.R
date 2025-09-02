@@ -6,6 +6,7 @@ suppressPackageStartupMessages({
 library(scan)
 library(scplot)
 library(shiny)
+library(bslib)
 })
 
 options(
@@ -13,13 +14,17 @@ options(
     bootstrap_options = c("striped", "condensed"), 
     full_width = FALSE,
     position = "left"
-  )
+  ),
+  scan.export.engine = "gt",
+  scan.export.title.prefix = NULL
 )
 
 res <- list()
 
 res$pipe <- " |> "
 res$pipe_br <- paste0(res$pipe, "\n")
+
+res$new_case <- "-new case-"
 
 # choices ------
 
@@ -74,6 +79,7 @@ for(i in seq_along(themes)) {
 res$choices$fn_stats <- c(
   "Descriptives" = "describe",
   "Standardized mean differences" = "smd",
+  "Between-Case Standardized Mean Difference" = "between_smd",
   "Overlap indices" = "overlap",
   "Data trends" = "trend",
   "Auto correlations" = "autocorr",
@@ -132,7 +138,7 @@ values2 = values - max(values[phase=="A"])
 across_cases(values2 = scale(values)
 '
 
-res$placeholder$stats_out_args <- "e.g.: decimals = 3; meta = FALSE"
+res$placeholder$stats_out_args <- "" #"e.g.: decimals = 3; meta = FALSE"
 
 res$placeholder$plot_arguments <- '(choose one or more of the templates below and experiment with the syntax here.)
 '
@@ -164,13 +170,16 @@ res$div$pt <- paste0(
 # error ----
 
 res$error_msg$invalid_case <- "Sorry!
-The last case you tried to add didn't have a valid case definition."
+The case you just tried to add didn't have a valid case definition."
 
 res$error_msg$plot <- "Sorry!
 The plot arguments are not valid."
 
 res$error_msg$scdf_save <- "Sorry!
 The last file you saved is corrupt. Did you forget to add a case before saving?"
+
+res$error_msg$html_output <- "Sorry!
+HTML export is not available. Please switch to text output instead."
 
 # msg ----
 
@@ -179,9 +188,9 @@ res$msg$startup <-
 
 You can:
 
-1. create a new case (fill in 'values' and click 'Add')
-2. load a dataset (Data -> Load -> click 'Open file' to import an rds, csv, or excel file)
-3. choose an example scdf (Data -> Load -> choose from 'Choose example')
+1. load a dataset: click 'Choose file' to import an rds, csv, or excel file)
+2. choose an example scdf from 'Choose example')
+3. create a new case (Data -> New -> fill in 'values' and click 'save case')
 
 'exampleABC' is a good place to start.
 
@@ -200,7 +209,7 @@ Have fun!
 res$msg$no_case_scdf <-
 "No case has been defined yet.
 You can:
-1. create a new case (fill in 'values' and click 'Add')
+1. create a new case (fill in 'values' and click 'save case')
 2. load a dataset (Data -> Load -> click 'Open file' to import an rds, csv, or excel file)
 3. choose an example scdf (Data -> Load -> 'Choose example')
 "
@@ -222,12 +231,31 @@ res$help_page <- structure(
   <li>Create a plot in the <strong>Plot tab</strong>.</li>\n</ol>
   <p>Analysis and plots are based on the scdf after any changes from the <strong>Transform tab</strong>.</p>
   <p>Here are helpful links:</p>
-  <p><a href=\"https://jazznbass.github.io/scan/\">Help pages for scan</a></p>
+  <p><a href=\"https://jazznbass.github.io/scan-Book/ch_shinyscan.html\">A short introduction to shiny scan</a></p>
   <p><a href=\"https://jazznbass.github.io/scan-Book/\">Online book for single case analysis with scan</a></p>
-  <p><a href=\"https://jazznbass.github.io/scplot/\">Help pages for scplot</a></p>
+  <p><a href=\"https://jazznbass.github.io/scan/\">Technnical help pages for scan</a></p>
+  <p><a href=\"https://jazznbass.github.io/scplot/\">Technnical help pages for scplot</a></p>
   <p>Have fun!</p>",
   html = TRUE, class = c("html", "character")
 )
+
+## ---- define themes (global scope) ----
+res$theme_light <- bs_theme(version = 5, bootswatch = "cerulean")
+
+res$theme_dark <- res$theme_light |>
+  bs_theme_update(
+    # High-contrast dark surface + readable text
+    bg = "#0f172a", fg = "#e5e7eb",
+    # Cards/tables to match dark surface
+    "card-bg"            = "#111827",
+    "card-border-color"  = "#1f2937",
+    "table-bg"           = "#0f172a",
+    "table-border-color" = "#1f2937"
+    # (Optional) tweak accent colors; by default we keep Cerulean's primary blue
+    # "primary" = "#2FA4E7"
+  )
+
+
 
 ### little help-functions
 
@@ -243,4 +271,41 @@ quoted <- function(x) {
   out
 }
 
+correct_casenames <- function(x, string = FALSE) {
+  
+  if (is.null(x) || identical(length(x), 0)) return(NULL)
+    
+  new_names <- names(x)
+  if (is.null(new_names)) {
+    new_names <- paste0("[case #", 1:length(x), "]")
+  } else {
+    nonames <- which(is.na(new_names) | new_names == "")
+    new_names[nonames] <- paste0("[case #", nonames, "]")
+  }
+  
+  while(anyDuplicated(new_names) != 0) {
+    id <- anyDuplicated(new_names) 
+    new_names[id] <- paste0(new_names[id], "'")
+  }
+  
+  if (string) {
+    return(new_names)
+  }
+  
+  names(x) <- new_names
+  x
+}
+
+guess_col <- function(cols, hints) {
+  hit <- which(tolower(cols) %in% hints)
+  if (length(hit)) cols[hit[1]] else cols[1]
+}
+
 n2br <- function(x) gsub("\n", "<br>", x)
+
+render_summary <- function(scdf) {
+  out <-  summary(scdf) |> export()
+  if (getOption("scan.export.engine") == "gt")
+    out <- out |> gt::as_raw_html(out)
+  HTML(out)
+}

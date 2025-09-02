@@ -330,8 +330,9 @@ plm <- function(data, dvar, pvar, mvar,
   )
   
   class(out) <- c("sc_plm")
-  attr(out, opt("phase"))  <- original_attr[opt("phase")]
-  attr(out, opt("mt"))     <- original_attr[opt("mt")]
-  attr(out, opt("dv"))     <- original_attr[opt("dv")]
+  
+  nm <- opts("phase", "mt", "dv")
+  attributes(out)[nm] <- original_attr[nm]
+  
   out
 }

@@ -90,7 +90,6 @@ pem <- function(data, dvar, pvar,
   row.names(PEM) <- NULL
   out <- list(PEM = PEM, test = stats.ma, decreasing = decreasing)
   class(out) <- c("sc_pem")
-  attr(out, opt("phase")) <- pvar
-  attr(out, opt("dv")) <- dvar
+  attributes(out)[opts("phase", "dv")] <- list(pvar, dvar)
   out
 }

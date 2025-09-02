@@ -38,14 +38,14 @@ examples <- examples[!filter]
 res$choices$examples <- c("(none)", examples)
 
 res$choices$scplot_examples <- c(
-"(empty selection)" = "",
-"Trend lines" = 'add_statline("trend")',
-"Baseline trend" = 'add_statline("trendA")',
-"Max A" = 'add_statline("max", phase = "A")',
-"Means" = 'add_statline("mean")',
-"Medians" = 'add_statline("median")',
-"Moving average" = 'add_statline("moving mean")',
-"Smoothed line" = 'add_statline("loess", span = 0.4)'
+  "(empty selection)" = "",
+  "Trend lines" = 'add_statline("trend")',
+  "Baseline trend" = 'add_statline("trendA")',
+  "Max A" = 'add_statline("max", phase = "A")',
+  "Means" = 'add_statline("mean")',
+  "Medians" = 'add_statline("median")',
+  "Moving average" = 'add_statline("moving mean")',
+  "Smoothed line" = 'add_statline("loess", span = 0.4)'
 )
 
 res$choices$scplot_templates_design <- c(
@@ -148,6 +148,8 @@ res$placeholder$mt <- "(optional, e.g. 1,2,4,6,7,8,9,12,13)"
 res$placeholder$variables <-
 "(optional, e.g., depression = 1,4,3,5,6,5,7
 separate multiple variables with linebreaks)"
+
+res$placeholder$casename <- "(optional. Random if left empty)"
 
 res$placeholder$pt <- "Power calculation may take some time. Click 'Run' to start calculation."
 

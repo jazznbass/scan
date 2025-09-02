@@ -114,8 +114,6 @@ trend <- function(data, dvar, pvar, mvar,
     design = design
   )
   class(out) <- c("sc_trend")
-  attr(out, opt("phase")) <- pvar
-  attr(out, opt("mt")) <- mvar
-  attr(out, opt("dv")) <- dvar
+  attributes(out)[opts("phase", "mt", "dv")] <- list(pvar, mvar, dvar)
   out
 }

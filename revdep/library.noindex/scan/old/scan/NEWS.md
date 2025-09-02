@@ -1,3 +1,42 @@
+# scan 0.65.1
+
+## Error correction
+
+- `plm()`: dummy slope values did falsely ignore missing values. That could lead to incorrect slope effect estimations.
+
+# scan 0.65.0
+
+## New function
+
+- `rowwise()`: A new helper function for `transform()` that allows to make calculations rowwise:
+
+```.r
+ex <- exampleAB_add; ex[[1]]$wellbeing[c(3, 6)] <- NA
+transform(
+  ex, 
+  mean_dv = rowwise(mean(c(wellbeing, cigarrets, depression), na.rm = TRUE))
+)
+```
+
+## New features
+
+- `mplm()`: Reworked the function and its output. Now provides global F test and a more integrated depiction of the coefficients. Added export() method.
+- `plm()/print.sc_plm()`: either print partial or delta (incremental), or both R squared: 
+
+```r
+plm(exampleAB$Johanna) |> 
+  print(r_squared = c("delta", "partial"))
+```
+
+## Corrections
+
+- `plm()`: Corrected calculation for model fit F statistic and R2 for models without an intercept
+- `scdf()`: Reported a false error message when the `phase.start` argument was used and mt started with 0.
+
+## Further changes
+
+- `scdf()`: Optimized code, function arguments, and help page.
+
 # scan 0.64.0
 
 ## New functions

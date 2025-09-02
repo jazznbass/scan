@@ -136,10 +136,9 @@ bplm <- function(data, dvar, pvar, mvar,
   out$contrast <- list(level = contrast_level, slope = contrast_slope)
   
   class(out) <- c("sc_bplm")
-  attr(out, opt("phase")) <- pvar
-  attr(out, opt("mt"))    <- mvar
-  attr(out, opt("dv"))    <- dvar
   
+  attributes(out)[opts("phase", "mt", "dv")] <- list(pvar, mvar, dvar)
+
   out
 }
 

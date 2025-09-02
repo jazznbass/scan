@@ -17,10 +17,6 @@ shinyscan <- function(scdf = NULL,
                       browser = c("external", "viewer"), 
                       ...) {
   
-  check_args(
-    by_call(browser)
-  )
-  
   browser <- browser[1]
   
   miss <- c()

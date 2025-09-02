@@ -86,7 +86,6 @@ pet <- function(data,
     decreasing = decreasing
   )
   class(out) <- c("sc_pet")
-  attr(out, opt("phase")) <- pvar
-  attr(out, opt("dv")) <- dvar
+  attributes(out)[opts("phase", "dv")] <- list(pvar, dvar)
   out
 }

@@ -1,5 +1,5 @@
 
-R version 4.5.0 (2025-04-11) -- "How About a Twenty-Six"
+R version 4.5.1 (2025-06-13) -- "Great Square Root"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin20
 
@@ -21,6 +21,7 @@ Type 'q()' to quit R.
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
 > library('scplot')
+[31mscplot 0.6.0 (2025-06-29)[34m
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
@@ -129,7 +130,7 @@ Type 'q()' to quit R.
 > ### ** Examples
 > 
 > library(scan)
-[34mscan 0.64.0 (2025-03-18)
+[34mscan 0.65.1 (2025-07-13)
 [31mSet 'options(scan.export.engine = "gt")' and try out the improved table engine for 'export()'.
 > p1 <- scplot(exampleA1B1A2B2$Moritz) |> add_marks(positions = c(1,5,10,14))
 > p1 <- scplot(Huber2014) |> add_marks(positions = outlier(Huber2014))
@@ -231,6 +232,24 @@ Possible effects are:
 > 
 > 
 > cleanEx()
+> nameEx("scplot_rand")
+> ### * scplot_rand
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: scplot_rand
+> ### Title: Random start position plot Plot of statistics for random phase B
+> ###   start positions
+> ### Aliases: scplot_rand
+> 
+> ### ** Examples
+> 
+> scplot_rand(scan::byHeart2011[1:5])
+> 
+> 
+> 
+> 
+> cleanEx()
 > nameEx("set_background")
 > ### * set_background
 > 
@@ -296,7 +315,7 @@ Possible effects are:
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.498 0.059 1.558 0 0 
+Time elapsed:  1.665 0.053 1.885 0 0 
 > grDevices::dev.off()
 null device 
           1 

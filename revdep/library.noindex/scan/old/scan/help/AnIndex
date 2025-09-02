@@ -54,12 +54,13 @@ export.scdf_summary	export
 export.sc_bplm	bplm
 export.sc_desc	export
 export.sc_hplm	hplm
+export.sc_mplm	mplm
 export.sc_nap	export
 export.sc_overlap	export
 export.sc_pand	pand
 export.sc_pem	export
 export.sc_pet	export
-export.sc_plm	export
+export.sc_plm	plm
 export.sc_pnd	export
 export.sc_power	export
 export.sc_smd	export
@@ -124,7 +125,7 @@ print.sc_overlap	print.sc
 print.sc_pand	pand
 print.sc_pem	print.sc
 print.sc_pet	print.sc
-print.sc_plm	print.sc
+print.sc_plm	plm
 print.sc_pnd	print.sc
 print.sc_power	print.sc
 print.sc_rand	print.sc
@@ -143,6 +144,7 @@ readSC	deprecated-functions
 readSC.excel	deprecated-functions
 read_scdf	read_scdf
 rescale	rescale
+rowwise	transform.scdf
 rSC	deprecated-functions
 sample_names	sample_names
 scan	scan-package
