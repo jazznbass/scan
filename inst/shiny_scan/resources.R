@@ -242,7 +242,16 @@ res$help_page <- structure(
 )
 
 ## ---- define themes (global scope) ----
-res$theme_light <- bs_theme(version = 5, bootswatch = getOption("scan.shiny.theme"))
+
+theme <- getOption("scan.shiny.theme")
+if (!theme %in% bslib::bootswatch_themes()) {
+  message(
+    theme, " is not a valid theme. Use one of these: ", 
+    paste0(bslib::bootswatch_themes(), collapse = ", "))
+  theme <- "cerulean"
+}
+
+res$theme_light <- bs_theme(version = 5, bootswatch = theme)
 
 
 res$theme_dark <- res$theme_light |>

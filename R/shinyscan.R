@@ -39,13 +39,6 @@ shinyscan <- function(scdf = NULL,
   
   browser <- match.arg(browser)
   
-  if (!theme %in% bslib::bootswatch_themes()) {
-    message(
-      theme, " is not a valid theme. Use one of these: ", 
-      paste0(bslib::bootswatch_themes(), collapse = ", "))
-    theme <- "cerulean"
-  }
-  
   options(scan.shiny.theme = theme)
   
   old_opt <- if (identical(browser, "external")) {

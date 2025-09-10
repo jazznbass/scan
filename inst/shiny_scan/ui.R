@@ -173,24 +173,25 @@ card_plot_args <- card(
       col_widths = c(6, 6),
       numericInput("scplot_ymin", "min", value = NA),
       numericInput("scplot_ymax", "max", value = NA)
-    )
-    
+    ),
+    h5("X-Axis"),
+    numericInput("scplot_xinc", "increment", value = NA)
   )
 )
 
 card_plot_args_2 <- card(
   card_body(
-    h5("Phase A"),
-    input_switch("scplot_stats_trend_a", "Trend A", FALSE),
-    input_switch("scplot_stats_mean_a", "Mean A", FALSE),
-    input_switch("scplot_stats_median_a", "Median A", FALSE),
-    input_switch("scplot_stats_max_a", "Max A", FALSE),
-    input_switch("scplot_stats_min_a", "Min A", FALSE),
+    h5("Baseline"),
+    input_switch("scplot_stats_trend_a", "Trend", FALSE),
+    input_switch("scplot_stats_mean_a", "Mean", FALSE),
+    input_switch("scplot_stats_median_a", "Median", FALSE),
+    input_switch("scplot_stats_max_a", "Max", FALSE),
+    input_switch("scplot_stats_min_a", "Min", FALSE),
     
-    h5("Each phase"),
-    input_switch("scplot_stats_trend", "Trend", FALSE),
+    h5("Phases"),
     input_switch("scplot_stats_mean", "Mean", FALSE),
     input_switch("scplot_stats_median", "Median", FALSE),
+    input_switch("scplot_stats_trend", "Slope", FALSE),
     
     h5("Curves"),
     input_switch("scplot_stats_moving", "Moving mean", FALSE),

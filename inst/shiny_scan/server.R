@@ -1161,7 +1161,9 @@ server <- function(input, output, session) {
       if (!is.na(input$scplot_ymin) || !is.na(input$scplot_ymax)) {
         paste0("set_yaxis(limits = c(", input$scplot_ymin, ",", input$scplot_ymax, "))")
       },
-      
+      if (!is.na(input$scplot_xinc)) {
+        paste0("set_xaxis(increment = ", input$scplot_xinc, ")")
+      },
       if (input$scplot_stats_mean_a) 'add_statline("mean", phase = "A")',
       if (input$scplot_stats_median_a) 'add_statline("median", phase = "A")',
       if (input$scplot_stats_max_a) 'add_statline("max", phase = "A")',
@@ -1198,12 +1200,11 @@ server <- function(input, output, session) {
     req(inherits(my_scdf(), "scdf"))
     
     call <- paste0(create_scplot_call(), " |> print()")
-    
+    out <- NULL
     tryCatch(
       out <- str2lang(call) |> eval(),
       error = function(x) {
-        msg <- paste0(res$error_msg$plot, "\n\n", x)
-        out <- renderPrint(cat(msg))
+        out <- paste0(res$error_msg$plot, "\n\n", x)
         
       }
     )
