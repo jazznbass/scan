@@ -15,13 +15,29 @@ server <- function(input, output, session) {
   
   
   observeEvent(input$scan, {
-    if (input$scan == "Exp plot") {
+    if (input$scan == "Plot") {
       choices <- lapply(transformed(), function(x) names(x)) |> unlist() |> unique()
       id <- which(!choices %in% scdf_attr(transformed())[c("var.values", "var.mt", "var.phase")] |> unlist())
       updateSelectInput(
         session, 
         inputId = "scplot_add", 
         choices = c("None", choices[id])
+      )
+      choices <- correct_casenames(transformed(), string = TRUE)
+      choices <- setNames(1:length(choices), choices)
+      updateSelectInput(
+        session, 
+        inputId = "scplot_select_case", 
+        choices = c("all", choices)
+      )
+    }
+    if (input$scan == "Stats") {
+      choices <- correct_casenames(transformed(), string = TRUE)
+      choices <- setNames(1:length(choices), choices)
+      updateSelectInput(
+        session, 
+        inputId = "stats_select_case", 
+        choices = c("all", choices)
       )
     }
   })
@@ -536,11 +552,16 @@ server <- function(input, output, session) {
   calculate_stats <- reactive({
     if (!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
     scdf <- transformed()
+    
+    if (input$stats_select_case != "all") {
+      scdf <- str2lang(paste0("select_cases(scdf, ", input$stats_select_case, ")")) |> eval()
+    }
+    
     call <- paste0("scan::", get_stats_call())
     
-    if (input$stats_batch) {
-      call <- paste0("batch_apply(scdf,", call, ")")
-    }
+    #if (input$stats_batch) {
+    #  call <- paste0("batch_apply(scdf,", call, ")")
+    #}
     
     tryCatch(
       out <- str2lang(call) |> eval(),
@@ -550,11 +571,12 @@ server <- function(input, output, session) {
         validate(msg)
       }
     )
-    if (input$stats_batch) {
-      stats_class(class(out[[1]]))
-    } else {
-      stats_class(class(out))
-    }
+    # if (input$stats_batch) {
+    #   stats_class(class(out[[1]]))
+    # } else {
+    #   stats_class(class(out))
+    # }
+    stats_class(class(out))
     update_print()
     out
   })
@@ -603,37 +625,37 @@ server <- function(input, output, session) {
       call <- paste0("export(results)")
     }
     
-    if (input$stats_batch) {
-      
-      str_render <- if (getOption("scan.export.engine") == "gt") {
-        " |> gt::as_raw_html() |> HTML()"
+    # if (input$stats_batch) {
+    #   
+    #   str_render <- if (getOption("scan.export.engine") == "gt") {
+    #     " |> gt::as_raw_html() |> HTML()"
+    #   } else {
+    #     " |> print() |> as.character() |> HTML()"
+    #   }
+    #   call <- paste0(
+    #     "lapply(results, function(results) {",
+    #     call, str_render, "})"
+    #   )
+    #   
+    #   tryCatch(
+    #     tmp <- str2lang(call) |> eval(),
+    #     error = function(e) {
+    #       validate(res$error_msg$html_output, e)
+    #     }
+    #   )  
+    #   
+    # } else {
+    tryCatch(
+      if (getOption("scan.export.engine") == "gt") {
+        str2lang(call) |> eval() |> gt::as_raw_html() |> HTML()
       } else {
-        " |> print() |> as.character() |> HTML()"
+        str2lang(call) |> eval() |> print() |> as.character() |> HTML()
+      },
+      error = function(e) {
+        validate(res$error_msg$html_output)
       }
-      call <- paste0(
-        "lapply(results, function(results) {",
-        call, str_render, "})"
-      )
-      
-      tryCatch(
-        tmp <- str2lang(call) |> eval(),
-        error = function(e) {
-          validate(res$error_msg$html_output, e)
-        }
-      )  
-      
-    } else {
-      tryCatch(
-        if (getOption("scan.export.engine") == "gt") {
-          str2lang(call) |> eval() |> gt::as_raw_html() |> HTML()
-        } else {
-          str2lang(call) |> eval() |> print() |> as.character() |> HTML()
-        },
-        error = function(e) {
-          validate(res$error_msg$html_output)
-        }
-      )    
-    }
+    )    
+    
     
 
   })
@@ -647,22 +669,22 @@ server <- function(input, output, session) {
       call<- paste0("print(results, ", print_args, ")")
     } else call <- "print(results)"
     
-    if (input$stats_batch) {
-     
-      call <- paste0(
-        "mapply(function(results, nm) {",
-        "cat('\\nCase:', nm, '\\n\\n'); ",
-        call, 
-        "; cat('\\n", strrep("\\u2501", 75), "\\n')",
-        "}, results, nm = names(results))"
-      )
-     
-      tmp <- str2lang(call) |> eval()
-      
-    } else {
-      str2lang(call) |> eval()      
-    }
-    
+    # if (input$stats_batch) {
+    #  
+    #   call <- paste0(
+    #     "mapply(function(results, nm) {",
+    #     "cat('\\nCase:', nm, '\\n\\n'); ",
+    #     call, 
+    #     "; cat('\\n", strrep("\\u2501", 75), "\\n')",
+    #     "}, results, nm = names(results))"
+    #   )
+    #  
+    #   tmp <- str2lang(call) |> eval()
+    #   
+    # } else {
+    #   str2lang(call) |> eval()      
+    # }
+    str2lang(call) |> eval()     
 
   })
 
@@ -808,8 +830,8 @@ server <- function(input, output, session) {
     args <- args[id]
     values <- values[id]
 
-    str_scdf <- if (input$stats_batch) "." else "scdf"
-    
+    #str_scdf <- if (input$stats_batch) "." else "scdf"
+    str_scdf <- "scdf"
     call <- paste0(
       input$func, "(", str_scdf,
       if (length(args > 0)) {
@@ -825,7 +847,7 @@ server <- function(input, output, session) {
   ## Save ------
   
   condition_for_output <- reactive({
-    !(input$stats_out && input$stats_batch)
+    TRUE#!(input$stats_out && input$stats_batch)
   })
   
   
@@ -863,15 +885,15 @@ server <- function(input, output, session) {
           call<- paste0("print(results, ", print_args, ")")
         } else call <- "print(results)"
         
-        if (input$stats_batch) {
-          call <- paste0(
-            "tmp <- mapply(function(results, nm) {",
-            "cat('\\nCase:', nm, '\\n\\n'); ",
-            call, 
-            "; cat('\\n", strrep("\\u2501", 75), "\\n')",
-            "}, results, nm = names(results))"
-          )
-        }
+        # if (input$stats_batch) {
+        #   call <- paste0(
+        #     "tmp <- mapply(function(results, nm) {",
+        #     "cat('\\nCase:', nm, '\\n\\n'); ",
+        #     call, 
+        #     "; cat('\\n", strrep("\\u2501", 75), "\\n')",
+        #     "}, results, nm = names(results))"
+        #   )
+        # }
         
         call <- paste0("capture.output(", call, ")")
         writeLines(str2lang(call) |> eval(), con = file)
@@ -897,113 +919,113 @@ server <- function(input, output, session) {
     }
   )
   
-  # Plot -----
-
-  ## Render ----
-  render_plot <- reactive({
-    req(inherits(my_scdf(), "scdf"))
-    call <- paste0("scplot(transformed())")
-    if (trimws(input$plot_arguments) != "") {
-      plot_args <- trimws(input$plot_arguments)
-      plot_args <- gsub("\n+", "\n", plot_args)
-      call <- paste0(
-        call, res$pipe, gsub("\n", res$pipe, plot_args)
-      )
-    }
-    call <- paste0("print(",call,")")
-    tryCatch(
-      str2lang(call) |> eval(),
-      error = function(x) {
-        msg <- paste0(res$error_msg$plot, "\n\n", x)
-        output$plot_syntax <- renderPrint(cat(msg))
-        #showNotification(msg, type = "error")
-      }
-    )
-  })
-
-  observeEvent(input$scplot_templates_design, {
-    new_value <- unname(
-      res$choices$scplot_templates_design[input$scplot_templates_design]
-    )
-    old_value <- input$plot_arguments
-    if (old_value == "") {
-      value <- new_value
-    } else {
-      value <- paste0(input$plot_arguments, "\n", new_value)
-    }
-  updateTextAreaInput(inputId = "plot_arguments", value = value)
-  })
-
-  observeEvent(input$scplot_templates_annotate, {
-    new_value <- unname(
-      res$choices$scplot_templates_annotate[input$scplot_templates_annotate]
-    )
-    old_value <- input$plot_arguments
-    if (old_value == "") {
-      value <- new_value
-    } else {
-      value <- paste0(input$plot_arguments, "\n", new_value)
-    }
-    updateTextAreaInput(inputId = "plot_arguments", value = value)
-  })
-  
-  observeEvent(input$scplot_examples, {
-    if ("(empty selection)" == input$scplot_examples) {
-      value <- ""
-    } else {
-      new_value <- unname(res$choices$scplot_examples[input$scplot_examples])
-      old_value <- input$plot_arguments
-      if (old_value == "") {
-        value <- new_value
-      } else {
-        value <- paste0(input$plot_arguments, "\n", new_value)
-      }
-    }
-    updateTextAreaInput(inputId = "plot_arguments", value = value)
-  })
-
-  observeEvent(input$plot_arguments, render_plot_syntax())
-
-  ## Output ----
- 
-  render_plot_syntax <- reactive({
-    call <- paste0("scplot(scdf)")
-    if (trimws(input$plot_arguments) != "") {
-      call <- paste0(
-        call, res$pipe_br, " ", gsub("\n", paste0(res$pipe_br, " "), trimws(input$plot_arguments))
-      )
-    }
-    output$plot_syntax <- renderPrint({
-      cat(call)
-    })
-  })
-  
-  output$plot_scdf <- renderPlot(res = 120, {
-    render_plot()
-  })
-
-  ## Save ----
-  output$saveplot <- downloadHandler(
-    filename = function() {
-      scdf <- transformed()
-      out <- paste(
-        input$prefix_output_plot,
-        sprintf("%02d", length(scdf)),
-        paste0(unique(scdf[[1]]$phase), collapse = ""),
-        format(Sys.time(), format = "%y%m%d-%H%M%S"),
-        sep = "-"
-      )
-      paste0(out, ".png")
-    },
-    content = function(file) {
-      ggplot2::ggsave(
-        file, render_plot(), width = input$width, height = input$height,
-        dpi = input$dpi, units = "px",  device = "png"
-      )
-    }
-  )
-
-  
+  # # Plot -----
+  # 
+  # ## Render ----
+  # render_plot <- reactive({
+  #   req(inherits(my_scdf(), "scdf"))
+  #   call <- paste0("scplot(transformed())")
+  #   if (trimws(input$plot_arguments) != "") {
+  #     plot_args <- trimws(input$plot_arguments)
+  #     plot_args <- gsub("\n+", "\n", plot_args)
+  #     call <- paste0(
+  #       call, res$pipe, gsub("\n", res$pipe, plot_args)
+  #     )
+  #   }
+  #   call <- paste0("print(",call,")")
+  #   tryCatch(
+  #     str2lang(call) |> eval(),
+  #     error = function(x) {
+  #       msg <- paste0(res$error_msg$plot, "\n\n", x)
+  #       output$plot_syntax <- renderPrint(cat(msg))
+  #       #showNotification(msg, type = "error")
+  #     }
+  #   )
+  # })
+  # 
+  # observeEvent(input$scplot_templates_design, {
+  #   new_value <- unname(
+  #     res$choices$scplot_templates_design[input$scplot_templates_design]
+  #   )
+  #   old_value <- input$plot_arguments
+  #   if (old_value == "") {
+  #     value <- new_value
+  #   } else {
+  #     value <- paste0(input$plot_arguments, "\n", new_value)
+  #   }
+  # updateTextAreaInput(inputId = "plot_arguments", value = value)
+  # })
+  # 
+  # observeEvent(input$scplot_templates_annotate, {
+  #   new_value <- unname(
+  #     res$choices$scplot_templates_annotate[input$scplot_templates_annotate]
+  #   )
+  #   old_value <- input$plot_arguments
+  #   if (old_value == "") {
+  #     value <- new_value
+  #   } else {
+  #     value <- paste0(input$plot_arguments, "\n", new_value)
+  #   }
+  #   updateTextAreaInput(inputId = "plot_arguments", value = value)
+  # })
+  # 
+  # observeEvent(input$scplot_examples, {
+  #   if ("(empty selection)" == input$scplot_examples) {
+  #     value <- ""
+  #   } else {
+  #     new_value <- unname(res$choices$scplot_examples[input$scplot_examples])
+  #     old_value <- input$plot_arguments
+  #     if (old_value == "") {
+  #       value <- new_value
+  #     } else {
+  #       value <- paste0(input$plot_arguments, "\n", new_value)
+  #     }
+  #   }
+  #   updateTextAreaInput(inputId = "plot_arguments", value = value)
+  # })
+  # 
+  # observeEvent(input$plot_arguments, render_plot_syntax())
+  # 
+  # ## Output ----
+  # 
+  # render_plot_syntax <- reactive({
+  #   call <- paste0("scplot(scdf)")
+  #   if (trimws(input$plot_arguments) != "") {
+  #     call <- paste0(
+  #       call, res$pipe_br, " ", gsub("\n", paste0(res$pipe_br, " "), trimws(input$plot_arguments))
+  #     )
+  #   }
+  #   output$plot_syntax <- renderPrint({
+  #     cat(call)
+  #   })
+  # })
+  # 
+  # output$plot_scdf <- renderPlot(res = 120, {
+  #   render_plot()
+  # })
+  # 
+  # ## Save ----
+  # output$saveplot <- downloadHandler(
+  #   filename = function() {
+  #     scdf <- transformed()
+  #     out <- paste(
+  #       input$prefix_output_plot,
+  #       sprintf("%02d", length(scdf)),
+  #       paste0(unique(scdf[[1]]$phase), collapse = ""),
+  #       format(Sys.time(), format = "%y%m%d-%H%M%S"),
+  #       sep = "-"
+  #     )
+  #     paste0(out, ".png")
+  #   },
+  #   content = function(file) {
+  #     ggplot2::ggsave(
+  #       file, render_plot(), width = input$width, height = input$height,
+  #       dpi = input$dpi, units = "px",  device = "png"
+  #     )
+  #   }
+  # )
+  # 
+  # 
   
   
   # Power test -----
@@ -1127,8 +1149,19 @@ server <- function(input, output, session) {
   create_scplot_call <- reactive({
     themes <- c(input$scplot_theme_1, input$scplot_theme_2, input$scplot_theme_3)
     themes <- themes[which(themes != "None")]
+    
+    
+    
     call <- c(
-      "scplot(transformed())",
+      "transformed()",
+      if (input$scplot_select_case != "all") {
+        paste0("select_cases(", input$scplot_select_case, ")")
+      },
+      "scplot()",
+      if (!is.na(input$scplot_ymin) || !is.na(input$scplot_ymax)) {
+        paste0("set_yaxis(limits = c(", input$scplot_ymin, ",", input$scplot_ymax, "))")
+      },
+      
       if (input$scplot_stats_mean_a) 'add_statline("mean", phase = "A")',
       if (input$scplot_stats_median_a) 'add_statline("median", phase = "A")',
       if (input$scplot_stats_max_a) 'add_statline("max", phase = "A")',
@@ -1195,7 +1228,9 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       ggplot2::ggsave(
-        file, render_plot_2(), width = input$width, height = input$height,
+        file, 
+        paste0(create_scplot_call(), " |> print()") |> str2lang() |> eval(),
+        width = input$width, height = input$height,
         dpi = input$dpi, units = "px",  device = "png"
       )
     }

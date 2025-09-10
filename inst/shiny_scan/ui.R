@@ -8,7 +8,7 @@ tab_scdf <- nav_panel(
   "New / Edit",
   layout_sidebar(
     sidebar = sidebar(
-      title = NULL, #"Case setup",
+      title = NULL,
       open  = "always", width = left_width,
       selectInput("new_select_case", "Select case",
                   choices = res$new_case, selected = res$new_case),
@@ -19,7 +19,6 @@ tab_scdf <- nav_panel(
                     placeholder = res$placeholder$variables, rows = 3),
       textInput("new_casename", "Case name", placeholder = res$placeholder$casename),
       
-      # Primary + secondary actions
       div(class = "d-grid gap-2",
           actionButton("new_save_case",   "Save case",    class = "btn-primary"),
           actionButton("new_remove_case", "Remove case",  class = "btn-light"),
@@ -103,8 +102,11 @@ tab_stats <- layout_sidebar(
     title = NULL,
     open  = "always", 
     width = 400,
-    input_switch("stats_batch", "Case-by-case analyses", FALSE),
-    selectInput("func", "Statistic", choices = res$choices$fn_stats),
+    h5("Select case"),
+    selectInput("stats_select_case", NULL, choices = "all"),
+    #input_switch("stats_batch", "Case-by-case analyses", FALSE),
+    h5("Statistic"),
+    selectInput("func", NULL, choices = res$choices$fn_stats),
     uiOutput("stats_arguments")
   ),
  
@@ -129,60 +131,82 @@ tab_stats <- layout_sidebar(
 )
 
 # ---------- Plot ----------
-tab_plot <- layout_sidebar(
-  sidebar = sidebar(
-    title = NULL, 
-    open  = "always", 
-    width = left_width,
-    textAreaInput("plot_arguments", "Arguments", value = "", rows = 5,
-                  placeholder = res$placeholder$plot_arguments),
-    selectInput("scplot_examples", "Stats templates",
-                choices = names(res$choices$scplot_examples)),
-    selectInput("scplot_templates_design", "Design templates",
-                choices = names(res$choices$scplot_templates_design)),
-    selectInput("scplot_templates_annotate", "Annotate templates",
-                choices = names(res$choices$scplot_templates_annotate)),
-    downloadButton("saveplot", "Save plot", class = "btn-success")
-  ),
-  mainPanel(
-    verbatimTextOutput("plot_syntax"),
-    plotOutput("plot_scdf", width = 1000, height = 800)
-  )
-)
+# tab_plot <- layout_sidebar(
+#   sidebar = sidebar(
+#     title = NULL, 
+#     open  = "always", 
+#     width = left_width,
+#     textAreaInput("plot_arguments", "Arguments", value = "", rows = 5,
+#                   placeholder = res$placeholder$plot_arguments),
+#     selectInput("scplot_examples", "Stats templates",
+#                 choices = names(res$choices$scplot_examples)),
+#     selectInput("scplot_templates_design", "Design templates",
+#                 choices = names(res$choices$scplot_templates_design)),
+#     selectInput("scplot_templates_annotate", "Annotate templates",
+#                 choices = names(res$choices$scplot_templates_annotate)),
+#     downloadButton("saveplot", "Save plot", class = "btn-success")
+#   ),
+#   mainPanel(
+#     verbatimTextOutput("plot_syntax"),
+#     plotOutput("plot_scdf", width = 1000, height = 800)
+#   )
+# )
 
 
-# ---------- Plot-new ----------
+# ---------- Plot
 
 card_plot_args <- card(
   card_body(
-    input_switch("scplot_legend", "Add legend", FALSE),
-    h4("Themes"),
-    selectInput("scplot_theme_1", NULL, choices = c(res$scplot_themes)),
+    h5("Select case"),
+    selectInput("scplot_select_case", NULL, choices = "all"),
+    
+    h5("Themes"),
+    selectInput("scplot_theme_1", NULL, choices = c(res$scplot_themes), selected = "default"),
     selectInput("scplot_theme_2", NULL, choices = c("None", res$scplot_themes)),
     selectInput("scplot_theme_3", NULL, choices = c("None", res$scplot_themes)),
-    sliderInput("scplot_text_size", "Textsize", min = 6, max = 25, value = 6),
-    selectInput("scplot_add", "Add variable", choices = "None")
+    input_switch("scplot_legend", "Add legend", FALSE),
+    h5("Textsize"),
+    sliderInput("scplot_text_size", NULL, min = 6, max = 25, value = 6),
+    
+    h5("Y-Axis"),
+    layout_columns(
+      col_widths = c(6, 6),
+      numericInput("scplot_ymin", "min", value = NA),
+      numericInput("scplot_ymax", "max", value = NA)
+    )
+    
   )
 )
 
 card_plot_args_2 <- card(
   card_body(
-    h4("Phase A lines"),
+    h5("Phase A"),
     input_switch("scplot_stats_trend_a", "Trend A", FALSE),
     input_switch("scplot_stats_mean_a", "Mean A", FALSE),
     input_switch("scplot_stats_median_a", "Median A", FALSE),
     input_switch("scplot_stats_max_a", "Max A", FALSE),
     input_switch("scplot_stats_min_a", "Min A", FALSE),
     
-    h4("Phase lines"),
+    h5("Each phase"),
     input_switch("scplot_stats_trend", "Trend", FALSE),
     input_switch("scplot_stats_mean", "Mean", FALSE),
     input_switch("scplot_stats_median", "Median", FALSE),
     
-    h4("Curves"),
+    h5("Curves"),
     input_switch("scplot_stats_moving", "Moving mean", FALSE),
     input_switch("scplot_stats_loess", "Smoothed line", FALSE),
+    h5("Add variable"),
+    selectInput("scplot_add", NULL, choices = "None"),
+    hr(),
+    h5("Export"),
+    layout_columns(
+      col_widths = c(4, 4, 4),
+      numericInput("width",  "Width",  value = 1600, min = 100, max = 4000),
+      numericInput("height", "Height", value = 1200, min = 100, max = 4000),
+      numericInput("dpi",    "Dpi",    value = 200,  min = 50,  max = 1200),
+    ),
     downloadButton("saveplot_2", "Save plot", class = "btn-success")
+    
   )
 )
 
@@ -195,16 +219,9 @@ card_plot_scdf_2 <- card(
 
 tab_plot_new <- layout_columns(
   col_widths = c(2, 2, 8),
-  heights_equal = "row",
-  # col 1
   card_plot_args,
-  # col 2
   card_plot_args_2,
-  # col 3: stack two half-height cards vertically
-  div(class = "d-flex flex-column gap-3 h-100",
-     # card_plot_syntax_2,
-      card_plot_scdf_2
-  )
+  card_plot_scdf_2
 )
 
 
@@ -309,9 +326,9 @@ tab_settings <- layout_columns(
     card_header("Plot"),
     card_body(
       textInput("prefix_output_plot", "Prefix save filename", value = "scplot"),
-      numericInput("width",  "Export width",  value = 1600, min = 100, max = 4000),
-      numericInput("height", "Export height", value = 1200, min = 100, max = 4000),
-      numericInput("dpi",    "Export dpi",    value = 200,  min = 50,  max = 1200)
+      #numericInput("width",  "Export width",  value = 1600, min = 100, max = 4000),
+      #numericInput("height", "Export height", value = 1200, min = 100, max = 4000),
+      #numericInput("dpi",    "Export dpi",    value = 200,  min = 50,  max = 1200)
     )
   ),
   card(
@@ -352,12 +369,13 @@ ui <- tagList(
     nav_menu("Data", tab_load, tab_scdf),
     nav_panel("Transform",  tab_transform),
     nav_panel("Stats",      tab_stats),
-    nav_panel("Plot",       tab_plot),
+    nav_panel("Plot",       tab_plot_new),
+    #nav_panel("Plot",       tab_plot),
     nav_panel("Power",      tab_power_test),
     nav_panel("Settings",   tab_settings),
     navbar_help,
     nav_spacer(),
-    nav_panel("Exp plot",       tab_plot_new),
+    
     nav_item(input_switch("darkmode", "Dark mode", value = FALSE))
   )
 )
