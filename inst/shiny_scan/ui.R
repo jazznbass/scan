@@ -122,7 +122,7 @@ tab_stats <- layout_sidebar(
       )),
       downloadButton("stats_save", label = "Save", class = "btn-success")
     ),
-    input_switch("stats_out", "HTML", FALSE),
+    input_switch("stats_out", "HTML", TRUE),
     conditionalPanel('input.stats_description', htmlOutput("stats_description")),
     verbatimTextOutput("stats_syntax"),
     conditionalPanel('!input.stats_out', verbatimTextOutput("stats_text")),
