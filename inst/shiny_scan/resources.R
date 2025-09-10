@@ -71,7 +71,7 @@ res$choices$scplot_templates_annotate <- c(
 
 res$scplot_themes <- names(scplot:::.scplot_themes)
 
-for(i in seq_along(themes)) {
+for(i in seq_along(res$scplot_themes)) {
   res$choices$scplot_templates_design[[paste0("Theme ", res$scplot_themes[i])]] <-
     paste0('set_theme("', res$scplot_themes[i], '")')
 }
