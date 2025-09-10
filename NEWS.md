@@ -1,3 +1,15 @@
+# scan 0.67.0
+
+## Reworked Shiny Scan app
+
+- Complete new design for the "plot" tab.
+
+## New features
+
+- `shinyscan()`: New argument theme (default is `cerulean`) that allows to run shinyscan in a different bootstrap 5 theme.
+  I like `shinyscan(theme = "united")`
+
+
 # scan 0.66.0
 
 ## New features
