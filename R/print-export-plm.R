@@ -35,10 +35,7 @@ print.sc_plm <- function(x,
   )
   
   if (x$ar > 0) {
-    cat(
-      "Correlated residuals up to autoregressions of lag",
-      x$ar, "are modelled\n\n"
-    )
+    cat("Autocorrelated residuals up to lag", x$ar, "were modeled\n\n")
   }
   
   cat(results$fit, "; AIC = ", results$aic, "\n\n", sep = "")

@@ -46,13 +46,19 @@ opts <- function(...) {
 .opt$tip <- list(
     "Visit the free online book on scan at: https://jazznbass.github.io/scan-Book/",
     "For information on citing scan, type citation(\"scan\").",
-    "Please cite splot (type 'citation(\"scplot\")' for more information.",
-    "Start the graphical user interface of scan with shinyscan().",
+    "Please cite splot (type 'citation(\"scplot\")' for more information).",
+    "Start the graphical user interface with shinyscan().",
+    "Start scans GUI by clicking 'Addins -> Launch Shiny-Scan'.",
+    "Type 'import_scdf()' to start the import helper.",
+    "Click 'Addins -> scdf Import' to start the import helper.",
     "Post a question or improvement idea on scan at https://github.com/jazznbass/scan/discussions",
     "Post issues at https://github.com/jazznbass/scan/issues",
     "Find the online help-pages at https://jazznbass.github.io/scan/",
     "The addon package 'scplot' provides sophisticated graphs for single-case data.",
-    "Set 'options(scan.export.engine = \"gt\")' and try out the improved table engine for 'export()'."
+    "Set 'options(scan.export.engine = \"gt\")' and try out the improved table engine for 'export()'.",
+    "Use shinyscan to analyse by providing an scdf as an argument, e.g. 'shinyscan(exampleAB)'.",
+    "Try out a different visual theme for shinyscan e.g. 'shinyscan(theme = \"united\")'.",
+    "Create APA-style html tables with 'export' (e.g. 'hplm(exampleAB) |> export()'."
   )
 
 .opt$startup_message <- paste0(

@@ -5,6 +5,7 @@
 #' @param scdf If you provide an *scdf* here, it will be loaded at startup.
 #' @param quiet If TRUE (default) does not report shiny messages in the console.
 #' @param browser c("external","viewer") 
+#' @param theme Bootstrap 5 theme. Default is "cerulean".
 #' @param \dots Further arguments passed to the `shiny::runApp()` function.
 #' @details This function launches a shiny application.
 #'   You need to have `scplot` and `shiny` installed.
@@ -14,7 +15,8 @@
 #' @export
 shinyscan <- function(scdf = NULL,
                       quiet = TRUE, 
-                      browser = c("external", "viewer"), 
+                      browser = c("external", "viewer"),
+                      theme = "cerulean",
                       ...) {
   
   browser <- browser[1]
@@ -34,6 +36,8 @@ shinyscan <- function(scdf = NULL,
   }
   
   browser <- match.arg(browser)
+  
+  options(scan.shiny.theme = theme)
   
   old_opt <- if (identical(browser, "external")) {
     options(shiny.launch.browser = TRUE)
