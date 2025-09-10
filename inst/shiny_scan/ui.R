@@ -1,5 +1,5 @@
 
-source("resources.R")  # assumes res$theme_light is a BS5 theme
+source("resources.R")
 
 left_width <- 400
 
@@ -150,6 +150,65 @@ tab_plot <- layout_sidebar(
   )
 )
 
+
+# ---------- Plot-new ----------
+
+card_plot_args <- card(
+  card_body(
+    input_switch("scplot_legend", "Add legend", FALSE),
+    h4("Themes"),
+    selectInput("scplot_theme_1", NULL, choices = c(res$scplot_themes)),
+    selectInput("scplot_theme_2", NULL, choices = c("None", res$scplot_themes)),
+    selectInput("scplot_theme_3", NULL, choices = c("None", res$scplot_themes)),
+    sliderInput("scplot_text_size", "Textsize", min = 6, max = 25, value = 6),
+    selectInput("scplot_add", "Add variable", choices = "None")
+  )
+)
+
+card_plot_args_2 <- card(
+  card_body(
+    h4("Phase A lines"),
+    input_switch("scplot_stats_trend_a", "Trend A", FALSE),
+    input_switch("scplot_stats_mean_a", "Mean A", FALSE),
+    input_switch("scplot_stats_median_a", "Median A", FALSE),
+    input_switch("scplot_stats_max_a", "Max A", FALSE),
+    input_switch("scplot_stats_min_a", "Min A", FALSE),
+    
+    h4("Phase lines"),
+    input_switch("scplot_stats_trend", "Trend", FALSE),
+    input_switch("scplot_stats_mean", "Mean", FALSE),
+    input_switch("scplot_stats_median", "Median", FALSE),
+    
+    h4("Curves"),
+    input_switch("scplot_stats_moving", "Moving mean", FALSE),
+    input_switch("scplot_stats_loess", "Smoothed line", FALSE),
+    downloadButton("saveplot_2", "Save plot", class = "btn-success")
+  )
+)
+
+card_plot_scdf_2 <- card(
+  card_body(
+    #verbatimTextOutput("scplot_syntax"),
+    plotOutput("scplot_plot")
+  ), height = "100vh"
+)
+
+tab_plot_new <- layout_columns(
+  col_widths = c(2, 2, 8),
+  heights_equal = "row",
+  # col 1
+  card_plot_args,
+  # col 2
+  card_plot_args_2,
+  # col 3: stack two half-height cards vertically
+  div(class = "d-flex flex-column gap-3 h-100",
+     # card_plot_syntax_2,
+      card_plot_scdf_2
+  )
+)
+
+
+
 # ---------- Power-test ----------
 
 card_design <- card(
@@ -283,23 +342,22 @@ navbar_help <- nav_menu(
 )
 
 # ---------- UI ----------
-ui <- page_navbar(
-  title = "scan",
-  id = "scan",
-  tags$head(
-    tags$link(rel = "icon", type = "image/png", href = "logo.png")
-  ),
-  theme = res$theme_light,
-  navbar_options = navbar_options(class = "bg-primary", theme = "dark"),
-  
-  nav_menu("Data", tab_load, tab_scdf),
-  nav_panel("Transform",  tab_transform),
-  nav_panel("Stats",      tab_stats),
-  nav_panel("Plot",       tab_plot),
-  nav_panel("Power",      tab_power_test),
-  nav_panel("Settings",   tab_settings),
-  navbar_help,
-  
-  nav_spacer(),
-  nav_item(input_switch("darkmode", "Dark mode", value = FALSE))
+ui <- tagList(
+  tags$head(tags$link(rel = "icon", type = "image/png", href = "logo.png")),
+  page_navbar(
+    title = "scan",
+    id = "scan",
+    theme = res$theme_light,
+    navbar_options = navbar_options(class = "bg-primary", theme = "dark"),
+    nav_menu("Data", tab_load, tab_scdf),
+    nav_panel("Transform",  tab_transform),
+    nav_panel("Stats",      tab_stats),
+    nav_panel("Plot",       tab_plot),
+    nav_panel("Power",      tab_power_test),
+    nav_panel("Settings",   tab_settings),
+    navbar_help,
+    nav_spacer(),
+    nav_panel("Exp plot",       tab_plot_new),
+    nav_item(input_switch("darkmode", "Dark mode", value = FALSE))
+  )
 )

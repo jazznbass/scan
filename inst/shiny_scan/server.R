@@ -13,6 +13,19 @@ server <- function(input, output, session) {
     session$setCurrentTheme(if (isTRUE(input$darkmode)) res$theme_dark else res$theme_light)
   }, ignoreInit = TRUE)
   
+  
+  observeEvent(input$scan, {
+    if (input$scan == "Exp plot") {
+      choices <- lapply(transformed(), function(x) names(x)) |> unlist() |> unique()
+      id <- which(!choices %in% scdf_attr(transformed())[c("var.values", "var.mt", "var.phase")] |> unlist())
+      updateSelectInput(
+        session, 
+        inputId = "scplot_add", 
+        choices = c("None", choices[id])
+      )
+    }
+  })
+  
   # scdf ----
   
   ## startup message ----
@@ -990,6 +1003,9 @@ server <- function(input, output, session) {
     }
   )
 
+  
+  
+  
   # Power test -----
   
   output$pt_results <- renderPrint(cat(res$placeholder$pt))
@@ -1105,5 +1121,85 @@ server <- function(input, output, session) {
       stopApp()
     }
   })
+  
+  # Plot new -----
+  
+  create_scplot_call <- reactive({
+    themes <- c(input$scplot_theme_1, input$scplot_theme_2, input$scplot_theme_3)
+    themes <- themes[which(themes != "None")]
+    call <- c(
+      "scplot(transformed())",
+      if (input$scplot_stats_mean_a) 'add_statline("mean", phase = "A")',
+      if (input$scplot_stats_median_a) 'add_statline("median", phase = "A")',
+      if (input$scplot_stats_max_a) 'add_statline("max", phase = "A")',
+      if (input$scplot_stats_min_a) 'add_statline("min", phase = "A")',
+      if (input$scplot_stats_trend) 'add_statline("trend")',
+      if (input$scplot_stats_mean) 'add_statline("mean")',
+      if (input$scplot_stats_median) 'add_statline("median")',
+      if (input$scplot_stats_moving) 'add_statline("moving mean")',
+      if (input$scplot_stats_loess) 'add_statline("loess", span = 0.4)',
+      if (input$scplot_stats_trend_a) 'add_statline("trendA")',
+      if (input$scplot_add != "None") paste0('set_dataline("', input$scplot_add, '")'),
+      
+      paste0("set_theme(", paste0("'", themes, "'", collapse = ", "), ")"),
+      if (input$scplot_text_size > 6) paste0('set_base_text(size = ', input$scplot_text_size, ')'),
+      if (input$scplot_legend) 'add_legend()'
+      
+    )
+    call <- paste0(call, collapse = " |>\n\t")
+    call
+  })
+  
+  
+  
+  
+  output$scplot_syntax <- renderPrint({
+
+    #call <- create_scplot_call()
+    #cat(call)
+  })
+  
+  ## Render plot new----
+
+  output$scplot_plot <- renderPlot(res = 120, {
+    req(inherits(my_scdf(), "scdf"))
+    
+    call <- paste0(create_scplot_call(), " |> print()")
+    
+    tryCatch(
+      out <- str2lang(call) |> eval(),
+      error = function(x) {
+        msg <- paste0(res$error_msg$plot, "\n\n", x)
+        out <- renderPrint(cat(msg))
+        
+      }
+    )
+    out
+  })
+  
+  ## Output Render plot new----
+  
+
+  ## Save Render plot new----
+  output$saveplot_2 <- downloadHandler(
+    filename = function() {
+      scdf <- transformed()
+      out <- paste(
+        input$prefix_output_plot,
+        sprintf("%02d", length(scdf)),
+        paste0(unique(scdf[[1]]$phase), collapse = ""),
+        format(Sys.time(), format = "%y%m%d-%H%M%S"),
+        sep = "-"
+      )
+      paste0(out, ".png")
+    },
+    content = function(file) {
+      ggplot2::ggsave(
+        file, render_plot_2(), width = input$width, height = input$height,
+        dpi = input$dpi, units = "px",  device = "png"
+      )
+    }
+  )
+  
   
 }
