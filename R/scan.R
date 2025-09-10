@@ -34,7 +34,8 @@
       full_width = FALSE, position = "left",
       latex_options = c("hold_position"),
       htmltable_class = "lightable-classic"
-    )
+    ),
+    scan.shiny.theme = "cerulean"
   )
   
   toset <- !(names(op_scan) %in% names(op))
