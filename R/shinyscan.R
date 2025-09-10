@@ -21,6 +21,8 @@ shinyscan <- function(scdf = NULL,
   
   browser <- browser[1]
   
+  
+  
   miss <- c()
   if (!requireNamespace("scplot", quietly = TRUE)) miss <- c(miss, "scplot")
   if (!requireNamespace("shiny",  quietly = TRUE)) miss <- c(miss,  "shiny")
@@ -36,6 +38,13 @@ shinyscan <- function(scdf = NULL,
   }
   
   browser <- match.arg(browser)
+  
+  if (!theme %in% bslib::bootswatch_themes()) {
+    message(
+      theme, " is not a valid theme. Use one of these: ", 
+      paste0(bslib::bootswatch_themes(), collapse = ", "))
+    theme <- "cerulean"
+  }
   
   options(scan.shiny.theme = theme)
   
