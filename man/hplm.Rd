@@ -195,11 +195,11 @@ Leidig2018 |>
 }
 \seealso{
 Other regression functions: 
-\code{\link{autocorr}()},
 \code{\link{bplm}()},
-\code{\link{corrected_tau}()},
 \code{\link{mplm}()},
 \code{\link{plm}()},
+\code{\link{print.sc_ac}()},
+\code{\link{print.sc_bctau}()},
 \code{\link{trend}()}
 }
 \author{

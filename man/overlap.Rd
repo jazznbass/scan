@@ -67,13 +67,13 @@ overlap(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 }
 \seealso{
 Other overlap functions: 
-\code{\link{cdc}()},
 \code{\link{ird}()},
 \code{\link{nap}()},
 \code{\link{pand}()},
 \code{\link{pem}()},
 \code{\link{pet}()},
 \code{\link{pnd}()},
+\code{\link{print.sc_cdc}()},
 \code{\link{tau_u}()}
 }
 \author{

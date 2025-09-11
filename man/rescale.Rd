@@ -37,7 +37,7 @@ Other data manipulation functions:
 \code{\link{as_scdf}()},
 \code{\link{fill_missing}()},
 \code{\link{moving_median}()},
-\code{\link{outlier}()},
+\code{\link{print.sc_outlier}()},
 \code{\link{ranks}()},
 \code{\link{scdf}()},
 \code{\link{select_cases}()},

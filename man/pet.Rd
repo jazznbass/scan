@@ -56,13 +56,13 @@ pet(dat, ci = .99)
 }
 \seealso{
 Other overlap functions: 
-\code{\link{cdc}()},
 \code{\link{ird}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},
 \code{\link{pem}()},
 \code{\link{pnd}()},
+\code{\link{print.sc_cdc}()},
 \code{\link{tau_u}()}
 }
 \author{

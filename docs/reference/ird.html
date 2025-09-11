@@ -45,7 +45,10 @@ Parker and colleagues (2011).</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ird</span><span class="op">(</span><span class="va">data</span>, <span class="va">dvar</span>, <span class="va">pvar</span>, decreasing <span class="op">=</span> <span class="cn">FALSE</span>, phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'sc_ird'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'sc_ird'</span></span>
+<span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span><span class="va">object</span>, caption <span class="op">=</span> <span class="cn">NA</span>, footnote <span class="op">=</span> <span class="cn">NA</span>, filename <span class="op">=</span> <span class="cn">NA</span>, round <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -91,6 +94,29 @@ is <code>phases = c(1,2)</code>.</p></dd>
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Further arguments passed to the function.</p></dd>
 
+
+<dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
+<dd><p>An scdf or an object exported from a scan function.</p></dd>
+
+
+<dt id="arg-caption">caption<a class="anchor" aria-label="anchor" href="#arg-caption"></a></dt>
+<dd><p>Character string with table caption. If left NA (default) a
+caption will be created based on the exported object.</p></dd>
+
+
+<dt id="arg-footnote">footnote<a class="anchor" aria-label="anchor" href="#arg-footnote"></a></dt>
+<dd><p>Character string with table footnote. If left NA (default) a
+footnote will be created based on the exported object.</p></dd>
+
+
+<dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
+<dd><p>String containing the file name. If a filename is given the
+output will be written to that file.</p></dd>
+
+
+<dt id="arg-round">round<a class="anchor" aria-label="anchor" href="#arg-round"></a></dt>
+<dd><p>Integer passed to the digits argument used to round values.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -106,6 +132,7 @@ the average of the irds for each case.</p>
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
 
 <ul><li><p><code>print(sc_ird)</code>: Print results</p></li>
+<li><p><code>export(sc_ird)</code>: Export results to html</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -123,13 +150,13 @@ https://doi.org/10.1037/met0000179</p>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other overlap functions:
-<code><a href="cdc.html">cdc</a>()</code>,
 <code><a href="nap.html">nap</a>()</code>,
 <code><a href="overlap.html">overlap</a>()</code>,
 <code><a href="pand.html">pand</a>()</code>,
 <code><a href="pem.html">pem</a>()</code>,
 <code><a href="pet.html">pet</a>()</code>,
 <code><a href="pnd.html">pnd</a>()</code>,
+<code><a href="cdc.html">print.sc_cdc</a>()</code>,
 <code><a href="tau_u.html">tau_u</a>()</code></p></div>
     </div>
 

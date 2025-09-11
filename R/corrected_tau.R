@@ -128,13 +128,13 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   
   
   out <- list(
-    tau = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > 0.05) x$tau[2] else x$tau[3]), 
-    p = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > 0.05) x$p[2] else x$p[3]), 
+    tau = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > alpha) x$tau[2] else x$tau[3]), 
+    p = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > alpha) x$p[2] else x$p[3]), 
     corrected_tau = x,
     auto_tau = sapply(x, function(x) x$tau[1]),
     tau_corrected = sapply(x, function(x) x$tau[3]),
     tau_uncorrected = sapply(x, function(x) x$tau[2]),    
-    correction = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > 0.05) FALSE else TRUE),
+    correction = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > alpha) FALSE else TRUE),
     alpha = alpha,
     continuity = continuity,
     repeated   = repeated,

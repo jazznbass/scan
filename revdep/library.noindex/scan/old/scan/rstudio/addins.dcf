@@ -1,5 +1,11 @@
-Name: Shiny-Scan
-Description: A shiny app for scan
+Name: Launch Shiny-Scan
+Description: Start the scan Shiny app
 Binding: shinyscan
-Interactive: false
+Interactive: true
+
+Name: scdf Import
+Description: Import single-case data and map columns to scdf.
+Binding: import_scdf
+Interactive: true
+
 

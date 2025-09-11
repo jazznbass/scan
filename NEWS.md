@@ -8,7 +8,7 @@
 
 - `shinyscan()`: New argument theme (default is `cerulean`) that allows to run shinyscan in a different bootstrap 5 theme.
   I like `shinyscan(theme = "united")`
-
+- `export()` methods for: `cdc()`, `corrected_tau()`, `rand_test()`, `ird()`, `outlier()`, `autocorr()`.
 
 # scan 0.66.0
 

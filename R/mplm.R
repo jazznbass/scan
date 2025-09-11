@@ -45,11 +45,17 @@ mplm <- function(data, dvar, mvar, pvar,
                  na.action = na.omit, 
                  ...) {
  
+  # set attributes to arguments else set to defaults of scdf
+  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
+  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
+  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
+  
   check_args(
     by_call(model),
     by_call(contrast),
     by_call(contrast_level),
-    by_call(contrast_slope)
+    by_call(contrast_slope),
+    is_true(length(dvar) > 1, "At least two dependent variables must be defined in the argument 'dvar'.")
   )
   model <- model[1]
   contrast <- contrast[1]
@@ -65,11 +71,6 @@ mplm <- function(data, dvar, mvar, pvar,
   if (is.na(contrast_level)) contrast_level <- contrast
   if (is.na(contrast_slope)) contrast_slope <- contrast
   
-  # set attributes to arguments else set to defaults of scdf
-  if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
-  if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
-  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
-
   data <- .prepare_scdf(data)
 
   N <- length(data)

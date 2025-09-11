@@ -86,13 +86,13 @@ https://doi.org/10.1037/met0000179
 }
 \seealso{
 Other overlap functions: 
-\code{\link{cdc}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},
 \code{\link{pem}()},
 \code{\link{pet}()},
 \code{\link{pnd}()},
+\code{\link{print.sc_cdc}()},
 \code{\link{tau_u}()}
 }
 \concept{overlap functions}

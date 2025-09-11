@@ -146,11 +146,11 @@ bplm(exampleAB_50, random_level = TRUE, nitt = 5000)
 }
 \seealso{
 Other regression functions: 
-\code{\link{autocorr}()},
-\code{\link{corrected_tau}()},
 \code{\link{hplm}()},
 \code{\link{mplm}()},
 \code{\link{plm}()},
+\code{\link{print.sc_ac}()},
+\code{\link{print.sc_bctau}()},
 \code{\link{trend}()}
 }
 \author{

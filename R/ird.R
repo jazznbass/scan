@@ -105,6 +105,9 @@ export.sc_ird <- function(object,
     footnote = footnote,
     ...
   )
+  
+  if (!is.na(filename)) .save_export(table, filename)
+  
   table
 
 }  

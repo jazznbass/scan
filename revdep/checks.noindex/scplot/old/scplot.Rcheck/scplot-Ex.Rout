@@ -130,7 +130,7 @@ Type 'q()' to quit R.
 > ### ** Examples
 > 
 > library(scan)
-[34mscan 0.65.1 (2025-07-13)
+[34mscan 0.66.0 (2025-09-02)
 [31mSet 'options(scan.export.engine = "gt")' and try out the improved table engine for 'export()'.
 > p1 <- scplot(exampleA1B1A2B2$Moritz) |> add_marks(positions = c(1,5,10,14))
 > p1 <- scplot(Huber2014) |> add_marks(positions = outlier(Huber2014))
@@ -315,7 +315,7 @@ Possible effects are:
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.665 0.053 1.885 0 0 
+Time elapsed:  1.612 0.051 1.676 0 0 
 > grDevices::dev.off()
 null device 
           1 

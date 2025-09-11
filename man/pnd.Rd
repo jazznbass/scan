@@ -41,13 +41,13 @@ pnd(GruenkeWilbert2014)
 }
 \seealso{
 Other overlap functions: 
-\code{\link{cdc}()},
 \code{\link{ird}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},
 \code{\link{pem}()},
 \code{\link{pet}()},
+\code{\link{print.sc_cdc}()},
 \code{\link{tau_u}()}
 }
 \author{
