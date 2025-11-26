@@ -16,6 +16,7 @@ navbar:
     - news
     - scan-book
     - scplot
+    - videos
     right: github
   components:
     home:
@@ -38,6 +39,9 @@ navbar:
     scplot:
       text: scplot
       href: https://jazznbass.github.io/scplot/
+    videos:
+      text: Tutorial videos
+      href: https://www.youtube.com/playlist?list=PLsolivUa9sHI_1cRXPCEF4yfaT1KOVXNB
 
 reference:
 - title: Coding and manipulation of single-case data frames
