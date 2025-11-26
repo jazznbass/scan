@@ -15,6 +15,21 @@ server <- function(input, output, session) {
   
   
   observeEvent(input$scan, {
+    
+    if (input$scan == "Transform") {
+      scdf <- transformed()
+      req(inherits(scdf, "scdf"))
+      choices <- lapply(scdf, function(x) names(x)) |> unlist() |> unique()
+      
+      id <- which(!choices %in% scdf_attr(scdf)[c("var.mt", "var.phase")] |> unlist())
+      choices <- c(scdf_attr(scdf)[["var.values"]], choices[id])
+      updateSelectInput(
+        session, 
+        inputId = "setdvar", 
+        choices = choices
+      )
+    }
+    
     if (input$scan == "Plot") {
       choices <- lapply(transformed(), function(x) names(x)) |> unlist() |> unique()
       id <- which(!choices %in% scdf_attr(transformed())[c("var.values", "var.mt", "var.phase")] |> unlist())

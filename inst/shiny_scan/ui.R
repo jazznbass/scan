@@ -83,7 +83,7 @@ tab_transform <- layout_sidebar(
     ),
     textInput("subset", "Filter measurements", placeholder = 'e.g.: mt > mean(values[phase == "A"])'),
     textAreaInput("transform", "Transform variables", rows = 5, placeholder = res$placeholder$transform),
-    textInput("setdvar", "Set dependent variable", placeholder = "e.g.: depression"),
+    selectInput("setdvar", "Set dependent variable", choices = ""),
     downloadButton("transformed_save", "Save transformed scdf", class = "btn-success")
   ),
   mainPanel(
@@ -167,15 +167,15 @@ card_plot_args <- card(
     input_switch("scplot_legend", "Add legend", FALSE),
     h5("Textsize"),
     sliderInput("scplot_text_size", NULL, min = 6, max = 25, value = 6),
+    h5("Axis"),
+    numericInput("scplot_xinc", "x increment", value = NA),
     
-    h5("Y-Axis"),
+    
     layout_columns(
       col_widths = c(6, 6),
-      numericInput("scplot_ymin", "min", value = NA),
-      numericInput("scplot_ymax", "max", value = NA)
-    ),
-    h5("X-Axis"),
-    numericInput("scplot_xinc", "increment", value = NA)
+      numericInput("scplot_ymin", "y min", value = NA),
+      numericInput("scplot_ymax", "y max", value = NA)
+    )
   )
 )
 
