@@ -23,6 +23,7 @@ fill_missing            Replacing missing measurement times in
                         single-case data
 hplm                    Hierarchical piecewise linear model / piecewise
                         regression
+import_scdf             Import scdf – RStudio Addin
 ird                     IRD - Improvement rate difference
 is.scdf                 scdf objects Tests for objects of type "scdf"
 moving_median           Transform every single case of a single case

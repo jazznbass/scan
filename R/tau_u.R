@@ -94,11 +94,6 @@ tau_u <- function(data, dvar, pvar,
     within(ci, 0, 1)
   )
   
-  method <- method[1]
-  tau_method <- tau_method[1]
-  meta_weight_method <- meta_weight_method[1]
-  ci_method <- ci_method[1]
-  
   if (method == "parker") {
     #message("method = 'parker' ignores the tau_method argument.")
     tau_method <- "a"

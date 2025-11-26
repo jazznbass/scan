@@ -61,9 +61,16 @@ check_args <- function(...) {
     msg <- paste0("'", match, "'")
     if (length(match) == 2) msg <- paste0(msg, collapse = " or ")
     if (length(match) > 2) msg <- paste0("one of ", paste0(msg, collapse = ", "))
+    arg_name <- as.character(match.call()[2])
+    if (identical(arg, match)) {
+      caller_env <- parent.frame(n = 4)
+      caller_env[[arg_name]] <- arg[1]
+      return(list(pass = TRUE))
+    }
+  
     env$is_true(
       arg %in% match, 
-      "Argument ", as.character(match.call()[2]), " is not ", msg, "."
+      "Argument ", arg_name, " is not ", msg, "."
     )
   }
   

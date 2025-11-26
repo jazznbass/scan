@@ -87,13 +87,10 @@ pand <- function(data, dvar, pvar,
                  phases = c(1, 2),
                  method = c("sort", "minimum")) {
   
-  
   check_args(
-    
     by_call(method)
   )
-  method <- method[1]
-
+  
   # set default attributes
   if (missing(dvar)) dvar <- dv(data)
   if (missing(pvar)) pvar <- phase(data)

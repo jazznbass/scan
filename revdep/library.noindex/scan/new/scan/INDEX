@@ -4,15 +4,12 @@ anova.sc_plm            ANOVA Table for Piecewise Linear Models
 as.data.frame.scdf      Creating a long format data frame from several
                         single-case data frames (scdf).
 as_scdf                 as_scdf
-autocorr                Autocorrelation for single-case data
 batch_apply             Apply a function to each element in an scdf.
 between_smd             Between-Case Standardized Mean Difference
 bplm                    Bayesian Piecewise Linear Model
-cdc                     Conservative Dual-Criterion Method
 coef.sc_plm             Extract coefficients from plm/hplm objects
 combine                 Combine single-case data frames
 convert                 Convert
-corrected_tau           Baseline corrected tau
 describe                Descriptive statistics for single-case data
 design                  Generate a single-case design matrix
 estimate_design         Estimate single-case design
@@ -33,7 +30,6 @@ mplm                    Multivariate Piecewise linear model / piecewise
 na.omit.scdf            scdf objects Removes any row with a missing
                         value
 nap                     Nonoverlap of all Pairs
-outlier                 Handling outliers in single-case data
 overlap                 Overlap indices for single-case data
 pand                    Percentage of all non-overlapping data
 pem                     Percent exceeding the median
@@ -43,8 +39,12 @@ plot.scdf               (Deprecated) Plot single-case data
 plot_rand               Plot random distribution
 pnd                     Percentage of non-overlapping data
 power_test              Empirical power analysis for single-case data
+print.sc_ac             Autocorrelation for single-case data
+print.sc_bctau          Baseline corrected tau
+print.sc_cdc            Conservative Dual-Criterion Method
+print.sc_outlier        Handling outliers in single-case data
+print.sc_rand           Randomization Tests for single-case data
 print.scdf              Print an scdf
-rand_test               Randomization Tests for single-case data
 random_scdf             Single-case data generator
 rci                     Reliable change index
 read_scdf               Load single-case data from files

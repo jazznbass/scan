@@ -123,11 +123,6 @@ plm <- function(data, dvar, pvar, mvar,
     at_least(AR, 0)
   )
   
-  model <- model[1]
-  contrast <- contrast[1]
-  contrast_level <- contrast_level[1]
-  contrast_slope <- contrast_slope[1]
-  
   # set defaults attributes
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar

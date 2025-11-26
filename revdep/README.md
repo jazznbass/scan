@@ -10,18 +10,17 @@
 |collate  |en_US.UTF-8                                                                                      |
 |ctype    |en_US.UTF-8                                                                                      |
 |tz       |Europe/Berlin                                                                                    |
-|date     |2025-08-31                                                                                       |
+|date     |2025-09-11                                                                                       |
 |rstudio  |2025.05.0+496 Mariposa Orchid (desktop)                                                          |
 |pandoc   |3.4 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/aarch64/ (via rmarkdown) |
 |quarto   |1.7.31 @ /usr/local/bin/quarto                                                                   |
 
 # Dependencies
 
-|package  |old    |new    |Δ  |
-|:--------|:------|:------|:--|
-|scan     |0.65.1 |0.66.0 |*  |
-|evaluate |NA     |1.0.4  |*  |
-|later    |NA     |1.4.3  |*  |
+|package |old    |new    |Δ  |
+|:-------|:------|:------|:--|
+|scan    |0.66.0 |0.67.0 |*  |
+|ggplot2 |NA     |3.5.2  |*  |
 
 # Revdeps
 

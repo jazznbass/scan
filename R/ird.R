@@ -49,10 +49,12 @@ ird <- function(data, dvar, pvar,
   out <- list(
     ird = ird,
     decreasing = decreasing,
-    phases = recombined_data$phases
+    phases = recombined_data$phases,
+    n_cases = length(data)
   )
   
   class(out) <- "sc_ird"
+  attributes(out)[opts("phase", "dv")] <- list(pvar, dvar)
   out
   
 }
@@ -66,21 +68,46 @@ ird <- function(data, dvar, pvar,
 #' 
 print.sc_ird <- function(x, digits = 3, ...) {
   cat("Improvement rate difference =",  round(x$ird, digits))
-  #ird <- x$ird |> 
-  #  lapply(function(x) c(ird = x$ird, x$improve_rates, x$nonoverlaps)) 
-  #ird <- do.call(rbind, ird) |> 
-  #  round(digits) |> 
-  #  as.data.frame()
-  #names(ird) <- c(
-  #  "IRD", 
-  #  paste0("Improve rate phase ", c("A", "B")), 
-  #  paste0("Non-overlap phase ", c("A", "B"))
-  #)
-
-  #cat(round(x$ird, digits), ...)
-  #cat("\n")
   if (x$decreasing) {
     cat("\nAssumed decreasing values in Phase B.\n\n")
   }
 }
 
+#' @describeIn ird Export results to html
+#' @order 3
+#' @inheritParams export
+#' @export
+export.sc_ird <- function(object, 
+                           caption = NA, 
+                           footnote = NA, 
+                           filename = NA,
+                           round = 3,
+                           ...) {
+  
+  if (is.na(caption)) {
+    caption <- paste0(
+      "Improvement rate difference for variable '", 
+      attr(object, opt("dv")),  "'"
+    )
+  }
+  
+  if (is.na(footnote)) {
+    if (object$decreasing) {
+      footnote <- "Assumed decreasing values in Phase B"
+    }
+  }
+  
+  
+  out <- data.frame("IRD" = round(object$ird, round))
+  table <- .create_table(
+    out,
+    caption = caption,
+    footnote = footnote,
+    ...
+  )
+  
+  if (!is.na(filename)) .save_export(table, filename)
+  
+  table
+
+}  

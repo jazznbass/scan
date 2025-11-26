@@ -129,7 +129,6 @@ rand_test <- function (data, dvar, pvar,
     
     by_call(statistic)
   )
-  statistic <- statistic[1]
   
   if(!is.null(seed)) set.seed(seed)
   

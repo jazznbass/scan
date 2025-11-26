@@ -3,11 +3,14 @@
 \name{ird}
 \alias{ird}
 \alias{print.sc_ird}
+\alias{export.sc_ird}
 \title{IRD - Improvement rate difference}
 \usage{
 ird(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2))
 
 \method{print}{sc_ird}(x, digits = 3, ...)
+
+\method{export}{sc_ird}(object, caption = NA, footnote = NA, filename = NA, round = 3, ...)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
@@ -33,6 +36,19 @@ is \code{phases = c(1,2)}.}
 \item{digits}{The minimum number of significant digits to be use.}
 
 \item{...}{Further arguments passed to the function.}
+
+\item{object}{An scdf or an object exported from a scan function.}
+
+\item{caption}{Character string with table caption. If left NA (default) a
+caption will be created based on the exported object.}
+
+\item{footnote}{Character string with table footnote. If left NA (default) a
+footnote will be created based on the exported object.}
+
+\item{filename}{String containing the file name. If a filename is given the
+output will be written to that file.}
+
+\item{round}{Integer passed to the digits argument used to round values.}
 }
 \description{
 \code{ird()} calculates the robust improvement rate difference as proposed by
@@ -51,6 +67,8 @@ the average of the irds for each case.
 \itemize{
 \item \code{print(sc_ird)}: Print results
 
+\item \code{export(sc_ird)}: Export results to html
+
 }}
 \references{
 Parker, R. I., Vannest, K. J., & Brown, L. (2009). The
@@ -68,13 +86,13 @@ https://doi.org/10.1037/met0000179
 }
 \seealso{
 Other overlap functions: 
-\code{\link{cdc}()},
 \code{\link{nap}()},
 \code{\link{overlap}()},
 \code{\link{pand}()},
 \code{\link{pem}()},
 \code{\link{pet}()},
 \code{\link{pnd}()},
+\code{\link{print.sc_cdc}()},
 \code{\link{tau_u}()}
 }
 \concept{overlap functions}

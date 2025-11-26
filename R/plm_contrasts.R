@@ -21,9 +21,6 @@ add_dummy_variables <- function(scdf,
     by_call(contrast_level),
     by_call(contrast_slope)
   )
-  model <- model[1]
-  contrast_level <- contrast_level[1]
-  contrast_slope <- contrast_slope[1]
   
   out <- .add_dummy_variables(
     data = scdf, 

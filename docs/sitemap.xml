@@ -48,6 +48,11 @@
 <url><loc>https://jazznbass.github.io/scan/reference/pnd.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/power_test.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/print.sc.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/print.sc_ac.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/print.sc_bctau.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/print.sc_cdc.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/print.sc_outlier.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/print.sc_rand.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/print.scdf.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/rand_test.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/random_scdf.html</loc></url>

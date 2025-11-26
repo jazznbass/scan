@@ -159,6 +159,7 @@ export_table_gt <- function(x,
                             cols_label = NULL,
                             decimals = NULL,
                             prefix_title = getOption("scan.export.title.prefix"),
+                            fmt_markdown = FALSE,
                             ...) {
           
   
@@ -221,7 +222,7 @@ export_table_gt <- function(x,
   if (!is.null(footnote) && !identical(footnote, "") && !identical(footnote, NA)) 
     out <- gt::tab_footnote(out, gt::md(footnote))
   if (!is.null(decimals)) out <- gt::fmt_number(out, decimals = decimals)
-
+  if (fmt_markdown) out <- gt::fmt_markdown(out, columns = everything())
   out
 }
 

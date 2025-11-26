@@ -1,3 +1,9 @@
+# scan 0.67.1
+
+## Fix
+
+- export function for `plm()` does not throw an error when AIC can not be computed.
+
 # scan 0.67.0
 
 ## Reworked Shiny Scan app
@@ -8,7 +14,7 @@
 
 - `shinyscan()`: New argument theme (default is `cerulean`) that allows to run shinyscan in a different bootstrap 5 theme.
   I like `shinyscan(theme = "united")`
-
+- `export()` methods for: `cdc()`, `corrected_tau()`, `rand_test()`, `ird()`, `outlier()`, `autocorr()`.
 
 # scan 0.66.0
 

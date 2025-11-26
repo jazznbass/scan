@@ -21,6 +21,7 @@ bplm	bplm
 byHeart2011	example_data
 c.scdf	combine
 cdc	cdc
+center_at	transform.scdf
 coef.sc_hplm	hplm
 coef.sc_plm	coef.sc_plm
 combine	combine
@@ -51,6 +52,7 @@ example_data	example_data
 export	export
 export.scdf	export
 export.scdf_summary	export
+export.sc_bcsmd	between_smd
 export.sc_bplm	bplm
 export.sc_desc	export
 export.sc_hplm	hplm
@@ -76,6 +78,7 @@ GruenkeWilbert2014	example_data
 hplm	hplm
 Huber2014	example_data
 Huitema2000	example_data
+import_scdf	import_scdf
 ird	ird
 is.scdf	is.scdf
 Leidig2018	example_data
@@ -156,6 +159,7 @@ select_cases	select_cases
 select_phases	select_phases
 set_dvar	set_vars
 set_mvar	set_vars
+set_na_at	transform.scdf
 set_pvar	set_vars
 set_vars	set_vars
 shift	shift
