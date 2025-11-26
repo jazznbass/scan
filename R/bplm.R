@@ -62,9 +62,6 @@ bplm <- function(data, dvar, pvar, mvar,
     by_call(contrast_level),
     by_call(contrast_slope)
   )
-  model <- model[1]
-  contrast_level <- contrast_level[1]
-  contrast_slope <- contrast_slope[1]
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar

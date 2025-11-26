@@ -149,8 +149,6 @@ design <- function(n = 1,
   if (is.list(rtt)) rtt <- unlist(rtt)
   if (!is.list(phase_design)) phase_design <- as.list(phase_design)
     
-  distribution <- distribution[1]
-  
   ## intial checks ----
   check_args(
     as_deprecated("m" = "start_value", "phase.design" = "phase_design", 

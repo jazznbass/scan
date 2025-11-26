@@ -49,8 +49,6 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     is_logical(repeated)
   )
   
-  tau_method <- tau_method[1]
-
   # prepare scdf ----
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar

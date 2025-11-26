@@ -63,8 +63,6 @@ between_smd <- function(data,
     is_logical(include_residuals)
   )
   
-  method <- method[1]
-  
   models <- list()
   if (inherits(data, "sc_hplm")) {
     if (data$N == 1) {

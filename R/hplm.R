@@ -97,9 +97,6 @@ hplm <- function(data, dvar, pvar, mvar,
         "unequal_variances and weights arguments defined at the same time."
     )
   )
-  model <- model[1]
-  method <- method[1]
-  contrast <- contrast[1]
   
   if (model == "JW") {
     contrast_level <- "preceding"
