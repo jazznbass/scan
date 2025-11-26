@@ -155,6 +155,7 @@ export.sc_plm <- function(object,
     FALSE else TRUE
   
   out$aic <- x$full.model$aic
+  if (!is.numeric(out$aic)) out$aic <- NA
   if (x$family == "poisson" || x$family == "binomial") {
     chi <- x$full$null.deviance - x$full$deviance
     df <- x$full$df.null - x$full$df.residual

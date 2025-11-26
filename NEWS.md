@@ -1,3 +1,9 @@
+# scan 0.67.1
+
+## Fix
+
+- export function for `plm()` does not throw an error when AIC can not be computed.
+
 # scan 0.67.0
 
 ## Reworked Shiny Scan app
