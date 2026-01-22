@@ -10,6 +10,7 @@
 #' follows the formula suggested by Pustejovsky (2019). For a multiple case
 #' design, ird is based on the overall improvement rate of all cases which is
 #' the average of the irds for each case.
+#' 
 #' @inheritParams .inheritParams
 #' @family overlap functions
 #' @references Parker, R. I., Vannest, K. J., & Brown, L. (2009). The
@@ -30,6 +31,9 @@
 ird <- function(data, dvar, pvar,
                 decreasing = FALSE,
                 phases = c(1, 2)) {
+  check_args(
+    by_class(decreasing, "logical")
+  )
   
   # set attributes to arguments else set to defaults of scdf
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
@@ -111,3 +115,4 @@ export.sc_ird <- function(object,
   table
 
 }  
+
