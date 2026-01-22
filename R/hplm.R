@@ -1,6 +1,39 @@
-#' Hierarchical piecewise linear model / piecewise regression
+#' Hierarchical piecewise linear model / piecewise regression for multiple cases
 #'
-#' The [hplm()] function computes a hierarchical piecewise regression model.
+#' The [hplm()] function computes a hierarchical piecewise regression model. It
+#' extends the standard piecewise regression model to multiple cases by
+#' estimating fixed and random effects. The function uses the `lme` function of
+#' the `nlme` package to fit linear mixed-effects models. The model can include
+#' random intercepts and random slopes for level, trend, and treatment effects.
+#' Additionally, it allows for the inclusion of autoregressive structures and
+#' unequal variances across phases. The function also provides options for
+#' likelihood ratio tests to compare models with and without random slope
+#' effects, as well as the calculation of intraclass correlations (ICC) to
+#' assess the proportion of variance attributable to between-case differences.
+#' This function is particularly useful for analyzing data from multiple
+#' single-case experimental designs (SCEDs) where observations are nested within
+#' cases.
+#'
+#' @section Model specification: The fixed effects part of the model can be
+#'   specified using the `fixed` argument, while the random effects part can be
+#'   specified using the `random` argument. If not provided, default formulas
+#'   based on the specified model type (e.g., "B&L-B") are created. The function
+#'   also allows for the inclusion of autoregressive structures through the `ar`
+#'   argument and unequal variances across phases through the
+#'   `unequal_variances` argument.
+#' @section Random slopes: By setting the `random.slopes` argument to TRUE, the
+#'   model will include random slope effects for level, trend, and treatment
+#'   effects. This allows for individual differences in how cases respond to
+#'   these effects.
+#' @section Likelihood ratio tests: If the `lr.test` argument is set to TRUE,
+#'   the function will perform likelihood ratio tests to compare models with and
+#'   without random slope effects. This helps to determine whether including
+#'   random slopes significantly improves model fit.
+#' @section Intraclass correlation: If the `ICC` argument is set to TRUE, the
+#'   function will calculate the intraclass correlation coefficient (ICC) to
+#'   assess the proportion of variance attributable to between-case differences.
+#'   This provides insight into the degree of similarity among observations
+#'   within the same case.
 #'
 #' @inheritParams .inheritParams
 #' @order 1
@@ -24,7 +57,9 @@
 #'   based on the method provide in the model argument (e.g., "B&L-B"). The
 #'   formula can be changed for example to include further L1 or L2 variables
 #'   into the regression model.
-#' @param random The random part of the model.
+#' @param random The random part of the model. Defaults to a random intercept
+#'   model. The formula can be changed to include random slope effects for
+#'   level, trend, and treatment effects.
 #' @param ar Maximal lag of autoregression. Modelled based on the
 #'   Autoregressive-Moving Average (ARMA) function.
 #' @param unequal_variances Logical. If set TRUE, estimations are weighted by
@@ -36,14 +71,15 @@
 #'   have a column named 'cases' with the names of the cases the Level 2
 #'   variables belong to.
 #' @param ... Further arguments passed to the lme function.
-#' @return |  |  | | --- | --- | | `model` | List containing infromation about
-#' the applied model. | | `N` | Number of single-cases. | | `formula` |A list
-#' containing the fixed and the random formulas of the hplm model. | | `hplm` |
-#' Object of class lme contaning the multilevel model. | | `model.0` | Object of
-#' class lme containing the zero model. | | `ICC` | List containing intraclass
-#' correlation and test parameters. | | `model.without` | Object of class gls
-#' containing the fixed effect model. | | `contrast` | List with contrast
-#' definitions. |
+#' @return An object of class `sc_hplm`.
+#' - `model` | List containing infromation about
+#' - `N` | Number of single-cases. 
+#' - `formula` | A list containing the fixed and the random formulas of the hplm model.
+#' - `hplm` | Object of class lme contaning the multilevel model. 
+#' - `model.0` | Object of class lme containing the zero model. 
+#' - `ICC` | List containing intraclass correlation and test parameters. 
+#' - `model.without` | Object of class gls containing the fixed effect model. 
+#' - `contrast` | List with contrast definitions.
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @examples

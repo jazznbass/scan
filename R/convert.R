@@ -1,15 +1,21 @@
-#' Convert
+#' Convert scdf to R code
 #'
-#' Converts an scdf object into R code
+#' Converts an scdf object into R code that can be used to recreate the object.
+#' 
+#' This function is useful for exporting scdf objects for sharing or
+#' documentation purposes. The generated R code can be sourced to recreate the
+#' original scdf object.
 #'
 #' @inheritParams .inheritParams
-#' @param file A filename for exporting the syntax.
+#' @param file A filename for exporting the syntax. If an empty string (default),
+#'  the syntax is not written to a file.
 #' @param study_name Character string. Name of the study object.
 #' @param case_name Character string. Name of the scdf objects.
 #' @param inline If TRUE, phase definition is in an online version.
 #' @param indent Integer. Indentation.
-#' @param silent If TRUE, syntax is not printed to the console
+#' @param silent If TRUE, syntax is not printed to the console.
 #' @return Returns a string (invisible).
+#' @author Juergen Wilbert
 #' @keywords io
 #' @family io-functions
 #' @examples

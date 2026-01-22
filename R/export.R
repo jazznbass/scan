@@ -3,6 +3,14 @@
 #' Export creates html files of tables or displays them directly in the viewer
 #' pane of rstudio. When applied in rmarkdown/quarto, tables can also be created
 #' for pdf/latex output.
+#' 
+#' The function uses either the kableExtra or the gt package to create the tables.
+#' The default engine can be set via the option `scan.export.engine`. Additional
+#' options for kable and kable_styling can be set via the options
+#' `scan.export.kable` and `scan.export.kable_styling`.
+#' The default options can be viewed and modified via
+#' `options("scan.export.kable")` and
+#' `options("scan.export.kable_styling")`.
 #'
 #' @param object An scdf or an object exported from a scan function.
 #' @param caption Character string with table caption. If left NA (default) a

@@ -1,5 +1,5 @@
 #' Extract coefficients from plm/hplm objects
-#'
+#' 
 #' @param object plm or hplm object
 #' @param ... not implemented
 #'
@@ -15,7 +15,7 @@ coef.sc_plm <- function(object, ...) {
 
 #' @describeIn hplm Extract model coefficients
 #' @order 4
-#' @param casewise Returns the estimations for each case
+#' @param casewise Returns the estimations for each case separately
 #' @inheritParams coef.sc_plm
 #' @export
 coef.sc_hplm <- function(object, casewise = FALSE, ...) {

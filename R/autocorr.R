@@ -1,11 +1,16 @@
-#' Autocorrelation for single-case data
+#' Autocorrelation within and across phases
 #'
 #' The autocorr function calculates autocorrelations within each phase and
 #' across all phases.
+#' 
+#' Autocorrelations are computed using the [acf()] function from the stats
+#' package. For each single-case in the scdf object, a data frame is returned
+#' containing the autocorrelations for each phase and for all phases up to the
+#' specified lag.
 #'
 #' @inheritParams .inheritParams
 #' @param lag_max,lag.max The lag up to which autocorrelations will be computed.
-#' @param ... Further arguments passed to the [acf()] function
+#' @param ... Further arguments passed to the [acf()] function.
 #' @return A data frame containing separate autocorrelations for each phase and
 #'   for all phases (for each single-case). If `lag_max` exceeds the length
 #'   of a phase minus one, NA is returned for this cell.

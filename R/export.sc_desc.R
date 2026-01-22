@@ -1,3 +1,5 @@
+#' Export Descriptive Statistics Table
+#' 
 #' @rdname export
 #' @export
 export.sc_desc <- function(object, 
@@ -7,7 +9,7 @@ export.sc_desc <- function(object,
                            flip = FALSE, 
                            round = 2,
                            ...) {
-  
+  # prepare table -----------------------------------------------------------
   if (is.na(caption)) caption <- "Descriptive statistics"
 
   if (is.na(footnote)) {
@@ -46,7 +48,6 @@ export.sc_desc <- function(object,
       ...
     )
   }
-  
   
   if (!flip) {
     n_phases <- length(object$design)

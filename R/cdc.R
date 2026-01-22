@@ -6,6 +6,7 @@
 #' increase/decrease of .25 SD. A binomial test against a 50/50 distribution is
 #' computed and p-values below .05 are labeled "systematic change".
 #'
+#'
 #' @inheritParams .inheritParams
 #' @param trend_method Method used to calculate the trend line. Default is
 #'   `trend_method = "OLS"`. Possible values are: `"OLS"`, `"bisplit"`, and

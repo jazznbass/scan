@@ -2,7 +2,11 @@
 #'
 #' The `describe()` function provides common descriptive statistics for
 #' single-case data.
-#'
+#' 
+#' It computes the number of measurements, number of missing values, mean,
+#' median, standard deviation, median average deviation, minimum, maximum, and
+#' trend (slope of dependent variable regressed on measurement-time) for each
+#' phase of each single-case included in an scdf.
 #'
 #' @inheritParams .inheritParams
 #' @details n = number of measurements; mis = number of missing vaues; m = mean;
@@ -10,7 +14,7 @@
 #'   minimum; max = maximum; trend = weight of depended variable regressed on
 #'   time (values ~ mt).
 #' @return A list containing a data frame of descriptive statistics
-#'   (descriptives); the cse design (design); the number of cases (N)
+#'   (descriptives); the cse design (design); the number of cases (N).
 #' @author Juergen Wilbert
 #' @seealso [overlap()], [plot.scdf()]
 #' @examples
