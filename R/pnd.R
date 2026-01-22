@@ -1,8 +1,14 @@
-#' Percentage of non-overlapping data
+#' Percentage of non-overlapping data (PND)
 #' 
 #' This function returns the percentage of non-overlapping data.  Due to its
 #' error-proneness the PND should not be used, but \code{\link{nap}} or
 #' \code{\link{pand}} instead (see Parker & Vannest, 2009).
+#' 
+#' PND is calculated by determining the number of data points in phase B that
+#' exceed the highest data point in phase A (or are lower than the lowest data
+#' point in phase A for decreasing data) divided by the total number of data
+#' points in phase B. This value is then multiplied by 100 to get a percentage
+#' value.
 #' 
 #' @inheritParams .inheritParams
 #' @param decreasing If you expect data to be lower in the B phase, set

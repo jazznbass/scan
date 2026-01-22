@@ -1,7 +1,14 @@
 #' Piecewise linear model / piecewise regression
 #'
 #' The `plm` function computes a piecewise regression model (see Huitema &
-#' McKean, 2000).
+#' McKean, 2000). The function automatically creates the fixed part of the
+#' regression model based on the provided data and the selected options. The
+#' function uses the `glm` function of the stats package or the `gls`
+#' function of the nlme package to fit the model.
+#' 
+#' The default model includes trend, level, and slope effects. The fixed part of
+#' the model can be changed by providing a custom formula to the `update`
+#' argument.
 #'
 #' @inheritParams .inheritParams
 #' @order 1
@@ -28,7 +35,7 @@
 #'   dependent variable is assumed to represent proportions `[0,1]`. Otherwise
 #'   dvar is assumed to represent counts.
 #' @param ... Further arguments passed to the glm function.
-#' @return
+#' @return An object of class `sc_plm`.
 #' \item{formula}{plm formula. Uselful if you want to use the update or
 #'   formula argument and you don't know the names of the parameters.}
 #' \item{model}{Character string from function call (see `Arguments`

@@ -1,7 +1,9 @@
 #' Tau-U for single-case data
 #'
 #' This function calculates indices of the Tau-U family as proposed by Parker et
-#' al. (2011a).
+#' al. (2011a). It allows to calculate Tau-U values for single cases as well
+#' as overall Tau-U values across several single cases by applying a meta
+#' analysis.
 #'
 #' @order 1
 #' @inheritParams .inheritParams
@@ -12,7 +14,8 @@
 #' @param meta_analyses If TRUE, a meta analysis is conducted.
 #' @param meta_weight_method String to specify the method for calculating the
 #'   weights of the studies. Either "tau" or "z".
-#' @param ci Confidence intervals
+#' @param ci Confidence intervals level. If NULL or NA, no confidence intervals
+#'   are calculated.
 #' @param ci_method String to specify the method for calculating the standard
 #'   error of tau. Either "tau", "z", or "s" (not recommended).
 #' @param tau_method Character with values "a" or "b" (default) indicating

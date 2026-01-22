@@ -56,20 +56,28 @@
 #' @param startpoints Alternative to the `limit`-parameter `startpoints` exactly
 #'   defines the possible start points of phase B (e.g., `startpoints = 4:9`
 #'   restricts the phase B start points to measurements 4 to 9. `startpoints`
-#'   overruns the `limit`-parameter.
+#'   overruns the `limit`-parameter. If a list of start points is provided, each
+#'   single-case can have different start points (e.g., `startpoints = list(4:9,
+#'   5:10)` for a two-case design). Default is `startpoints = NA`, which uses
+#'   the `limit`-parameter to define possible start points.
 #' @param exclude.equal If set to \code{exclude.equal = FALSE}, which is the
 #'   default, random distribution values equal to the observed distribution are
 #'   counted as null-hypothesis conform. That is, they decrease the probability
 #'   of rejecting the null-hypothesis (increase the p-value).
 #'   \code{exclude.equal} should be set to `TRUE` if you analyse one single-case
 #'   design (not a multiple baseline data set) to reach a sufficient power. But
-#'   be aware, that it increases the chance of an alpha-error.
+#'   be aware, that it increases the chance of an alpha-error. If
+#'   \code{exclude.equal = "auto" } is used, the function automatically sets
+#'   \code{exclude.equal = TRUE} for single-case designs and to \code{FALSE} for
+#'   multiple-case designs.
 #' @param graph If `graph = TRUE`, a histogram of the resulting distribution is
 #'   plotted. It is `FALSE` by default. *Note: use the more versatile
 #'   [plot_rand()] function instead.*
 #' @param output (deprecated and not implemented)
-#' @param seed A seed number for the random generator.
-#' @return \item{statistic}{Character string from function call (see
+#' @param seed A seed number for the random generator. Default is `NULL`.
+#' @return An object of class `sc_rand`. It is a list containing the following
+#' elements:
+#' \item{statistic}{Character string from function call (see
 #'   \code{Arguments} above).} \item{N}{Number of single-cases.}
 #'   \item{n1}{Number of data points in phase A.} \item{n2}{Number of data
 #'   points in phase B.} \item{limit}{Numeric from function call (see
@@ -89,7 +97,8 @@
 #' the number of possible combinations (under the given restrictions) undercuts
 #' the requested `number` of combinations.} \item{ecxlude.equal}{see argument
 #' above}
-#'
+#' \item{testdirection}{Indicates the direction of the test ("greater" or
+#' "less").}
 #' @author Juergen Wilbert
 #' @references Bulte, I., & Onghena, P. (2009). Randomization tests for
 #'   multiple-baseline designs: An extension of the SCRT-R package.

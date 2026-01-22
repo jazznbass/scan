@@ -1,9 +1,15 @@
 #' Samples random names
+#' 
+#' Generates random names for cases. Names are sampled from a predefined list
+#' of neutral, male, female, or mixed names.
+#' 
+#' This function is useful for anonymizing case names in datasets or for generating
+#' random identifiers.
 #'
-#' @param n Number of names
-#' @param type "neutral", "male", "female", or "mixed"
-#' @param seed A seed for the random number generator.
-#' @return A character vector with random names
+#' @param n Number of names to sample.
+#' @param type "neutral", "male", "female", or "mixed" type of names to sample.
+#' @param seed A seed for the random number generator. If provided, the sampling will be reproducible.
+#' @return A character vector with random names.
 #' @examples 
 #' sample_names(3)
 #' @export

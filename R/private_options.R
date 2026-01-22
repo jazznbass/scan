@@ -1,5 +1,5 @@
 
-
+# Functions to get package options
 opt <- function(x) {
   out <- .opt[[x]]
   if (is.null(out)) stop("Option ", x, " not defined.")

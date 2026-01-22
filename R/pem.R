@@ -1,9 +1,17 @@
-#' Percent exceeding the median
+#' Percent exceeding the median (PEM)
 #' 
 #' The \code{pem} function returns the percentage of phase B data exceeding the
 #' phase A median.  Additionally, a chi square test against a 50/50
 #' distribution is computed.  Different measures of central tendency can be
 #' addressed for alternative analyses.
+#' 
+#' @details The Percent Exceeding the Median is calculated as
+#' the percentage of data points in phase B that exceed the median of phase A.
+#' If the \code{decreasing} argument is set to \code{TRUE},
+#' the percentage of data points in phase B that are below the median of
+#' phase A is calculated.  The PEM is expressed as a percentage ranging
+#' from 0 to 100.  Higher values indicate a greater degree of
+#' improvement from phase A to phase B.
 #' 
 #' @inheritParams .inheritParams
 #' @param binom.test Computes a binomial test for a 50/50 distribution. Default
@@ -12,7 +20,7 @@
 #' \code{chi.test = FALSE} skips the Chi-square test.
 #' @param FUN Data points are compared with the phase A median. Use this
 #' argument to implement alternative measures of central tendency. Default is
-#' \code{FUN = median}
+#' \code{FUN = median}.
 #' @param \dots Additional arguments for the \code{FUN} parameter (e.g.
 #' \code{FUN = mean, trim = 0.1} will use the 10 percent trimmed arithmetic
 #' mean instead of the median for comparisons). The function must take a vector

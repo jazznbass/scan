@@ -5,17 +5,23 @@
 #' up a design matrix with all parameters needed for the \code{random_scdf}
 #' function.
 #'
+#' The generated data can be normally distributed, Poisson-distributed, or
+#' binomially distributed. The default is normally distributed data.
 #'
 #' @param design A design matrix which is created by \code{design} and specifies
-#'   all parameters.
+#'   all parameters. If \code{design} is \code{NULL} (default), the design
+#'   parameters have to be specified via the \code{...} argument. If a numeric
+#'   value is provided instead of a design matrix, it is interpreted as the
+#'   number of cases \code{n}.
 #' @param round Rounds the scores to the defined decimal. To round to the second
-#'   decimal, set \code{round = 2}.
+#'   decimal, set \code{round = 2}. Default is \code{NA} (no rounding).
 #' @param random_names Is \code{FALSE} by default. If set \code{random_names =
 #'   TRUE} cases are assigned random first names. If set \code{"neutral", "male"
 #'   or "female"} only gender neutral, male, or female names are chosen. The
 #'   names are drawn from the 2,000 most popular names for newborns in 2012 in
 #'   the U.S. (1,000 male and 1,000 female names).
-#' @param seed A seed number for the random generator.
+#' @param seed A seed number for the random generator. If \code{NULL} (default),
+#'   no seed
 #' @param ... arguments that are directly passed to the \code{design} function
 #'   for a more concise coding.
 #' @return A single-case data frame. See \code{\link{scdf}} to learn about this

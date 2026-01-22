@@ -1,8 +1,7 @@
-#' Single case data frame
+#' Single case data frame constructor
 #'
 #' `scdf()` is the constructor for objects of class `scdf`. It stores data from
-#' single-case studies with one or more cases in a structured format suitable
-#' for analysis with the `scan` package.
+#' single-case studies in a structured format suitable for analysis with the `scan` package.
 #'
 #' @aliases scdf scdf-class as.scdf
 #' @inheritParams .inheritParams
@@ -37,7 +36,36 @@
 #'
 #'   If a vector matching the name of the phase variable is provided, it will be
 #'   used to define the phase design directly.
-#'
+#'   Otherwise, the phase design can be defined in three alternative ways:
+#'   via the `B_start` argument, via the `phase_starts` argument, or via
+#'   the `phase_design` argument.
+#'   
+#'   If `B_start` is provided, a simple AB phase design is assumed, with phase A
+#'   starting at measurement time 1 and phase B starting at the measurement time
+#'   indicated by `B_start`.
+#'   If `phase_starts` is provided, the phase design is constructed based on the
+#'   measurement times indicated in the vector.
+#'   If `phase_design` is provided, it is used directly to define the phase
+#'   design.
+#'   If multiple of these options are provided, the priority order is:
+#'   `phase_design`, `phase_starts`, `B_start`, phase variable in
+#'   data frame, names of dependent variable.
+#'   
+#'   If none of these options are provided, an error is raised.
+#'   
+#'   The function can be used to create single-case data frames for multiple cases
+#'   separately, which can then be combined into a list for multiple-case
+#'   analyses.
+#'   
+#'   See also the convenience function \code{\link{transform.scdf}} to add new
+#'   variables to an existing `scdf` object.
+#'   
+#'   See the package vignettes for further examples on how to create and work with
+#'   `scdf` objects.
+#'   
+#'   See the section on *Data structure* in the documentation of the
+#'   \code{\link{scan}} package for further details on the `scdf` data structure.
+#'   
 #' @author Juergen Wilbert
 #' @family data manipulation functions
 #' @examples

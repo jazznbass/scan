@@ -19,10 +19,12 @@
 #'   Example: `rowwise(sum(values, mt, na.rm = TRUE))`.  
 #' - **`across_cases()`**: creates new variables or replaces existing ones across all cases.  
 #'   Example: `across_cases(values_ranked = rank(values, na.last = "keep"))` 
-#'
+#'   ranks the `values` variable across all cases and creates a new variable `values_ranked`.
+#'   
 #' @param _data An scdf.
 #' @param ... Expressions.
 #' @return An scdf.
+#' @author Juergen Wilbert
 #' @family data manipulation functions
 #' @export
 #' @examples

@@ -2,7 +2,17 @@
 #'
 #' The `rci()` function computes indices of reliable change (Wise, 2004)
 #' and corresponding descriptive statistics.
-#'
+#' 
+#' The reliable change index (RCI) indicates whether the change in scores from
+#' phase A to phase B is statistically reliable, that is, whether the change is
+#' larger than would be expected due to measurement error alone. The RCI can be
+#' calculated using different methods (Jacobsen & Truax, 1991; Christensen &
+#' Mendoza, 1986). The most common method is that of Jacobsen and Truax (1991) 
+#' which uses the standard error of measurement in phase A to
+#' calculate the RCI. Christensen and Mendoza (1986) proposed an alteration of
+#' the RCI which uses the standard error of the difference between phase A and
+#' phase B means. Both methods are implemented in the `rci()` function. 
+#' 
 #' @inheritParams .inheritParams
 #' @param rel Reliability of the measure, used to compute the standard error.
 #' @param ci Width of confidence interval as a decimal. Default is `ci = 0.95`

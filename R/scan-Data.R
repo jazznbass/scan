@@ -10,7 +10,8 @@
 #'   exampleA1B1A2B2 exampleA1B1A2B2_zvt exampleAB_50 exampleAB_50.l2
 #'   exampleABC_150 exampleAB_mpd Huber2014 Lenz2013 Leidig2018 Leidig2018_l2
 #'   SSDforR2017 Parker2011 Parker2007 Parker2009 Parker2009b Parker2011b Tarlow2017
-#' @return
+#' @return A single-case data frame (scdf) object containing one or more
+#'  single-case data frames.
 #' \item{Beretvas2008}{Fictitious single-case intervention study.
 #' **Reference:** Beretvas, S., & Chung, H. (2008). An evaluation of
 #' modified R2-change effect size indices for single-subject experimental

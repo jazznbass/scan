@@ -1,6 +1,8 @@
-#' Combine single-case data frames
+#' Combine single-case data frames into one scdf
+#' 
+#' Combines several single-case data frames (scdf) into one scdf object.
 #'
-#' @param ... scdf objects
+#' @param ... scdf objects to be combined.
 #' @param dvar Character string. Name of the dependent variable. Defaults to the
 #'   dependent variable of the first case provided.
 #' @param pvar Character string. Name of the phase variable. Defaults to the
@@ -12,7 +14,8 @@
 #' @return A scdf. If not set differently, the attributes of this scdf are
 #'   copied from the first scdf provided (i.e the first argument of the
 #'   function).
-#'
+#' @author Juergen Wilbert
+#' @keywords data manipulation
 #' @export
 combine <- function(..., 
                     dvar = NULL, 
@@ -65,12 +68,14 @@ c.scdf <- function(...) {
   combine(...)
 }
 
-#' Select an scdf
+#' Select an scdf case by name
+#' 
+#' Selects a single case from a scdf object by its name.
 #'
-#' @param x A scdf object
-#' @param i A case name from x 
-#'
-#' @return A scdf
+#' @param x A scdf object.
+#' @param i A case name from x. If i is not a name of x, a warning is issued.
+#' @return A scdf object containing only the selected case.
+#' @author Juergen Wilbert
 #' @rdname Subsetting
 #' @keywords internal
 #' @export
@@ -96,20 +101,24 @@ c.scdf <- function(...) {
 
 
 
-#' scdf objects
-#' Tests for objects of type "scdf"
+#' Test for scdf objects
+#' 
+#' Tests for objects of type "scdf".
 #'
-#' @param x An object to be tested
+#' @param x An object to be tested.
 #' @return Returns TRUE or FALSE depending on whether its argument is of scdf type or not.
+#' @author Juergen Wilbert
 #' @export
 is.scdf <- function(x) inherits(x, "scdf")
 
-#' scdf objects
-#' Removes any row with a missing value
+#' Remove missing values from scdf
+#' 
+#' Removes any row with a missing value from each single-case data frame in an scdf.
 #'
 #' @param object A scdf.
 #' @param ... not implemented yet.
 #' @return A scdf object.
+#' @author Juergen Wilbert
 #' @export
 na.omit.scdf <- function(object, ...) {
   for (i in 1:length(object))

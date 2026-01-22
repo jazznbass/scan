@@ -1,9 +1,13 @@
-#' Select a subset of cases
+#' Select a subset of cases from an scdf
+#' 
+#' This function allows to select a subset of cases from an scdf by
+#' specifying either the case names or their numeric indices. Negative
+#' selection is also supported.
 #'
 #' @inheritParams .inheritParams
 #' @param ... Selection criteria. Either numeric, objectnames, or as characters.
-#'
-#' @return An scdf with a subset of cases
+#' @return An scdf with a subset of cases.
+#' @author Juergen Wilbert
 #' @export
 #' @family data manipulation functions
 #' @examples

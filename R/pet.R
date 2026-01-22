@@ -1,10 +1,18 @@
-#' Percent exceeding the trend
+#' Percent exceeding the trend (PET)
 #'
 #' The `pet` function returns the percentage of Phase B data points that exceed
 #' the prediction based on the Phase A trend. A binomial test against a 50/50
 #' distribution is calculated. It also calculates the percentage of Phase B data
 #' points that exceed the upper (or lower) 95 percent confidence interval of the
 #' predicted progression.
+#' 
+#' The PET is calculated by first fitting a linear model to the Phase A data
+#' to estimate the trend. Then, for each data point in Phase B, it is
+#' determined whether it exceeds the predicted value from the Phase A trend.
+#' The PET is the percentage of Phase B data points that exceed this predicted
+#' value. Additionally, a binomial test is performed to assess whether the
+#' observed PET is significantly greater than what would be expected by chance
+#' (i.e., 50%).
 #'
 #' @inheritParams .inheritParams
 #' @param ci Width of the confidence interval. Default is `ci = 0.95`.

@@ -1,7 +1,9 @@
 #' A Shiny app for scan
 #'
 #' Run a Shiny app with most of the scan functions.
-#'
+#' 
+#' @return This function launches a Shiny application.
+#' @author Juergen Wilbert
 #' @param scdf If you provide an *scdf* here, it will be loaded at startup.
 #' @param quiet If TRUE (default) does not report shiny messages in the console.
 #' @param browser c("external","viewer") 

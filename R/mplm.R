@@ -1,6 +1,14 @@
 #' Multivariate Piecewise linear model / piecewise regression
 #'
-#' The [mplm()] function computes a multivariate piecewise regression model.
+#' The [mplm()] function computes a multivariate piecewise regression model. The
+#' function automatically creates the regression formula based on the provided
+#' data and the selected options. The default model includes trend, level, and
+#' slope effects for each dependent variable. The regression formula can be
+#' changed by providing a custom formula to the `update` argument.
+#' 
+#' The function currently only supports single-case data (i.e., one case per
+#' dataset). For multilevel piecewise regression models, please use the [hplm] 
+#' function.
 #'
 #' @inheritParams .inheritParams
 #' @order 1

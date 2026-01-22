@@ -1,6 +1,9 @@
 #' Handling outliers in single-case data
 #'
 #' Identifies and drops outliers within a single-case data frame (scdf).
+#' Outliers can be identified based on mean average deviation (MAD),
+#' standard deviation (SD), confidence intervals (CI), or Cook's Distance
+#' from a Piecewise Linear Regression Model.
 #'
 #' @inheritParams .inheritParams
 #' @param method Specifies the method for outlier identification. Set `method =

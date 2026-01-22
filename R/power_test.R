@@ -23,9 +23,11 @@
 #' @param n_sim Number of sample studies created for the the Monte-Carlo study.
 #'   Default is `n = 100`. Ignored if design_is_one_study = FALSE.
 #' @param design_is_one_study If TRUE, the design is assumed to define all cases
-#'   of one study that is repeatedly randomly created `n_sim` times. If false,
+#'   of one study that is repeatedly randomly created `n_sim` times. If FALSE,
 #'   the design is assumed to contain all cases from which a random sample is
 #'   generated. This is useful for very specific complex simulation studies.
+#'   In this case, n_sim indicates how many random samples are drawn from the
+#'   provided design. Default is TRUE.
 #' @param alpha_test Logical. If TRUE, alpha error is calculated.
 #' @param power_test Logical. If TRUE, power is calculated.
 #' @param binom_test Shortcut. When set TRUE, binom_test_power is set to 0.80,
@@ -45,6 +47,10 @@
 #' @param alpha_level Alpha level used to calculate the proportion of
 #'   significant tests. Default is `alpha_level = 0.05`.
 #' @author Juergen Wilbert
+#' @return A data frame with the power, alpha error, and correct proportions for
+#'  each provided method. If binomial tests are requested, p values for these
+#'  tests are also provided. If confidence intervals are requested, these
+#'  are also provided.
 #' @seealso [random_scdf()], [design()]
 #' @examples
 #'

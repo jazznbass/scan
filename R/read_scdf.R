@@ -2,6 +2,11 @@
 #'
 #' Use the `read_scdf` function to load single-case data csv, excel, or yaml
 #' files.
+#' 
+#' The data file must be in a "long" format with one column for case
+#' identifiers, one column for phase identifiers, one column for measurement
+#' time, and one column for the dependent variable values. Each row represents
+#' a single measurement.
 #'
 #' @param file Either a character string defining the file to be loaded (e.g.
 #'   `"SC_Anita.csv"` (if left empty a dialog box for choosing will be opened)
