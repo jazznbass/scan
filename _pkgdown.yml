@@ -117,3 +117,6 @@ reference:
   - estimate_design
   - random_scdf
 
+- title: Example data sets
+  contents:
+  - example_data_sets
