@@ -2,7 +2,7 @@
 % Please edit documentation in R/smd.R
 \name{smd}
 \alias{smd}
-\title{Standardized mean differences}
+\title{Standardized mean differences for single-case data}
 \usage{
 smd(data, dvar, pvar, mvar, phases = c(1, 2))
 }
@@ -30,6 +30,10 @@ The \code{smd()} function provides various standardized mean effect sizes for
 single-case data.
 }
 \details{
+It computes 'Cohen's d', 'Hedges' g', 'Hedges' g correction',
+'Hedges' g durlak correction', and 'Glass' delta' for each single-case
+included in an scdf.
+
 'sd cohen' is the (unweigted) average of the variance of phase A and
 B. 'sd Hedges' is the weighted average of the variance of phase A and B
 (with a degrees of freedom correction). 'Hedges' g' is the mean difference

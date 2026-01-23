@@ -77,7 +77,9 @@ phases. Default is \code{limit = 5}.}
 \item{startpoints}{Alternative to the \code{limit}-parameter \code{startpoints} exactly
 defines the possible start points of phase B (e.g., \code{startpoints = 4:9}
 restricts the phase B start points to measurements 4 to 9. \code{startpoints}
-overruns the \code{limit}-parameter.}
+overruns the \code{limit}-parameter. If a list of start points is provided, each
+single-case can have different start points (e.g., \code{startpoints = list(4:9, 5:10)} for a two-case design). Default is \code{startpoints = NA}, which uses
+the \code{limit}-parameter to define possible start points.}
 
 \item{exclude.equal}{If set to \code{exclude.equal = FALSE}, which is the
 default, random distribution values equal to the observed distribution are
@@ -85,7 +87,10 @@ counted as null-hypothesis conform. That is, they decrease the probability
 of rejecting the null-hypothesis (increase the p-value).
 \code{exclude.equal} should be set to \code{TRUE} if you analyse one single-case
 design (not a multiple baseline data set) to reach a sufficient power. But
-be aware, that it increases the chance of an alpha-error.}
+be aware, that it increases the chance of an alpha-error. If
+\code{exclude.equal = "auto" } is used, the function automatically sets
+\code{exclude.equal = TRUE} for single-case designs and to \code{FALSE} for
+multiple-case designs.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
 that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
@@ -99,9 +104,11 @@ plotted. It is \code{FALSE} by default. \emph{Note: use the more versatile
 
 \item{output}{(deprecated and not implemented)}
 
-\item{seed}{A seed number for the random generator.}
+\item{seed}{A seed number for the random generator. Default is \code{NULL}.}
 }
 \value{
+An object of class \code{sc_rand}. It is a list containing the following
+elements:
 \item{statistic}{Character string from function call (see
 \code{Arguments} above).} \item{N}{Number of single-cases.}
 \item{n1}{Number of data points in phase A.} \item{n2}{Number of data
@@ -122,6 +129,8 @@ indicates that a corrected number of combinations was used. This happens, if
 the number of possible combinations (under the given restrictions) undercuts
 the requested \code{number} of combinations.} \item{ecxlude.equal}{see argument
 above}
+\item{testdirection}{Indicates the direction of the test ("greater" or
+"less").}
 }
 \description{
 The \code{rand_test} function computes a randomization test for single or multiple

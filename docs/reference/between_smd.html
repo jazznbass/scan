@@ -9,7 +9,7 @@ described in Pustejovsky et al. (2014)"><meta property="og:image" content="https
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.67.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.67.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -128,8 +128,12 @@ output will be written to that file.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class sc_bcsmd.</p>
-    </div>
+    <p>An object of class sc_bcsmd. It is a list containing the following
+elements:</p><ul><li><p><code>models</code>: A list of data frames containing the BC-SMD results for each
+model calculated.</p></li>
+<li><p><code>ci</code>: The width of the confidence/credible interval.</p></li>
+<li><p><code>method</code>: The method used for model estimation.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The BC-SMD is calculate as <code>BC-SMD = Phase difference / sqrt(residual + random_intercept)</code>. This is most closely related to Cohen's <em>d</em>. If you want
@@ -151,6 +155,10 @@ model includes the trend and the phase slope as additional predictors.</p>
 Design-Comparable Effect Sizes in Multiple Baseline Designs: A General
 Modeling Framework. Journal of Educational and Behavioral Statistics,
 39(5), 368–393. https://doi.org/10.3102/1076998614547577</p>
+    </div>
+    <div class="section level2">
+    <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
+    <p>Juergen Wilbert</p>
     </div>
 
     <div class="section level2">
@@ -224,7 +232,7 @@ Modeling Framework. Journal of Educational and Behavioral Statistics,
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

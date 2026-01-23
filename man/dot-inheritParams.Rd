@@ -53,7 +53,7 @@ McKean, 2000). Default is \code{model = "W"}. Possible values are: \code{"B&L-B"
 \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
 \item{contrast}{Sets contrast_level and contrast_slope. Either "first",
-"preceding" or a contrast matrix.}
+"preceding" or a contrast matrix. If NA contrast is ignored.}
 
 \item{contrast_level}{Either "first", "preceding" or a contrast matrix. If NA
 contrast_level is a copy of contrast.}
@@ -75,7 +75,16 @@ publication tables.}
 
 \item{...}{Further arguments passed to the function.}
 }
-\description{
-Dummy function to inherit global descriptions of parameters
+\value{
+No return value.
 }
+\description{
+This function is only used to inherit parameter descriptions in the
+documentation of other functions. It has no other purpose and is not meant to
+be called directly.
+}
+\author{
+Juergen Wilbert
+}
+\concept{internal functions}
 \keyword{internal}

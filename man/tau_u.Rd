@@ -64,7 +64,8 @@ is \code{phases = c(1,2)}.}
 
 \item{meta_analyses}{If TRUE, a meta analysis is conducted.}
 
-\item{ci}{Confidence intervals}
+\item{ci}{Confidence intervals level. If NULL or NA, no confidence intervals
+are calculated.}
 
 \item{ci_method}{String to specify the method for calculating the standard
 error of tau. Either "tau", "z", or "s" (not recommended).}
@@ -120,7 +121,9 @@ statistics.} \item{tau_u}{Tau-U value.}
 }
 \description{
 This function calculates indices of the Tau-U family as proposed by Parker et
-al. (2011a).
+al. (2011a). It allows to calculate Tau-U values for single cases as well
+as overall Tau-U values across several single cases by applying a meta
+analysis.
 }
 \details{
 Tau-U is an inconsistently operationalized construct. Parker et al.
@@ -187,7 +190,8 @@ Other overlap functions:
 \code{\link{pem}()},
 \code{\link{pet}()},
 \code{\link{pnd}()},
-\code{\link{print.sc_cdc}()}
+\code{\link{print.sc_cdc}()},
+\code{\link{select_phases}()}
 }
 \author{
 Juergen Wilbert

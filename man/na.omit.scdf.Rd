@@ -2,8 +2,7 @@
 % Please edit documentation in R/scdf-functions.R
 \name{na.omit.scdf}
 \alias{na.omit.scdf}
-\title{scdf objects
-Removes any row with a missing value}
+\title{Remove missing values from scdf}
 \usage{
 \method{na.omit}{scdf}(object, ...)
 }
@@ -16,6 +15,8 @@ Removes any row with a missing value}
 A scdf object.
 }
 \description{
-scdf objects
-Removes any row with a missing value
+Removes any row with a missing value from each single-case data frame in an scdf.
+}
+\author{
+Juergen Wilbert
 }

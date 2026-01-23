@@ -2,7 +2,7 @@
 % Please edit documentation in R/convert.R
 \name{convert}
 \alias{convert}
-\title{Convert}
+\title{Convert scdf to R code}
 \usage{
 convert(
   scdf,
@@ -18,7 +18,8 @@ convert(
 \item{scdf}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
 format.}
 
-\item{file}{A filename for exporting the syntax.}
+\item{file}{A filename for exporting the syntax. If an empty string (default),
+the syntax is not written to a file.}
 
 \item{study_name}{Character string. Name of the study object.}
 
@@ -28,13 +29,18 @@ format.}
 
 \item{indent}{Integer. Indentation.}
 
-\item{silent}{If TRUE, syntax is not printed to the console}
+\item{silent}{If TRUE, syntax is not printed to the console.}
 }
 \value{
 Returns a string (invisible).
 }
 \description{
-Converts an scdf object into R code
+Converts an scdf object into R code that can be used to recreate the object.
+}
+\details{
+This function is useful for exporting scdf objects for sharing or
+documentation purposes. The generated R code can be sourced to recreate the
+original scdf object.
 }
 \examples{
 filename <- tempfile()
@@ -47,6 +53,9 @@ unlink(filename)
 Other io-functions: 
 \code{\link{read_scdf}()},
 \code{\link{write_scdf}()}
+}
+\author{
+Juergen Wilbert
 }
 \concept{io-functions}
 \keyword{io}

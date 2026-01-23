@@ -21,13 +21,18 @@ Defaults to the attributes in the scdf file.}
 }
 \value{
 A list containing a data frame of descriptive statistics
-(descriptives); the cse design (design); the number of cases (N)
+(descriptives); the cse design (design); the number of cases (N).
 }
 \description{
 The \code{describe()} function provides common descriptive statistics for
 single-case data.
 }
 \details{
+It computes the number of measurements, number of missing values, mean,
+median, standard deviation, median average deviation, minimum, maximum, and
+trend (slope of dependent variable regressed on measurement-time) for each
+phase of each single-case included in an scdf.
+
 n = number of measurements; mis = number of missing vaues; m = mean;
 md = median; sd = standard deviation; mad = median average deviation; min =
 minimum; max = maximum; trend = weight of depended variable regressed on

@@ -155,6 +155,7 @@ Other overlap functions:
 \code{\link{pet}()},
 \code{\link{pnd}()},
 \code{\link{print.sc_cdc}()},
+\code{\link{select_phases}()},
 \code{\link{tau_u}()}
 }
 \author{

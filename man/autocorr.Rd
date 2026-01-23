@@ -4,7 +4,7 @@
 \alias{print.sc_ac}
 \alias{export.sc_ac}
 \alias{autocorr}
-\title{Autocorrelation for single-case data}
+\title{Autocorrelation within and across phases}
 \usage{
 \method{print}{sc_ac}(x, digits = "auto", ...)
 
@@ -18,7 +18,7 @@ autocorr(data, dvar, pvar, mvar, lag_max = 3, lag.max, ...)
 \item{digits}{The minimum number of significant digits to be use.
 If set to "auto" (default), values are predefined.}
 
-\item{...}{Further arguments passed to the \code{\link[=acf]{acf()}} function}
+\item{...}{Further arguments passed to the \code{\link[=acf]{acf()}} function.}
 
 \item{object}{An scdf or an object exported from a scan function.}
 
@@ -56,6 +56,12 @@ of a phase minus one, NA is returned for this cell.
 The autocorr function calculates autocorrelations within each phase and
 across all phases.
 }
+\details{
+Autocorrelations are computed using the \code{\link[=acf]{acf()}} function from the stats
+package. For each single-case in the scdf object, a data frame is returned
+containing the autocorrelations for each phase and for all phases up to the
+specified lag.
+}
 \section{Functions}{
 \itemize{
 \item \code{print(sc_ac)}: Print method
@@ -72,6 +78,7 @@ autocorr(Huber2014, lag_max = 2)
 
 Other regression functions: 
 \code{\link{bplm}()},
+\code{\link{fetch}()},
 \code{\link{hplm}()},
 \code{\link{mplm}()},
 \code{\link{plm}()},

@@ -41,6 +41,7 @@ Other data manipulation functions:
 \code{\link{add_l2}()},
 \code{\link{as.data.frame.scdf}()},
 \code{\link{as_scdf}()},
+\code{\link{batch_apply}()},
 \code{\link{fill_missing}()},
 \code{\link{moving_median}()},
 \code{\link{print.sc_outlier}()},

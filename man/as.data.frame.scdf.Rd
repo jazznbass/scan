@@ -8,16 +8,16 @@
 \method{as.data.frame}{scdf}(x, ..., l2 = NULL, id = "case")
 }
 \arguments{
-\item{x}{An scdf object}
+\item{x}{An scdf object.}
 
-\item{...}{Not implemented}
+\item{...}{Not implemented.}
 
 \item{l2}{A data frame providing additional variables at Level 2. The scdf
 has to have names for all cases and the Level 2 data frame has to have a
 column with corresponding case names.}
 
 \item{id}{Variable name of the Level 2 data frame that contains the case
-names.}
+names. Defaults to "case".}
 }
 \value{
 Returns one data frame with data of all single-cases structured by
@@ -47,6 +47,7 @@ summary(Leidig2018_long)
 Other data manipulation functions: 
 \code{\link{add_l2}()},
 \code{\link{as_scdf}()},
+\code{\link{batch_apply}()},
 \code{\link{fill_missing}()},
 \code{\link{moving_median}()},
 \code{\link{print.sc_outlier}()},

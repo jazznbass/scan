@@ -1,4 +1,7 @@
-# scan 0.67.1
+# scan 0.67.2
+
+- Reworked `fill_missing()` function. It now interpolates the values for all variables in an scdf.
+- Extended roxygen helpfiles for functions.
 
 ## Fix
 

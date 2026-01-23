@@ -60,7 +60,14 @@ output will be written to that file.}
 \item{round}{Integer passed to the digits argument used to round values.}
 }
 \value{
-An object of class sc_bcsmd.
+An object of class sc_bcsmd. It is a list containing the following
+elements:
+\itemize{
+\item \code{models}: A list of data frames containing the BC-SMD results for each
+model calculated.
+\item \code{ci}: The width of the confidence/credible interval.
+\item \code{method}: The method used for model estimation.
+}
 }
 \description{
 Calculates a standardized mean difference from a multilevel model as
@@ -108,4 +115,7 @@ Pustejovsky, J. E., Hedges, L. V., & Shadish, W. R. (2014).
 Design-Comparable Effect Sizes in Multiple Baseline Designs: A General
 Modeling Framework. Journal of Educational and Behavioral Statistics,
 39(5), 368–393. https://doi.org/10.3102/1076998614547577
+}
+\author{
+Juergen Wilbert
 }

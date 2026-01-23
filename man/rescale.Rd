@@ -2,7 +2,7 @@
 % Please edit documentation in R/rescale.R
 \name{rescale}
 \alias{rescale}
-\title{Rescales values of an scdf file}
+\title{Rescales values of an scdf}
 \usage{
 rescale(data, ..., m = 0, sd = 1)
 }
@@ -10,7 +10,8 @@ rescale(data, ..., m = 0, sd = 1)
 \item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
 format.}
 
-\item{...}{Names of variables to be standardized.}
+\item{...}{Names of variables to be standardized. If none are given, all numeric
+variables are standardized.}
 
 \item{m}{The target mean. If set NULL, it is not changed.}
 
@@ -35,6 +36,7 @@ Other data manipulation functions:
 \code{\link{add_l2}()},
 \code{\link{as.data.frame.scdf}()},
 \code{\link{as_scdf}()},
+\code{\link{batch_apply}()},
 \code{\link{fill_missing}()},
 \code{\link{moving_median}()},
 \code{\link{print.sc_outlier}()},
@@ -51,4 +53,4 @@ Other data manipulation functions:
 Juergen Wilbert
 }
 \concept{data manipulation functions}
-\keyword{internal}
+\keyword{manip}

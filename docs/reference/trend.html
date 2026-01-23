@@ -15,7 +15,7 @@ can add regression models using the R-specific formula class."><meta property="o
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.67.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.67.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,8 +107,7 @@ parameters of the model are <code>values</code>, <code>mt</code> and <code>phase
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-
-
+    <p>A list of class <code>sc_trend</code> containing:</p>
 <dl><dt>trend</dt>
 <dd><p>A matrix containing the results (Intercept, B and beta)
 of separate regression models for phase A, phase B, and the whole data.</p></dd>
@@ -119,15 +118,29 @@ section).</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The function computes separate regression models for each phase and
+for the whole data. By default two models are computed: a linear model and
+a quadratic model. Additionally, custom models can be specified using the
+<code>model</code> argument. The measurement time variable is adjusted such that the
+first measurement time point of each phase is set to the value specified in
+the <code>first_mt</code> argument (default = 0). This means that if <code>first_mt = 0</code>,
+the first measurement time point of each phase is set to 0, if <code>first_mt = 1</code>, the first measurement time point of each phase is set to 1, and so on.
+This adjustment allows for a more intuitive interpretation of the
+regression coefficients, especially the intercept, which then represents
+the estimated value at the beginning of each phase.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="describe.html">describe()</a></code></p>
 <p>Other regression functions:
-<code><a href="bplm.html">bplm</a>()</code>,
-<code><a href="hplm.html">hplm</a>()</code>,
-<code><a href="mplm.html">mplm</a>()</code>,
-<code><a href="plm.html">plm</a>()</code>,
-<code><a href="autocorr.html">print.sc_ac</a>()</code>,
-<code><a href="corrected_tau.html">print.sc_bctau</a>()</code></p></div>
+<code><a href="bplm.html">bplm()</a></code>,
+<code><a href="fetch.html">fetch()</a></code>,
+<code><a href="hplm.html">hplm()</a></code>,
+<code><a href="mplm.html">mplm()</a></code>,
+<code><a href="plm.html">plm()</a></code>,
+<code><a href="autocorr.html">print.sc_ac()</a></code>,
+<code><a href="corrected_tau.html">print.sc_bctau()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -154,14 +167,14 @@ section).</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note. Measurement-times start at 0 for each phase</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Besides the linear and squared regression models compute two custom models:</span></span></span>
-<span class="r-in"><span><span class="co">## a) a cubic model, and </span></span></span>
+<span class="r-in"><span><span class="co">## a) a cubic model, and</span></span></span>
 <span class="r-in"><span><span class="co">## b) the values predicted by the natural logarithm of the</span></span></span>
 <span class="r-in"><span><span class="co">## measurement time.</span></span></span>
 <span class="r-in"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ben</span> <span class="op">&lt;-</span> <span class="fu"><a href="random_scdf.html">random_scdf</a></span><span class="op">(</span><span class="va">design</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">trend</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">ben</span>, </span></span>
-<span class="r-in"><span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Cubic"</span> <span class="op">=</span> <span class="va">values</span> <span class="op">~</span> <span class="va">mt</span><span class="op">^</span><span class="fl">3</span>, <span class="st">"Log Time"</span> <span class="op">=</span> <span class="va">values</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">mt</span><span class="op">)</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>  <span class="va">ben</span>,</span></span>
+<span class="r-in"><span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Cubic"</span> <span class="op">=</span> <span class="va">values</span> <span class="op">~</span> <span class="va">mt</span><span class="op">^</span><span class="fl">3</span>, <span class="st">"Log Time"</span> <span class="op">=</span> <span class="va">values</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">mt</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  first_mt <span class="op">=</span> <span class="fl">1</span> <span class="co"># must be set to 1 because log(0) would be -Inf</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Trend for each phase</span>
@@ -193,7 +206,7 @@ section).</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

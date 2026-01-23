@@ -6,7 +6,7 @@
 \alias{print.sc_hplm}
 \alias{export.sc_hplm}
 \alias{coef.sc_hplm}
-\title{Hierarchical piecewise linear model / piecewise regression}
+\title{Hierarchical piecewise linear model / piecewise regression for multiple cases}
 \usage{
 hplm(
   data,
@@ -70,7 +70,7 @@ McKean, 2000). Default is \code{model = "W"}. Possible values are: \code{"B&L-B"
 \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
 \item{contrast}{Sets contrast_level and contrast_slope. Either "first",
-"preceding" or a contrast matrix.}
+"preceding" or a contrast matrix. If NA contrast is ignored.}
 
 \item{contrast_level}{Either "first", "preceding" or a contrast matrix. If NA
 contrast_level is a copy of contrast.}
@@ -116,7 +116,9 @@ based on the method provide in the model argument (e.g., "B&L-B"). The
 formula can be changed for example to include further L1 or L2 variables
 into the regression model.}
 
-\item{random}{The random part of the model.}
+\item{random}{The random part of the model. Defaults to a random intercept
+model. The formula can be changed to include random slope effects for
+level, trend, and treatment effects.}
 
 \item{ar}{Maximal lag of autoregression. Modelled based on the
 Autoregressive-Moving Average (ARMA) function.}
@@ -140,7 +142,7 @@ If set to "auto" (default), values are predefined.}
 
 \item{bcsmd}{If TRUE, reports between-case standardized mean differences.}
 
-\item{casewise}{Returns the estimations for each case}
+\item{casewise}{Returns the estimations for each case separately}
 
 \item{object}{An scdf or an object exported from a scan function.}
 
@@ -159,17 +161,32 @@ output will be written to that file.}
 publication tables.}
 }
 \value{
-|  |  | | --- | --- | | \code{model} | List containing infromation about
-the applied model. | | \code{N} | Number of single-cases. | | \code{formula} |A list
-containing the fixed and the random formulas of the hplm model. | | \code{hplm} |
-Object of class lme contaning the multilevel model. | | \code{model.0} | Object of
-class lme containing the zero model. | | \code{ICC} | List containing intraclass
-correlation and test parameters. | | \code{model.without} | Object of class gls
-containing the fixed effect model. | | \code{contrast} | List with contrast
-definitions. |
+An object of class \code{sc_hplm}.
+\itemize{
+\item \code{model} | List containing infromation about
+\item \code{N} | Number of single-cases.
+\item \code{formula} | A list containing the fixed and the random formulas of the hplm model.
+\item \code{hplm} | Object of class lme contaning the multilevel model.
+\item \code{model.0} | Object of class lme containing the zero model.
+\item \code{ICC} | List containing intraclass correlation and test parameters.
+\item \code{model.without} | Object of class gls containing the fixed effect model.
+\item \code{contrast} | List with contrast definitions.
+}
 }
 \description{
-The \code{\link[=hplm]{hplm()}} function computes a hierarchical piecewise regression model.
+The \code{\link[=hplm]{hplm()}} function computes a hierarchical piecewise regression model. It
+extends the standard piecewise regression model to multiple cases by
+estimating fixed and random effects. The function uses the \code{lme} function of
+the \code{nlme} package to fit linear mixed-effects models. The model can include
+random intercepts and random slopes for level, trend, and treatment effects.
+Additionally, it allows for the inclusion of autoregressive structures and
+unequal variances across phases. The function also provides options for
+likelihood ratio tests to compare models with and without random slope
+effects, as well as the calculation of intraclass correlations (ICC) to
+assess the proportion of variance attributable to between-case differences.
+This function is particularly useful for analyzing data from multiple
+single-case experimental designs (SCEDs) where observations are nested within
+cases.
 }
 \section{Functions}{
 \itemize{
@@ -180,6 +197,38 @@ The \code{\link[=hplm]{hplm()}} function computes a hierarchical piecewise regre
 \item \code{coef(sc_hplm)}: Extract model coefficients
 
 }}
+\section{Model specification}{
+ The fixed effects part of the model can be
+specified using the \code{fixed} argument, while the random effects part can be
+specified using the \code{random} argument. If not provided, default formulas
+based on the specified model type (e.g., "B&L-B") are created. The function
+also allows for the inclusion of autoregressive structures through the \code{ar}
+argument and unequal variances across phases through the
+\code{unequal_variances} argument.
+}
+
+\section{Random slopes}{
+ By setting the \code{random.slopes} argument to TRUE, the
+model will include random slope effects for level, trend, and treatment
+effects. This allows for individual differences in how cases respond to
+these effects.
+}
+
+\section{Likelihood ratio tests}{
+ If the \code{lr.test} argument is set to TRUE,
+the function will perform likelihood ratio tests to compare models with and
+without random slope effects. This helps to determine whether including
+random slopes significantly improves model fit.
+}
+
+\section{Intraclass correlation}{
+ If the \code{ICC} argument is set to TRUE, the
+function will calculate the intraclass correlation coefficient (ICC) to
+assess the proportion of variance attributable to between-case differences.
+This provides insight into the degree of similarity among observations
+within the same case.
+}
+
 \examples{
 
 ## Compute hplm model on a MBD over fifty cases (restricted log-likelihood)
@@ -196,6 +245,7 @@ Leidig2018 |>
 \seealso{
 Other regression functions: 
 \code{\link{bplm}()},
+\code{\link{fetch}()},
 \code{\link{mplm}()},
 \code{\link{plm}()},
 \code{\link{print.sc_ac}()},

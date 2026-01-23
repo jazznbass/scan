@@ -2,7 +2,7 @@
 % Please edit documentation in R/select_cases.R
 \name{select_cases}
 \alias{select_cases}
-\title{Select a subset of cases}
+\title{Select a subset of cases from an scdf}
 \usage{
 select_cases(scdf, ...)
 }
@@ -13,10 +13,12 @@ format.}
 \item{...}{Selection criteria. Either numeric, objectnames, or as characters.}
 }
 \value{
-An scdf with a subset of cases
+An scdf with a subset of cases.
 }
 \description{
-Select a subset of cases
+This function allows to select a subset of cases from an scdf by
+specifying either the case names or their numeric indices. Negative
+selection is also supported.
 }
 \examples{
 select_cases(exampleAB, Johanna, Karolina)
@@ -33,6 +35,7 @@ Other data manipulation functions:
 \code{\link{add_l2}()},
 \code{\link{as.data.frame.scdf}()},
 \code{\link{as_scdf}()},
+\code{\link{batch_apply}()},
 \code{\link{fill_missing}()},
 \code{\link{moving_median}()},
 \code{\link{print.sc_outlier}()},
@@ -44,5 +47,8 @@ Other data manipulation functions:
 \code{\link{smooth_cases}()},
 \code{\link{standardize}()},
 \code{\link{truncate_phase}()}
+}
+\author{
+Juergen Wilbert
 }
 \concept{data manipulation functions}

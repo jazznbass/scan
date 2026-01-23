@@ -140,6 +140,7 @@ Other overlap functions:
 \code{\link{pem}()},
 \code{\link{pet}()},
 \code{\link{pnd}()},
+\code{\link{select_phases}()},
 \code{\link{tau_u}()}
 }
 \author{

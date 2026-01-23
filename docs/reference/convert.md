@@ -1,0 +1,112 @@
+# Convert scdf to R code
+
+Converts an scdf object into R code that can be used to recreate the
+object.
+
+## Usage
+
+``` r
+convert(
+  scdf,
+  file = "",
+  study_name = "study",
+  case_name = "case",
+  inline = FALSE,
+  indent = 2,
+  silent = FALSE
+)
+```
+
+## Arguments
+
+- scdf:
+
+  A single-case data frame. See
+  [`scdf()`](https://jazznbass.github.io/scan/reference/scdf.md) to
+  learn about this format.
+
+- file:
+
+  A filename for exporting the syntax. If an empty string (default), the
+  syntax is not written to a file.
+
+- study_name:
+
+  Character string. Name of the study object.
+
+- case_name:
+
+  Character string. Name of the scdf objects.
+
+- inline:
+
+  If TRUE, phase definition is in an online version.
+
+- indent:
+
+  Integer. Indentation.
+
+- silent:
+
+  If TRUE, syntax is not printed to the console.
+
+## Value
+
+Returns a string (invisible).
+
+## Details
+
+This function is useful for exporting scdf objects for sharing or
+documentation purposes. The generated R code can be sourced to recreate
+the original scdf object.
+
+## See also
+
+Other io-functions:
+[`read_scdf()`](https://jazznbass.github.io/scan/reference/read_scdf.md),
+[`write_scdf()`](https://jazznbass.github.io/scan/reference/write_scdf.md)
+
+## Author
+
+Juergen Wilbert
+
+## Examples
+
+``` r
+filename <- tempfile()
+convert(exampleABC, file = filename)
+#> case1 <- scdf(
+#>   values = c(
+#>     58, 56, 60, 63, 51, 45, 44, 59, 45, 39, 83, 65, 70, 83, 70, 85, 47, 66,
+#>     77, 75, 51, 87, 80, 68, 70, 56, 52, 70, 83, 63
+#>   ),
+#>   phase_design = c(A = 10, B = 10, C = 10),
+#>   name = "Marie"
+#> )
+#> 
+#> case2 <- scdf(
+#>   values = c(
+#>     47, 41, 47, 52, 54, 65, 55, 37, 51, 60, 60, 65, 55, 46, 49, 54, 77, 73,
+#>     97, 64, 84, 71, 66, 74, 78, 68, 52, 76, 63, 54
+#>   ),
+#>   phase_design = c(A = 15, B = 8, C = 7),
+#>   name = "Rosalind"
+#> )
+#> 
+#> case3 <- scdf(
+#>   values = c(
+#>     50, 45, 63, 53, 66, 57, 35, 45, 74, 63, 47, 45, 47, 36, 51, 55, 35, 66,
+#>     59, 55, 73, 60, 85, 62, 79, 69, 87, 76, 90, 48
+#>   ),
+#>   phase_design = c(A = 20, B = 7, C = 3),
+#>   name = "Lise"
+#> )
+#> 
+#> study <- c(
+#>   case1, case2, case3
+#> ) 
+source(filename)
+all.equal(study, exampleABC)
+#> [1] TRUE
+unlink(filename)
+```

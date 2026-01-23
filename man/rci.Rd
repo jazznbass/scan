@@ -34,6 +34,17 @@ is \code{phases = c(1,2)}.}
 The \code{rci()} function computes indices of reliable change (Wise, 2004)
 and corresponding descriptive statistics.
 }
+\details{
+The reliable change index (RCI) indicates whether the change in scores from
+phase A to phase B is statistically reliable, that is, whether the change is
+larger than would be expected due to measurement error alone. The RCI can be
+calculated using different methods (Jacobsen & Truax, 1991; Christensen &
+Mendoza, 1986). The most common method is that of Jacobsen and Truax (1991)
+which uses the standard error of measurement in phase A to
+calculate the RCI. Christensen and Mendoza (1986) proposed an alteration of
+the RCI which uses the standard error of the difference between phase A and
+phase B means. Both methods are implemented in the \code{rci()} function.
+}
 \examples{
 
 ## Report the RCIs of the first case from the byHeart data and include a graph

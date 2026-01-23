@@ -11,7 +11,7 @@ and for other Monte-Carlo tasks."><meta property="og:image" content="https://jaz
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.67.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.67.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -180,7 +180,11 @@ the distribution.</p></dd>
 
 <dt id="arg-n-trials">n_trials<a class="anchor" aria-label="anchor" href="#arg-n-trials"></a></dt>
 <dd><p>If <code>distribution</code> (see below) is <code>"binomial"</code>, <code>n_trials</code> is
-the number of trials/observations/items.</p></dd>
+the number of trials/observations/items. E.g., if you simulate accuracy
+data with 10 items per measurement, set <code>n_trials = 10</code>. To assign
+different n_trials to several single-cases, use a vector of values (e.g.
+<code>n_trials = c(10, 15, 20)</code>). If the number of cases exceeds the length of
+the vector, values are recycled.</p></dd>
 
 
 <dt id="arg-mt-mt">mt, MT<a class="anchor" aria-label="anchor" href="#arg-mt-mt"></a></dt>
@@ -283,7 +287,7 @@ values will be recycled.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

@@ -3,14 +3,14 @@
 \name{combine}
 \alias{combine}
 \alias{c.scdf}
-\title{Combine single-case data frames}
+\title{Combine single-case data frames into one scdf}
 \usage{
 combine(..., dvar = NULL, pvar = NULL, mvar = NULL, info = NULL, author = NULL)
 
 \method{c}{scdf}(...)
 }
 \arguments{
-\item{...}{scdf objects}
+\item{...}{scdf objects to be combined.}
 
 \item{dvar}{Character string. Name of the dependent variable. Defaults to the
 dependent variable of the first case provided.}
@@ -31,5 +31,10 @@ copied from the first scdf provided (i.e the first argument of the
 function).
 }
 \description{
-Combine single-case data frames
+Combines several single-case data frames (scdf) into one scdf object.
 }
+\author{
+Juergen Wilbert
+}
+\keyword{data}
+\keyword{manipulation}

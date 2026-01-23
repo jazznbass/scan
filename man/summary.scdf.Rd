@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.scdf.R
 \name{summary.scdf}
 \alias{summary.scdf}
-\title{Summary function for an scdf}
+\title{Summary function for an scdf object}
 \usage{
 \method{summary}{scdf}(object, all_cases = FALSE, ...)
 }
@@ -14,5 +14,18 @@
 \item{...}{not in use}
 }
 \description{
-Summary function for an scdf
+Provides a summary of an \code{scdf} object, including the number of cases,
+measurements per case, and design information.
+}
+\details{
+The summary includes:
+\itemize{
+\item Total number of cases in the \code{scdf}.
+\item A table listing each case with the number of measurements and design.
+\item Variable names with annotations for phase, measurement-time, and dependent variable.
+\item Additional information and author details if available.
+}
+}
+\author{
+Juergen Wilbert
 }

@@ -23,6 +23,9 @@ shinyscan(
 
 \item{\dots}{Further arguments passed to the \code{shiny::runApp()} function.}
 }
+\value{
+This function launches a Shiny application.
+}
 \description{
 Run a Shiny app with most of the scan functions.
 }
@@ -31,4 +34,7 @@ This function launches a shiny application.
 You need to have \code{scplot} and \code{shiny} installed.
 These packages are suggested but not necessarily installed along with scan.
 \code{shinyscan()} will ask to install missing packages.
+}
+\author{
+Juergen Wilbert
 }

@@ -4,7 +4,7 @@
 \alias{bplm}
 \alias{print.sc_bplm}
 \alias{export.sc_bplm}
-\title{Bayesian Piecewise Linear Model}
+\title{Bayesian Piecewise Linear Model (bplm)}
 \usage{
 bplm(
   data,
@@ -125,7 +125,19 @@ An object of class \code{sc_bplm}.\tabular{ll}{
 }
 \description{
 Computes a bayesian (hierarchical) piecewise linear model based on a Markov
-chain Monte Carlo sampler.
+chain Monte Carlo sampler. The function automatically creates the fixed and random
+part of the regression model based on the provided data and the selected
+options. The function uses the MCMCglmm function of the MCMCglmm
+package to fit the model.
+}
+\details{
+The default model includes fixed trend, level, and slope effects as well as a
+random intercept for each single-case. The fixed part of the model can be
+changed by providing a custom formula to the \code{fixed} argument or by using
+the \code{update_fixed} argument. The random part of the model can be changed by
+providing a custom formula to the \code{random} argument or by setting the
+\code{random_trend}, \code{random_level}, or \code{random_slope} arguments to
+TRUE.
 }
 \section{Functions}{
 \itemize{
@@ -143,9 +155,14 @@ bplm(exampleAB_50, nitt = 5000)
 
 # Adding a random slope
 bplm(exampleAB_50, random_level = TRUE, nitt = 5000)
+
+# Custom fixed formula
+bplm(exampleAB_50, update_fixed = values ~ -1 + mt + phaseB +
+  interB, nitt = 5000)
 }
 \seealso{
 Other regression functions: 
+\code{\link{fetch}()},
 \code{\link{hplm}()},
 \code{\link{mplm}()},
 \code{\link{plm}()},

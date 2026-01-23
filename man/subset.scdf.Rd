@@ -2,7 +2,7 @@
 % Please edit documentation in R/subset.scdf.R
 \name{subset.scdf}
 \alias{subset.scdf}
-\title{Subset cases, rows, and variables}
+\title{Subset cases, rows, and variables of an scdf}
 \usage{
 \method{subset}{scdf}(x, subset, select, cases, ...)
 }
@@ -24,6 +24,11 @@ An scdf.
 \description{
 This function is mainly used to filter rows by a logical expression. It has
 also arguments to filter variables and cases.
+}
+\details{
+For subsetting rows, a logical expression can be provided in the \code{subset}
+argument. Missing values are treated as FALSE. The expression is evaluated
+within each single-case data frame of the scdf.
 }
 \examples{
 exampleAB |>

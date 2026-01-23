@@ -3,21 +3,24 @@
 \name{$.scdf}
 \alias{$.scdf}
 \alias{[.scdf}
-\title{Select an scdf}
+\title{Select an scdf case by name}
 \usage{
 \method{$}{scdf}(x, i)
 
 \method{[}{scdf}(x, i)
 }
 \arguments{
-\item{x}{A scdf object}
+\item{x}{A scdf object.}
 
-\item{i}{A case name from x}
+\item{i}{A case name from x. If i is not a name of x, a warning is issued.}
 }
 \value{
-A scdf
+A scdf object containing only the selected case.
 }
 \description{
-Select an scdf
+Selects a single case from a scdf object by its name.
+}
+\author{
+Juergen Wilbert
 }
 \keyword{internal}

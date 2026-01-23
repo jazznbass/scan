@@ -5,7 +5,7 @@
 \alias{set_dvar}
 \alias{set_mvar}
 \alias{set_pvar}
-\title{Set analysis variables in an scdf}
+\title{Set analysis variables in an scdf object}
 \usage{
 set_vars(data, dvar, mvar, pvar)
 
@@ -25,8 +25,12 @@ format.}
 
 \item{pvar}{Character string. Name of the phase variable.}
 }
+\value{
+An \code{scdf} object with updated variable settings.
+}
 \description{
-Set analysis variables in an scdf
+This function allows to set or change the dependent variable,
+measurement-time variable, and phase variable in an scdf object.
 }
 \examples{
 exampleAB_add |>
@@ -38,6 +42,7 @@ Other data manipulation functions:
 \code{\link{add_l2}()},
 \code{\link{as.data.frame.scdf}()},
 \code{\link{as_scdf}()},
+\code{\link{batch_apply}()},
 \code{\link{fill_missing}()},
 \code{\link{moving_median}()},
 \code{\link{print.sc_outlier}()},
@@ -49,5 +54,8 @@ Other data manipulation functions:
 \code{\link{smooth_cases}()},
 \code{\link{standardize}()},
 \code{\link{truncate_phase}()}
+}
+\author{
+Juergen Wilbert
 }
 \concept{data manipulation functions}

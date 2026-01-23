@@ -2,7 +2,7 @@
 % Please edit documentation in R/nap.R
 \name{nap}
 \alias{nap}
-\title{Nonoverlap of all Pairs}
+\title{Nonoverlap of all Pairs (NAP)}
 \usage{
 nap(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2))
 }
@@ -44,6 +44,10 @@ rescaled from -100 to 100 percent where negative
 values indicate an inverse effect is also displayed (\eqn{nap_{rescaled} = 2
 * nap - 100}).
 }
+\details{
+If a decrease of phase B scores is expected, set the argument
+\code{decreasing = TRUE}.
+}
 \examples{
 
 ## Calculate NAP for a study with  lower expected phase B scores
@@ -53,6 +57,10 @@ nap(gretchen, decreasing = TRUE)
 
 ## Request NAP for all cases from the Grosche2011 scdf
 nap(Grosche2011)
+
+## Calculate NAP for phase 1 and phase 3 of an ABAB design
+nap(exampleABAB, phases = c(1, 3))
+
 
 }
 \references{
@@ -69,6 +77,7 @@ Other overlap functions:
 \code{\link{pet}()},
 \code{\link{pnd}()},
 \code{\link{print.sc_cdc}()},
+\code{\link{select_phases}()},
 \code{\link{tau_u}()}
 }
 \author{

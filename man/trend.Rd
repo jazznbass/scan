@@ -40,6 +40,7 @@ regression model. This is a formula expression of the standard R class. The
 parameters of the model are \code{values}, \code{mt} and \code{phase}.}
 }
 \value{
+A list of class \code{sc_trend} containing:
 \item{trend}{A matrix containing the results (Intercept, B and beta)
 of separate regression models for phase A, phase B, and the whole data.}
 \item{first_mt}{Numeric argument from function call (see arguments
@@ -52,6 +53,18 @@ quadratic regression of measurement time on scores. Models are calculated
 separately for each phase and across all phases. For more advanced use, you
 can add regression models using the R-specific formula class.
 }
+\details{
+The function computes separate regression models for each phase and
+for the whole data. By default two models are computed: a linear model and
+a quadratic model. Additionally, custom models can be specified using the
+\code{model} argument. The measurement time variable is adjusted such that the
+first measurement time point of each phase is set to the value specified in
+the \code{first_mt} argument (default = 0). This means that if \code{first_mt = 0},
+the first measurement time point of each phase is set to 0, if \code{first_mt = 1}, the first measurement time point of each phase is set to 1, and so on.
+This adjustment allows for a more intuitive interpretation of the
+regression coefficients, especially the intercept, which then represents
+the estimated value at the beginning of each phase.
+}
 \examples{
 
 ## Compute the linear and squared regression for a random single-case
@@ -60,14 +73,14 @@ matthea <- random_scdf(design)
 trend(matthea)
 
 ## Besides the linear and squared regression models compute two custom models:
-## a) a cubic model, and 
+## a) a cubic model, and
 ## b) the values predicted by the natural logarithm of the
 ## measurement time.
 design <- design(slope = 0.3)
 ben <- random_scdf(design)
 trend(
-  ben, 
-  model = list("Cubic" = values ~ mt^3, "Log Time" = values ~ log(mt)), 
+  ben,
+  model = list("Cubic" = values ~ mt^3, "Log Time" = values ~ log(mt)),
   first_mt = 1 # must be set to 1 because log(0) would be -Inf
 )
 
@@ -77,6 +90,7 @@ trend(
 
 Other regression functions: 
 \code{\link{bplm}()},
+\code{\link{fetch}()},
 \code{\link{hplm}()},
 \code{\link{mplm}()},
 \code{\link{plm}()},
