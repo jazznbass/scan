@@ -2,7 +2,7 @@
 % Please edit documentation in R/design.R
 \name{design}
 \alias{design}
-\title{Generate a single-case design matrix}
+\title{Generate a single-case design matrix for multiple random single-cases}
 \usage{
 design(
   n = 1,

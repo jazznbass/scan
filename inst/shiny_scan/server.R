@@ -1179,10 +1179,10 @@ server <- function(input, output, session) {
       if (!is.na(input$scplot_xinc)) {
         paste0("set_xaxis(increment = ", input$scplot_xinc, ")")
       },
-      if (input$scplot_stats_mean_a) 'add_statline("mean", phase = "A")',
-      if (input$scplot_stats_median_a) 'add_statline("median", phase = "A")',
-      if (input$scplot_stats_max_a) 'add_statline("max", phase = "A")',
-      if (input$scplot_stats_min_a) 'add_statline("min", phase = "A")',
+      if (input$scplot_stats_mean_a) 'add_statline("mean", phase = 1)',
+      if (input$scplot_stats_median_a) 'add_statline("median", phase = 1)',
+      if (input$scplot_stats_max_a) 'add_statline("max", phase = 1)',
+      if (input$scplot_stats_min_a) 'add_statline("min", phase = 1)',
       if (input$scplot_stats_trend) 'add_statline("trend")',
       if (input$scplot_stats_mean) 'add_statline("mean")',
       if (input$scplot_stats_median) 'add_statline("median")',

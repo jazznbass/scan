@@ -28,6 +28,7 @@
 \alias{exampleAB_50.l2}
 \alias{exampleABC_150}
 \alias{exampleAB_mpd}
+\alias{example_stranger}
 \alias{Lenz2013}
 \alias{Leidig2018}
 \alias{Leidig2018_l2}
@@ -40,7 +41,7 @@
 \alias{Tarlow2017}
 \title{Single-case example data sets}
 \usage{
-data(example_data_sets, package = "scan")
+data(exampleAB, package = "scan")
 }
 \description{
 The \link{scan} package comes with a set of fictitious and authentic
@@ -67,6 +68,7 @@ and to reproduce results from the respective publications.
 \item \strong{exampleABC_150} — Fictitious ABC example (150 cases).
 \item \strong{exampleABC_50} — Fictitious ABC example (50 cases).
 \item \strong{exampleABC_outlier} — Fictitious ABC example with outlier.
+\item \strong{example_stranger} - Example for screen time of Stranger Things characters.
 \item \strong{Grosche2011} — Multiple-baseline (three cases) from a direct-instructive reading intervention (Grosche, 2011).
 \item \strong{Grosche2014} — Multiple-baseline (3×3 materials) reading intervention (Grosche, Lueke, & Wilbert, unpublished).
 \item \strong{GruenkeWilbert2014} — Multiple-baseline (six cases) from a story mapping reading intervention (Gruenke, Wilbert, & Stegemann-Calder, 2013).

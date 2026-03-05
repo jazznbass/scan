@@ -7,6 +7,10 @@
 
 - export function for `plm()` does not throw an error when AIC can not be computed.
 
+## New example datasets
+
+- example_stranger: example for screen time of Stranger Things characters.
+
 # scan 0.67.0
 
 ## Reworked Shiny Scan app
