@@ -1,8 +1,7 @@
 #' Single-case example data sets
 #' 
 #' @docType data
-#' @usage data(example_data_sets, package = "scan")
-#' 
+#' @usage data(exampleAB, package = "scan")
 #' @description
 #' The [scan] package comes with a set of fictitious and authentic
 #' single-case study data.
@@ -28,6 +27,7 @@
 #' - **exampleABC_150** — Fictitious ABC example (150 cases).
 #' - **exampleABC_50** — Fictitious ABC example (50 cases).
 #' - **exampleABC_outlier** — Fictitious ABC example with outlier.
+#' - **example_stranger** - Example for screen time of Stranger Things characters.
 #' - **Grosche2011** — Multiple-baseline (three cases) from a direct-instructive reading intervention (Grosche, 2011).
 #' - **Grosche2014** — Multiple-baseline (3×3 materials) reading intervention (Grosche, Lueke, & Wilbert, unpublished).
 #' - **GruenkeWilbert2014** — Multiple-baseline (six cases) from a story mapping reading intervention (Gruenke, Wilbert, & Stegemann-Calder, 2013).
@@ -79,7 +79,7 @@
 #'   exampleAB_simple exampleAB exampleAB_add exampleAB_decreasing
 #'   exampleAB_score exampleABC exampleABC_outlier exampleABC_50 exampleABAB
 #'   exampleA1B1A2B2 exampleA1B1A2B2_zvt exampleAB_50 exampleAB_50.l2
-#'   exampleABC_150 exampleAB_mpd Lenz2013 Leidig2018 Leidig2018_l2
+#'   exampleABC_150 exampleAB_mpd example_stranger Lenz2013 Leidig2018 Leidig2018_l2
 #'   SSDforR2017 Parker2011 Parker2007 Parker2009 Parker2009b Parker2011b Tarlow2017
 #' @author Juergen Wilbert
 #' @keywords datasets
