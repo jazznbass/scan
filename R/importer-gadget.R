@@ -6,6 +6,7 @@ import_scdf <- function() {
   #  library(bslib)
   #})
 
+  # ui ------
   ui <- miniUI::miniPage(
     shiny::tags$head(
       shiny::tags$style(shiny::HTML("
@@ -16,13 +17,14 @@ import_scdf <- function() {
     miniUI::miniContentPanel(
       shiny::verbatimTextOutput("status"),
       shiny::fillRow(
-        flex = c(1, 1),
+        flex = c(1,1),
         shiny::wellPanel(
           shiny::fileInput("file", "Choose file",
-                           accept = c(".csv", ".xlsx", ".xls", ".rds")),
+                           accept = c(".csv", ".xlsx", ".xls", ".rds", ".txt")),
           shiny::textInput("na", "NA strings (comma-sep.)", '"", NA'),
           shiny::selectInput("sep", "CSV separator", 
-                      c("comma" =",", "semicolon" =";", "tab" = "\t"), selected = 1),
+                      c("comma" = ",", "semicolon" = ";", "tab" =  "\t"), 
+                      selected = 1),
           shiny::textInput("obj_name", "Save as (object name)", "dat_scdf")
         ),
         shiny::wellPanel(
@@ -33,6 +35,7 @@ import_scdf <- function() {
     )
   )
   
+  # server ------
   server <- function(input, output, session) {
     raw_df  <- shiny::reactiveVal(NULL)
     scdfobj <- shiny::reactiveVal(NULL)
@@ -44,8 +47,14 @@ import_scdf <- function() {
     
     
     
-    shiny::observeEvent(input$file, {
+    shiny::observeEvent(input$file, load_file())
+    shiny::observeEvent(input$sep, load_file())
+    
+    load_file <- function() {
+      
       path <- input$file$datapath
+      if (length(path) == 0) return()
+      
       fname(input$file$name)
       ext  <- tolower(tools::file_ext(input$file$name))
       typ  <- "auto"
@@ -77,7 +86,7 @@ import_scdf <- function() {
           output$status <- shiny::renderText("Not a valid scdf file")
           return()
         }
-       
+        
       }
       
       # Excel
@@ -94,8 +103,13 @@ import_scdf <- function() {
       
       # CSV
       if (ext %in% c("csv","txt")) {
-        args <- list(file = path, header = TRUE, stringsAsFactors = FALSE, na.strings = nas)
         sep <- input$sep
+        dec <- if (sep == ";") "," else "."
+        args <- list(file = path, header = TRUE, 
+                     stringsAsFactors = FALSE, 
+                     na.strings = nas,
+                     sep = sep, dec = dec)
+        
         tb <- try(do.call(utils::read.csv, args), silent = TRUE)
         if (inherits(tb, "try-error")) { 
           output$status <- shiny::renderText(as.character(tb))
@@ -104,8 +118,13 @@ import_scdf <- function() {
         raw_df(tb)
       }
       scdfobj(NULL)
-      output$status <- shiny::renderText("Loaded table. Map columns and click Done.")
-    })
+      msg <- "Loaded table (see below). Map columns and click Done."
+      if (ncol(raw_df()) == 1 && ext %in% c("csv","txt")) {
+        msg <- "Check CSV separator. File not loaded correctly (see beow)."
+      }
+      
+      output$status <- shiny::renderText(msg)
+    }
     
     # Mapping UI
     output$map_ui <- shiny::renderUI({
@@ -169,6 +188,6 @@ import_scdf <- function() {
     shiny::observeEvent(input$cancel, shiny::stopApp(invisible(NULL)))
   }
   
-  viewer <- shiny::dialogViewer("scdf import", width = 400, height = 400)
+  viewer <- shiny::dialogViewer("scdf import", width = 600, height = 400)
   shiny::runGadget(ui, server, viewer = viewer)
 }
