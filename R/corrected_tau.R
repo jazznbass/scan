@@ -7,7 +7,6 @@
 #' @param alpha Sets the p-value at and below which a baseline correction is
 #'   applied.
 #' @param continuity If TRUE applies a continuity correction for calculating p
-#' @param repeated (deprecated)
 #' @param tau_method Character with values "a" or "b" (default) indicating
 #'   whether Kendall Tau A or Kendall Tau B is applied.
 #' @details This method has been proposed by Tarlow (2016). The baseline data
@@ -84,10 +83,6 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     }
     
     formula  <- as.formula(paste0(dvar, "~", mvar))
-    
-    
-    #fit_mblm <- mblm(formula, dataframe = A_data, repeated = FALSE)
-    #data$fit <- predict(fit_mblm, data, se.fit = FALSE)
     
     fit_ts <- theil_sen(formula, data = A_data)
     data$fit <- fit_ts$intercept + data[[mvar]] * fit_ts$slope
