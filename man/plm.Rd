@@ -114,7 +114,8 @@ considered to be a the constant number of trials across all measurements.}
 dependent variable is assumed to represent proportions \verb{[0,1]}. Otherwise
 dvar is assumed to represent counts.}
 
-\item{...}{Further arguments passed to the glm function.}
+\item{...}{Further arguments passed to the \code{\link[stats:glm]{stats::glm()}} or \code{\link[nlme:gls]{nlme::gls()}}
+function.}
 
 \item{x}{Object}
 
@@ -158,15 +159,14 @@ above).}
 }
 \description{
 The \code{plm} function computes a piecewise regression model (see Huitema &
-McKean, 2000). The function automatically creates the fixed part of the
-regression model based on the provided data and the selected options. The
-function uses the \code{glm} function of the stats package or the \code{gls}
-function of the nlme package to fit the model.
+McKean, 2000) for one case. The function automatically creates the default
+model which includes trend, level, and slope effects. The model can be
+changed with \code{trend}, \code{level}, and \code{slope} arguments or by providing a custom
+formula.
 }
 \details{
-The default model includes trend, level, and slope effects. The fixed part of
-the model can be changed by providing a custom formula to the \code{update}
-argument.
+The function uses the \code{glm} function of the stats package or the \code{gls}
+function of the nlme package (for auto-regression models).
 }
 \section{Functions}{
 \itemize{
