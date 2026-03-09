@@ -7,8 +7,7 @@
 #' @param alpha Sets the p-value at and below which a baseline correction is
 #'   applied.
 #' @param continuity If TRUE applies a continuity correction for calculating p
-#' @param repeated If TRUE applies the repeated median method for calculating
-#'   slope and intercept.
+#' @param repeated (deprecated)
 #' @param tau_method Character with values "a" or "b" (default) indicating
 #'   whether Kendall Tau A or Kendall Tau B is applied.
 #' @details This method has been proposed by Tarlow (2016). The baseline data
@@ -20,8 +19,7 @@
 #'   residuals of the Theil-Sen regression are taken for further calculations.
 #'   Finally, Kendall's tau is calculated for the dependent variable and the
 #'   dichotomous phase variable. The function here provides two extensions to
-#'   this procedure: The more accurate Siegel repeated median regression is
-#'   applied when `repeated = TRUE` and a continuity correction is applied when
+#'   this procedure: The more accurate continuity correction is applied when
 #'   `continuity = TRUE`.
 #'
 #' @family regression functions
@@ -37,16 +35,14 @@ corrected_tau <- function(data, dvar, pvar, mvar,
                           phases = c(1, 2), 
                           alpha = 0.05, 
                           continuity = FALSE, 
-                          repeated = FALSE,
                           tau_method = c("b", "a")) {
   
   # validity check ----
   check_args(
-    
     by_call(tau_method),
     within(alpha, 0, 1),
-    is_logical(continuity),
-    is_logical(repeated)
+    is_logical(continuity)
+    #is_logical(repeated)
   )
   
   # prepare scdf ----
@@ -64,9 +60,16 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     A_data <- data[rowsA, ]
     B_data <- data[rowsB, ]
     
-    if (var(A_data[[dvar]]) == 0) {
+    if (length(unique(A_data[[dvar]])) == 1) {
       warning(
         "All phase A values are identical. ",
+        "Autocorrelation can not be calculated and is set to NA.",
+        call. = FALSE
+      )
+      auto_tau <- list(tau = NA, z = NA, p = NA)
+    } else if (length(A_data[[dvar]]) < 3 ) {
+      warning(
+        "Need at least three data points in phase A. ",
         "Autocorrelation can not be calculated and is set to NA.",
         call. = FALSE
       )
@@ -81,17 +84,30 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     }
     
     formula  <- as.formula(paste0(dvar, "~", mvar))
-    fit_mblm <- mblm(formula, dataframe = A_data, repeated = repeated)
-    data$fit <- predict(fit_mblm, data, se.fit = FALSE)
-    x <- data[[dvar]] - data$fit
+    
+    
+    #fit_mblm <- mblm(formula, dataframe = A_data, repeated = FALSE)
+    #data$fit <- predict(fit_mblm, data, se.fit = FALSE)
+    
+    fit_ts <- theil_sen(formula, data = A_data)
+    data$fit <- fit_ts$intercept + data[[mvar]] * fit_ts$slope
+    
     y <- as.numeric(factor(data[[pvar]]))
+    
     base_corr_tau <- kendall_tau(
-      x, y, continuity_correction = continuity, tau_method = tau_method
+      x = data[[dvar]] - data$fit, 
+      y = y, 
+      continuity_correction = continuity, 
+      tau_method = tau_method
     )
     
     x <- data[[dvar]]
+    
     uncorrected_tau <- kendall_tau(
-      x, y, continuity_correction = continuity, tau_method = tau_method
+      x = data[[dvar]], 
+      y = y, 
+      continuity_correction = continuity, 
+      tau_method = tau_method
     )
     
     if (is.na(auto_tau$p)) {
@@ -122,9 +138,6 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   
   x <- lapply(data, corr_tau)
 
-  
-  
-  
   out <- list(
     tau = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > alpha) x$tau[2] else x$tau[3]), 
     p = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > alpha) x$p[2] else x$p[3]), 
@@ -135,12 +148,39 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     correction = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > alpha) FALSE else TRUE),
     alpha = alpha,
     continuity = continuity,
-    repeated   = repeated,
+    repeated   = FALSE,
     tau_method = tau_method,
     data = data
   )
   
   class(out) <- c("sc_bctau")
   attributes(out)[opts("phase", "mt", "dv")] <- list(pvar, mvar, dvar)
+  out
+}
+
+theil_sen <- function(formula, data) {
+  
+  y <- model.frame(formula, data)[[1]]
+  x <- model.frame(formula, data)[[2]]
+  
+  # Pairwise slopes (exclude ties in x)
+  idx <- combn(length(y), 2)
+  dx <- x[idx[2, ]] - x[idx[1, ]]
+  dy <- y[idx[2, ]] - y[idx[1, ]]
+  keep <- dx != 0
+  
+  #if (!any(keep)) stop("All x values are identical; slope is undefined.")
+
+  #fitted <- intercept + slope * x
+  #resid <- y - fitted
+  
+  slope <- median(dy[keep] / dx[keep])
+  intercept <- median(y - slope * x)
+  
+  out <- list(
+    intercept = intercept,
+    slope = slope
+  )
+  
   out
 }
