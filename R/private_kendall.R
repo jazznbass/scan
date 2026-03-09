@@ -5,7 +5,7 @@ kendall_tau <- function(x, y,
   N <- length(x)
   
   if (N < 3) {
-    warning("could not calculate p-values for tau. Less than two data points.")
+    warning("could not calculate p-values for tau. Less than three data points.")
   }
   
   if (all(x == x[1]) || all(x == x[2])) {
