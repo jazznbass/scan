@@ -12,12 +12,11 @@
 #' @import graphics
 #' @import knitr
 #' @import kableExtra
-#' @import mblm
 #' @import methods
 #' @import gt
 #' @import MCMCglmm
 #' @importFrom car Anova
-#' @importFrom utils install.packages read.csv capture.output
+#' @importFrom utils install.packages read.csv capture.output combn
 #' @keywords internal
 "_PACKAGE"
 
