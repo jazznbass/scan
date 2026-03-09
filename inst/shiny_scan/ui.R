@@ -4,6 +4,7 @@ source("resources.R")
 left_width <- 400
 
 # ---------- Data: New ----------
+
 tab_scdf <- nav_panel(
   "New / Edit",
   layout_sidebar(
@@ -25,8 +26,8 @@ tab_scdf <- nav_panel(
           actionButton("new_clear_cases", "Clear all cases",
                        class = "btn-warning"),
           actionButton("new_clear_fields", "Clear input fields",
-                      class = "btn-dark")),
-    
+                       class = "btn-dark")),
+      
       tags$hr(),
       downloadButton("scdf_save", "Save scdf", class = "btn-success")
     ),
@@ -40,36 +41,49 @@ tab_scdf <- nav_panel(
 )
 
 # ---------- Data: Load ----------
-tab_load <- nav_panel(
-  "Load",
-  layout_sidebar(
-    sidebar = sidebar(
-      title = NULL, # "Import",
-      open  = "always", 
-      width = left_width,
-      selectInput("scdf_example", "Choose example", choices = res$choices$examples),
-      tags$hr(),
-      fileInput("upload", NULL,
-                accept = c(".csv", ".rds", ".xlsx", ".xls", ".R", ".r", ".txt"),
-                buttonLabel = "Choose file"),
-      selectInput("scdf_load_cvar", "Case variable", choices = "case"),
-      selectInput("scdf_load_pvar", "Phase variable", choices = "phase"),
-      selectInput("scdf_load_dvar", "Dependent variable", choices = "values"),
-      selectInput("scdf_load_mvar", "Measurement time variable", choices = "mt"),
-      textInput("scdf_load_na", "Missing values", value = '"", "NA"'),
-      selectInput("scdf_csv", "Separators (only for .csv and .txt files)", 
-                  choices = c("comma" = ",", "semicolon" = ";", "tab" = "\t", "space" = " ")
-      ),
-      tags$hr(),
-      actionButton("scdf_import",   "Import scdf",    class = "btn-primary")
-    ),
-    mainPanel(
-      verbatimTextOutput("load_messages"),
-      verbatimTextOutput("load_output"),
-      htmlOutput("load_output_html")
-    )
+card_load_example <- card(
+  card_body(
+    selectInput("scdf_example", "Choose example", choices = res$choices$examples),
+    tags$hr(),
+    actionButton("scdf_import", "Import example", class = "btn-primary")
   )
 )
+  
+card_load_import <- card(
+  card_body(
+    fileInput("upload", NULL,
+              accept = c(".csv", ".rds", ".xlsx", ".xls", ".R", ".r", ".txt"),
+              buttonLabel = "Choose file"),
+    selectInput("scdf_load_cvar", "Case variable", choices = "case"),
+    selectInput("scdf_load_pvar", "Phase variable", choices = "phase"),
+    selectInput("scdf_load_dvar", "Dependent variable", choices = "values"),
+    selectInput("scdf_load_mvar", "Measurement time variable", choices = "mt"),
+    textInput("scdf_load_na", "Missing values", value = '"", "NA"'),
+    selectInput("scdf_csv", "Separators (only for .csv and .txt files)", 
+                choices = c("comma" = ",", "semicolon" = ";", "tab" = "\t", "space" = " ")
+    ),
+    tags$hr(),
+    actionButton("scdf_import",   "Import scdf",    class = "btn-primary")
+  )
+)
+
+card_load_output <- card(
+  card_body(
+    verbatimTextOutput("load_messages"),
+    verbatimTextOutput("load_output"),
+    htmlOutput("load_output_html")
+  )
+)
+  
+nav_panel_load <- nav_panel("Load",
+  layout_columns(
+    col_widths = c(3, 9),
+    navset_tab(
+      nav_panel("Import", card_load_import),
+      nav_panel("Examples", card_load_example)
+    ),
+    card_load_output
+))
 
 # ---------- Transform ----------
 tab_transform <- layout_sidebar(
@@ -122,7 +136,12 @@ tab_stats <- layout_sidebar(
       )),
       downloadButton("stats_save", label = "Save", class = "btn-success")
     ),
-    input_switch("stats_out", "HTML", TRUE),
+    div(class = "toolbar",
+      input_switch("stats_out", "HTML", TRUE),
+      input_switch("stats_description","Method description", FALSE)
+    ), 
+                 #tags$span("Show short description", class = "chklabel-big"),
+                 #value = FALSE),
     conditionalPanel('input.stats_description', htmlOutput("stats_description")),
     verbatimTextOutput("stats_syntax"),
     conditionalPanel('!input.stats_out', verbatimTextOutput("stats_text")),
@@ -130,56 +149,43 @@ tab_stats <- layout_sidebar(
   )
 )
 
-# ---------- Plot ----------
-# tab_plot <- layout_sidebar(
-#   sidebar = sidebar(
-#     title = NULL, 
-#     open  = "always", 
-#     width = left_width,
-#     textAreaInput("plot_arguments", "Arguments", value = "", rows = 5,
-#                   placeholder = res$placeholder$plot_arguments),
-#     selectInput("scplot_examples", "Stats templates",
-#                 choices = names(res$choices$scplot_examples)),
-#     selectInput("scplot_templates_design", "Design templates",
-#                 choices = names(res$choices$scplot_templates_design)),
-#     selectInput("scplot_templates_annotate", "Annotate templates",
-#                 choices = names(res$choices$scplot_templates_annotate)),
-#     downloadButton("saveplot", "Save plot", class = "btn-success")
-#   ),
-#   mainPanel(
-#     verbatimTextOutput("plot_syntax"),
-#     plotOutput("plot_scdf", width = 1000, height = 800)
-#   )
-# )
+# ---------- Plot -------
 
-
-# ---------- Plot
-
-card_plot_args <- card(
+card_plot_theme <- card(
   card_body(
     h5("Select case"),
     selectInput("scplot_select_case", NULL, choices = "all"),
     
     h5("Themes"),
-    selectInput("scplot_theme_1", NULL, choices = c(res$scplot_themes), selected = "default"),
+    selectInput("scplot_theme_1", NULL, choices = res$scplot_themes, selected = "default"),
     selectInput("scplot_theme_2", NULL, choices = c("None", res$scplot_themes)),
     selectInput("scplot_theme_3", NULL, choices = c("None", res$scplot_themes)),
     input_switch("scplot_legend", "Add legend", FALSE),
+    
     h5("Textsize"),
-    sliderInput("scplot_text_size", NULL, min = 6, max = 25, value = 6),
+    sliderInput("scplot_text_size", NULL, min = 6, max = 25, value = 6)
+  )
+)
+
+card_plot_axis <- card(
+  card_body(
     h5("Axis"),
     numericInput("scplot_xinc", "x increment", value = NA),
-    
-    
     layout_columns(
       col_widths = c(6, 6),
       numericInput("scplot_ymin", "y min", value = NA),
       numericInput("scplot_ymax", "y max", value = NA)
-    )
+    ),
+    textInput("scplot_xlabel", "x label"),
+    textInput("scplot_ylabel", "y label"),
+    textInput("scplot_phasenames", "Phasenames"),
+    textInput("scplot_casenames", "Casenames"),
+    input_switch("scplot_footer", "Footnote", FALSE),
+    
   )
 )
 
-card_plot_args_2 <- card(
+card_plot_lines <- card(
   card_body(
     h5("Baseline"),
     input_switch("scplot_stats_trend_a", "Trend", FALSE),
@@ -197,9 +203,12 @@ card_plot_args_2 <- card(
     input_switch("scplot_stats_moving", "Moving mean", FALSE),
     input_switch("scplot_stats_loess", "Smoothed line", FALSE),
     h5("Add variable"),
-    selectInput("scplot_add", NULL, choices = "None"),
-    hr(),
-    h5("Export"),
+    selectInput("scplot_add", NULL, choices = "None")
+  )
+)
+
+card_plot_save <- card(
+  card_body(
     layout_columns(
       col_widths = c(4, 4, 4),
       numericInput("width",  "Width",  value = 1600, min = 100, max = 4000),
@@ -207,24 +216,27 @@ card_plot_args_2 <- card(
       numericInput("dpi",    "Dpi",    value = 200,  min = 50,  max = 1200),
     ),
     downloadButton("saveplot_2", "Save plot", class = "btn-success")
-    
   )
 )
 
-card_plot_scdf_2 <- card(
+card_plot_output <- card(
   card_body(
     #verbatimTextOutput("scplot_syntax"),
     plotOutput("scplot_plot")
   ), height = "100vh"
 )
 
-tab_plot_new <- layout_columns(
-  col_widths = c(2, 2, 8),
-  card_plot_args,
-  card_plot_args_2,
-  card_plot_scdf_2
-)
 
+tab_plot <- layout_columns(
+  col_widths = c(3, 9),
+  navset_tab(
+    nav_panel("Theme", card_plot_theme),
+    nav_panel("Axis", card_plot_axis),
+    nav_panel("Lines", card_plot_lines),
+    nav_panel("Save", card_plot_save)
+  ),
+  card_plot_output
+)
 
 
 # ---------- Power-test ----------
@@ -268,19 +280,20 @@ card_plot <- card(
   ), height = "50vh"
 )
 
+
+ 
 tab_power_test <- layout_columns(
   col_widths = c(2, 3, 7),
   heights_equal = "row",
-  # col 1
   card_design,
-  # col 2
   card_analysis,
-  # col 3: stack two half-height cards vertically
   div(class = "d-flex flex-column gap-3 h-100",
     card_run,
     card_plot
   )
 )
+
+#tab_power_test <- navset_tab(nav_panel("Power test", tab_power_test))
 
 # ---------- Settings ----------
 tab_settings <- layout_columns(
@@ -311,9 +324,9 @@ tab_settings <- layout_columns(
   card(
     card_header("Stats"),
     card_body(
-      input_switch("stats_description",
-                   tags$span("Show short description", class = "chklabel-big"),
-                   value = FALSE),
+      #input_switch("stats_description",
+      #             tags$span("Show short description", class = "chklabel-big"),
+      #             value = FALSE),
       input_switch("stats_default",
                    tags$span("Show defaults", class = "chklabel-big"),
                    value = FALSE),
@@ -367,11 +380,12 @@ ui <- tagList(
     id = "scan",
     theme = res$theme_light,
     navbar_options = navbar_options(class = "bg-primary", theme = "dark"),
-    nav_menu("Data", tab_load, tab_scdf),
+    #nav_menu("Data", nav_panel_load, tab_scdf),
+    nav_panel("Data", nav_panel_load),
+    nav_panel("New/Edit", tab_scdf),
     nav_panel("Transform",  tab_transform),
     nav_panel("Stats",      tab_stats),
-    nav_panel("Plot",       tab_plot_new),
-    #nav_panel("Plot",       tab_plot),
+    nav_panel("Plot",       tab_plot),
     nav_panel("Power",      tab_power_test),
     nav_panel("Settings",   tab_settings),
     navbar_help,
