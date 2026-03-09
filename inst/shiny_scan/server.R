@@ -463,7 +463,7 @@ server <- function(input, output, session) {
 
   # +++ Tab Transform +++ ----
 
-  ## render ----
+  ### render ----
   transformed <- reactive({
     out <- my_scdf()
     syntax = "scdf"
@@ -529,7 +529,7 @@ server <- function(input, output, session) {
     out
   })
 
-  ## save ----
+  ### save ----
   output$transformed_save <- downloadHandler(
     filename = function() {
       scdf <- transformed()
@@ -552,7 +552,7 @@ server <- function(input, output, session) {
     }
   )
   
-  ## output ------
+  ### output ------
   
   output$transform_scdf <- renderPrint({
     if(!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
@@ -574,21 +574,21 @@ server <- function(input, output, session) {
   # +++ Tab Stats ++++ -----
   
   stats_class <- reactiveVal()
+  stats_args_tab_initialized <- reactiveVal(FALSE)
   
-  ## Calculate ---- 
+  ### Calculate ---- 
   calculate_stats <- reactive({
     if (!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
     scdf <- transformed()
     
     if (input$stats_select_case != "all") {
-      scdf <- str2lang(paste0("select_cases(scdf, ", input$stats_select_case, ")")) |> eval()
+      scdf <- str2lang(
+        paste0("select_cases(scdf, ", input$stats_select_case, ")")
+      ) |> eval()
     }
     
-    call <- paste0("scan::", get_stats_call())
-    
-    #if (input$stats_batch) {
-    #  call <- paste0("batch_apply(scdf,", call, ")")
-    #}
+    call <- get_stats_call()
+    call <- paste0("scan::", call)
     
     tryCatch(
       out <- str2lang(call) |> eval(),
@@ -598,11 +598,6 @@ server <- function(input, output, session) {
         validate(msg)
       }
     )
-    # if (input$stats_batch) {
-    #   stats_class(class(out[[1]]))
-    # } else {
-    #   stats_class(class(out))
-    # }
     stats_class(class(out))
     update_print()
     out
@@ -640,7 +635,7 @@ server <- function(input, output, session) {
     
   })
  
-  ## Output ----
+  ### Output ----
   output$stats_html <- renderUI({
     results <- calculate_stats()
     print_args <- input$stats_print_arguments
@@ -652,26 +647,6 @@ server <- function(input, output, session) {
       call <- paste0("export(results)")
     }
     
-    # if (input$stats_batch) {
-    #   
-    #   str_render <- if (getOption("scan.export.engine") == "gt") {
-    #     " |> gt::as_raw_html() |> HTML()"
-    #   } else {
-    #     " |> print() |> as.character() |> HTML()"
-    #   }
-    #   call <- paste0(
-    #     "lapply(results, function(results) {",
-    #     call, str_render, "})"
-    #   )
-    #   
-    #   tryCatch(
-    #     tmp <- str2lang(call) |> eval(),
-    #     error = function(e) {
-    #       validate(res$error_msg$html_output, e)
-    #     }
-    #   )  
-    #   
-    # } else {
     tryCatch(
       if (getOption("scan.export.engine") == "gt") {
         str2lang(call) |> eval() |> gt::as_raw_html() |> HTML()
@@ -682,8 +657,6 @@ server <- function(input, output, session) {
         validate(res$error_msg$html_output)
       }
     )    
-    
-    
 
   })
 
@@ -696,30 +669,21 @@ server <- function(input, output, session) {
       call<- paste0("print(results, ", print_args, ")")
     } else call <- "print(results)"
     
-    # if (input$stats_batch) {
-    #  
-    #   call <- paste0(
-    #     "mapply(function(results, nm) {",
-    #     "cat('\\nCase:', nm, '\\n\\n'); ",
-    #     call, 
-    #     "; cat('\\n", strrep("\\u2501", 75), "\\n')",
-    #     "}, results, nm = names(results))"
-    #   )
-    #  
-    #   tmp <- str2lang(call) |> eval()
-    #   
-    # } else {
-    #   str2lang(call) |> eval()      
-    # }
     str2lang(call) |> eval()     
-
   })
 
+  observeEvent(input$stats_tabs, {
+    if (identical(input$stats_tabs, "Arguments")) {
+      stats_args_tab_initialized(TRUE)
+    }
+  })
   
-  observeEvent(input$func, {
+  ### observe stats_func ----
+  
+  observeEvent(input$stats_func, {
+    ## show description
     if(input$stats_description) {
-    
-      hf <- help(input$func, package = "scan")
+      hf <- help(input$stats_func, package = "scan")
       res <- utils:::.getHelpFile(hf)
       desc <- Filter(function(x) attr(x, "Rd_tag") == "\\description", res)
       if (length(desc) > 0) {
@@ -728,10 +692,11 @@ server <- function(input, output, session) {
         output$stats_description <- renderUI({
           tags$p(HTML(desc), style = "font-size:18px; color:darkblue;")
         })
-
       }
     }
     updateTextAreaInput(session, "stats_print_arguments", value = "")
+    stats_args_tab_initialized(FALSE)
+    output$stats_arguments <- renderUI(render_stats_args_input())
   })
   
   output$stats_syntax <- renderPrint({
@@ -739,18 +704,21 @@ server <- function(input, output, session) {
   })
 
 
-  ## Arguments ------
+  ### get stat func arguments ------
   stat_arg_names <- reactive({
-    .formals <- formals(eval(str2lang(paste0("scan::", input$func))))
+    .formals <- formals(eval(str2lang(paste0("scan::", input$stats_func))))
     args <- names(.formals)
     values <- .formals
 
+    # remove some arguments
     id <- which(!args %in% c(
       "dvar", "pvar", "mvar", "phases",
       "data", "scdf", "data.l2", "offset", "lag.max",
       "graph", "output", "...")
     )
-    if (input$func == "mplm") {
+    
+    # add dvar for mplm
+    if (input$stats_func == "mplm") {
       id <- c(which(args == "dvar") , id)
       values[which(args == "dvar")] <- scan:::dv(transformed())
     }
@@ -758,16 +726,17 @@ server <- function(input, output, session) {
     list(names = args[id], values = values[id])
   })
 
-  output$stats_arguments <- renderUI({
+  ### create argument inputs ----
+  render_stats_args_input <- reactive({
     args <- stat_arg_names()
-
+    
     out <- vector("list", length(args$names))
     if (length(out) > 0) {
       for (i in 1:length(out)) {
-
+        
         value <- args$values[[i]]
         if (is.character(value)) value <- deparse(value)
-   
+        
         if (!is.name(value) && !inherits(value, "call") && isTRUE(is.na(value))) 
           value <- substitute(value) |> deparse()
         if (is.null(value)) value <- substitute(value) |> deparse()
@@ -783,7 +752,7 @@ server <- function(input, output, session) {
           }
         }
         outvalue <- value
-
+        
         if (length(value) > 1) {
           choices <- setNames(quoted(value), value)
           selected <- names(choices)[1]
@@ -797,34 +766,31 @@ server <- function(input, output, session) {
             args$names[i], args$names[i], value = outvalue
           )
         } else if (is.logical(value)) {
-          choices <- c("FALSE" = FALSE, "TRUE" = TRUE)
-          #out[[i]] <- div(
-          #  style = "display: flex; align-items: center; vertical-align: top; padding-left: 5px;",
-          #  tags$label(args$names[i]),
-          #  radioButtons(args$names[i], NULL,
-          #               choices = choices,
-          #               inline = TRUE)
-          #)
+          #choices <- c("FALSE" = FALSE, "TRUE" = TRUE)
           out[[i]] <- checkboxInput( 
             args$names[i], 
             tags$span(args$names[i], class = "chklabel-big"),
             value = outvalue
           )
-          #out[[i]] <- radioButtons(
-          #  args$names[i], args$names[i],
-          #  choices = choices,
-          #  inline = TRUE, selected = outvalue
-          #)
         } else {
           out[[i]] <- textInput(args$names[i], args$names[i], value = outvalue)
         }
       }
       return(out)
+    } else {
+      return(NULL)
     }
   })
 
-  ## get stats call ----
+  ### get stats call ----
   get_stats_call <- reactive({
+    func <- input$stats_func
+    # returns function without args if tab has not been initialised
+
+    if (!stats_args_tab_initialized()) {
+      return(paste0(input$stats_func, "(scdf)"))
+    }
+   
     full_args <- stat_arg_names()
     args <- full_args
     values <- sapply(args$names, function(name) input[[name]])
@@ -834,7 +800,7 @@ server <- function(input, output, session) {
     if (!input$stats_default) {
       id_default <- mapply(
         function(origin, new) {
-  
+          
           if (typeof(origin) == "language") origin <- eval(origin)
           if (typeof(origin) == "symbol") origin <- deparse(origin)
           if (identical(new, origin)) return(TRUE)
@@ -843,7 +809,7 @@ server <- function(input, output, session) {
           
           if (substr(deparse(origin[1]), 1,3) == "NA_") origin <- NA
           if (identical(new, deparse(origin[1]))) return(TRUE)
-    
+          
           return(FALSE)
         },
         origin = full_args$values,
@@ -853,13 +819,13 @@ server <- function(input, output, session) {
     }
     
     id <- which(values != "")
-
+    
     args <- args[id]
     values <- values[id]
-
+    
     str_scdf <- "scdf"
     call <- paste0(
-      input$func, "(", str_scdf,
+      input$stats_func, "(", str_scdf,
       if (length(args > 0)) {
         paste0(", ",paste0(args, " = ", values, collapse = ", "))
       } else {
@@ -867,22 +833,18 @@ server <- function(input, output, session) {
       },
       ")"
     )
+
     call
   })
 
-  ## Save ------
-  
-  condition_for_output <- reactive({
-    TRUE#!(input$stats_out && input$stats_batch)
-  })
-  
-  
+  ### Save ------
+
   output$stats_save <- downloadHandler(
     
     filename = function() {
       scdf <- transformed()
       out <- paste(
-        input$prefix_output_stats, input$func,
+        input$prefix_output_stats, input$stats_func,
         sprintf("%02d", length(scdf)),
         paste0(unique(scdf[[1]]$phase), collapse = ""),
         format(Sys.time(), format = "%y%m%d-%H%M%S"),
@@ -895,14 +857,6 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       
-      if (!(condition_for_output())) {
-        showNotification(
-          "An html or docx output for case-by-case analyses is not avaliable yet. Please switch to the text output before saving.", 
-          duration = 10,
-          type = "error")
-        return(invisible(NULL)) 
-      }
-      
       if (!input$stats_out) {
         results <- calculate_stats()
         print_args <- input$stats_print_arguments
@@ -910,16 +864,6 @@ server <- function(input, output, session) {
           print_args <- paste0(", ", print_args)
           call<- paste0("print(results, ", print_args, ")")
         } else call <- "print(results)"
-        
-        # if (input$stats_batch) {
-        #   call <- paste0(
-        #     "tmp <- mapply(function(results, nm) {",
-        #     "cat('\\nCase:', nm, '\\n\\n'); ",
-        #     call, 
-        #     "; cat('\\n", strrep("\\u2501", 75), "\\n')",
-        #     "}, results, nm = names(results))"
-        #   )
-        # }
         
         call <- paste0("capture.output(", call, ")")
         writeLines(str2lang(call) |> eval(), con = file)
@@ -1093,7 +1037,10 @@ server <- function(input, output, session) {
       
       paste0("set_theme(", paste0("'", themes, "'", collapse = ", "), ")"),
       if (input$scplot_text_size > 6) paste0('set_base_text(size = ', input$scplot_text_size, ')'),
-      if (input$scplot_legend) 'add_legend()',
+      if (input$scplot_legend_position != "none") {
+        #paste0('add_legend(position = ',  input$scplot_legend_position , ')')
+        glue::glue('add_legend(position = "{input$scplot_legend_position}")')
+      },
       if (!input$scplot_ylabel == "") paste0('set_ylabel(label = ', deparse(input$scplot_ylabel), ')'),
       if (!input$scplot_xlabel == "") paste0('set_xlabel(label = ', deparse(input$scplot_xlabel), ')'),
       if (!input$scplot_footer) 'add_caption(label = NULL)',
@@ -1124,6 +1071,7 @@ server <- function(input, output, session) {
   ## Render plot ----
 
   output$scplot_plot <- renderPlot(res = 120, {
+    if (!inherits(my_scdf(), "scdf")) validate(res$msg$no_case)
     req(inherits(my_scdf(), "scdf"))
     
     call <- paste0(create_scplot_call(), " |> print()")

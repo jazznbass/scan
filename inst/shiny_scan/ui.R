@@ -43,7 +43,9 @@ tab_scdf <- nav_panel(
 # ---------- Data: Load ----------
 card_load_example <- card(
   card_body(
-    selectInput("scdf_example", "Choose example", choices = res$choices$examples),
+    selectInput("scdf_example", "Choose example", 
+                choices = res$choices$examples, size = 15,
+                selectize = FALSE),
     tags$hr(),
     actionButton("scdf_import", "Import example", class = "btn-primary")
   )
@@ -111,43 +113,57 @@ tab_transform <- layout_sidebar(
 )
 
 # ---------- Stats ----------
-tab_stats <- layout_sidebar(
-  sidebar = sidebar(
-    title = NULL,
-    open  = "always", 
-    width = 400,
+
+card_stats_main <- card(
+  card_body(
     h5("Select case"),
     selectInput("stats_select_case", NULL, choices = "all"),
-    #input_switch("stats_batch", "Case-by-case analyses", FALSE),
-    h5("Statistic"),
-    selectInput("func", NULL, choices = res$choices$fn_stats),
+    h5("Select analysis"),
+    selectInput("stats_func", NULL, choices = res$choices$fn_stats,
+                selectize = FALSE, size = length(res$choices$fn_stats))
+  )
+)
+
+card_stats_args <- card(
+  card_body(
     uiOutput("stats_arguments")
-  ),
- 
-  mainPanel(
+  )
+)
+
+card_stats_output <- card(
+  card_body(
     tags$head(tags$style(HTML("
       .toolbar { display:flex; gap:16px; align-items:center; }
       .toolbar .stretch { flex:1; }"
     ))),
     div(class = "toolbar",
-      div(class = "stretch", textAreaInput(
-        "stats_print_arguments", label = "Output arguments",
-        rows = 1, width = "100%", placeholder = res$placeholder$stats_out_args
-      )),
-      downloadButton("stats_save", label = "Save", class = "btn-success")
+        div(class = "stretch", textAreaInput(
+          "stats_print_arguments", label = "Output arguments",
+          rows = 1, width = "100%", placeholder = res$placeholder$stats_out_args
+        )),
+        downloadButton("stats_save", label = "Save", class = "btn-success")
     ),
     div(class = "toolbar",
-      input_switch("stats_out", "HTML", TRUE),
-      input_switch("stats_description","Method description", FALSE)
+        input_switch("stats_out", "HTML", TRUE),
+        input_switch("stats_description","Method description", FALSE)
     ), 
-                 #tags$span("Show short description", class = "chklabel-big"),
-                 #value = FALSE),
     conditionalPanel('input.stats_description', htmlOutput("stats_description")),
     verbatimTextOutput("stats_syntax"),
     conditionalPanel('!input.stats_out', verbatimTextOutput("stats_text")),
     conditionalPanel('input.stats_out', tableOutput("stats_html"))
   )
 )
+
+tab_stats <- layout_columns(
+  col_widths = c(3, 9),
+  navset_tab(
+    id = "stats_tabs",
+    nav_panel("Main", card_stats_main),
+    nav_panel("Arguments", card_stats_args)
+  ),
+  card_stats_output
+)
+
 
 # ---------- Plot -------
 
@@ -160,8 +176,9 @@ card_plot_theme <- card(
     selectInput("scplot_theme_1", NULL, choices = res$scplot_themes, selected = "default"),
     selectInput("scplot_theme_2", NULL, choices = c("None", res$scplot_themes)),
     selectInput("scplot_theme_3", NULL, choices = c("None", res$scplot_themes)),
-    input_switch("scplot_legend", "Add legend", FALSE),
-    
+    selectInput("scplot_legend_position", "Legend position",
+                choices = res$choices$legend_position, 
+                selected = "none"),
     h5("Textsize"),
     sliderInput("scplot_text_size", NULL, min = 6, max = 25, value = 6)
   )
