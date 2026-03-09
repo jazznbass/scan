@@ -1,18 +1,16 @@
 #' Bayesian Piecewise Linear Model (bplm)
 #'
 #' Computes a bayesian (hierarchical) piecewise linear model based on a Markov
-#' chain Monte Carlo sampler. The function automatically creates the fixed and random
-#' part of the regression model based on the provided data and the selected
-#' options. The function uses the MCMCglmm function of the MCMCglmm
-#' package to fit the model.
-#' 
-#' The default model includes fixed trend, level, and slope effects as well as a
+#' chain Monte Carlo sampler. The function automatically creates the fixed and
+#' random part of the regression model.
+#'
+#' The function uses the [MCMCglmm::MCMCglmm()] function to fit the model. The
+#' default model includes fixed trend, level, and slope effects as well as a
 #' random intercept for each single-case. The fixed part of the model can be
-#' changed by providing a custom formula to the `fixed` argument or by using
-#' the `update_fixed` argument. The random part of the model can be changed by
+#' changed by providing a custom formula to the `fixed` argument or by using the
+#' `update_fixed` argument. The random part of the model can be changed by
 #' providing a custom formula to the `random` argument or by setting the
-#' `random_trend`, `random_level`, or `random_slope` arguments to
-#' TRUE.
+#' `random_trend`, `random_level`, or `random_slope` arguments to TRUE.
 #'
 #' @inheritParams .inheritParams
 #' @order 1
@@ -31,27 +29,25 @@
 #'   of the regression model.
 #' @param update_fixed An easier way to change the fixed model part (e.g., `. ~
 #'   . + newvariable`).
-#' @param ... Further arguments passed to the mcmcglmm function.
-#' @return An object of class `sc_bplm`.
-#'  |  |  |
-#'  | --- | --- |
-#'  | `model` | List containing information about the applied model. |
-#'  | `N` | Number of single-cases. |
-#'  | `formula` |A list containing the fixed and the random formulas of the hplm model. |
-#'  | `mcmglmm` | Object of class MCMglmm. |
-#'  | `contrast` | List with contrast definitions. |
+#' @param ... Further arguments passed to the [MCMCglmm::MCMCglmm()] function.
+#' @return An object of class `sc_bplm` with element:
+#' - `model` - List containing information about the applied model. 
+#' - `N` - Number of single-cases.
+#' - `formula` - A list containing the fixed and the random formulas of the hplm model. 
+#' - `mcmglmm` -  Object of class MCMglmm.
+#' - `contrast` -  List with contrast definitions.
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @examples
 #' # plm regression
 #' bplm(example_A24)
-#' 
+#'
 #' # Multilevel plm regression with random intercept
 #' bplm(exampleAB_50, nitt = 5000)
-#' 
+#'
 #' # Adding a random slope
 #' bplm(exampleAB_50, random_level = TRUE, nitt = 5000)
-#' 
+#'
 #' # Custom fixed formula
 #' bplm(exampleAB_50, update_fixed = values ~ -1 + mt + phaseB +
 #'   interB, nitt = 5000)
@@ -142,9 +138,11 @@ bplm <- function(data, dvar, pvar, mvar,
   )
   
 # out ----
-    
+  
   out$model$fixed  <- fixed
   out$model$random <- random
+  
+  
   out$contrast <- list(level = contrast_level, slope = contrast_slope)
   
   class(out) <- c("sc_bplm")

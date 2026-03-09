@@ -1,11 +1,12 @@
 #' ANOVA Table for Piecewise Linear Models
 #' 
-#' Model comparison for piecewise regression models fitted with plm(),
-#' hplm(), or mplm() using likelihood ratio tests.
+#' Model comparison for piecewise regression models fitted with `plm()`,
+#' `hplm()`, or `mplm()` using likelihood ratio tests.
 #' 
 #' @aliases anova.sc_plm anova.sc_hplm anova.sc_mplm
-#' @param object an object containing the results returned by a plm().
-#' @param ... additional plm objects.
+#' @param object An object containing the results returned by `plm()`,
+#' `hplm()`, or `mplm()`.
+#' @param ... additional objects for model comparison.
 #' @return An object of class `anova` containing the results of the model
 #'  comparison.
 #' @details
