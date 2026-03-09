@@ -22,7 +22,6 @@ Imports:
   knitr,
   kableExtra,
   readxl,
-  mblm,
   magrittr,
   miniUI,
   rstudioapi
