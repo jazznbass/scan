@@ -73,6 +73,9 @@ the \code{method} setting.}
 }
 \description{
 Identifies and drops outliers within a single-case data frame (scdf).
+Outliers can be identified based on mean average deviation (MAD),
+standard deviation (SD), confidence intervals (CI), or Cook's Distance
+from a Piecewise Linear Regression Model.
 }
 \details{
 For \code{method = "SD"}, \code{criteria = 2} would refer t0 two standard
@@ -105,6 +108,7 @@ Other data manipulation functions:
 \code{\link{add_l2}()},
 \code{\link{as.data.frame.scdf}()},
 \code{\link{as_scdf}()},
+\code{\link{batch_apply}()},
 \code{\link{fill_missing}()},
 \code{\link{moving_median}()},
 \code{\link{ranks}()},

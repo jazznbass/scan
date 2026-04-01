@@ -2,9 +2,9 @@
 % Please edit documentation in R/fill_missing.R
 \name{fill_missing}
 \alias{fill_missing}
-\title{Replacing missing measurement times in single-case data}
+\title{Replacing missing measurement points in single-case data}
 \usage{
-fill_missing(data, dvar, mvar, na.rm = TRUE)
+fill_missing(data, dvar, mvar, pvar, interpolate_na = TRUE)
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
@@ -16,22 +16,37 @@ Defaults to the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{na.rm}{If set \code{TRUE}, \code{NA} values are also interpolated. Default is
-\code{na.rm = TRUE}.}
+\item{pvar}{Character string with the name of the phase variable. Defaults to
+the attributes in the scdf file.}
+
+\item{interpolate_na}{If set \code{TRUE}, \code{NA} values in the measurement time variable are
+also interpolated. Default is \code{TRUE}.}
 }
 \value{
-A single-case data frame with interpolated missing data points.  See
-\code{\link[=scdf]{scdf()}} to learn about the SCDF Format.
+A single-case data frame with interpolated missing data points.
 }
 \description{
 The \code{fillmissing()} function replaces missing measurements in single-case
-data.
+data. It linearly interpolates missing data points between two existing
+measurements for all variables except the measurement time and phase. The
+measurement time variable is filled with the missing time points. The phase
+variable is copied from the previous measurement time point. If mt values are
+missing (\code{NA}), they are also interpolated if \code{interpolate_na = TRUE}.
 }
 \details{
-This procedure is recommended if there are gaps between measurement times
-(e.g. MT: 1, 2, 3, 4, 5, ... 8, 9) or explicitly missing values in your
-single-case data and you want to calculate overlap indices (\code{\link[=overlap]{overlap()}}) or a
-randomization test (\code{\link[=rand_test]{rand_test()}}).
+The \code{fill_missing()} function is designed to handle single-case data
+with missing measurement points. It performs linear interpolation to estimate
+the missing values based on the existing data points. The function iterates
+through each single-case in the provided single-case data frame (scdf) and
+identifies gaps in the measurement time variable. For each gap, it calculates
+the step size for linear interpolation and fills in the missing values for
+all target variables (i.e., all variables except the measurement time and
+phase). The interpolated data points are then added to the single-case data
+frame, and the final result is sorted by measurement time. This function is
+particularly useful for preparing single-case data for further analysis, such
+as calculating overlap indices or conducting randomization tests, where
+continuous measurement times are required. It ensures that the data is
+complete by filling in the missing measurement points in a systematic manner.
 }
 \examples{
 
@@ -46,15 +61,21 @@ study <- c(Grosche2011[2], Grosche2011filled[2])
 names(study) <- c("Original", "Filled")
 study
 
-## Fill missing values in a single-case dataset that are NA
-Maggie <- random_scdf(design(level = list(0,1)), seed = 123)
-Maggie_n <- Maggie
-replace.positions <- c(10,16,18)
-Maggie_n[[1]][replace.positions,"values"] <- NA
-Maggie_f <- fill_missing(Maggie_n)
-study <- c(Maggie, Maggie_n, Maggie_f)
-names(study) <- c("original", "missing", "interpolated")
-study
+## An example with multiple interpolated variables
+
+rolf_n <- exampleAB_add
+rolf_n[[1]] <- rolf_n[[1]][-c(3,7,8),]
+rolf_f <- fill_missing(rolf_n)
+study1 <- c("original" = exampleAB_add, "interpolated" = rolf_f)
+study1
+
+## Example with missing NAs in measurement time
+Maggie2 <- random_scdf(design(level = list(0,1)), seed = 123)
+Maggie2_n <- Maggie2
+Maggie2_n[[1]][c(5,12:14,20), "mt"] <- NA
+Maggie2_f <- fill_missing(Maggie2_n)
+study2 <- c("original" = Maggie2, "interpolated" = Maggie2_f)
+study2
 
 }
 \seealso{
@@ -62,6 +83,7 @@ Other data manipulation functions:
 \code{\link{add_l2}()},
 \code{\link{as.data.frame.scdf}()},
 \code{\link{as_scdf}()},
+\code{\link{batch_apply}()},
 \code{\link{moving_median}()},
 \code{\link{print.sc_outlier}()},
 \code{\link{ranks}()},

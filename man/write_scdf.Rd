@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_scdf.R
 \name{write_scdf}
 \alias{write_scdf}
-\title{Data output}
+\title{Data output: Write single-case data to a .csv-file}
 \usage{
 write_scdf(data, filename = NULL, sep = ",", dec = ".", ...)
 }
@@ -11,7 +11,8 @@ write_scdf(data, filename = NULL, sep = ",", dec = ".", ...)
 format.}
 
 \item{filename}{A character string defining the output file name (e.g.
-\code{"SC_data.csv"}.}
+\code{"scdf_data.csv"}. If \code{NULL} (default), the data are written to the
+console.}
 
 \item{sep}{The field separator string. Values within each row of x are
 separated by this string.}
@@ -21,17 +22,22 @@ columns: must be a single character.}
 
 \item{\dots}{Further arguments passed to write.table.}
 }
+\value{
+Invisibly returns \code{NULL}.
+}
 \description{
 This function restructures and writes single-case data into a .csv-file.
 }
 \details{
 This is a wrapper for the write.table function with predefined parameters.
+It converts the single-case data file into a data frame and writes it to a
+.csv-file. Each single-case data set is stacked below each other and an
+additional column "case" is added to identify the different single-cases.
 }
 \examples{
 ## write single-case data to a .csv-file
 filename <- tempfile(fileext = ".csv")
-jessica <- random_scdf(design(level = .5))
-write_scdf(jessica, tempfile())
+write_scdf(exampleAB, filename)
 
 ## write multiple cases to a .csv-file with semicolon as field and comma as
 ## decimal separator

@@ -4,7 +4,8 @@
 #' Kelley, & Lomas, 2003) to scdf objects. It compares phase B data points to
 #' both phase A mean and trend (OLS, bi-split, tri-split) with an additional
 #' increase/decrease of .25 SD. A binomial test against a 50/50 distribution is
-#' computed and p-values below .05 are labeled "systematic change".
+#' computed and p-values below .05 are labelled "systematic change".
+#'
 #'
 #' @inheritParams .inheritParams
 #' @param trend_method Method used to calculate the trend line. Default is

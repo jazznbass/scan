@@ -26,7 +26,6 @@ corrected_tau(
   phases = c(1, 2),
   alpha = 0.05,
   continuity = FALSE,
-  repeated = FALSE,
   tau_method = c("b", "a")
 )
 }
@@ -77,9 +76,6 @@ applied.}
 
 \item{continuity}{If TRUE applies a continuity correction for calculating p}
 
-\item{repeated}{If TRUE applies the repeated median method for calculating
-slope and intercept.}
-
 \item{tau_method}{Character with values "a" or "b" (default) indicating
 whether Kendall Tau A or Kendall Tau B is applied.}
 }
@@ -97,8 +93,7 @@ The dependent variable is now corrected for this baseline trend and the
 residuals of the Theil-Sen regression are taken for further calculations.
 Finally, Kendall's tau is calculated for the dependent variable and the
 dichotomous phase variable. The function here provides two extensions to
-this procedure: The more accurate Siegel repeated median regression is
-applied when \code{repeated = TRUE} and a continuity correction is applied when
+this procedure: The more accurate continuity correction is applied when
 \code{continuity = TRUE}.
 }
 \section{Functions}{
@@ -120,6 +115,7 @@ Modification, 41(4)}, 427–467. https://doi.org/10.1177/0145445516676750
 \seealso{
 Other regression functions: 
 \code{\link{bplm}()},
+\code{\link{fetch}()},
 \code{\link{hplm}()},
 \code{\link{mplm}()},
 \code{\link{plm}()},

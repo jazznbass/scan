@@ -1,0 +1,22 @@
+# Discription of single-case data frame (scdf) `AlberMorgan.rds`
+
+- README file from: 2026-03-21 15:10:38  
+- Datafile from: 2025-08-27 08:04:44  
+
+## Summary
+
+```
+#A single-case data frame with four cases
+
+        Measurements             Design
+ Theo             31 baseline-treatment
+ Kelly            31 baseline-treatment
+ Brian            31 baseline-treatment
+ Andrew           26 baseline-treatment
+
+Variable names:
+outcome <dependent variable>
+condition <phase variable>
+session <measurement-time variable>
+
+```

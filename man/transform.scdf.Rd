@@ -92,6 +92,7 @@ For example:
 Example: \code{rowwise(sum(values, mt, na.rm = TRUE))}.
 \item \strong{\code{across_cases()}}: creates new variables or replaces existing ones across all cases.
 Example: \code{across_cases(values_ranked = rank(values, na.last = "keep"))}
+ranks the \code{values} variable across all cases and creates a new variable \code{values_ranked}.
 }
 }
 \examples{
@@ -160,6 +161,7 @@ Other data manipulation functions:
 \code{\link{add_l2}()},
 \code{\link{as.data.frame.scdf}()},
 \code{\link{as_scdf}()},
+\code{\link{batch_apply}()},
 \code{\link{fill_missing}()},
 \code{\link{print.sc_outlier}()},
 \code{\link{ranks}()},
@@ -171,5 +173,8 @@ Other data manipulation functions:
 \code{\link{smooth_cases}()},
 \code{\link{standardize}()},
 \code{\link{truncate_phase}()}
+}
+\author{
+Juergen Wilbert
 }
 \concept{data manipulation functions}

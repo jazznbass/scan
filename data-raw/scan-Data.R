@@ -1274,6 +1274,81 @@ exampleAB_score <- c(case1, case2, case3)
 scdf_attr(exampleAB_score, "info") <- "Random data-set for binomial data."
 filenames <- c(filenames, "exampleAB_score")
 
+### example for screen time of Stranger Things characters ---------
+
+case_1 <- scdf(
+  c(one = 9.9, 16.0,  8.0, 11.2, 12.6, 10.3, 15.7, 14.8,
+    two = 7.6,  8.5,  8.2,  3.9,  7.2,  5.7,  0.6, 21.0, 18.7),
+  dvar = "minutes", pvar = "season", mvar = "episode",
+  name = "Mike"
+)
+case_2 <- scdf(
+  c(one = 6.4,  1.4,  0.0,  0.6,  0.8,  0.0,  1.4,  9.6,
+    two = 14.8,  9.6, 10.8,  9.2,  6.7,  7.1,  0.0, 11.5, 7.2),
+  dvar = "minutes", pvar = "season", mvar = "episode",
+  name = "Will"
+)
+case_3 <- scdf(
+  c(one = 8.3,  8.4,  6.1,  8.5, 12.0,  9.8, 13.9, 11.9,
+    two = 6.4,  7.4, 10.2,  5.0,  4.5, 10.5,  0.2, 14.6, 22.0),
+  dvar = "minutes", pvar = "season", mvar = "episode",
+  name = "Dustin"
+)
+case_4 <- scdf(
+  c(one = 5.1, 13.7, 14.0, 11.7, 11.4,  8.4, 17.6,  9.8,
+    two = 0.8, 12.9, 11.9, 10.1,  8.8,  0.0, 34.7,  0.7, 18.1),
+  dvar = "minutes", pvar = "season", mvar = "episode",
+  name = "Eleven"
+)
+
+example_stranger <- c(
+  case_1, case_2, case_3, case_4, 
+  info = "Stranger Things screen times for main characters.",
+  author = "ChatGpt 5.2")
+
+filenames <- c(filenames, "example_stranger")
+
+
+### example for alternating treatment design ---------
+
+set.seed(123456)
+
+case1 <- scdf(
+  values = c(
+    A = 44, sample(42:48, 4, replace = TRUE),
+    B = 61, 62, 61, 66, 64, 78, 70, 74, 72, 77, 66, 68, 70, 86, 67,
+    C = 77, sample(75:85, 4, replace = TRUE)
+  ),
+  treatment = c(rep(NA, 5), rep(c(1,2), length.out = 15), rep(NA, 5)),
+  name = "Juppi"
+)
+
+case2 <- scdf(
+  values = c(
+    A = 43, sample(41:59, 6, replace = TRUE), 
+    B = 67, 75, 66, 74, 68, 73, 67, 79, 66, 82, 70, 83, 69,
+    C = 75, sample(75:85, 5, replace = TRUE)
+  ),
+  treatment = c(rep(NA, 7), rep(c(1,2), length.out = 13), rep(NA, 6)),
+  name = "Schluppi"
+)
+
+case3 <- scdf(
+  values = c(
+    A = 54, sample(52:58, 5, replace = TRUE),
+    B = 68, 68, 81, 67, 78, 73, 72, 78, 81, 78, 71, 85, 80, 76,
+    C = 80, sample(75:85, 7, replace = TRUE)
+  ),
+  treatment = c(rep(NA, 6), rep(c(1,2), length.out = 14), rep(NA, 8)),
+  name = "Wuppi"
+)
+
+example_atd <- c(
+  case1, case2, case3, 
+  info = "Created example with alternating treatment design"
+) 
+
+filenames <- c(filenames, "example_atd")
 
 # write data -----
 

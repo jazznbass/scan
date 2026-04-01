@@ -1,8 +1,14 @@
 #' Piecewise linear model / piecewise regression
 #'
 #' The `plm` function computes a piecewise regression model (see Huitema &
-#' McKean, 2000).
+#' McKean, 2000) for one case. The function automatically creates the default
+#' model which includes trend, level, and slope effects. The model can be
+#' changed with `trend`, `level`, and `slope` arguments or by providing a custom
+#' formula.
 #'
+#' The function uses the `glm` function of the stats package or the `gls`
+#' function of the nlme package (for auto-regression models).
+#' 
 #' @inheritParams .inheritParams
 #' @order 1
 #' @param AR Maximal lag of autoregression. Modelled based on the
@@ -27,8 +33,9 @@
 #' @param dvar_percentage Only for binomial distribution. If set TRUE, the
 #'   dependent variable is assumed to represent proportions `[0,1]`. Otherwise
 #'   dvar is assumed to represent counts.
-#' @param ... Further arguments passed to the glm function.
-#' @return
+#' @param ... Further arguments passed to the [stats::glm()] or [nlme::gls()]
+#'   function.
+#' @return An object of class `sc_plm`.
 #' \item{formula}{plm formula. Uselful if you want to use the update or
 #'   formula argument and you don't know the names of the parameters.}
 #' \item{model}{Character string from function call (see `Arguments`
@@ -39,7 +46,7 @@
 #'   above).}
 #' \item{family}{Distribution family from function call
 #'   (see `Arguments` above).}
-#' \item{full.model}{Full regression model list from the gls or glm function.}
+#'   \item{full.model}{Full regression model list from the gls or glm function.}
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @references Beretvas, S., & Chung, H. (2008). An evaluation of modified

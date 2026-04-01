@@ -1,12 +1,10 @@
 test_that("main", {
   
-  res <- cdc(exampleAB_50)
-  testsum <- sum(res$cdc_be + res$cdc_b)
-  expect_equal(testsum, 1929)
+  res <- cdc(exampleABC)
+  expect_equal(object_checksum(res), '51.3037')
   
   
   res <- cdc(exampleAB_50, trend_method = "trisplit")
-  testsum <- sum(res$cdc_be + res$cdc_b)
-  expect_equal(testsum, 1915)
+  expect_equal(object_checksum(res), '1970.1410')
   
 })

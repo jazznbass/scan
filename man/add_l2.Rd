@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_l2.R
 \name{add_l2}
 \alias{add_l2}
-\title{Add level-2 data}
+\title{Add level-2 data to an scdf}
 \usage{
 add_l2(scdf, data_l2, cvar = "case")
 }
@@ -16,17 +16,23 @@ format.}
 dataset (default is 'case').}
 }
 \value{
-An scdf
+An scdf with added level-2 variables.
 }
 \description{
-Merges variables with corresponding case names from a data.frame with an scdf
-file
+Merges variables with corresponding case names from a data.frame with an scdf.
 }
 \details{
 This function is mostly used in combination with the \code{\link[=hplm]{hplm()}} function.
+It adds level-2 variables to each single-case data frame in an scdf based on
+matching case names.
 }
 \examples{
+## Example with the default case variable name 'case'
 Leidig2018 |> add_l2(Leidig2018_l2)
+## Example with a different case variable name in the L2 data
+Leidig2018_l2_renamed <- Leidig2018_l2
+names(Leidig2018_l2_renamed)[2] <- "subject"
+Leidig2018 |> add_l2(Leidig2018_l2_renamed, cvar = "subject")
 }
 \seealso{
 \code{\link[=hplm]{hplm()}}
@@ -34,6 +40,7 @@ Leidig2018 |> add_l2(Leidig2018_l2)
 Other data manipulation functions: 
 \code{\link{as.data.frame.scdf}()},
 \code{\link{as_scdf}()},
+\code{\link{batch_apply}()},
 \code{\link{fill_missing}()},
 \code{\link{moving_median}()},
 \code{\link{print.sc_outlier}()},
@@ -46,6 +53,9 @@ Other data manipulation functions:
 \code{\link{smooth_cases}()},
 \code{\link{standardize}()},
 \code{\link{truncate_phase}()}
+}
+\author{
+Juergen Wilbert
 }
 \concept{data manipulation functions}
 \keyword{transform}

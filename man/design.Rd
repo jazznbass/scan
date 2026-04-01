@@ -2,7 +2,7 @@
 % Please edit documentation in R/design.R
 \name{design}
 \alias{design}
-\title{Generate a single-case design matrix}
+\title{Generate a single-case design matrix for multiple random single-cases}
 \usage{
 design(
   n = 1,
@@ -107,7 +107,11 @@ the length of the vector, values are repeated.}
 the distribution.}
 
 \item{n_trials}{If \code{distribution} (see below) is \code{"binomial"}, \code{n_trials} is
-the number of trials/observations/items.}
+the number of trials/observations/items. E.g., if you simulate accuracy
+data with 10 items per measurement, set \code{n_trials = 10}. To assign
+different n_trials to several single-cases, use a vector of values (e.g.
+\code{n_trials = c(10, 15, 20)}). If the number of cases exceeds the length of
+the vector, values are recycled.}
 
 \item{mt, MT}{Number of measurements (in each study). Default is \code{mt = 20}.}
 

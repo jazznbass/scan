@@ -1,4 +1,12 @@
 #' Dummy function to inherit global descriptions of parameters
+#' 
+#' This function is only used to inherit parameter descriptions in the
+#' documentation of other functions. It has no other purpose and is not meant to
+#' be called directly.
+#' 
+#' @return No return value.
+#' @author Juergen Wilbert
+#' @family internal functions
 #'
 #' @param data A single-case data frame. See [scdf()] to learn about this
 #'   format.
@@ -22,7 +30,7 @@
 #'   McKean, 2000). Default is `model = "W"`. Possible values are: `"B&L-B"`,
 #'   `"H-M"`, `"W"`, and deprecated `"JW"`.
 #' @param contrast Sets contrast_level and contrast_slope. Either "first",
-#'   "preceding" or a contrast matrix.
+#'   "preceding" or a contrast matrix. If NA contrast is ignored.
 #' @param contrast_level Either "first", "preceding" or a contrast matrix. If NA
 #'   contrast_level is a copy of contrast.
 #' @param contrast_slope Either "first", "preceding" or a contrast matrix. If NA

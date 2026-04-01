@@ -1,6 +1,6 @@
-errors <- c()
-
-if (length(errors) > 0) stop(errors)
+#errors <- c()
+#
+#if (length(errors) > 0) stop(errors)
 
 suppressPackageStartupMessages({
 library(scan)
@@ -29,53 +29,34 @@ res$new_case <- "-new case-"
 # choices ------
 
 res$choices <- list()
+
+## examples ----
+
 examples <- data(package = "scan")$results[, 3]
 filter <- startsWith(examples,"Grosche2014") | 
           endsWith(examples,"Leidig2018_l2") | 
           startsWith(examples,"exampleAB_50.l2")
-examples <- examples[!filter]
+examples <- examples[!filter] |> sort()
 
 res$choices$examples <- c("(none)", examples)
 
-res$choices$scplot_examples <- c(
-  "(empty selection)" = "",
-  "Trend lines" = 'add_statline("trend")',
-  "Baseline trend" = 'add_statline("trendA")',
-  "Max A" = 'add_statline("max", phase = "A")',
-  "Means" = 'add_statline("mean")',
-  "Medians" = 'add_statline("median")',
-  "Moving average" = 'add_statline("moving mean")',
-  "Smoothed line" = 'add_statline("loess", span = 0.4)'
-)
+## themes ----
 
-res$choices$scplot_templates_design <- c(
-  "",
-  "Legend" = 'add_legend()',
-  "Add title" = 'add_title("A new plot", color = "darkblue", size = 1.3)',
-  "Add caption" = 'add_caption("Note. What a nice plot!", face = "italic", colour = "darkred")',
-  "Set axis labels" = 'set_ylabel("Score", color = "darkred", angle = 0)
-set_xlabel("Session", color = "darkred")',
-  "Set phase names" = 'set_phasenames(labels = c("Baseline", "Intervention", "Extended", "Follow-up"), color = "darkblue", size = 0.9, face = "italic")',
-  "Set case names" = 'set_casenames(position = "strip", background = list(fill = "lightblue"))',
-  "Resize size" = 'set_base_text(size = 19)',
-  "Background" = 'set_background(fill = "grey90", color = "black", size = 2)'
+themes <- lapply(scplot:::.scplot_themes, function(x) x$theme_type) |> unlist()
 
-)
-
-res$choices$scplot_templates_annotate <- c(
-  "",
-  "Marks" = 'add_marks(case = "all", position = \"values < mean(values)\", shape = 16, size = 2)',
-  "Text" = 'add_text("Hallo", case = 1, x = 5, y = 20)',
-  "Arrow" = 'add_arrow(case = 1, 2, 70, 6, 55, color = "darkred")'
-)  
-
-res$scplot_themes <- names(scplot:::.scplot_themes)
-
-for(i in seq_along(res$scplot_themes)) {
-  res$choices$scplot_templates_design[[paste0("Theme ", res$scplot_themes[i])]] <-
-    paste0('set_theme("', res$scplot_themes[i], '")')
+if (!is.null(themes)) {
+  complete <- names(themes)[which(themes == "complete")]
+  element <- names(themes)[which(!themes == "complete")]
+} else {
+  complete <- names(scplot:::.scplot_themes)
+  element <- names(scplot:::.scplot_themes)
 }
 
+
+res$scplot_themes_complete <- complete
+res$scplot_themes_element <- c("None", element)
+
+## stats ----
 res$choices$fn_stats <- c(
   "Descriptives" = "describe",
   "Standardized mean differences" = "smd",
@@ -100,11 +81,14 @@ res$choices$fn_stats <- c(
   "Outlier analysis" = "outlier"
 )
 
+
+
+## power analysis ----
+
 .name <- function(x, at, label) {
   names(x)[which(x == at)] <- label
   x
 }
-
 
 res$choices$pt_method <- names(scan:::.opt$mc_fun)  |> 
   setNames(names(scan:::.opt$mc_fun)) |> 
@@ -124,12 +108,19 @@ res$choices$pt_method <- names(scan:::.opt$mc_fun)  |>
   .name("rand_slope", "Randomization test slope") |>
   .name("rand_slope_decrease", "Randomization test slope (decreasing)")
 
+## legend position ----
+res$choices$legend_position <- c(
+  "none" = "none",
+  "top" = "top",
+  "right" = "right",
+  "bottom" = "bottom",
+  "left" = "left"
+)
 
-
+res$choices$separators <- c("comma" = ",", "semicolon" = ";", "tab" = "\t", 
+                            "space" = " ")
 
 # placeholder ----
-
-res$placeholder$values <- "Enter values here to create a new case. E.g. \nA = 1,2,3,4,3 \nB = 7,6,7,8,7,6"
 
 res$placeholder$transform <- 'e.g.
 values = scale(values)
@@ -138,18 +129,14 @@ values2 = values - max(values[phase=="A"])
 across_cases(values2 = scale(values)
 '
 
-res$placeholder$stats_out_args <- "" #"e.g.: decimals = 3; meta = FALSE"
-
-res$placeholder$plot_arguments <- '(choose one or more of the templates below and experiment with the syntax here.)
-'
-
+res$placeholder$values <- "Enter values here to create a new case. E.g. \nA = 1,2,3,4,3 \nB = 7,6,7,8,7,6"
 res$placeholder$mt <- "(optional, e.g. 1,2,4,6,7,8,9,12,13)"
-
 res$placeholder$variables <-
-"(optional, e.g., depression = 1,4,3,5,6,5,7
+  "(optional, e.g., depression = 1,4,3,5,6,5,7
 separate multiple variables with linebreaks)"
-
 res$placeholder$casename <- "(optional. Random if left empty)"
+
+res$placeholder$stats_out_args <- "" #"e.g.: decimals = 3; meta = FALSE"
 
 res$placeholder$pt <- "Power calculation may take some time. Click 'Run' to start calculation."
 

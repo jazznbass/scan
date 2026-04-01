@@ -1,4 +1,4 @@
-#' Nonoverlap of all Pairs
+#' Nonoverlap of all Pairs (NAP)
 #'
 #' The [nap()] function calculates the nonoverlap of all pairs (NAP; Parker &
 #' Vannest, 2009).  NAP summarizes the overlap between all pairs of phase A and
@@ -10,6 +10,9 @@
 #' rescaled from -100 to 100 percent where negative
 #' values indicate an inverse effect is also displayed (\eqn{nap_{rescaled} = 2
 #' * nap - 100}).
+#' 
+#' If a decrease of phase B scores is expected, set the argument
+#' `decreasing = TRUE`.
 #'
 #' @inheritParams .inheritParams
 #' @return 
@@ -32,6 +35,10 @@
 #'
 #' ## Request NAP for all cases from the Grosche2011 scdf
 #' nap(Grosche2011)
+#' 
+#' ## Calculate NAP for phase 1 and phase 3 of an ABAB design
+#' nap(exampleABAB, phases = c(1, 3))
+#' 
 #'
 #' @export
 

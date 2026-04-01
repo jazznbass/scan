@@ -4,7 +4,7 @@
 \alias{bplm}
 \alias{print.sc_bplm}
 \alias{export.sc_bplm}
-\title{Bayesian Piecewise Linear Model}
+\title{Bayesian Piecewise Linear Model (bplm)}
 \usage{
 bplm(
   data,
@@ -90,7 +90,7 @@ of the regression model.}
 
 \item{update_fixed}{An easier way to change the fixed model part (e.g., \code{. ~ . + newvariable}).}
 
-\item{...}{Further arguments passed to the mcmcglmm function.}
+\item{...}{Further arguments passed to the \code{\link[MCMCglmm:MCMCglmm]{MCMCglmm::MCMCglmm()}} function.}
 
 \item{x}{An object returned by \code{\link[=bplm]{bplm()}}}
 
@@ -114,18 +114,28 @@ output will be written to that file.}
 publication tables.}
 }
 \value{
-An object of class \code{sc_bplm}.\tabular{ll}{
-    \tab  \cr
-   \code{model} \tab List containing information about the applied model. \cr
-   \code{N} \tab Number of single-cases. \cr
-   \code{formula} \tab A list containing the fixed and the random formulas of the hplm model. \cr
-   \code{mcmglmm} \tab Object of class MCMglmm. \cr
-   \code{contrast} \tab List with contrast definitions. \cr
+An object of class \code{sc_bplm} with element:
+\itemize{
+\item \code{model} - List containing information about the applied model.
+\item \code{N} - Number of single-cases.
+\item \code{formula} - A list containing the fixed and the random formulas of the hplm model.
+\item \code{mcmglmm} -  Object of class MCMglmm.
+\item \code{contrast} -  List with contrast definitions.
 }
 }
 \description{
 Computes a bayesian (hierarchical) piecewise linear model based on a Markov
-chain Monte Carlo sampler.
+chain Monte Carlo sampler. The function automatically creates the fixed and
+random part of the regression model.
+}
+\details{
+The function uses the \code{\link[MCMCglmm:MCMCglmm]{MCMCglmm::MCMCglmm()}} function to fit the model. The
+default model includes fixed trend, level, and slope effects as well as a
+random intercept for each single-case. The fixed part of the model can be
+changed by providing a custom formula to the \code{fixed} argument or by using the
+\code{update_fixed} argument. The random part of the model can be changed by
+providing a custom formula to the \code{random} argument or by setting the
+\code{random_trend}, \code{random_level}, or \code{random_slope} arguments to TRUE.
 }
 \section{Functions}{
 \itemize{
@@ -143,9 +153,14 @@ bplm(exampleAB_50, nitt = 5000)
 
 # Adding a random slope
 bplm(exampleAB_50, random_level = TRUE, nitt = 5000)
+
+# Custom fixed formula
+bplm(exampleAB_50, update_fixed = values ~ -1 + mt + phaseB +
+  interB, nitt = 5000)
 }
 \seealso{
 Other regression functions: 
+\code{\link{fetch}()},
 \code{\link{hplm}()},
 \code{\link{mplm}()},
 \code{\link{plm}()},

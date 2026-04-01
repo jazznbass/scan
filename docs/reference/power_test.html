@@ -9,7 +9,7 @@ a statistical function."><meta property="og:image" content="https://jazznbass.gi
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.67.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,9 +90,11 @@ Default is <code>n = 100</code>. Ignored if design_is_one_study = FALSE.</p></dd
 
 <dt id="arg-design-is-one-study">design_is_one_study<a class="anchor" aria-label="anchor" href="#arg-design-is-one-study"></a></dt>
 <dd><p>If TRUE, the design is assumed to define all cases
-of one study that is repeatedly randomly created <code>n_sim</code> times. If false,
+of one study that is repeatedly randomly created <code>n_sim</code> times. If FALSE,
 the design is assumed to contain all cases from which a random sample is
-generated. This is useful for very specific complex simulation studies.</p></dd>
+generated. This is useful for very specific complex simulation studies.
+In this case, n_sim indicates how many random samples are drawn from the
+provided design. Default is TRUE.</p></dd>
 
 
 <dt id="arg-alpha-test">alpha_test<a class="anchor" aria-label="anchor" href="#arg-alpha-test"></a></dt>
@@ -138,6 +140,13 @@ significant tests. Default is <code>alpha_level = 0.05</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A data frame with the power, alpha error, and correct proportions for
+each provided method. If binomial tests are requested, p values for these
+tests are also provided. If confidence intervals are requested, these
+are also provided.</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Based on a <code><a href="design.html">design()</a></code> object, a large number of single-cases are generated
 and re-analysed with a provided statistical function. The proportion of
@@ -171,8 +180,8 @@ probability.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test-Power in percent:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Method Power Alpha Error Alpha:Beta Correct</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  plm_level    70           0      1:Inf      85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       rand    70           0      1:Inf      85</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  plm_level    60           0      1:Inf      80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       rand    60           0      1:Inf      80</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       tauU   100          20      1:0.0      90</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Would you achieve higher power by setting up a MBD with three cases?</span></span></span>
@@ -184,9 +193,9 @@ probability.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test-Power in percent:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Method Power Alpha Error Alpha:Beta Correct</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  hplm_level   100           0      1:NaN     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        rand   100           0      1:NaN     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   tauU_meta   100          50      1:0.0      75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  hplm_level   100          10      1:0.0      95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        rand    90          10      1:1.0      90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   tauU_meta   100          60      1:0.0      70</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -198,7 +207,7 @@ probability.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

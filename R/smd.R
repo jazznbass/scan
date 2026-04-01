@@ -1,7 +1,11 @@
-#' Standardized mean differences
+#' Standardized mean differences for single-case data
 #'
 #' The `smd()` function provides various standardized mean effect sizes for
 #' single-case data.
+#' 
+#' It computes 'Cohen's d', 'Hedges' g', 'Hedges' g correction',
+#' 'Hedges' g durlak correction', and 'Glass' delta' for each single-case
+#' included in an scdf.
 #'
 #' @inheritParams .inheritParams
 #' @details 'sd cohen' is the (unweigted) average of the variance of phase A and

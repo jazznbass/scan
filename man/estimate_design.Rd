@@ -32,37 +32,56 @@ Defaults to the attributes in the scdf file.}
 
 \item{s}{The standard deviation depicting the between case variance of the
 overall performance. If more than two single-cases are included in the
-scdf, the variance is estimated if s is set to NULL.}
+scdf, the variance is estimated if s is set to NULL. If s is provided, this
+value is used.}
 
 \item{rtt}{The reliability of the measurements. The reliability is estimated
-when rtt = NULL.}
+when rtt = NULL. If rtt is provided, this value is used for all single-cases.}
 
 \item{overall_effects}{If TRUE, trend, level, and slope effect estimations
 will be identical for each case. If FALSE, effects are estimated for each
-case separately.}
+case separately. Default is FALSE.}
 
 \item{overall_rtt}{Ignored when \code{rtt} is set. If TRUE, rtt estimations will
 be based on all cases and identical for each case. If FALSE rtt is
-estimated for each case separately.}
+estimated for each case separately. Default is TRUE.}
 
 \item{model}{Model used for calculating the dummy parameters (see Huitema &
 McKean, 2000). Default is \code{model = "W"}. Possible values are: \code{"B&L-B"},
 \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
 \item{...}{Further arguments passed to the plm function used for parameter
-estimation.}
+estimation. For example, the model argument can be used to select
+different piecewise regression models. See plm for details.}
 }
 \value{
 A list of parameters for each single-case. Parameters include name,
 length, and starting measurement time of each phase, trend, level, and
 slope effects for each phase, start value, standard deviation, and
-reliability for each case.
+reliability for each case. This list can be used as input for the
+random_scdf function to create new random scdf files based on the estimated
+parameters.
 }
 \description{
 This functions takes an scdf and extracts design parameters. The resulting
 object can be used to randomly create new scdf files with the same underlying
 parameters. This is useful for Monte-Carlo studies and bootstrapping
 procedures.
+}
+\details{
+The function uses the plm function to estimate parameters for each
+single-case. If more than two single-cases are included in the scdf,
+the between case variance depicting the overall performance (s) is
+estimated unless s is provided. The reliability of the measurements (rtt)
+is estimated for each case unless rtt is provided. If overall_rtt is set
+to TRUE, rtt estimations will be based on all cases and identical for each
+case. If overall_effects is set to TRUE, trend, level, and slope
+effect estimations will be identical for each case.
+
+The resulting design object can be used as input for the random_scdf
+function to create new random scdf files based on the estimated parameters.
+This allows to create bootstrap samples or Monte-Carlo datasets based on
+the characteristics of an existing dataset.
 }
 \examples{
 # create a random scdf with predefined parameters
@@ -89,4 +108,7 @@ pand(scdf)
 pand(scdf_est)
 rand_test(scdf)
 rand_test(scdf_est)
+}
+\author{
+Juergen Wilbert
 }

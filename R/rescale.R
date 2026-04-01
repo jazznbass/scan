@@ -1,16 +1,17 @@
-#' Rescales values of an scdf file
+#' Rescales values of an scdf
 #'
 #' This function scales the measured values of an scdf file. It allows for mean
 #' centering and standardization across all cases included in an scdf.
 #'
 #' @inheritParams .inheritParams
-#' @param ... Names of variables to be standardized.
+#' @param ... Names of variables to be standardized. If none are given, all numeric
+#'  variables are standardized.
 #' @param m The target mean. If set NULL, it is not changed.
 #' @param sd The target standard deviation. If set NULL, it is not changed.
 #' @return An scdf with the scaled values.
 #' @author Juergen Wilbert
 #' @family data manipulation functions
-#' @keywords internal
+#' @keywords manip
 #' @examples
 #'
 #' ## Standardize a multiple case scdf and compute an hplm

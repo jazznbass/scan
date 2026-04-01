@@ -13,12 +13,24 @@
 \method{anova}{sc_mplm}(object, ...)
 }
 \arguments{
-\item{object}{an object containing the results returned by a plm().}
+\item{object}{An object containing the results returned by \code{plm()},
+\code{hplm()}, or \code{mplm()}.}
 
-\item{...}{additional plm objects.}
+\item{...}{additional objects for model comparison.}
+}
+\value{
+An object of class \code{anova} containing the results of the model
+comparison.
 }
 \description{
-Model comparison for piecewise regression models
+Model comparison for piecewise regression models fitted with \code{plm()},
+\code{hplm()}, or \code{mplm()} using likelihood ratio tests.
+}
+\details{
+The function performs likelihood ratio tests to compare nested piecewise
+regression models. It extracts the underlying model from the sc_plm, sc_hplm,
+or sc_mplm object and passes them to the generic anova() function
+for model comparison.
 }
 \examples{
 ## For glm models with family = "gaussian"

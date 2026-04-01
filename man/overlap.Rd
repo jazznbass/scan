@@ -42,6 +42,10 @@ The \code{overlap} function provides the most common overlap indices for
 single-case data and some additional statistics.
 }
 \details{
+It computes PND, PEM, PET, NAP, PAND, IRD, Tau-U, mean difference,
+difference in trend, SMD, and Hedges-g for each single-case included in an
+scdf.
+
 See corresponding functions of PND, PEM, PET, NAP, PAND for
 calculation. Tau_U(A) reports "A vs. B - Trend A" whereas Tau_U(BA) reports
 "A vs. B + Trend B - Trend A". Base_Tau is baseline corrected tau
@@ -66,6 +70,8 @@ overlap(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 
 }
 \seealso{
+\code{\link[=pnd]{pnd()}}, \code{\link[=pem]{pem()}}, \code{\link[=pet]{pet()}}, \code{\link[=nap]{nap()}}, \code{\link[=pand]{pand()}}, \code{\link[=ird]{ird()}}, \code{\link[=tau_u]{tau_u()}}, \code{\link[=corrected_tau]{corrected_tau()}}
+
 Other overlap functions: 
 \code{\link{ird}()},
 \code{\link{nap}()},
@@ -74,9 +80,11 @@ Other overlap functions:
 \code{\link{pet}()},
 \code{\link{pnd}()},
 \code{\link{print.sc_cdc}()},
+\code{\link{select_phases}()},
 \code{\link{tau_u}()}
 }
 \author{
 Juergen Wilbert
 }
 \concept{overlap functions}
+\keyword{overlap}

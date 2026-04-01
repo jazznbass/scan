@@ -57,6 +57,12 @@ about the format of these data frames.
 Use the \code{read_scdf} function to load single-case data csv, excel, or yaml
 files.
 }
+\details{
+The data file must be in a "long" format with one column for case
+identifiers, one column for phase identifiers, one column for measurement
+time, and one column for the dependent variable values. Each row represents
+a single measurement.
+}
 \examples{
 
 ## Read SC-data from a file named "study1.csv" in your working directory

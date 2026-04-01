@@ -92,7 +92,7 @@ The \code{cdc()} function applies the Conservative Dual-Criterion Method (Fisher
 Kelley, & Lomas, 2003) to scdf objects. It compares phase B data points to
 both phase A mean and trend (OLS, bi-split, tri-split) with an additional
 increase/decrease of .25 SD. A binomial test against a 50/50 distribution is
-computed and p-values below .05 are labeled "systematic change".
+computed and p-values below .05 are labelled "systematic change".
 }
 \section{Functions}{
 \itemize{
@@ -140,6 +140,7 @@ Other overlap functions:
 \code{\link{pem}()},
 \code{\link{pet}()},
 \code{\link{pnd}()},
+\code{\link{select_phases}()},
 \code{\link{tau_u}()}
 }
 \author{

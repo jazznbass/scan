@@ -2,6 +2,10 @@
 #'
 #' The `overlap` function provides the most common overlap indices for
 #' single-case data and some additional statistics.
+#' 
+#' It computes PND, PEM, PET, NAP, PAND, IRD, Tau-U, mean difference,
+#' difference in trend, SMD, and Hedges-g for each single-case included in an
+#' scdf.
 #'
 #' @inheritParams .inheritParams
 #' @details See corresponding functions of PND, PEM, PET, NAP, PAND for
@@ -24,6 +28,8 @@
 #'  | `design` | Phase design. |
 #' @family overlap functions
 #' @author Juergen Wilbert
+#' @seealso [pnd()], [pem()], [pet()], [nap()], [pand()], [ird()], [tau_u()], [corrected_tau()]
+#' @keywords overlap
 #' @examples
 #'
 #' ## Display overlap indices for one single-case

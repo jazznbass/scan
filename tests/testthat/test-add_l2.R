@@ -7,17 +7,13 @@ test_that("combination", {
     gender = c(0,0,2),
     age = c(23,35,12)
   )
-  
   combined <- scdf |> add_l2(l2)
   
-  expect_s3_class(combined, "scdf")
-  expect_equal(scan:::check_scdf(combined), TRUE)
-  expect_equal(all(combined[["Rosalind"]]$age == 35), TRUE)
-  expect_equal(all(combined[["Lise"]]$gender ==2), TRUE)
-  expect_equal(attributes(scdf), attributes(combined))
+  expect_equal(object_checksum(combined), '9242.0000')
+  
 })
 
-test_that("warnings", {
+test_that("error", {
   
   scdf <- exampleABC
   l2 <- data.frame(
@@ -34,6 +30,6 @@ test_that("warnings", {
     age = c(23,35,12)
   )
   
-  expect_warning(scdf$Marie |> add_l2(l2[1,]))
+  expect_error(scdf$Marie |> add_l2(l2[1,]))
   
 })

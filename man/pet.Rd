@@ -2,7 +2,7 @@
 % Please edit documentation in R/pet.R
 \name{pet}
 \alias{pet}
-\title{Percent exceeding the trend}
+\title{Percent exceeding the trend (PET)}
 \usage{
 pet(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = c(1, 2))
 }
@@ -45,6 +45,15 @@ distribution is calculated. It also calculates the percentage of Phase B data
 points that exceed the upper (or lower) 95 percent confidence interval of the
 predicted progression.
 }
+\details{
+The PET is calculated by first fitting a linear model to the Phase A data
+to estimate the trend. Then, for each data point in Phase B, it is
+determined whether it exceeds the predicted value from the Phase A trend.
+The PET is the percentage of Phase B data points that exceed this predicted
+value. Additionally, a binomial test is performed to assess whether the
+observed PET is significantly greater than what would be expected by chance
+(i.e., 50\%).
+}
 \examples{
 
 ## Calculate the PET and use a 99\%-CI for the additional calculation
@@ -63,6 +72,7 @@ Other overlap functions:
 \code{\link{pem}()},
 \code{\link{pnd}()},
 \code{\link{print.sc_cdc}()},
+\code{\link{select_phases}()},
 \code{\link{tau_u}()}
 }
 \author{

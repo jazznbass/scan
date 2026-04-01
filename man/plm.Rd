@@ -85,7 +85,7 @@ model.}
 model.}
 
 \item{contrast}{Sets contrast_level and contrast_slope. Either "first",
-"preceding" or a contrast matrix.}
+"preceding" or a contrast matrix. If NA contrast is ignored.}
 
 \item{contrast_level}{Either "first", "preceding" or a contrast matrix. If NA
 contrast_level is a copy of contrast.}
@@ -114,7 +114,8 @@ considered to be a the constant number of trials across all measurements.}
 dependent variable is assumed to represent proportions \verb{[0,1]}. Otherwise
 dvar is assumed to represent counts.}
 
-\item{...}{Further arguments passed to the glm function.}
+\item{...}{Further arguments passed to the \code{\link[stats:glm]{stats::glm()}} or \code{\link[nlme:gls]{nlme::gls()}}
+function.}
 
 \item{x}{Object}
 
@@ -143,6 +144,7 @@ publication tables.}
 \item{round}{Integer passed to the digits argument used to round values.}
 }
 \value{
+An object of class \code{sc_plm}.
 \item{formula}{plm formula. Uselful if you want to use the update or
 formula argument and you don't know the names of the parameters.}
 \item{model}{Character string from function call (see \code{Arguments}
@@ -157,7 +159,14 @@ above).}
 }
 \description{
 The \code{plm} function computes a piecewise regression model (see Huitema &
-McKean, 2000).
+McKean, 2000) for one case. The function automatically creates the default
+model which includes trend, level, and slope effects. The model can be
+changed with \code{trend}, \code{level}, and \code{slope} arguments or by providing a custom
+formula.
+}
+\details{
+The function uses the \code{glm} function of the stats package or the \code{gls}
+function of the nlme package (for auto-regression models).
 }
 \section{Functions}{
 \itemize{
@@ -226,6 +235,7 @@ Measurement, 60}, 38-58.
 \seealso{
 Other regression functions: 
 \code{\link{bplm}()},
+\code{\link{fetch}()},
 \code{\link{hplm}()},
 \code{\link{mplm}()},
 \code{\link{print.sc_ac}()},

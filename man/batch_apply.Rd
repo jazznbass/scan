@@ -22,7 +22,37 @@ A list of the output of each function call.
 This function applies a given function to each case of a multiple case scdf,
 returning a list of the output of each function call.
 }
+\details{
+If \code{simplify} is TRUE and the function returns a vector of values, the output
+is combined into a data frame with case names as additional columns.
+
+This is particularly useful for applying statistical models or summary
+statistics to each case in an scdf.
+}
 \examples{
 batch_apply(exampleAB, coef(plm(.)))
 
 }
+\seealso{
+Other data manipulation functions: 
+\code{\link{add_l2}()},
+\code{\link{as.data.frame.scdf}()},
+\code{\link{as_scdf}()},
+\code{\link{fill_missing}()},
+\code{\link{moving_median}()},
+\code{\link{print.sc_outlier}()},
+\code{\link{ranks}()},
+\code{\link{rescale}()},
+\code{\link{scdf}()},
+\code{\link{select_cases}()},
+\code{\link{set_vars}()},
+\code{\link{shift}()},
+\code{\link{smooth_cases}()},
+\code{\link{standardize}()},
+\code{\link{truncate_phase}()}
+}
+\author{
+Juergen Wilbert
+}
+\concept{data manipulation functions}
+\keyword{manip}

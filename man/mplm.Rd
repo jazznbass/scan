@@ -55,7 +55,7 @@ McKean, 2000). Default is \code{model = "W"}. Possible values are: \code{"B&L-B"
 \code{"H-M"}, \code{"W"}, and deprecated \code{"JW"}.}
 
 \item{contrast}{Sets contrast_level and contrast_slope. Either "first",
-"preceding" or a contrast matrix.}
+"preceding" or a contrast matrix. If NA contrast is ignored.}
 
 \item{contrast_level}{Either "first", "preceding" or a contrast matrix. If NA
 contrast_level is a copy of contrast.}
@@ -118,7 +118,16 @@ publication tables.}
 }
 }
 \description{
-The \code{\link[=mplm]{mplm()}} function computes a multivariate piecewise regression model.
+The \code{\link[=mplm]{mplm()}} function computes a multivariate piecewise regression model. The
+function automatically creates the regression formula based on the provided
+data and the selected options. The default model includes trend, level, and
+slope effects for each dependent variable. The regression formula can be
+changed by providing a custom formula to the \code{update} argument.
+}
+\details{
+The function currently only supports single-case data (i.e., one case per
+dataset). For multilevel piecewise regression models, please use the \link{hplm}
+function.
 }
 \section{Functions}{
 \itemize{
@@ -138,6 +147,7 @@ print(res, std = TRUE)
 \seealso{
 Other regression functions: 
 \code{\link{bplm}()},
+\code{\link{fetch}()},
 \code{\link{hplm}()},
 \code{\link{plm}()},
 \code{\link{print.sc_ac}()},

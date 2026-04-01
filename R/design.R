@@ -1,4 +1,4 @@
-#' Generate a single-case design matrix
+#' Generate a single-case design matrix for multiple random single-cases
 #'
 #' Generates a parameter list used for generating multiple random single-cases.
 #' This is used within the `random_scdf` function and the `power_test` function
@@ -30,7 +30,11 @@
 #'   number of cases exceeds the length of the vector, values are recycled. if
 #'   the distribution is 'poisson' or 'binomial' s is not applied.
 #' @param n_trials If `distribution` (see below) is `"binomial"`, `n_trials` is
-#'   the number of trials/observations/items.
+#'   the number of trials/observations/items. E.g., if you simulate accuracy
+#'   data with 10 items per measurement, set `n_trials = 10`. To assign
+#'   different n_trials to several single-cases, use a vector of values (e.g.
+#'   `n_trials = c(10, 15, 20)`). If the number of cases exceeds the length of
+#'   the vector, values are recycled.
 #' @param trend Defines the effect size of a trend added incrementally to each
 #'   measurement across the whole data-set. To assign different trends to
 #'   several single-cases, use a vector of values (e.g. `trend = c(.1, .3,

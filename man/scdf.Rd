@@ -4,7 +4,7 @@
 \alias{scdf}
 \alias{scdf-class}
 \alias{as.scdf}
-\title{Single case data frame}
+\title{Single case data frame constructor}
 \usage{
 scdf(
   ...,
@@ -47,8 +47,7 @@ the \code{scan} package.
 }
 \description{
 \code{scdf()} is the constructor for objects of class \code{scdf}. It stores data from
-single-case studies with one or more cases in a structured format suitable
-for analysis with the \code{scan} package.
+single-case studies in a structured format suitable for analysis with the \code{scan} package.
 }
 \details{
 If no variable matching the name of the dependent variable is
@@ -66,6 +65,35 @@ in phase A and four in phase B.
 
 If a vector matching the name of the phase variable is provided, it will be
 used to define the phase design directly.
+Otherwise, the phase design can be defined in three alternative ways:
+via the \code{B_start} argument, via the \code{phase_starts} argument, or via
+the \code{phase_design} argument.
+
+If \code{B_start} is provided, a simple AB phase design is assumed, with phase A
+starting at measurement time 1 and phase B starting at the measurement time
+indicated by \code{B_start}.
+If \code{phase_starts} is provided, the phase design is constructed based on the
+measurement times indicated in the vector.
+If \code{phase_design} is provided, it is used directly to define the phase
+design.
+If multiple of these options are provided, the priority order is:
+\code{phase_design}, \code{phase_starts}, \code{B_start}, phase variable in
+data frame, names of dependent variable.
+
+If none of these options are provided, an error is raised.
+
+The function can be used to create single-case data frames for multiple cases
+separately, which can then be combined into a list for multiple-case
+analyses.
+
+See also the convenience function \code{\link{transform.scdf}} to add new
+variables to an existing \code{scdf} object.
+
+See the package vignettes for further examples on how to create and work with
+\code{scdf} objects.
+
+See the section on \emph{Data structure} in the documentation of the
+\code{\link{scan}} package for further details on the \code{scdf} data structure.
 }
 \examples{
 ## Scores on a letter naming task were collected on eleven days in a row.
@@ -137,6 +165,7 @@ Other data manipulation functions:
 \code{\link{add_l2}()},
 \code{\link{as.data.frame.scdf}()},
 \code{\link{as_scdf}()},
+\code{\link{batch_apply}()},
 \code{\link{fill_missing}()},
 \code{\link{moving_median}()},
 \code{\link{print.sc_outlier}()},

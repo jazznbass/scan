@@ -2,15 +2,19 @@
 % Please edit documentation in R/fetch.R
 \name{fetch}
 \alias{fetch}
-\title{Fetches elements from scan objects
-Getter function for scan objects}
+\alias{fetch.sc_plm}
+\alias{fetch.sc_hplm}
+\alias{fetch.sc_bplm}
+\alias{fetch.sc_mplm}
+\title{Fetches elements from scan objects}
 \usage{
 fetch(object, what, ...)
 }
 \arguments{
 \item{object}{Object returned from a scan function.}
 
-\item{what}{Element/part to be extracted.}
+\item{what}{Element/part to be extracted. Currently, only "model" is
+supported to extract the fitted regression model.}
 
 \item{...}{Further parameters passed to the function.}
 }
@@ -18,6 +22,34 @@ fetch(object, what, ...)
 An object of the respective regression model class.
 }
 \description{
-Fetches elements from scan objects
-Getter function for scan objects
+The fetch function is a getter function for scan objects
+returned from regression functions such as \code{plm()}, \code{hplm()}, \code{bplm()}, and
+\code{mplm()}. It allows users to extract specific elements from these objects,
+such as the fitted model.
 }
+\examples{
+# plm regression
+model1 <- plm(example_A24)
+fetch(model1, what = "model") |> summary()
+# Multilevel plm regression
+model2 <- hplm(exampleAB_50)
+fetch(model2, what = "model") |> summary()
+# Bayesian plm regression
+model3 <- bplm(exampleAB_50, nitt = 5000)
+fetch(model3, what = "model") |> summary()
+}
+\seealso{
+Other regression functions: 
+\code{\link{bplm}()},
+\code{\link{hplm}()},
+\code{\link{mplm}()},
+\code{\link{plm}()},
+\code{\link{print.sc_ac}()},
+\code{\link{print.sc_bctau}()},
+\code{\link{trend}()}
+}
+\author{
+Juergen Wilbert
+}
+\concept{regression functions}
+\keyword{regression}

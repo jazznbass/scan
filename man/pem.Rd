@@ -2,7 +2,7 @@
 % Please edit documentation in R/pem.R
 \name{pem}
 \alias{pem}
-\title{Percent exceeding the median}
+\title{Percent exceeding the median (PEM)}
 \usage{
 pem(
   data,
@@ -37,7 +37,7 @@ is \code{binom.test = TRUE}.}
 
 \item{FUN}{Data points are compared with the phase A median. Use this
 argument to implement alternative measures of central tendency. Default is
-\code{FUN = median}}
+\code{FUN = median}.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
 that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
@@ -56,6 +56,15 @@ phase A median.  Additionally, a chi square test against a 50/50
 distribution is computed.  Different measures of central tendency can be
 addressed for alternative analyses.
 }
+\details{
+The Percent Exceeding the Median is calculated as
+the percentage of data points in phase B that exceed the median of phase A.
+If the \code{decreasing} argument is set to \code{TRUE},
+the percentage of data points in phase B that are below the median of
+phase A is calculated.  The PEM is expressed as a percentage ranging
+from 0 to 100.  Higher values indicate a greater degree of
+improvement from phase A to phase B.
+}
 \examples{
 
 ## Calculate the PEM including the Binomial and Chi-square tests for a single-case
@@ -72,6 +81,7 @@ Other overlap functions:
 \code{\link{pet}()},
 \code{\link{pnd}()},
 \code{\link{print.sc_cdc}()},
+\code{\link{select_phases}()},
 \code{\link{tau_u}()}
 }
 \author{

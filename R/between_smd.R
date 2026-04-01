@@ -21,7 +21,13 @@
 #'   MCMCglmm). The default is `0.95` for a 95-percent interval.
 #' @param include_residuals Logical. See details.  
 #' @param ... Further arguments passed to the [hplm()] or [bplm()]function.
-#' @return An object of class sc_bcsmd.
+#' @return An object of class sc_bcsmd. It is a list containing the following
+#'  elements:
+#'  - `models`: A list of data frames containing the BC-SMD results for each
+#'  model calculated.
+#'  - `ci`: The width of the confidence/credible interval.
+#'  - `method`: The method used for model estimation.
+#' @author Juergen Wilbert
 #' @references Pustejovsky, J. E., Hedges, L. V., & Shadish, W. R. (2014).
 #'   Design-Comparable Effect Sizes in Multiple Baseline Designs: A General
 #'   Modeling Framework. Journal of Educational and Behavioral Statistics,

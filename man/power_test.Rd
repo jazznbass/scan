@@ -38,9 +38,11 @@ provided design is set to 0 when computing the alpha-error proportion.}
 Default is \code{n = 100}. Ignored if design_is_one_study = FALSE.}
 
 \item{design_is_one_study}{If TRUE, the design is assumed to define all cases
-of one study that is repeatedly randomly created \code{n_sim} times. If false,
+of one study that is repeatedly randomly created \code{n_sim} times. If FALSE,
 the design is assumed to contain all cases from which a random sample is
-generated. This is useful for very specific complex simulation studies.}
+generated. This is useful for very specific complex simulation studies.
+In this case, n_sim indicates how many random samples are drawn from the
+provided design. Default is TRUE.}
 
 \item{alpha_test}{Logical. If TRUE, alpha error is calculated.}
 
@@ -67,6 +69,12 @@ correct proportions.}
 
 \item{alpha_level}{Alpha level used to calculate the proportion of
 significant tests. Default is \code{alpha_level = 0.05}.}
+}
+\value{
+A data frame with the power, alpha error, and correct proportions for
+each provided method. If binomial tests are requested, p values for these
+tests are also provided. If confidence intervals are requested, these
+are also provided.
 }
 \description{
 Conducts a Monte-Carlo study on the test-power and alpha-error probability of

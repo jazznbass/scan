@@ -1,7 +1,11 @@
-#' Subset cases, rows, and variables
+#' Subset cases, rows, and variables of an scdf
 #'
 #' This function is mainly used to filter rows by a logical expression. It has
 #' also arguments to filter variables and cases.
+#' 
+#' For subsetting rows, a logical expression can be provided in the `subset`
+#' argument. Missing values are treated as FALSE. The expression is evaluated
+#' within each single-case data frame of the scdf.
 #'
 #' @param x An scdf object.
 #' @param ... not implemented
@@ -19,7 +23,6 @@
 #' subset(exampleAB_add, select = c(-cigarrets, -depression))
 #' subset(exampleAB, cases = c(Karolina, Johanna))
 #' subset(exampleA1B1A2B2, phase %in% c("A1", "B2"), cases = Pawel:Moritz)
-
 subset.scdf <- function(x, subset, select, cases, ...) {
   scdf <- x
   scdf_attributes <- attributes(scdf)

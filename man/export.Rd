@@ -143,3 +143,12 @@ Export creates html files of tables or displays them directly in the viewer
 pane of rstudio. When applied in rmarkdown/quarto, tables can also be created
 for pdf/latex output.
 }
+\details{
+The function uses either the kableExtra or the gt package to create the tables.
+The default engine can be set via the option \code{scan.export.engine}. Additional
+options for kable and kable_styling can be set via the options
+\code{scan.export.kable} and \code{scan.export.kable_styling}.
+The default options can be viewed and modified via
+\code{options("scan.export.kable")} and
+\code{options("scan.export.kable_styling")}.
+}

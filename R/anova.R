@@ -1,10 +1,20 @@
 #' ANOVA Table for Piecewise Linear Models
 #' 
-#' Model comparison for piecewise regression models
+#' Model comparison for piecewise regression models fitted with `plm()`,
+#' `hplm()`, or `mplm()` using likelihood ratio tests.
 #' 
 #' @aliases anova.sc_plm anova.sc_hplm anova.sc_mplm
-#' @param object an object containing the results returned by a plm().
-#' @param ... additional plm objects.
+#' @param object An object containing the results returned by `plm()`,
+#' `hplm()`, or `mplm()`.
+#' @param ... additional objects for model comparison.
+#' @return An object of class `anova` containing the results of the model
+#'  comparison.
+#' @details
+#' The function performs likelihood ratio tests to compare nested piecewise
+#' regression models. It extracts the underlying model from the sc_plm, sc_hplm,
+#' or sc_mplm object and passes them to the generic anova() function
+#' for model comparison.
+#'  
 #' @examples
 #' ## For glm models with family = "gaussian"
 #' mod1 <- plm(exampleAB$Johanna, level = FALSE, slope = FALSE)
@@ -37,7 +47,6 @@ anova.sc_plm <- function(object, ...) {
   models <- c(list(object$full.model), models)
   
   do.call(anova, models)
-  
 }
 
 #' @rdname anova.sc_plm

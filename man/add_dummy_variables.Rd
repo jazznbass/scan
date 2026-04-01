@@ -28,6 +28,11 @@ contrast_level is a copy of contrast.}
 \description{
 Adds dummy variables to an scdf for calculating piecewise linear models.
 }
+\details{
+This function creates dummy variables for phase levels and phase slopes
+according to the specified piecewise regression model. It supports different
+contrast coding schemes for both level and slope contrasts.
+}
 \examples{
 add_dummy_variables(
  scdf = exampleABC, 
