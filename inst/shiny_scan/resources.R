@@ -42,7 +42,19 @@ res$choices$examples <- c("(none)", examples)
 
 ## themes ----
 
-res$scplot_themes <- names(scplot:::.scplot_themes)
+themes <- lapply(scplot:::.scplot_themes, function(x) x$theme_type) |> unlist()
+
+if (!is.null(themes)) {
+  complete <- names(themes)[which(themes == "complete")]
+  element <- names(themes)[which(!themes == "complete")]
+} else {
+  complete <- names(scplot:::.scplot_themes)
+  element <- names(scplot:::.scplot_themes)
+}
+
+
+res$scplot_themes_complete <- complete
+res$scplot_themes_element <- c("None", element)
 
 ## stats ----
 res$choices$fn_stats <- c(
@@ -105,6 +117,8 @@ res$choices$legend_position <- c(
   "left" = "left"
 )
 
+res$choices$separators <- c("comma" = ",", "semicolon" = ";", "tab" = "\t", 
+                            "space" = " ")
 
 # placeholder ----
 

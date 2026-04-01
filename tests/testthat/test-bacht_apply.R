@@ -20,6 +20,6 @@ test_that("batch_apply simplifies vector outputs to a data frame with case and r
     simplify = TRUE
   ) 
   
-  expect_equal(object_checksum(res), "443fc209")
+  expect_equal(object_checksum(res), '242.2942')
                                                                                                                                                    
 })

@@ -19,7 +19,7 @@ publication friendly style. A shiny app allows to use scan in a
 graphical userinterface.
 
 More details can be found in the online book ‘Analyzing single-case data
-with R and scan’, Juergen Wilbert (2025)  
+with R and scan’, Juergen Wilbert (2026)  
 <https://jazznbass.github.io/scan-Book/>.
 
 ## Installation
@@ -33,6 +33,6 @@ install.packages("scan")
 Or the development version from GitHub with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("jazznbass/scan")
+# install.packages("pak")
+pak::pak("jazznbass/scan")
 ```

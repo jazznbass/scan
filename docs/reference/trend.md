@@ -116,13 +116,13 @@ matthea <- random_scdf(design)
 trend(matthea)
 #> Trend for each phase
 #> 
-#>               Intercept     B  Beta
-#> Linear.ALL       41.504 4.159 0.957
-#> Linear.A         50.958 0.750 0.320
-#> Linear.B         57.269 4.751 0.946
-#> Quadratic.ALL    54.904 0.211 0.958
-#> Quadratic.A      52.085 0.062 0.110
-#> Quadratic.B      68.993 0.318 0.920
+#>               Intercept      B   Beta
+#> Linear.ALL       38.979  4.359  0.971
+#> Linear.A         52.090 -0.620 -0.578
+#> Linear.B         54.536  5.100  0.981
+#> Quadratic.ALL    52.497  0.226  0.990
+#> Quadratic.A      51.719 -0.145 -0.563
+#> Quadratic.B      66.393  0.352  0.983
 #> 
 #> Note. Measurement-times start at 0 for each phase
 
@@ -139,19 +139,19 @@ trend(
 )
 #> Trend for each phase
 #> 
-#>               Intercept      B   Beta
-#> Linear.ALL       43.260  2.417  0.898
-#> Linear.A         56.353 -0.794 -0.272
-#> Linear.B         48.333  3.149  0.918
-#> Quadratic.ALL    52.101  0.115  0.926
-#> Quadratic.A      56.289 -0.211 -0.441
-#> Quadratic.B      58.126  0.186  0.893
-#> Cubic.ALL        43.260  2.417  0.898
-#> Cubic.A          56.353 -0.794 -0.272
-#> Cubic.B          48.333  3.149  0.918
-#> Log Time.ALL     37.394 14.760  0.753
-#> Log Time.A       54.527 -0.581 -0.080
-#> Log Time.B       42.725 16.561  0.844
+#>               Intercept      B  Beta
+#> Linear.ALL       40.300  2.781 0.909
+#> Linear.A         49.455  1.125 0.376
+#> Linear.B         46.354  3.588 0.918
+#> Quadratic.ALL    50.513  0.132 0.935
+#> Quadratic.A      51.488  0.122 0.249
+#> Quadratic.B      57.271  0.215 0.906
+#> Cubic.ALL        40.300  2.781 0.909
+#> Cubic.A          49.455  1.125 0.376
+#> Cubic.B          46.354  3.588 0.918
+#> Log Time.ALL     32.875 17.302 0.777
+#> Log Time.A       49.518  3.458 0.465
+#> Log Time.B       39.477 19.128 0.856
 #> 
 #> Note. Measurement-times start at 1 for each phase
 ```

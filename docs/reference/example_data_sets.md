@@ -52,6 +52,11 @@ and to reproduce results from the respective publications.
 
 - **exampleABC_outlier** — Fictitious ABC example with outlier.
 
+- **example_atd** — Fictitious AB alternating treatment design.
+
+- **example_stranger** - Example for screen time of Stranger Things
+  characters.
+
 - **Grosche2011** — Multiple-baseline (three cases) from a
   direct-instructive reading intervention (Grosche, 2011).
 
@@ -97,7 +102,7 @@ and to reproduce results from the respective publications.
 ## Usage
 
 ``` r
-data(example_data_sets, package = "scan")
+data(exampleAB, package = "scan")
 ```
 
 ## References

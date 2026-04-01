@@ -18,7 +18,8 @@ tab_scdf <- nav_panel(
       textInput("new_mt", "Measurement times", placeholder = res$placeholder$mt),
       textAreaInput("new_variables", "Additional variables",
                     placeholder = res$placeholder$variables, rows = 3),
-      textInput("new_casename", "Case name", placeholder = res$placeholder$casename),
+      textInput("new_casename", "Case name", 
+                placeholder = res$placeholder$casename),
       
       div(class = "d-grid gap-2",
           actionButton("new_save_case",   "Save case",    class = "btn-primary"),
@@ -62,8 +63,7 @@ card_load_import <- card(
     selectInput("scdf_load_mvar", "Measurement time variable", choices = "mt"),
     textInput("scdf_load_na", "Missing values", value = '"", "NA"'),
     selectInput("scdf_csv", "Separators (only for .csv and .txt files)", 
-                choices = c("comma" = ",", "semicolon" = ";", "tab" = "\t", "space" = " ")
-    ),
+                choices = res$choices$separators),
     tags$hr(),
     actionButton("scdf_import",   "Import scdf",    class = "btn-primary")
   )
@@ -97,8 +97,10 @@ tab_transform <- layout_sidebar(
         textInput("select_phasesA", "Combine phases to A", placeholder = "(e.g.: 1)"),
         textInput("select_phasesB", "Combine phases to B", placeholder = "(e.g.: 2,3)")
     ),
-    textInput("subset", "Filter measurements", placeholder = 'e.g.: mt > mean(values[phase == "A"])'),
-    textAreaInput("transform", "Transform variables", rows = 5, placeholder = res$placeholder$transform),
+    textInput("subset", "Filter measurements", 
+              placeholder = 'e.g.: mt > mean(values[phase == "A"])'),
+    textAreaInput("transform", "Transform variables", rows = 5, 
+                  placeholder = res$placeholder$transform),
     selectInput("setdvar", "Set dependent variable", choices = ""),
     downloadButton("transformed_save", "Save transformed scdf", class = "btn-success")
   ),
@@ -173,10 +175,14 @@ card_plot_theme <- card(
     selectInput("scplot_select_case", NULL, choices = "all"),
     
     h5("Themes"),
-    selectInput("scplot_theme_1", NULL, choices = res$scplot_themes, selected = "default"),
-    selectInput("scplot_theme_2", NULL, choices = c("None", res$scplot_themes)),
-    selectInput("scplot_theme_3", NULL, choices = c("None", res$scplot_themes)),
-    selectInput("scplot_legend_position", "Legend position",
+    selectInput("scplot_theme_1", "Complete", 
+                choices = res$scplot_themes_complete, selected = "default"),
+    selectInput("scplot_theme_2", "Add element", 
+                choices = res$scplot_themes_element),
+    selectInput("scplot_theme_3", "Add element", 
+                choices = res$scplot_themes_element),
+    h5("Legend position"),
+    selectInput("scplot_legend_position", NULL,
                 choices = res$choices$legend_position, 
                 selected = "none"),
     h5("Textsize"),
@@ -267,13 +273,15 @@ card_design <- card(
     textInput("design_level", "Level", value = "1"),
     textInput("design_start", "Start value", value = 50),
     textInput("design_rtt", "Reliabiliy", value = 0.8),
-    selectInput("design_distribution", "Distribution", choices = c("normal", "poisson", "binomial"))
+    selectInput("design_distribution", "Distribution", 
+                choices = c("normal", "poisson", "binomial"))
   )
 )
 
 card_analysis <- card(
   card_body(
-    checkboxGroupInput("pt_method", "Method(s)", choices = res$choices$pt_method, selected = "plm_level"),
+    checkboxGroupInput("pt_method", "Method(s)", 
+                       choices = res$choices$pt_method, selected = "plm_level"),
     textInput("pt_method_user", "User method", value = ""),
     selectInput("pt_effect", "Null effect for", choices = c("level", "slope")),
     numericInput("pt_n", "Number of simulations", min = 30, max = 10000, value = 100),
@@ -341,9 +349,6 @@ tab_settings <- layout_columns(
   card(
     card_header("Stats"),
     card_body(
-      #input_switch("stats_description",
-      #             tags$span("Show short description", class = "chklabel-big"),
-      #             value = FALSE),
       input_switch("stats_default",
                    tags$span("Show defaults", class = "chklabel-big"),
                    value = FALSE),
@@ -378,13 +383,19 @@ navbar_help <- nav_menu(
   nav_panel(
     "About",
     h4("Running:"),
-    h4(paste0("scan ",   utils::packageVersion("scan"),   " (", utils::packageDate('scan'),   ")")),
-    h4(paste0("scplot ", utils::packageVersion("scplot"), " (", utils::packageDate('scplot'), ")")),
+    h4(paste0("scan ",   utils::packageVersion("scan"),   " (", 
+              utils::packageDate('scan'),   ")")),
+    h4(paste0("scplot ", utils::packageVersion("scplot"), " (", 
+              utils::packageDate('scplot'), ")")),
     hr(),
     h4("Please cite as:"),
-    h4({x <- citation("scan"); class(x) <- "list"; attributes(x[[1]])$textVersion}),
+    h4({
+      x <- citation("scan")
+      class(x) <- "list"
+      attributes(x[[1]])$textVersion
+    }),
     hr(),
-    h4("(c) Jürgen Wilbert, 2025")
+    h4("(c) Jürgen Wilbert, 2026")
   ),
   nav_panel(title = "Quit")
 )

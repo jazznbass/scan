@@ -29,6 +29,7 @@
 \alias{exampleABC_150}
 \alias{exampleAB_mpd}
 \alias{example_stranger}
+\alias{example_atd}
 \alias{Lenz2013}
 \alias{Leidig2018}
 \alias{Leidig2018_l2}
@@ -45,9 +46,8 @@ data(exampleAB, package = "scan")
 }
 \description{
 The \link{scan} package comes with a set of fictitious and authentic
-single-case study data.
-These data sets can be used to practice single-case data analysis
-and to reproduce results from the respective publications.
+single-case study data. These data sets can be used to practice single-case
+data analysis and to reproduce results from the respective publications.
 \itemize{
 \item \strong{Beretvas2008} — Fictitious single-case intervention study from Beretvas & Chung, 2008.
 \item \strong{Borckardt2014} — Fictitious daily pain ratings evaluating a psychological treatment from Borckardt & Nash, 2014.
@@ -68,6 +68,7 @@ and to reproduce results from the respective publications.
 \item \strong{exampleABC_150} — Fictitious ABC example (150 cases).
 \item \strong{exampleABC_50} — Fictitious ABC example (50 cases).
 \item \strong{exampleABC_outlier} — Fictitious ABC example with outlier.
+\item \strong{example_atd} — Fictitious AB alternating treatment design.
 \item \strong{example_stranger} - Example for screen time of Stranger Things characters.
 \item \strong{Grosche2011} — Multiple-baseline (three cases) from a direct-instructive reading intervention (Grosche, 2011).
 \item \strong{Grosche2014} — Multiple-baseline (3×3 materials) reading intervention (Grosche, Lueke, & Wilbert, unpublished).
@@ -88,33 +89,61 @@ and to reproduce results from the respective publications.
 }
 }
 \references{
-Beretvas, S., & Chung, H. (2008). An evaluation of modified R2-change effect size indices for single-subject experimental designs. \emph{Evidence-Based Communication Assessment and Intervention, 2}, 120–128.
+Beretvas, S., & Chung, H. (2008). An evaluation of modified
+R2-change effect size indices for single-subject experimental designs.
+\emph{Evidence-Based Communication Assessment and Intervention, 2}, 120–128.
 
-Borckardt, J. J., & Nash, M. R. (2014). Simulation modelling analysis for small sets of single-subject data collected over time. \emph{Neuropsychological Rehabilitation, 24}, 492–506.
+Borckardt, J. J., & Nash, M. R. (2014). Simulation modelling analysis for
+small sets of single-subject data collected over time. \emph{Neuropsychological
+Rehabilitation, 24}, 492–506.
 
-Gruenke, M., Wilbert, J., & Stegemann-Calder, K. (2013). Analyzing the effects of story mapping on the reading comprehension of children with low intellectual abilities. \emph{Learning Disabilities: A Contemporary Journal, 11}, 51–64.
+Gruenke, M., Wilbert, J., & Stegemann-Calder, K. (2013). Analyzing the
+effects of story mapping on the reading comprehension of children with low
+intellectual abilities. \emph{Learning Disabilities: A Contemporary Journal, 11},
+51–64.
 
-Grosche, M. (2011). Effekte einer direkt-instruktiven Foerderung der Lesegenauigkeit. \emph{Empirische Sonderpaedagogik, 3}, 147–161.
+Grosche, M. (2011). Effekte einer direkt-instruktiven Foerderung der
+Lesegenauigkeit. \emph{Empirische Sonderpaedagogik, 3}, 147–161.
 
-Huitema, B. E., & McKean, J. W. (2000). Design specification issues in time-series intervention models. \emph{Educational and Psychological Measurement, 60}, 38–58.
+Huitema, B. E., & McKean, J. W. (2000). Design specification issues in
+time-series intervention models. \emph{Educational and Psychological Measurement,
+60}, 38–58.
 
-Lenz, A. S. (2013). Calculating Effect Size in Single-Case Research: A Comparison of Nonoverlap Methods. \emph{Measurement and Evaluation in Counseling and Development, 46}(1), 64–73.
+Lenz, A. S. (2013). Calculating Effect Size in Single-Case Research: A
+Comparison of Nonoverlap Methods. \emph{Measurement and Evaluation in Counseling
+and Development, 46}(1), 64–73.
 
-Leidig, T., Casale, G., Wilbert, J., Hennemann, T., Volpe, R. J., Briesch, A., & Grosche, M. (2022). Individual, generalized, and moderated effects of the good behavior game on at-risk primary school students: A multilevel multiple baseline study using behavioral progress monitoring. \emph{Frontiers in Education, 7}. https://www.frontiersin.org/articles/10.3389/feduc.2022.917138
+Leidig, T., Casale, G., Wilbert, J., Hennemann, T., Volpe, R. J., Briesch,
+A., & Grosche, M. (2022). Individual, generalized, and moderated effects of
+the good behavior game on at-risk primary school students: A multilevel
+multiple baseline study using behavioral progress monitoring. \emph{Frontiers in
+Education, 7}. https://www.frontiersin.org/articles/10.3389/feduc.2022.917138
 
-Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage of All Non-Overlapping Data (PAND) An Alternative to PND. The Journal of Special Education, 40(4), 194-204.
+Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage of All
+Non-Overlapping Data (PAND) An Alternative to PND. The Journal of Special
+Education, 40(4), 194-204.
 
-Parker, R. I., Vannest, K. J., & Brown, L. (2009). The improvement rate difference for single-case research. Exceptional Children, 75(2), 135-150.
+Parker, R. I., Vannest, K. J., & Brown, L. (2009). The improvement rate
+difference for single-case research. Exceptional Children, 75(2), 135-150.
 
-Parker, R. I., & Vannest, K. (2009). An improved effect size for single-case research: Nonoverlap of all pairs. Behavior Therapy, 40(4), 357-367.
+Parker, R. I., & Vannest, K. (2009). An improved effect size for single-case
+research: Nonoverlap of all pairs. Behavior Therapy, 40(4), 357-367.
 
-Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011). Combining Nonoverlap and Trend for Single-Case Research: Tau-U. \emph{Behavior Therapy, 42}(2), 284–299. https://doi.org/10.1016/j.beth.2010.08.006
+Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011).
+Combining Nonoverlap and Trend for Single-Case Research: Tau-U. \emph{Behavior
+Therapy, 42}(2), 284–299. https://doi.org/10.1016/j.beth.2010.08.006
 
-Parker, R. I., Vannest, K. J., & Davis, J. L. (2011). Effect Size in Single-Case Research: A Review of Nine Nonoverlap Techniques. Behavior Modification, 35(4), 303-322. https://doi.org/10.1177/0145445511399147
+Parker, R. I., Vannest, K. J., & Davis, J. L. (2011). Effect Size in
+Single-Case Research: A Review of Nine Nonoverlap Techniques. Behavior
+Modification, 35(4), 303-322. https://doi.org/10.1177/0145445511399147
 
-Tarlow, K. R. (2017). An Improved Rank Correlation Effect Size Statistic for Single-Case Designs: Baseline Corrected Tau. \emph{Behavior Modification, 41}(4), 427–467. https://doi.org/10.1177/0145445516676750
+Tarlow, K. R. (2017). An Improved Rank Correlation Effect Size Statistic for
+Single-Case Designs: Baseline Corrected Tau. \emph{Behavior Modification, 41}(4),
+427–467. https://doi.org/10.1177/0145445516676750
 
-Waddell, D. E., Nassar, S. L., & Gustafson, S. A. (2011). Single-Case Design in Psychophysiological Research: Part II: Statistical Analytic Approaches. \emph{Journal of Neurotherapy, 15}, 160–169.
+Waddell, D. E., Nassar, S. L., & Gustafson, S. A. (2011). Single-Case Design
+in Psychophysiological Research: Part II: Statistical Analytic Approaches.
+\emph{Journal of Neurotherapy, 15}, 160–169.
 }
 \author{
 Juergen Wilbert

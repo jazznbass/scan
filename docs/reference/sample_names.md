@@ -37,5 +37,5 @@ generating random identifiers.
 
 ``` r
 sample_names(3)
-#> [1] "Marion"  "Kyrie"   "Charley"
+#> [1] "Parris" "Regan"  "Storm" 
 ```

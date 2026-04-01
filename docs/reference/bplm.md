@@ -2,9 +2,7 @@
 
 Computes a bayesian (hierarchical) piecewise linear model based on a
 Markov chain Monte Carlo sampler. The function automatically creates the
-fixed and random part of the regression model based on the provided data
-and the selected options. The function uses the MCMCglmm function of the
-MCMCglmm package to fit the model.
+fixed and random part of the regression model.
 
 ## Usage
 
@@ -130,7 +128,9 @@ export(
 
 - ...:
 
-  Further arguments passed to the mcmcglmm function.
+  Further arguments passed to the
+  [`MCMCglmm::MCMCglmm()`](https://rdrr.io/pkg/MCMCglmm/man/MCMCglmm.html)
+  function.
 
 - x:
 
@@ -171,26 +171,30 @@ export(
 
 ## Value
 
-An object of class `sc_bplm`.
+An object of class `sc_bplm` with element:
 
-|  |  |
-|----|----|
-|  |  |
-| `model` | List containing information about the applied model. |
-| `N` | Number of single-cases. |
-| `formula` | A list containing the fixed and the random formulas of the hplm model. |
-| `mcmglmm` | Object of class MCMglmm. |
-| `contrast` | List with contrast definitions. |
+- `model` - List containing information about the applied model.
+
+- `N` - Number of single-cases.
+
+- `formula` - A list containing the fixed and the random formulas of the
+  hplm model.
+
+- `mcmglmm` - Object of class MCMglmm.
+
+- `contrast` - List with contrast definitions.
 
 ## Details
 
-The default model includes fixed trend, level, and slope effects as well
-as a random intercept for each single-case. The fixed part of the model
-can be changed by providing a custom formula to the `fixed` argument or
-by using the `update_fixed` argument. The random part of the model can
-be changed by providing a custom formula to the `random` argument or by
-setting the `random_trend`, `random_level`, or `random_slope` arguments
-to TRUE.
+The function uses the
+[`MCMCglmm::MCMCglmm()`](https://rdrr.io/pkg/MCMCglmm/man/MCMCglmm.html)
+function to fit the model. The default model includes fixed trend,
+level, and slope effects as well as a random intercept for each
+single-case. The fixed part of the model can be changed by providing a
+custom formula to the `fixed` argument or by using the `update_fixed`
+argument. The random part of the model can be changed by providing a
+custom formula to the `random` argument or by setting the
+`random_trend`, `random_level`, or `random_slope` arguments to TRUE.
 
 ## Functions
 

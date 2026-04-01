@@ -147,8 +147,8 @@ power_test(design, n_sim = 10)
 #> Test-Power in percent:
 #> 
 #>     Method Power Alpha Error Alpha:Beta Correct
-#>  plm_level    70           0      1:Inf      85
-#>       rand    70           0      1:Inf      85
+#>  plm_level    60           0      1:Inf      80
+#>       rand    60           0      1:Inf      80
 #>       tauU   100          20      1:0.0      90
 
 ## Would you achieve higher power by setting up a MBD with three cases?
@@ -160,7 +160,7 @@ power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"))
 #> Test-Power in percent:
 #> 
 #>      Method Power Alpha Error Alpha:Beta Correct
-#>  hplm_level   100           0      1:NaN     100
-#>        rand   100           0      1:NaN     100
-#>   tauU_meta   100          50      1:0.0      75
+#>  hplm_level   100          10      1:0.0      95
+#>        rand    90          10      1:1.0      90
+#>   tauU_meta   100          60      1:0.0      70
 ```

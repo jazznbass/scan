@@ -1,7 +1,10 @@
 # ANOVA Table for Piecewise Linear Models
 
-Model comparison for piecewise regression models fitted with plm(),
-hplm(), or mplm() using likelihood ratio tests.
+Model comparison for piecewise regression models fitted with
+[`plm()`](https://jazznbass.github.io/scan/reference/plm.md),
+[`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md), or
+[`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md) using
+likelihood ratio tests.
 
 ## Usage
 
@@ -20,11 +23,14 @@ anova(object, ...)
 
 - object:
 
-  an object containing the results returned by a plm().
+  An object containing the results returned by
+  [`plm()`](https://jazznbass.github.io/scan/reference/plm.md),
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md), or
+  [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md).
 
 - ...:
 
-  additional plm objects.
+  additional objects for model comparison.
 
 ## Value
 

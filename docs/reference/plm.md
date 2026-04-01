@@ -1,10 +1,10 @@
 # Piecewise linear model / piecewise regression
 
 The `plm` function computes a piecewise regression model (see Huitema &
-McKean, 2000). The function automatically creates the fixed part of the
-regression model based on the provided data and the selected options.
-The function uses the `glm` function of the stats package or the `gls`
-function of the nlme package to fit the model.
+McKean, 2000) for one case. The function automatically creates the
+default model which includes trend, level, and slope effects. The model
+can be changed with `trend`, `level`, and `slope` arguments or by
+providing a custom formula.
 
 ## Usage
 
@@ -162,7 +162,9 @@ export(
 
 - ...:
 
-  Further arguments passed to the glm function.
+  Further arguments passed to the
+  [`stats::glm()`](https://rdrr.io/r/stats/glm.html) or
+  [`nlme::gls()`](https://rdrr.io/pkg/nlme/man/gls.html) function.
 
 - x:
 
@@ -245,9 +247,8 @@ An object of class `sc_plm`.
 
 ## Details
 
-The default model includes trend, level, and slope effects. The fixed
-part of the model can be changed by providing a custom formula to the
-`update` argument.
+The function uses the `glm` function of the stats package or the `gls`
+function of the nlme package (for auto-regression models).
 
 ## Functions
 

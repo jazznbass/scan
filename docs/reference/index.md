@@ -231,7 +231,7 @@
 ## Simulating data
 
 - [`design()`](https://jazznbass.github.io/scan/reference/design.md) :
-  Generate a single-case design matrix
+  Generate a single-case design matrix for multiple random single-cases
 - [`estimate_design()`](https://jazznbass.github.io/scan/reference/estimate_design.md)
   : Estimate single-case design
 - [`random_scdf()`](https://jazznbass.github.io/scan/reference/random_scdf.md)
@@ -239,5 +239,5 @@
 
 ## Example data sets
 
-- [`example_data_sets`](https://jazznbass.github.io/scan/reference/example_data_sets.md)
+- [`exampleAB`](https://jazznbass.github.io/scan/reference/example_data_sets.md)
   : Single-case example data sets

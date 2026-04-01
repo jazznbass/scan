@@ -156,11 +156,11 @@ transform(study, proportion = values/trials, percentage = proportion * 100)
 #> #A single-case data frame with three cases
 #> 
 #>  [case #1]: phase values mt trials proportion percentage
-#>                 A     12  1     20        0.6         60
-#>                 A     13  2     20       0.65         65
-#>                 A     11  3     20       0.55         55
-#>                 A      9  4     20       0.45         45
-#>                 A      9  5     20       0.45         45
+#>                 A      9  1     20       0.45         45
+#>                 A      9  2     20       0.45         45
+#>                 A     10  3     20        0.5         50
+#>                 A     13  4     20       0.65         65
+#>                 A     12  5     20        0.6         60
 #>                 B     20  6     20          1        100
 #>                 B     20  7     20          1        100
 #>                 B     20  8     20          1        100

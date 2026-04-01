@@ -1,4 +1,4 @@
-# Generate a single-case design matrix
+# Generate a single-case design matrix for multiple random single-cases
 
 Generates a parameter list used for generating multiple random
 single-cases. This is used within the `random_scdf` function and the

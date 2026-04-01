@@ -112,8 +112,8 @@ dat <- random_scdf(5, level = 0.5)
 pem(dat, chi.test = TRUE)
 #> Percent Exceeding the Median
 #> 
-#>       Case PEM positives total  binom.p Chi DF        p
-#>  [case #1] 100        15    15 3.05e-05  15  1 0.000108
+#>       Case  PEM positives total  binom.p  Chi DF        p
+#>  [case #1] 93.3        14    15 0.000488 11.3  1 0.000789
 #> 
 #> Alternative hypothesis: true probability > 50%
 ```

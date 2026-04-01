@@ -153,18 +153,18 @@ between_smd(study)
 #> Base model
 #> 
 #>   Effect BC-SMD   se LL-CI95% UL-CI95%
-#>  phaseB1   0.85 0.02     0.81     0.89
-#>  phaseA2   0.86 0.02     0.82     0.90
-#>  phaseB2   1.67 0.02     1.63     1.71
-#>   phaseC   2.55 0.02     2.51     2.58
+#>  phaseB1   0.82 0.02     0.78     0.85
+#>  phaseA2   0.82 0.02     0.78     0.86
+#>  phaseB2   1.65 0.02     1.61     1.69
+#>   phaseC   2.47 0.02     2.43     2.51
 #> 
 #> Full plm model
 #> 
 #>   Effect BC-SMD   se LL-CI95% UL-CI95%
-#>  phaseB1   0.87 0.04     0.79     0.95
-#>  phaseA2   0.95 0.08     0.79     1.11
-#>  phaseB2   1.89 0.13     1.64     2.15
-#>   phaseC   2.90 0.18     2.55     3.24
+#>  phaseB1   0.82 0.04     0.75     0.90
+#>  phaseA2   0.80 0.08     0.64     0.95
+#>  phaseB2   1.64 0.13     1.40     1.89
+#>   phaseC   2.40 0.17     2.07     2.74
 
 ## Specify the model and provide an hplm object:
 model <- hplm(study, contrast_level = "preceding", slope = FALSE,  trend = FALSE)
@@ -175,10 +175,10 @@ between_smd(model)
 #> Provided
 #> 
 #>   Effect BC-SMD   se LL-CI95% UL-CI95%
-#>  phaseB1   0.85 0.02     0.81     0.89
-#>  phaseA2   0.01 0.02    -0.03     0.05
-#>  phaseB2   0.82 0.02     0.78     0.86
-#>   phaseC   0.87 0.02     0.84     0.91
+#>  phaseB1   0.82 0.02     0.78     0.86
+#>  phaseA2   0.00 0.02    -0.04     0.04
+#>  phaseB2   0.83 0.02     0.79     0.87
+#>   phaseC   0.82 0.02     0.78     0.86
 
 ## excluding the residuals gives a more accurate estimation:
 between_smd(model, include_residuals = FALSE)
@@ -188,8 +188,8 @@ between_smd(model, include_residuals = FALSE)
 #> Provided
 #> 
 #>   Effect BC-SMD   se LL-CI95% UL-CI95%
-#>  phaseB1   1.02 0.02     0.97     1.07
-#>  phaseA2   0.01 0.02    -0.04     0.06
-#>  phaseB2   0.98 0.02     0.93     1.02
-#>   phaseC   1.05 0.02     1.00     1.09
+#>  phaseB1   0.97 0.02     0.92     1.01
+#>  phaseA2   0.00 0.02    -0.04     0.05
+#>  phaseB2   0.98 0.02     0.94     1.03
+#>   phaseC   0.97 0.02     0.93     1.02
 ```

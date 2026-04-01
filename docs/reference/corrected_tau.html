@@ -9,7 +9,7 @@ is calculated after correcting for a baseline trend."><meta property="og:image" 
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.67.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,6 @@ is calculated after correcting for a baseline trend.</p>
 <span>  phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  continuity <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  repeated <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  tau_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="st">"a"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -152,11 +151,6 @@ applied.</p></dd>
 <dd><p>If TRUE applies a continuity correction for calculating p</p></dd>
 
 
-<dt id="arg-repeated">repeated<a class="anchor" aria-label="anchor" href="#arg-repeated"></a></dt>
-<dd><p>If TRUE applies the repeated median method for calculating
-slope and intercept.</p></dd>
-
-
 <dt id="arg-tau-method">tau_method<a class="anchor" aria-label="anchor" href="#arg-tau-method"></a></dt>
 <dd><p>Character with values "a" or "b" (default) indicating
 whether Kendall Tau A or Kendall Tau B is applied.</p></dd>
@@ -173,8 +167,7 @@ The dependent variable is now corrected for this baseline trend and the
 residuals of the Theil-Sen regression are taken for further calculations.
 Finally, Kendall's tau is calculated for the dependent variable and the
 dichotomous phase variable. The function here provides two extensions to
-this procedure: The more accurate Siegel repeated median regression is
-applied when <code>repeated = TRUE</code> and a continuity correction is applied when
+this procedure: The more accurate continuity correction is applied when
 <code>continuity = TRUE</code>.</p>
     </div>
     <div class="section level2">

@@ -13,7 +13,7 @@ procedures."><meta property="og:image" content="https://jazznbass.github.io/scan
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.67.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,24 +90,25 @@ Defaults to the attributes in the scdf file.</p></dd>
 <dt id="arg-s">s<a class="anchor" aria-label="anchor" href="#arg-s"></a></dt>
 <dd><p>The standard deviation depicting the between case variance of the
 overall performance. If more than two single-cases are included in the
-scdf, the variance is estimated if s is set to NULL.</p></dd>
+scdf, the variance is estimated if s is set to NULL. If s is provided, this
+value is used.</p></dd>
 
 
 <dt id="arg-rtt">rtt<a class="anchor" aria-label="anchor" href="#arg-rtt"></a></dt>
 <dd><p>The reliability of the measurements. The reliability is estimated
-when rtt = NULL.</p></dd>
+when rtt = NULL. If rtt is provided, this value is used for all single-cases.</p></dd>
 
 
 <dt id="arg-overall-effects">overall_effects<a class="anchor" aria-label="anchor" href="#arg-overall-effects"></a></dt>
 <dd><p>If TRUE, trend, level, and slope effect estimations
 will be identical for each case. If FALSE, effects are estimated for each
-case separately.</p></dd>
+case separately. Default is FALSE.</p></dd>
 
 
 <dt id="arg-overall-rtt">overall_rtt<a class="anchor" aria-label="anchor" href="#arg-overall-rtt"></a></dt>
 <dd><p>Ignored when <code>rtt</code> is set. If TRUE, rtt estimations will
 be based on all cases and identical for each case. If FALSE rtt is
-estimated for each case separately.</p></dd>
+estimated for each case separately. Default is TRUE.</p></dd>
 
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
@@ -118,7 +119,8 @@ McKean, 2000). Default is <code>model = "W"</code>. Possible values are: <code>"
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Further arguments passed to the plm function used for parameter
-estimation.</p></dd>
+estimation. For example, the model argument can be used to select
+different piecewise regression models. See plm for details.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -126,7 +128,28 @@ estimation.</p></dd>
     <p>A list of parameters for each single-case. Parameters include name,
 length, and starting measurement time of each phase, trend, level, and
 slope effects for each phase, start value, standard deviation, and
-reliability for each case.</p>
+reliability for each case. This list can be used as input for the
+random_scdf function to create new random scdf files based on the estimated
+parameters.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The function uses the plm function to estimate parameters for each
+single-case. If more than two single-cases are included in the scdf,
+the between case variance depicting the overall performance (s) is
+estimated unless s is provided. The reliability of the measurements (rtt)
+is estimated for each case unless rtt is provided. If overall_rtt is set
+to TRUE, rtt estimations will be based on all cases and identical for each
+case. If overall_effects is set to TRUE, trend, level, and slope
+effect estimations will be identical for each case.</p>
+<p>The resulting design object can be used as input for the random_scdf
+function to create new random scdf files based on the estimated parameters.
+This allows to create bootstrap samples or Monte-Carlo datasets based on
+the characteristics of an existing dataset.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
+    <p>Juergen Wilbert</p>
     </div>
 
     <div class="section level2">

@@ -28,7 +28,6 @@ corrected_tau(
   phases = c(1, 2),
   alpha = 0.05,
   continuity = FALSE,
-  repeated = FALSE,
   tau_method = c("b", "a")
 )
 ```
@@ -114,11 +113,6 @@ corrected_tau(
 
   If TRUE applies a continuity correction for calculating p
 
-- repeated:
-
-  If TRUE applies the repeated median method for calculating slope and
-  intercept.
-
 - tau_method:
 
   Character with values "a" or "b" (default) indicating whether Kendall
@@ -135,8 +129,7 @@ B-phase. The dependent variable is now corrected for this baseline trend
 and the residuals of the Theil-Sen regression are taken for further
 calculations. Finally, Kendall's tau is calculated for the dependent
 variable and the dichotomous phase variable. The function here provides
-two extensions to this procedure: The more accurate Siegel repeated
-median regression is applied when `repeated = TRUE` and a continuity
+two extensions to this procedure: The more accurate continuity
 correction is applied when `continuity = TRUE`.
 
 ## Functions

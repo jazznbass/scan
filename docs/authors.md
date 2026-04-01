@@ -12,8 +12,8 @@
 Source:
 [`inst/CITATION`](https://github.com/jazznbass/scan/blob/HEAD/inst/CITATION)
 
-Wilbert, J. & Lüke, T. (2025). Scan: Single-Case Data Analyses for
-Single and Multiple Baseline Designs. (0.67.0) \[English\]. CRAN.
+Wilbert, J. & Lüke, T. (2026). Scan: Single-Case Data Analyses for
+Single and Multiple Baseline Designs. (0.68.0) \[English\]. CRAN.
 https://CRAN.R-project.org/package=scan.
 
     @Misc{,
@@ -21,6 +21,6 @@ https://CRAN.R-project.org/package=scan.
       shorttitle = {scan},
       publisher = {CRAN},
       author = {Jürgen Wilbert and Timo Lüke},
-      year = {2025},
+      year = {2026},
       url = {https://CRAN.R-project.org/package=scan},
     }

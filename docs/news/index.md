@@ -1,17 +1,34 @@
 # Changelog
 
-## scan 0.67.2
+## scan 0.68.0
+
+### New features
 
 - Reworked
   [`fill_missing()`](https://jazznbass.github.io/scan/reference/fill_missing.md)
   function. It now interpolates the values for all variables in an scdf.
-- Extended roxygen helpfiles for functions.
+
+### Shinyscan app
+
+- Introduced tabset in the data load and example data tab.
+- Tabsets in the plot dataset with many added options.
+- Tabsets in the stats tab with Arguments on a separate tab.
+
+### Corrections
+
+- Extended roxygen helpfiles for many functions.
 
 ### Fix
 
 - export function for
   [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) does not
   throw an error when AIC can not be computed.
+
+### New example datasets
+
+- example_stranger: example for screen time of Stranger Things
+  characters.
+- example_atd: three case example for AB alternating treatment design.
 
 ## scan 0.67.0
 

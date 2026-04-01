@@ -1308,6 +1308,48 @@ example_stranger <- c(
 
 filenames <- c(filenames, "example_stranger")
 
+
+### example for alternating treatment design ---------
+
+set.seed(123456)
+
+case1 <- scdf(
+  values = c(
+    A = 44, sample(42:48, 4, replace = TRUE),
+    B = 61, 62, 61, 66, 64, 78, 70, 74, 72, 77, 66, 68, 70, 86, 67,
+    C = 77, sample(75:85, 4, replace = TRUE)
+  ),
+  treatment = c(rep(NA, 5), rep(c(1,2), length.out = 15), rep(NA, 5)),
+  name = "Juppi"
+)
+
+case2 <- scdf(
+  values = c(
+    A = 43, sample(41:59, 6, replace = TRUE), 
+    B = 67, 75, 66, 74, 68, 73, 67, 79, 66, 82, 70, 83, 69,
+    C = 75, sample(75:85, 5, replace = TRUE)
+  ),
+  treatment = c(rep(NA, 7), rep(c(1,2), length.out = 13), rep(NA, 6)),
+  name = "Schluppi"
+)
+
+case3 <- scdf(
+  values = c(
+    A = 54, sample(52:58, 5, replace = TRUE),
+    B = 68, 68, 81, 67, 78, 73, 72, 78, 81, 78, 71, 85, 80, 76,
+    C = 80, sample(75:85, 7, replace = TRUE)
+  ),
+  treatment = c(rep(NA, 6), rep(c(1,2), length.out = 14), rep(NA, 8)),
+  name = "Wuppi"
+)
+
+example_atd <- c(
+  case1, case2, case3, 
+  info = "Created example with alternating treatment design"
+) 
+
+filenames <- c(filenames, "example_atd")
+
 # write data -----
 
 .createDataFileScan <- function(filenames) {
