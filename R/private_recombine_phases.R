@@ -12,7 +12,7 @@ recombine_phases <- function(data,
   
   if (inherits(phases, c("character", "numeric", "integer"))) {
     if (!length(phases) == 2) {
-      stop("phases argument not set correctly.")
+      abort("phases argument not set correctly.")
     }    
     phases_A <- phases[1]
     phases_B <- phases[2]
@@ -57,7 +57,7 @@ recombine_phases <- function(data,
       
       tmp <- sapply(phases_total, function(x) sum(x == design$values) > 1)
       if (any(tmp)) {
-        stop(paste0(
+        abort(paste0(
           "Selected phase ", paste(names(tmp[tmp])), " occure several times. ",
           "Please give number of phases instead of characters."
         ))
@@ -103,12 +103,12 @@ recombine_phases <- function(data,
     design_list[[case]] <- design
   }
   
-  if (length(warning) > 0) warning(paste0(warning, collapse = "  "))
+  if (length(warning) > 0) warn(paste0(warning, collapse = "  "))
   if (length(dropped_cases > 0)) {
     data <- data[-dropped_cases]
     design_list <- design_list[-dropped_cases]
     source_attributes$names <- source_attributes$names[-dropped_cases]
-    if (length(data) == 0) stop("No case remained.")
+    if (length(data) == 0) abort("No case remained.")
   }
   
   attributes(data) <- source_attributes

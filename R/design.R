@@ -265,18 +265,17 @@ design <- function(n = 1,
   if (identical(case_effects, 0)) case_effects <- rep(0, phase_length)
   
   if (length(case_effects) == phase_length && case_effects[1] != 0) {
-    warning("Effect for first phase is not 0. Looks like a missspecification", call. = FALSE)
+    warn("Effect for first phase is not 0. Looks like a missspecification")
   }  
     
   if (length(case_effects) == phase_length - 1) 
     case_effects <- c(0, case_effects)
   
   if (length(case_effects) != phase_length) {
-    warning(
+    warn(
       as.character(match.call()[2]), ": the wrong number of phase ",
       "effects defined. Should be ", phase_length, " is ", 
-      length(case_effects), 
-      call. = FALSE
+      length(case_effects)
     )
   }  
   

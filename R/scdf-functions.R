@@ -51,10 +51,10 @@ combine <- function(...,
     results <- .check_scdf(data)
     if (!isTRUE(results)) {
       if(length(results$warnings) > 0) {
-        warning(results$warnings)
+        warn(results$warnings)
       }
       if(length(results$errors) > 0) {
-        stop(results$errors)
+        abort(results$errors)
       }
     } 
   }
@@ -81,7 +81,7 @@ c.scdf <- function(...) {
 #' @export
 `$.scdf`<- function(x, i) {
   if (is.character(i) && !(i %in% names(x))) {
-    warning("Unknown case: '", i, "'.")
+    warn("Unknown case: '", i, "'.")
   }
   out <- x[i]
   attr(out, opt("scdf")) <- attr(x, opt("scdf"))

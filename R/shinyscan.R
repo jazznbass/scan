@@ -30,12 +30,12 @@ shinyscan <- function(scdf = NULL,
   if (!requireNamespace("shiny",  quietly = TRUE)) miss <- c(miss,  "shiny")
   
   if (length(miss) > 0) {
-    message("shinyscan needs: ", paste(miss, collapse = ", "))
+    notify("shinyscan needs: ", paste(miss, collapse = ", "))
     ans <- utils::askYesNo("Install missing packages now?")
     if (isTRUE(ans)) {
       install.packages(miss) 
     } else {
-      stop("Packages missing.", call. = FALSE)
+      abort("Packages missing.")
     }
   }
   
@@ -57,7 +57,7 @@ shinyscan <- function(scdf = NULL,
   
   app_dir <- system.file("shiny_scan", package = "scan")
   if (app_dir == "") 
-    stop("Cannot find inst/shiny_scan in installed package.", call. = FALSE)
+    abort("Cannot find inst/shiny_scan in installed package.")
   
   shiny::runApp(app_dir, quiet = quiet, ...)
   

@@ -255,7 +255,7 @@ hplm <- function(data, dvar, pvar, mvar,
     pred_rand_id <- trimws(pred_rand_id)
 
     if (length(pred_rand) == 1) {
-      stop("LR Test not applicable with only one random effect.")
+      abort("LR Test not applicable with only one random effect.")
     }
     
     random_ir <- list(formula(gsub("1", "-1", paste(random, collapse = " "))))

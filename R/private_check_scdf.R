@@ -6,11 +6,11 @@ check_scdf <- function(object, message = FALSE) {
     return(invisible(TRUE))
   }
   if(length(results$warnings) > 0) {
-    warning(results$warnings)
+    warn(results$warnings)
   }
   
   if(length(results$errors) > 0) {
-    stop(results$errors)
+    abort(results$errors)
   }
 }
 

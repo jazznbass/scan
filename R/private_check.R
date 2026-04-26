@@ -198,12 +198,12 @@ check_args <- function(...) {
   
   if (length(warning_msg) > 0) {
     warning_msg <- paste0(1:length(warning_msg), ": ", warning_msg, "\n")
-    warning(warning_msg, call. = FALSE)
+    warn(warning_msg)
   }
   
   if (length(error_msg) > 0) {
     error_msg <- paste0(1:length(error_msg), ": ", error_msg, "\n")
-    stop("\n", error_msg, call. = FALSE)
+    abort(error_msg)
   }
 }
 

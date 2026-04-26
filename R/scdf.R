@@ -142,8 +142,6 @@ scdf <- function(...,
                  pvar = "phase",
                  mvar = "mt") {
   
-  on.exit(print_messages())
-  
   # Catch ellipse ----
   
   df <- list(...)
@@ -209,7 +207,7 @@ scdf <- function(...,
     phase_design <- phase_starts2phase_design(phase_starts, df[[mvar]])
   
   if (is.null(phase_design)) {
-    stop("Phase design not defined correctly!", call. = FALSE)
+    abort("Phase design not defined correctly!")
   }
   
   df[[pvar]] <- factor(
@@ -219,9 +217,8 @@ scdf <- function(...,
   
   # return ----
   if (length(df[[pvar]]) != length(df[[dvar]])) {
-    stop(
-      "\nThe phase argument suggests ", length(df[[pvar]]), " measures but ",
-      length(df[[dvar]]), " measurements are available.", call. = FALSE)
+    abort("The phase argument suggests ", length(df[[pvar]]), " measures but ",
+      length(df[[dvar]]), " measurements are available.")
   }
   data <- list(as.data.frame(df))
   attributes(data) <- .default_attributes()
@@ -237,15 +234,14 @@ phase_starts2phase_design <- function(starts, mt) {
   ids <- lapply(starts, function(x) which(x == mt))
   check <- lapply(ids, function(x) {
     if (length(x) == 0) 
-      stop("phase_starts not defined correctly. ", 
-           "Measurement time does not exist.", call. = FALSE)
+      abort("phase_starts not defined correctly. ", 
+           "Measurement time does not exist.")
   })
 
   if (ids[1] != 1) {
-    stop("phase_starts not defined correctly. ", 
+    abort("phase_starts not defined correctly. ", 
          "First phase must start at the first measurement time which is ", 
-         mt[1], ".", 
-         call. = FALSE)
+         mt[1], ".")
   }
     
   

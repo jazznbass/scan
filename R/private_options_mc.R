@@ -20,12 +20,12 @@
     res[2 + param + 1, 5]
   },
   tauU = function(x) {
-    if (length(x) > 1) stop("Use 'tauU_meta' for multiple case designs.", call. = FALSE)
+    if (length(x) > 1) abort("Use 'tauU_meta' for multiple case designs.", call. = FALSE)
     res <- tau_u(x, method = "tarlow", meta_analyses = FALSE)$table[[1]]
     res[which(row.names(res) == "A vs. B - Trend A"), which(names(res) == "p")]
   },
   tauU_slope = function(x) {
-    if (length(x) > 1) stop("Use 'tauU_slope_meta' for multiple case designs.", call. = FALSE)
+    if (length(x) > 1) abort("Use 'tauU_slope_meta' for multiple case designs.", call. = FALSE)
     res <- tau_u(x, method = "tarlow", meta_analyses = FALSE)$table[[1]]
     res[which(row.names(res) == "A vs. B + Trend B - Trend A"), which(names(res) == "p")]
   },
@@ -56,7 +56,7 @@
                     count.data = FALSE) {
   n <- length(data)
   if (n > 1) {
-    stop("Multiple single-cases are given. Calculations could only be applied ",
+    abort("Multiple single-cases are given. Calculations could only be applied ",
          "to a single data set.\n")
   }
   
@@ -93,6 +93,6 @@
     return(summary(full)$coef[4, 1])
   if (type == "model")
     return(full)
-  stop("Wrong type:", type)
+  abort("Wrong type:", type)
 }
 

@@ -5,11 +5,11 @@ kendall_tau <- function(x, y,
   N <- length(x)
   
   if (N < 3) {
-    warning("could not calculate p-values for tau. Less than three data points.")
+    warn("could not calculate p-values for tau. Less than three data points.")
   }
   
   if (all(x == x[1]) || all(x == x[2])) {
-    warning("could not calculate tau. Variance is zero.")
+    warn("could not calculate tau. Variance is zero.")
   }
   
   .sort <- sort.list(x)
