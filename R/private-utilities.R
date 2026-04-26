@@ -16,10 +16,9 @@
 
 .deprecated_warning <- function(new, old) {
   if (isTRUE(getOption("scan.deprecated.warning"))) {
-    warning(
+    warn(
       opt("function_deprecated_warning"), 
-      "\nPlease use function '", new, "' instead of '", old, "'.",
-      call. = FALSE
+      "\nPlease use function '", new, "' instead of '", old, "'."
     )
   }   
 } 

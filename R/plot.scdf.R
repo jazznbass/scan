@@ -142,7 +142,7 @@ plotSC <- function(data, dvar, pvar, mvar,
   #for pre style backwards compatibility
   sty_names <- c("fill", "fill.bg", "frame", "grid", "lwd", "pch", "text.ABlag", "type")
   if (any(names(dots) %in% sty_names)) {
-    stop("Using style parameters directly as arguments (like 'fill') is deprectated. ",
+    abort("Using style parameters directly as arguments (like 'fill') is deprectated. ",
          "Please use the 'stlye' argument to provide these parameters. ",
          "E.g., style = list(fill = 'blue', pch = 19)")
   }
@@ -822,7 +822,7 @@ plotSC <- function(data, dvar, pvar, mvar,
     tmp_args <- unlist(lines[[1]])
     id <- which(tmp_args %in% names(types))
     if (length(id) > 1) {
-      warning("More than one line type detected in one list element!")
+      warn("More than one line type detected in one list element!")
       for (i in 2:length(id)) {
         lines <- c(lines, list(lines[[1]][id[i]]))
         lines[[1]] <- lines[[1]][-id[i]]
@@ -832,7 +832,7 @@ plotSC <- function(data, dvar, pvar, mvar,
     tmp_args <- names(lines[[1]])
     id <- which(tmp_args %in% names(types))
     if (length(id) > 1) {
-      warning("More than one line type detected in one list element!")
+      warn("More than one line type detected in one list element!")
       for (i in 2:length(id)) {
         lines <- c(lines, list(lines[[1]][id[i]]))
         lines[[1]] <- lines[[1]][-id[i]]
@@ -886,7 +886,7 @@ plotSC <- function(data, dvar, pvar, mvar,
     
     id <- which(arg_names == "")
     if(length(id) > 1) {
-      stop("undefined lines argument(s)") # todo: specify error
+      abort("undefined lines argument(s)") # todo: specify error
     }
     if(length(id) == 1) {
       names(lines[[i]])[id] <- "type"
