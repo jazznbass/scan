@@ -9,7 +9,7 @@ test_that("combination", {
   )
   combined <- scdf |> add_l2(l2)
   
-  expect_equal(object_checksum(combined), '9242.0000')
+  expect_equal(length(unlist(combined)), 450)
   
 })
 

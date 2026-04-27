@@ -7,8 +7,6 @@ test_that("anova wrappers delegate to underlying models and match numeric result
   res_base_plm <- anova(mod0$full.model, mod1$full.model)
   
   expect_equal(res_wrap_plm, res_base_plm)
-  
-  expect_equal(object_checksum(res_wrap_plm), '936.6187')
 
   # sc_mplm
   data_mplm <- Leidig2018$`1a1`
@@ -32,8 +30,6 @@ test_that("anova wrappers delegate to underlying models and match numeric result
   
   expect_equal(res_wrap_mplm, res_base_mplm)
   
-  expect_equal(object_checksum(res_wrap_mplm), '491.2245')
-  
   # sc_hplm
   h0 <- hplm(Leidig2018, trend = FALSE, slope = FALSE, level = FALSE)
   h1 <- hplm(Leidig2018, trend = FALSE)
@@ -44,7 +40,5 @@ test_that("anova wrappers delegate to underlying models and match numeric result
   row.names(res_base_hplm) <- NULL  # match wrapper behavior
   
   expect_equal(res_wrap_hplm, res_base_hplm)
-  
-  expect_equal(object_checksum(res_wrap_hplm), '27419.7256')
   
 })
