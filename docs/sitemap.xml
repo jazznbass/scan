@@ -5,6 +5,7 @@
 <url><loc>https://jazznbass.github.io/scan/index.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/news/index.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/Subsetting.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/abort.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/add_dummy_variables.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/add_l2.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/anova.sc_plm.html</loc></url>
@@ -38,6 +39,7 @@
 <url><loc>https://jazznbass.github.io/scan/reference/mplm.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/na.omit.scdf.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/nap.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/notify.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/outlier.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/overlap.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/pand.html</loc></url>
@@ -81,6 +83,7 @@
 <url><loc>https://jazznbass.github.io/scan/reference/transform.scdf.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/trend.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/truncate_phase.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/warn.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/write_scdf.html</loc></url>
 </urlset>
 

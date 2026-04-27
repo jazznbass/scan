@@ -161,6 +161,7 @@ Timo Lueke
 ## Examples
 
 ``` r
+
 ## Apply the CDC method (standard OLS line)
 design <- design(n = 1, slope = 0.2)
 dat <- random_scdf(design, seed = 42)

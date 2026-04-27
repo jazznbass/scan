@@ -106,9 +106,10 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Calculate the PEM including the Binomial and Chi-square tests for a single-case
 dat <- random_scdf(5, level = 0.5)
-#> Warning: The first argument is expected to be a design matrix created by design(). If you want to set n, please name the first argument with n = ...
+#> Warning: ! The first argument is expected to be a design matrix created by design(). If you want to set n, plea... [truncated]
 pem(dat, chi.test = TRUE)
 #> Percent Exceeding the Median
 #> 

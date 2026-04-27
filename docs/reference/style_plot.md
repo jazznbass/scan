@@ -106,17 +106,14 @@ Juergen Wilbert
 
 ``` r
 newstyle <- style_plot(style = "default")
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'style_plot'.
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
 newstyle$text.ABlag <- c("START", "END")
 newstyle$col.dots <- ""
 newstyle$annotations <- list(cex = 0.6, col = "grey10", offset = 0.4)
 newstyle$names <- list(cex = 0.8, col = "blue", side = 1, adj = 1, line = -1, at = 31)
 newstyle$fill.bg <- c("grey99", "grey95", "grey90")
 plot(exampleABC, style = newstyle, main = "Example Plot")
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'plot'.
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'style_plot'.
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
 
 ```

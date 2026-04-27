@@ -16,6 +16,7 @@
 #' @import gt
 #' @import MCMCglmm
 #' @importFrom car Anova
+#' @importFrom cli col_blue
 #' @importFrom utils install.packages read.csv capture.output combn
 #' @keywords internal
 "_PACKAGE"

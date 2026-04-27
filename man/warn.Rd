@@ -7,7 +7,12 @@ This is a convenience wrapper for internal use.}
 \usage{
 warn(...)
 }
+\arguments{
+\item{...}{The message. This can be a character string or a
+combination of character strings and variables.}
+}
 \description{
 Throws a warning
 This is a convenience wrapper for internal use.
 }
+\keyword{internal}

@@ -78,6 +78,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Calculate the PND for multiple single-case data
 pnd(GruenkeWilbert2014)
 #> Percent Non-Overlapping Data

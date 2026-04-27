@@ -43,6 +43,9 @@ notify <- function(... , type = "!", detail = 1, warning = FALSE) {
 
 #' Throws a warning
 #' This is a convenience wrapper for internal use.
+#' @param ... The message. This can be a character string or a 
+#'  combination of character strings and variables.
+#' @keywords internal
 warn <- function(...) {
   notify(..., warning = TRUE)
 }

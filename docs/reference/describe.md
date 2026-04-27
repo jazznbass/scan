@@ -61,6 +61,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Descriptive statistics for a study of three single-cases
 describe(Grosche2011)
 #> Describe Single-Case Data

@@ -27,12 +27,14 @@ with R and scan’, Juergen Wilbert (2026)
 You can install the released version of scan from CRAN with:
 
 ``` r
+
 install.packages("scan")
 ```
 
 Or the development version from GitHub with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("jazznbass/scan")
 ```

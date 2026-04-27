@@ -146,6 +146,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Identify outliers using 1.5 standard deviations as criterion
 susanne <- random_scdf(level = 1.0)
 res_outlier <- outlier(susanne, method = "SD", criteria = 1.5)

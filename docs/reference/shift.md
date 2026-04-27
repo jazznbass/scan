@@ -56,8 +56,7 @@ Other data manipulation functions:
 ``` r
 ### Shift the measurement time for a better estimation of the intercept
 ex <- shift(example_A24, value = -1996)
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'transform' instead of 'shift'.
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
 plm(ex)
 #> Piecewise Regression Analysis
 #> 

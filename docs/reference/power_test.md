@@ -134,6 +134,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Assume you want to conduct a single-case study with 15 measurements
 ## (phases: A = 6 and B = 9) using a highly reliable test and
 ## an expected level effect of d = 1.4.

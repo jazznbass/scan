@@ -1,6 +1,13 @@
 # Changelog
 
+## scan 0.68.1
+
+- Introduced rlang error and messaging system for more informative error
+  messages and warnings.
+
 ## scan 0.68.0
+
+CRAN release: 2026-04-01
 
 ### New features
 
@@ -138,6 +145,7 @@ transform(
   or both R squared:
 
 ``` r
+
 plm(exampleAB$Johanna) |> 
   print(r_squared = c("delta", "partial"))
 ```
@@ -169,6 +177,7 @@ CRAN release: 2025-03-19
   lm, lme from the respective plm, hplm, and mplm objects:
 
 ``` r
+
 mod <- plm(exampleAB$Johanna)
 fetch(mod)
 ```
@@ -271,6 +280,7 @@ CRAN release: 2025-02-05
   which provides a name for your user function.
 
 ``` r
+
 userstat <- list(
   statistic = function(a, b) median(b) - median(a), 
   aggregate = function(x) median(x),
@@ -291,6 +301,7 @@ rand_test(exampleAB, statistic = "Median B-A" , complete = TRUE)
   statistic changes.
 
 ``` r
+
 Leidig2018[4] |> 
   na.omit() |> 
   rand_test(complete = TRUE, limit = 1, statistic = "SMD glass") |> 
@@ -439,6 +450,7 @@ CRAN release: 2023-05-24
   for the scdf case.
 
 ``` r
+
 batch_apply(exampleAB, plm(.) |> coef())
 ```
 
@@ -466,6 +478,7 @@ batch_apply(exampleAB, plm(.) |> coef())
   significance Ljung_Box test is reported.
 
 ``` r
+
 plm(exampleAB$Johanna) |> print(lag_max = 5)
 ```
 
@@ -511,6 +524,7 @@ CRAN release: 2023-02-16
   Allow for a selection based on object names (like in substitute).
 
 ``` r
+
 select_cases(exampleAB, -c(Johanna, Karolina))
 select_cases(exampleAB, Johanna, Karolina)
 v <- c("Moritz", "Jannis")
@@ -531,6 +545,7 @@ select_cases(exampleA1B1A2B2, v)
   Now it is easier to import data from any file format.
 
 ``` r
+
 readODS::read_ods("filename.ods") |> as.scdf()
 openxlsx::read.xlsx("filename.xlsx") |> as.scdf()
 
@@ -758,6 +773,7 @@ CRAN release: 2021-09-22
   “mixed”}. Useful to anonymize scdf files
 
 ``` r
+
 names(exampleAB) <- sample_names(3)
 ```
 
@@ -766,6 +782,7 @@ Adds the variables from a second level 2 data frame to an scdf matched
 by an id variable (default is `case`).
 
 ``` r
+
 Leidig2018 %>%
   add_l2(Leidig2018_l2) %>%
   hplm(update.fixed = .~. + gender + migration + ITRF_TOTAL*phaseB, 
@@ -778,6 +795,7 @@ Leidig2018 %>%
   operators).
 
 ``` r
+
 exampleA1B1A2B2 %>% 
   select_phases(A = c(1, 3), B = c(2, 4)) %>%
   overlap()
@@ -795,6 +813,7 @@ exampleA1B1A2B2 %>%
   e.g. `exmpleAB_add %>% set_dvar("depression") %>% describe()`
 
 ``` r
+
 exampleAB_add %>%
   set_vars(dv = "depression") %>%
   overlap()
@@ -808,6 +827,7 @@ exampleAB_add %>%
   Creates an scdf syntax file from an scdf object.
 
 ``` r
+
 # Create a syntax to code the scdf exampleAB and write it into an R file
 convert(exampleAB, file = "cases.R")
 ```
@@ -816,6 +836,7 @@ convert(exampleAB, file = "cases.R")
   Kelley, & Lomas, 2003) to scdf objects.
 
 ``` r
+
 cdc(Beretvas2008)
 cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
 ```
@@ -830,6 +851,7 @@ cdc(exampleAB_decreasing, decreasing = TRUE, trend.method = "bisplit")
   Tukey’s tri-split / Wald’s slope (lines = “trendA_trisplit”).
 
 ``` r
+
 plot(exampleAB_50[8], lines = "trendA_bisplit")
 plot(example_A24, lines = "trendA_trisplit")
 ```
@@ -838,6 +860,7 @@ plot(example_A24, lines = "trendA_trisplit")
   Now allows for multiple lines with different line styles.
 
 ``` r
+
 plot(
   exampleAB, 
   lines = list(
@@ -891,6 +914,7 @@ from scan:
   value structure. Example:
 
 ``` r
+
 new_style <- style_plot()
 new_style$names$side <- 3
 new_style$names$line <- -1.7
@@ -907,6 +931,7 @@ plot(exampleAB_decreasing, style = new_style)
   Different background colors for different phases:
 
 ``` r
+
 new_style <- style_plot()
 new_style$fill.bg <- c("aliceblue", "mistyrose1", "honeydew")
 new_style$lty.seperators <- 0
@@ -914,6 +939,7 @@ plot(exampleABC, style = new_style)
 ```
 
 ``` r
+
 plot(exampleABAB, style = c("default", "phase_shade"))
 ```
 
@@ -933,6 +959,7 @@ plot(exampleABAB, style = c("default", "phase_shade"))
   `select`, and `cases`.
 
 ``` r
+
 subset(exampleAB, (values < 60 & phase == "A") | (values >= 60 & phase == "B"))
 subset(exampleAB_add, select = c(-cigarrets, -depression))
 subset(exampleA1B1A2B2, phase %in% c("A1", "B2"), cases = Pawel:Moritz)
@@ -947,6 +974,7 @@ subset(exampleA1B1A2B2, phase %in% c("A1", "B2"), cases = Pawel:Moritz)
   function.
 
 ``` r
+
 select_cases(exampleAB, "Johanna", "Karolina")
 select_cases(exampleAB, 1,2)
 select_cases(exampleAB, "-Johanna")

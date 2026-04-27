@@ -84,6 +84,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Use the three different smoothing functions and compare the results
 study <- c(
   "Original" = Huber2014$Berta,
@@ -92,10 +93,8 @@ study <- c(
   "Local regression" = smooth_cases(Huber2014$Berta, method = "regression")
 )
 plot(study)
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'plot'.
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'style_plot'.
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
 
 
 Huber2014$Berta |>

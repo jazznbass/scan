@@ -302,6 +302,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Compute a randomization test on the first case of the byHeart2011 data and include a graph
 rand_test(byHeart2011[1], statistic = "Median B-A", graph = TRUE, seed = 123)
 

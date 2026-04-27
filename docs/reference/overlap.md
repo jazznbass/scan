@@ -103,6 +103,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Display overlap indices for one single-case
 overlap(Huitema2000, decreasing = TRUE)
 #> Overlap Indices

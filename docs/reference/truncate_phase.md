@@ -77,6 +77,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Truncate the first two data points of both phases and compare the two 
 ## data sets
 study <- c(
@@ -89,8 +90,6 @@ study <- c(
 #> 
 #> Lisa (Turkish): 1 2 6 7
 plot(study)
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'plot'.
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'style_plot'.
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
 ```

@@ -25,7 +25,8 @@ Imports:
   magrittr,
   miniUI,
   rstudioapi,
-  rlang
+  rlang,
+  cli
 Suggests:
   testthat (>= 3.0.0),
   shiny,
