@@ -2,13 +2,13 @@
 # Functions to get package options
 opt <- function(x) {
   out <- .opt[[x]]
-  if (is.null(out)) stop("Option ", x, " not defined.")
+  if (is.null(out)) abort("Option ", x, " not defined.")
   out
 }
 
 opts <- function(...) {
   out <- .opt[c(...)] |> unlist()
-  if (is.null(out)) stop("Options not all defined.")
+  if (is.null(out)) abort("Options not all defined.")
   out
 }
 

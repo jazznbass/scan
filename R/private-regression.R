@@ -73,7 +73,7 @@ rename_predictors <- function(rn, x) {
     rn <- gsub(paste0(str_phase, "(\\w+)"), "Level \\1", rn)
     rn <- gsub(paste0(str_slope, "(\\w+)"), "Slope \\1", rn)
   } else {
-    stop("Ill defined scan.rename.predictors option.", 
+    abort("Ill defined scan.rename.predictors option.", 
          "Must be one of 'concise', 'full' or, 'no'.")
   }
   

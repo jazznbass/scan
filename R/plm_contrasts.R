@@ -92,7 +92,7 @@ add_dummy_variables <- function(scdf,
   } else if (identical(contrast_level, "preceding")) {
     contr <- contr.cum(nlevels(data[[pvar]]))
   } else {
-    stop("Wrong declaration of level contrast: ", contrast_level)
+    abort("Wrong declaration of level contrast: ", contrast_level)
   }
   rownames(contr) <- levels(data[[pvar]])
   colnames(contr) <- levels(data[[pvar]])[-1]
@@ -108,7 +108,7 @@ add_dummy_variables <- function(scdf,
   } else if (identical(contrast_slope, "preceding")) {
     contr <- contr.cum(nlevels(data[[pvar]]))
   } else {
-    stop("Wrong declaration of slope contrast: ", contrast_slope)
+    abort("Wrong declaration of slope contrast: ", contrast_slope)
   }
   
   rownames(contr) <- levels(data[[pvar]])

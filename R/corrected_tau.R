@@ -60,17 +60,15 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     B_data <- data[rowsB, ]
     
     if (length(unique(A_data[[dvar]])) == 1) {
-      warning(
+      warn(
         "All phase A values are identical. ",
-        "Autocorrelation can not be calculated and is set to NA.",
-        call. = FALSE
+        "Autocorrelation can not be calculated and is set to NA."
       )
       auto_tau <- list(tau = NA, z = NA, p = NA)
     } else if (length(A_data[[dvar]]) < 3 ) {
-      warning(
+      warn(
         "Need at least three data points in phase A. ",
-        "Autocorrelation can not be calculated and is set to NA.",
-        call. = FALSE
+        "Autocorrelation can not be calculated and is set to NA."
       )
       auto_tau <- list(tau = NA, z = NA, p = NA)
     } else {
@@ -164,7 +162,7 @@ theil_sen <- function(formula, data) {
   dy <- y[idx[2, ]] - y[idx[1, ]]
   keep <- dx != 0
   
-  #if (!any(keep)) stop("All x values are identical; slope is undefined.")
+  #if (!any(keep)) abort("All x values are identical; slope is undefined.")
 
   #fitted <- intercept + slope * x
   #resid <- y - fitted

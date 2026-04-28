@@ -46,7 +46,7 @@ export <- function (object, ...) {
       identical(select, FALSE)) return(df)
   
   if (!all(select %in% names(df)) && !is.numeric(select)) {
-    warning(
+    warn(
       "`select` arguments has variable names that are not included in " ,
       "the output table: valid names are: ", 
       paste(names(df), collapse = ", "), "."

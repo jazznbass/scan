@@ -7,7 +7,7 @@ mc_function <- function(name) {
     return(opt("mc_fun")[id])
   }
   
-  stop("Unknown function. Valid values are: ",
+  abort("Unknown function. Valid values are: ",
        paste(names(opt("mc_fun")), collapse = ", "))
   
 }

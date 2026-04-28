@@ -1,3 +1,7 @@
+# scan 0.68.1
+
+- Introduced rlang error and messaging system for more informative error messages and warnings.
+
 # scan 0.68.0
 
 ## New features

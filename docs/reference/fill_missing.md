@@ -90,6 +90,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## In his study, Grosche (2011) could not realize measurements each
 ## single week for all participants. During the course of 100 weeks,
 ## about 20 measurements per person at different times were administered.

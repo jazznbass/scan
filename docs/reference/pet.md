@@ -92,6 +92,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Calculate the PET and use a 99%-CI for the additional calculation
 # create random example data
 design <- design(n = 5, slope = 0.2)

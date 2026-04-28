@@ -64,6 +64,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Convert the list of three single-case data frames from Grosche (2011)
 ### into one long data frame
 Grosche2011

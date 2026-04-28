@@ -248,6 +248,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 tau_u(Grosche2011$Eva)
 #> Tau-U
 #> Method: complete 

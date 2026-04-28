@@ -196,20 +196,17 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Request the default plot of the data from Borckhardt (2014)
 plot(Borckardt2014)
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'plot'.
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'style_plot'.
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
 
 
 ## Plot the three cases from Grosche (2011) and visualize the phase A trend
 plot(Grosche2011, style = "grid", lines = "trendA")
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'plot'.
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'style_plot'.
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
 
 
 ## Request the local regression line for Georg from that data set and customize the plot
@@ -217,19 +214,15 @@ plot(Grosche2011$Georg, style = "sienna", ylim = c(0,NA),
        xlab = "Training session", ylab = "Words per minute",
        phase.names = c("Baseline", "Intervention"), xinc = 5,
        lines = list(type = "loreg", f = 0.2, lty = "solid", col = "black", lwd = 3))
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'plot'.
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'style_plot'.
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
 
 
 ## Plot a random MBD over three cases and mark interesting MTs
 dat <- random_scdf(design = design(3))
 plot(dat, marks = list(positions = list(c(2,4,5),c(1,2,3),c(7,8,9)), col = "blue",
        cex = 1.4), style = c("grid", "annotate", "tiny"))
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'plot'.
-#> Warning: This function is deprecated. It might be dropped without any further notice in a future update of scan.
-#> Please use function 'scplot' from the package 'scplot' instead of 'style_plot'.
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
 
 ```

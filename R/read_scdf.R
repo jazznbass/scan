@@ -130,7 +130,7 @@ readSC <- function(...) {
 .load_yml <- function(filename, ...) {
   
   if (!requireNamespace("yaml", quietly = TRUE)) {
-    stop("You need to install the 'yaml' package first (install.packages('yaml')")
+    abort("You need to install the 'yaml' package first (install.packages('yaml')")
   }
   
   out <- yaml::read_yaml(filename, ...)

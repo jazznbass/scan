@@ -110,6 +110,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Compute the linear and squared regression for a random single-case
 design <- design(slope = 0.5)
 matthea <- random_scdf(design)

@@ -60,6 +60,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Standardize a multiple case scdf and compute an hplm
 exampleAB_50 |>
   rescale(values, mt) |>

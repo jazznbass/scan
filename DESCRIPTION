@@ -1,8 +1,8 @@
 Package: scan
 Type: Package
 Title: Single-Case Data Analyses for Single and Multiple Baseline Designs
-Version: 0.68.0
-Date: 2026-04-01
+Version: 0.68.1
+Date: 2026-04-27
 Authors@R: c(
   person("Juergen", "Wilbert", email = "juergen.wilbert@uni-muenster.de", 
     role = c("cre", "aut"), comment = c(ORCID = "0000-0002-8392-2873")), 
@@ -24,14 +24,16 @@ Imports:
   readxl,
   magrittr,
   miniUI,
-  rstudioapi
+  rstudioapi,
+  rlang,
+  cli
 Suggests:
   testthat (>= 3.0.0),
   shiny,
   yaml,
   scplot
 Description: A collection of procedures for analysing, visualising, 
-  and managing single-case data. Multiphase and multibaseline designs are 
+  and managing single-case data. Multi-phase and multi-baseline designs are 
   supported. Analysing methods include regression models 
   (multilevel, multivariate, bayesian), between case standardised mean difference, 
   overlap indices ('PND', 'PEM', 'PAND', 'NAP', 'PET', 'tau-u', 'IRD', 'baseline corrected tau', 

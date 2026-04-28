@@ -72,22 +72,22 @@ between_smd <- function(data,
   models <- list()
   if (inherits(data, "sc_hplm")) {
     if (data$N == 1) {
-      stop("Between-Case Standardized Mean Difference can not be computed ",
-           "with one case.", call. = FALSE)
+      abort("Between-Case Standardized Mean Difference can not be computed ",
+           "with one case.")
     }
     method <- "REML"
     models[["Provided"]] <- data
   } else if (inherits(data, "sc_bplm")) {
     if (data$N == 1) {
-      stop("Between-Case Standardized Mean Difference can not be computed ",
-           "with one case.", call. = FALSE)
+      abort("Between-Case Standardized Mean Difference can not be computed ",
+           "with one case.")
     }
     method <- "MCMCglmm"
     models[["Provided"]] <- data
   } else if (inherits(data, "scdf")) {
     if (length(data) == 1) {
-      stop("Between-Case Standardized Mean Difference can not be computed ",
-           "with one case.", call. = FALSE)
+      abort("Between-Case Standardized Mean Difference can not be computed ",
+           "with one case.")
     }
     
     if (method == "REML") {

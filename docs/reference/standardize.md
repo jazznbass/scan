@@ -85,6 +85,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Standardize a multiple case scdf and compute an hplm
 exampleAB_50 |>
   standardize("values", center = TRUE, scale = TRUE) |>

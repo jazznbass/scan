@@ -99,9 +99,9 @@ cdc <- function(data,
     cdc_nb[i] <- nrow(B)
 
     if ((cdc_na[i] < 5 || cdc_nb[i] < 5) && trend_method != "OLS") {
-      stop(
+      abort(
         "The selected method for trend estimation should not be applied ",
-        "with less than five data points per phase.\n"
+        "with less than five data points per phase."
       )
     }
 

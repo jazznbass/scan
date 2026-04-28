@@ -323,6 +323,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Compute hplm model on a MBD over fifty cases (restricted log-likelihood)
 hplm(exampleAB_50, method = "REML", random.slopes = FALSE)
 #> Hierarchical Piecewise Linear Regression

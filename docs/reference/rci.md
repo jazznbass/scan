@@ -84,6 +84,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Report the RCIs of the first case from the byHeart data and include a graph
 rci(byHeart2011[1], graph = TRUE, rel = 0.8)
 

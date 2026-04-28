@@ -23,14 +23,12 @@ as_scdf <- function(object,
                     phase_names = NULL,
                     sort_cases = FALSE) {
 
-  on.exit(print_messages(pretext = "Note:"))
-  
   original_attr <- scdf_attr(object)
   if (!is.null(original_attr)) {
     pvar <- phase(object)
     dvar <- dv(object)
     mvar <- mt(object)
-    add_message("Found scdf attributes and replaced function arguments.")
+    notify("Found scdf attributes and replaced function arguments.")
   }
   
   ## check file -----
@@ -44,7 +42,7 @@ as_scdf <- function(object,
   )
   
   if (!cvar %in% names(object)) {
-    add_message("Casename variable not found. Assuming one case.")
+    notify("Casename variable not found. Assuming one case.")
     object[[cvar]] <- "unnamed"
   }
 

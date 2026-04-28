@@ -87,6 +87,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Calculate NAP for a study with  lower expected phase B scores
 ## (e.g. aggressive behavior)
 gretchen <- scdf(c(A = 12, 14, 9, 10, B = 10, 6, 4, 5, 3, 4))

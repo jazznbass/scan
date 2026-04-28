@@ -66,7 +66,7 @@ rci <- function(data, dvar, pvar,
   N <- length(data)
   
   #if(N > 1) {
-  #  stop("Multiple single-cases are given. Calculations can only be applied to one single-case data set.\n")
+  #  abort("Multiple single-cases are given. Calculations can only be applied to one single-case data set.\n")
   #}
   
   A <- lapply(data, function(x) x[, dvar][x[, pvar] == "A"])

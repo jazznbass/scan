@@ -56,7 +56,7 @@ random_scdf <- function(design = NULL,
   
   if (!is.null(seed)) set.seed(seed)
   if (is.numeric(design)) {
-    warning("The first argument is expected to be a design matrix created by ", 
+    warn("The first argument is expected to be a design matrix created by ", 
             "design(). If you want to set n, please name the first ",
             "argument with n = ...")
     n <- design

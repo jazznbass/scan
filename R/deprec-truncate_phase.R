@@ -49,7 +49,7 @@ truncate_phase <- function(data, dvar, pvar,
     class(phases) <- "list"
     deselect <- c()
     if (length(phases$values) != length(truncate)) {
-      stop("Please provide truncation values for each phase.")
+      abort("Please provide truncation values for each phase.")
     }
     for (ph in 1:length(phases$values)) {
       if (truncate[[ph]][1] > 0) {

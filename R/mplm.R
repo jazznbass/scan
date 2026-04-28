@@ -83,7 +83,7 @@ mplm <- function(data, dvar, mvar, pvar,
 
   N <- length(data)
   if (N > 1) {
-    stop("Procedure could not be applied to more than one case.\n")
+    abort("Procedure could not be applied to more than one case.")
   }
 
   ### model definition

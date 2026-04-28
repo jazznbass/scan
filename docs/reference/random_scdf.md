@@ -61,6 +61,7 @@ Juergen Wibert
 ## Examples
 
 ``` r
+
 ## Create random single-case data and inspect it
 design <- design(
   n = 3, rtt = 0.75, slope = 0.1, extreme_prop = 0.1,

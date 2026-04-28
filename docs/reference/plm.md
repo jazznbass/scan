@@ -285,6 +285,7 @@ Juergen Wilbert
 ## Examples
 
 ``` r
+
 ## Compute a piecewise regression model for a random single-case
 set.seed(123)
 AB <- design(
