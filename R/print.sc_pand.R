@@ -6,6 +6,7 @@
 print.sc_pand <- function(x, ...) {
   cat("Percentage of all non-overlapping data\n\n")
   cat("Method:", x$method, "\n\n")
+  if (x$decreasing) cat("Expected decrease of phase B scores\n")
   cat("PAND = ", round(x$pand, 1), "%\n", sep = "")
 
   if (x$method == "sort") {

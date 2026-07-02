@@ -148,7 +148,8 @@ pand <- function(data, dvar, pvar,
       matrix = mat_propotions, 
       matrix_counts = mat_counts, 
       chi_test = chi_test,
-      fisher_test = suppressWarnings(fisher.test(mat_counts))
+      fisher_test = suppressWarnings(fisher.test(mat_counts)),
+      decreasing = decreasing
     )
     
   }
@@ -203,7 +204,8 @@ pand <- function(data, dvar, pvar,
       n_a = n_all_a, 
       n_b = n_all_b, 
       casewise = casewise,
-      method = method
+      method = method,
+      decreasing = decreasing
     )
   }
 
@@ -242,7 +244,8 @@ export.sc_pand <- function(object,
         "Fisher exact test: Odds ratio = %.2f, p = %.3f",
         object$fisher_test$estimate, 
         object$fisher_test$p.value
-      )
+      ),
+      if (object$decreasing) "Expected decrease of phase B scores" else NULL
     )
   }
   
@@ -265,19 +268,15 @@ export.sc_pand <- function(object,
   )
   names(out) <- c(" ", "  ", "A", "B", "Total")
 
-  opts <- options(knitr.kable.NA = "")
-  options(scan.export.kable = c(
-    list(align = c("l", "r", "c", "c", "c")), 
-    getOption("scan.export.kable")
-  ))
-  
-  
+  ops <- options(knitr.kable.NA = "")
+
   table <- .create_table(
     out, 
     caption = caption,
     footnote = footnote,
     spanner = list("Expected" = 3:5),
-    row_group = list("Percentage" = 1:3, "Counts" = 4:6)
+    row_group = list("Percentage" = 1:3, "Counts" = 4:6),
+    align = c("l", "r", "c", "c", "c")
   )
   
   if (getOption("scan.export.engine") == "kable") {
@@ -292,7 +291,7 @@ export.sc_pand <- function(object,
   
   if (!is.na(filename)) .save_export(table, filename)
   
-  options(opts)
+  options(ops)
   
   table
 }
