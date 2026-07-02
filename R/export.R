@@ -63,29 +63,6 @@ export <- function (object, ...) {
   df
 }
 
-# .join_kabel <- function(kable_options) {
-#   
-#   default_kable <- getOption("scan.export.kable")
-#   
-#   tmp <- which(!(names(default_kable) %in% names(kable_options)))
-#   kable_options <- c(kable_options, default_kable[tmp])
-#   
-#   kable_options
-# } 
-# 
-# .join_kabel_styling <- function(kable_styling_options) {
-#   
-#   default_kable_styling <- getOption("scan.export.kable_styling")
-#   
-#   tmp <- which(
-#     !(names(default_kable_styling) %in% names(kable_styling_options))
-#   )
-#   
-#   kable_styling_options <- c(kable_styling_options, default_kable_styling[tmp])
-#   
-#   kable_styling_options
-# } 
-
 .save_export <- function(x, filename) {
   
   
@@ -137,11 +114,9 @@ export <- function (object, ...) {
   
   if (!is.null(align)) options$align <- align
   
-  if (is.null(options$align))  
-    options$align <- c("l", rep("c",  ncol(x) - 1))
-  
-  if (is.null(options$caption))  
-    options$caption <- caption
+  if (is.null(options$align)) options$align <- c("l", rep("c",  ncol(x) - 1))
+    
+  if (is.null(options$caption)) options$caption <- caption
   
   options$x <- x
   table <- do.call(kable, options)
