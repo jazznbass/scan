@@ -181,10 +181,13 @@ readSC <- function(...) {
   
   out <- lapply(out, extract)
   
-  for(i in 1:length(out)) names(out[[i]]) <- case_names[i]
+  if (length(out) == 0) {
+    abort("The YAML file contains no cases.")
+  }
   
-  for(i in 2:length(out)) scdf <- c(out[[i-1]], out[[i]])
+  for (i in seq_along(out)) {
+    names(out[[i]]) <- case_names[i]
+  }
   
-  
-  scdf
+  do.call(combine, unname(out))
 }
