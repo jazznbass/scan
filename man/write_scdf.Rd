@@ -54,9 +54,9 @@ all.equal(res1,res2)
 \seealso{
 \code{\link[=write.table]{write.table()}}, \code{\link[=saveRDS]{saveRDS()}}
 
-Other io-functions: 
-\code{\link{convert}()},
-\code{\link{read_scdf}()}
+Other io-functions:
+\code{\link[=convert]{convert()}},
+\code{\link[=read_scdf]{read_scdf()}}
 }
 \author{
 Juergen Wilbert

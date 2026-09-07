@@ -159,14 +159,14 @@ bplm(exampleAB_50, update_fixed = values ~ -1 + mt + phaseB +
   interB, nitt = 5000)
 }
 \seealso{
-Other regression functions: 
-\code{\link{fetch}()},
-\code{\link{hplm}()},
-\code{\link{mplm}()},
-\code{\link{plm}()},
-\code{\link{print.sc_ac}()},
-\code{\link{print.sc_bctau}()},
-\code{\link{trend}()}
+Other regression functions:
+\code{\link[=fetch]{fetch()}},
+\code{\link[=hplm]{hplm()}},
+\code{\link[=mplm]{mplm()}},
+\code{\link[=plm]{plm()}},
+\code{\link[=print.sc_ac]{print.sc_ac()}},
+\code{\link[=print.sc_bctau]{print.sc_bctau()}},
+\code{\link[=trend]{trend()}}
 }
 \author{
 Juergen Wilbert

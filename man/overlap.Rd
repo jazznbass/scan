@@ -72,16 +72,16 @@ overlap(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 \seealso{
 \code{\link[=pnd]{pnd()}}, \code{\link[=pem]{pem()}}, \code{\link[=pet]{pet()}}, \code{\link[=nap]{nap()}}, \code{\link[=pand]{pand()}}, \code{\link[=ird]{ird()}}, \code{\link[=tau_u]{tau_u()}}, \code{\link[=corrected_tau]{corrected_tau()}}
 
-Other overlap functions: 
-\code{\link{ird}()},
-\code{\link{nap}()},
-\code{\link{pand}()},
-\code{\link{pem}()},
-\code{\link{pet}()},
-\code{\link{pnd}()},
-\code{\link{print.sc_cdc}()},
-\code{\link{select_phases}()},
-\code{\link{tau_u}()}
+Other overlap functions:
+\code{\link[=ird]{ird()}},
+\code{\link[=nap]{nap()}},
+\code{\link[=pand]{pand()}},
+\code{\link[=pem]{pem()}},
+\code{\link[=pet]{pet()}},
+\code{\link[=pnd]{pnd()}},
+\code{\link[=print.sc_cdc]{print.sc_cdc()}},
+\code{\link[=select_phases]{select_phases()}},
+\code{\link[=tau_u]{tau_u()}}
 }
 \author{
 Juergen Wilbert

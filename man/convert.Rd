@@ -50,9 +50,9 @@ all.equal(study, exampleABC)
 unlink(filename)
 }
 \seealso{
-Other io-functions: 
-\code{\link{read_scdf}()},
-\code{\link{write_scdf}()}
+Other io-functions:
+\code{\link[=read_scdf]{read_scdf()}},
+\code{\link[=write_scdf]{write_scdf()}}
 }
 \author{
 Juergen Wilbert

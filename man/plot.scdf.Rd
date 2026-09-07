@@ -42,13 +42,13 @@ the attributes in the scdf file.}
 Defaults to the attributes in the scdf file.}
 
 \item{ylim}{Lower and upper limits of the y-axis (e.g., \code{ylim = c(0,
-  20)} sets the y-axis to a scale from 0 to 20). With multiple single-cases
+20)} sets the y-axis to a scale from 0 to 20). With multiple single-cases
 you can use \code{ylim = c(0, NA)} to scale the y-axis from 0 to the
 maximum of each case. \code{ylim} is not set by default, which makes
 \code{scan} set a proper scale based on the given data.}
 
 \item{xlim}{Lower and upper limits of the x-axis (e.g., \code{xlim = c(0,
-  20)} sets the x-axis to a scale from 0 to 20). With multiple single-cases
+20)} sets the x-axis to a scale from 0 to 20). With multiple single-cases
 you can use \code{ylim = c(0, NA)} to scale the x-axis from 0 to the
 maximum of each case. \code{xlim} is not set by default, which makes
 \code{scan} set a proper scale based on the given data.}

@@ -83,9 +83,9 @@ all.equal(res1,res2)
 \seealso{
 \code{\link[=read.table]{read.table()}}, \code{\link[=readRDS]{readRDS()}}
 
-Other io-functions: 
-\code{\link{convert}()},
-\code{\link{write_scdf}()}
+Other io-functions:
+\code{\link[=convert]{convert()}},
+\code{\link[=write_scdf]{write_scdf()}}
 }
 \author{
 Juergen Wilbert

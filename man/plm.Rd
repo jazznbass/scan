@@ -233,14 +233,14 @@ time-series intervention models. \emph{Educational and Psychological
 Measurement, 60}, 38-58.
 }
 \seealso{
-Other regression functions: 
-\code{\link{bplm}()},
-\code{\link{fetch}()},
-\code{\link{hplm}()},
-\code{\link{mplm}()},
-\code{\link{print.sc_ac}()},
-\code{\link{print.sc_bctau}()},
-\code{\link{trend}()}
+Other regression functions:
+\code{\link[=bplm]{bplm()}},
+\code{\link[=fetch]{fetch()}},
+\code{\link[=hplm]{hplm()}},
+\code{\link[=mplm]{mplm()}},
+\code{\link[=print.sc_ac]{print.sc_ac()}},
+\code{\link[=print.sc_bctau]{print.sc_bctau()}},
+\code{\link[=trend]{trend()}}
 }
 \author{
 Juergen Wilbert

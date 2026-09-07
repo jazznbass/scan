@@ -147,16 +147,16 @@ Single-Case Effect Sizes. R package version 0.7.1.9999,
 https://jepusto.github.io/SingleCaseES/.
 }
 \seealso{
-Other overlap functions: 
-\code{\link{ird}()},
-\code{\link{nap}()},
-\code{\link{overlap}()},
-\code{\link{pem}()},
-\code{\link{pet}()},
-\code{\link{pnd}()},
-\code{\link{print.sc_cdc}()},
-\code{\link{select_phases}()},
-\code{\link{tau_u}()}
+Other overlap functions:
+\code{\link[=ird]{ird()}},
+\code{\link[=nap]{nap()}},
+\code{\link[=overlap]{overlap()}},
+\code{\link[=pem]{pem()}},
+\code{\link[=pet]{pet()}},
+\code{\link[=pnd]{pnd()}},
+\code{\link[=print.sc_cdc]{print.sc_cdc()}},
+\code{\link[=select_phases]{select_phases()}},
+\code{\link[=tau_u]{tau_u()}}
 }
 \author{
 Juergen Wilbert

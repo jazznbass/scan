@@ -132,16 +132,16 @@ of Single-Case Designs. \emph{Journal of Applied Behavior Analysis, 36},
 387-406. https://doi.org/10.1901/jaba.2003.36-387
 }
 \seealso{
-Other overlap functions: 
-\code{\link{ird}()},
-\code{\link{nap}()},
-\code{\link{overlap}()},
-\code{\link{pand}()},
-\code{\link{pem}()},
-\code{\link{pet}()},
-\code{\link{pnd}()},
-\code{\link{select_phases}()},
-\code{\link{tau_u}()}
+Other overlap functions:
+\code{\link[=ird]{ird()}},
+\code{\link[=nap]{nap()}},
+\code{\link[=overlap]{overlap()}},
+\code{\link[=pand]{pand()}},
+\code{\link[=pem]{pem()}},
+\code{\link[=pet]{pet()}},
+\code{\link[=pnd]{pnd()}},
+\code{\link[=select_phases]{select_phases()}},
+\code{\link[=tau_u]{tau_u()}}
 }
 \author{
 Timo Lueke

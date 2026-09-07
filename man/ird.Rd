@@ -85,15 +85,15 @@ single-case designs with directly observed behavioral outcome measures.
 https://doi.org/10.1037/met0000179
 }
 \seealso{
-Other overlap functions: 
-\code{\link{nap}()},
-\code{\link{overlap}()},
-\code{\link{pand}()},
-\code{\link{pem}()},
-\code{\link{pet}()},
-\code{\link{pnd}()},
-\code{\link{print.sc_cdc}()},
-\code{\link{select_phases}()},
-\code{\link{tau_u}()}
+Other overlap functions:
+\code{\link[=nap]{nap()}},
+\code{\link[=overlap]{overlap()}},
+\code{\link[=pand]{pand()}},
+\code{\link[=pem]{pem()}},
+\code{\link[=pet]{pet()}},
+\code{\link[=pnd]{pnd()}},
+\code{\link[=print.sc_cdc]{print.sc_cdc()}},
+\code{\link[=select_phases]{select_phases()}},
+\code{\link[=tau_u]{tau_u()}}
 }
 \concept{overlap functions}

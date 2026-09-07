@@ -39,14 +39,14 @@ model3 <- bplm(exampleAB_50, nitt = 5000)
 fetch(model3, what = "model") |> summary()
 }
 \seealso{
-Other regression functions: 
-\code{\link{bplm}()},
-\code{\link{hplm}()},
-\code{\link{mplm}()},
-\code{\link{plm}()},
-\code{\link{print.sc_ac}()},
-\code{\link{print.sc_bctau}()},
-\code{\link{trend}()}
+Other regression functions:
+\code{\link[=bplm]{bplm()}},
+\code{\link[=hplm]{hplm()}},
+\code{\link[=mplm]{mplm()}},
+\code{\link[=plm]{plm()}},
+\code{\link[=print.sc_ac]{print.sc_ac()}},
+\code{\link[=print.sc_bctau]{print.sc_bctau()}},
+\code{\link[=trend]{trend()}}
 }
 \author{
 Juergen Wilbert

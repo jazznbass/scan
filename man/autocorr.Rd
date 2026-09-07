@@ -76,14 +76,14 @@ autocorr(Huber2014, lag_max = 2)
 \seealso{
 \code{\link[=acf]{acf()}}
 
-Other regression functions: 
-\code{\link{bplm}()},
-\code{\link{fetch}()},
-\code{\link{hplm}()},
-\code{\link{mplm}()},
-\code{\link{plm}()},
-\code{\link{print.sc_bctau}()},
-\code{\link{trend}()}
+Other regression functions:
+\code{\link[=bplm]{bplm()}},
+\code{\link[=fetch]{fetch()}},
+\code{\link[=hplm]{hplm()}},
+\code{\link[=mplm]{mplm()}},
+\code{\link[=plm]{plm()}},
+\code{\link[=print.sc_bctau]{print.sc_bctau()}},
+\code{\link[=trend]{trend()}}
 }
 \author{
 Juergen Wilbert

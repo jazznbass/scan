@@ -73,16 +73,16 @@ pem(dat, chi.test = TRUE)
 
 }
 \seealso{
-Other overlap functions: 
-\code{\link{ird}()},
-\code{\link{nap}()},
-\code{\link{overlap}()},
-\code{\link{pand}()},
-\code{\link{pet}()},
-\code{\link{pnd}()},
-\code{\link{print.sc_cdc}()},
-\code{\link{select_phases}()},
-\code{\link{tau_u}()}
+Other overlap functions:
+\code{\link[=ird]{ird()}},
+\code{\link[=nap]{nap()}},
+\code{\link[=overlap]{overlap()}},
+\code{\link[=pand]{pand()}},
+\code{\link[=pet]{pet()}},
+\code{\link[=pnd]{pnd()}},
+\code{\link[=print.sc_cdc]{print.sc_cdc()}},
+\code{\link[=select_phases]{select_phases()}},
+\code{\link[=tau_u]{tau_u()}}
 }
 \author{
 Juergen Wilbert

@@ -88,14 +88,14 @@ trend(
 \seealso{
 \code{\link[=describe]{describe()}}
 
-Other regression functions: 
-\code{\link{bplm}()},
-\code{\link{fetch}()},
-\code{\link{hplm}()},
-\code{\link{mplm}()},
-\code{\link{plm}()},
-\code{\link{print.sc_ac}()},
-\code{\link{print.sc_bctau}()}
+Other regression functions:
+\code{\link[=bplm]{bplm()}},
+\code{\link[=fetch]{fetch()}},
+\code{\link[=hplm]{hplm()}},
+\code{\link[=mplm]{mplm()}},
+\code{\link[=plm]{plm()}},
+\code{\link[=print.sc_ac]{print.sc_ac()}},
+\code{\link[=print.sc_bctau]{print.sc_bctau()}}
 }
 \author{
 Juergen Wilbert

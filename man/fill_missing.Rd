@@ -79,22 +79,22 @@ study2
 
 }
 \seealso{
-Other data manipulation functions: 
-\code{\link{add_l2}()},
-\code{\link{as.data.frame.scdf}()},
-\code{\link{as_scdf}()},
-\code{\link{batch_apply}()},
-\code{\link{moving_median}()},
-\code{\link{print.sc_outlier}()},
-\code{\link{ranks}()},
-\code{\link{rescale}()},
-\code{\link{scdf}()},
-\code{\link{select_cases}()},
-\code{\link{set_vars}()},
-\code{\link{shift}()},
-\code{\link{smooth_cases}()},
-\code{\link{standardize}()},
-\code{\link{truncate_phase}()}
+Other data manipulation functions:
+\code{\link[=add_l2]{add_l2()}},
+\code{\link[=as.data.frame.scdf]{as.data.frame.scdf()}},
+\code{\link[=as_scdf]{as_scdf()}},
+\code{\link[=batch_apply]{batch_apply()}},
+\code{\link[=moving_median]{moving_median()}},
+\code{\link[=print.sc_outlier]{print.sc_outlier()}},
+\code{\link[=ranks]{ranks()}},
+\code{\link[=rescale]{rescale()}},
+\code{\link[=scdf]{scdf()}},
+\code{\link[=select_cases]{select_cases()}},
+\code{\link[=set_vars]{set_vars()}},
+\code{\link[=shift]{shift()}},
+\code{\link[=smooth_cases]{smooth_cases()}},
+\code{\link[=standardize]{standardize()}},
+\code{\link[=truncate_phase]{truncate_phase()}}
 }
 \author{
 Juergen Wilbert
