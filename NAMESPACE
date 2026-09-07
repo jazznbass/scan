@@ -158,7 +158,9 @@ import(stats)
 importFrom(car,Anova)
 importFrom(cli,col_blue)
 importFrom(magrittr,"%>%")
-importFrom(utils,capture.output)
-importFrom(utils,combn)
-importFrom(utils,install.packages)
-importFrom(utils,read.csv)
+importFrom(utils,
+  capture.output,
+  combn,
+  install.packages,
+  read.csv
+)

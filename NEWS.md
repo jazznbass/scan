@@ -1,3 +1,9 @@
+# scan 0.68.3
+
+- resolved minor bugs in the scdf() phase definition.
+- resolved minor bugs in the combine() /c() function.
+- 
+
 # scan 0.68.1
 
 - Introduced rlang error and messaging system for more informative error messages and warnings.
