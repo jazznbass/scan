@@ -181,6 +181,10 @@ scdf <- function(...,
   
   ## from a named vector
   if (!is.null(names(df[[dvar]]))) {
+    if (!is.null(phase_design)) {
+      warn("Phase design is defined by the names of the dependent variable. ",
+           "The argument 'phase_design' is ignored.")
+    }
     tmp_names <- names(df[[dvar]])
     tmp <- c(which(tmp_names != ""), length(tmp_names) + 1)
     phase_design <- tmp[-1] - tmp[-length(tmp)]
@@ -189,7 +193,7 @@ scdf <- function(...,
 
   ## from phase variable
   if (!is.null(df[[pvar]])) {
-    tmp_phase <- rle(df[[pvar]])
+    tmp_phase <- rle(as.character(df[[pvar]]))
     phase_design <- tmp_phase$lengths
     names(phase_design) <- tmp_phase$values
   }
@@ -203,9 +207,10 @@ scdf <- function(...,
   }
   
   # from phase_starts
-  if (!is.null(phase_starts)) 
+  if (!is.null(phase_starts)) {
     phase_design <- phase_starts2phase_design(phase_starts, df[[mvar]])
-  
+  }
+    
   if (is.null(phase_design)) {
     abort("Phase design not defined correctly!")
   }
@@ -220,7 +225,7 @@ scdf <- function(...,
     abort("The phase argument suggests ", length(df[[pvar]]), " measures but ",
       length(df[[dvar]]), " measurements are available.")
   }
-  data <- list(as.data.frame(df))
+  data <- list(as.data.frame(df, check.names = FALSE))
   attributes(data) <- .default_attributes()
   dv(data) <- dvar
   phase(data) <- pvar
@@ -231,6 +236,9 @@ scdf <- function(...,
 }
 
 phase_starts2phase_design <- function(starts, mt) {
+  if (length(starts) < 2) {
+    abort("phase_starts must contain at least two phases.")
+  }
   ids <- lapply(starts, function(x) which(x == mt))
   check <- lapply(ids, function(x) {
     if (length(x) == 0) 
@@ -244,11 +252,14 @@ phase_starts2phase_design <- function(starts, mt) {
          mt[1], ".")
   }
     
-  
-  phase_design <- list()
+  phase_design <- vector("list", length(starts))
   for (i in 2:length(ids)) {
-    phase_design[[names(starts)[i - 1]]] <- ids[[i]] - ids[[i - 1]]
+    phase_design[[i - 1]] <- ids[[i]] - ids[[i - 1]]
   }
-  phase_design[[names(starts)[length(starts)]]] <- length(mt) - sum(unlist(phase_design))
+  
+  phase_design[[length(starts)]] <- length(mt) - sum(unlist(phase_design))
+  
+  names(phase_design) <- names(starts)
+  
   phase_design
 }
