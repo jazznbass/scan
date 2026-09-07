@@ -97,6 +97,10 @@ read_scdf <- function(file,
 
   if (type == "data") {
     dat <- as.data.frame(file)
+    dat[] <- lapply(
+      dat,
+      function(x) replace(x, x %in% na, NA)
+    )
   }
  
   out <- as_scdf(
