@@ -27,7 +27,13 @@ combine <- function(...,
   
   source_attr <- attributes(scdfs[[1]])
   
-  case_names <- unlist(lapply(scdfs, names))
+  case_names <- unlist(
+    lapply(scdfs, function(x) {
+      nms <- names(x)
+      if (is.null(nms)) rep("", length(x)) else nms
+    }),
+    use.names = FALSE
+  )
    
   data <- unlist(scdfs, recursive = FALSE)
   
