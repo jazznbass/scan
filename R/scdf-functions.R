@@ -47,9 +47,10 @@ combine <- function(...,
   
   names(data) <- case_names
   if (!is.null(names(scdfs))) {
-    .names <- names(scdfs)[which(names(scdfs) != "")]
-    names(data)[which(names(scdfs) != "")] <- .names
-    
+    sizes <- lengths(scdfs)
+    starts <- cumsum(c(1L, head(sizes, -1L)))
+    named <- which(names(scdfs) != "" & sizes > 0L)
+    names(data)[starts[named]] <- names(scdfs)[named]
   }
   
   # check class scdf validity
