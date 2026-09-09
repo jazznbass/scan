@@ -20,6 +20,11 @@
 #' - **`across_cases()`**: creates new variables or replaces existing ones across all cases.  
 #'   Example: `across_cases(values_ranked = rank(values, na.last = "keep"))` 
 #'   ranks the `values` variable across all cases and creates a new variable `values_ranked`.
+#' - **`moving_mean()` / moving_median()**: calculate a moving average. 
+#'   Smoothing proceeds from the first observation toward the last. 
+#'   Each interior value is replaced by the mean of its current window, 
+#'   including the central value. Previously smoothed values are used in 
+#'   subsequent windows. Boundary values remain unchanged.
 #'   
 #' @param _data An scdf.
 #' @param ... Expressions.
