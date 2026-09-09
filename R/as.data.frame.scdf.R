@@ -35,16 +35,23 @@
 as.data.frame.scdf <- function(x, ..., l2 = NULL, id = "case") {
   if (!is.null(l2)) x <- add_l2(x, l2, cvar = id)
 
+  if (any(vapply(x, function(z) id %in% names(z), logical(1)))) {
+    abort(
+      "The 'id' column name already exists in the case data. ",
+      "Choose a different id."
+    )
+  }
   label <- revise_names(x)
   outdat <- vector()
 
   for (i_case in seq_along(x)) {
-    x[[i_case]]$case <- label[i_case]
-    outdat <- rbind(outdat, x[[i_case]])
+    case_data <- data.frame(
+      label[i_case], x[[i_case]], check.names = FALSE
+    )
+    names(case_data)[1] <- id
+    outdat <- rbind(outdat, case_data)
   }
 
-  outdat <- cbind(outdat[, ncol(outdat)], outdat[, -ncol(outdat)])
-  colnames(outdat)[1] <- id
   outdat[[1]] <- factor(outdat[[1]], levels = label, labels = label)
   attr(outdat, "scdf") <- attr(x, "scdf")
   outdat

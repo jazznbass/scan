@@ -93,6 +93,11 @@ Example: \code{rowwise(sum(values, mt, na.rm = TRUE))}.
 \item \strong{\code{across_cases()}}: creates new variables or replaces existing ones across all cases.
 Example: \code{across_cases(values_ranked = rank(values, na.last = "keep"))}
 ranks the \code{values} variable across all cases and creates a new variable \code{values_ranked}.
+\item \strong{\code{moving_mean()} / moving_median()}: calculate a moving average.
+Smoothing proceeds from the first observation toward the last.
+Each interior value is replaced by the mean of its current window,
+including the central value. Previously smoothed values are used in
+subsequent windows. Boundary values remain unchanged.
 }
 }
 \examples{

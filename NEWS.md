@@ -2,7 +2,17 @@
 
 - resolved minor bugs in the scdf() phase definition.
 - resolved minor bugs in the combine() /c() function.
-- 
+- resolved minor bugs in the center_at() function.
+- resolved minor bugs in the set_na_at() function.
+- resolved minor bugs in the as.data.frame.scdf() function.
+- resolved minor bugs in the transform() function that now allows to calculate a vlaue based on multiple expressions: 
+
+```.r
+transform(
+  study,
+  adjusted = values - mean(values[phase == "A"], na.rm = TRUE) + mean(values[phase == "B"], na.rm = TRUE)
+)
+```
 
 # scan 0.68.1
 
