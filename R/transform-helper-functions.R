@@ -6,7 +6,6 @@ moving_median <- function(x, lag = 1) .moving_average(x, lag, median)
 #' @rdname transform.scdf
 #' @param lag Number of values surrounding a value to calculate the average
 #' @export
-
 moving_mean <- function(x, lag = 1) .moving_average(x, lag, mean)
 
 #' @rdname transform.scdf
@@ -24,9 +23,12 @@ local_regression <- function(x, mt = 1:length(x), f = 0.2) {
 #' @param positions  A numeric vector with relative positions to the first 
 #'  appearance of a TRUE value in x.
 set_na_at <- function(x, first_of, positions = 0) {
-  x[match(TRUE, first_of) + positions] <- NA
+  id <- match(TRUE, first_of) + positions
+  id <- id[!is.na(id) & id >= 1 & id <= length(x)]
+  x[id] <- NA
   x
 }
+
 
 #' @export
 #' @rdname transform.scdf
@@ -44,7 +46,7 @@ set_na_at <- function(x, first_of, positions = 0) {
 #'   integers.
 
 center_at <- function(x, at = TRUE, shift = 0, part = 0) {
-  x - x[match(TRUE, at) + shift + round(sum(at, na.rm = TRUE) * part)]
+  x - x[match(TRUE, at) + shift + round((sum(at, na.rm = TRUE) - 1) * part)]
 }
 
 
