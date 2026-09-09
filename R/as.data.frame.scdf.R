@@ -33,7 +33,7 @@
 #'
 #' @export
 as.data.frame.scdf <- function(x, ..., l2 = NULL, id = "case") {
-  if (!is.null(l2)) x <- add_l2(x, l2)
+  if (!is.null(l2)) x <- add_l2(x, l2, cvar = id)
 
   label <- revise_names(x)
   outdat <- vector()
