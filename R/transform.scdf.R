@@ -94,20 +94,24 @@
 #'   )
 #' @export
 transform.scdf <- function(`_data`, ...) {
+  .caller <- parent.frame()
   expressions <- substitute(list(...))
   original_attr <- attributes(`_data`)
   .df <- as.data.frame(`_data`)
   
   for(i_expression in 2:length(expressions)) {
     
-    if(startsWith(deparse(expressions[[i_expression]]), "across_cases(")) {
+    if (
+      is.call(expressions[[i_expression]]) &&
+      identical(expressions[[i_expression]][[1]], as.name("across_cases"))
+    ) {
       .list_env <- as.list(.df)
      
       # across cases
       .list_env$across_cases <- function(...) {
         exp_across <- substitute(list(...))
         for (i in 2:length(exp_across)) {
-          new <- eval(exp_across[c(1,i)], .list_env)
+          new <- eval(exp_across[c(1,i)], .list_env, enclos = .caller)
           .df[[names(new)]] <- new[[1]]
           .list_env[[names(new)]] <- new[[1]]
         }
@@ -116,10 +120,9 @@ transform.scdf <- function(`_data`, ...) {
       
       new <- eval(expressions[c(1,i_expression)], .list_env, parent.frame())
       .df <- new[[1]]
-     
+      
       `_data` <- suppressMessages(as_scdf(.df))
      
-      #attributes(`_data`) <- original_attr
     } else {
       # For across case calculations
       .df <- as.data.frame(`_data`)
@@ -131,14 +134,17 @@ transform.scdf <- function(`_data`, ...) {
         ## additional functions all(), all_cases() and n()
         .list_env$all_cases <- .list_env$all <- function(x) {
           x <- substitute(x)
-          eval(x, .df)
+          eval(x, .df, enclos = .caller)
         }
         .list_env$n <- function() {nrow(`_data`[[i_case]])}
         .list_env$rowwise <- function(expr) {
           expr <- substitute(expr)
           out <- c()
           for(i_row in 1:nrow(`_data`[[i_case]])) {
-            out <- c(out, eval(expr, `_data`[[i_case]][i_row, ]))
+            out <- c(
+              out,
+              eval(expr, `_data`[[i_case]][i_row, ], enclos = .caller)
+            )
           }
           out
         }
@@ -148,15 +154,11 @@ transform.scdf <- function(`_data`, ...) {
         
         # Add new variable
         `_data`[[i_case]][[names(new)]] <- new[[1]]
-        
-        
       }
       .df <- as.data.frame(`_data`)
     }
   }
   `_data`
 }
-
-
 
 
