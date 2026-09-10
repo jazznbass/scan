@@ -37,18 +37,16 @@ subset.scdf <- function(x, subset, select, cases, ...) {
   scdf <- scdf[eval(substitute(cases), envir = nl, enclos = parent.frame())]
   
    
-  for(i in 1:length(scdf)) {
+  for(i in seq_along(scdf)) {
     x <- scdf[[i]]
     # select vars
     nl <- as.list(seq_along(x))
     names(nl) <- names(x)
     columns <- eval(substitute(select), nl, parent.frame())
     # subset rows
-    if (isTRUE(subset)) rows <- TRUE
-    if (is.call(subset)) {
-      rows <- eval(subset, x, parent.frame())
-      if (is.logical(rows))
-        rows <- rows & !is.na(rows)
+    rows <- eval(subset, x, parent.frame())
+    if (is.logical(rows)) {
+      rows <- rows & !is.na(rows)
     }
     #print(rows)
     scdf[[i]] <- x[rows, columns, drop = FALSE]
