@@ -28,7 +28,7 @@ pnd <- function(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2)) {
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
   
-  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .prepare_scdf(data)
   data <- recombine_phases(data, phases = phases)$data
   
   pnd <- c()
@@ -37,7 +37,13 @@ pnd <- function(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2)) {
   for(i in 1:length(data)) {
     A <- data[[i]][, dvar][data[[i]][, pvar] == "A"]
     B <- data[[i]][, dvar][data[[i]][, pvar] == "B"]
+    A <- A[!is.na(A)]
+    B <- B[!is.na(B)]
     n.B[i] <- length(B)
+    if (length(A) == 0L || length(B) == 0L) {
+      pnd[i] <- NA_real_
+      next
+    }
     if (!decreasing) pnd[i] <- sum(B > max(A)) /  n.B[i] * 100
     if (decreasing) pnd[i] <- sum(B < min(A)) /  n.B[i] * 100
   }
