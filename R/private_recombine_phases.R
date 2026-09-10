@@ -87,8 +87,9 @@ recombine_phases <- function(data,
     data[[case]][[pvar]] <- as.character(data[[case]][[pvar]])
     
     if (set_phases) {
+      case_phase_names <- phase_names
       if (identical(phase_names, "auto")) {
-        phase_names <- sapply(phases, function(x) {
+        case_phase_names <- sapply(phases, function(x) {
           if (is.numeric(x)) {
             paste0(design$values[x], collapse = "")
           } else {
@@ -96,8 +97,8 @@ recombine_phases <- function(data,
           }
         })          
       }
-      data[[case]][A ,pvar] <- phase_names[1]
-      data[[case]][B ,pvar] <- phase_names[2]
+      data[[case]][A ,pvar] <- case_phase_names[1]
+      data[[case]][B ,pvar] <- case_phase_names[2]
     }
     data[[case]] <- data[[case]][c(A, B),]
     design_list[[case]] <- design
