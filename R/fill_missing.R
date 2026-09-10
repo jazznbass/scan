@@ -84,18 +84,23 @@ fill_missing <- function(data,
     
     # interpolate missing measurement times
     if (interpolate_na) {
-      dat[[mvar]] <- .interpolate(dat[[mvar]]) |> round()
+      missing_mt <- is.na(dat[[mvar]])
+      if (any(missing_mt)) {
+        interpolated_mt <- round(.interpolate(dat[[mvar]]))
+        dat[[mvar]][missing_mt] <- interpolated_mt[missing_mt]
+      }
     }
     
+    dat <- dat[order(dat[[mvar]], na.last = TRUE), , drop = FALSE]
     new_dat <- dat[0, , drop = FALSE]  # empty data frame to store new data
 
-    for(i_row in 1:(nrow(dat) - 1)) {
+    for(i_row in seq_len(max(0L, nrow(dat) - 1L))) {
       
       # skip if current or next measurement time is NA
       if (is.na(dat[[mvar]][i_row]) || is.na(dat[[mvar]][i_row + 1])) next
       
       # check for missing measurement times
-      if (dat[i_row + 1, mvar] - dat[i_row, mvar] == 1) next
+      if (dat[i_row + 1, mvar] - dat[i_row, mvar] <= 1) next
       
       # interpolate missing values for all target variables
       new_rows <- (dat[i_row, mvar] + 1) : (dat[i_row + 1, mvar] - 1)
@@ -129,6 +134,7 @@ fill_missing <- function(data,
 }
 
 .interpolate <- function(mt) {
+  if (sum(!is.na(mt)) < 2L) return(mt)
   
   if (!any(is.na(mt))) return(mt)
 
@@ -144,5 +150,3 @@ fill_missing <- function(data,
   
   return(x)
 }
-
-
