@@ -147,11 +147,21 @@ rand_test <- function (data, dvar, pvar,
   dv(data) <- dvar
   phase(data) <- pvar
   
-  data <- .prepare_scdf(data, na.rm = TRUE)
-  
+  data <- .prepare_scdf(data)
   keep <- recombine_phases(data, phases = phases)
   data <- keep$data
   
+  for (i in seq_along(data)) {
+    dat <- data[[i]]
+    dat <- dat[!is.na(dat[[dvar]]), , drop = FALSE]
+
+    if (!any(dat[[pvar]] == "A") || !any(dat[[pvar]] == "B")) {
+      abort("Case ", i, ": both selected phases need observed values.")
+    }
+
+    data[[i]] <- dat
+  }
+
   a   <- lapply(data, function(x) x[x[, pvar] == "A", dvar])
   b   <- lapply(data, function(x) x[x[, pvar] == "B", dvar])
   obs <- lapply(data, function(x) x[, dvar])
