@@ -60,7 +60,7 @@ rci <- function(data, dvar, pvar,
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
   
-  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .prepare_scdf(data)
   data <- recombine_phases(data, phases = phases)$data
   
   N <- length(data)
@@ -73,12 +73,19 @@ rci <- function(data, dvar, pvar,
   B <- lapply(data, function(x) x[, dvar][x[, pvar] == "B"])
   A <- unlist(A)
   B <- unlist(B)
+  A <- A[!is.na(A)]
+  B <- B[!is.na(B)]
+
+  if (length(A) < 2L || length(B) < 2L) {
+    abort("Need at least two observed values in each selected phase.")
+  }
+
   sA <- sd(A, na.rm = TRUE)
   sB <- sd(B, na.rm = TRUE)
   mA <- mean(A, na.rm = TRUE)
   mB <- mean(B, na.rm = TRUE)
-  nA <- sum(!is.na(A))
-  nB <- sum(!is.na(A))
+  nA <- length(A)
+  nB <- length(B)
   n <- nA + nB
   seA <- sA * sqrt(1 - rel)
   seB <- sB * sqrt(1 - rel)
@@ -144,7 +151,6 @@ rci <- function(data, dvar, pvar,
   attributes(out)[opts("phase", "dv")] <- list(pvar, dvar)
   out
 }
-
 
 
 
