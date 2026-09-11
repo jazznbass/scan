@@ -44,7 +44,7 @@ pet <- function(data,
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
   if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
   
-  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .prepare_scdf(data)
   data <- recombine_phases(data, phases = phases)$data
   
   N <- length(data)
@@ -56,23 +56,52 @@ pet <- function(data,
   p      <- rep(NA, N)
   
   for(i in 1:N) {
+    dat <- data[[i]]
+    usable <- complete.cases(dat[, c(dvar, mvar), drop = FALSE])
+    A <- dat[which(dat[[pvar]] == "A" & usable), , drop = FALSE]
+    B <- dat[which(dat[[pvar]] == "B" & usable), , drop = FALSE]
+
+    if (nrow(A) < 2L || nrow(B) < 1L) {
+      warn(
+        "Case ", i, ": need at least two complete observations ",
+        "in phase A and one in phase B."
+      )
+      next
+    }
+    if (length(unique(A[[mvar]])) < 2L) {
+      warn("Case ", i, ": need distinct measurement times in phase A.")
+      next
+    }
+
+    calculate_ci <- nrow(A) >= 3L
+    if (!calculate_ci) {
+      warn(
+        "Case ", i, ": need at least three complete observations ",
+        "in phase A for PET CI. Ordinary PET is still calculated."
+      )
+    }
+
     formula <- as.formula(paste0(dvar, "~", mvar))
     model <- lm(
       formula, 
-      data = data[[i]][data[[i]][, pvar] == "A",], 
+      data = A,
       na.action = na.omit
     )
-    B <- data[[i]][data[[i]][, pvar] == "B",]
-    res <- predict(model, B, se.fit = TRUE)
+    res <- predict(model, B, se.fit = calculate_ci)
+    if (!calculate_ci) res <- list(fit = res)
     nB <- nrow(B)
     if(!decreasing) {
-      pet_ci[i] <- mean(B[, dvar] > (res$fit + res$se.fit * se_factor)) * 100
+      if (calculate_ci) {
+        pet_ci[i] <- mean(B[, dvar] > (res$fit + res$se.fit * se_factor)) * 100
+      }
       pet[i]    <- mean(B[, dvar] > res$fit)*100
       p[i]      <- binom.test(
         sum(B[, dvar] > res$fit), nB, alternative = "greater"
       )$p.value
     } else {
-      pet_ci[i] <- mean(B[, dvar] < (res$fit - res$se.fit * se_factor)) * 100
+      if (calculate_ci) {
+        pet_ci[i] <- mean(B[, dvar] < (res$fit - res$se.fit * se_factor)) * 100
+      }
       pet[i] <- mean(B[, dvar] < res$fit) * 100
       p[i] <- binom.test(
         sum(B[, dvar] < res$fit), nB, alternative = "greater"
