@@ -49,7 +49,7 @@ nap <- function(data, dvar, pvar,
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
   
-  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .prepare_scdf(data)
   data <- recombine_phases(data, phases = phases)$data
   
   casenames <- revise_names(data)
@@ -57,8 +57,26 @@ nap <- function(data, dvar, pvar,
   .nap <- function(data) {
     
     values <- split(data[[dvar]], data[[pvar]])
+    values$A <- values$A[!is.na(values$A)]
+    values$B <- values$B[!is.na(values$B)]
+
     pairs <- length(values$A) * length(values$B)
     
+    if (pairs == 0) {
+      return(data.frame(
+        NAP = NA,
+        "NAP Rescaled" = NA,
+        Pairs = pairs,
+        "Non-overlaps" = NA,
+        Positives = NA,
+        Ties = NA,
+        w = NA,
+        p = NA,
+        d = NA,
+        "R\u00B2" = NA,
+        check.names = FALSE
+      ))
+    }
     if (!decreasing) {
       pos <- sum(unlist(lapply(values$A, function(x) values$B > x)))
     }

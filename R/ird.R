@@ -39,7 +39,7 @@ ird <- function(data, dvar, pvar,
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
   
-  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .prepare_scdf(data)
   recombined_data <- recombine_phases(data, phases = phases)
   
   data <- recombined_data$data
@@ -54,7 +54,7 @@ ird <- function(data, dvar, pvar,
     ird = ird,
     decreasing = decreasing,
     phases = recombined_data$phases,
-    n_cases = length(data)
+    n_cases = pa$N
   )
   
   class(out) <- "sc_ird"

@@ -49,17 +49,47 @@ corrected_tau <- function(data, dvar, pvar, mvar,
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
   if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
 
-  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .prepare_scdf(data)
   data <- recombine_phases(data, phases = phases)$data
+
+  empty_return <- data.frame(
+    Model = c(
+      "Baseline autocorrelation",
+      "Uncorrected tau",
+      "Baseline corrected tau"
+    ),
+    tau = rep(NA_real_, 3),
+    z = rep(NA_real_, 3),
+    p = rep(NA_real_, 3),
+    check.names = FALSE
+  )
 
   corr_tau <- function(data) {
     
+    # extract data for phase A and B ----
+    data <- data[
+      complete.cases(data[, c(dvar, mvar), drop = FALSE]), ,
+      drop = FALSE
+    ]
+
     rowsA <- which(data[[pvar]] == "A")
     rowsB <- which(data[[pvar]] == "B")
+
     A_data <- data[rowsA, ]
     B_data <- data[rowsB, ]
     
-    if (length(unique(A_data[[dvar]])) == 1) {
+    # validity checks ----
+
+    if (length(unique(A_data[[mvar]])) < 2L) {
+      warn("Need at least two distinct measurement times in phase A.")
+      return(empty_return)
+    } else if (nrow(A_data) < 2L || nrow(B_data) < 1L) {
+      warn(
+        "Need at least two complete observations in phase A ",
+        "and one in phase B."
+      )
+      return(empty_return)
+    } else if (length(unique(A_data[[dvar]])) == 1) {
       warn(
         "All phase A values are identical. ",
         "Autocorrelation can not be calculated and is set to NA."
@@ -80,6 +110,8 @@ corrected_tau <- function(data, dvar, pvar, mvar,
       )
     }
     
+    # apply baseline correction if necessary ----
+
     formula  <- as.formula(paste0(dvar, "~", mvar))
     
     fit_ts <- theil_sen(formula, data = A_data)
@@ -115,7 +147,9 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     
     if (corr_applied) tau <- base_corr_tau else tau <- uncorrected_tau
     
-    df <- data.frame(
+    # return results ----
+
+    return(data.frame(
       Model = c("Baseline autocorrelation", 
                 "Uncorrected tau", 
                 "Baseline corrected tau"),
@@ -123,10 +157,7 @@ corrected_tau <- function(data, dvar, pvar, mvar,
       z = c(auto_tau$z, uncorrected_tau$z, base_corr_tau$z),
       p = c(auto_tau$p, uncorrected_tau$p, base_corr_tau$p),
       check.names = FALSE
-    )
-    
-    df
-    
+    ))
   }
   
   x <- lapply(data, corr_tau)

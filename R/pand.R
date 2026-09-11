@@ -98,10 +98,32 @@ pand <- function(data, dvar, pvar,
   dv(data) <- dvar
   phase(data) <- pvar
   
-  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .prepare_scdf(data)
   data <- recombine_phases(data, phases = phases)$data
   
+  for (i in seq_along(data)) {
+    data[[i]] <- data[[i]][!is.na(data[[i]][[dvar]]), , drop = FALSE]
+  }
+
+  N_pre <- length(data)
+
+  # removes cases with no data in either phase
+  data <- data[sapply(data, function(x) {
+    any(x[[pvar]] == "A") && any(x[[pvar]] == "B")
+  })]
+
   N <- length(data)
+
+  if (N == 0L) {
+    abort("No cases with observations in both phases remain.")
+  }
+
+  if (N < N_pre) {
+    warn(N_pre - N, " case(s) were removed from the analysis. ",
+      "They had no data in either phase."
+    )
+  }
+
   values_a <- lapply(data, function(x) x[x[[pvar]] == "A", dvar])
   values_b <- lapply(data, function(x) x[x[[pvar]] == "B", dvar])
   n_all_a <- length(unlist(values_a))
@@ -119,11 +141,6 @@ pand <- function(data, dvar, pvar,
       x <- x[sample(1:nrow(x)),]
       x[[pvar]][order(x[[dvar]], x[[pvar]], decreasing = decreasing)]
     }) |> unlist() 
-    
-    #phases_sorted <- lapply(data, function(x) {
-    #  x <- x[sample(1:nrow(x)),]
-    #  x[[pvar]][sort.list(x[[dvar]],decreasing = decreasing)]
-    #}) |> unlist()
     
     mat_counts <- table(phases_data, phases_sorted)
     mat_propotions <- prop.table(mat_counts)

@@ -48,7 +48,7 @@ pem <- function(data, dvar, pvar,
   dv(data) <- dvar
   phase(data) <- pvar
   
-  data <- .prepare_scdf(data, na.rm = TRUE)
+  data <- .prepare_scdf(data)
   data <- recombine_phases(data, phases = phases)$data
   
   N <- length(data)
@@ -65,6 +65,12 @@ pem <- function(data, dvar, pvar,
   for(i in 1:N) {
     A <- data[[i]][, dvar][data[[i]][, pvar] == "A"]
     B <- data[[i]][, dvar][data[[i]][, pvar] == "B"]
+    A <- A[!is.na(A)]
+    B <- B[!is.na(B)]
+    if (length(A) == 0L || length(B) == 0L) {
+      PEM[i] <- NA_real_
+      next
+    }
     if (!decreasing)
       PEM[i] <- mean(B > FUN(A,...)) * 100
     if (decreasing)

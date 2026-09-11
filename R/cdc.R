@@ -81,7 +81,7 @@ cdc <- function(data,
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
   if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
 
-  data  <- .prepare_scdf(data, na.rm = TRUE)
+  data  <- .prepare_scdf(data)
   data  <- recombine_phases(data, phases = phases)$data
 
   n_cases <- length(data)
@@ -93,16 +93,36 @@ cdc <- function(data,
   cdc_all <- NA          # CDC rule evaluation of all "cases"
 
   for (i in 1:n_cases) {
-    A <- data[[i]][data[[i]][, pvar] == "A", ]
-    B <- data[[i]][data[[i]][, pvar] == "B", ]
+    dat <- data[[i]]
+    idx <- complete.cases(dat[, c(dvar, mvar), drop = FALSE])
+    A <- dat[which(dat[[pvar]] == "A" & idx), , drop = FALSE]
+    B <- dat[which(dat[[pvar]] == "B" & idx), , drop = FALSE]
+
     cdc_na[i] <- nrow(A)
     cdc_nb[i] <- nrow(B)
 
     if ((cdc_na[i] < 5 || cdc_nb[i] < 5) && trend_method != "OLS") {
-      abort(
-        "The selected method for trend estimation should not be applied ",
-        "with less than five data points per phase."
+      warn(
+        "Case ", i, ": The selected method for trend estimation should not be ",
+        "applied with less than five data points per phase."
       )
+      cdc[i] <- "insufficient data"
+      next
+    }
+
+    if (nrow(A) < 2L || nrow(B) < 1L) {
+      warn(
+        "Case ", i, ": need at least two complete observations ",
+        "in phase A and one in phase B."
+      )
+      cdc[i] <- "insufficient data"
+      next
+    }
+
+    if (length(unique(A[[mvar]])) < 2L) {
+      warn("Case ", i, ": need distinct measurement times in phase A.")
+      cdc[i] <- "insufficient data"
+      next
     }
 
     if (trend_method == "bisplit") {
@@ -167,8 +187,10 @@ cdc <- function(data,
       )$p.value
       cdc[i] <- if (cdc_p[i] < .05) "systematic change" else "no change"
     }
-    
-    cdc_all <- if (length(cdc_p[cdc_p > .05]) / length(cdc_p) <= .25) {
+  }
+
+  if (length(cdc_p) > 0 && !anyNA(cdc_p)) {
+    cdc_all <- if (mean(cdc_p > .05) <= .25) {
       "systematic change"
     } else {
       "no change"
