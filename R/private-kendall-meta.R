@@ -38,11 +38,19 @@
 }
 
 .meta_tau <- function(tau, n, ci, se_method) {
+
   ci_z <- qnorm((1 - ci) / 2, lower.tail = FALSE)
   tau_z <- .tau_z(tau)
   
-  if (se_method == "tau") se_z <- sqrt(0.437 / (n - 4))
-  if (se_method == "z") se_z <- 1 / sqrt(n - 3)
+  
+  
+  if (se_method == "tau") {
+    se_z <- sqrt(0.437 / (n - 4))
+  }
+  
+  if (se_method == "z") {
+    se_z <- 1 / sqrt(n - 3)
+  }
   
   weight <- 1 / se_z^2
   TE <- sum(tau_z * weight) / sum(weight)

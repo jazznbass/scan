@@ -27,7 +27,7 @@
 #'   0.
 #' @param model A string or a list of (named) strings each depicting one
 #'   regression model. This is a formula expression of the standard R class. The
-#'   parameters of the model are `values`, `mt` and `phase`.
+#'   parameters of the model are `values` and `mt`.
 #' @return A list of class `sc_trend` containing:
 #' \item{trend}{A matrix containing the results (Intercept, B and beta)
 #'   of separate regression models for phase A, phase B, and the whole data.}
@@ -93,7 +93,7 @@ trend <- function(data, dvar, pvar, mvar,
   formulas_names <- c("Linear", "Quadratic")
   if(!is.null(model)) {
     formulas <- c(formulas, model)
-    formulas_names <- names(formulas)#c(formulas_names, names(model))
+    formulas_names <- names(formulas)
   }
   tmp <- length(design) + 1
   rows <- paste0(paste0(rep(formulas_names, each = tmp), "."), c("ALL", design))
@@ -109,7 +109,16 @@ trend <- function(data, dvar, pvar, mvar,
     data_phase[[mvar]] <- data_phase[[mvar]] - mvar_correction
     
     .row <- which(rows == paste0(formulas_names[i_formula], ".ALL"))
-    ma[.row, 1:3] <- .beta_weights(lm(formulas[[i_formula]], data = data_phase))
+    coefs <- .beta_weights(lm(formulas[[i_formula]], data = data_phase))
+    if (length(coefs) != 3L) {
+      abort(
+        "Model '", formulas_names[i_formula], "' has ",
+        (length(coefs) - 1L) %/% 2L, " predictors. trend() only ",
+        "supports models with exactly one predictor."
+      )
+    }
+    ma[.row, 1:3] <- coefs
+    
     for(p in 1:length(design)) {
       data_phase <- data[phases$start[p]:phases$stop[p], ]
       mvar_correction <- min(data_phase[[mvar]], na.rm = TRUE) - first_mt

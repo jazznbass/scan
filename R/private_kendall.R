@@ -8,7 +8,11 @@ kendall_tau <- function(x, y,
     warn("could not calculate p-values for tau. Less than three data points.")
   }
   
-  if (all(x == x[1]) || all(x == x[2])) {
+  if (N < 2) {
+    abort("Cannot calculate tau with fewer than two data points.")
+  }
+  
+  if (all(x == x[1], na.rm = TRUE) || all(y == y[1], na.rm = TRUE)) {
     warn("could not calculate tau. Variance is zero.")
   }
   

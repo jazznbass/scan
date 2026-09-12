@@ -25,6 +25,13 @@
 
 
 .moving_average <- function(x, lag = 1, FUN = mean) {
+  if (length(x) < 2 * lag + 1) {
+    warn(
+      "Series of ", length(x), " values is too short for lag = ", lag,
+      ". Values are returned unchanged."
+    )
+    return(x)
+  }
   for(i in (lag + 1):(length(x) - lag))
     x[i] <- FUN(x[(i - lag):(i + lag)], na.rm = TRUE)
   x

@@ -116,20 +116,33 @@ recombine_phases <- function(data,
   
   original_phases <- lapply(design_list, function(x) x$values)
   
+  #new_phases <- lapply(original_phases, function(x) {
+  #  out <- if (is.numeric(phases_A)) {
+  #    paste0(x[phases_A], collapse = "")
+  #  } else {
+  #    paste0(x[which(phases_A %in% x)], collapse = "")
+  #  }
+  #  out <- if (is.numeric(phases_B)) {
+  #    c(out, paste0(x[phases_B], collapse = ""))
+  #  } else {
+  #    c(out, paste0(x[which(phases_B %in% x)], collapse = ""))
+  #  }
+  #  out
+  #})
+  
   new_phases <- lapply(original_phases, function(x) {
-    out <- if (is.numeric(phases_A)) {
+    out_a <- if (is.numeric(phases_A)) {
       paste0(x[phases_A], collapse = "")
     } else {
-      paste0(x[which(phases_A %in% x)], collapse = "")
+      paste0(x[which(x %in% phases_A)], collapse = "")
     }
-    out <- if (is.numeric(phases_B)) {
-      c(out, paste0(x[phases_B], collapse = ""))
+    out_b <- if (is.numeric(phases_B)) {
+      paste0(x[phases_B], collapse = "")
     } else {
-      c(out, paste0(x[which(phases_B %in% x)], collapse = ""))
+      paste0(x[which(x %in% phases_B)], collapse = "")
     }
-    out
+    c(out_a, out_b)
   })
-  
   #browser()
   
   out <- list(

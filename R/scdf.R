@@ -171,8 +171,24 @@ scdf <- function(...,
       all(lengths(df) == lengths(df)[1]), 
       "All variables must have the same length. \nActual lengths are: ", 
       paste0(names(lengths(df)), " = ", lengths(df), collapse = ", "), "."
+    ),
+    is_true(
+      sum(!is.null(names(df[[dvar]])), 
+          !is.null(phase_design),
+          !is.null(phase_starts),
+          !is.null(B_start) , 
+          !is.null(df[[pvar]])) < 2,
+      "Phase design is defined by multiple sources. Please define it only once."
     )
   )
+ 
+  #if (sum(!is.null(names(df[[dvar]])), 
+  #        !is.null(phase_design),
+  #        !is.null(phase_starts),
+  #        !is.null(B_start) , 
+  #        !is.null(df[[pvar]])) > 1) {
+  #  abort("Phase design is defined by multiple sources. Please define it only once.")
+  #}
   
   # create default mt column ----
   if (!(mvar %in% names(df))) df[[mvar]] <- 1:length(df[[dvar]])
@@ -181,10 +197,6 @@ scdf <- function(...,
   
   ## from a named vector
   if (!is.null(names(df[[dvar]]))) {
-    if (!is.null(phase_design)) {
-      warn("Phase design is defined by the names of the dependent variable. ",
-           "The argument 'phase_design' is ignored.")
-    }
     tmp_names <- names(df[[dvar]])
     tmp <- c(which(tmp_names != ""), length(tmp_names) + 1)
     phase_design <- tmp[-1] - tmp[-length(tmp)]

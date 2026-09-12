@@ -30,8 +30,12 @@ notify <- function(... , type = "!", detail = 1, warning = FALSE) {
   
   max_char <- getOption("wmisc.msg.max", default = 100)
   if (nchar(msg) > max_char) {
-    msg <- paste0(substring(msg, 1, max_char), "... [truncated]")
+    cut <- substring(msg, 1, max_char)
+    last_space <- regexpr("[[:space:]][^[:space:]]*$", cut)
+    if (last_space > 0) cut <- substring(cut, 1, last_space - 1)
+    msg <- paste0(cut, " [...]")
   }
+
   msg <- setNames(msg, type)
   if (!warning) {
     rlang::inform(msg)

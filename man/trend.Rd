@@ -37,7 +37,7 @@ Default = 0.}
 
 \item{model}{A string or a list of (named) strings each depicting one
 regression model. This is a formula expression of the standard R class. The
-parameters of the model are \code{values}, \code{mt} and \code{phase}.}
+parameters of the model are \code{values} and \code{mt}.}
 }
 \value{
 A list of class \code{sc_trend} containing:

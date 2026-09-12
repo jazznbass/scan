@@ -5,6 +5,7 @@ check_scdf <- function(object, message = FALSE) {
     if (message) message("No errors or warnings.")
     return(invisible(TRUE))
   }
+  
   if(length(results$warnings) > 0) {
     warn(results$warnings)
   }
@@ -30,7 +31,7 @@ check_scdf <- function(object, message = FALSE) {
   if (is.null(scdf_attributes)) {
     msg <- paste0("Attribute '", opt("scdf"), "' missing.")
     errors <- c(errors, msg)
-    return(errors)
+    return(list(errors = errors, warnings = warnings))
   } 
   
   var_phase <- scdf_attributes[[opt("phase")]]

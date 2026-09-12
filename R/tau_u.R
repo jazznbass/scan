@@ -94,8 +94,14 @@ tau_u <- function(data, dvar, pvar,
     by_call(ci_method),
     by_call(method),
     by_call(meta_weight_method),
-    within(ci, 0, 1)
+    is_true(
+      is.null(ci) || is.na(ci) || (ci > 0 && ci < 1),
+      "Argument ci must be NULL, NA, or a value between 0 and 1."
+    )
   )
+  
+  # NULL and NA both mean: no confidence intervals
+  if (is.null(ci) || is.na(ci)) ci <- NA_real_
   
   if (method == "parker") {
     #message("method = 'parker' ignores the tau_method argument.")
@@ -146,7 +152,7 @@ tau_u <- function(data, dvar, pvar,
   )
   col_names <- c(
     "pairs", "pos", "neg", "ties", "S", "D", "Tau", "CI lower", "CI upper",
-    "SD_S", "VAR_S", "SE_Tau", "Z", "p"
+    "SD_S", "VAR_S", "SE_Tau", "Z", "p", "n"
   )
   
   template_table_tau <- as.data.frame(matrix(
@@ -174,6 +180,16 @@ tau_u <- function(data, dvar, pvar,
     nA <- length(A)
     nB <- length(B)
     nAB <- nA + nB
+    
+    if (nA < 2L || nB < 2L) {
+      warn(
+        "Case ", case, ": less than two observed values in a phase. ",
+        "Tau-U is set to NA."
+      )
+      out$table[[case]] <- table_tau
+      out$tau_u[[case]] <- c("A vs. B - Trend A" = NA_real_)
+      next
+    }
     
     # create tau matrix -----------------------------------------------------
     AvApos <- 0
@@ -320,7 +336,7 @@ tau_u <- function(data, dvar, pvar,
     table_tau$SE_Tau <- table_tau$Tau / table_tau$Z
     
     # confidence intervals --------------------
-    if (!is.na(ci) && !is.null(ci)) {
+    if (!is.null(ci) && !is.na(ci)) {
       if (ci_method == "s") {
         see <- qnorm((1 - ci) / 2, lower.tail = FALSE)
         S <- table_tau$S
@@ -376,8 +392,21 @@ tau_u <- function(data, dvar, pvar,
   .meta <- function(model) {
     tau <- sapply(tau_matrix, function(x) x[model, "Tau"])
     n <- sapply(tau_matrix, function(x) x[model, "n"])
+    
+    if (anyNA(tau) || anyNA(n)) {
+      return(data.frame(
+        Model = model,
+        Tau_U = NA_real_,
+        se = NA_real_,
+        'CI lower' = NA_real_,
+        'CI upper' = NA_real_,
+        z = NA_real_,
+        p = NA_real_,
+        check.names = FALSE
+      ))
+    }
+    
     out <- data.frame(Model = model)
-  
     res <- .meta_tau(tau, n, ci = ci, se_method = se_method)      
 
     out$Tau_U <- res$tau

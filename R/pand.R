@@ -138,8 +138,8 @@ pand <- function(data, dvar, pvar,
     
     # phase order when sorted by values within case ----
     phases_sorted <- lapply(data, function(x) {
-      x <- x[sample(1:nrow(x)),]
-      x[[pvar]][order(x[[dvar]], x[[pvar]], decreasing = decreasing)]
+      values <- if (decreasing) -x[[dvar]] else x[[dvar]]
+      x[[pvar]][order(values, x[[pvar]])]
     }) |> unlist() 
     
     mat_counts <- table(phases_data, phases_sorted)
@@ -215,7 +215,7 @@ pand <- function(data, dvar, pvar,
     out <- list(
       pand = nonoverlaps / n * 100,
       overlaps = n - nonoverlaps,
-      perc_overlaps = 100 - (nonoverlaps / n * 100),
+      perc_overlap = 100 - (nonoverlaps / n * 100),
       n = n, 
       N = N, 
       n_a = n_all_a, 
@@ -247,61 +247,103 @@ export.sc_pand <- function(object,
     caption <- c("Percentage of all non-overlapping data (PAND)")
   }
   
-  if (is.na(footnote)) {
-    footnote <- c(
-      paste0("PAND = ", round(object$pand, 1), "%"),
-      paste0("\u03A6 = ", round(object$phi, 3)), 
-      paste0("\u03A6\u00b2 = ", round(object$phi^2, 3)), 
-      paste0("Number of cases: ", object$N), 
-      sprintf("\u03C7\u00B2 = %.2f, df = 1, p = %.3f; ",
-              object$chi_test$statistic, 
-              object$chi_test$p.value
-      ),
-      sprintf(
-        "Fisher exact test: Odds ratio = %.2f, p = %.3f",
-        object$fisher_test$estimate, 
-        object$fisher_test$p.value
-      ),
-      if (object$decreasing) "Expected decrease of phase B scores" else NULL
+  if (object$method == "sort") {
+    if (is.na(footnote)) {
+      footnote <- c(
+        paste0("PAND = ", round(object$pand, 1), "%"),
+        "Method: sort",
+        paste0("\u03A6 = ", round(object$phi, 3)), 
+        paste0("\u03A6\u00b2 = ", round(object$phi^2, 3)), 
+        paste0("Number of cases: ", object$N), 
+        sprintf("\u03C7\u00B2 = %.2f, df = 1, p = %.3f; ",
+                object$chi_test$statistic, 
+                object$chi_test$p.value
+        ),
+        sprintf(
+          "Fisher exact test: Odds ratio = %.2f, p = %.3f",
+          object$fisher_test$estimate, 
+          object$fisher_test$p.value
+        ),
+        if (object$decreasing) "Expected decrease of phase B scores" else NULL
+      )
+    }
+    
+    object$matrix <- rbind(object$matrix, object$matrix[1,] + object$matrix[2,])
+    object$matrix_counts <- rbind(
+      object$matrix_counts, object$matrix_counts[1,] + object$matrix_counts[2,]
     )
+    object$matrix <- cbind(object$matrix, object$matrix[,1] + object$matrix[,2])
+    object$matrix_counts <- cbind(
+      object$matrix_counts, object$matrix_counts[,1] + object$matrix_counts[,2]
+    )  
+    out <- as.data.frame(
+      round(rbind(object$matrix * 100, object$matrix_counts), round)
+    )
+    out <- cbind(
+      data.frame(
+        " " = rep(c("Real", " ", " "), 2), Phase = rep(c("A", "B", "Total"), 2)
+      ), 
+      out
+    )
+    names(out) <- c(" ", "  ", "A", "B", "Total")
+    
+    ops <- options(knitr.kable.NA = "")
+    
+    table <- .create_table(
+      out, 
+      caption = caption,
+      footnote = footnote,
+      spanner = list("Expected" = 3:5),
+      row_group = list("Percentage" = 1:3, "Counts" = 4:6),
+      align = c("l", "r", "c", "c", "c")
+    )
+    
+    if (getOption("scan.export.engine") == "kable") {
+      style <- "border-bottom: 1px solid; text-align: center"
+      table <- table  |> 
+        add_header_above(c(" " = 2, "Expected" = 3))  |> 
+        pack_rows(index = c("Percentage" = 3, "Counts" = 3), label_row_css = style)  |> 
+        column_spec(1:2, bold = TRUE)
+    }
   }
   
-  object$matrix <- rbind(object$matrix, object$matrix[1,] + object$matrix[2,])
-  object$matrix_counts <- rbind(
-    object$matrix_counts, object$matrix_counts[1,] + object$matrix_counts[2,]
-  )
-  object$matrix <- cbind(object$matrix, object$matrix[,1] + object$matrix[,2])
-  object$matrix_counts <- cbind(
-    object$matrix_counts, object$matrix_counts[,1] + object$matrix_counts[,2]
-  )  
-  out <- as.data.frame(
-    round(rbind(object$matrix * 100, object$matrix_counts), round)
-  )
-  out <- cbind(
-    data.frame(
-      " " = rep(c("Real", " ", " "), 2), Phase = rep(c("A", "B", "Total"), 2)
-    ), 
-    out
-  )
-  names(out) <- c(" ", "  ", "A", "B", "Total")
-
-  ops <- options(knitr.kable.NA = "")
-
-  table <- .create_table(
-    out, 
-    caption = caption,
-    footnote = footnote,
-    spanner = list("Expected" = 3:5),
-    row_group = list("Percentage" = 1:3, "Counts" = 4:6),
-    align = c("l", "r", "c", "c", "c")
-  )
-  
-  if (getOption("scan.export.engine") == "kable") {
-    style <- "border-bottom: 1px solid; text-align: center"
-    table <- table  |> 
-      add_header_above(c(" " = 2, "Expected" = 3))  |> 
-      pack_rows(index = c("Percentage" = 3, "Counts" = 3), label_row_css = style)  |> 
-      column_spec(1:2, bold = TRUE)
+  if (object$method == "minimum") {
+    if (is.na(footnote)) {
+      footnote <- c(
+        "Method: minimum",
+        if (object$decreasing) "Expected decrease of phase B scores" else NULL
+      )
+    }
+    
+    
+    out <- data.frame(
+      " " = c(
+        "PAND",
+        "Overlapping data points",
+        "Number of measurements",
+        "Number of cases"
+      ),
+      Value = c(
+        round(object$pand, round),
+        object$overlaps,
+        object$n,
+        object$N
+      ),
+      check.names = FALSE
+    )
+    
+    ops <- options(knitr.kable.NA = "")
+    
+    table <- .create_table(
+      out, 
+      caption = caption,
+      footnote = footnote,
+      align = c("l", "c")
+    )
+    
+    if (getOption("scan.export.engine") == "kable") {
+      table <- table |> column_spec(1, bold = TRUE)
+    }
   }
   
   # finish ------------------------------------------------------------------
