@@ -17,11 +17,13 @@
 \arguments{
 \item{x}{An scdf object}
 
-\item{cases}{Number of cases to be printed. "fit" fits the number to the current screen width.}
+\item{cases}{Number of cases to be printed. "fit" fits the number to the
+current screen width.}
 
 \item{rows}{Number of rows to be printed.}
 
-\item{cols}{Columns to be printed. "Main" only prints the dependent, measurement-time and phase variable.}
+\item{cols}{Columns to be printed. "Main" only prints the dependent,
+measurement-time and phase variable.}
 
 \item{long}{Logical. If TRUE cases are printed in one by a time.}
 
@@ -34,10 +36,7 @@ Print an scdf
 }
 \details{
 Print options for scdf objects could be set globally:
-option(scan.print.cases = "all"),
-option(scan.print.rows = 10),
-option(scan.print.cols = "main"),
-option(scan.print.long = TRUE),
-option(scan.print.digits = 0),
-option(scan.print.scdf.name = FALSE)
+option(scan.print.cases = "all"), option(scan.print.rows = 10),
+option(scan.print.cols = "main"), option(scan.print.long = TRUE),
+option(scan.print.digits = 0), option(scan.print.scdf.name = FALSE)
 }

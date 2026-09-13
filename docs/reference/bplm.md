@@ -178,9 +178,9 @@ An object of class `sc_bplm` with element:
 - `N` - Number of single-cases.
 
 - `formula` - A list containing the fixed and the random formulas of the
-  hplm model.
+  bplm model.
 
-- `mcmglmm` - Object of class MCMglmm.
+- `mcmcglmm` - Object of class MCMCglmm.
 
 - `contrast` - List with contrast definitions.
 
@@ -268,7 +268,7 @@ bplm(exampleAB_50, nitt = 5000)
 #>           SD lower 95% CI upper 95% CI 
 #>        5.293        5.069        5.488 
 
-# Adding a random slope
+# Adding a random level effect
 bplm(exampleAB_50, random_level = TRUE, nitt = 5000)
 #> Bayesian Piecewise Linear Regression
 #> 
@@ -287,13 +287,13 @@ bplm(exampleAB_50, random_level = TRUE, nitt = 5000)
 #> 
 #> G-Structure - Random effects (~us(1 + phaseB):case)
 #> 
-#>               Parameter    SD lower 95% CI upper 95% CI
-#>               Intercept 9.778        8.105       11.397
-#>  Level phase B (phaseB) 3.985        2.900        5.059
+#>  Parameter    SD lower 95% CI upper 95% CI
+#>  Intercept 9.778        8.105       11.397
+#>     phaseB 3.985        2.900        5.059
 #> 
 #> Correlation
-#>                         Parameter Correlation lower 95% CI upper 95% CI
-#>  Intercept:Level phase B (phaseB)       0.086       -0.203        0.498
+#>         Parameter Correlation lower 95% CI upper 95% CI
+#>  Intercept:phaseB       0.086       -0.203        0.498
 #> 
 #> R-Structure - Residuals
 #> 

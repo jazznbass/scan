@@ -116,6 +116,12 @@ Several helper functions can be used inside expressions:
   the `values` variable across all cases and creates a new variable
   `values_ranked`.
 
+- **`moving_mean()` / moving_median()**: calculate a moving average.
+  Smoothing proceeds from the first observation toward the last. Each
+  interior value is replaced by the mean of its current window,
+  including the central value. Previously smoothed values are used in
+  subsequent windows. Boundary values remain unchanged.
+
 ## See also
 
 Other data manipulation functions:
@@ -156,10 +162,10 @@ transform(study, proportion = values/trials, percentage = proportion * 100)
 #> #A single-case data frame with three cases
 #> 
 #>  [case #1]: phase values mt trials proportion percentage
-#>                 A      9  1     20       0.45         45
-#>                 A      9  2     20       0.45         45
-#>                 A     10  3     20        0.5         50
-#>                 A     13  4     20       0.65         65
+#>                 A     13  1     20       0.65         65
+#>                 A     14  2     20        0.7         70
+#>                 A      9  3     20       0.45         45
+#>                 A      7  4     20       0.35         35
 #>                 A     12  5     20        0.6         60
 #>                 B     20  6     20          1        100
 #>                 B     20  7     20          1        100

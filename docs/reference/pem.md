@@ -108,13 +108,16 @@ Juergen Wilbert
 ``` r
 
 ## Calculate the PEM including the Binomial and Chi-square tests for a single-case
-dat <- random_scdf(5, level = 0.5)
-#> Warning: ! The first argument is expected to be a design matrix created by design(). If you want to set n, plea... [truncated]
+dat <- random_scdf(design(n = 5, level = 0.5))
 pem(dat, chi.test = TRUE)
 #> Percent Exceeding the Median
 #> 
-#>       Case  PEM positives total  binom.p  Chi DF        p
-#>  [case #1] 93.3        14    15 0.000488 11.3  1 0.000789
+#>       Case  PEM positives total  binom.p   Chi DF        p
+#>  [case #1] 93.3        14    15 0.000488 11.27  1 0.000789
+#>  [case #2] 93.3        14    15 0.000488 11.27  1 0.000789
+#>  [case #3] 93.3        14    15 0.000488 11.27  1 0.000789
+#>  [case #4] 86.7        13    15 0.003693  8.07  1 0.004509
+#>  [case #5] 80.0        12    15 0.017578  5.40  1 0.020137
 #> 
 #> Alternative hypothesis: true probability > 50%
 ```

@@ -84,7 +84,10 @@ export(
 
   Maximal lag of autoregression. Modelled based on the
   Autoregressive-Moving Average (ARMA) function. When AR is set, the
-  family argument must be set to `family = "gaussian"`.
+  family argument must be set to `family = "gaussian"`. The
+  autocorrelation is modelled along the measurement-time variable, so
+  its values must be whole numbers and unique within a case. Otherwise a
+  warning is given and `AR` is set to `0`.
 
 - model:
 
@@ -241,14 +244,42 @@ An object of class `sc_plm`.
 
   Distribution family from function call (see `Arguments` above).
 
+- contrast:
+
+  List with the level and slope contrast definitions.
+
+- var_trials:
+
+  Number of trials from function call (see `Arguments` above), only for
+  binomial regressions.
+
+- dvar_percentage:
+
+  Logical from function call (see `Arguments` above), only for binomial
+  regressions.
+
 - full.model:
 
   Full regression model list from the gls or glm function.
 
+- data:
+
+  The data the model was fitted to, including the dummy variables for
+  level and slope effects. For a binomial regression with
+  `dvar_percentage = FALSE` the dependent variable holds the proportions
+  that were modelled, not the counts that were passed in.
+
 ## Details
 
 The function uses the `glm` function of the stats package or the `gls`
-function of the nlme package (for auto-regression models).
+function of the nlme package (for auto-regression models). For `AR > 0`
+the model is estimated with generalized least squares. The F test, R
+squared and the delta R squares are then computed in the metric of the
+dependent variable, using the residuals of the fitted model. They are
+descriptive in that case: the sums of squares do not decompose exactly,
+and the F statistic is not exactly F distributed. With `AR > 0`
+individual delta R squares can become negative, because the sums of
+squares do not decompose exactly in this metric.
 
 ## Functions
 
@@ -302,13 +333,13 @@ plm(dat, AR = 3)
 #> Fitted a gaussian distribution.
 #> Autocorrelated residuals up to lag 3 were modeled
 #> 
-#> F(3, 26) = 47.38; p = 0.000; R² = 0.845; Adjusted R² = 0.828; AIC = NA
+#> F(3, 26) = 47.38; p = 0.000; R² = 0.845; Adjusted R² = 0.828; AIC = 185.8468
 #> 
 #>                             B LL-CI95% UL-CI95%    SE      t     p delta R²
 #> Intercept              53.068   48.188   57.948 2.490 21.315 0.000         
 #> Trend (mt)             -0.166   -1.032    0.701 0.442 -0.374 0.711   -0.001
 #> Level phase B (phaseB) 16.266   10.061   22.470 3.166  5.138 0.000    0.069
-#> Slope phase B (interB)  0.913   -0.045    1.871 0.489  1.869 0.073    0.016
+#> Slope phase B (interB)  0.913   -0.045    1.871 0.489  1.869 0.073    0.018
 #> 
 #> Autocorrelations of the residuals
 #>  lag    cr

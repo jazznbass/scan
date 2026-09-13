@@ -222,28 +222,29 @@ Juergen Wibert
 #> 
 #> Method: sort 
 #> 
-#> PAND = 91.8%
-#> Φ =  0.836  ; Φ² =  0.699 
+#> Expected decrease of phase B scores
+#> PAND = 95.9%
+#> Φ =  0.918  ; Φ² =  0.843 
 #> 
 #> 49 measurements (23 Phase A, 26 Phase B) in 3 cases
-#> Overlapping data: n = 4 ; percentage = 8.2 
+#> Overlapping data: n = 2 ; percentage = 4.1 
 #> 
 #> 2 x 2 Matrix of percentages
 #>          A    B total
-#> A     42.9  4.1  46.9
-#> B      4.1 49.0  53.1
+#> A     44.9  2.0  46.9
+#> B      2.0 51.0  53.1
 #> total 46.9 53.1 100.0
 #> 
 #> 2 x 2 Matrix of counts
 #>        A  B total
-#> A     21  2    23
-#> B      2 24    26
+#> A     22  1    23
+#> B      1 25    26
 #> total 23 26    49
 #> 
 #> 
 #> Chi-Squared test:
-#> X² = 34.256, df = 1, p = 0.000 
+#> X² = 41.299, df = 1, p = 0.000 
 #> 
 #> Fisher exact test:
-#> Odds ratio = 99.881, p = 0.000 
+#> Odds ratio = 333.881, p = 0.000 
 ```

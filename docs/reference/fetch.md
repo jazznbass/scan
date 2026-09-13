@@ -115,25 +115,25 @@ fetch(model3, what = "model") |> summary()
 #>  Thinning interval  = 10
 #>  Sample size  = 200 
 #> 
-#>  DIC: 8574.971 
+#>  DIC: 8575.066 
 #> 
 #>  G-structure:  ~case
 #> 
 #>      post.mean l-95% CI u-95% CI eff.samp
-#> case     104.3    69.03    143.1    273.2
+#> case     104.8    62.98    156.8    165.4
 #> 
 #>  R-structure:  ~units
 #> 
 #>       post.mean l-95% CI u-95% CI eff.samp
-#> units     27.97    26.17    29.92      200
+#> units        28    26.12    30.21    134.9
 #> 
 #>  Location effects: values ~ 1 + mt + phaseB + interB 
 #> 
 #>             post.mean l-95% CI u-95% CI eff.samp  pMCMC   
-#> (Intercept)   48.5216  45.0742  51.4028    243.6 <0.005 **
-#> mt             0.5846   0.3416   0.8156    200.0 <0.005 **
-#> phaseB        14.0314  12.7356  15.1772    200.0 <0.005 **
-#> interB         0.8952   0.6623   1.1684    200.0 <0.005 **
+#> (Intercept)   48.4036  45.4214  50.5330    142.9 <0.005 **
+#> mt             0.5656   0.3244   0.7921    200.0 <0.005 **
+#> phaseB        14.0815  12.8889  15.3085    200.0 <0.005 **
+#> interB         0.9166   0.6692   1.1463    200.0 <0.005 **
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```

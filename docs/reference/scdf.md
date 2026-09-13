@@ -93,11 +93,9 @@ phase A starting at measurement time 1 and phase B starting at the
 measurement time indicated by `B_start`. If `phase_starts` is provided,
 the phase design is constructed based on the measurement times indicated
 in the vector. If `phase_design` is provided, it is used directly to
-define the phase design. If multiple of these options are provided, the
-priority order is: `phase_design`, `phase_starts`, `B_start`, phase
-variable in data frame, names of dependent variable.
-
-If none of these options are provided, an error is raised.
+define the phase design. Defining the phase design in more than one way
+raises an error. And if none of these options are provided, an error is
+raised.
 
 The function can be used to create single-case data frames for multiple
 cases separately, which can then be combined into a list for

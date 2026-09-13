@@ -6,7 +6,7 @@ single-case data.
 ## Usage
 
 ``` r
-smd(data, dvar, pvar, mvar, phases = c(1, 2))
+smd(data, dvar, pvar, phases = c(1, 2))
 ```
 
 ## Arguments
@@ -26,11 +26,6 @@ smd(data, dvar, pvar, mvar, phases = c(1, 2))
 
   Character string with the name of the phase variable. Defaults to the
   attributes in the scdf file.
-
-- mvar:
-
-  Character string with the name of the measurement time variable.
-  Defaults to the attributes in the scdf file.
 
 - phases:
 

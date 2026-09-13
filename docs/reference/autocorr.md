@@ -12,7 +12,16 @@ print(x, digits = "auto", ...)
 # S3 method for class 'sc_ac'
 export(object, caption = NA, footnote = NA, filename = NA, round = 3, ...)
 
-autocorr(data, dvar, pvar, mvar, lag_max = 3, lag.max, ...)
+autocorr(
+  data,
+  dvar,
+  pvar,
+  mvar,
+  lag_max = 3,
+  na.action = na.fail,
+  lag.max,
+  ...
+)
 ```
 
 ## Arguments
@@ -78,6 +87,17 @@ autocorr(data, dvar, pvar, mvar, lag_max = 3, lag.max, ...)
 - lag_max, lag.max:
 
   The lag up to which autocorrelations will be computed.
+
+- na.action:
+
+  How to handle missing values, passed to
+  [`acf()`](https://rdrr.io/r/stats/acf.html). The default
+  [`na.fail()`](https://rdrr.io/r/stats/na.fail.html) stops with an
+  informative message; use
+  [`na.pass()`](https://rdrr.io/r/stats/na.fail.html) to compute
+  autocorrelations from the incomplete series. Note that
+  [`acf()`](https://rdrr.io/r/stats/acf.html) returns `NA` for lags it
+  cannot estimate from the available pairs.
 
 ## Value
 

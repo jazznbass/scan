@@ -51,6 +51,7 @@
 
 ### Effect sizes and overlap indices
 
+- `describe()` handles phases without observed values. Minimum and maximum came back as `Inf` and `-Inf` with a warning, the mean as `NaN`, and the trend stopped the whole call with `0 (non-NA) cases` from `lm.fit`, so a single case with an unmeasured phase made the descriptives unavailable for the entire study. The number of measurements and the number of missing values are still reported, every other statistic is `NA`, and the trend is computed where at least two values were observed. The trend no longer depends on the global `na.action` setting either.
 - Preserved the phase selection before missing values are removed in `pnd()`, `pem()`, `nap()`, `pand()`, `ird()`, `corrected_tau()`, `cdc()` and `rand_test()`, and reject or skip cases without observed values in a selected phase.
 - Handled empty phases in PEM and NAP, excluded unusable cases from PAND and IRD with correct case counts, and handled insufficient data in `corrected_tau()` and `cdc()`. CDC overall results remain missing when any case is unevaluable.
 - Fixed phase selection and missing-data handling in `pet()`. Two baseline observations allow PET and its binomial test, while the PET confidence interval requires at least three.
@@ -81,6 +82,7 @@
 
 ### Messages and printed output
 
+- `print()` for an scdf works with `cols = "main"`. The names of the dependent, phase and measurement-time variable were read with `attr()`, but an scdf keeps them inside a single `scdf` attribute, so all three came back `NULL`, every column was dropped, and the call stopped with `'names' attribute [1] must be the same length as the vector [0]`. The documented setting `options(scan.print.cols = "main")` broke every scdf print in the same way. Selecting a single column, as in `cols = "values"`, reduced each case to a vector and stopped with `incorrect number of dimensions`.
 - Long messages and warnings are truncated at a word boundary instead of in the middle of a word.
 - The note on the variables used in an analysis no longer fails when an object does not carry all three variable attributes, and reports only the attributes that are set.
 - `export()` for `hplm()` and `bplm()` uses a footnote passed through the `footnote` argument. It was replaced by the automatically generated footnote without notice. `export()` for `plm()` and `mplm()` was already correct.

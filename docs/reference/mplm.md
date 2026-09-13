@@ -108,7 +108,10 @@ export(
   the phase name (e.g., `interB`) adresses the slope effect based on the
   method provide in the model argument (e.g., `"B&L-B"`). The formula
   can be changed for example to include further variables into the
-  regression model.
+  regression model. The response of the model is
+  [`cbind()`](https://rdrr.io/r/base/cbind.html) of the variables given
+  in `dvar`. A custom formula has to use the same form, for example
+  `cbind(var1, var2) ~ 1 + mt + phaseB`.
 
 - update:
 
@@ -226,7 +229,8 @@ print(res)
 #> Level phase B (phaseB) 0.000
 #> Slope phase B (interB) 0.287
 #> 
-#> Formula: y ~ 1 + mt + phaseB + interB
+#> Formula: cbind(academic_engagement, disruptive_behavior) ~ 1 + mt + phaseB + 
+#>     interB
 ## also report standardized coefficients:
 print(res, std = TRUE)
 #> Multivariate piecewise linear model
@@ -247,5 +251,6 @@ print(res, std = TRUE)
 #> Slope phase B (interB) 0.287
 #> 
 #> Coefficients are standardized
-#> Formula: y ~ 1 + mt + phaseB + interB
+#> Formula: cbind(academic_engagement, disruptive_behavior) ~ 1 + mt + phaseB + 
+#>     interB
 ```

@@ -61,8 +61,7 @@ anova(mod1, mod2)
 ## For glm models with family = "poisson"
 mod0 <- plm(example_A24, formula = injuries ~ 1, family = "poisson")
 mod1 <- plm(example_A24, trend = FALSE, family = "poisson")
-anova(mod0, mod1, mod2)
-#> Warning: models with response ‘"values"’ removed because response differs from model 1
+anova(mod0, mod1)
 #> Analysis of Deviance Table
 #> 
 #> Model 1: injuries ~ 1
@@ -122,9 +121,11 @@ mod2 <- mplm(
 anova(mod0, mod1, mod2)
 #> Analysis of Variance Table
 #> 
-#> Model 1: y ~ 1
-#> Model 2: y ~ 1 + phaseB + interB
-#> Model 3: y ~ 1 + mt + phaseB + interB
+#> Model 1: cbind(academic_engagement, disruptive_behavior) ~ 1
+#> Model 2: cbind(academic_engagement, disruptive_behavior) ~ 1 + phaseB + 
+#>     interB
+#> Model 3: cbind(academic_engagement, disruptive_behavior) ~ 1 + mt + phaseB + 
+#>     interB
 #>   Res.Df Df Gen.var.  Pillai approx F num Df den Df    Pr(>F)    
 #> 1     82     0.52962                                             
 #> 2     80 -2  0.44785 0.33250   7.8764      4    158 8.167e-06 ***

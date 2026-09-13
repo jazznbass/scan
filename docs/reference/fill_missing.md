@@ -1,17 +1,16 @@
 # Replacing missing measurement points in single-case data
 
-The `fillmissing()` function replaces missing measurements in
-single-case data. It linearly interpolates missing data points between
-two existing measurements for all variables except the measurement time
-and phase. The measurement time variable is filled with the missing time
-points. The phase variable is copied from the previous measurement time
-point. If mt values are missing (`NA`), they are also interpolated if
-`interpolate_na = TRUE`.
+The `fill_missing()` function replaces missing values in single-case
+data. It linearly interpolates missing values of all variables except
+the measurement time and the phase variable. Measurement times that are
+not part of the data are added and the phase variable is copied from the
+previous measurement time point. If mt values are missing (`NA`), they
+are also interpolated if `interpolate_na = TRUE`.
 
 ## Usage
 
 ``` r
-fill_missing(data, dvar, mvar, pvar, interpolate_na = TRUE)
+fill_missing(data, dvar, mvar, pvar, interpolate_na = TRUE, mark = FALSE)
 ```
 
 ## Arguments
@@ -42,6 +41,13 @@ fill_missing(data, dvar, mvar, pvar, interpolate_na = TRUE)
   If set `TRUE`, `NA` values in the measurement time variable are also
   interpolated. Default is `TRUE`.
 
+- mark:
+
+  If set `TRUE`, a logical variable `interpolated` is added to each case
+  which is `TRUE` for every measurement that contains at least one
+  interpolated value. Default is `FALSE`. The function stops if a
+  variable of that name already exists.
+
 ## Value
 
 A single-case data frame with interpolated missing data points.
@@ -53,16 +59,30 @@ with missing measurement points. It performs linear interpolation to
 estimate the missing values based on the existing data points. The
 function iterates through each single-case in the provided single-case
 data frame (scdf) and identifies gaps in the measurement time variable.
-For each gap, it calculates the step size for linear interpolation and
-fills in the missing values for all target variables (i.e., all
-variables except the measurement time and phase). The interpolated data
-points are then added to the single-case data frame, and the final
-result is sorted by measurement time. This function is particularly
-useful for preparing single-case data for further analysis, such as
-calculating overlap indices or conducting randomization tests, where
-continuous measurement times are required. It ensures that the data is
-complete by filling in the missing measurement points in a systematic
-manner.
+For each gap, a new measurement is added which carries the phase of the
+preceding observation. Afterwards, all missing values are interpolated.
+This covers both the added measurement times and `NA` values that were
+already present in the data. The final result is sorted by measurement
+time. This function is particularly useful for preparing single-case
+data for further analysis, such as calculating overlap indices or
+conducting randomization tests, where continuous measurement times are
+required.
+
+Only numeric variables are interpolated; other variables remain `NA` in
+added measurement times. Values at the very beginning or the very end of
+a series cannot be interpolated and remain `NA`. If measurement times
+remain unknown after interpolation, the case is returned unchanged with
+a warning, because filling gaps would replace these observations with
+interpolated values.
+
+Interpolation runs across the whole series and does not take the phase
+structure into account. This is deliberate: interpolating within phases
+would impose the very level difference that the analysis sets out to
+estimate. Note that the resulting values are conservative with respect
+to level effects, and that a gap spanning a phase change produces a run
+of interpolated values that rises or falls towards the level of the
+adjacent phase. With large gaps this can affect trend based measures.
+Use `mark = TRUE` to keep track of which values were interpolated.
 
 ## See also
 
@@ -174,5 +194,31 @@ study2
 #>                B     62 13 │                   B     62 13 │
 #>                B  60.55 14 │                   B  60.55 14 │
 #>                B  57.22 15 │                   B  57.22 15 │
+#> # ... up to five more rows
+
+## Missing values in the dependent variable, marked in the output
+case <- scdf(
+  c(3, 6, 2, 4, 3, 5, 2, NA, 3, 2, 6, 7, 5, 8, 6, NA, 4, 8, 5, 6),
+  phase_design = c(A = 10, B = 10)
+)
+fill_missing(case, mark = TRUE)
+#> #A single-case data frame with one case
+#> 
+#>  [case #1]: values mt phase interpolated
+#>                  3  1     A        FALSE
+#>                  6  2     A        FALSE
+#>                  2  3     A        FALSE
+#>                  4  4     A        FALSE
+#>                  3  5     A        FALSE
+#>                  5  6     A        FALSE
+#>                  2  7     A        FALSE
+#>                2.5  8     A         TRUE
+#>                  3  9     A        FALSE
+#>                  2 10     A        FALSE
+#>                  6 11     B        FALSE
+#>                  7 12     B        FALSE
+#>                  5 13     B        FALSE
+#>                  8 14     B        FALSE
+#>                  6 15     B        FALSE
 #> # ... up to five more rows
 ```

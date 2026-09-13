@@ -60,7 +60,7 @@ trend(
 
   A string or a list of (named) strings each depicting one regression
   model. This is a formula expression of the standard R class. The
-  parameters of the model are `values`, `mt` and `phase`.
+  parameters of the model are `values` and `mt`.
 
 ## Value
 
@@ -118,12 +118,12 @@ trend(matthea)
 #> Trend for each phase
 #> 
 #>               Intercept      B   Beta
-#> Linear.ALL       38.979  4.359  0.971
-#> Linear.A         52.090 -0.620 -0.578
-#> Linear.B         54.536  5.100  0.981
-#> Quadratic.ALL    52.497  0.226  0.990
-#> Quadratic.A      51.719 -0.145 -0.563
-#> Quadratic.B      66.393  0.352  0.983
+#> Linear.ALL       41.820  4.077  0.964
+#> Linear.A         54.085 -0.207 -0.056
+#> Linear.B         55.277  4.891  0.982
+#> Quadratic.ALL    54.644  0.210  0.976
+#> Quadratic.A      53.733 -0.010 -0.011
+#> Quadratic.B      67.383  0.327  0.953
 #> 
 #> Note. Measurement-times start at 0 for each phase
 
@@ -140,19 +140,19 @@ trend(
 )
 #> Trend for each phase
 #> 
-#>               Intercept      B  Beta
-#> Linear.ALL       40.300  2.781 0.909
-#> Linear.A         49.455  1.125 0.376
-#> Linear.B         46.354  3.588 0.918
-#> Quadratic.ALL    50.513  0.132 0.935
-#> Quadratic.A      51.488  0.122 0.249
-#> Quadratic.B      57.271  0.215 0.906
-#> Cubic.ALL        40.300  2.781 0.909
-#> Cubic.A          49.455  1.125 0.376
-#> Cubic.B          46.354  3.588 0.918
-#> Log Time.ALL     32.875 17.302 0.777
-#> Log Time.A       49.518  3.458 0.465
-#> Log Time.B       39.477 19.128 0.856
+#>               Intercept      B   Beta
+#> Linear.ALL       41.892  2.576  0.945
+#> Linear.A         56.248 -2.263 -0.932
+#> Linear.B         53.670  2.720  0.939
+#> Quadratic.ALL    52.077  0.117  0.932
+#> Quadratic.A      53.533 -0.370 -0.933
+#> Quadratic.B      62.523  0.156  0.887
+#> Cubic.ALL        41.892  2.576  0.945
+#> Cubic.A          56.248 -2.263 -0.932
+#> Cubic.B          53.670  2.720  0.939
+#> Log Time.ALL     34.174 16.422  0.828
+#> Log Time.A       54.589 -5.358 -0.887
+#> Log Time.B       47.218 15.167  0.916
 #> 
 #> Note. Measurement-times start at 1 for each phase
 ```

@@ -15,7 +15,7 @@ test_that("hplm", {
     method = "REML",
     unequal_variances = TRUE,
     random_trend = TRUE,
-    control = lmeControl(msMaxIter = 50, apVar = FALSE, returnObject = TRUE),
+    control = nlme::lmeControl(msMaxIter = 50, apVar = FALSE, returnObject = TRUE),
     ar = 1
   )
   values <- round(sum(residuals(result$hplm)^2))

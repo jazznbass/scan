@@ -247,18 +247,18 @@ rand_test(scdf)
 #> 
 #> Distribution based on a random sample of all 25937424601 possible combinations.
 #> n   =  500 
-#> M   =  0.3085513 
-#> SD  =  0.06906004 
-#> Min =  0.1427584 
-#> Max =  0.5118563 
+#> M   =  0.3097159 
+#> SD  =  0.06831258 
+#> Min =  0.1211692 
+#> Max =  0.5219912 
 #> 
 #> Probability of an equal or higher value than the observed statistic:
 #> p   <  0.002 
 #> 
-#> Shapiro-Wilk Normality Test: W = 0.994; p = 0.037  (Hypothesis of normality rejected)
+#> Shapiro-Wilk Normality Test: W = 0.998; p = 0.746  (Hypothesis of normality maintained)
 #> 
 #> Probabilty of observed statistic based on the assumption of normality:
-#> z = 6.6515, p = 0.0000 (single sided)
+#> z = 6.7072, p = 0.0000 (single sided)
 rand_test(scdf_est)
 #> Randomization Test
 #> 
@@ -272,16 +272,16 @@ rand_test(scdf_est)
 #> 
 #> Distribution based on a random sample of all 25937424601 possible combinations.
 #> n   =  500 
-#> M   =  0.269875 
-#> SD  =  0.07922479 
-#> Min =  0.08001321 
+#> M   =  0.2717592 
+#> SD  =  0.08040287 
+#> Min =  0.0733932 
 #> Max =  0.5456197 
 #> 
 #> Probability of an equal or higher value than the observed statistic:
 #> p   <  0.002 
 #> 
-#> Shapiro-Wilk Normality Test: W = 0.992; p = 0.013  (Hypothesis of normality rejected)
+#> Shapiro-Wilk Normality Test: W = 0.991; p = 0.004  (Hypothesis of normality rejected)
 #> 
 #> Probabilty of observed statistic based on the assumption of normality:
-#> z = 5.8259, p = 0.0000 (single sided)
+#> z = 5.7171, p = 0.0000 (single sided)
 ```

@@ -126,7 +126,6 @@ cdc(
 | `decreasing` | Logical argument from function call (see Arguments above). |
 | `conservative` | Numeric argument from function call (see Arguments above). |
 | `case_names` | Assigned name of single-case. |
-| `phases` | \- |
 
 ## Functions
 

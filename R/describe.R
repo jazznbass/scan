@@ -80,15 +80,24 @@ describe <- function(data, dvar, pvar, mvar) {
       y <- data[[dvar]][phases$start[i]:phases$stop[i]]
 
       phase <- phases$values[i]
+      n_obs <- sum(!is.na(y))
+      
       desc[case, paste0("n.", phase)] <- length(y)
-      desc[case, paste0("mis.", phase)] <- sum(is.na(y), na.rm = TRUE)
+      desc[case, paste0("mis.", phase)] <- sum(is.na(y))
+      
+      if (n_obs == 0) next
+      
       desc[case, paste0("m.", phase)] <- mean(y, na.rm = TRUE)
       desc[case, paste0("md.", phase)] <- median(y, na.rm = TRUE)
       desc[case, paste0("sd.", phase)] <- sd(y, na.rm = TRUE)
       desc[case, paste0("mad.", phase)] <- mad(y, na.rm = TRUE)
       desc[case, paste0("min.", phase)] <- min(y, na.rm = TRUE)
       desc[case, paste0("max.", phase)] <- max(y, na.rm = TRUE)
-      desc[case, paste0("trend.", phase)] <- coef(lm(y ~ I(x - x[1] + 1)))[2]
+      
+      if (n_obs >= 2) {
+        desc[case, paste0("trend.", phase)] <- 
+          coef(lm(y ~ I(x - x[1] + 1), na.action = na.omit))[2]
+      }
     }
   }
 

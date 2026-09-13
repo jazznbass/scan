@@ -177,7 +177,10 @@ coef(object, casewise = FALSE, ...)
 - ar:
 
   Maximal lag of autoregression. Modelled based on the
-  Autoregressive-Moving Average (ARMA) function.
+  Autoregressive-Moving Average (ARMA) function. The autocorrelation is
+  modelled along the measurement-time variable, so its values must be
+  whole numbers and unique within a case. Otherwise a warning is given
+  and `ar` is set to `0`.
 
 - unequal_variances:
 
@@ -192,7 +195,7 @@ coef(object, casewise = FALSE, ...)
 
   A data frame providing additional variables at Level 2. The scdf File
   has to have names for all cases and the Level 2 data frame has to have
-  a column named 'cases' with the names of the cases the Level 2
+  a column named 'case' with the names of the cases the Level 2
   variables belong to.
 
 - ...:
@@ -304,6 +307,12 @@ If the `ICC` argument is set to TRUE, the function will calculate the
 intraclass correlation coefficient (ICC) to assess the proportion of
 variance attributable to between-case differences. This provides insight
 into the degree of similarity among observations within the same case.
+The accompanying likelihood ratio test compares a model with a random
+intercept against one without. It tests a variance against zero, that is
+a parameter at the boundary of its parameter space. The test statistic
+then follows a mixture of chi squared distributions rather than the chi
+squared distribution the p value is based on, so the reported p value is
+conservative.
 
 ## See also
 
@@ -366,14 +375,14 @@ Leidig2018 |>
 #> 
 #> Fixed effects (academic_engagement ~ mt + phaseB + gender + migration + ITRF_TOTAL +     phaseB:ITRF_TOTAL)
 #> 
-#>                                        B    SE   df      t     p
-#> Intercept                          3.751 0.262 2376 14.302 0.000
-#> Trend (mt)                         0.004 0.001 2376  6.019 0.000
-#> Level phase B (phaseB)             0.667 0.098 2376  6.808 0.000
-#> gender                            -0.020 0.301   31 -0.067 0.947
-#> migration                         -0.300 0.193   31 -1.556 0.130
-#> ITRF_TOTAL                        -0.035 0.013   31 -2.674 0.012
-#> Level phase B (phaseB):ITRF_TOTAL -0.001 0.005 2376 -0.279 0.780
+#>                             B    SE   df      t     p
+#> Intercept               3.751 0.262 2376 14.302 0.000
+#> Trend (mt)              0.004 0.001 2376  6.019 0.000
+#> Level phase B (phaseB)  0.667 0.098 2376  6.808 0.000
+#> gender                 -0.020 0.301   31 -0.067 0.947
+#> migration              -0.300 0.193   31 -1.556 0.130
+#> ITRF_TOTAL             -0.035 0.013   31 -2.674 0.012
+#> phaseB:ITRF_TOTAL      -0.001 0.005 2376 -0.279 0.780
 #> 
 #> Random effects (~1 | case)
 #> 

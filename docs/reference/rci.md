@@ -96,9 +96,9 @@ rci(byHeart2011[1], graph = TRUE, rel = 0.8)
 #> Reliability of measurements =  0.8 
 #> 
 #> Descriptives:
-#>         n mean    SD    SE
-#> A-Phase 5  0.4 0.548 0.245
-#> B-Phase 5 12.8 5.634 2.520
+#>          n mean    SD    SE
+#> A-Phase  5  0.4 0.548 0.245
+#> B-Phase 15 12.8 5.634 2.520
 #> 
 #> 95 % Confidence Intervals:
 #>          Lower  Upper

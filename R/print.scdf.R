@@ -1,19 +1,18 @@
 #' Print an scdf
 #'
 #' @param x An scdf object
-#' @param cases Number of cases to be printed. "fit" fits the number to the current screen width.
-#' @param rows Number of rows to be printed. 
-#' @param cols Columns to be printed. "Main" only prints the dependent, measurement-time and phase variable.
+#' @param cases Number of cases to be printed. "fit" fits the number to the
+#'   current screen width.
+#' @param rows Number of rows to be printed.
+#' @param cols Columns to be printed. "Main" only prints the dependent,
+#'   measurement-time and phase variable.
 #' @param long Logical. If TRUE cases are printed in one by a time.
 #' @param digits Number of digits.
-#' @param ... Further arguments passed to the print function. 
+#' @param ... Further arguments passed to the print function.
 #' @details Print options for scdf objects could be set globally:
-#' option(scan.print.cases = "all"), 
-#' option(scan.print.rows = 10), 
-#' option(scan.print.cols = "main"),
-#' option(scan.print.long = TRUE),
-#' option(scan.print.digits = 0),
-#' option(scan.print.scdf.name = FALSE)
+#'   option(scan.print.cases = "all"), option(scan.print.rows = 10),
+#'   option(scan.print.cols = "main"), option(scan.print.long = TRUE),
+#'   option(scan.print.digits = 0), option(scan.print.scdf.name = FALSE)
 #' @export
 print.scdf <- function(x, 
                        cases  = getOption("scan.print.cases"), 
@@ -30,16 +29,21 @@ print.scdf <- function(x,
   names(x) <- revise_names(x)
 
   if (identical(cases, "all")) cases <- N
-  if (is.numeric(cases) && cases > N) cases <- N
+  if (is.numeric(cases)) {
+    if (cases < 1) abort("Argument cases must be one or more (is ", cases, ").")
+    if (cases > N) cases <- N
+  }
   if (N == 1) cat("#A single-case data frame with one case\n\n")
   if (N > 1)  
     cat("#A single-case data frame with", number_word(N), "cases\n\n")
   
   if (identical(cols, "main")) {
-    cols <- c(attr(x, opt("dv")), attr(x, opt("phase")), attr(x, opt("mt")))
+    cols <- c(dv(x), phase(x), mt(x))
   }
   
-  if (!identical(cols, "all")) for(i in 1:N) x[[i]] <- x[[i]][, cols]
+  if (!identical(cols, "all")) {
+    for (i in 1:N) x[[i]] <- x[[i]][, cols, drop = FALSE]
+  }
   
   if(getOption("scan.print.scdf.name")) {
     for(i in 1:N) {
@@ -76,8 +80,7 @@ print.scdf <- function(x,
   if (rows == "all") long <- TRUE
   if (!long) {
     if (max_row < rows) rows <- max_row
-    out <- lapply(x[1:cases], function(x) x[1:rows, ])
-    #if (cases > 1) out <- lapply(out, function(x) {x$"|" <- "|"; x})
+    out <- lapply(x[1:cases], function(x) x[1:rows, , drop = FALSE])
     if (cases > 1) out <- lapply(out, function(x) {x[[v_bar]] <- v_bar; x})
 
     names <- lapply(out, names)

@@ -57,9 +57,8 @@ summary.scdf <- function(object, all_cases = FALSE, ...) {
   names[id_phase] <- paste(names[id_phase], "<phase variable>")
   names[id_mt] <- paste(names[id_mt], "<measurement-time variable>")
   names[id_dv] <- paste(names[id_dv], "<dependent variable>")
-  cat(names[c(
-    id_dv, id_phase, id_mt, (1:length(names))[-c(id_dv, id_phase, id_mt)]
-  )], sep = "\n")
+  id_main <- c(id_dv, id_phase, id_mt)
+  cat(names[c(id_main, setdiff(seq_along(names), id_main))], sep = "\n")
   cat("\n")
   
   

@@ -90,6 +90,8 @@ study <- c(
 #> 
 #> Lisa (Turkish): 1 2 6 7
 plot(study)
-#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
-#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of sc... [truncated]
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of scan.
+#>   Please use function 'scplot' from the [...]
+#> Warning: ! This function is deprecated. It might be dropped without any further notice in a future update of scan.
+#>   Please use function 'scplot' from the [...]
 ```

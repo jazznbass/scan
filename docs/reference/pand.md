@@ -232,28 +232,29 @@ pand(cubs, decreasing = TRUE)
 #> 
 #> Method: sort 
 #> 
-#> PAND = 63.6%
-#> Φ =  0.214  ; Φ² =  0.046 
+#> Expected decrease of phase B scores
+#> PAND = 81.8%
+#> Φ =  0.607  ; Φ² =  0.369 
 #> 
 #> 11 measurements (4 Phase A, 7 Phase B) in 1 cases
-#> Overlapping data: n = 4 ; percentage = 36.4 
+#> Overlapping data: n = 2 ; percentage = 18.2 
 #> 
 #> 2 x 2 Matrix of percentages
 #>          A    B total
-#> A     18.2 18.2  36.4
-#> B     18.2 45.5  63.6
+#> A     27.3  9.1  36.4
+#> B      9.1 54.5  63.6
 #> total 36.4 63.6 100.0
 #> 
 #> 2 x 2 Matrix of counts
 #>       A B total
-#> A     2 2     4
-#> B     2 5     7
+#> A     3 1     4
+#> B     1 6     7
 #> total 4 7    11
 #> 
 #> 
 #> Chi-Squared test:
-#> X² = 0.505, df = 1, p = 0.477 
+#> X² = 4.055, df = 1, p = 0.044 
 #> 
 #> Fisher exact test:
-#> Odds ratio = 2.288, p = 0.576 
+#> Odds ratio = 12.230, p = 0.088 
 ```

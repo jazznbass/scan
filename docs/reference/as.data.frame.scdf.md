@@ -164,44 +164,36 @@ names(Leidig2018_long)
 #> [13] "SDQ_EXTERNALIZING"     "SDQ_INTERNALIZING"     "ITRF_TOTAL"           
 #> [16] "ITRF_ACADEMIC"         "ITRF_BEHAVIOR"        
 summary(Leidig2018_long)
-#>       case      academic_engagement       mt           classID         
-#>  1a1    : 108   Min.   :0.0         Min.   :  1.00   Length:3780       
-#>  1a2    : 108   1st Qu.:3.0         1st Qu.: 27.75   Class :character  
-#>  1a3    : 108   Median :4.0         Median : 54.50   Mode  :character  
-#>  1a4    : 108   Mean   :3.7         Mean   : 54.50                     
-#>  1a5    : 108   3rd Qu.:5.0         3rd Qu.: 81.25                     
-#>  2a1    : 108   Max.   :5.0         Max.   :108.00                     
-#>  (Other):3132   NA's   :1366                                           
-#>     weekday      disruptive_behavior phase       class          
-#>  Min.   :1.000   Min.   :0.0000      A: 730   Length:3780       
-#>  1st Qu.:2.000   1st Qu.:0.0000      B:3050   Class :character  
-#>  Median :3.000   Median :0.0000               Mode  :character  
-#>  Mean   :3.028   Mean   :0.6192                                 
-#>  3rd Qu.:4.000   3rd Qu.:1.0000                                 
-#>  Max.   :5.000   Max.   :4.0000                                 
-#>                  NA's   :1393                                   
-#>      gender         migration      first_language_german   SDQ_TOTAL    
-#>  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000        Min.   : 4.00  
-#>  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000        1st Qu.: 8.00  
-#>  Median :0.0000   Median :1.0000   Median :1.0000        Median :11.00  
-#>  Mean   :0.1429   Mean   :0.5429   Mean   :0.7429        Mean   :11.46  
-#>  3rd Qu.:0.0000   3rd Qu.:1.0000   3rd Qu.:1.0000        3rd Qu.:14.00  
-#>  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000        Max.   :22.00  
-#>                                                                         
-#>  SDQ_EXTERNALIZING SDQ_INTERNALIZING   ITRF_TOTAL   ITRF_ACADEMIC   
-#>  Min.   : 3.000    Min.   : 0.0      Min.   : 3.0   Min.   : 0.000  
-#>  1st Qu.: 6.000    1st Qu.: 1.0      1st Qu.:12.0   1st Qu.: 2.000  
-#>  Median : 9.000    Median : 2.0      Median :16.0   Median : 9.000  
-#>  Mean   : 8.857    Mean   : 2.6      Mean   :17.4   Mean   : 9.286  
-#>  3rd Qu.:11.000    3rd Qu.: 3.0      3rd Qu.:23.0   3rd Qu.:16.000  
-#>  Max.   :18.000    Max.   :10.0      Max.   :35.0   Max.   :24.000  
-#>                                                                     
-#>  ITRF_BEHAVIOR   
-#>  Min.   : 0.000  
-#>  1st Qu.: 4.000  
-#>  Median : 7.000  
-#>  Mean   : 8.114  
-#>  3rd Qu.:11.000  
-#>  Max.   :20.000  
-#>                  
+#>       case      academic_engagement       mt              classID    
+#>  1a1    : 108   Min.   :0.0         Min.   :  1.00   Length   :3780  
+#>  1a2    : 108   1st Qu.:3.0         1st Qu.: 27.75   N.unique :   7  
+#>  1a3    : 108   Median :4.0         Median : 54.50   N.blank  :   0  
+#>  1a4    : 108   Mean   :3.7         Mean   : 54.50   Min.nchar:   2  
+#>  1a5    : 108   3rd Qu.:5.0         3rd Qu.: 81.25   Max.nchar:   2  
+#>  2a1    : 108   Max.   :5.0         Max.   :108.00                   
+#>  (Other):3132   NAs    :1366                                         
+#>     weekday      disruptive_behavior phase          class          gender      
+#>  Min.   :1.000   Min.   :0.0000      A: 730   Length   :3780   Min.   :0.0000  
+#>  1st Qu.:2.000   1st Qu.:0.0000      B:3050   N.unique :   7   1st Qu.:0.0000  
+#>  Median :3.000   Median :0.0000               N.blank  :   0   Median :0.0000  
+#>  Mean   :3.028   Mean   :0.6192               Min.nchar:   2   Mean   :0.1429  
+#>  3rd Qu.:4.000   3rd Qu.:1.0000               Max.nchar:   2   3rd Qu.:0.0000  
+#>  Max.   :5.000   Max.   :4.0000                                Max.   :1.0000  
+#>                  NAs    :1393                                                  
+#>    migration      first_language_german   SDQ_TOTAL     SDQ_EXTERNALIZING
+#>  Min.   :0.0000   Min.   :0.0000        Min.   : 4.00   Min.   : 3.000   
+#>  1st Qu.:0.0000   1st Qu.:0.0000        1st Qu.: 8.00   1st Qu.: 6.000   
+#>  Median :1.0000   Median :1.0000        Median :11.00   Median : 9.000   
+#>  Mean   :0.5429   Mean   :0.7429        Mean   :11.46   Mean   : 8.857   
+#>  3rd Qu.:1.0000   3rd Qu.:1.0000        3rd Qu.:14.00   3rd Qu.:11.000   
+#>  Max.   :1.0000   Max.   :1.0000        Max.   :22.00   Max.   :18.000   
+#>                                                                          
+#>  SDQ_INTERNALIZING   ITRF_TOTAL   ITRF_ACADEMIC    ITRF_BEHAVIOR   
+#>  Min.   : 0.0      Min.   : 3.0   Min.   : 0.000   Min.   : 0.000  
+#>  1st Qu.: 1.0      1st Qu.:12.0   1st Qu.: 2.000   1st Qu.: 4.000  
+#>  Median : 2.0      Median :16.0   Median : 9.000   Median : 7.000  
+#>  Mean   : 2.6      Mean   :17.4   Mean   : 9.286   Mean   : 8.114  
+#>  3rd Qu.: 3.0      3rd Qu.:23.0   3rd Qu.:16.000   3rd Qu.:11.000  
+#>  Max.   :10.0      Max.   :35.0   Max.   :24.000   Max.   :20.000  
+#>                                                                    
 ```

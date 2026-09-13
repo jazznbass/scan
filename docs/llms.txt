@@ -13,13 +13,13 @@ Analysing methods include
 - randomization tests.
 
 Data preparation functions support outlier detection, handling missing
-values, scaling, and custom transformations.  
+values, scaling, and custom transformations.\
 An export function helps to generate html, word, and latex tables in a
 publication friendly style. A shiny app allows to use scan in a
 graphical userinterface.
 
 More details can be found in the online book ‘Analyzing single-case data
-with R and scan’, Juergen Wilbert (2026)  
+with R and scan’, Juergen Wilbert (2026)\
 <https://jazznbass.github.io/scan-Book/>.
 
 ## Installation

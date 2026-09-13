@@ -1,6 +1,435 @@
 # Changelog
 
+## scan 0.68.3
+
+### Breaking changes
+
+- Removed the `mvar` argument from
+  [`smd()`](https://jazznbass.github.io/scan/reference/smd.md). It had
+  no effect, as standardized mean differences do not use the
+  measurement-time variable.
+- Renamed the
+  [`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md) result
+  fields `cdc_be` and `cdc_b` to `cdc_exc` and `cdc_nb`, the names the
+  help page has always documented.
+- Renamed the `pand(method = "minimum")` result field `perc_overlaps` to
+  `perc_overlap`, to match `method = "sort"` and the documentation.
+- [`scdf()`](https://jazznbass.github.io/scan/reference/scdf.md) rejects
+  a phase design that is defined in more than one way, instead of
+  silently letting one definition win.
+- Regression models across several cases reject cases with differing
+  phase designs and name the case, instead of failing later when the
+  case data are combined.
+- Selecting an unknown case with `$` or `[` raises an error instead of
+  returning an scdf whose case is `NULL`. Such an object looked valid
+  and failed later with an unrelated message.
+- [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) models
+  autocorrelation along the measurement-time variable, as
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md) already
+  did. For cases whose measurement times are not consecutive the results
+  change, because the gaps were previously ignored and the observations
+  treated as equally spaced. Results for consecutive measurement times
+  are unchanged.
+
+### New features
+
+- [`fill_missing()`](https://jazznbass.github.io/scan/reference/fill_missing.md)
+  gained a `mark` argument, adding a logical variable `interpolated`
+  that flags every measurement containing an interpolated value.
+- [`autocorr()`](https://jazznbass.github.io/scan/reference/autocorr.md)
+  gained an `na.action` argument, which allows to compute
+  autocorrelations from incomplete series.
+- [`plm()`](https://jazznbass.github.io/scan/reference/plm.md),
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md),
+  [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md) and
+  [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md) record
+  the names of their level and slope dummy variables as attributes of
+  the returned object. Predictors are renamed for printing by matching
+  these names exactly, so covariates such as `intervention` or
+  `phase_length` are no longer renamed as if they were dummy variables.
+
+### Bug fixes
+
+#### General
+
+- Functions that validate their arguments can be called programmatically
+  again. The argument check looked up the function definition by the
+  name under which the function had been called, which fails whenever
+  there is no such name. `do.call(plm, args)` stopped with
+  `first argument has length > 1`, and calling a function through
+  another one, as in `lapply(list_of_scdf, plm)`, with
+  `object 'FUN' of mode 'function' was not found`. Affected were
+  [`plm()`](https://jazznbass.github.io/scan/reference/plm.md),
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md),
+  [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md),
+  [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md),
+  [`pand()`](https://jazznbass.github.io/scan/reference/pand.md),
+  [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md),
+  [`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
+  [`corrected_tau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md),
+  [`between_smd()`](https://jazznbass.github.io/scan/reference/between_smd.md),
+  [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md),
+  [`design()`](https://jazznbass.github.io/scan/reference/design.md) and
+  [`add_dummy_variables()`](https://jazznbass.github.io/scan/reference/add_dummy_variables.md).
+
+#### Data structures and data preparation
+
+- [`read_scdf()`](https://jazznbass.github.io/scan/reference/read_scdf.md)
+  rejects file types it can not read. A type matching none of the import
+  branches left the internal data object unassigned, and R then resolved
+  that name in the user’s workspace: with an object of that name
+  present, the function returned it as a single-case scdf instead of the
+  file’s content, without any warning. An explicitly given `type` is now
+  matched case-insensitively as well, so `type = "CSV"` works.
+- [`write_scdf()`](https://jazznbass.github.io/scan/reference/write_scdf.md)
+  writes to the console when `filename` is `NULL`, its documented
+  default.
+  [`utils::write.table()`](https://rdrr.io/r/utils/write.table.html)
+  takes a character string or a connection, so the default stopped with
+  `argument is of length zero` and the console output was only reachable
+  by passing `filename = ""` by hand.
+- [`convert()`](https://jazznbass.github.io/scan/reference/convert.md)
+  quotes the phase names in the generated code. Phase names are
+  arbitrary strings in an scdf, but they were written as if they were
+  syntactic R names, so a name containing a space or a hyphen, a name
+  that is a number, or a reserved word such as `if` produced code that
+  did not parse.
+  [`convert()`](https://jazznbass.github.io/scan/reference/convert.md)
+  itself reported no problem, and the error only surfaced when someone
+  ran the generated file.
+- [`convert()`](https://jazznbass.github.io/scan/reference/convert.md)
+  keeps the position of the measurement-time variable. When its values
+  are `1, 2, ... n` the variable is left out of the generated code,
+  because [`scdf()`](https://jazznbass.github.io/scan/reference/scdf.md)
+  recreates it; but
+  [`scdf()`](https://jazznbass.github.io/scan/reference/scdf.md) appends
+  it after the other variables, so for data whose measurement times are
+  not the last variable the columns came back in a different order, as
+  in `Leidig2018` and `exampleAB_add`. It is now left out only where
+  that position matches. Missing values in the measurement times no
+  longer stop the function with `missing value where TRUE/FALSE needed`.
+- `convert(inline = TRUE)` writes one section per phase of the series.
+  The measurements were grouped by the levels of the phase variable
+  instead of by the sections of the series, so in any design where a
+  phase name recurs — `A B A B` and the other reversal designs — all
+  sections sharing a name were merged into one and the measurements came
+  back in a different order. The generated code reported no problem and
+  produced a valid scdf holding the wrong data.
+- `convert(inline = TRUE)` no longer leaves a trailing comma in the
+  generated call. The comma separating the measurements from the
+  argument definitions was written unconditionally, while the
+  definitions added their own only in the other mode, so a case with the
+  default variable names and no case name produced `scdf(..., )` and the
+  generated file stopped with `argument is missing, with no default`.
+- Fixed bugs in
+  [`scdf()`](https://jazznbass.github.io/scan/reference/scdf.md) phase
+  definitions.
+- Fixed `scdf(phase_starts = ...)` for data with repeated measurement
+  times, which failed with an uninformative comparison error.
+- Fixed case naming in
+  [`combine()`](https://jazznbass.github.io/scan/reference/combine.md) /
+  [`c()`](https://rdrr.io/r/base/c.html).
+- Fixed custom level-2 IDs and prevented column overwrites in
+  [`as.data.frame.scdf()`](https://jazznbass.github.io/scan/reference/as.data.frame.scdf.md).
+- [`as_scdf()`](https://jazznbass.github.io/scan/reference/as_scdf.md)
+  keeps every case a data frame even when a single variable remains
+  after removing the case variable, and checks the case variable for
+  missing values also when it had to be created.
+- Fixed logical row filters and empty case selections in
+  [`subset.scdf()`](https://jazznbass.github.io/scan/reference/subset.scdf.md).
+- Fixed long expressions and access to caller-local variables in
+  [`transform()`](https://rdrr.io/r/base/transform.html) helpers.
+- Corrected the centering position in
+  [`center_at()`](https://jazznbass.github.io/scan/reference/transform.scdf.md)
+  and prevented out-of-range replacements in
+  [`set_na_at()`](https://jazznbass.github.io/scan/reference/transform.scdf.md).
+- Fixed
+  [`moving_mean()`](https://jazznbass.github.io/scan/reference/transform.scdf.md)
+  and
+  [`moving_median()`](https://jazznbass.github.io/scan/reference/transform.scdf.md)
+  for series shorter than the smoothing window, which failed with an
+  indexing error. The values are now returned unchanged with a warning.
+- Fixed automatic phase naming in
+  [`select_phases()`](https://jazznbass.github.io/scan/reference/select_phases.md)
+  to use each case’s own phase names, and the construction of combined
+  phase names when phases are selected by name.
+
+#### fill_missing()
+
+- Missing values of the measured variables are interpolated again. They
+  had been left untouched, so only absent measurement times were filled.
+- Measurement times missing at the beginning or the end of a series are
+  now determined as well, and supplied measurement times are preserved
+  instead of being rounded.
+- A case whose measurement times remain unknown is returned unchanged
+  with a warning. Such observations were previously pushed to the end of
+  the series and replaced by interpolated values.
+- Fixed interpolation for insufficient data, repeated measurement times,
+  cases with fewer than two observations, and rows that are out of time
+  order.
+- The returned rows are renumbered instead of being labelled `NA`.
+
+#### Effect sizes and overlap indices
+
+- [`describe()`](https://jazznbass.github.io/scan/reference/describe.md)
+  handles phases without observed values. Minimum and maximum came back
+  as `Inf` and `-Inf` with a warning, the mean as `NaN`, and the trend
+  stopped the whole call with `0 (non-NA) cases` from `lm.fit`, so a
+  single case with an unmeasured phase made the descriptives unavailable
+  for the entire study. The number of measurements and the number of
+  missing values are still reported, every other statistic is `NA`, and
+  the trend is computed where at least two values were observed. The
+  trend no longer depends on the global `na.action` setting either.
+- Preserved the phase selection before missing values are removed in
+  [`pnd()`](https://jazznbass.github.io/scan/reference/pnd.md),
+  [`pem()`](https://jazznbass.github.io/scan/reference/pem.md),
+  [`nap()`](https://jazznbass.github.io/scan/reference/nap.md),
+  [`pand()`](https://jazznbass.github.io/scan/reference/pand.md),
+  [`ird()`](https://jazznbass.github.io/scan/reference/ird.md),
+  [`corrected_tau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md),
+  [`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md) and
+  [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md),
+  and reject or skip cases without observed values in a selected phase.
+- Handled empty phases in PEM and NAP, excluded unusable cases from PAND
+  and IRD with correct case counts, and handled insufficient data in
+  [`corrected_tau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md)
+  and [`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md). CDC
+  overall results remain missing when any case is unevaluable.
+- Fixed phase selection and missing-data handling in
+  [`pet()`](https://jazznbass.github.io/scan/reference/pet.md). Two
+  baseline observations allow PET and its binomial test, while the PET
+  confidence interval requires at least three.
+- Fixed phase selection and phase-B counts in
+  [`rci()`](https://jazznbass.github.io/scan/reference/rci.md), which
+  now requires at least two observed values per selected phase.
+- Fixed tie handling in `pand(method = "sort")`. The `decreasing`
+  argument no longer reverses the phase tiebreak, so both directions are
+  treated symmetrically.
+- Fixed
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  `pand(method = "minimum")`, which failed because it accessed
+  statistics that only exist for `method = "sort"`.
+- [`pem()`](https://jazznbass.github.io/scan/reference/pem.md) counts
+  the exceeding measurements once and uses that count for the
+  percentage, the binomial test and the chi-squared test, which
+  previously reconstructed it from the percentage. A `FUN` returning
+  `NA` is reported with a warning instead of failing inside
+  [`binom.test()`](https://rdrr.io/r/stats/binom.test.html), and all
+  result columns are numeric even when no test was computed.
+
+#### Regression and correlation
+
+- Fixed [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md)
+  for cases with fewer than two observed values in a phase, which
+  produced a plausible looking but invalid Tau-U. Such cases now return
+  `NA` with a warning, and the meta analysis returns `NA` when any case
+  is unevaluable.
+- Fixed `tau_u(ci = NULL)`, which failed in the meta analysis although
+  the documentation offers `NULL` as a way to suppress confidence
+  intervals. The `ci` argument is now validated and accepts `NULL`,
+  `NA`, or a value between 0 and 1.
+- Fixed the zero variance check in the internal Kendall tau computation,
+  which tested the first variable twice and never the second. A constant
+  second variable silently returned `NaN` and now issues a warning.
+  Computing tau with fewer than two data points raises an error.
+- Fixed [`trend()`](https://jazznbass.github.io/scan/reference/trend.md)
+  for custom models with more than one predictor, which silently
+  reported the second raw coefficient in the `Beta` column. Such models
+  now raise an informative error.
+- [`autocorr()`](https://jazznbass.github.io/scan/reference/autocorr.md)
+  reports missing values in the dependent variable with an informative
+  message pointing to
+  [`fill_missing()`](https://jazznbass.github.io/scan/reference/fill_missing.md),
+  instead of failing inside [`acf()`](https://rdrr.io/r/stats/acf.html),
+  and handles phases with fewer than two observations, which failed with
+  an indexing error.
+- [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) computes
+  the F test and R squared from the same residual sum of squares. R
+  squared previously used `var(residuals)`, which is only equivalent for
+  ordinary least squares; with `AR > 0` the residuals are not mean free
+  and the two statistics referred to slightly different quantities.
+  Results for `AR = 0` are unchanged.
+- Fixed `hplm(lr.test = TRUE)`, which derived the models for the
+  likelihood ratio tests from the text of the random effects formula
+  instead of the random effects the model actually estimated. Two
+  failures followed from this. Names containing a `1` were mangled,
+  because the random intercept was removed by replacing every `1` with
+  `-1`: `phaseB1` became `phaseB - 1`, which either failed with
+  `object not found` or silently tested a different random effect. And a
+  user supplied formula with an implicit intercept, such as
+  `random = ~ mt + phaseB | case`, produced fewer tests than there were
+  random effects, so printing the result failed. The tests are now built
+  from the estimated random effects, one per effect, in the order the
+  output uses.
+- [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md) reports
+  `random.slopes` in the result correctly when random effects were
+  requested through `random_trend`, `random_level` or `random_slope`
+  rather than through `random.slopes` itself.
+- [`add_l2()`](https://jazznbass.github.io/scan/reference/add_l2.md)
+  keeps every case a valid part of the scdf when a case has no matching
+  row in the level-2 data. Such cases lacked the level-2 variables
+  entirely, which made the scdf unusable and failed later when the case
+  data were combined. They now receive `NA`, so the case is dropped from
+  the model by `na.omit` instead.
+- [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md) warns
+  when cases are dropped from the model because of missing values. The
+  reported number of cases refers to the data passed in, which could
+  differ from the number actually estimated without any notice.
+- Fixed [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md)
+  for data with missing values. The dependent variables were combined
+  into a matrix outside the data and the null model was fitted without
+  the data, so the null model used all measurements while the full model
+  dropped the incomplete ones.
+  [`anova()`](https://rdrr.io/r/stats/anova.html) and
+  [`print()`](https://rdrr.io/r/base/print.html) then failed with
+  `models were not all fitted to the same size of dataset`. The
+  dependent variables are now part of the model formula, and the null
+  model is fitted to the rows the full model used.
+- Fixed `mplm(formula = ...)`. A user supplied formula was evaluated in
+  the environment it was written in, where the response matrix did not
+  exist, so `mplm(formula = y ~ mt + phaseB + interB)` failed with
+  `variable lengths differ`. The response is now addressed by the names
+  of the dependent variables.
+- [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md) keeps a
+  random effects formula passed through the `random` argument. It was
+  replaced without notice whenever `random_trend`, `random_level` or
+  `random_slope` was set, although `random` is documented to overwrite
+  the automatically created random part of the model.
+- [`fetch()`](https://jazznbass.github.io/scan/reference/fetch.md)
+  reports an unsupported `what` instead of returning `NULL`. All four
+  methods returned the requested element from inside an `if` without an
+  `else`, so anything other than `"model"` — a typo, a different
+  capitalisation, an element name such as `"data"` — gave an invisible
+  `NULL` with no indication that the value was not supported. A `what`
+  that is not a single string is rejected as well.
+- [`anova()`](https://rdrr.io/r/stats/anova.html) for
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md) objects
+  passes additional arguments on unchanged. The call was assembled as
+  text and the arguments were inserted by their value, so a character
+  argument lost its quotes and `anova(model, type = "marginal")` failed
+  with `object 'marginal' not found`, while more than one additional
+  argument failed with `subscript out of bounds`.
+- [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) passes
+  additional arguments on to
+  [`nlme::gls()`](https://rdrr.io/pkg/nlme/man/gls.html) when `AR > 0`,
+  as `...` is documented to do. They were dropped without notice, so
+  arguments such as `weights` had no effect on the model and a
+  misspelled argument went unnoticed instead of raising an error.
+- [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) and
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md) check
+  the measurement times before modelling autocorrelation.
+  [`nlme::corARMA()`](https://rdrr.io/pkg/nlme/man/corARMA.html)
+  requires whole numbers that are unique within a case: `hplm(ar > 0)`
+  stopped with
+  `covariate must have unique integer values within groups for "corARMA" objects`,
+  and [`plm()`](https://jazznbass.github.io/scan/reference/plm.md)
+  ignored the measurement times altogether. Both now report the problem
+  and set the autoregression to 0.
+
+#### Messages and printed output
+
+- [`print()`](https://rdrr.io/r/base/print.html) for an scdf works with
+  `cols = "main"`. The names of the dependent, phase and
+  measurement-time variable were read with
+  [`attr()`](https://rdrr.io/r/base/attr.html), but an scdf keeps them
+  inside a single `scdf` attribute, so all three came back `NULL`, every
+  column was dropped, and the call stopped with
+  `'names' attribute [1] must be the same length as the vector [0]`. The
+  documented setting `options(scan.print.cols = "main")` broke every
+  scdf print in the same way. Selecting a single column, as in
+  `cols = "values"`, reduced each case to a vector and stopped with
+  `incorrect number of dimensions`.
+- Long messages and warnings are truncated at a word boundary instead of
+  in the middle of a word.
+- The note on the variables used in an analysis no longer fails when an
+  object does not carry all three variable attributes, and reports only
+  the attributes that are set.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md) and
+  [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md) uses a
+  footnote passed through the `footnote` argument. It was replaced by
+  the automatically generated footnote without notice.
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) and
+  [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md) was
+  already correct.
+- [`print()`](https://rdrr.io/r/base/print.html) and
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md)
+  report the AIC of a
+  [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) model
+  with `AR > 0`. The value was taken from a list element that only `glm`
+  objects carry, so it showed as `NA` for the `gls` models that are
+  fitted when autocorrelation is modelled.
+- [`print()`](https://rdrr.io/r/base/print.html) for
+  [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) objects
+  works with `ci = FALSE`, which the help page offers. It stopped with
+  `object 'param_filter' not found`, because the variable is only
+  created when confidence intervals are computed, and for Poisson and
+  binomial models additionally with
+  `$ operator is invalid for atomic vectors`.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) objects
+  derives the column groups of the table from the table itself instead
+  of assuming its shape. Three things went wrong before. With
+  `ci = FALSE` the confidence interval group was placed anyway, which
+  labelled the `SE` and `t` columns as confidence limits and made
+  Poisson models fail; `ci = TRUE` was labelled `CI(100%)` instead of
+  `CI(95%)`. The group for the odds ratio limits was set for Poisson but
+  not for binomial models, so every binomial export failed with the
+  kable engine and lost its labels with the gt engine. And the kable
+  groups assumed exactly one R squared column, so `r_squared = "none"`
+  and `r_squared = c("delta", "partial")` failed. Of the 108
+  combinations of family, `ci`, `q`, `r_squared` and export engine, 70
+  either failed or produced a mislabelled table.
+
+### Documentation
+
+- [`scdf()`](https://jazznbass.github.io/scan/reference/scdf.md): the
+  help page described a priority order for competing phase-design
+  definitions that did not match the behaviour.
+- [`overlap()`](https://jazznbass.github.io/scan/reference/overlap.md):
+  documented that PAND is reported for `method = "sort"` while IRD is
+  based on `method = "minimum"`, so the two columns are not
+  algebraically linked. Removed the `design` entry from the documented
+  return value, which the function never returned.
+- [`trend()`](https://jazznbass.github.io/scan/reference/trend.md): the
+  `model` argument no longer lists `phase` as an available parameter, as
+  phase terms cannot be estimated within a single phase.
+- [`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md): removed
+  the `phases` entry from the documented return value, which was never
+  returned.
+- [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md): the
+  `data.l2` argument requires a column named `case`, not `cases` as the
+  help page stated.
+- [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md):
+  documented that the likelihood ratio test accompanying the intraclass
+  correlation tests a variance against zero, a parameter at the boundary
+  of its parameter space, so the reported p value is conservative.
+- [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md): the
+  `formula` argument now states that the response is the
+  [`cbind()`](https://rdrr.io/r/base/cbind.html) of the dependent
+  variables, e.g. `cbind(dv1, dv2) ~ 1 + mt + phaseB + interB`.
+- [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md): the
+  documented return value `mcmglmm` is named `mcmcglmm`, the description
+  of `formula` referred to the hplm model, and an example announced a
+  random slope while setting `random_level`.
+- [`anova()`](https://rdrr.io/r/stats/anova.html): the example for
+  Poisson models compared them with a Gaussian model fitted to different
+  data and a different response variable, which `anova.glm()` silently
+  dropped again with a warning.
+- [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) and
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md): the
+  `AR` and `ar` arguments state that the measurement times must be whole
+  numbers and unique within a case.
+- [`plm()`](https://jazznbass.github.io/scan/reference/plm.md): the
+  documented return value lists the elements `contrast`, `var_trials`,
+  `dvar_percentage` and `data`, which were returned but not described.
+  For a binomial regression with `dvar_percentage = FALSE`, `data` holds
+  the modelled proportions rather than the counts that were passed in.
+
 ## scan 0.68.1
+
+CRAN release: 2026-04-28
 
 - Introduced rlang error and messaging system for more informative error
   messages and warnings.
@@ -67,16 +496,16 @@ CRAN release: 2025-09-02
 ### New features
 
 - [`as_scdf()`](https://jazznbass.github.io/scan/reference/as_scdf.md):
-  Add format checks with informative error messages.  
+  Add format checks with informative error messages.\
   (Mainly useful for externally loaded files via
   [`read_scdf()`](https://jazznbass.github.io/scan/reference/read_scdf.md).)
 - [`shinyscan()`](https://jazznbass.github.io/scan/reference/shinyscan.md):
   New argument `browser`. Default `"external"` launches the Shiny app in
   an external browser.
 - [`between_smd()`](https://jazznbass.github.io/scan/reference/between_smd.md):
-  - Stops if the `scdf` contains only one case.  
-  - Redesigned outputs.  
-  - Improved Bayesian analysis.  
+  - Stops if the `scdf` contains only one case.\
+  - Redesigned outputs.\
+  - Improved Bayesian analysis.\
   - Added confidence/credible intervals and new argument `ci`.
 - [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md):
   - Argument `ar` sets a auto-regression parameter for correlated
@@ -627,7 +1056,7 @@ power_test(
   [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md): Added
   contrast argument with values `"first"` or “`preceding`”. Now
   `model = "JW"` is deprecated and identical to
-  `model = "B&L-B", contrast = "preceding"`.  
+  `model = "B&L-B", contrast = "preceding"`.\
 - [`plm()`](https://jazznbass.github.io/scan/reference/plm.md),
   [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md): Added
   model `"W"`. Which shifts the measurement-time variable to start with
@@ -698,7 +1127,7 @@ CRAN release: 2022-03-23
   with various extensions, optimizations, and solved various bugs.
   rewrote the `print` method, added an argument `duration` to print the
   computation duration. Added the `'n_trials'` argument for binomial
-  distributions. Extended the help page.  
+  distributions. Extended the help page.\
 - [`design()`](https://jazznbass.github.io/scan/reference/design.md) and
   its print method. Extended the help page. Rewrote the algorithm for
   the ‘binomial’ distribution.
@@ -713,7 +1142,7 @@ CRAN release: 2022-03-23
 - speed optimized
   [`random_scdf()`](https://jazznbass.github.io/scan/reference/random_scdf.md).
   Rewrote the algorithm for ‘poisson’ distributed measures. Rewrote the
-  algorithm for the ‘binomial’ distribution. Extended the help page.  
+  algorithm for the ‘binomial’ distribution. Extended the help page.\
 - [`read_scdf()`](https://jazznbass.github.io/scan/reference/read_scdf.md):
   extracts filetype from file extension.
 - [`read_scdf()`](https://jazznbass.github.io/scan/reference/read_scdf.md):
