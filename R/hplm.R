@@ -33,7 +33,12 @@
 #'   function will calculate the intraclass correlation coefficient (ICC) to
 #'   assess the proportion of variance attributable to between-case differences.
 #'   This provides insight into the degree of similarity among observations
-#'   within the same case.
+#'   within the same case. The accompanying likelihood ratio test compares a
+#'   model with a random intercept against one without. It tests a variance
+#'   against zero, that is a parameter at the boundary of its parameter space.
+#'   The test statistic then follows a mixture of chi squared distributions
+#'   rather than the chi squared distribution the p value is based on, so the
+#'   reported p value is conservative.
 #'
 #' @inheritParams .inheritParams
 #' @order 1
@@ -68,7 +73,7 @@
 #'   . + newvariable`).
 #' @param data.l2 A data frame providing additional variables at Level 2. The
 #'   scdf File has to have names for all cases and the Level 2 data frame has to
-#'   have a column named 'cases' with the names of the cases the Level 2
+#'   have a column named 'case' with the names of the cases the Level 2
 #'   variables belong to.
 #' @param ... Further arguments passed to the lme function.
 #' @return An object of class `sc_hplm`.
@@ -162,7 +167,7 @@ hplm <- function(data, dvar, pvar, mvar,
   out$model$contrast.method     <- contrast
   out$model$estimation.method   <- method
   out$model$lr.test             <- lr.test
-  out$model$random.slopes       <- random.slopes
+
   out$model$ICC                 <- ICC
   out$N                         <- N
 
@@ -190,6 +195,7 @@ hplm <- function(data, dvar, pvar, mvar,
   if (any(random_trend, random_level, random_slope)) {
     random.slopes <- TRUE
   }
+  out$model$random.slopes       <- random.slopes
   
   if (!random.slopes && is.null(random)) 
     random <- as.formula("~1|case")
@@ -244,58 +250,53 @@ hplm <- function(data, dvar, pvar, mvar,
   out$hplm$call$fixed <- fixed
   out$hplm$call$random <- random
   out$hplm$call$data <- str2lang("dat")
+  n_used <- as.integer(out$hplm$dims$ngrps[1])
+  if (n_used < N) {
+    warn(N - n_used, " case(s) dropped from the model due to missing values.")
+  }
   
 # LR tests ----------------------------------------------------------------
 
   if (lr.test) {
-    pred_rand    <- unlist(strsplit(as.character(random[2]), "\\|"))[1]
-    pred_rand_id <- unlist(strsplit(as.character(random[2]), "\\|"))[2]
-    pred_rand    <- unlist(strsplit(pred_rand, "\\+"))
-    pred_rand    <- trimws(pred_rand)
-    pred_rand_id <- trimws(pred_rand_id)
-
+    pred_rand_id <- trimws(
+      unlist(strsplit(as.character(random[2]), "\\|"))[2]
+    )
+    
+    # the random effects as lme actually estimated them, in the order the
+    # print and export methods use
+    pred_rand <- rownames(VarCorr(out$hplm))
+    pred_rand <- pred_rand[pred_rand != "Residual"]
+    
     if (length(pred_rand) == 1) {
       abort("LR Test not applicable with only one random effect.")
     }
     
-    random_ir <- list(formula(gsub("1", "-1", paste(random, collapse = " "))))
-    for(i in 2:length(pred_rand)) {
-      random_ir[[i]] <- formula(
-        paste0("~", paste0(pred_rand[!pred_rand %in% pred_rand[i]], 
-        collapse = " + "), " | ", pred_rand_id)
-      )
-    }
-    out$random_ir$restricted <- list()
+    has_intercept <- "(Intercept)" %in% pred_rand
+    terms_rand    <- setdiff(pred_rand, "(Intercept)")
     
-    # lme
-    for(i in 1:length(random_ir)) {
-      
+    .restricted_formula <- function(drop) {
+      keep <- setdiff(terms_rand, drop)
+      intercept <- if (has_intercept && drop != "(Intercept)") "1" else "-1"
+      formula(paste0(
+        "~ ", paste(c(intercept, keep), collapse = " + "), " | ", pred_rand_id
+      ))
+    }
+    random_ir <- lapply(pred_rand, .restricted_formula)
+    
+    out$random_ir$restricted <- list()
+    for (i in seq_along(random_ir)) {
       args_restricted <- args
-      args_restricted$random <- random_ir[i]
-      
+      args_restricted$random <- random_ir[[i]]
       out$random_ir$restricted[[i]] <- do.call(lme, args_restricted)
-      out$random_ir$restricted[[i]]$call$data <- str2lang("dat")
-      # check:
-      # out$random_ir$restricted[[i]] <- lme(
-      #   fixed = fixed, 
-      #   random = random_ir[i], 
-      #   data = dat,
-      #   na.action = na.omit, 
-      #   method = method, 
-      #   control=control,
-      #   keep.data = FALSE, 
-      #   ...
-      # )
-      out$random_ir$restricted[[i]]$call$data <- str2lang("dat")
+      out$random_ir$restricted[[i]]$call$data  <- str2lang("dat")
       out$random_ir$restricted[[i]]$call$fixed <- fixed
     }
-    out$LR.test <- list()
     
-    # LR test
-    for(i in 1:length(random_ir)) {
+    out$LR.test <- list()
+    for (i in seq_along(random_ir)) {
       out$LR.test[[i]] <- anova(out$random_ir$restricted[[i]], out$hplm)
     }
-    attr(out$random_ir, "parameters") <- c("Intercept", pred_rand)
+    attr(out$random_ir, "parameters") <- pred_rand
   }
   
 # ICC ---------
@@ -308,7 +309,7 @@ hplm <- function(data, dvar, pvar, mvar,
     )
     out$model.0$call$fixed <- .formula.null
     
-    vc <- as.numeric(VarCorr(out$model.0))
+    vc <- as.numeric(VarCorr(out$model.0)[, "Variance"])
     out$ICC$value <- vc[1] / (vc[1] + vc[2])	
     out$model.without <- gls(
       .formula.null, data = dat, method = method, 

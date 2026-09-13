@@ -130,7 +130,7 @@ phase variances.}
 
 \item{data.l2}{A data frame providing additional variables at Level 2. The
 scdf File has to have names for all cases and the Level 2 data frame has to
-have a column named 'cases' with the names of the cases the Level 2
+have a column named 'case' with the names of the cases the Level 2
 variables belong to.}
 
 \item{...}{Further arguments passed to the lme function.}
@@ -226,7 +226,12 @@ random slopes significantly improves model fit.
 function will calculate the intraclass correlation coefficient (ICC) to
 assess the proportion of variance attributable to between-case differences.
 This provides insight into the degree of similarity among observations
-within the same case.
+within the same case. The accompanying likelihood ratio test compares a
+model with a random intercept against one without. It tests a variance
+against zero, that is a parameter at the boundary of its parameter space.
+The test statistic then follows a mixture of chi squared distributions
+rather than the chi squared distribution the p value is based on, so the
+reported p value is conservative.
 }
 
 \examples{

@@ -41,16 +41,20 @@ add_l2 <- function(scdf,
     casename <- names(scdf)[i]
     id <- which(data_l2[[cvar]] == casename)
 
-    if (length(id) == 0) warn("No matching case in L2 data found for ", casename)
-    if (length(id) > 1) abort("Multiple matches for a casename in the L1 dataset for ", casename)
-
-    if (length(id) == 1) {
-      scdf[[i]] <- cbind(
-        scdf[[i]],
-        data_l2[id, -which(names(data_l2) == cvar), drop = FALSE],
-        row.names = NULL
-      )
+    if (length(id) > 1) {
+      abort("Multiple matches for a casename in the L1 dataset for ", casename)
     }
+
+    if (length(id) == 0) {
+      warn("No matching case in L2 data found for ", casename)
+      id <- NA_integer_
+    }
+    
+    scdf[[i]] <- cbind(
+      scdf[[i]],
+      data_l2[id, -which(names(data_l2) == cvar), drop = FALSE],
+      row.names = NULL
+    )
   }
 
   scdf

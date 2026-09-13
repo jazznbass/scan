@@ -44,7 +44,10 @@ add_dummy_variables <- function(scdf,
                                 contrast_slope) {
       
 
-  for(case in 1:length(data)) {
+  var_inter <- NULL
+  var_phase <- NULL
+  
+  for(case in seq_along(data)) {
     dat_inter <- .create_dummies(
       data[[case]], 
       model = model, 
@@ -58,8 +61,20 @@ add_dummy_variables <- function(scdf,
     data[[case]][, mvar] <- dat_inter$mt
     data[[case]] <- cbind(data[[case]], dat_inter[, -1])
     n_Var <- (ncol(dat_inter) - 1) / 2
-    var_inter <- names(dat_inter)[(ncol(dat_inter) - n_Var + 1):ncol(dat_inter)]
-    var_phase <- names(dat_inter)[2:(n_Var + 1)]
+    case_inter <- names(dat_inter)[(ncol(dat_inter) - n_Var + 1):ncol(dat_inter)]
+    case_phase <- names(dat_inter)[2:(n_Var + 1)]
+    
+    if (case == 1L) {
+      var_inter <- case_inter
+      var_phase <- case_phase
+    } else if (!identical(case_phase, var_phase) ||
+               !identical(case_inter, var_inter)) {
+      abort(
+        "Case ", case, " has a different phase design than case 1. ",
+        "A joint regression model requires identical phases."
+      )
+    }
+    
   }
   out <- list(
     data = data, 

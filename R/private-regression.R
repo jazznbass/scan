@@ -53,7 +53,8 @@ rename_predictors <- function(rn, x) {
   str_slope <- getOption("scan.string.dummy.slope")
   str_phase <- getOption("scan.string.dummy.phase")
 
-  # Objects created by plm(), hplm(), mplm() and bplm() carry the names of
+  # Objects created by plm(), hplm(), mplm() and bplm() from version 0.63.3 on 
+  # carry the names of
   # their dummy variables. Match these exactly. Older objects and objects from
   # other sources fall back to matching the dummy prefixes, which cannot tell a
   # covariate named e.g. 'intervention' from a slope dummy.

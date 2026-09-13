@@ -28,7 +28,7 @@ notify <- function(... , type = "!", detail = 1, warning = FALSE) {
     type <- ""
   }
   
-  max_char <- getOption("wmisc.msg.max", default = 100)
+  max_char <- getOption("wmisc.msg.max", default = 150)
   if (nchar(msg) > max_char) {
     cut <- substring(msg, 1, max_char)
     last_space <- regexpr("[[:space:]][^[:space:]]*$", cut)

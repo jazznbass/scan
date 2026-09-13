@@ -68,7 +68,7 @@ improvement from phase A to phase B.
 \examples{
 
 ## Calculate the PEM including the Binomial and Chi-square tests for a single-case
-dat <- random_scdf(5, level = 0.5)
+dat <- random_scdf(design(n = 5, level = 0.5))
 pem(dat, chi.test = TRUE)
 
 }

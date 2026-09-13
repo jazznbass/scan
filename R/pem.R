@@ -30,7 +30,7 @@
 #' @examples
 #' 
 #' ## Calculate the PEM including the Binomial and Chi-square tests for a single-case
-#' dat <- random_scdf(5, level = 0.5)
+#' dat <- random_scdf(design(n = 5, level = 0.5))
 #' pem(dat, chi.test = TRUE)
 #' 
 #' @export
@@ -53,13 +53,13 @@ pem <- function(data, dvar, pvar,
   
   N <- length(data)
   
-  PEM       <- rep(NA, N)
-  chi       <- rep(NA, N)
-  chi.df    <- rep(NA, N)
-  chi.p     <- rep(NA, N)
-  binom.p   <- rep(NA, N)
-  positives <- rep(NA, N)
-  total     <- rep(NA, N)
+  PEM       <- rep(NA_real_, N)
+  chi       <- rep(NA_real_, N)
+  chi.df    <- rep(NA_real_, N)
+  chi.p     <- rep(NA_real_, N)
+  binom.p   <- rep(NA_real_, N)
+  positives <- rep(NA_real_, N)
+  total     <- rep(NA_real_, N)
   
   
   for(i in 1:N) {
@@ -71,20 +71,27 @@ pem <- function(data, dvar, pvar,
       PEM[i] <- NA_real_
       next
     }
-    if (!decreasing)
-      PEM[i] <- mean(B > FUN(A,...)) * 100
-    if (decreasing)
-      PEM[i] <- mean(B < FUN(A,...)) * 100
-    if(binom.test) {
-      nB <- length(B)
-      bi <- binom.test(round(PEM[i] / 100  * nB), nB, alternative = "greater")
+    nB <- length(B)
+    exceeding <- if (!decreasing) {
+      sum(B > FUN(A, ...))
+    } else {
+      sum(B < FUN(A, ...))
+    }
+
+    if (is.na(exceeding)) {
+      warn("Case ", i, ": FUN returned NA. PEM is set to NA.")
+      next
+    }
+
+    PEM[i] <- exceeding / nB * 100
+
+    if (binom.test) {
+      bi <- binom.test(exceeding, nB, alternative = "greater")
       positives[i] <- bi$statistic
       total[i]     <- bi$parameter
       binom.p[i]   <- bi$p.value
     }
-    if(chi.test) {
-      nB <- length(B)
-      exceeding <- PEM[i] / 100  * nB
+    if (chi.test) {
       res <- chisq.test(c(exceeding, nB - exceeding), p = c(0.5, 0.5))
       chi[i]    <- res$statistic
       chi.df[i] <- res$parameter

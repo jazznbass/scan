@@ -8,7 +8,13 @@
 #'
 #' The function uses the `glm` function of the stats package or the `gls`
 #' function of the nlme package (for auto-regression models).
-#' 
+#' For `AR > 0` the model is estimated with generalized least squares.
+#'   The F test, R squared and the delta R squares are then computed in the
+#'   metric of the dependent variable, using the residuals of the fitted model.
+#'   They are descriptive in that case: the sums of squares do not decompose
+#'   exactly, and the F statistic is not exactly F distributed.
+#'   With `AR > 0` individual delta R squares can become negative, because the
+#'   sums of squares do not decompose exactly in this metric.
 #' @inheritParams .inheritParams
 #' @order 1
 #' @param AR Maximal lag of autoregression. Modelled based on the
@@ -270,23 +276,24 @@ plm <- function(data, dvar, pvar, mvar,
     mqse <- qse / df_residuals
     f_value <- mqsa / mqse
    
-    if (!is.infinite(f_value)) {
-      p <- pf(f_value, df_effect, df_residuals, lower.tail = FALSE)
+    p <- if (is.finite(f_value)) {
+      pf(f_value, df_effect, df_residuals, lower.tail = FALSE)
     } else {
-      p <- NULL
+      NA_real_
     }
     
-    if (df_intercept == 1) {
-      total_variance <- qst / (n - 1) # identical to var(y)
-      mse <- var(residuals)
-    } else {
-      total_variance <- qst / n
-      mse <- sum(residuals^2) / n
-    }
+    #if (df_intercept == 1) {
+    #  total_variance <- qst / (n - 1) # identical to var(y)
+    #  mse <- var(residuals)
+    #} else {
+    #  total_variance <- qst / n
+    #  mse <- sum(residuals^2) / n
+    #}
+    #r2 <- 1 - mse / total_variance
     
-    r2 <- 1 - mse / total_variance
+    r2 <- 1 - qse / qst
     r2_adj <- 1 - (1 - r2) * ((n - df_intercept) / df_residuals)
-    
+   
     f_test <- c(
       F = f_value, 
       df1 = df_effect, 
@@ -297,8 +304,11 @@ plm <- function(data, dvar, pvar, mvar,
     )
 
     if (r_squared) {
-      r_squares <- lapply(restricted.models, function(x) 
-        r2 - (1 - (var(resid(x), na.rm = TRUE) / total_variance))
+      #r_squares <- lapply(restricted.models, function(x) 
+      #  r2 - (1 - (var(resid(x), na.rm = TRUE) / total_variance))
+      #)
+      r_squares <- lapply(restricted.models, function(x)
+        r2 - (1 - sum(resid(x)^2, na.rm = TRUE) / qst)
       )
       r_squares <- unlist(r_squares)
     } else {

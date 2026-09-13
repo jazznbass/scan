@@ -167,6 +167,13 @@ formula.
 \details{
 The function uses the \code{glm} function of the stats package or the \code{gls}
 function of the nlme package (for auto-regression models).
+For \code{AR > 0} the model is estimated with generalized least squares.
+The F test, R squared and the delta R squares are then computed in the
+metric of the dependent variable, using the residuals of the fitted model.
+They are descriptive in that case: the sums of squares do not decompose
+exactly, and the F statistic is not exactly F distributed.
+With \code{AR > 0} individual delta R squares can become negative, because the
+sums of squares do not decompose exactly in this metric.
 }
 \section{Functions}{
 \itemize{

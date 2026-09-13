@@ -88,7 +88,7 @@ c.scdf <- function(...) {
 #' @export
 `$.scdf`<- function(x, i) {
   if (is.character(i) && !(i %in% names(x))) {
-    warn("Unknown case: '", i, "'.")
+    abort("Unknown case: '", i, "'.")
   }
   out <- x[i]
   attr(out, opt("scdf")) <- attr(x, opt("scdf"))
@@ -101,6 +101,9 @@ c.scdf <- function(...) {
 `[.scdf`<- function(x, i) {
   class(x) <- "list"
   out <- x[i]
+  if (any(vapply(out, is.null, logical(1)))) {
+    abort("Unknown case selected.")
+  }
   attr(out, opt("scdf")) <- attr(x, opt("scdf"))
   class(out) <- c("scdf", "list")
   out

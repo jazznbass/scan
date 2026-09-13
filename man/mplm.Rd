@@ -77,7 +77,10 @@ parameter phase followed by the phase name (e.g., \code{phaseB}) indicates the
 level effect of the corresponding phase. The parameter 'inter' followed by
 the phase name (e.g., \code{interB}) adresses the slope effect based on the
 method provide in the model argument (e.g., \code{"B&L-B"}). The formula can be
-changed for example to include further variables into the regression model.}
+changed for example to include further variables into the regression model.
+The response of the model is \code{cbind()} of the variables given in \code{dvar}. A
+custom formula has to use the same form, for example
+\code{cbind(var1, var2) ~ 1 + mt + phaseB}.}
 
 \item{update}{An easier way to change the regression formula (e.g., \code{. ~ . + newvariable}).}
 

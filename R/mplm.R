@@ -18,6 +18,9 @@
 #'   the phase name (e.g., `interB`) adresses the slope effect based on the
 #'   method provide in the model argument (e.g., `"B&L-B"`). The formula can be
 #'   changed for example to include further variables into the regression model.
+#'   The response of the model is `cbind()` of the variables given in `dvar`. A
+#'   custom formula has to use the same form, for example
+#'   `cbind(var1, var2) ~ 1 + mt + phaseB`.
 #' @param update An easier way to change the regression formula (e.g., `. ~ . +
 #'   newvariable`).
 #' @param na.action Defines how to deal with missing values.
@@ -96,9 +99,13 @@ mplm <- function(data, dvar, mvar, pvar,
   
   data <- tmp_model$data[[1]]
 
+  # the response is written out, so that the formula resolves in the data
+  # instead of in an enclosing environment
+  formula_dv <- paste0("cbind(", paste(dvar, collapse = ", "), ")")
+  
   if (is.null(formula)) {
     formula <- .create_fixed_formula(
-      dvar = "y", 
+      dvar = formula_dv, 
       mvar = mvar, 
       slope = slope, 
       level = level, 
@@ -107,15 +114,42 @@ mplm <- function(data, dvar, mvar, pvar,
       var_inter = tmp_model$var_inter
     )
   }
-
+  
   if (!is.null(update)) formula <- update(formula, update)
-
-  y <- as.matrix(data[, dvar])
- 
+  
   full <- lm(formula, data = data, na.action = na.action, ...)
   full$coef_std <- .std_lm(full)
   
-  null <- lm(y ~ 1, na.action = na.action, ...)
+  # the null model has to be fitted on the rows the full model actually used
+  dropped <- attr(model.frame(full), "na.action")
+  data_used <- if (is.null(dropped)) data else data[-dropped, , drop = FALSE]
+  
+  null <- lm(
+    as.formula(paste0(formula_dv, " ~ 1")), 
+    data = data_used, 
+    na.action = na.action, 
+    ...
+  )
+  # if (is.null(formula)) {
+  #   formula <- .create_fixed_formula(
+  #     dvar = "y", 
+  #     mvar = mvar, 
+  #     slope = slope, 
+  #     level = level, 
+  #     trend = trend, 
+  #     var_phase = tmp_model$var_phase, 
+  #     var_inter = tmp_model$var_inter
+  #   )
+  # }
+  # 
+  # if (!is.null(update)) formula <- update(formula, update)
+  # 
+  # y <- as.matrix(data[, dvar])
+  # 
+  # full <- lm(formula, data = data, na.action = na.action, ...)
+  # full$coef_std <- .std_lm(full)
+  # 
+  # null <- lm(y ~ 1, na.action = na.action, ...)
   
   out <- structure(
     list(
