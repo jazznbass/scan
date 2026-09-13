@@ -34,7 +34,6 @@ is \code{phases = c(1,2)}.}
    \code{overlap} \tab A data frame consisting of the following indices for each single-case for all cases: PND, PEM, PET, NAP, PAND, IRD, Tau-U (A vs. B - Trend A), Diff_mean, Diff_trend, SMD, Hedges-g. \cr
    \code{phases.A} \tab Selection for A phase. \cr
    \code{phases.B} \tab Selection for B phase. \cr
-   \code{design} \tab Phase design. \cr
 }
 }
 \description{
@@ -50,6 +49,7 @@ See corresponding functions of PND, PEM, PET, NAP, PAND for
 calculation. Tau_U(A) reports "A vs. B - Trend A" whereas Tau_U(BA) reports
 "A vs. B + Trend B - Trend A". Base_Tau is baseline corrected tau
 (correction applied when autocorrelation in phase A is significant).
+PAND is calculated with the sort method (see \code{\link[=pand]{pand()}}).
 Diff_mean is the mean difference. Diff_trend is the difference in the
 regression estimation of the dependent variable on measurement-time (\code{x ~ mt}) for each phase. SMD is the mean difference divided by the standard
 deviation of phase A. Hedges_g is the mean difference divided by the pooled

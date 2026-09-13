@@ -12,6 +12,7 @@
 #'   calculation. Tau_U(A) reports "A vs. B - Trend A" whereas Tau_U(BA) reports
 #'   "A vs. B + Trend B - Trend A". Base_Tau is baseline corrected tau
 #'   (correction applied when autocorrelation in phase A is significant).
+#'   PAND is calculated with the sort method (see [pand()]).
 #'   Diff_mean is the mean difference. Diff_trend is the difference in the
 #'   regression estimation of the dependent variable on measurement-time (`x ~
 #'   mt`) for each phase. SMD is the mean difference divided by the standard
@@ -25,7 +26,6 @@
 #'  | `overlap` | A data frame consisting of the following indices for each single-case for all cases: PND, PEM, PET, NAP, PAND, IRD, Tau-U (A vs. B - Trend A), Diff_mean, Diff_trend, SMD, Hedges-g. |
 #'  | `phases.A` | Selection for A phase. |
 #'  | `phases.B` | Selection for B phase. |
-#'  | `design` | Phase design. |
 #' @family overlap functions
 #' @author Juergen Wilbert
 #' @seealso [pnd()], [pem()], [pet()], [nap()], [pand()], [ird()], [tau_u()], [corrected_tau()]

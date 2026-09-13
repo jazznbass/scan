@@ -1,18 +1,48 @@
 # scan 0.68.3
 
-- resolved minor bugs in the scdf() phase definition.
-- resolved minor bugs in the combine() /c() function.
-- resolved minor bugs in the center_at() function.
-- resolved minor bugs in the set_na_at() function.
-- resolved minor bugs in the as.data.frame.scdf() function.
-- resolved minor bugs in the transform() function that now allows to calculate a vlaue based on multiple expressions: 
+- Fixed bugs in `scdf()` phase definitions.
+- Fixed case naming in `combine()` / `c()`.
+- Corrected the centering position in `center_at()`.
+- Prevented out-of-range replacements in `set_na_at()`.
+- Fixed custom level-2 IDs and prevented column overwrites in `as.data.frame.scdf()`.
+- Fixed long expressions and access to caller-local variables in `transform()` helpers.
+- Fixed logical row filters and empty case selections in `subset.scdf()`.
+- Fixed `fill_missing()` for insufficient interpolation data, repeated measurement times, and cases with fewer than two observations.
+- Preserved supplied measurement times in `fill_missing()` instead of rounding them.
+- Prevented duplicate interpolated observations in `fill_missing()` when rows are out of time order.
+- Fixed automatic phase naming in `select_phases()` to use each case's own phase names.
+- Preserved phase selection in `pnd()` with missing values and returned `NA` when either selected phase has no observations.
+- Preserved phase selection before NA removal in `pem()`, `nap()`, `pand()`, `ird()`, `corrected_tau()`, and `cdc()`.
+- Handled empty phases in PEM/NAP and excluded unusable cases from PAND/IRD with correct case counts.
+- Handled insufficient data in `corrected_tau()` and `cdc()`; CDC overall results remain missing when any case is unevaluable.
+- Fixed phase selection and missing-data handling in `pet()`; two baseline observations allow PET and its binomial test, while PET CI requires at least three.
+- Fixed phase selection and phase-B counts in `rci()`; require at least two observed values per selected phase.
+- Preserved phase selection before NA removal in `rand_test()` and reject cases with no observed values in either selected phase.
+- Fixed tie handling in `pand(method = "sort")`: the `decreasing` argument no longer reverses the phase tiebreak, so both directions are now treated symmetrically.
+- Fixed the construction of combined phase names in `recombine_phases()` when phases are selected by name; the labels reported by `ird()` were built from the wrong index vector.
+- Fixed `tau_u()` for cases with fewer than two observed values in a phase. Such cases previously produced a plausible looking but invalid Tau-U; they now return `NA` with a warning. The meta analysis returns `NA` when any case is unevaluable.
+- Fixed the zero variance check in the internal Kendall tau computation, which tested the first variable twice and never the second. A constant second variable silently returned `NaN`; it now issues a warning. Computing tau with fewer than two data points now raises an error instead of returning undefined values.
+- Fixed `trend()` for custom models with more than one predictor. Such models silently reported the second raw coefficient in the `Beta` column; they now raise an informative error. The `model` argument no longer lists `phase` as an available parameter, as phase terms cannot be estimated within a single phase.
+- Fixed `fill_missing()`, which no longer replaced `NA` values of the measured variables. Missing values are now interpolated wherever they occur, both in added measurement times and in existing measurements.
+- `fill_missing()` now also determines measurement times that are missing at the beginning or the end of a series.
+- `fill_missing()` returns a case unchanged (with a warning) when measurement times remain unknown. Previously such observations were pushed to the end of the series and replaced by interpolated values.
+- `fill_missing()` gained a `mark` argument adding a logical variable `interpolated` that flags every measurement containing an interpolated value. Interpolation deliberately ignores the phase structure; see the help page.
+- Renumbered the rows returned by `fill_missing()` instead of labelling interpolated measurements `NA`.
+- Long messages and warnings are now truncated at a word boundary instead of in the middle of a word. Shortened the `tau_u()` warning for unevaluable cases, which lost its final sentence to truncation.
+- Fixed `export()` for `pand(method = "minimum")`, which failed because it accessed statistics that only exist for `method = "sort"`. Renamed the result field `perc_overlaps` to `perc_overlap` to match `method = "sort"` and the documentation.
+- Fixed `moving_mean()` and `moving_median()` for series shorter than the smoothing window. They failed with an indexing error; the values are now returned unchanged with a warning.
+- Fixed `tau_u(ci = NULL)`, which failed in the meta analysis although the documentation offers `NULL` as a way to suppress confidence intervals. The `ci` argument is now validated and accepts `NULL`, `NA`, or a value between 0 and 1.
+- `autocorr()` now reports missing values in the dependent variable with an informative message pointing to `fill_missing()`, instead of failing inside `acf()`. A new `na.action` argument allows to compute autocorrelations from incomplete series.
+- Fixed `autocorr()` for phases with fewer than two observations, which failed with an indexing error. Such phases now return `NA`, as documented for lags exceeding the length of a phase.
+- `scdf()` rejects a phase design that is defined in more than one way. The help page described a priority order that no longer applies and did not match the previous behaviour either.
+- Fixed `scdf(phase_starts = ...)` for data with repeated measurement times, which failed with an uninformative comparison error. Repeated measurement times are now reported, and the check for the first phase start no longer depends on list simplification.
+- Renamed the `cdc()` result fields `cdc_be` and `cdc_b` to `cdc_exc` and `cdc_nb`, the names the help page has always documented. The undocumented `phases` entry was removed from the documentation, as it was never returned.
+- Documented that `overlap()` reports PAND for `method = "sort"` while IRD is based on `method = "minimum"`, so the two columns are not algebraically linked. Removed the `design` entry from the documented return value, which the function never returned.
+- Removed the `mvar` argument from `smd()`. It had no effect, as standardized mean differences do not use the measurement-time variable.
+- The note on the variables used in an analysis no longer fails when an object does not carry all three variable attributes, and reports only the attributes that are set.
+- `as_scdf()` keeps every case a data frame even when a single variable remains after removing the case variable, and checks the case variable for missing values also when it had to be created.
+- Corrected a misplaced parenthesis in the internal phase recombination, where the test for dropped cases measured the length of a comparison instead of the number of dropped cases.
 
-```.r
-transform(
-  study,
-  adjusted = values - mean(values[phase == "A"], na.rm = TRUE) + mean(values[phase == "B"], na.rm = TRUE)
-)
-```
 
 # scan 0.68.1
 

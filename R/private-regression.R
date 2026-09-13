@@ -50,7 +50,6 @@ rename_predictors <- function(rn, x) {
   if (identical(style, "no")) return(rn)
   
   str_mt <- attr(x, opt("mt"))
-  str_phase <- attr(x, opt("phase"))
   str_slope <- getOption("scan.string.dummy.slope")
   str_phase <- getOption("scan.string.dummy.phase")
   
@@ -58,20 +57,20 @@ rename_predictors <- function(rn, x) {
     rn[which(rn == str_mt)] <- paste0("Trend (", str_mt, ")")
     rn <- gsub("(Intercept)", "Intercept", rn, fixed = TRUE)
     rn <- gsub(
-      paste0(str_phase, "(\\w+)"), 
+      paste0("^", str_phase, "(\\w+)$"), 
       paste0("Level phase \\1 (", str_phase, "\\1)"), 
       rn
     )
     rn <- gsub(
-      paste0(str_slope, "(\\w+)"), 
+      paste0("^", str_slope, "(\\w+)$"), 
       paste0("Slope phase \\1 (", str_slope, "\\1)"), 
       rn
     )
   } else if (style == "concise"){
     rn[which(rn == str_mt)] <- "Trend"
     rn <- gsub("(Intercept)", "Intercept", rn, fixed = TRUE)
-    rn <- gsub(paste0(str_phase, "(\\w+)"), "Level \\1", rn)
-    rn <- gsub(paste0(str_slope, "(\\w+)"), "Slope \\1", rn)
+    rn <- gsub(paste0("^", str_phase, "(\\w+)$"), "Level \\1", rn)
+    rn <- gsub(paste0("^", str_slope, "(\\w+)$"), "Slope \\1", rn)
   } else {
     abort("Ill defined scan.rename.predictors option.", 
          "Must be one of 'concise', 'full' or, 'no'.")

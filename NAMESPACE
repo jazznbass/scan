@@ -161,6 +161,7 @@ importFrom(magrittr,"%>%")
 importFrom(utils,
   capture.output,
   combn,
+  head,
   install.packages,
   read.csv
 )

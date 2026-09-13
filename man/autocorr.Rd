@@ -10,7 +10,16 @@
 
 \method{export}{sc_ac}(object, caption = NA, footnote = NA, filename = NA, round = 3, ...)
 
-autocorr(data, dvar, pvar, mvar, lag_max = 3, lag.max, ...)
+autocorr(
+  data,
+  dvar,
+  pvar,
+  mvar,
+  lag_max = 3,
+  na.action = na.fail,
+  lag.max,
+  ...
+)
 }
 \arguments{
 \item{x}{An object returned by \code{\link[=autocorr]{autocorr()}}}
@@ -46,6 +55,11 @@ the attributes in the scdf file.}
 Defaults to the attributes in the scdf file.}
 
 \item{lag_max, lag.max}{The lag up to which autocorrelations will be computed.}
+
+\item{na.action}{How to handle missing values, passed to \code{\link[=acf]{acf()}}. The
+default \code{\link[=na.fail]{na.fail()}} stops with an informative message; use \code{\link[=na.pass]{na.pass()}} to
+compute autocorrelations from the incomplete series. Note that \code{acf()}
+returns \code{NA} for lags it cannot estimate from the available pairs.}
 }
 \value{
 A data frame containing separate autocorrelations for each phase and

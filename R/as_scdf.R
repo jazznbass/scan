@@ -33,6 +33,12 @@ as_scdf <- function(object,
   
   ## check file -----
   
+  # the case variable has to exist before it can be checked for missings
+  if (!cvar %in% names(object)) {
+    notify("Casename variable not found. Assuming one case.")
+    object[[cvar]] <- "unnamed"
+  }
+  
   check_args(
     is_true(dvar %in% names(object), "Variable '", dvar, "' is missing."),
     is_true(mvar %in% names(object), "Variable '", mvar, "' is missing."),
@@ -40,11 +46,6 @@ as_scdf <- function(object,
     not(any(is.na(object[[cvar]])), "Variable '", cvar, "' has a missing value."),
     not(any(is.na(object[[pvar]])), "Variable '", pvar, "' has a missing value.")
   )
-  
-  if (!cvar %in% names(object)) {
-    notify("Casename variable not found. Assuming one case.")
-    object[[cvar]] <- "unnamed"
-  }
 
 
   if (!sort_cases) {
@@ -59,7 +60,7 @@ as_scdf <- function(object,
   case_names <- levels(object[[cvar]])
   object <- split(object, object[[cvar]])
   object <- lapply(object, function(x) {
-    x[, -which(names(x) == cvar)]
+    x[, names(x) != cvar, drop = FALSE]
   })
   names(object) <- case_names
 

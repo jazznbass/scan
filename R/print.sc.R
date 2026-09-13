@@ -10,20 +10,38 @@ NULL
 
 
 .note_vars <- function(x) {
-  v <- any(attr(x, opt("dv")) != "values")
-  p <- attr(x, opt("phase")) != "phase"
-  m <- attr(x, opt("mt")) != "mt"
-  if (v || p || m) { 
-    cat(
-      "\nThe following variables were used in this analysis:\n'", 
-      paste0(attr(x, opt("dv")), collapse = "/ "), 
-      "' as dependent variable, '", 
-      paste0(attr(x, opt("phase")), collapse = "/ "), 
-      "' as phase variable, and '", 
-      paste0(attr(x, opt("mt")), collapse = "/ "), 
-      "' as measurement-time variable.\n", 
-      sep = ""
+
+  var_dv    <- attr(x, opt("dv"))
+  var_phase <- attr(x, opt("phase"))
+  var_mt    <- attr(x, opt("mt"))
+
+  # attributes that are not set are neither checked nor reported
+  changed <- c(
+    any(var_dv    != "values"),
+    any(var_phase != "phase"),
+    any(var_mt    != "mt")
+  )
+  if (!any(changed)) return(invisible(NULL))
+
+  parts <- c(
+    if (!is.null(var_dv)) paste0(
+      "'", paste0(var_dv, collapse = "/ "), "' as dependent variable"
+    ),
+    if (!is.null(var_phase)) paste0(
+      "'", paste0(var_phase, collapse = "/ "), "' as phase variable"
+    ),
+    if (!is.null(var_mt)) paste0(
+      "'", paste0(var_mt, collapse = "/ "), "' as measurement-time variable"
     )
+  )
+  if (length(parts) > 1) {
+    parts[length(parts)] <- paste0("and ", parts[length(parts)])
   }
+
+  cat(
+    "\nThe following variables were used in this analysis:\n",
+    paste0(parts, collapse = ", "), ".\n",
+    sep = ""
+  )
 }
 

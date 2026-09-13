@@ -47,11 +47,8 @@
 #'   measurement times indicated in the vector.
 #'   If `phase_design` is provided, it is used directly to define the phase
 #'   design.
-#'   If multiple of these options are provided, the priority order is:
-#'   `phase_design`, `phase_starts`, `B_start`, phase variable in
-#'   data frame, names of dependent variable.
-#'   
-#'   If none of these options are provided, an error is raised.
+#'   Defining the phase design in more than one way raises an error.
+#'   And if none of these options are provided, an error is raised.
 #'   
 #'   The function can be used to create single-case data frames for multiple cases
 #'   separately, which can then be combined into a list for multiple-case
@@ -251,19 +248,29 @@ phase_starts2phase_design <- function(starts, mt) {
   if (length(starts) < 2) {
     abort("phase_starts must contain at least two phases.")
   }
+  
   ids <- lapply(starts, function(x) which(x == mt))
-  check <- lapply(ids, function(x) {
-    if (length(x) == 0) 
-      abort("phase_starts not defined correctly. ", 
-           "Measurement time does not exist.")
-  })
-
-  if (ids[1] != 1) {
-    abort("phase_starts not defined correctly. ", 
-         "First phase must start at the first measurement time which is ", 
-         mt[1], ".")
+  
+  if (any(lengths(ids) == 0)) {
+    abort(
+      "phase_starts not defined correctly. ",
+      "Measurement time does not exist."
+    )
   }
-    
+  
+  if (any(lengths(ids) > 1)) {
+    abort(
+      "phase_starts not defined correctly. ",
+      "Measurement times must be unique."
+    )
+  }
+  
+  if (ids[[1]][1] != 1) {
+    abort("phase_starts not defined correctly. ",
+          "First phase must start at the first measurement time which is ",
+          mt[1], ".")
+  }
+  
   phase_design <- vector("list", length(starts))
   for (i in 2:length(ids)) {
     phase_design[[i - 1]] <- ids[[i]] - ids[[i - 1]]
@@ -273,5 +280,5 @@ phase_starts2phase_design <- function(starts, mt) {
   
   names(phase_design) <- names(starts)
   
-  phase_design
+  unlist(phase_design)
 }

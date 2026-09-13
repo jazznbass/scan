@@ -21,13 +21,12 @@
 #' @examples
 #' smd(exampleAB)
 #' @export
-smd <- function(data, dvar, pvar, mvar, 
+smd <- function(data, dvar, pvar,
                 phases = c(1, 2)) {
   
   # set defaults attributes
   if (missing(dvar)) dvar <- dv(data) else dv(data) <- dvar
   if (missing(pvar)) pvar <- phase(data) else phase(data) <- pvar
-  if (missing(mvar)) mvar <- mt(data) else mt(data) <- mvar
   
   data_list <- .prepare_scdf(data)
   
@@ -94,7 +93,7 @@ smd <- function(data, dvar, pvar, mvar,
   class(out) <- c("sc_smd")
   
   source_attributes <- attributes(data_list)[[opt("scdf")]]
-  nm <- opts("phase", "mt", "dv")
+  nm <- opts("phase", "dv")
   attributes(out)[nm] <- source_attributes[nm]
   
   out

@@ -29,7 +29,6 @@
 #'  | `decreasing` | Logical argument from function call (see Arguments above). |
 #'  | `conservative` | Numeric argument from function call (see Arguments above). |
 #'  | `case_names` | Assigned name of single-case. |
-#'  | `phases` | - |
 #' @author Timo Lueke
 #' @references Fisher, W. W., Kelley, M. E., & Lomas, J. E. (2003). Visual Aids
 #'   and Structured Criteria for Improving Visual Inspection and Interpretation
@@ -199,8 +198,8 @@ cdc <- function(data,
 
   out <- list(
     cdc = cdc,
-    cdc_be = cdc_exc,
-    cdc_b = cdc_nb,
+    cdc_exc = cdc_exc,
+    cdc_nb = cdc_nb,
     cdc_p = cdc_p,
     cdc_all = cdc_all,
     N = n_cases,

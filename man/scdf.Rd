@@ -76,11 +76,8 @@ If \code{phase_starts} is provided, the phase design is constructed based on the
 measurement times indicated in the vector.
 If \code{phase_design} is provided, it is used directly to define the phase
 design.
-If multiple of these options are provided, the priority order is:
-\code{phase_design}, \code{phase_starts}, \code{B_start}, phase variable in
-data frame, names of dependent variable.
-
-If none of these options are provided, an error is raised.
+Defining the phase design in more than one way raises an error.
+And if none of these options are provided, an error is raised.
 
 The function can be used to create single-case data frames for multiple cases
 separately, which can then be combined into a list for multiple-case

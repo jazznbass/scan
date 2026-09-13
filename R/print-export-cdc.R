@@ -10,8 +10,8 @@ print.sc_cdc <- function(x, nice = TRUE, ...) {
   if (nice) x$cdc_p <- .nice_p(x$cdc_p)
   out <- data.frame(
     Case = x$case_names,
-    "nB improve" = x$cdc_be,
-    "nB" = x$cdc_b,
+    "nB improve" = x$cdc_exc,
+    "nB" = x$cdc_nb,
     "binom p" = x$cdc_p,
     "CDC Evaluation" = x$cdc,
     check.names = FALSE
@@ -73,8 +73,8 @@ export.sc_cdc <- function(object,
   if (nice) object$cdc_p <- .nice_p(object$cdc_p)
   out <- data.frame(
     Case = object$case_names,
-    "nB improve" = object$cdc_be,
-    "nB" = object$cdc_b,
+    "nB improve" = object$cdc_exc,
+    "nB" = object$cdc_nb,
     "binom p" = object$cdc_p,
     "CDC Evaluation" = object$cdc,
     check.names = FALSE

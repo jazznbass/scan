@@ -84,7 +84,6 @@ is \code{phases = c(1,2)}.}
    \code{decreasing} \tab Logical argument from function call (see Arguments above). \cr
    \code{conservative} \tab Numeric argument from function call (see Arguments above). \cr
    \code{case_names} \tab Assigned name of single-case. \cr
-   \code{phases} \tab - \cr
 }
 }
 \description{

@@ -105,7 +105,7 @@ recombine_phases <- function(data,
   }
   
   if (length(warning) > 0) warn(paste0(warning, collapse = "  "))
-  if (length(dropped_cases > 0)) {
+  if (length(dropped_cases) > 0) {
     data <- data[-dropped_cases]
     design_list <- design_list[-dropped_cases]
     source_attributes$names <- source_attributes$names[-dropped_cases]

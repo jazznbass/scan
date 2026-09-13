@@ -4,7 +4,7 @@
 \alias{smd}
 \title{Standardized mean differences for single-case data}
 \usage{
-smd(data, dvar, pvar, mvar, phases = c(1, 2))
+smd(data, dvar, pvar, phases = c(1, 2))
 }
 \arguments{
 \item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
@@ -15,9 +15,6 @@ Defaults to the attributes in the scdf file.}
 
 \item{pvar}{Character string with the name of the phase variable. Defaults to
 the attributes in the scdf file.}
-
-\item{mvar}{Character string with the name of the measurement time variable.
-Defaults to the attributes in the scdf file.}
 
 \item{phases}{A vector of two characters or numbers indicating the two phases
 that should be compared. E.g., \code{phases = c("A","C")} or \code{phases = c(2,4)}
