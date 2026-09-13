@@ -76,7 +76,14 @@ read_scdf <- function(file,
   }
   
   if (is.na(type)) {
-    type <- tolower(tools::file_ext(file))#substring(file, regexpr("\\.([[:alnum:]]+)$", file) + 1)
+    type <- tolower(tools::file_ext(file))
+  }
+  
+  type <- tolower(type)
+  
+  if (!type %in% c("csv", "yml", "yaml", "excel", "xlsx", "xls", "data")) {
+    abort("Can not read a file of type '", type, "'. ",
+          "Use csv, xlsx, xls, yml, or yaml.")
   }
   
   if (type == "csv") {

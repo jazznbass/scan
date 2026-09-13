@@ -40,6 +40,7 @@
 #' @export
 write_scdf <- function(data, filename = NULL, sep = ",", dec = ".", ...) {
   
+  if (is.null(filename)) filename <- ""
   utils::write.table(
     as.data.frame(data), 
     file = filename, 

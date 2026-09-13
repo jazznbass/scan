@@ -33,34 +33,42 @@ fetch <- function (object, what, ...) {
 
 #' @exportS3Method fetch sc_plm
 fetch.sc_plm <- function(object, what = "model", ...) {
-  if (what == "model") {
-    return(object$full.model)
-  }
+  check_args(
+    has_length(what, 1),
+    one_of(what, "model")
+  )
+  object$full.model
 }
 
 
 #' @exportS3Method fetch sc_hplm
 fetch.sc_hplm <- function(object, what = "model", ...) {
-  if (what == "model") {
-    return(object$hplm)
-  }
-  
+  check_args(
+    has_length(what, 1),
+    one_of(what, "model")
+  )
+  object$hplm
 }
 
 
 #' @exportS3Method fetch sc_bplm
 fetch.sc_bplm <- function(object, what = "model", ...) {
-  if (what == "model") {
-    return(object$mcmcglmm)
-  }
+  check_args(
+    has_length(what, 1),
+    one_of(what, "model")
+  )
+  object$mcmcglmm
 }
 
 #' @exportS3Method fetch sc_mplm
 fetch.sc_mplm <- function(object, what = "model", ...) {
-  if (what == "model") {
-    return(object$full.model)
-  }
+  check_args(
+    has_length(what, 1),
+    one_of(what, "model")
+  )
+  object$full.model
 }
+
 
 
 

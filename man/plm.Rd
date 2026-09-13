@@ -158,7 +158,16 @@ R squared for each model parameter.}
 above).}
 \item{family}{Distribution family from function call
 (see \code{Arguments} above).}
+\item{contrast}{List with the level and slope contrast definitions.}
+\item{var_trials}{Number of trials from function call (see \code{Arguments}
+above), only for binomial regressions.}
+\item{dvar_percentage}{Logical from function call (see \code{Arguments}
+above), only for binomial regressions.}
 \item{full.model}{Full regression model list from the gls or glm function.}
+\item{data}{The data the model was fitted to, including the dummy variables
+for level and slope effects. For a binomial regression with
+\code{dvar_percentage = FALSE} the dependent variable holds the proportions
+that were modelled, not the counts that were passed in.}
 }
 \description{
 The \code{plm} function computes a piecewise regression model (see Huitema &

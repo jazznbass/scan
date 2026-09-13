@@ -104,13 +104,13 @@ convert <- function(scdf,
 format_phase_design <- function(inline, design, def_string, sindent) {
   if (!inline) {
     phase_design <- paste0(
-      design$values, " = ", design$lengths,
+      encodeString(design$values, quote = '"'), " = ", design$lengths,
       collapse = ", "
     )
     phase_design <- paste0("phase_design = c(", phase_design, ")")
     phase_design <- paste0(",\n", sindent, phase_design)
   } else {
-    phase_design <- paste0(",\n")
+    phase_design <- ""
   }
 
   phase_design
@@ -132,9 +132,9 @@ format_body <- function(case,
   for (i in seq_along(var_names)) {
     values <- case[, var_names[i]]
 
-    if (var_names[i] == attr_case[[opt("mt")]]) {
-      if (all(seq_along(values) == values)) next
-    }
+    if (var_names[i] == attr_case[[opt("mt")]] &&
+        i == length(var_names) &&
+        isTRUE(all(seq_along(values) == values))) next
 
     if (is.numeric(values)) {
       values_string <- paste0(values, collapse = ", ")
@@ -144,13 +144,17 @@ format_body <- function(case,
     }
 
     if (var_names[i] == attr_case[[opt("dv")]] && inline) {
-      x <- split(
-        case[[attr_case[[opt("dv")]]]], 
-        case[[attr_case[[opt("phase")]]]]
+      design <- rle(as.character(case[[attr_case[[opt("phase")]]]]))
+      section <- factor(
+        rep(seq_along(design$lengths), design$lengths),
+        levels = seq_along(design$lengths)
       )
+      x <- split(case[[attr_case[[opt("dv")]]]], section)
+      names(x) <- design$values
       x <- mapply(
         function(x, n) {
-          paste0(n, " = ", paste0(x, collapse = ", "), collapse = "")
+          paste0(encodeString(n, quote = '"'), " = ", 
+                 paste0(x, collapse = ", "), collapse = "")
         },
         x, names(x)
       )
@@ -211,7 +215,7 @@ format_definition <- function(var_dv,
   }
   def_string <- paste0(def_string, collapse = ", \n")
 
-  if (!inline && def_string != "")
+  if (def_string != "")
     def_string <- paste0(",\n", def_string)
 
   def_string
