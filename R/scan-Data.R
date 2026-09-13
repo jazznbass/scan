@@ -101,13 +101,13 @@
 #' *Journal of Neurotherapy, 15*, 160–169.
 #'
 #' @aliases Beretvas2008 Borckardt2014 Huitema2000 Waddell2011 byHeart2011
-#'   Grosche2011 Grosche2014 GruenkeWilbert2014 Huber2014 example_A24
-#'   exampleAB_simple exampleAB exampleAB_add exampleAB_decreasing
-#'   exampleAB_score exampleABC exampleABC_outlier exampleABC_50 exampleABAB
-#'   exampleA1B1A2B2 exampleA1B1A2B2_zvt exampleAB_50 exampleAB_50.l2
-#'   exampleABC_150 exampleAB_mpd example_stranger example_atd Lenz2013
-#'   Leidig2018 Leidig2018_l2 SSDforR2017 Parker2011 Parker2007 Parker2009
-#'   Parker2009b Parker2011b Tarlow2017
+#' @aliases Grosche2011 Grosche2014 GruenkeWilbert2014 Huber2014 example_A24
+#' @aliases exampleAB_simple exampleAB exampleAB_add exampleAB_decreasing exampleAB_score
+#' @aliases exampleABC exampleABC_outlier exampleABC_50 exampleABAB exampleA1B1A2B2
+#' @aliases exampleA1B1A2B2_zvt exampleAB_50 exampleAB_50.l2 exampleABC_150 exampleAB_mpd
+#' @aliases example_stranger example_atd Lenz2013 Leidig2018 Leidig2018_l2
+#' @aliases SSDforR2017 Parker2011 Parker2007 Parker2009 Parker2009b
+#' @aliases Parker2011b Tarlow2017
 #' @author Juergen Wilbert
 #' @keywords datasets
 #' @name example_data_sets
