@@ -66,7 +66,10 @@
 #'   model. The formula can be changed to include random slope effects for
 #'   level, trend, and treatment effects.
 #' @param ar Maximal lag of autoregression. Modelled based on the
-#'   Autoregressive-Moving Average (ARMA) function.
+#'   Autoregressive-Moving Average (ARMA) function. The autocorrelation is
+#'   modelled along the measurement-time variable, so its values must be whole
+#'   numbers and unique within a case. Otherwise a warning is given and `ar` is
+#'   set to `0`.
 #' @param unequal_variances Logical. If set TRUE, estimations are weighted by
 #'   phase variances.
 #' @param update.fixed An easier way to change the fixed model part (e.g., `. ~
@@ -211,6 +214,18 @@ hplm <- function(data, dvar, pvar, mvar,
   out$formula <- list(fixed = fixed, random = random)
 
   if (ar > 0) {
+    valid_time <- unlist(tapply(dat[[mvar]], dat$case, .valid_arma_time))
+    if (!isTRUE(all(valid_time))) {
+      warn(
+        "Measurement times in '", mvar, "' are not unique whole numbers ",
+        "within each case. Autocorrelation can not be modelled; ",
+        "ar is set to 0."
+      )
+      ar <- 0
+    }
+  }
+  
+  if (ar > 0) {
     args_add$correlation <- corARMA(
       form = as.formula(paste0("~", mvar, " | case")), 
       p = ar, q = 0
@@ -234,19 +249,6 @@ hplm <- function(data, dvar, pvar, mvar,
  
 # lme hplm model ----------------------------------------------------------
   out$hplm <- do.call(lme, args) 
-  
-  # check:
-  #out$hplm <- lme(
-  #  fixed = fixed,
-  #  random = random,
-  #  data = dat,
-  #  na.action = na.omit,
-  #  method = method,
-  #  control = control,
-  #  keep.data = FALSE,
-  #  ...
-  #)
-
   out$hplm$call$fixed <- fixed
   out$hplm$call$random <- random
   out$hplm$call$data <- str2lang("dat")

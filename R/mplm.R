@@ -99,8 +99,6 @@ mplm <- function(data, dvar, mvar, pvar,
   
   data <- tmp_model$data[[1]]
 
-  # the response is written out, so that the formula resolves in the data
-  # instead of in an enclosing environment
   formula_dv <- paste0("cbind(", paste(dvar, collapse = ", "), ")")
   
   if (is.null(formula)) {
@@ -130,26 +128,6 @@ mplm <- function(data, dvar, mvar, pvar,
     na.action = na.action, 
     ...
   )
-  # if (is.null(formula)) {
-  #   formula <- .create_fixed_formula(
-  #     dvar = "y", 
-  #     mvar = mvar, 
-  #     slope = slope, 
-  #     level = level, 
-  #     trend = trend, 
-  #     var_phase = tmp_model$var_phase, 
-  #     var_inter = tmp_model$var_inter
-  #   )
-  # }
-  # 
-  # if (!is.null(update)) formula <- update(formula, update)
-  # 
-  # y <- as.matrix(data[, dvar])
-  # 
-  # full <- lm(formula, data = data, na.action = na.action, ...)
-  # full$coef_std <- .std_lm(full)
-  # 
-  # null <- lm(y ~ 1, na.action = na.action, ...)
   
   out <- structure(
     list(

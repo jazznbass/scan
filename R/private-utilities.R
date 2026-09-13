@@ -191,4 +191,13 @@ str_contrasts <- function(method, contrasts) {
   )
 }
 
-
+#' Check whether a measurement-time variable can carry an ARMA structure
+#'
+#' `nlme::corARMA()` requires unique integer positions within each group.
+#' Returns TRUE when `x` satisfies that, FALSE otherwise.
+#' @keywords internal
+#' @noRd
+.valid_arma_time <- function(x) {
+  x <- x[!is.na(x)]
+  length(x) > 0L && all(x == round(x)) && anyDuplicated(x) == 0L
+}

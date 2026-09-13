@@ -121,7 +121,10 @@ model. The formula can be changed to include random slope effects for
 level, trend, and treatment effects.}
 
 \item{ar}{Maximal lag of autoregression. Modelled based on the
-Autoregressive-Moving Average (ARMA) function.}
+Autoregressive-Moving Average (ARMA) function. The autocorrelation is
+modelled along the measurement-time variable, so its values must be whole
+numbers and unique within a case. Otherwise a warning is given and \code{ar} is
+set to \code{0}.}
 
 \item{unequal_variances}{Logical. If set TRUE, estimations are weighted by
 phase variances.}

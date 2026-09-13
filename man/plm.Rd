@@ -66,7 +66,10 @@ Defaults to the attributes in the scdf file.}
 
 \item{AR}{Maximal lag of autoregression. Modelled based on the
 Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
-argument must be set to \code{family = "gaussian"}.}
+argument must be set to \code{family = "gaussian"}. The autocorrelation is
+modelled along the measurement-time variable, so its values must be whole
+numbers and unique within a case. Otherwise a warning is given and \code{AR} is
+set to \code{0}.}
 
 \item{model}{Model used for calculating the dummy parameters (see Huitema &
 McKean, 2000). Default is \code{model = "W"}. Possible values are: \code{"B&L-B"},

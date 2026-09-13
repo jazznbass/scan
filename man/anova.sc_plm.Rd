@@ -40,7 +40,7 @@ anova(mod1, mod2)
 ## For glm models with family = "poisson"
 mod0 <- plm(example_A24, formula = injuries ~ 1, family = "poisson")
 mod1 <- plm(example_A24, trend = FALSE, family = "poisson")
-anova(mod0, mod1, mod2)
+anova(mod0, mod1)
 ## For glm with family = "binomial"
 mod0 <- plm(
   exampleAB_score$Christiano, 

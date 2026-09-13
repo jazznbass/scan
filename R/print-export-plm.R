@@ -92,19 +92,26 @@ export.sc_plm <- function(object,
   
   if (nice) out$p <- .nice_p(out$p)
   
+  has_ci <- !identical(ci, FALSE)
+  if (isTRUE(ci)) ci <- 0.95
+  has_or <- "OR" %in% names(out)
+  has_q  <- "Q"  %in% names(out)
+  
   if (is.na(footnote)) footnote <- c(
     paste0(results$fit), 
     paste0("AIC = ", round(results$aic)),
-    "LL = lower limit",
-    "UL = upper limit",
+    if (has_ci) "LL = lower limit",
+    if (has_ci) "UL = upper limit",
     str_contrasts(object$model, object$contrast)
   )
   
-  if (getOption("scan.export.engine") == "gt") {
+  spanner <- NULL
+  
+  if (has_ci && getOption("scan.export.engine") == "gt") {
     spanner <- list("CI" = 3:4)
-    if (object$family %in% c("poisson", "nbinomial")) {
+    if (has_or) {
       spanner[[" CI "]]  <- 9:10
-      if (q) spanner[["  CI  "]]  <- 12:13
+      if (has_q) spanner[["  CI  "]]  <- 12:13
     }
     names(spanner) <- gsub(
       "CI", paste0("CI(", ci * 100, "%)"), x = names(spanner)
@@ -118,13 +125,16 @@ export.sc_plm <- function(object,
     spanner = spanner
   )
   
-  if (getOption("scan.export.engine") == "kable") {
-    spanner <- c(" " = 2, "CI" = 2, " " = 4)
+  if (has_ci && getOption("scan.export.engine") == "kable") {
+    spanner <- c(" " = 2, "CI" = 2)
   
-    if (object$family %in% c("poisson", "nbinomial")) {
-      spanner <- c(spanner, "CI" = 2)
-      if (q) spanner <- c(spanner, " " = 1, "CI" = 2)
+    if (has_or) {
+      spanner <- c(spanner, " " = 4, "CI" = 2)
+      if (has_q) spanner <- c(spanner, " " = 1, "CI" = 2)
     }
+    
+    rest <- ncol(out) - sum(spanner)
+    if (rest > 0) spanner <- c(spanner, " " = rest)
     
     names(spanner) <- gsub(
       "CI", paste0("CI(", ci * 100, "%)"), x = names(spanner)
@@ -154,8 +164,9 @@ export.sc_plm <- function(object,
   report_r_squared <- if (is.null(x$r.squares) || identical(x$r.squares, NA)) 
     FALSE else TRUE
   
-  out$aic <- x$full.model$aic
-  if (!is.numeric(out$aic)) out$aic <- NA
+  out$aic <- tryCatch(as.numeric(AIC(x$full.model)), error = function(e) NA_real_)
+  if (!is.numeric(out$aic) || length(out$aic) != 1L) out$aic <- NA
+ 
   if (x$family == "poisson" || x$family == "binomial") {
     chi <- x$full$null.deviance - x$full$deviance
     df <- x$full$df.null - x$full$df.residual
@@ -187,12 +198,12 @@ export.sc_plm <- function(object,
   out$table <- round(out$table, round)
   out$table <- as.data.frame(out$table)
   names(out$table)[1:4] <- c("B", "SE", "t", "p")
-  
+  param_filter <- rep(TRUE, nrow(out$table))
   
   if (identical(ci, FALSE)) {
     if (x$family == "poisson" || x$family == "binomial") {
       OR <- exp(out$table[, "B"])
-      out$table <- cbind(out$table[, c("B", "SE", "t", "p")],  "OR" = round(OR$table, 3))
+      out$table <- cbind(out$table[, c("B", "SE", "t", "p")],  "OR" = round(OR, 3))
       if (q) {
         Q <- (OR - 1) / (OR + 1)
         out$table <- cbind(out$table, "Q" = round(Q, 2))
@@ -203,9 +214,7 @@ export.sc_plm <- function(object,
   ## ci ----
   if (!identical(ci, FALSE)) {
     if (isTRUE(ci)) ci <- 0.95
-    
-    #str_ci <- paste0(round(c((1 - ci) / 2, ci + ((1 - ci) / 2)) * 100, 2), "%")
-    
+
     if (format == "print") str_ci <- str_ci(ci)
     if (format == "export") str_ci <- c("LL", "UL")
     

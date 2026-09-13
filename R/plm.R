@@ -19,7 +19,10 @@
 #' @order 1
 #' @param AR Maximal lag of autoregression. Modelled based on the
 #'   Autoregressive-Moving Average (ARMA) function.  When AR is set, the family
-#'   argument must be set to `family = "gaussian"`.
+#'   argument must be set to `family = "gaussian"`. The autocorrelation is
+#'   modelled along the measurement-time variable, so its values must be whole
+#'   numbers and unique within a case. Otherwise a warning is given and `AR` is
+#'   set to `0`.
 #' @param family Set the distribution family. Defaults to a gaussian
 #'   distribution. See the `family` function for more details.
 #' @param formula Defaults to the standard piecewise regression model. The
@@ -52,7 +55,16 @@
 #'   above).}
 #' \item{family}{Distribution family from function call
 #'   (see `Arguments` above).}
+#' \item{contrast}{List with the level and slope contrast definitions.}
+#' \item{var_trials}{Number of trials from function call (see `Arguments`
+#'   above), only for binomial regressions.}
+#' \item{dvar_percentage}{Logical from function call (see `Arguments`
+#'   above), only for binomial regressions.}
 #'   \item{full.model}{Full regression model list from the gls or glm function.}
+#' \item{data}{The data the model was fitted to, including the dummy variables
+#'   for level and slope effects. For a binomial regression with
+#'   `dvar_percentage = FALSE` the dependent variable holds the proportions
+#'   that were modelled, not the counts that were passed in.}
 #' @author Juergen Wilbert
 #' @family regression functions
 #' @references Beretvas, S., & Chung, H. (2008). An evaluation of modified
@@ -156,8 +168,6 @@ plm <- function(data, dvar, pvar, mvar,
   
   original_attr <- attributes(data)[[opt("scdf")]]
   
-  regmodel <- if (AR == 0) "glm" else "gls"
-  
   # formula definition ------------------------------------------------------
   
   tmp_model <- .add_dummy_variables(
@@ -168,6 +178,16 @@ plm <- function(data, dvar, pvar, mvar,
   )
 
   data  <- tmp_model$data[[1]]
+  
+  if (AR > 0 && !.valid_arma_time(data[[mvar]])) {
+    warn(
+      "Measurement times in '", mvar, "' are not unique whole numbers. ",
+      "Autocorrelation can not be modelled; AR is set to 0."
+    )
+    AR <- 0
+  }
+  
+  regmodel <- if (AR == 0) "glm" else "gls"
   
   if(is.null(formula)) {
     formula <- .create_fixed_formula(
@@ -181,12 +201,6 @@ plm <- function(data, dvar, pvar, mvar,
   term_labels <- attr(terms(formula), "term.labels")
   predictors  <- if (length(term_labels)) term_labels else character(0)
   
-  #predictors <- as.character(formula[3])
-  #predictors <- unlist(strsplit(predictors, "\\+"))
-  #predictors <- trimws(predictors)
-  #if(!is.na(match("1", predictors)))
-  #  predictors <- predictors[-match("1", predictors)]
- 
   formula_full <- formula
   formulas_restricted  <- sapply(
     predictors, function(x) update(formula, formula(paste0(".~. - ", x)))
@@ -225,17 +239,19 @@ plm <- function(data, dvar, pvar, mvar,
   }
   
   if(regmodel == "gls") {
+    corr <- corARMA(form = as.formula(paste0("~", mvar)), p = AR, q = 0)
+    
     full <- gls(
-      formula_full, data = data, correlation = corARMA(p = AR), 
-      method = "ML", na.action = na.action
+      formula_full, data = data, correlation = corr, 
+      method = "ML", na.action = na.action, ...
     )
     
     if (r_squared) {
       restricted.models <- lapply(
         formulas_restricted, 
         function(x) 
-          gls(model = x, data = data, correlation = corARMA(p = AR), 
-              method = "ML", na.action = na.action
+          gls(model = x, data = data, correlation = corr, 
+              method = "ML", na.action = na.action, ...
           )
       )
     }
@@ -282,15 +298,6 @@ plm <- function(data, dvar, pvar, mvar,
       NA_real_
     }
     
-    #if (df_intercept == 1) {
-    #  total_variance <- qst / (n - 1) # identical to var(y)
-    #  mse <- var(residuals)
-    #} else {
-    #  total_variance <- qst / n
-    #  mse <- sum(residuals^2) / n
-    #}
-    #r2 <- 1 - mse / total_variance
-    
     r2 <- 1 - qse / qst
     r2_adj <- 1 - (1 - r2) * ((n - df_intercept) / df_residuals)
    
@@ -304,9 +311,6 @@ plm <- function(data, dvar, pvar, mvar,
     )
 
     if (r_squared) {
-      #r_squares <- lapply(restricted.models, function(x) 
-      #  r2 - (1 - (var(resid(x), na.rm = TRUE) / total_variance))
-      #)
       r_squares <- lapply(restricted.models, function(x)
         r2 - (1 - sum(resid(x)^2, na.rm = TRUE) / qst)
       )

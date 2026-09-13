@@ -23,7 +23,7 @@
 #' ## For glm models with family = "poisson"
 #' mod0 <- plm(example_A24, formula = injuries ~ 1, family = "poisson")
 #' mod1 <- plm(example_A24, trend = FALSE, family = "poisson")
-#' anova(mod0, mod1, mod2)
+#' anova(mod0, mod1)
 #' ## For glm with family = "binomial"
 #' mod0 <- plm(
 #'   exampleAB_score$Christiano, 
@@ -65,21 +65,18 @@ anova.sc_hplm <- function(object, ...) {
 
   models <- c(list(object$hplm), models)
 
-  id <- lapply(models, function(x) inherits(x, "lme")) |> unlist()
+  is_model <- vapply(models, inherits, logical(1), what = "lme")
   
-  str_models <- paste0("models[[", which(id), "]]", collapse = ", ")
+  arg_names <- names(models)
+  if (is.null(arg_names)) arg_names <- rep("", length(models))
   
-  id <- which(!id)
+  args <- c(
+    lapply(which(is_model), function(i) str2lang(paste0("models[[", i, "]]"))),
+    models[!is_model]
+  )
+  names(args) <- c(rep("", sum(is_model)), arg_names[!is_model])
   
-  str_args <- if (length(id > 0)) {
-    paste0(names(id), " = ", models[[id]], collapse = ", ")
-  } else {
-    NULL
-  }
-  
-  str <- paste0(c(str_models, str_args), collapse = ", ")
-  out <- paste0("anova(", str, ")")
-  out <- eval(str2lang(out))
+  out <- eval(as.call(c(list(quote(anova)), args)))
   row.names(out) <- NULL
   out
 }
