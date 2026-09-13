@@ -8,6 +8,7 @@
 - `scdf()` rejects a phase design that is defined in more than one way, instead of silently letting one definition win.
 - Regression models across several cases reject cases with differing phase designs and name the case, instead of failing later when the case data are combined.
 - Selecting an unknown case with `$` or `[` raises an error instead of returning an scdf whose case is `NULL`. Such an object looked valid and failed later with an unrelated message.
+- `plm()` models autocorrelation along the measurement-time variable, as `hplm()` already did. For cases whose measurement times are not consecutive the results change, because the gaps were previously ignored and the observations treated as equally spaced. Results for consecutive measurement times are unchanged.
 
 ## New features
 
@@ -67,12 +68,18 @@
 - Fixed `mplm()` for data with missing values. The dependent variables were combined into a matrix outside the data and the null model was fitted without the data, so the null model used all measurements while the full model dropped the incomplete ones. `anova()` and `print()` then failed with `models were not all fitted to the same size of dataset`. The dependent variables are now part of the model formula, and the null model is fitted to the rows the full model used.
 - Fixed `mplm(formula = ...)`. A user supplied formula was evaluated in the environment it was written in, where the response matrix did not exist, so `mplm(formula = y ~ mt + phaseB + interB)` failed with `variable lengths differ`. The response is now addressed by the names of the dependent variables.
 - `bplm()` keeps a random effects formula passed through the `random` argument. It was replaced without notice whenever `random_trend`, `random_level` or `random_slope` was set, although `random` is documented to overwrite the automatically created random part of the model.
+- `anova()` for `hplm()` objects passes additional arguments on unchanged. The call was assembled as text and the arguments were inserted by their value, so a character argument lost its quotes and `anova(model, type = "marginal")` failed with `object 'marginal' not found`, while more than one additional argument failed with `subscript out of bounds`.
+- `plm()` passes additional arguments on to `nlme::gls()` when `AR > 0`, as `...` is documented to do. They were dropped without notice, so arguments such as `weights` had no effect on the model and a misspelled argument went unnoticed instead of raising an error.
+- `plm()` and `hplm()` check the measurement times before modelling autocorrelation. `nlme::corARMA()` requires whole numbers that are unique within a case: `hplm(ar > 0)` stopped with `covariate must have unique integer values within groups for "corARMA" objects`, and `plm()` ignored the measurement times altogether. Both now report the problem and set the autoregression to 0.
 
 ### Messages and printed output
 
 - Long messages and warnings are truncated at a word boundary instead of in the middle of a word.
 - The note on the variables used in an analysis no longer fails when an object does not carry all three variable attributes, and reports only the attributes that are set.
 - `export()` for `hplm()` and `bplm()` uses a footnote passed through the `footnote` argument. It was replaced by the automatically generated footnote without notice. `export()` for `plm()` and `mplm()` was already correct.
+- `print()` and `export()` report the AIC of a `plm()` model with `AR > 0`. The value was taken from a list element that only `glm` objects carry, so it showed as `NA` for the `gls` models that are fitted when autocorrelation is modelled.
+- `print()` for `plm()` objects works with `ci = FALSE`, which the help page offers. It stopped with `object 'param_filter' not found`, because the variable is only created when confidence intervals are computed, and for Poisson and binomial models additionally with `$ operator is invalid for atomic vectors`.
+- `export()` for `plm()` objects derives the column groups of the table from the table itself instead of assuming its shape. Three things went wrong before. With `ci = FALSE` the confidence interval group was placed anyway, which labelled the `SE` and `t` columns as confidence limits and made Poisson models fail; `ci = TRUE` was labelled `CI(100%)` instead of `CI(95%)`. The group for the odds ratio limits was set for Poisson but not for binomial models, so every binomial export failed with the kable engine and lost its labels with the gt engine. And the kable groups assumed exactly one R squared column, so `r_squared = "none"` and `r_squared = c("delta", "partial")` failed. Of the 108 combinations of family, `ci`, `q`, `r_squared` and export engine, 70 either failed or produced a mislabelled table.
 
 ## Documentation
 
@@ -84,6 +91,9 @@
 - `hplm()`: documented that the likelihood ratio test accompanying the intraclass correlation tests a variance against zero, a parameter at the boundary of its parameter space, so the reported p value is conservative.
 - `mplm()`: the `formula` argument now states that the response is the `cbind()` of the dependent variables, e.g. `cbind(dv1, dv2) ~ 1 + mt + phaseB + interB`.
 - `bplm()`: the documented return value `mcmglmm` is named `mcmcglmm`, the description of `formula` referred to the hplm model, and an example announced a random slope while setting `random_level`.
+- `anova()`: the example for Poisson models compared them with a Gaussian model fitted to different data and a different response variable, which `anova.glm()` silently dropped again with a warning.
+- `plm()` and `hplm()`: the `AR` and `ar` arguments state that the measurement times must be whole numbers and unique within a case.
+- `plm()`: the documented return value lists the elements `contrast`, `var_trials`, `dvar_percentage` and `data`, which were returned but not described. For a binomial regression with `dvar_percentage = FALSE`, `data` holds the modelled proportions rather than the counts that were passed in.
 
 # scan 0.68.1
 
