@@ -17,6 +17,10 @@
 
 ## Bug fixes
 
+### General
+
+- Functions that validate their arguments can be called programmatically again. The argument check looked up the function definition by the name under which the function had been called, which fails whenever there is no such name. `do.call(plm, args)` stopped with `first argument has length > 1`, and calling a function through another one, as in `lapply(list_of_scdf, plm)`, with `object 'FUN' of mode 'function' was not found`. Affected were `plm()`, `hplm()`, `mplm()`, `bplm()`, `pand()`, `tau_u()`, `cdc()`, `corrected_tau()`, `between_smd()`, `rand_test()`, `design()` and `add_dummy_variables()`.
+
 ### Data structures and data preparation
 
 - Fixed bugs in `scdf()` phase definitions.
@@ -62,11 +66,13 @@
 - `hplm()` warns when cases are dropped from the model because of missing values. The reported number of cases refers to the data passed in, which could differ from the number actually estimated without any notice.
 - Fixed `mplm()` for data with missing values. The dependent variables were combined into a matrix outside the data and the null model was fitted without the data, so the null model used all measurements while the full model dropped the incomplete ones. `anova()` and `print()` then failed with `models were not all fitted to the same size of dataset`. The dependent variables are now part of the model formula, and the null model is fitted to the rows the full model used.
 - Fixed `mplm(formula = ...)`. A user supplied formula was evaluated in the environment it was written in, where the response matrix did not exist, so `mplm(formula = y ~ mt + phaseB + interB)` failed with `variable lengths differ`. The response is now addressed by the names of the dependent variables.
+- `bplm()` keeps a random effects formula passed through the `random` argument. It was replaced without notice whenever `random_trend`, `random_level` or `random_slope` was set, although `random` is documented to overwrite the automatically created random part of the model.
 
 ### Messages and printed output
 
 - Long messages and warnings are truncated at a word boundary instead of in the middle of a word.
 - The note on the variables used in an analysis no longer fails when an object does not carry all three variable attributes, and reports only the attributes that are set.
+- `export()` for `hplm()` and `bplm()` uses a footnote passed through the `footnote` argument. It was replaced by the automatically generated footnote without notice. `export()` for `plm()` and `mplm()` was already correct.
 
 ## Documentation
 
@@ -77,6 +83,7 @@
 - `hplm()`: the `data.l2` argument requires a column named `case`, not `cases` as the help page stated.
 - `hplm()`: documented that the likelihood ratio test accompanying the intraclass correlation tests a variance against zero, a parameter at the boundary of its parameter space, so the reported p value is conservative.
 - `mplm()`: the `formula` argument now states that the response is the `cbind()` of the dependent variables, e.g. `cbind(dv1, dv2) ~ 1 + mt + phaseB + interB`.
+- `bplm()`: the documented return value `mcmglmm` is named `mcmcglmm`, the description of `formula` referred to the hplm model, and an example announced a random slope while setting `random_level`.
 
 # scan 0.68.1
 

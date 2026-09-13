@@ -61,7 +61,7 @@ export.sc_bplm <- function(object,
     }
   }
   
-  footnote <- c(
+  if (is.na(footnote)) footnote <- c(
     str_contrasts(object$model$interaction.method, object$contrast),
     paste0("N = ", object$N, " cases")
   )
@@ -139,13 +139,15 @@ export.sc_bplm <- function(object,
       "Fixed effects (B-Structure)" = 1:nrow_b,
       "Random effects (G-Structure)" = (nrow_b + 1) : (nrow_b + nrow_g + 1),
       "Residuals (R-Structure)" = (nrow_b + nrow_g + 2) : (nrow_b + nrow_g + nrow_r + 2),
-      "Model" = (nrow_b + nrow_g + nrow_r + 2) : nrow(out)
+      "Model" = nrow(out)
+      #"Model" = (nrow_b + nrow_g + nrow_r + 2) : nrow(out)
     )
   } else {
     list(
       "Fixed effects (B-Structure)" = 1:nrow_b,
       "Residuals (R-Structure)" = (nrow_b + 1) : (nrow_b + nrow_r + 1),
-      "Model" = (nrow_b + nrow_r + 1) : nrow(out)
+      "Model" = nrow(out)
+      #"Model" = (nrow_b + nrow_r + 1) : nrow(out)
     )
   }
   

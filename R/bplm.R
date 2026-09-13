@@ -33,8 +33,8 @@
 #' @return An object of class `sc_bplm` with element:
 #' - `model` - List containing information about the applied model. 
 #' - `N` - Number of single-cases.
-#' - `formula` - A list containing the fixed and the random formulas of the hplm model. 
-#' - `mcmglmm` -  Object of class MCMglmm.
+#' - `formula` - A list containing the fixed and the random formulas of the bplm model. 
+#' - `mcmcglmm` -  Object of class MCMCglmm.
 #' - `contrast` -  List with contrast definitions.
 #' @author Juergen Wilbert
 #' @family regression functions
@@ -45,7 +45,7 @@
 #' # Multilevel plm regression with random intercept
 #' bplm(exampleAB_50, nitt = 5000)
 #'
-#' # Adding a random slope
+#' # Adding a random level effect
 #' bplm(exampleAB_50, random_level = TRUE, nitt = 5000)
 #'
 #' # Custom fixed formula
@@ -111,9 +111,7 @@ bplm <- function(data, dvar, pvar, mvar,
   }
   if (!is.null(update_fixed)) fixed <- update(fixed, update_fixed)
   
-  if (is.null(random) && N > 1) random <- ~case
-  
-  if (any(random_trend, random_level, random_slope)) {
+  if (is.null(random) && any(random_trend, random_level, random_slope)) {
     random <- .create_random_formula(
       mvar, 
       random_slope, 
@@ -124,6 +122,8 @@ bplm <- function(data, dvar, pvar, mvar,
       syntax = "mcmc"
     )
   }
+  
+  if (is.null(random) && N > 1) random <- ~case
   
   out$formula <- list(fixed = fixed, random = random)
   

@@ -118,8 +118,8 @@ An object of class \code{sc_bplm} with element:
 \itemize{
 \item \code{model} - List containing information about the applied model.
 \item \code{N} - Number of single-cases.
-\item \code{formula} - A list containing the fixed and the random formulas of the hplm model.
-\item \code{mcmglmm} -  Object of class MCMglmm.
+\item \code{formula} - A list containing the fixed and the random formulas of the bplm model.
+\item \code{mcmcglmm} -  Object of class MCMCglmm.
 \item \code{contrast} -  List with contrast definitions.
 }
 }
@@ -151,7 +151,7 @@ bplm(example_A24)
 # Multilevel plm regression with random intercept
 bplm(exampleAB_50, nitt = 5000)
 
-# Adding a random slope
+# Adding a random level effect
 bplm(exampleAB_50, random_level = TRUE, nitt = 5000)
 
 # Custom fixed formula

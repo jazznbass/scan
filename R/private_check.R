@@ -18,10 +18,13 @@ check_args <- function(...) {
   expressions <- substitute(list(...))
 
   env <- new.env(parent = parent.frame()) 
- 
-  env$call <- as.call(
-    as.list(parse(text = gsub("^[^:]+::", "", deparse(sys.call(-1)))))
-  )[[1]]
+  
+  env$call <- sys.call(-1)
+  env$.formals <- formals(sys.function(-1))
+  
+  #env$call <- as.call(
+  #  as.list(parse(text = gsub("^[^:]+::", "", deparse(sys.call(-1)))))
+  #)[[1]]
   
   env$is_true <- function(condition, ..., .warning = FALSE) {
     
@@ -63,8 +66,8 @@ check_args <- function(...) {
   
   env$by_call <- function(arg, .warning = FALSE) {
     
-    args <- formals(as.character(env$call[[1]]))
-   
+    #args <- formals(as.character(env$call[[1]]))
+    args <- env$.formals
     id <- which(names(args) == as.character(match.call()[2]))
     if (length(id) == 0) stop("by_call has no matching arg.")
     match <- eval(args[[id]])
@@ -134,7 +137,8 @@ check_args <- function(...) {
   
   env$is_deprecated <- function() {
     .call <- env$call
-    defaults <- formals(as.character(.call[[1]]))
+    #defaults <- formals(as.character(.call[[1]]))
+    defaults <- env$.formals
     .call <- as.list(.call)
     id_deprecated <- names(defaults)[
       sapply(defaults, function(x) identical(x, "deprecated")) |> which()
@@ -157,7 +161,8 @@ check_args <- function(...) {
     
     test_args <- list(...)
     .call <- env$call
-    defaults <- formals(as.character(.call[[1]]))
+    #defaults <- formals(as.character(.call[[1]]))
+    defaults <- env$.formals
     .call <- as.list(.call)
     deprecated_args <- test_args[which(names(test_args) %in% names(.call))]
     

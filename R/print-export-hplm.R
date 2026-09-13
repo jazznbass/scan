@@ -63,7 +63,7 @@ export.sc_hplm <- function(object,
     )
   }
   
-  footnote <- c(
+  if (is.na(footnote)) footnote <- c(
     paste0("Estimation method ", object$model$estimation.method),
     str_contrasts(object$model$interaction.method, object$contrast),
     paste0("N = ", object$N, " cases")
