@@ -129,5 +129,7 @@ mplm <- function(data, dvar, mvar, pvar,
   )
 
   attributes(out)[opts("phase", "mt", "dv")] <- list(pvar, mvar, dvar)
+  attributes(out)[opts("dummy_phase", "dummy_slope")] <-
+    list(tmp_model$var_phase, tmp_model$var_inter)
   out
 }

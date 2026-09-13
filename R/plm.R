@@ -335,6 +335,8 @@ plm <- function(data, dvar, pvar, mvar,
   
   nm <- opts("phase", "mt", "dv")
   attributes(out)[nm] <- original_attr[nm]
+  attributes(out)[opts("dummy_phase", "dummy_slope")] <-
+    list(tmp_model$var_phase, tmp_model$var_inter)
   
   out
 }

@@ -20,6 +20,8 @@ opts <- function(...) {
   dv           = "var.values",
   phase        = "var.phase",
   mt           = "var.mt",
+  dummy_phase  = "var.dummy.phase",
+  dummy_slope  = "var.dummy.slope",
   case_name    = "name",
   info         = "info",
   author       = "author",

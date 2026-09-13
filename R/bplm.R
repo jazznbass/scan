@@ -148,6 +148,8 @@ bplm <- function(data, dvar, pvar, mvar,
   class(out) <- c("sc_bplm")
   
   attributes(out)[opts("phase", "mt", "dv")] <- list(pvar, mvar, dvar)
+  attributes(out)[opts("dummy_phase", "dummy_slope")] <-
+    list(dat_dummies$var_phase, dat_dummies$var_inter)
 
   out
 }

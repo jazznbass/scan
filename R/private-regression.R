@@ -44,38 +44,61 @@
 }
 
 rename_predictors <- function(rn, x) {
-  
+
   style <- getOption("scan.rename.predictors")
   if (identical(style, FALSE)) return(rn)
   if (identical(style, "no")) return(rn)
-  
-  str_mt <- attr(x, opt("mt"))
+
+  str_mt    <- attr(x, opt("mt"))
   str_slope <- getOption("scan.string.dummy.slope")
   str_phase <- getOption("scan.string.dummy.phase")
-  
+
+  # Objects created by plm(), hplm(), mplm() and bplm() carry the names of
+  # their dummy variables. Match these exactly. Older objects and objects from
+  # other sources fall back to matching the dummy prefixes, which cannot tell a
+  # covariate named e.g. 'intervention' from a slope dummy.
+  dummy_phase <- attr(x, opt("dummy_phase"))
+  dummy_slope <- attr(x, opt("dummy_slope"))
+
+  id_phase <- if (!is.null(dummy_phase)) {
+    which(rn %in% dummy_phase)
+  } else {
+    grep(paste0("^", str_phase, "\\w+$"), rn)
+  }
+
+  id_slope <- if (!is.null(dummy_slope)) {
+    which(rn %in% dummy_slope)
+  } else {
+    grep(paste0("^", str_slope, "\\w+$"), rn)
+  }
+
+  .strip <- function(x, prefix) {
+    ifelse(startsWith(x, prefix), substring(x, nchar(prefix) + 1), x)
+  }
+  name_phase <- .strip(rn[id_phase], str_phase)
+  name_slope <- .strip(rn[id_slope], str_slope)
+  dummy_phase_names <- rn[id_phase]
+  dummy_slope_names <- rn[id_slope]
+
   if (style == "full") {
     rn[which(rn == str_mt)] <- paste0("Trend (", str_mt, ")")
     rn <- gsub("(Intercept)", "Intercept", rn, fixed = TRUE)
-    rn <- gsub(
-      paste0("^", str_phase, "(\\w+)$"), 
-      paste0("Level phase \\1 (", str_phase, "\\1)"), 
-      rn
+    rn[id_phase] <- paste0(
+      "Level phase ", name_phase, " (", dummy_phase_names, ")"
     )
-    rn <- gsub(
-      paste0("^", str_slope, "(\\w+)$"), 
-      paste0("Slope phase \\1 (", str_slope, "\\1)"), 
-      rn
+    rn[id_slope] <- paste0(
+      "Slope phase ", name_slope, " (", dummy_slope_names, ")"
     )
-  } else if (style == "concise"){
+  } else if (style == "concise") {
     rn[which(rn == str_mt)] <- "Trend"
     rn <- gsub("(Intercept)", "Intercept", rn, fixed = TRUE)
-    rn <- gsub(paste0("^", str_phase, "(\\w+)$"), "Level \\1", rn)
-    rn <- gsub(paste0("^", str_slope, "(\\w+)$"), "Slope \\1", rn)
+    rn[id_phase] <- paste0("Level ", name_phase)
+    rn[id_slope] <- paste0("Slope ", name_slope)
   } else {
-    abort("Ill defined scan.rename.predictors option.", 
-         "Must be one of 'concise', 'full' or, 'no'.")
+    abort("Ill defined scan.rename.predictors option. ",
+          "Must be one of 'concise', 'full' or 'no'.")
   }
-  
+
   rn
 }
 

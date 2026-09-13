@@ -330,6 +330,8 @@ hplm <- function(data, dvar, pvar, mvar,
   
   class(out) <- c("sc_hplm")
   attributes(out)[opts("phase", "mt", "dv")] <- list(pvar, mvar, dvar)
+  attributes(out)[opts("dummy_phase", "dummy_slope")] <-
+    list(tmp_model$var_phase, tmp_model$var_inter)
   out
 }
 
