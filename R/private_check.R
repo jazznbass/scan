@@ -89,10 +89,11 @@ check_args <- function(...) {
   
   env$within <- function(arg, lower, upper, .warning = FALSE) {
     env$is_true(
-      arg >= lower && arg <= upper, 
+      isTRUE(all(arg >= lower & arg <= upper)), 
       "Argument ",
       as.character(match.call()[2]), 
-      " is not within ", lower, " and ", upper, " (is ", arg, ")"
+      " is not within ", lower, " and ", upper, 
+      " (is ", paste0(arg, collapse = ", "), ")"
     ) 
   }
   

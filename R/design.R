@@ -124,7 +124,7 @@ design <- function(n = 1,
                                     "binomial"),
                    random_start_value = FALSE,
                    n_trials = NULL,
-                   mt = NULL, 
+                   mt = 20, 
                    B_start = NULL,
                    m,
                    phase.design,
@@ -176,12 +176,7 @@ design <- function(n = 1,
   ## B_start ----
   if (!is.null(B_start)) {
     mt <- rep(mt, length.out = n)
-    if (B_start[1] == "rand") {
-      tmp_start <- round(as.numeric(B_start[2]) * mt)
-      tmp_end <- round(as.numeric(B_start[3]) * mt)
-      B_start <- round(runif(n, tmp_start, tmp_end))
-    }
-
+    
     if (B_start[1] < 1 && B_start[1] > 0) B_start <- round(B_start * mt) + 1
     B_start <- rep(B_start, length.out = n)
 
@@ -220,8 +215,9 @@ design <- function(n = 1,
   if (length(extreme_prop) != n) {
     extreme_prop <- lapply(numeric(n), function(y) unlist(extreme_prop))
   }
+  if (!is.list(extreme_range)) extreme_range <- list(extreme_range)
   if (length(extreme_range) != n) {
-    extreme_range <- lapply(numeric(n), function(y) unlist(extreme_range))
+    extreme_range <- rep(extreme_range, length.out = n)
   }
   if (length(missing_prop) != n) {
     missing_prop <- lapply(numeric(n), function(y) unlist(missing_prop))

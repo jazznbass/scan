@@ -44,7 +44,7 @@
   rand_slope = function(x) rand_test(
     x, number = 100, statistic = "Slope B-A", exclude.equal = "auto", limit = 3)$p.value,
   rand_slope_decrease = function(x) rand_test(
-    x, number = 100, statistic = "Slope B-A", exclude.equal = "auto", limit = 3)$p.value
+    x, number = 100, statistic = "Slope A-B", exclude.equal = "auto", limit = 3)$p.value
   
 )
 

@@ -25,7 +25,6 @@ rand_test(
   exclude.equal = FALSE,
   phases = c(1, 2),
   graph = FALSE,
-  output = NULL,
   seed = NULL
 )
 }
@@ -101,8 +100,6 @@ is \code{phases = c(1,2)}.}
 \item{graph}{If \code{graph = TRUE}, a histogram of the resulting distribution is
 plotted. It is \code{FALSE} by default. \emph{Note: use the more versatile
 \code{\link[=plot_rand]{plot_rand()}} function instead.}}
-
-\item{output}{(deprecated and not implemented)}
 
 \item{seed}{A seed number for the random generator. Default is \code{NULL}.}
 }

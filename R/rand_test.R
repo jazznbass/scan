@@ -73,7 +73,6 @@
 #' @param graph If `graph = TRUE`, a histogram of the resulting distribution is
 #'   plotted. It is `FALSE` by default. *Note: use the more versatile
 #'   [plot_rand()] function instead.*
-#' @param output (deprecated and not implemented)
 #' @param seed A seed number for the random generator. Default is `NULL`.
 #' @return An object of class `sc_rand`. It is a list containing the following
 #' elements:
@@ -130,7 +129,6 @@ rand_test <- function (data, dvar, pvar,
                        exclude.equal = FALSE, 
                        phases = c(1, 2), 
                        graph = FALSE, 
-                       output = NULL, 
                        seed = NULL) {
 
   
@@ -175,12 +173,42 @@ rand_test <- function (data, dvar, pvar,
 # starting points ---------------------------------------------------------
 
   if (length(limit) == 1) limit[2] <- limit[1]
-  #obs.B.start <- unlist(lapply(a, function(x) length(x) + 1))
   
   if (is.na(startpoints[1])) {
+    
+    if (any(limit < 1)) abort("Argument limit must be one or more.")
+    
+    too_short <- unlist(mts) < limit[1] + limit[2]
+    if (any(too_short)) {
+      abort(
+        "Case(s) ", paste(names(data)[too_short], collapse = ", "),
+        ": fewer measurements than limit requires (", limit[1], " + ", limit[2], ")."
+      )
+    }
+    
     pos_startpts <- lapply(mts, function(x) (limit[1] + 1):(x - limit[2] + 1))
+    
   } else {
-    pos_startpts <- lapply(mts, function(x) startpoints)
+    
+    if (is.list(startpoints)) {
+      if (length(startpoints) != n_cases) {
+        abort(
+          "Argument startpoints has ", length(startpoints), 
+          " elements but there are ", n_cases, " cases."
+        )
+      }
+      pos_startpts <- startpoints
+    } else {
+      pos_startpts <- lapply(mts, function(x) startpoints)
+    }
+    
+    bad <- mapply(function(x, n) any(x < 2 | x > n), pos_startpts, mts)
+    if (any(bad)) {
+      abort(
+        "Case(s) ", paste(names(data)[bad], collapse = ", "),
+        ": startpoints outside the range of measurements."
+      )
+    }
   }
   
   ### posible combinations
@@ -193,11 +221,15 @@ rand_test <- function (data, dvar, pvar,
     auto_corrected_number <- TRUE
     complete <- TRUE
   }
-  
+
   if (!complete) {
-    startpts <- lapply(pos_startpts, function(x) sample(x, number, replace = TRUE))
+    startpts <- lapply(
+      pos_startpts, 
+      function(x) x[sample.int(length(x), number, replace = TRUE)]
+    )
     startpts <- matrix(unlist(startpts), nrow = number, ncol = n_cases)
   }
+  
   if (complete) {
     startpts <- expand.grid(pos_startpts)
     number   <- nrow(startpts)
@@ -358,24 +390,38 @@ rand_test <- function (data, dvar, pvar,
   if (statistic == "Slope A-B") {
     res <- rand_test_statistic(rnd_a, rnd_b, a, b,
       statistic = .opt$rand_test$slope,
-      args_statistic = list(method = "B-A"),
+      args_statistic = list(method = "A-B"),
       aggregate = function(x) sum(x) / length(x)
     )
   }   
   
 # p value -----------------------------------------------------------------
   
-  if (testdirection == "greater") {
-    test <- if (!exclude.equal) res$dist >= res$obs_stat else res$dist > res$obs_stat
-  } else {
-    test <- if (!exclude.equal) res$dist <= res$obs_stat else res$dist < res$obs_stat
-  }
+  # p value -----------------------------------------------------------------
   
-  p_value <- sum(test) / number
+  n_not_finite <- sum(!is.finite(res$dist))
+  
+  if (!is.finite(res$obs_stat)) {
+    warn("The observed statistic is not a finite number. p is set to NA.")
+    p_value <- NA_real_
+  } else if (n_not_finite > 0) {
+    warn(
+      n_not_finite, " of ", length(res$dist), " values of the randomization ",
+      "distribution are not finite. p is set to NA."
+    )
+    p_value <- NA_real_
+  } else {
+    if (testdirection == "greater") {
+      test <- if (!exclude.equal) res$dist >= res$obs_stat else res$dist > res$obs_stat
+    } else {
+      test <- if (!exclude.equal) res$dist <= res$obs_stat else res$dist < res$obs_stat
+    }
+    p_value <- sum(test) / number
+  }
   
 # return ------------------------------------------------------------------
 
-  if (graph){
+  if (graph && is.finite(res$obs_stat) && all(is.finite(res$dist))) {
     h <- hist(res$dist, plot = FALSE)
     lab <- paste0(round(h$counts / length(res$dist) * 100, 0), "%")
     xlim <- c(min(h$breaks,na.rm = TRUE), max(h$breaks, na.rm = TRUE))
@@ -387,12 +433,19 @@ rand_test <- function (data, dvar, pvar,
       ylab = "Frequency", main = "Random distribution", col = "lightgrey"
     )
     abline(v = res$obs_stat, lty = 2, lwd = 2, col = "grey") 
-    if (p_value < 0.5) pos <- 2 else pos <- 4
+    if (isTRUE(p_value < 0.5)) pos <- 2 else pos <- 4
     text(res$obs_stat, ylim, "observed", pos = pos)
   }
   
-  z <- (res$obs_stat - mean(res$dist, na.rm = TRUE)) / sd(res$dist, na.rm = TRUE)
-  p_z_single <- if (testdirection == "greater") 1 - pnorm(z) else pnorm(z)
+  sd_dist <- sd(res$dist, na.rm = TRUE)
+  z <- if (isTRUE(sd_dist > 0)) {
+    (res$obs_stat - mean(res$dist, na.rm = TRUE)) / sd_dist
+  } else {
+    NA_real_
+  }
+  p_z_single <- if (is.na(z)) {
+    NA_real_
+  } else if (testdirection == "greater") 1 - pnorm(z) else pnorm(z)
     
   possible_combinations <- cumprod(unlist(lapply(pos_startpts, length)))[n_cases]
 
@@ -464,7 +517,7 @@ rand_test_statistic <- function(rnd_a, rnd_b, a, b,
   
 }
 
-.opt$rand_test$statistic_slope <- statistic <- function(a, b, method) {
+.opt$rand_test$slope <- function(a, b, method) {
   slope_b <- .estimate_slope(1:length(b), b)
   slope_a <- .estimate_slope(1:length(a), a)
   if (method == "B-A") slope_b - slope_a else slope_a - slope_b
@@ -486,8 +539,11 @@ rand_test_statistic <- function(rnd_a, rnd_b, a, b,
 }  
 
 .opt$rand_test$t_test <- function(a, b) {
-  suppressWarnings(t.test(b, a)$statistic)
-}  
+  tryCatch(
+    suppressWarnings(t.test(b, a)$statistic), 
+    error = function(e) NA_real_
+  )
+}
 
 .opt$rand_test$smd <- function(a, b, method) {
   # Hedges'g + Durlak correction or Glass' Delta

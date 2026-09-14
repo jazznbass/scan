@@ -49,14 +49,16 @@ print.sc_rand <- function(x, ...) {
     if (!x$exclude.equal) cat("Probability of an equal or lower value than the observed statistic:\n")  
   }
   
-  if (x$p.value == 0) {
+  if (isTRUE(x$p.value == 0)) {
     cat("p   < ", format(1/x$number, scientific = FALSE), "\n")
   } else {
     cat("p   = ", x$p.value, "\n")
   }
   
-  if (x$number > 3 && x$number < 5001) {
-    sh <- shapiro.test(x$distribution)
+  dist <- x$distribution[is.finite(x$distribution)]
+  
+  if (length(dist) > 3 && length(dist) < 5001 && sd(dist) > 0) {
+    sh <- shapiro.test(dist)
     cat(sprintf("\nShapiro-Wilk Normality Test: W = %0.3f; p = %0.3f",sh[[1]], sh$p.value))
     if (sh$p.value > .05) {
       cat("  (Hypothesis of normality maintained)\n")
@@ -64,7 +66,8 @@ print.sc_rand <- function(x, ...) {
       cat("  (Hypothesis of normality rejected)\n")
     }
   } else {
-    cat("\nSample size must be between 3 and 5000 to perform a Shapiro-Wilk Test.\n")
+    cat("\nA Shapiro-Wilk Test needs between 3 and 5000 finite values",
+        "that are not all identical.\n")
   }
   
   cat("\nProbabilty of observed statistic based on the assumption of normality:\n")
@@ -90,6 +93,14 @@ export.sc_rand <- function(object,
   }
   
   if (is.na(footnote)) {
+    case_names <- attr(object, "casenames")
+    footnote <- paste0(
+      "N = ", object$N, if (object$N == 1) " case" else " cases"
+    )
+    if (!is.null(case_names) && length(case_names) == object$N && 
+        all(nzchar(case_names))) {
+      footnote <- paste0(footnote, ": ", paste0(case_names, collapse = ", "))
+    }
   }
   
   out <- capture.output(
