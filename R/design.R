@@ -23,12 +23,15 @@
 #'   start values to several single-cases, use a vector of values (e.g. `c(50,
 #'   42, 56)`). If the number of cases exceeds the length of the vector, values
 #'   are recycled. The `m` argument is deprecated.
-#' @param s Standard deviation used to calculate absolute values from level,
-#'   slope, trend effects and to calculate and error distribution from the `rtt`
-#'   values. Set to `10` by default. To assign different variances to several
-#'   single-cases, use a vector of values (e.g. `s = c(5, 10, 15)`). If the
-#'   number of cases exceeds the length of the vector, values are recycled. if
-#'   the distribution is 'poisson' or 'binomial' s is not applied.
+#' @param s Standard deviation of the true values in the population of cases.
+#'   It is used to calculate absolute values from level, slope, and trend
+#'   effects and, together with `rtt`, the error distribution (see `rtt`). With
+#'   `random_start_value = TRUE` the start values are drawn from a normal
+#'   distribution with this standard deviation. Set to `10` by default. To
+#'   assign different variances to several single-cases, use a vector of values
+#'   (e.g. `s = c(5, 10, 15)`). If the number of cases exceeds the length of the
+#'   vector, values are recycled. if the distribution is 'poisson' or 'binomial'
+#'   s is not applied.
 #' @param n_trials If `distribution` (see below) is `"binomial"`, `n_trials` is
 #'   the number of trials/observations/items. E.g., if you simulate accuracy
 #'   data with 10 items per measurement, set `n_trials = 10`. To assign
@@ -66,10 +69,21 @@
 #'   poisson distribution, `slope` indicates an increase in points / counts per
 #'   measurement.
 #' @param rtt Reliability of the underlying simulated measurements. Set `rtt =
-#'   .8` by default. To assign different reliabilities to several single-cases,
-#'   use a vector of values (e.g. `rtt = c(.6, .7, .8)`). If the number of cases
-#'   exceeds the length of the vector, values are repeated. `rtt` has no effect
-#'   when you're using binomial or poisson distributions.
+#'   .8` by default. Reliability is defined as in classical test theory, with
+#'   `s^2` as the variance of the true values: `rtt = s^2 / (s^2 + error^2)`.
+#'   The measurement error is drawn accordingly from a normal distribution with
+#'   `error = sqrt((1 - rtt) / rtt * s^2)`, that is, with the same variance for
+#'   every case and every measurement. To assign different reliabilities to
+#'   several single-cases, use a vector of values (e.g. `rtt = c(.6, .7, .8)`).
+#'   If the number of cases exceeds the length of the vector, values are
+#'   repeated. `rtt` has no effect when you're using binomial or poisson
+#'   distributions.
+#' @param error Standard deviation of the measurement error, as an alternative
+#'   way of setting `rtt`. When `error` is provided, the reliability is derived
+#'   from it as `rtt = s^2 / (s^2 + error^2)`, so the two arguments must not be
+#'   given together. To assign different errors to several single-cases, use a
+#'   vector of values. Like `rtt`, `error` has no effect for binomial or poisson
+#'   distributions.
 #' @param extreme_prop,extreme.p Probability of extreme values. `extreme.p =
 #'   .05` gives a five percent probability of an extreme value. A vector of
 #'   values assigns different probabilities to multiple cases. If the number of
@@ -117,6 +131,7 @@ design <- function(n = 1,
                    start_value = 50,
                    s = 10,
                    rtt = 0.80, 
+                   error = NULL,
                    extreme_prop = list(0), 
                    extreme_range = c(-4, -3),
                    missing_prop = 0, 
@@ -151,6 +166,7 @@ design <- function(n = 1,
   if (is.list(trend)) trend <- unlist(trend)
   if (is.list(s)) s <- unlist(s)
   if (is.list(rtt)) rtt <- unlist(rtt)
+  if (is.list(error)) error <- unlist(error)
   if (!is.list(phase_design)) phase_design <- as.list(phase_design)
     
   ## intial checks ----
@@ -172,6 +188,15 @@ design <- function(n = 1,
     within(extreme_prop, 0, 1),
     within(missing_prop, 0, 1)
   )
+  
+  if (!is.null(error)) {
+    if (!missing(rtt)) {
+      abort("Provide either 'rtt' or 'error', not both.")
+    }
+    if (!is.numeric(error) || !all(is.finite(error)) || any(error <= 0)) {
+      abort("Argument 'error' must hold positive numbers.")
+    }
+  }
   
   ## B_start ----
   if (!is.null(B_start)) {
@@ -204,6 +229,10 @@ design <- function(n = 1,
   if (length(start_value) != n) start_value <- rep(start_value, length = n)
   if (length(s) != n) s <- rep(s, length = n)
   if (length(rtt) != n) rtt <- rep(rtt, length = n)
+  if (!is.null(error)) {
+    if (length(error) != n) error <- rep(error, length = n)
+    rtt <- s^2 / (s^2 + error^2)
+  }
   if (is.list(trend)) trend <- unlist(trend)
 
   
@@ -212,10 +241,28 @@ design <- function(n = 1,
   slope <- .check_design(slope, n)
   phase_design <- .check_design(phase_design, n)
 
+  if (!all(vapply(
+    phase_design, 
+    function(x) isTRUE(all(x >= 1 & x == round(x))), 
+    logical(1)
+  ))) {
+    abort("Phase lengths must be whole numbers of at least one.")
+  }
+  
+  
   if (length(extreme_prop) != n) {
     extreme_prop <- lapply(numeric(n), function(y) unlist(extreme_prop))
   }
   if (!is.list(extreme_range)) extreme_range <- list(extreme_range)
+  if (!all(vapply(extreme_range, 
+                  function(x) isTRUE(length(x) == 2 && x[1] < x[2]), 
+                  logical(1)))) {
+    abort(
+      "Argument extreme_range must hold two values ",
+      "with the first below the second."
+    )
+  }
+  
   if (length(extreme_range) != n) {
     extreme_range <- rep(extreme_range, length.out = n)
   }

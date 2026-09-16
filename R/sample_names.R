@@ -15,13 +15,18 @@
 #' @export
 sample_names <- function(n = 1, type = "neutral", seed = NULL) {
   
-  if (!is.null(seed)) set.seed(seed)
-  out <- character(0)
-  if (type == "neutral") out <- sample(case_names$neutral, n)
-  if (type == "female") out <- sample(case_names$female, n)
-  if (type == "male") out <- sample(case_names$male, n)
-  if (type == "mixed") out <- sample(case_names$all, n)
+  check_args(
+    one_of(type, c("neutral", "male", "female", "mixed"))
+  )
   
-  out
+  if (!is.null(seed)) set.seed(seed)
+  
+  switch(
+    type,
+    neutral = sample(case_names$neutral, n),
+    female  = sample(case_names$female, n),
+    male    = sample(case_names$male, n),
+    mixed   = sample(case_names$all, n)
+  )
 }
 

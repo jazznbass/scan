@@ -10,8 +10,8 @@ rescale(data, ..., m = 0, sd = 1)
 \item{data}{A single-case data frame. See \code{\link[=scdf]{scdf()}} to learn about this
 format.}
 
-\item{...}{Names of variables to be standardized. If none are given, all numeric
-variables are standardized.}
+\item{...}{Names of variables to be standardized, either as object names or
+as characters. If none are given, all numeric variables are standardized.}
 
 \item{m}{The target mean. If set NULL, it is not changed.}
 

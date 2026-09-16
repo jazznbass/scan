@@ -7,26 +7,26 @@
 random_scdf(design = NULL, round = NA, random_names = FALSE, seed = NULL, ...)
 }
 \arguments{
-\item{design}{A design matrix which is created by \code{design} and specifies
-all parameters. If \code{design} is \code{NULL} (default), the design
-parameters have to be specified via the \code{...} argument. If a numeric
-value is provided instead of a design matrix, it is interpreted as the
-number of cases \code{n}.}
+\item{design}{A design matrix which is created by \code{design} and specifies all
+parameters. If \code{design} is \code{NULL} (default), the design parameters have to
+be specified via the \code{...} argument. If a numeric value is provided instead
+of a design matrix, it is interpreted as the number of cases \code{n}.}
 
 \item{round}{Rounds the scores to the defined decimal. To round to the second
 decimal, set \code{round = 2}. Default is \code{NA} (no rounding).}
 
-\item{random_names}{Is \code{FALSE} by default. If set \code{random_names =
-TRUE} cases are assigned random first names. If set \code{"neutral", "male"
-or "female"} only gender neutral, male, or female names are chosen. The
-names are drawn from the 2,000 most popular names for newborns in 2012 in
-the U.S. (1,000 male and 1,000 female names).}
+\item{random_names}{Is \code{FALSE} by default. If set \code{random_names = TRUE} cases
+are assigned random first names. If set \verb{("neutral", "male" or "female")}
+only gender neutral, male, or female names are chosen. The names are drawn
+from the 2,000 most popular names for newborns in 2012 in the U.S. (1,000
+male and 1,000 female names).}
 
-\item{seed}{A seed number for the random generator. If \code{NULL} (default),
-no seed}
+\item{seed}{A seed number for the random generator. If \code{NULL} (default), no
+seed is set. If a number is provided, the random generator is set to this
+seed before generating the data. This is useful for reproducibility.}
 
-\item{...}{arguments that are directly passed to the \code{design} function
-for a more concise coding.}
+\item{...}{arguments that are directly passed to the \code{design} function for a
+more concise coding.}
 }
 \value{
 A single-case data frame. See \code{\link{scdf}} to learn about this
@@ -34,9 +34,8 @@ format.
 }
 \description{
 The \code{random_scdf} function generates random single-case data frames for
-monte-carlo studies and demonstration purposes. \code{design} is used to set
-up a design matrix with all parameters needed for the \code{random_scdf}
-function.
+monte-carlo studies and demonstration purposes. \code{design} is used to set up a
+design matrix with all parameters needed for the \code{random_scdf} function.
 }
 \details{
 The generated data can be normally distributed, Poisson-distributed, or

@@ -25,6 +25,8 @@ combine <- function(...,
                     author = NULL) {
   scdfs <- list(...)
   
+  if (length(scdfs) == 0) abort("No scdf provided.")
+  
   source_attr <- attributes(scdfs[[1]])
   
   case_names <- unlist(
@@ -51,6 +53,15 @@ combine <- function(...,
     starts <- cumsum(c(1L, head(sizes, -1L)))
     named <- which(names(scdfs) != "" & sizes > 0L)
     names(data)[starts[named]] <- names(scdfs)[named]
+  }
+  
+  nms <- names(data)
+  if (any(duplicated(nms[nzchar(nms)]))) {
+    warn("Duplicated case names: '", 
+         paste(unique(nms[duplicated(nms) & nzchar(nms)]), collapse = "', '"), 
+         "'. Names were made unique.")
+    nms[nzchar(nms)] <- make.unique(nms[nzchar(nms)])
+    names(data) <- nms
   }
   
   # check class scdf validity

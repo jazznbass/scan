@@ -10,7 +10,6 @@ print.sc_power <- function(x, duration = FALSE, digits = 1, ...) {
   out <- x
   
   ci <- attr(x, "ci")
-  binom_test <- attr(x, "binom_test")
   binom_test_power <- attr(x, "binom_test_power")
   binom_test_alpha <- attr(x, "binom_test_alpha")
   binom_test_correct <- attr(x, "binom_test_correct")
@@ -38,7 +37,7 @@ print.sc_power <- function(x, duration = FALSE, digits = 1, ...) {
     names(out)[which(names(out) == "p_alpha")] <- paste0("p Alpha Error<=", binom_test_alpha*100)
   }
     
-  if (is.numeric(binom_test_power)) {
+  if (is.numeric(binom_test_correct)) {
     out$p_correct <- x$p_correct
     names(out)[which(names(out) == "p_correct")] <- paste0("p Correct>=", binom_test_correct*100)
   }

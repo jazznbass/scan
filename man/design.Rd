@@ -13,13 +13,14 @@ design(
   start_value = 50,
   s = 10,
   rtt = 0.8,
+  error = NULL,
   extreme_prop = list(0),
   extreme_range = c(-4, -3),
   missing_prop = 0,
   distribution = c("normal", "gaussian", "poisson", "binomial"),
   random_start_value = FALSE,
   n_trials = NULL,
-  mt = NULL,
+  mt = 20,
   B_start = NULL,
   m,
   phase.design,
@@ -73,17 +74,32 @@ frequency. When \code{distribution = "binomial"} start_value must range between
 start values to several single-cases, use a vector of values (e.g. \code{c(50, 42, 56)}). If the number of cases exceeds the length of the vector, values
 are recycled. The \code{m} argument is deprecated.}
 
-\item{s}{Standard deviation used to calculate absolute values from level,
-slope, trend effects and to calculate and error distribution from the \code{rtt}
-values. Set to \code{10} by default. To assign different variances to several
-single-cases, use a vector of values (e.g. \code{s = c(5, 10, 15)}). If the
-number of cases exceeds the length of the vector, values are recycled. if
-the distribution is 'poisson' or 'binomial' s is not applied.}
+\item{s}{Standard deviation of the true values in the population of cases.
+It is used to calculate absolute values from level, slope, and trend
+effects and, together with \code{rtt}, the error distribution (see \code{rtt}). With
+\code{random_start_value = TRUE} the start values are drawn from a normal
+distribution with this standard deviation. Set to \code{10} by default. To
+assign different variances to several single-cases, use a vector of values
+(e.g. \code{s = c(5, 10, 15)}). If the number of cases exceeds the length of the
+vector, values are recycled. if the distribution is 'poisson' or 'binomial'
+s is not applied.}
 
-\item{rtt}{Reliability of the underlying simulated measurements. Set \code{rtt = .8} by default. To assign different reliabilities to several single-cases,
-use a vector of values (e.g. \code{rtt = c(.6, .7, .8)}). If the number of cases
-exceeds the length of the vector, values are repeated. \code{rtt} has no effect
-when you're using binomial or poisson distributions.}
+\item{rtt}{Reliability of the underlying simulated measurements. Set \code{rtt = .8} by default. Reliability is defined as in classical test theory, with
+\code{s^2} as the variance of the true values: \code{rtt = s^2 / (s^2 + error^2)}.
+The measurement error is drawn accordingly from a normal distribution with
+\code{error = sqrt((1 - rtt) / rtt * s^2)}, that is, with the same variance for
+every case and every measurement. To assign different reliabilities to
+several single-cases, use a vector of values (e.g. \code{rtt = c(.6, .7, .8)}).
+If the number of cases exceeds the length of the vector, values are
+repeated. \code{rtt} has no effect when you're using binomial or poisson
+distributions.}
+
+\item{error}{Standard deviation of the measurement error, as an alternative
+way of setting \code{rtt}. When \code{error} is provided, the reliability is derived
+from it as \code{rtt = s^2 / (s^2 + error^2)}, so the two arguments must not be
+given together. To assign different errors to several single-cases, use a
+vector of values. Like \code{rtt}, \code{error} has no effect for binomial or poisson
+distributions.}
 
 \item{extreme_prop, extreme.p}{Probability of extreme values. \code{extreme.p = .05} gives a five percent probability of an extreme value. A vector of
 values assigns different probabilities to multiple cases. If the number of

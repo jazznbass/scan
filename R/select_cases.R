@@ -22,15 +22,23 @@
 #' @export
 select_cases <- function(scdf, ...) {
   cases <- as.list(substitute(list(...)))[-1]
+  if (length(cases) == 0) abort("No case selected.")
   
   nl <- as.list(seq_along(scdf))
   names(nl) <- names(scdf)
+  env <- parent.frame()
   
-  selection <- lapply(cases, function(x) scdf[eval(x, envir = nl, enclos = parent.frame())])
+  ids <- unlist(lapply(cases, function(x) {
+    id <- eval(x, envir = nl, enclos = env)
+    if (is.character(id)) id <- match(id, names(scdf))
+    id
+  }))
   
-  out <- selection[[1]]
-  if (length(selection) > 1) 
-    for(i in 2:length(selection)) out <- c(out, selection[[i]])
-  out
+  if (any(ids < 0, na.rm = TRUE) && any(ids > 0, na.rm = TRUE)) {
+    abort("Positive and negative case selections can not be mixed.")
+  }
+  
+  scdf[ids]
 }
+
 

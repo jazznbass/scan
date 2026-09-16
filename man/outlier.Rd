@@ -50,7 +50,7 @@ the attributes in the scdf file.}
 \item{mvar}{Character string with the name of the measurement time variable.
 Defaults to the attributes in the scdf file.}
 
-\item{method}{Specifies the method for outlier identification. Set \code{method = "MAD"} for mean average deiviation, \code{method = "SD"} for standard
+\item{method}{Specifies the method for outlier identification. Set \code{method = "MAD"} for median absolute deviation, \code{method = "SD"} for standard
 deviations, \code{method = "CI"} for confidence intervals, \code{method = "Cook"} for
 Cook's Distance based on the Piecewise Linear Regression Model.}
 
@@ -73,15 +73,18 @@ the \code{method} setting.}
 }
 \description{
 Identifies and drops outliers within a single-case data frame (scdf).
-Outliers can be identified based on mean average deviation (MAD),
+Outliers can be identified based on the median absolute deviation (MAD),
 standard deviation (SD), confidence intervals (CI), or Cook's Distance
 from a Piecewise Linear Regression Model.
 }
 \details{
-For \code{method = "SD"}, \code{criteria = 2} would refer t0 two standard
+For \code{method = "SD"}, \code{criteria = 2} would refer to two standard
 deviations. For \code{method = "MAD"}, \code{criteria = 3.5} would refer to 3.5 times
-the mean average deviation. For \code{method = "CI"}, \code{criteria = 0.99} would
-refer to a 99 percent confidence interval. For \code{method = "cook"}, \code{criteria = "4/n"} would refer to a Cook's Distance greater than 4/n.
+the median absolute deviation (scaled to be consistent with the standard
+deviation for normally distributed data, as \code{stats::mad()} does). For
+\code{method = "CI"}, \code{criteria = 0.99} would refer to a 99 percent confidence
+interval. For \code{method = "cook"}, \code{criteria = "4/n"} would refer to a
+Cook's Distance greater than 4/n.
 }
 \section{Functions}{
 \itemize{

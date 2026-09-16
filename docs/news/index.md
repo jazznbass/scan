@@ -52,6 +52,14 @@
 
 #### General
 
+- Argument checks accept vectors where the function documents them. The
+  range check used `&&`, which requires a single value since R 4.3, so
+  `design(extreme_prop = c(0.1, 0.3, 0.5))` and
+  `design(missing_prop = ...)` with one value per case — both described
+  on the help page — stopped with
+  `'length = 3' in coercion to 'logical(1)'`, a message naming neither
+  the argument nor the function. A missing value in such an argument is
+  now rejected as well.
 - Functions that validate their arguments can be called programmatically
   again. The argument check looked up the function definition by the
   name under which the function had been called, which fails whenever
@@ -153,6 +161,46 @@
   [`select_phases()`](https://jazznbass.github.io/scan/reference/select_phases.md)
   to use each case’s own phase names, and the construction of combined
   phase names when phases are selected by name.
+- [`outlier()`](https://jazznbass.github.io/scan/reference/outlier.md)
+  treats each phase as the section of the series it occupies, not as
+  everything carrying the same label. With repeated labels — an ABAB
+  design, for example — the values of every A section were collected for
+  each of the two A phases, so the filter marking the outliers became
+  twice as long as the case. Used as a row index, such a filter adds a
+  row of missing values for every surplus position: the returned data
+  held `NA` rows, the wrong measurements were removed, `dropped.mt`
+  contained missing values and `dropped.n` counted outliers twice.
+  Affected `method = "MAD"`, `"SD"` and `"CI"`; `"Cook"` builds its
+  filter from the regression model and was correct.
+- [`outlier()`](https://jazznbass.github.io/scan/reference/outlier.md)
+  handles missing values in the dependent variable. For
+  `method = "MAD"`, `"SD"` and `"CI"` a single missing value made both
+  bounds of its phase `NA`, so every measurement of that phase was
+  neither inside nor outside them: used as a row index, the whole phase
+  was replaced by rows of missing values and `dropped.n` became `NA`.
+  For `"Cook"` the distances come from a regression fitted on the
+  complete cases, so the filter was shorter than the case and was
+  recycled over it, removing arbitrary measurements or failing with
+  `arguments imply differing number of rows`. Missing values are now
+  ignored when the bounds are computed, are never counted as outliers,
+  and Cook’s distances are matched to the measurements they belong to.
+- [`rescale()`](https://jazznbass.github.io/scan/reference/rescale.md)
+  takes its variable names as characters or from a variable as well as
+  as object names, the way
+  [`select_cases()`](https://jazznbass.github.io/scan/reference/select_cases.md)
+  documents it, and rejects a name it cannot use. The names were read
+  from the unevaluated call, so `rescale(dat, "values")` looked for a
+  column whose name carries the quotation marks, and a misspelled or
+  non-numeric name surfaced only deep inside the computation as
+  `'x' is NULL` or `undefined columns selected`, naming neither the
+  variable nor the function. A variable that is missing in one of the
+  cases or is not numeric now raises an error naming it.
+- The `mad` column of `outlier(method = "MAD")` reports the value the
+  bounds are built from. It was computed with `constant = 1`, while the
+  bounds use the scaled median absolute deviation, so `md` plus or minus
+  `criteria` times `mad` read off the matrix gave bounds too narrow by a
+  factor of 1.4826. The bounds and the outliers they identify are
+  unchanged.
 
 #### fill_missing()
 
@@ -180,6 +228,71 @@
   missing values are still reported, every other statistic is `NA`, and
   the trend is computed where at least two values were observed. The
   trend no longer depends on the global `na.action` setting either.
+- `rand_test(statistic = "Slope A-B")` computes the difference in the
+  direction it names. It passed the method of `"Slope B-A"` on, so both
+  slope statistics returned the same value and the p value of the
+  opposite direction. For a rising series `"Slope A-B"` reported p =
+  0.00 where p = 1.00 is correct.
+- The function behind the two slope statistics of
+  [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md)
+  is registered under the name the function looks up. It had been stored
+  under a different one, and only worked because the same line of code
+  left an object of a matching name in the package namespace, which
+  [`match.fun()`](https://rdrr.io/r/base/match.fun.html) picked up as a
+  fallback. Removing that stray assignment would have silently disabled
+  both slope statistics.
+- [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md)
+  checks the `limit` argument against the length of the series. When a
+  case had fewer measurements than `limit` requires for both phases, the
+  sequence of admissible start points was built backwards and used
+  anyway, so phase A could fall below the minimum without any notice:
+  for eight measurements, `limit = 5` and `limit = 3` produced the same
+  start points 4, 5 and 6. Such a case now stops with a message naming
+  it, and a `limit` below one is rejected.
+- `rand_test(startpoints = list(...))` assigns one set of start points
+  per case, as the help page describes. The whole list was handed to
+  every case instead, which stopped with
+  `non-numeric argument to binary operator`. Start points outside the
+  range of measurements are now rejected as well; they produced a p
+  value of `NA` or silently emptied a phase.
+- [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md)
+  draws from the admissible start points also when only one of them is
+  left for a case. [`sample()`](https://rdrr.io/r/base/sample.html)
+  treats a single number as a range, so such a case drew from `1` to
+  that number instead. This affected samples of start points, not the
+  complete enumeration.
+- [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md)
+  reports `NA` with a message when the observed statistic or the
+  randomization distribution is not a finite number, instead of building
+  a p value from such values. This happens for the standardised mean
+  differences when a phase has no variance. `Inf >= Inf` counted as a
+  hit, so a constant baseline with `statistic = "SMD glass"` returned p
+  = 0.55 from six infinite values out of eleven, indistinguishable from
+  a real result, while `NaN` values gave `NA` without any notice.
+- `rand_test(statistic = "T-test")` no longer stops inside
+  [`t.test()`](https://rdrr.io/r/stats/t.test.html) when a random split
+  has no variance, which ended the whole call with
+  `data are essentially constant`. Such a permutation counts as not
+  computable and the p value follows the rule above.
+- `Z` and `p.Z.single` are `NA` when the randomization distribution has
+  no variance, instead of `NaN` from a division by zero.
+- [`print()`](https://rdrr.io/r/base/print.html) and
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  a
+  [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md)
+  result survive a degenerate randomization distribution. A p value of
+  `NA` stopped the output with `missing value where TRUE/FALSE needed`,
+  and a distribution whose values are all identical stopped it inside
+  [`shapiro.test()`](https://rdrr.io/r/stats/shapiro.test.html) even
+  when the p value itself was sound. The normality test is now computed
+  from the finite values and skipped with a note when there are too few
+  or they do not vary.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  a
+  [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md)
+  result carries a footnote naming the number of cases and, where the
+  cases are named, the case names. The block meant to build it was
+  empty.
 - Preserved the phase selection before missing values are removed in
   [`pnd()`](https://jazznbass.github.io/scan/reference/pnd.md),
   [`pem()`](https://jazznbass.github.io/scan/reference/pem.md),
@@ -216,6 +329,109 @@
   `NA` is reported with a warning instead of failing inside
   [`binom.test()`](https://rdrr.io/r/stats/binom.test.html), and all
   result columns are numeric even when no test was computed.
+
+#### Simulation and power analysis
+
+- `design(B_start = ...)` works without `mt`. The help page documents
+  `mt = 20` as the default, but the argument defaulted to `NULL`, so
+  exactly the call the help page describes — `B_start = 6`, assigning
+  the first five measurements of each case to phase A — stopped with
+  `replacement has length zero`. An `mt` given explicitly still takes
+  precedence, and `phase_design` is unaffected.
+- [`power_test()`](https://jazznbass.github.io/scan/reference/power_test.md)
+  tests the falling direction with its `rand_slope_decrease` method. It
+  used the same statistic as `rand_slope`, so both methods returned the
+  same power.
+- [`design()`](https://jazznbass.github.io/scan/reference/design.md)
+  hands the whole `extreme_range` to every case. The range is a pair of
+  a lower and an upper bound, but it was treated like the arguments that
+  carry one value per case, so for exactly two cases the first case
+  received the lower bound and the second the upper one, each without a
+  counterpart.
+  [`random_scdf()`](https://jazznbass.github.io/scan/reference/random_scdf.md)
+  then drew extreme values against an undefined upper bound, warned
+  `NAs produced` and wrote missing values into the simulated data —
+  seven of forty measurements with the default settings. A list of pairs
+  now assigns one range per case.
+- [`random_scdf()`](https://jazznbass.github.io/scan/reference/random_scdf.md)
+  keeps count data as counts when extreme values are added. The extreme
+  values are drawn as continuous numbers and added to the simulated
+  scores, but only negative results were corrected, so binomial and
+  Poisson data came back with decimal places, and binomial counts could
+  exceed the number of trials: with `n_trials = 10` and
+  `extreme_range = c(5, 8)`, 23 of 40 measurements lay above 10 and the
+  largest was 15.43. Passed to `plm(family = "binomial")` such data
+  produced proportions above 1. Counts are now rounded and binomial
+  values are capped at the number of trials, while missing values
+  created by `missing_prop` are preserved.
+- `random_scdf(3)` builds the three cases it was asked for. The number
+  was noted, the design was then created without it, and the count
+  overwritten by the result, so the call warned about the unnamed
+  argument and returned a single case. The warning about naming the
+  argument `n` remains.
+- [`random_scdf()`](https://jazznbass.github.io/scan/reference/random_scdf.md)
+  rejects a `random_names` value it does not know. `"Male"`, `"m"` or
+  any typo produced an scdf without any case names and no indication
+  that the argument had been ignored.
+- [`design()`](https://jazznbass.github.io/scan/reference/design.md)
+  rejects an `extreme_range` whose first value is not below the second.
+  The help page states that the procedure fails in that case, but
+  [`runif()`](https://rdrr.io/r/stats/Uniform.html) simply returned
+  `NaN` with a warning, so half the simulated measurements silently
+  became missing values — twenty of forty with
+  `extreme_range = c(-3, -4)`. Ranges of the wrong length or containing
+  a missing value are rejected as well.
+- [`design()`](https://jazznbass.github.io/scan/reference/design.md)
+  rejects phase lengths that are not whole numbers of at least one. A
+  length of zero, a negative or a fractional length was accepted and the
+  design object returned, and the call only failed later inside
+  [`random_scdf()`](https://jazznbass.github.io/scan/reference/random_scdf.md)
+  with `invalid 'times' argument`, a message naming neither the phase
+  nor the case. `B_start = 1`, which leaves phase A empty, reached the
+  same dead end.
+- [`power_test()`](https://jazznbass.github.io/scan/reference/power_test.md)
+  reports the p values of its binomial tests with three decimals.
+  `p_power` and `p_alpha` were rounded to whole numbers and could
+  therefore only be 0 or 1: an alpha error rate of 2.5 % tested against
+  a threshold of 5 % was reported as `p_alpha = 0` where the test gives
+  p = 0.40, and a rate of 5.0 % as `p_alpha = 1` where p = 0.68. Both
+  readings suggest the opposite of what the test says. `p_correct` was
+  already computed correctly.
+- `power_test(ci = ...)` uses the requested level for all three
+  confidence intervals. The interval for the correct proportion was
+  built without `conf.level` and was therefore always a 95 % interval,
+  while the intervals for power and alpha error followed the argument,
+  so a table could hold intervals at two different levels under one
+  heading.
+- [`power_test()`](https://jazznbass.github.io/scan/reference/power_test.md)
+  no longer stops when a binomial test or a confidence interval is
+  requested while `alpha_test` or `power_test` is switched off. The
+  missing value was handed to
+  [`binom.test()`](https://rdrr.io/r/stats/binom.test.html) and ended
+  the call with `'x' must be nonnegative and integer`.
+- The print method for a
+  [`power_test()`](https://jazznbass.github.io/scan/reference/power_test.md)
+  result shows the p value for the correct proportion when it was asked
+  for. The block was guarded by `binom_test_power` instead of
+  `binom_test_correct`, so `binom_test_correct` on its own computed the
+  value but never printed it. Using the shortcut `binom_test = TRUE` hid
+  the mistake, because it sets all three thresholds at once.
+- [`power_test()`](https://jazznbass.github.io/scan/reference/power_test.md)
+  accepts unnamed functions in its `method` argument. The help page
+  describes `method` as a list whose elements can be functions, but the
+  rows of the result table are taken from the names of that list, so a
+  list without names ended the call with
+  `replacement has 1 row, data has 0` before any simulation was run.
+  Unnamed elements now receive the placeholder names `function1`,
+  `function2`, and so on, while named elements keep their name.
+- [`power_test()`](https://jazznbass.github.io/scan/reference/power_test.md)
+  reports the alpha to beta ratio as missing when it is not defined. The
+  ratio was formatted without any check, so the column could hold `1:NA`
+  when `alpha_test` or `power_test` was switched off, `1:Inf` whenever
+  the observed alpha error proportion was zero — the usual case for a
+  conservative method at `n_sim = 100` — and `1:NaN` when the power was
+  100 % at the same time. All three stood among rows holding real
+  ratios, with nothing to mark them as undefined.
 
 #### Regression and correlation
 
@@ -398,6 +614,14 @@
 - [`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md): removed
   the `phases` entry from the documented return value, which was never
   returned.
+- [`rescale()`](https://jazznbass.github.io/scan/reference/rescale.md):
+  the `...` argument documents that the variables can be named as
+  objects or as characters.
+- [`outlier()`](https://jazznbass.github.io/scan/reference/outlier.md):
+  MAD is the median absolute deviation, not the “mean average
+  deviation”. The help page now says so and adds that `criteria` refers
+  to the scaled deviation returned by
+  [`stats::mad()`](https://rdrr.io/r/stats/mad.html).
 - [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md): the
   `data.l2` argument requires a column named `case`, not `cases` as the
   help page stated.
@@ -426,6 +650,11 @@
   `dvar_percentage` and `data`, which were returned but not described.
   For a binomial regression with `dvar_percentage = FALSE`, `data` holds
   the modelled proportions rather than the counts that were passed in.
+- [`power_test()`](https://jazznbass.github.io/scan/reference/power_test.md):
+  the documented return value names the class `sc_power` that the
+  function actually sets, rather than describing the result as a data
+  frame. Like every other `sc_*` object it does not inherit from
+  `data.frame`.
 
 ## scan 0.68.1
 

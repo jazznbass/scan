@@ -29,14 +29,16 @@ random_scdf(design = NULL, round = NA, random_names = FALSE, seed = NULL, ...)
 - random_names:
 
   Is `FALSE` by default. If set `random_names = TRUE` cases are assigned
-  random first names. If set `"neutral", "male" or "female"` only gender
-  neutral, male, or female names are chosen. The names are drawn from
-  the 2,000 most popular names for newborns in 2012 in the U.S. (1,000
-  male and 1,000 female names).
+  random first names. If set `("neutral", "male" or "female")` only
+  gender neutral, male, or female names are chosen. The names are drawn
+  from the 2,000 most popular names for newborns in 2012 in the U.S.
+  (1,000 male and 1,000 female names).
 
 - seed:
 
   A seed number for the random generator. If `NULL` (default), no seed
+  is set. If a number is provided, the random generator is set to this
+  seed before generating the data. This is useful for reproducibility.
 
 - ...:
 

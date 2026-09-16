@@ -1,7 +1,7 @@
 # Handling outliers in single-case data
 
 Identifies and drops outliers within a single-case data frame (scdf).
-Outliers can be identified based on mean average deviation (MAD),
+Outliers can be identified based on the median absolute deviation (MAD),
 standard deviation (SD), confidence intervals (CI), or Cook's Distance
 from a Piecewise Linear Regression Model.
 
@@ -82,9 +82,10 @@ outlier(
 - method:
 
   Specifies the method for outlier identification. Set `method = "MAD"`
-  for mean average deiviation, `method = "SD"` for standard deviations,
-  `method = "CI"` for confidence intervals, `method = "Cook"` for Cook's
-  Distance based on the Piecewise Linear Regression Model.
+  for median absolute deviation, `method = "SD"` for standard
+  deviations, `method = "CI"` for confidence intervals,
+  `method = "Cook"` for Cook's Distance based on the Piecewise Linear
+  Regression Model.
 
 - criteria:
 
@@ -108,11 +109,14 @@ outlier(
 
 ## Details
 
-For `method = "SD"`, `criteria = 2` would refer t0 two standard
+For `method = "SD"`, `criteria = 2` would refer to two standard
 deviations. For `method = "MAD"`, `criteria = 3.5` would refer to 3.5
-times the mean average deviation. For `method = "CI"`, `criteria = 0.99`
-would refer to a 99 percent confidence interval. For `method = "cook"`,
-`criteria = "4/n"` would refer to a Cook's Distance greater than 4/n.
+times the median absolute deviation (scaled to be consistent with the
+standard deviation for normally distributed data, as
+[`stats::mad()`](https://rdrr.io/r/stats/mad.html) does). For
+`method = "CI"`, `criteria = 0.99` would refer to a 99 percent
+confidence interval. For `method = "cook"`, `criteria = "4/n"` would
+refer to a Cook's Distance greater than 4/n.
 
 ## Functions
 

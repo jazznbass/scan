@@ -11,6 +11,7 @@ estimate_design(
   mvar,
   s = NULL,
   rtt = NULL,
+  error = NULL,
   overall_effects = FALSE,
   overall_rtt = TRUE,
   model = "JW",
@@ -32,17 +33,29 @@ Defaults to the attributes in the scdf file.}
 
 \item{s}{The standard deviation depicting the between case variance of the
 overall performance. If more than two single-cases are included in the
-scdf, the variance is estimated if s is set to NULL. If s is provided, this
-value is used.}
+scdf, the variance is estimated if s is set to NULL. The estimate is the
+variance of the estimated start values reduced by the mean squared standard
+error of these estimates, so that the uncertainty of the single estimates
+does not inflate \code{s}. When that difference is not positive, \code{s} is set equal
+to the standard deviation of the error and a warning is issued (see
+details). If s is provided, this value is used.}
 
 \item{rtt}{The reliability of the measurements. The reliability is estimated
-when rtt = NULL. If rtt is provided, this value is used for all single-cases.}
+when rtt = NULL, as \code{s^2 / (s^2 + var_error)}, the definition \code{\link[=design]{design()}}
+uses to draw the measurement error. \code{var_error} is the residual variance of
+the piecewise regression, pooled across cases when \code{overall_rtt = TRUE}. If
+rtt is provided, this value is used for all single-cases.}
+
+\item{error}{Standard deviation of the measurement error. An alternative to
+\code{rtt}: the reliability of each case is then derived as
+\code{s^2 / (s^2 + error^2)}. \code{rtt} and \code{error} must not be given together. To
+assign different values to several single-cases, use a vector of values.}
 
 \item{overall_effects}{If TRUE, trend, level, and slope effect estimations
 will be identical for each case. If FALSE, effects are estimated for each
 case separately. Default is FALSE.}
 
-\item{overall_rtt}{Ignored when \code{rtt} is set. If TRUE, rtt estimations will
+\item{overall_rtt}{Ignored when \code{rtt} or \code{error} is set. If TRUE, rtt estimations will
 be based on all cases and identical for each case. If FALSE rtt is
 estimated for each case separately. Default is TRUE.}
 
@@ -78,6 +91,20 @@ to TRUE, rtt estimations will be based on all cases and identical for each
 case. If overall_effects is set to TRUE, trend, level, and slope
 effect estimations will be identical for each case.
 
+\code{s} is estimated from the differences between the start values of the cases,
+so it can only be estimated when the cases differ in their starting level by
+more than the precision of these estimates — with one or two cases it can not
+be estimated at all. When it can not, \code{s} is set equal to the standard
+deviation of the error and a warning is issued: the effects are then
+expressed in units of the variation within a case, and the reliability is
+fixed at 0.5 by that choice rather than estimated. Providing \code{s}, \code{rtt} or
+\code{error} is strongly recommended for such data. \code{s} and \code{rtt} are two sides of one
+parameter: whichever \code{s} is used, the error distribution derived from the
+estimated \code{rtt} has the residual variance of the piecewise regression, and
+the effects are stored in units of \code{s} and multiplied by \code{s} again when data
+are simulated. A different \code{s} therefore changes the reported parameters, not
+the simulated data.
+
 The resulting design object can be used as input for the random_scdf
 function to create new random scdf files based on the estimated parameters.
 This allows to create bootstrap samples or Monte-Carlo datasets based on
@@ -89,7 +116,7 @@ set.seed(1234)
 design <- design(
   n = 10, trend = -0.02,
   level = list(0, 1), rtt = 0.8,
-  s = 1
+  s = 1, random_start_value = TRUE
 )
 scdf<- random_scdf(design)
 

@@ -56,8 +56,8 @@
                     count.data = FALSE) {
   n <- length(data)
   if (n > 1) {
-    abort("Multiple single-cases are given. Calculations could only be applied ",
-         "to a single data set.\n")
+    abort("Calculations can only be applied to a single case. ",
+          "Use 'hplm_level' or 'hplm_slope' for multiple case designs.")
   }
   
   if (inherits(data, "list")) data <- data[[1]]

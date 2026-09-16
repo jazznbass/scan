@@ -6,28 +6,27 @@
 #' Based on a [design()] object, a large number of single-cases are generated
 #' and re-analysed with a provided statistical function. The proportion of
 #' significant analyses is the test power. In a second step, a specified effect
-#' of the design object is set to 0 and again single-cases are generated and
-#' re-analysed. The proportion of significant analyses is the alpha error
-#' probability.
+#' of the design object (specified in the `effect` parameter) is set to 0 and
+#' again single-cases are generated and re-analysed. The proportion of
+#' significant analyses is the alpha error probability.
 #'
 #' @param design An object returned from the `design` function.
 #' @param method A (named) list that defines the methods the power analysis is
 #'   based on. Each element can contain a function (that takes an scdf file and
-#'   returns a p value) or a character string (the name of predefined
+#'   returns a p-value) or a character string (the name of predefined
 #'   functions). default `method = list("plm_level", "rand", "tauU")` computes a
 #'   power analysis based on [tau_u()], [rand_test()] and [plm()] analyses.
 #'   (Further predefined functions are: "plm_slope", "plm_poisson_level",
-#'   "plm_poisson_slope", "hplm_level", "hplm_slope", "base_tau".
-#' @param effect Either "level" or "slope". The respective effect of the
+#'   "plm_poisson_slope", "hplm_level", "hplm_slope", "base_tau").
+#' @param effect Either `"level"` or `"slope"`. The respective effect of the
 #'   provided design is set to 0 when computing the alpha-error proportion.
 #' @param n_sim Number of sample studies created for the the Monte-Carlo study.
 #'   Default is `n = 100`. Ignored if design_is_one_study = FALSE.
 #' @param design_is_one_study If TRUE, the design is assumed to define all cases
 #'   of one study that is repeatedly randomly created `n_sim` times. If FALSE,
-#'   the design is assumed to contain all cases from which a random sample is
-#'   generated. This is useful for very specific complex simulation studies.
-#'   In this case, n_sim indicates how many random samples are drawn from the
-#'   provided design. Default is TRUE.
+#'   one random case is generated for each design case provided in the design
+#'   object. This is useful for very specific complex simulation studies.
+#'   Default is TRUE.
 #' @param alpha_test Logical. If TRUE, alpha error is calculated.
 #' @param power_test Logical. If TRUE, power is calculated.
 #' @param binom_test Shortcut. When set TRUE, binom_test_power is set to 0.80,
@@ -47,10 +46,10 @@
 #' @param alpha_level Alpha level used to calculate the proportion of
 #'   significant tests. Default is `alpha_level = 0.05`.
 #' @author Juergen Wilbert
-#' @return A data frame with the power, alpha error, and correct proportions for
-#'  each provided method. If binomial tests are requested, p values for these
-#'  tests are also provided. If confidence intervals are requested, these
-#'  are also provided.
+#' @return An object of class `sc_power` with the power, alpha error, and
+#'   correct proportions for each provided method. If binomial tests are
+#'   requested, p values for these tests are also provided. If confidence
+#'   intervals are requested, these are also provided.
 #' @seealso [random_scdf()], [design()]
 #' @examples
 #'
@@ -90,6 +89,7 @@ power_test <- function(design,
   
   starttime <- proc.time()
   
+  # derives the function from the method character string if necessary
   mc_fun <- unlist(
     lapply(
       method, 
@@ -97,7 +97,11 @@ power_test <- function(design,
       recursive = FALSE
   )
   
-  # return object
+  if (is.null(names(mc_fun))) names(mc_fun) <- rep("", length(mc_fun))
+  unnamed <- !nzchar(names(mc_fun))
+  if (any(unnamed)) names(mc_fun)[unnamed] <- paste0("function", which(unnamed))
+  
+  # initiate return object
   out <- data.frame(Method = names(mc_fun))
   
   # power calculation ----------
@@ -117,17 +121,14 @@ power_test <- function(design,
   
   if (alpha_test) {
     
-    #level <- any(sapply(design$cases, function(x) x$level) != 0)
-    #slope <- any(sapply(design$cases, function(x) x$slope) != 0)
-    
     design_no_effect <- design
+    
     if (effect == "level") {
       design_no_effect$cases <- lapply(design_no_effect$cases,  function(x) {
         x$level <- rep(0, length = length(x$length))
         x
       })
     }
-    
     if (effect == "slope") {
       design_no_effect$cases <- lapply(design_no_effect$cases, function(x) {
         x$slope <- rep(0, length = length(x$length))
@@ -146,7 +147,15 @@ power_test <- function(design,
     out$"Alpha Error" <- NA
   }
   
-  out$"Alpha:Beta" <- sprintf("1:%.1f", (100 - out$Power) / out$"Alpha Error")
+  # Calculate the ratio of alpha to beta ----
+  
+  out$"Alpha:Beta" <- mapply(
+    function(power, alpha) {
+      if (is.na(power) || is.na(alpha) || alpha == 0) return(NA_character_)
+      sprintf("1:%.1f", (100 - power) / alpha)
+    },
+    out$Power, out$"Alpha Error", USE.NAMES = FALSE
+  )
   out$Correct <- (out$Power + (100 - out$"Alpha Error")) / 2
   
   if (binom_test) {
@@ -154,73 +163,64 @@ power_test <- function(design,
     binom_test_power <- 0.80
     binom_test_correct <- 0.875
   }
-  
+
   if (is.numeric(binom_test_power)) {
-    b_test <- function(x) {
+    b_test_power <- function(x) {
+      if (is.na(x)) return(NA_real_)
       x <- binom.test(round(x / 100 * n_sim), 
-        n_sim, 
-        p = binom_test_power, 
-        alternative = "greater"
-      )
-      round(x$p.value)
-    }
-    out[["p_power"]] <- sapply(out$"Power", b_test)
-  }
-  
-  if (is.numeric(binom_test_alpha)) {
-    b_test <- function(x) {
-      x <- binom.test(round(x / 100 * n_sim), 
-        n_sim, 
-        p = binom_test_alpha, 
-        alternative = "less"
-      )
-      round(x$p.value)
-    }
-    out[["p_alpha"]] <- sapply(out$"Alpha Error", b_test)
-  }
-  
-  if (is.numeric(binom_test_correct)) {
-    b_test <- function(x) {
-      x <- binom.test(round(x / 100 * n_sim * 2), 
-        n_sim * 2, 
-        p = binom_test_correct, 
-        alternative = "greater"
+                      n_sim, 
+                      p = binom_test_power, 
+                      alternative = "greater"
       )
       round(x$p.value, 3)
     }
-    out[["p_correct"]] <- sapply(out$Correct, b_test)
-  }
-
-  if (is.numeric(ci)) {
-    b_test <- function(x) {
-      x <- binom.test(round(x / 100 * n_sim), 
-        n_sim, 
-        p = binom_test, 
-        conf.level = ci, 
-        alternative = "two.sided"
-      )
-      x$conf.int * 100
-    }
-    
-    out[["Power lower"]] <- sapply(out$Power, function(x) b_test(x)[1])
-    out[["Power upper"]] <- sapply(out$Power, function(x) b_test(x)[2])
-    out[["Alpha Error lower"]] <- sapply(out$"Alpha Error", 
-                                         function(x) b_test(x)[1])
-    out[["Alpha Error upper"]] <- sapply(out$"Alpha Error", 
-                                         function(x) b_test(x)[2])
-      
-    b_test <- function(x) {
-      x <- binom.test(round(x / 100 * n_sim * 2), 
-        n_sim * 2, 
-        p = binom_test, 
-        alternative = "two.sided"
-      )
-      x$conf.int * 100
-    }
-    out[["Correct lower"]] <- sapply(out$Correct, function(x) b_test(x)[1])
-    out[["Correct upper"]] <- sapply(out$Correct, function(x) b_test(x)[2])
+    out[["p_power"]] <- sapply(out$"Power", b_test_power)
   }
   
+  if (is.numeric(binom_test_alpha)) {
+    b_test_alpha <- function(x) {
+      if (is.na(x)) return(NA_real_)
+      x <- binom.test(round(x / 100 * n_sim), 
+                      n_sim, 
+                      p = binom_test_alpha, 
+                      alternative = "less"
+      )
+      round(x$p.value, 3)
+    }
+    out[["p_alpha"]] <- sapply(out$"Alpha Error", b_test_alpha)
+  }
+  
+  if (is.numeric(binom_test_correct)) {
+    b_test_correct <- function(x) {
+      if (is.na(x)) return(NA_real_)
+      x <- binom.test(round(x / 100 * n_sim * 2), 
+                      n_sim * 2, 
+                      p = binom_test_correct, 
+                      alternative = "greater"
+      )
+      round(x$p.value, 3)
+    }
+    out[["p_correct"]] <- sapply(out$Correct, b_test_correct)
+  }
+  
+  if (is.numeric(ci)) {
+    b_test <- function(x, n) {
+      if (is.na(x)) return(c(NA_real_, NA_real_))
+      binom.test(round(x / 100 * n), n, conf.level = ci)$conf.int * 100
+    }
+    
+    out[["Power lower"]] <- sapply(out$Power, function(x) b_test(x, n_sim)[1])
+    out[["Power upper"]] <- sapply(out$Power, function(x) b_test(x, n_sim)[2])
+    out[["Alpha Error lower"]] <- sapply(out$"Alpha Error", 
+                                         function(x) b_test(x, n_sim)[1])
+    out[["Alpha Error upper"]] <- sapply(out$"Alpha Error", 
+                                         function(x) b_test(x, n_sim)[2])
+    out[["Correct lower"]] <- sapply(out$Correct, 
+                                     function(x) b_test(x, n_sim * 2)[1])
+    out[["Correct upper"]] <- sapply(out$Correct, 
+                                     function(x) b_test(x, n_sim * 2)[2])
+  }  
+
   attr(out, "computation_duration") <- proc.time() - starttime
   attr(out, "binom_test_alpha") <- binom_test_alpha
   attr(out, "binom_test_power") <- binom_test_power
@@ -230,6 +230,8 @@ power_test <- function(design,
   out
 }
 
+# Generate random samples and returns the proportion of significant tests for 
+# each method. 
 .mc_scdf <- function(design, 
                      alpha_level = NA, 
                      n_sim, 
@@ -239,10 +241,12 @@ power_test <- function(design,
   # Genrate random sample ----------------------------------------------------
   rand_sample <- list()
   
+  ## the complete design is repeated n_sim times
   if (design_is_one_study) {
     for(i in 1:n_sim) rand_sample[[i]] <- random_scdf(design = design)
   }
   
+  ## each case of the design is randomly generated once
   if (!design_is_one_study) {
     tmp <- random_scdf(design = design)
     for (i in seq_along(tmp)) rand_sample[[i]] <- tmp[i]
@@ -255,9 +259,22 @@ power_test <- function(design,
     mean(p <= alpha_level, na.rm = TRUE) * 100
   }
 
-  out <-  sapply(mc_fun, test_function) 
+  out <- vapply(
+    seq_along(mc_fun),
+    function(i) {
+      tryCatch(
+        test_function(mc_fun[[i]]),
+        error = function(e) {
+          abort("Method '", names(mc_fun)[i], "': ", conditionMessage(e))
+        }
+      )
+    },
+    FUN.VALUE = numeric(1)
+  )
+  names(out) <- names(mc_fun) 
 
-  # return
+  # return ----
+  
   out
 }
 

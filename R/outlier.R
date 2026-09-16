@@ -1,13 +1,13 @@
 #' Handling outliers in single-case data
 #'
 #' Identifies and drops outliers within a single-case data frame (scdf).
-#' Outliers can be identified based on mean average deviation (MAD),
+#' Outliers can be identified based on the median absolute deviation (MAD),
 #' standard deviation (SD), confidence intervals (CI), or Cook's Distance
 #' from a Piecewise Linear Regression Model.
 #'
 #' @inheritParams .inheritParams
 #' @param method Specifies the method for outlier identification. Set `method =
-#'   "MAD"` for mean average deiviation, `method = "SD"` for standard
+#'   "MAD"` for median absolute deviation, `method = "SD"` for standard
 #'   deviations, `method = "CI"` for confidence intervals, `method = "Cook"` for
 #'   Cook's Distance based on the Piecewise Linear Regression Model.
 #' @param criteria Specifies the criteria for outlier identification. Based on
@@ -24,11 +24,13 @@
 #'  | `criteria` | Criteria used for outlier analysis. |
 #'  | `N` | Number of single-cases. |
 #'  | `case.names` | Case identifier. |
-#' @details For `method = "SD"`, `criteria = 2` would refer t0 two standard
+#' @details For `method = "SD"`, `criteria = 2` would refer to two standard
 #'   deviations. For `method = "MAD"`, `criteria = 3.5` would refer to 3.5 times
-#'   the mean average deviation. For `method = "CI"`, `criteria = 0.99` would
-#'   refer to a 99 percent confidence interval. For `method = "cook"`, `criteria
-#'   = "4/n"` would refer to a Cook's Distance greater than 4/n.
+#'   the median absolute deviation (scaled to be consistent with the standard
+#'   deviation for normally distributed data, as `stats::mad()` does). For
+#'   `method = "CI"`, `criteria = 0.99` would refer to a 99 percent confidence
+#'   interval. For `method = "cook"`, `criteria = "4/n"` would refer to a
+#'   Cook's Distance greater than 4/n.
 #' @author Juergen Wilbert
 #' @family data manipulation functions
 #' @keywords manip
@@ -85,8 +87,13 @@ outlier <- function(data, dvar, pvar, mvar,
   for(i in 1:N) {
     data <- data_list[[i]]
     
-    phases <- rle(as.character(data[, pvar]))$value
-    values <- lapply(phases, function(x) data[data[, pvar] == x, dvar])
+    runs <- rle(as.character(data[, pvar]))
+    phases <- runs$values
+    values <- split(
+      data[, dvar], 
+      factor(rep(seq_along(runs$values), runs$lengths), 
+             levels = seq_along(runs$values))
+    )
 
 # CI ----------------------------------------------------------------------
     
@@ -100,10 +107,10 @@ outlier <- function(data, dvar, pvar, mvar,
       
       for(p in 1:length(values)) {
         x <- values[[p]]
-        mat[p,"m"] <- mean(x)
-        mat[p,"se"] <- sd(x)/sqrt(length(x))
-        mat[p,"lower"] <- mean(x) - fac * (sd(x)/sqrt(length(x)))
-        mat[p,"upper"] <- mean(x) + fac * (sd(x)/sqrt(length(x)))
+        mat[p,"m"] <- mean(x, na.rm = TRUE)
+        mat[p,"se"] <- sd(x, na.rm = TRUE) / sqrt(sum(!is.na(x)))
+        mat[p,"lower"] <- mat[p,"m"] - fac * mat[p,"se"]
+        mat[p,"upper"] <- mat[p,"m"] + fac * mat[p,"se"]
         filter <- c(filter, (x < mat[p, "lower"]) | (x > mat[p, "upper"]))
       }
       mat <- as.data.frame(mat)
@@ -120,10 +127,10 @@ outlier <- function(data, dvar, pvar, mvar,
       filter <- c()
       for(p in 1:length(values)) {
         x <- values[[p]]
-        mat[p,"md"] <- median(x)
-        mat[p,"mad"] <- mad(x,constant = 1)
-        mat[p,"lower"] <- median(x) - fac * mad(x)
-        mat[p,"upper"] <- median(x) + fac * mad(x)
+        mat[p,"md"] <- median(x, na.rm = TRUE)
+        mat[p,"mad"] <- mad(x, na.rm = TRUE)
+        mat[p,"lower"] <- mat[p,"md"] - fac * mat[p,"mad"]
+        mat[p,"upper"] <- mat[p,"md"] + fac * mat[p,"mad"]
         filter <- c(filter, (x < mat[p,"lower"]) | (x > mat[p,"upper"]))
       }
       mat <- as.data.frame(mat)
@@ -140,10 +147,10 @@ outlier <- function(data, dvar, pvar, mvar,
       filter <- c()
       for(p in 1:length(values)) {
         x <- values[[p]]
-        mat[p,"m"] <- mean(x)
-        mat[p,"sd"] <- sd(x)
-        mat[p,"lower"] <- mean(x) - SD * sd(x)
-        mat[p,"upper"] <- mean(x) + SD * sd(x)
+        mat[p,"m"] <- mean(x, na.rm = TRUE)
+        mat[p,"sd"] <- sd(x, na.rm = TRUE)
+        mat[p,"lower"] <- mat[p,"m"] - SD * mat[p,"sd"]
+        mat[p,"upper"] <- mat[p,"m"] + SD * mat[p,"sd"]
         filter <- c(filter, (x < mat[p,"lower"]) | (x > mat[p, "upper"]))
       }
       mat <- as.data.frame(mat)
@@ -162,10 +169,17 @@ outlier <- function(data, dvar, pvar, mvar,
 
       reg <- plm(data_list[i], dvar = dvar, pvar = pvar, mvar = mvar)$full.model
       
-      cd <- cooks.distance(reg)
-      filter <- cd >= cut_off
+      cd_model <- cooks.distance(reg)
+      valid <- which(complete.cases(data[, c(dvar, pvar, mvar)]))
+      if (length(valid) != length(cd_model)) 
+        abort("Cook's distances can not be matched to the measurements.")
+      cd <- rep(NA_real_, nrow(data))
+      cd[valid] <- cd_model
+      filter <- !is.na(cd) & cd >= cut_off
       cook[[i]] <- data.frame(Cook = round(cd, 2), MT = data_list[[i]][, mvar])
     }		
+    
+    filter[is.na(filter)] <- FALSE
     
     dropped.mts[[i]] <- data_list[[i]][filter, mvar]
     dropped.n[[i]]   <- sum(filter)

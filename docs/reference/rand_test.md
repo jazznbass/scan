@@ -29,7 +29,6 @@ rand_test(
   exclude.equal = FALSE,
   phases = c(1, 2),
   graph = FALSE,
-  output = NULL,
   seed = NULL
 )
 ```
@@ -149,10 +148,6 @@ rand_test(
   plotted. It is `FALSE` by default. *Note: use the more versatile
   [`plot_rand()`](https://jazznbass.github.io/scan/reference/plot_rand.md)
   function instead.*
-
-- output:
-
-  (deprecated and not implemented)
 
 - seed:
 

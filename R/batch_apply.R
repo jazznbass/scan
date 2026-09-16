@@ -24,20 +24,29 @@
 #' @export
 batch_apply <- function(scdf, fn, simplify = FALSE) {
   fn <- substitute(fn)
+  env <- parent.frame()
   out <- vector("list", length(scdf))
   for (i in seq_along(scdf)) {
     data <- list(. = scdf[i])
-    out[[i]] <- eval(fn, envir = data)
+    out[[i]] <- eval(fn, envir = data, enclos = env)
   }
   names(out) <- names(scdf)
 
   if (simplify) {
-    out <- as.data.frame(do.call(rbind, out))
-    out$case <- rep(names(scdf), each = nrow(out) / length(names(scdf)))
-    out$rownames <- rownames(out)
+    n_rows <- vapply(out, function(x) if (is.null(nrow(x))) 1L else nrow(x), 
+                     integer(1))
+    case <- rep(names(scdf), n_rows)
+
+    combined <- do.call(rbind, out)
+    row_names <- rownames(combined)
+    if (is.null(row_names)) row_names <- seq_len(nrow(combined))
+    out <- as.data.frame(combined, check.names = FALSE)
+    out$case <- case
+    out$rownames <- row_names
+    
     rownames(out) <- NULL
     out <- out[, c(ncol(out) - 1, ncol(out), 1:(ncol(out) - 2))]
   }
-
+  
   out
 }

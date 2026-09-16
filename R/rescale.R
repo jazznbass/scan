@@ -4,8 +4,8 @@
 #' centering and standardization across all cases included in an scdf.
 #'
 #' @inheritParams .inheritParams
-#' @param ... Names of variables to be standardized. If none are given, all numeric
-#'  variables are standardized.
+#' @param ... Names of variables to be standardized, either as object names or
+#'  as characters. If none are given, all numeric variables are standardized.
 #' @param m The target mean. If set NULL, it is not changed.
 #' @param sd The target standard deviation. If set NULL, it is not changed.
 #' @return An scdf with the scaled values.
@@ -28,13 +28,22 @@ rescale <- function(data,
 
   N <- length(data)
   
-  vars <-  list(...) |> substitute() |> sapply(deparse)
-  vars <- vars[-1]
+  vars <- as.list(substitute(list(...)))[-1]
+  nl <- as.list(names(data[[1]]))
+  names(nl) <- names(data[[1]])
+  env <- parent.frame()
+  vars <- unlist(lapply(
+    vars, function(x) eval(x, envir = nl, enclos = env)
+  ))
   
   if (length(vars) == 0) {
-    vars <- sapply(data[[1]], function(x) is.numeric(x)) |> which()
-    vars <- names(data[[1]])[vars]
-    message(paste0("Rescaled ", paste0(vars, collapse = ", ")))
+    vars <- names(data[[1]])[vapply(data[[1]], is.numeric, logical(1))]
+    notify("Rescaled ", paste0(vars, collapse = ", "))
+  }
+  
+  for (v in vars) {
+    if (!all(vapply(data, function(case) is.numeric(case[[v]]), logical(1))))
+      abort("Variable '", v, "' is missing or not numeric in at least one case.")
   }
   
   m_sd <- vapply(vars, function(x) {

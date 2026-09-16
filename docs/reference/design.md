@@ -22,7 +22,7 @@ design(
   distribution = c("normal", "gaussian", "poisson", "binomial"),
   random_start_value = FALSE,
   n_trials = NULL,
-  mt = NULL,
+  mt = 20,
   B_start = NULL,
   m,
   phase.design,

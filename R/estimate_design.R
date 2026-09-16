@@ -14,6 +14,20 @@
 #' case. If overall_effects is set to TRUE, trend, level, and slope
 #' effect estimations will be identical for each case.
 #' 
+#' `s` is estimated from the differences between the start values of the cases,
+#' so it can only be estimated when the cases differ in their starting level by
+#' more than the precision of these estimates — with one or two cases it can not
+#' be estimated at all. When it can not, `s` is set equal to the standard
+#' deviation of the error and a warning is issued: the effects are then
+#' expressed in units of the variation within a case, and the reliability is
+#' fixed at 0.5 by that choice rather than estimated. Providing `s`, `rtt` or
+#' `error` is strongly recommended for such data. `s` and `rtt` are two sides of one
+#' parameter: whichever `s` is used, the error distribution derived from the
+#' estimated `rtt` has the residual variance of the piecewise regression, and
+#' the effects are stored in units of `s` and multiplied by `s` again when data
+#' are simulated. A different `s` therefore changes the reported parameters, not
+#' the simulated data.
+#' 
 #' The resulting design object can be used as input for the random_scdf
 #' function to create new random scdf files based on the estimated parameters.
 #' This allows to create bootstrap samples or Monte-Carlo datasets based on
@@ -22,11 +36,22 @@
 #' @inheritParams .inheritParams
 #' @param s The standard deviation depicting the between case variance of the
 #'   overall performance. If more than two single-cases are included in the
-#'   scdf, the variance is estimated if s is set to NULL. If s is provided, this
-#'   value is used.
+#'   scdf, the variance is estimated if s is set to NULL. The estimate is the
+#'   variance of the estimated start values reduced by the mean squared standard
+#'   error of these estimates, so that the uncertainty of the single estimates
+#'   does not inflate `s`. When that difference is not positive, `s` is set equal
+#'   to the standard deviation of the error and a warning is issued (see
+#'   details). If s is provided, this value is used.
 #' @param rtt The reliability of the measurements. The reliability is estimated
-#'   when rtt = NULL. If rtt is provided, this value is used for all single-cases.
-#' @param overall_rtt Ignored when `rtt` is set. If TRUE, rtt estimations will
+#'   when rtt = NULL, as `s^2 / (s^2 + var_error)`, the definition [design()]
+#'   uses to draw the measurement error. `var_error` is the residual variance of
+#'   the piecewise regression, pooled across cases when `overall_rtt = TRUE`. If
+#'   rtt is provided, this value is used for all single-cases.
+#' @param error Standard deviation of the measurement error. An alternative to
+#'   `rtt`: the reliability of each case is then derived as
+#'   `s^2 / (s^2 + error^2)`. `rtt` and `error` must not be given together. To
+#'   assign different values to several single-cases, use a vector of values.
+#' @param overall_rtt Ignored when `rtt` or `error` is set. If TRUE, rtt estimations will
 #'   be based on all cases and identical for each case. If FALSE rtt is
 #'   estimated for each case separately. Default is TRUE.
 #' @param overall_effects If TRUE, trend, level, and slope effect estimations
@@ -48,7 +73,7 @@
 #' design <- design(
 #'   n = 10, trend = -0.02,
 #'   level = list(0, 1), rtt = 0.8,
-#'   s = 1
+#'   s = 1, random_start_value = TRUE
 #' )
 #' scdf<- random_scdf(design)
 #'
@@ -72,6 +97,7 @@
 estimate_design <- function(data, dvar, pvar, mvar, 
                             s = NULL, 
                             rtt = NULL, 
+                            error = NULL,
                             overall_effects = FALSE, 
                             overall_rtt = TRUE,
                             model = "JW", 
@@ -87,9 +113,15 @@ estimate_design <- function(data, dvar, pvar, mvar,
   
   data <- .prepare_scdf(data)
   N <- length(data)
-  case_names <- names(data)
-
-  if (is.null(case_names)) case_names <- revise_names(data)
+  
+  if (!is.null(error)) {
+    if (!is.null(rtt)) abort("Provide either 'rtt' or 'error', not both.")
+    if (!is.numeric(error) || !all(is.finite(error)) || any(error <= 0)) {
+      abort("Argument 'error' must hold positive numbers.")
+    }
+    error <- rep(error, length = N)
+  }
+  if (!is.null(rtt)) rtt <- rep(rtt, length = N)
 
   cases <- lapply(data, function(x) {
     df <- as.list(.phasestructure(x, pvar))
@@ -97,44 +129,54 @@ estimate_design <- function(data, dvar, pvar, mvar,
     df
   })
 
-  error <- c()
-  fitted <- c()
+  ss_residuals <- 0
+  df_residuals <- 0
 
   for (i in 1:N) {
     plm_model <- plm(data[i], model = model, ...)$full
     res <- coef(plm_model)
-    var_fitted <- var(plm_model$fitted.values)
-    var_residuals <- var(plm_model$residuals)
+    residual_values <- residuals(plm_model)
+    df <- length(residual_values) - length(res)
+ 
+    cases[[i]]$var_residuals <- sum(residual_values^2) / df
+    cases[[i]]$var_start_value <- vcov(plm_model)[1, 1]
     n_phases <- length(cases[[i]]$phase)
     cases[[i]]$start_value <- res[1]
     cases[[i]]$trend <- res[2]
     cases[[i]]$level <- c(0, res[3:(1 + n_phases)])
     cases[[i]]$slope <- c(0, res[(2 + n_phases):(2 + 2 * (n_phases - 1))])
-    
-    if (is.null(rtt)) {
-      cases[[i]]$rtt <- var_fitted / (var_fitted + var_residuals)
-    } else {
-      cases[[i]]$rtt <- rtt
-    }
-    
     cases[[i]]$missing_prop <- mean(is.na(data[[i]][[dvar]]))
     
-    #missing_prop <- c()
-    # for (y in 1:length(cases[[i]]$phase)) {
-    #   missing_prop <- c(
-    #     missing_prop, 
-    #     sum(is.na(data[[i]][cases[[i]]$start[y]:cases[[i]]$stop[y], dvar])) / cases[[i]]$length[y]
-    #   )
-    # }
-    #cases[[i]]$error <- var_residuals
-    #cases[[i]]$fitted <- var_fitted
-    
-    error <- c(error, plm_model$residuals)
-    fitted <- c(fitted, plm_model$fitted.values)
+    ss_residuals <- ss_residuals + sum(residual_values^2)
+    df_residuals <- df_residuals + df
   }
+  
+  var_error <- ss_residuals / df_residuals
 
-  if (N > 2 && is.null(s)) 
-    s <- sd(sapply(cases, function(x) x$start_value[1]), na.rm = TRUE)
+  if (is.null(s)) {
+    var_s <- if (N > 2) {
+      var(sapply(cases, function(x) x$start_value[1]), na.rm = TRUE) -
+        mean(sapply(cases, function(x) x$var_start_value[1]), na.rm = TRUE)
+    } else NA_real_
+    
+    if (isTRUE(var_s > 0)) {
+      s <- sqrt(var_s)
+    } else {
+      s <- sqrt(var_error)
+      warn("'s' can not be estimated from these data. It is set equal to the ",
+           "standard deviation of the error (s = ", round(s, 3), ").")
+      if (is.null(rtt) && is.null(error)) {
+        warn("Equating the two fixes the reliability at rtt = 0.5 by ",
+             "construction. It is not estimated from the data.")
+      }
+      warn("Level, slope and trend are in units of the within-case error. ",
+           "Providing 's' or 'rtt' is strongly recommended.")
+    }
+  }
+  
+  if (!isTRUE(is.finite(s) && s > 0)) {
+    abort("Argument 's' must be a positive number (is ", s, ").")
+  }
   
   if (overall_effects) {
     level <- rowMeans(sapply(cases, function(x) x$level))
@@ -158,7 +200,15 @@ estimate_design <- function(data, dvar, pvar, mvar,
     cases[[i]]$slope <- cases[[i]]$slope / s
     cases[[i]]$trend <- cases[[i]]$trend / s
     cases[[i]]$s <- s
-    if (overall_rtt) cases[[i]]$rtt <- var(fitted) / (var(fitted) + var(error))
+    cases[[i]]$rtt <- if (!is.null(rtt)) {
+      rtt[i]
+    } else if (!is.null(error)) {
+      s^2 / (s^2 + error[i]^2)
+    } else if (overall_rtt) {
+      s^2 / (s^2 + var_error)
+    } else {
+      s^2 / (s^2 + cases[[i]]$var_residuals)
+    }
     cases[[i]]$extreme_prop <- 0
     cases[[i]]$extreme_low <- -4
     cases[[i]]$extreme_high <- -3

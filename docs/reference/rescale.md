@@ -19,8 +19,8 @@ rescale(data, ..., m = 0, sd = 1)
 
 - ...:
 
-  Names of variables to be standardized. If none are given, all numeric
-  variables are standardized.
+  Names of variables to be standardized, either as object names or as
+  characters. If none are given, all numeric variables are standardized.
 
 - m:
 

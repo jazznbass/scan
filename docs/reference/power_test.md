@@ -33,7 +33,7 @@ power_test(
 
   A (named) list that defines the methods the power analysis is based
   on. Each element can contain a function (that takes an scdf file and
-  returns a p value) or a character string (the name of predefined
+  returns a p-value) or a character string (the name of predefined
   functions). default `method = list("plm_level", "rand", "tauU")`
   computes a power analysis based on
   [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md),
@@ -41,11 +41,11 @@ power_test(
   and [`plm()`](https://jazznbass.github.io/scan/reference/plm.md)
   analyses. (Further predefined functions are: "plm_slope",
   "plm_poisson_level", "plm_poisson_slope", "hplm_level", "hplm_slope",
-  "base_tau".
+  "base_tau").
 
 - effect:
 
-  Either "level" or "slope". The respective effect of the provided
+  Either `"level"` or `"slope"`. The respective effect of the provided
   design is set to 0 when computing the alpha-error proportion.
 
 - n_sim:
@@ -56,11 +56,10 @@ power_test(
 - design_is_one_study:
 
   If TRUE, the design is assumed to define all cases of one study that
-  is repeatedly randomly created `n_sim` times. If FALSE, the design is
-  assumed to contain all cases from which a random sample is generated.
-  This is useful for very specific complex simulation studies. In this
-  case, n_sim indicates how many random samples are drawn from the
-  provided design. Default is TRUE.
+  is repeatedly randomly created `n_sim` times. If FALSE, one random
+  case is generated for each design case provided in the design object.
+  This is useful for very specific complex simulation studies. Default
+  is TRUE.
 
 - alpha_test:
 
@@ -106,10 +105,10 @@ power_test(
 
 ## Value
 
-A data frame with the power, alpha error, and correct proportions for
-each provided method. If binomial tests are requested, p values for
-these tests are also provided. If confidence intervals are requested,
-these are also provided.
+An object of class `sc_power` with the power, alpha error, and correct
+proportions for each provided method. If binomial tests are requested, p
+values for these tests are also provided. If confidence intervals are
+requested, these are also provided.
 
 ## Details
 
@@ -118,9 +117,9 @@ Based on a
 object, a large number of single-cases are generated and re-analysed
 with a provided statistical function. The proportion of significant
 analyses is the test power. In a second step, a specified effect of the
-design object is set to 0 and again single-cases are generated and
-re-analysed. The proportion of significant analyses is the alpha error
-probability.
+design object (specified in the `effect` parameter) is set to 0 and
+again single-cases are generated and re-analysed. The proportion of
+significant analyses is the alpha error probability.
 
 ## See also
 
@@ -148,8 +147,8 @@ power_test(design, n_sim = 10)
 #> Test-Power in percent:
 #> 
 #>     Method Power Alpha Error Alpha:Beta Correct
-#>  plm_level    60           0      1:Inf      80
-#>       rand    60           0      1:Inf      80
+#>  plm_level    60           0       <NA>      80
+#>       rand    60           0       <NA>      80
 #>       tauU   100          20      1:0.0      90
 
 ## Would you achieve higher power by setting up a MBD with three cases?

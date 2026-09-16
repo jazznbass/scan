@@ -71,15 +71,15 @@ a statistical function.</p>
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>A (named) list that defines the methods the power analysis is
 based on. Each element can contain a function (that takes an scdf file and
-returns a p value) or a character string (the name of predefined
+returns a p-value) or a character string (the name of predefined
 functions). default <code>method = list("plm_level", "rand", "tauU")</code> computes a
 power analysis based on <code><a href="tau_u.html">tau_u()</a></code>, <code><a href="rand_test.html">rand_test()</a></code> and <code><a href="plm.html">plm()</a></code> analyses.
 (Further predefined functions are: "plm_slope", "plm_poisson_level",
-"plm_poisson_slope", "hplm_level", "hplm_slope", "base_tau".</p></dd>
+"plm_poisson_slope", "hplm_level", "hplm_slope", "base_tau").</p></dd>
 
 
 <dt id="arg-effect">effect<a class="anchor" aria-label="anchor" href="#arg-effect"></a></dt>
-<dd><p>Either "level" or "slope". The respective effect of the
+<dd><p>Either <code>"level"</code> or <code>"slope"</code>. The respective effect of the
 provided design is set to 0 when computing the alpha-error proportion.</p></dd>
 
 
@@ -91,10 +91,9 @@ Default is <code>n = 100</code>. Ignored if design_is_one_study = FALSE.</p></dd
 <dt id="arg-design-is-one-study">design_is_one_study<a class="anchor" aria-label="anchor" href="#arg-design-is-one-study"></a></dt>
 <dd><p>If TRUE, the design is assumed to define all cases
 of one study that is repeatedly randomly created <code>n_sim</code> times. If FALSE,
-the design is assumed to contain all cases from which a random sample is
-generated. This is useful for very specific complex simulation studies.
-In this case, n_sim indicates how many random samples are drawn from the
-provided design. Default is TRUE.</p></dd>
+one random case is generated for each design case provided in the design
+object. This is useful for very specific complex simulation studies.
+Default is TRUE.</p></dd>
 
 
 <dt id="arg-alpha-test">alpha_test<a class="anchor" aria-label="anchor" href="#arg-alpha-test"></a></dt>
@@ -141,19 +140,19 @@ significant tests. Default is <code>alpha_level = 0.05</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame with the power, alpha error, and correct proportions for
-each provided method. If binomial tests are requested, p values for these
-tests are also provided. If confidence intervals are requested, these
-are also provided.</p>
+    <p>An object of class <code>sc_power</code> with the power, alpha error, and
+correct proportions for each provided method. If binomial tests are
+requested, p values for these tests are also provided. If confidence
+intervals are requested, these are also provided.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Based on a <code><a href="design.html">design()</a></code> object, a large number of single-cases are generated
 and re-analysed with a provided statistical function. The proportion of
 significant analyses is the test power. In a second step, a specified effect
-of the design object is set to 0 and again single-cases are generated and
-re-analysed. The proportion of significant analyses is the alpha error
-probability.</p>
+of the design object (specified in the <code>effect</code> parameter) is set to 0 and
+again single-cases are generated and re-analysed. The proportion of
+significant analyses is the alpha error probability.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -180,8 +179,8 @@ probability.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test-Power in percent:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Method Power Alpha Error Alpha:Beta Correct</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  plm_level    60           0      1:Inf      80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       rand    60           0      1:Inf      80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  plm_level    60           0       &lt;NA&gt;      80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       rand    60           0       &lt;NA&gt;      80</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       tauU   100          20      1:0.0      90</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Would you achieve higher power by setting up a MBD with three cases?</span></span></span>

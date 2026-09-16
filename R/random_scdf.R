@@ -1,29 +1,28 @@
 #' Single-case data generator
 #'
-#' The \code{random_scdf} function generates random single-case data frames for
-#' monte-carlo studies and demonstration purposes. \code{design} is used to set
-#' up a design matrix with all parameters needed for the \code{random_scdf}
-#' function.
+#' The `random_scdf` function generates random single-case data frames for
+#' monte-carlo studies and demonstration purposes. `design` is used to set up a
+#' design matrix with all parameters needed for the `random_scdf` function.
 #'
 #' The generated data can be normally distributed, Poisson-distributed, or
 #' binomially distributed. The default is normally distributed data.
 #'
-#' @param design A design matrix which is created by \code{design} and specifies
-#'   all parameters. If \code{design} is \code{NULL} (default), the design
-#'   parameters have to be specified via the \code{...} argument. If a numeric
-#'   value is provided instead of a design matrix, it is interpreted as the
-#'   number of cases \code{n}.
+#' @param design A design matrix which is created by `design` and specifies all
+#'   parameters. If `design` is `NULL` (default), the design parameters have to
+#'   be specified via the `...` argument. If a numeric value is provided instead
+#'   of a design matrix, it is interpreted as the number of cases `n`.
 #' @param round Rounds the scores to the defined decimal. To round to the second
-#'   decimal, set \code{round = 2}. Default is \code{NA} (no rounding).
-#' @param random_names Is \code{FALSE} by default. If set \code{random_names =
-#'   TRUE} cases are assigned random first names. If set \code{"neutral", "male"
-#'   or "female"} only gender neutral, male, or female names are chosen. The
-#'   names are drawn from the 2,000 most popular names for newborns in 2012 in
-#'   the U.S. (1,000 male and 1,000 female names).
-#' @param seed A seed number for the random generator. If \code{NULL} (default),
-#'   no seed
-#' @param ... arguments that are directly passed to the \code{design} function
-#'   for a more concise coding.
+#'   decimal, set `round = 2`. Default is `NA` (no rounding).
+#' @param random_names Is `FALSE` by default. If set `random_names = TRUE` cases
+#'   are assigned random first names. If set `("neutral", "male" or "female")`
+#'   only gender neutral, male, or female names are chosen. The names are drawn
+#'   from the 2,000 most popular names for newborns in 2012 in the U.S. (1,000
+#'   male and 1,000 female names).
+#' @param seed A seed number for the random generator. If `NULL` (default), no
+#'   seed is set. If a number is provided, the random generator is set to this
+#'   seed before generating the data. This is useful for reproducibility.
+#' @param ... arguments that are directly passed to the `design` function for a
+#'   more concise coding.
 #' @return A single-case data frame. See \code{\link{scdf}} to learn about this
 #'   format.
 #' @family mc fucntions
@@ -55,15 +54,27 @@ random_scdf <- function(design = NULL,
                         ...) {
   
   if (!is.null(seed)) set.seed(seed)
+  
+  # Check arguments ----
+  
+  if (!is.logical(random_names) && 
+      !random_names %in% c("male", "female", "neutral")) {
+    abort(
+      "Argument random_names must be TRUE, FALSE, or one of ",
+      "'male', 'female', 'neutral'."
+    )
+  }
+  
   if (is.numeric(design)) {
     warn("The first argument is expected to be a design matrix created by ", 
             "design(). If you want to set n, please name the first ",
             "argument with n = ...")
-    n <- design
-    design <- NULL
+    design <- design(n = design, ...)
   }
   if (is.null(design)) design <- design(...)
 
+  # Generate data ----
+  
   n <- length(design$cases)
 
   out <- vector("list", n)
@@ -143,10 +154,14 @@ random_scdf <- function(design = NULL,
     }
 
     if (design$distribution %in% c("binomial", "poisson")) {
-      measured_values[measured_values < 0] <- 0
+      measured_values <- round(measured_values)
+      measured_values[which(measured_values < 0)] <- 0
     }
     
-    # fast df assignment
+    if (design$distribution == "binomial") {
+      measured_values[which(measured_values > design$n_trials)] <- design$n_trials
+    }
+    
     df <- list(
       phase = rep(design$cases[[i]]$phase, length), 
       values = measured_values, 
@@ -161,11 +176,6 @@ random_scdf <- function(design = NULL,
     attr(df, "row.names") <- .set_row_names(length(df[[1]]))
   
     out[[i]] <- df
-    #out[[i]] <- data.frame(
-    ##  phase = rep(design$cases[[i]]$phase, length), 
-    #  values = measured_values, 
-    #  mt = 1:mt
-    #)
   }
 
   if (random_names == "male") names(out) <- sample(case_names$male, n)
