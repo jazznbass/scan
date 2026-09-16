@@ -12,5 +12,5 @@ test_that("estimate_design", {
   }
   
   value <- round(sum(unlist(lapply(result$cases, function(x)  unlist(x[-1])))), 4)
-  expect_equal(value, 594.4769)  
+  expect_equal(value, 591.4265)  
 })

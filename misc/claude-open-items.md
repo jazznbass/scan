@@ -102,3 +102,37 @@ but `all.equal()` reports "names for target but not for current", so a round
 trip looks broken although the data are identical. Either `combine()` should
 keep NULL when no case has a name, or the data sets should carry real case
 names. No practical consequence; noted while working on convert().
+
+## Noted: the unused 'output' argument of rand_test()
+
+`rand_test()` still carries `output = NULL` in its signature. It is documented
+as "(deprecated and not implemented)" and is never read in the body. Removing
+it makes an old call stop with `unused argument`; routing it through
+`as_deprecated()` in `check_args()`, the way `design()` handles its renamed
+arguments, would warn instead. Decision pending.
+
+## Noted: the dvar / pvar / mvar arguments of the analysis functions
+
+`set_vars()` and its three single setters now reject a variable that is not
+part of every case (Bug 71). The same names reach about twenty analysis
+functions through their own `dvar`, `pvar` and `mvar` arguments —
+`plm(dat, dvar = "valeus")` — and are still written into the scdf attribute
+unchecked. The natural place for one shared check is `.prepare_scdf()`, which
+every one of these functions passes through, but the argument is resolved
+before that call in most of them, so it needs a small reordering per function.
+Not started.
+
+## Noted: rtt as an intraclass correlation (estimate_design)
+
+Done so far: the error variance uses the residual degrees of freedom, `s^2` is
+corrected by the mean squared standard error of the estimated start values, the
+definition of `rtt` is documented in `?design`, and `design(error = ...)` offers
+the measurement error directly.
+
+Still open is the cleaner statistical route: estimating `s^2` and the error
+variance jointly from a random intercept model, so that
+`rtt = tau00 / (tau00 + sigma^2)` — the intraclass correlation. It would replace
+two separately corrected moments by one model. `hplm()` is in the package
+already, but it requires the same phase design for every case, while
+`estimate_design()` works case by case and tolerates different designs, so it
+needs a fallback. Worth doing as an option, not as a replacement.
