@@ -15,7 +15,7 @@ changed by providing a custom formula to the update argument."><meta property="o
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.69.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -193,8 +193,10 @@ caption will be created based on the exported object.</p></dd>
 
 
 <dt id="arg-footnote">footnote<a class="anchor" aria-label="anchor" href="#arg-footnote"></a></dt>
-<dd><p>Character string with table footnote. If left NA (default) a
-footnote will be created based on the exported object.</p></dd>
+<dd><p>Character string with table footnote. Several strings are
+combined into a footnote of several lines. If left NA (default) a footnote
+will be created based on the exported object. <code>NULL</code> or <code>""</code> suppress the
+footnote.</p></dd>
 
 
 <dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
@@ -253,7 +255,7 @@ function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Type III MANOVA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Pillai = 0.35; F(6, 158) = 5.57; p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Pillai = 0.35; F(6, 158) = 5.57; p &lt;.001 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        academic_engagement disruptive_behavior Pillai      F</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                            2.771               0.849  0.284 15.475</span>
@@ -268,13 +270,16 @@ function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: cbind(academic_engagement, disruptive_behavior) ~ 1 + mt + phaseB + </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     interB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The following variables were used in this analysis:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'academic_engagement/ disruptive_behavior' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</span>
 <span class="r-in"><span><span class="co">## also report standardized coefficients:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span>, std <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate piecewise linear model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dummy model: W level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Type III MANOVA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Pillai = 0.35; F(6, 158) = 5.57; p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Pillai = 0.35; F(6, 158) = 5.57; p &lt;.001 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        academic_engagement disruptive_behavior Pillai      F</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                            0.000               0.000  0.284 15.475</span>
@@ -290,6 +295,9 @@ function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients are standardized</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: cbind(academic_engagement, disruptive_behavior) ~ 1 + mt + phaseB + </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     interB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The following variables were used in this analysis:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'academic_engagement/ disruptive_behavior' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -64,7 +64,7 @@ plm(ex)
 #> Contrast model: W / level = first, slope = first
 #> 
 #> Fitted a gaussian distribution.
-#> F(3, 19) = 46.74; p = 0.000; R² = 0.881; Adjusted R² = 0.862; AIC = 221.5733
+#> F(3, 19) = 46.74; p <.001; R² = 0.881; Adjusted R² = 0.862; AIC = 221.6
 #> 
 #>                               B LL-CI95% UL-CI95%     SE      t     p delta R²
 #> Intercept               258.714  223.364  294.065 18.036 14.344 0.000         
@@ -77,9 +77,12 @@ plm(ex)
 #>    1  0.10
 #>    2 -0.13
 #>    3 -0.10
-#> Ljung-Box test: X²(3) = 0.99; p = 0.804 
+#> Ljung-Box test: X²(3) = 0.99; p = .80 
 #> 
 #> Formula: injuries ~ 1 + year + phaseB + interB 
+#> 
+#> The following variables were used in this analysis:
+#> 'injuries' as dependent variable, 'phase' as phase variable, and 'year' as measurement-time variable.
 
 # Please use transform instead:
 example_A24 |>
@@ -90,7 +93,7 @@ example_A24 |>
 #> Contrast model: W / level = first, slope = first
 #> 
 #> Fitted a gaussian distribution.
-#> F(3, 19) = 46.74; p = 0.000; R² = 0.881; Adjusted R² = 0.862; AIC = 221.5733
+#> F(3, 19) = 46.74; p <.001; R² = 0.881; Adjusted R² = 0.862; AIC = 221.6
 #> 
 #>                               B LL-CI95% UL-CI95%     SE      t     p delta R²
 #> Intercept               258.714  223.364  294.065 18.036 14.344 0.000         
@@ -103,7 +106,10 @@ example_A24 |>
 #>    1  0.10
 #>    2 -0.13
 #>    3 -0.10
-#> Ljung-Box test: X²(3) = 0.99; p = 0.804 
+#> Ljung-Box test: X²(3) = 0.99; p = .80 
 #> 
 #> Formula: injuries ~ 1 + year + phaseB + interB 
+#> 
+#> The following variables were used in this analysis:
+#> 'injuries' as dependent variable, 'phase' as phase variable, and 'year' as measurement-time variable.
 ```

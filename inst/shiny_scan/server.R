@@ -313,9 +313,9 @@ server <- function(input, output, session) {
       id <- match(case, c(res$new_case, casenames))
 
       scdf <- my_scdf()[id - 1]
-      dv <- scan:::dv(scdf)
-      mt <- scan:::mt(scdf)
-      phase <- scan:::phase(scdf)
+      dv <- dv(scdf)
+      mt <- mt(scdf)
+      phase <- phase(scdf)
      
       # values string
       x <- split(
@@ -683,14 +683,10 @@ server <- function(input, output, session) {
   observeEvent(input$stats_func, {
     ## show description
     if(input$stats_description) {
-      hf <- help(input$stats_func, package = "scan")
-      res <- utils:::.getHelpFile(hf)
-      desc <- Filter(function(x) attr(x, "Rd_tag") == "\\description", res)
-      if (length(desc) > 0) {
-        desc <- paste0(unlist(desc)[-1], collapse = "")
-        desc <- gsub("\n", "<br>", trimws(desc))
+      desc <- scan_description(input$stats_func)
+      if (!is.null(desc)) {
         output$stats_description <- renderUI({
-          tags$p(HTML(desc), style = "font-size:18px; color:darkblue;")
+          tags$p(HTML(n2br(desc)), style = "font-size:18px; color:darkblue;")
         })
       }
     }
@@ -720,7 +716,7 @@ server <- function(input, output, session) {
     # add dvar for mplm
     if (input$stats_func == "mplm") {
       id <- c(which(args == "dvar") , id)
-      values[which(args == "dvar")] <- scan:::dv(transformed())
+      values[which(args == "dvar")] <- dv(transformed())
     }
     
     list(names = args[id], values = values[id])

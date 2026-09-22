@@ -151,8 +151,10 @@ export(
 
 - footnote:
 
-  Character string with table footnote. If left NA (default) a footnote
-  will be created based on the exported object.
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
 
 - filename:
 
@@ -216,7 +218,7 @@ print(res)
 #> 
 #> Dummy model: W level = first, slope = first
 #> Type III MANOVA 
-#> Pillai = 0.35; F(6, 158) = 5.57; p = 0.000 
+#> Pillai = 0.35; F(6, 158) = 5.57; p <.001 
 #> 
 #>                        academic_engagement disruptive_behavior Pillai      F
 #> Intercept                            2.771               0.849  0.284 15.475
@@ -231,13 +233,16 @@ print(res)
 #> 
 #> Formula: cbind(academic_engagement, disruptive_behavior) ~ 1 + mt + phaseB + 
 #>     interB
+#> 
+#> The following variables were used in this analysis:
+#> 'academic_engagement/ disruptive_behavior' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.
 ## also report standardized coefficients:
 print(res, std = TRUE)
 #> Multivariate piecewise linear model
 #> 
 #> Dummy model: W level = first, slope = first
 #> Type III MANOVA 
-#> Pillai = 0.35; F(6, 158) = 5.57; p = 0.000 
+#> Pillai = 0.35; F(6, 158) = 5.57; p <.001 
 #> 
 #>                        academic_engagement disruptive_behavior Pillai      F
 #> Intercept                            0.000               0.000  0.284 15.475
@@ -253,4 +258,7 @@ print(res, std = TRUE)
 #> Coefficients are standardized
 #> Formula: cbind(academic_engagement, disruptive_behavior) ~ 1 + mt + phaseB + 
 #>     interB
+#> 
+#> The following variables were used in this analysis:
+#> 'academic_engagement/ disruptive_behavior' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.
 ```

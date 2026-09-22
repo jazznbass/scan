@@ -34,13 +34,13 @@ export.sc_bcsmd <- function(object,
   
   if (is.na(caption)) caption <- c("Between-Case Standardized Mean Difference")
   
-  if (is.na(footnote)) {
-    footnote <- c(
-      if (object$method == "MCMCglmm") "CI = credible interval" else "CI = confidence interval",
-      "LL = lower limit",
-                  "UL = upper limit",
-                  paste0("Method: ", object$method))
-  }
+  footnote <- .footnote(footnote, 
+    if (object$method == "MCMCglmm") "CI = credible interval" else "CI = confidence interval",
+    "LL = lower limit",
+    "UL = upper limit",
+    paste0("Method: ", object$method)
+  )
+  
 
   for (i in 1:length(object$models)) {
     object$models[[i]] <- round_numeric(object$models[[i]], digits)
@@ -49,12 +49,10 @@ export.sc_bcsmd <- function(object,
   
   out <- do.call(rbind, object$models)
   
-  if (getOption("scan.export.engine") == "gt") {
-    spanner <- list("CI" = 4:5)
-    names(spanner) <- gsub(
-      "CI", paste0("CI(", object$ci * 100, "%)"), x = names(spanner)
-    )
-  }
+  spanner <- list("CI" = 4:5)
+  names(spanner) <- gsub(
+    "CI", paste0("CI(", object$ci * 100, "%)"), x = names(spanner)
+  )
   
   if (length(object$models) == 2) {
     rows <- nrow(object$models[[1]])

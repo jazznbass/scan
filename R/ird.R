@@ -95,12 +95,9 @@ export.sc_ird <- function(object,
     )
   }
   
-  if (is.na(footnote)) {
-    if (object$decreasing) {
-      footnote <- "Assumed decreasing values in Phase B"
-    }
-  }
-  
+  footnote <- .footnote(footnote, 
+    if (object$decreasing) "Assumed decreasing values in Phase B"
+  )
   
   out <- data.frame("IRD" = round(object$ird, round))
   table <- .create_table(

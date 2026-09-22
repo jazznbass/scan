@@ -15,7 +15,7 @@ formula."><meta property="og:image" content="https://jazznbass.github.io/scan/lo
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.69.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -240,8 +240,10 @@ caption will be created based on the exported object.</p></dd>
 
 
 <dt id="arg-footnote">footnote<a class="anchor" aria-label="anchor" href="#arg-footnote"></a></dt>
-<dd><p>Character string with table footnote. If left NA (default) a
-footnote will be created based on the exported object.</p></dd>
+<dd><p>Character string with table footnote. Several strings are
+combined into a footnote of several lines. If left NA (default) a footnote
+will be created based on the exported object. <code>NULL</code> or <code>""</code> suppress the
+footnote.</p></dd>
 
 
 <dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
@@ -367,7 +369,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Autocorrelated residuals up to lag 3 were modeled</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 26) = 47.38; p = 0.000; R² = 0.845; Adjusted R² = 0.828; AIC = 185.8468</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 26) = 47.38; p &lt;.001; R² = 0.845; Adjusted R² = 0.828; AIC = 185.8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             B LL-CI95% UL-CI95%    SE      t     p delta R²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              53.068   48.188   57.948 2.490 21.315 0.000         </span>
@@ -380,7 +382,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1 -0.12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2 -0.23</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    3  0.38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 7.32; p = 0.062 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 7.32; p = .06 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: values ~ 1 + mt + phaseB + interB </span>
 <span class="r-in"><span></span></span>
@@ -397,7 +399,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level = preceding, slope = preceding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F(7, 62) = 11.05; p = 0.000; R² = 0.555; Adjusted R² = 0.505; AIC = 425.0077</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(7, 62) = 11.05; p &lt;.001; R² = 0.555; Adjusted R² = 0.505; AIC = 425</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                B LL-CI95% UL-CI95%    SE      t     p delta R²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                 51.354   46.820   55.889 2.314 22.196 0.000         </span>
@@ -414,7 +416,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1 -0.05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2 -0.12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    3  0.12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 2.27; p = 0.519 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 2.27; p = .51 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: values ~ 1 + mt + phaseB1 + phaseA2 + phaseB2 + interB1 + interA2 +      interB2 </span>
 <span class="r-in"><span></span></span>
@@ -426,7 +428,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level = preceding, slope = preceding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F(4, 65) = 19.73; p = 0.000; R² = 0.548; Adjusted R² = 0.521; AIC = 420.0594</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(4, 65) = 19.73; p &lt;.001; R² = 0.548; Adjusted R² = 0.521; AIC = 420.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                B LL-CI95% UL-CI95%    SE      t     p delta R²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                 50.232   47.470   52.994 1.409 35.645 0.000         </span>
@@ -440,7 +442,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1 -0.03</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2 -0.09</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    3  0.13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 2.02; p = 0.568 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 2.02; p = .56 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: values ~ 1 + mt + phaseB1 + phaseA2 + phaseB2 </span>
 <span class="r-in"><span></span></span>
@@ -451,7 +453,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level = preceding, slope = preceding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 66) = 26.34; p = 0.000; R² = 0.545; Adjusted R² = 0.524; AIC = 418.6005</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 66) = 26.34; p &lt;.001; R² = 0.545; Adjusted R² = 0.524; AIC = 418.6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                               B LL-CI95% UL-CI95%    SE      t p delta R²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept                50.762   48.427   53.097 1.191 42.611 0         </span>
@@ -464,7 +466,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1 -0.01</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2 -0.08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    3  0.13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 1.82; p = 0.611 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 1.82; p = .61 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: values ~ 1 + phaseB1 + phaseA2 + phaseB2 </span>
 <span class="r-in"><span></span></span>
@@ -476,7 +478,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a poisson distribution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X²(3) = 547.67; p = 0.000; AIC = 261.2856</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X²(3) = 547.67; p &lt;.001; AIC = 261.3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             B LL-CI95% UL-CI95%    SE       t     p      OR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept               5.556    5.472    5.638 0.042 131.693 0.000 258.786</span>
@@ -490,6 +492,9 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slope phase B (interB)     0.969     1.019</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: injuries ~ 1 + year + phaseB + interB </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The following variables were used in this analysis:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'injuries' as dependent variable, 'phase' as phase variable, and 'year' as measurement-time variable.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## A binomial regression (frequencies as dependent variable)</span></span></span>
 <span class="r-in"><span><span class="fu">plm</span><span class="op">(</span><span class="va">exampleAB_score</span><span class="op">$</span><span class="va">Christiano</span>, family <span class="op">=</span> <span class="st">"binomial"</span>, var_trials <span class="op">=</span> <span class="st">"trials"</span><span class="op">)</span></span></span>
@@ -498,7 +503,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a binomial distribution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X²(3) = 240.66; p = 0.000; AIC = 120.3268</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X²(3) = 240.66; p &lt;.001; AIC = 120.3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             B LL-CI95% UL-CI95%    SE      t     p     OR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              -1.964   -2.793   -1.239 0.394 -4.991 0.000  0.140</span>
@@ -524,7 +529,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a binomial distribution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X²(3) = 240.66; p = 0.000; AIC = 120.3268</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X²(3) = 240.66; p &lt;.001; AIC = 120.3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             B LL-CI95% UL-CI95%    SE      t     p     OR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              -1.964   -2.793   -1.239 0.394 -4.991 0.000  0.140</span>
@@ -539,6 +544,9 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: percentage ~ 1 + mt + phaseB + interB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> weights = trials </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The following variables were used in this analysis:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'percentage' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</span>
 <span class="r-in"><span><span class="co">## Print</span></span></span>
 <span class="r-in"><span><span class="fu">plm</span><span class="op">(</span><span class="va">exampleAB</span><span class="op">$</span><span class="va">Johanna</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>ci <span class="op">=</span> <span class="fl">0.9</span>, r_squared <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"delta"</span>, <span class="st">"partial"</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -547,7 +555,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Contrast model: W / level = first, slope = first</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitted a gaussian distribution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 16) = 28.69; p = 0.000; R² = 0.843; Adjusted R² = 0.814; AIC = 126.8444</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(3, 16) = 28.69; p &lt;.001; R² = 0.843; Adjusted R² = 0.814; AIC = 126.8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             B LL-CI90% UL-CI90%    SE      t     p delta R²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept              54.400   48.002   60.798 3.890 13.986 0.000         </span>
@@ -565,7 +573,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1 -0.32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2 -0.13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    3 -0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 2.84; p = 0.417 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ljung-Box test: X²(3) = 2.84; p = .41 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: values ~ 1 + mt + phaseB + interB </span>
 <span class="r-in"><span><span class="co">## Export</span></span></span>
@@ -632,7 +640,7 @@ Measurement, 60</em>, 38-58.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/tbody&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tfoot&gt;&lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;span style="font-style: italic;"&gt;Note: &lt;/span&gt; &lt;sup&gt;&lt;/sup&gt; F(3, 16) = 28.69; p = 0.000; R² = 0.843; Adjusted R² = 0.814; AIC = 127; LL = lower limit; UL = upper limit; Slope estimation method = W; Contrasts for the level and slope effects are coded with the first phase as the reference.&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;span style="font-style: italic;"&gt;Note: &lt;/span&gt; &lt;sup&gt;&lt;/sup&gt; F(3, 16) = 28.69; p &amp;lt;.001; R² = 0.843; Adjusted R² = 0.814; AIC = 127; LL = lower limit; UL = upper limit; Slope estimation method = W; Contrasts for the level and slope effects are coded with the first phase as the reference.&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/table&gt;</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

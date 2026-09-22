@@ -9,11 +9,10 @@ export.sc_trend <- function(object,
                             ...) {
   
   if (is.na(caption)) caption <- c("Trend analysis")
-  if (is.na(footnote)) {
-    footnote <- paste(
-      "Measurement-times start at", object$first_mt, " for each phase"
-    )
-  }
+  footnote <- .footnote(footnote, paste(
+      "Measurement-times start at", object$first_mt, " for each phase")
+  )
+  
   out <- object$trend
   #if (isTRUE(flip)) out <- t(out)
   
@@ -45,16 +44,6 @@ export.sc_trend <- function(object,
     ...
   )
   
-  if (getOption("scan.export.engine") == "kable") {
-    for (i in 1:length(object$formulas)) {
-      table <- group_rows(
-        table, object$formulas[i],
-        1 + (i - 1) * (length(object$design) + 1),
-        i * (length(object$design) + 1)
-        #label_row_css = "text-align: center;"
-      )
-    }
-  }
   # finish ------------------------------------------------------------------
   
   if (!is.na(filename)) .save_export(table, filename)

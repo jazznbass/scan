@@ -42,8 +42,10 @@ is \code{phases = c(1,2)}.}
 \item{caption}{Character string with table caption. If left NA (default) a
 caption will be created based on the exported object.}
 
-\item{footnote}{Character string with table footnote. If left NA (default) a
-footnote will be created based on the exported object.}
+\item{footnote}{Character string with table footnote. Several strings are
+combined into a footnote of several lines. If left NA (default) a footnote
+will be created based on the exported object. \code{NULL} or \code{""} suppress the
+footnote.}
 
 \item{filename}{String containing the file name. If a filename is given the
 output will be written to that file.}

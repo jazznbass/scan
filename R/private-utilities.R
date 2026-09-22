@@ -72,8 +72,8 @@
 }
 
 .nice_p <- function(p, equal.sign = FALSE) {
-  out <- rep(NA, length(p))
-  for(i in 1:length(p)) {
+  out <- rep(NA_character_, length(p))
+  for(i in seq_along(p)) {
     if (isTRUE(p[i] >= 0.05)) {
       out[i] <- substring(sprintf("%.2f", trunc(p[i] * 100) / 100), 2)
       if (equal.sign) out[i] <- paste0("= ", out[i])

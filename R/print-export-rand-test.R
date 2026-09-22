@@ -32,11 +32,12 @@ print.sc_rand <- function(x, ...) {
         x$possible.combinations, 
         "possible combinations.\n")
   
+  dist <- x$distribution[is.finite(x$distribution)]
   cat("n   = ", x$number,"\n")
-  cat("M   = ", mean(x$distribution),"\n")
-  cat("SD  = ", sd(x$distribution),"\n")
-  cat("Min = ", min(x$distribution),"\n")
-  cat("Max = ", max(x$distribution),"\n")
+  cat("M   = ", if (length(dist)) mean(dist) else NA, "\n")
+  cat("SD  = ", if (length(dist)) sd(dist) else NA, "\n")
+  cat("Min = ", if (length(dist)) min(dist) else NA, "\n")
+  cat("Max = ", if (length(dist)) max(dist) else NA, "\n")
   cat("\n")
   #cat("Probability of observed statistic based on distribution:\n")
   
@@ -55,11 +56,10 @@ print.sc_rand <- function(x, ...) {
     cat("p   = ", x$p.value, "\n")
   }
   
-  dist <- x$distribution[is.finite(x$distribution)]
-  
   if (length(dist) > 3 && length(dist) < 5001 && sd(dist) > 0) {
     sh <- shapiro.test(dist)
-    cat(sprintf("\nShapiro-Wilk Normality Test: W = %0.3f; p = %0.3f",sh[[1]], sh$p.value))
+    cat(sprintf("\nShapiro-Wilk Normality Test: W = %0.3f; p %s", 
+                sh[[1]], .nice_p(sh$p.value, equal.sign = TRUE)))
     if (sh$p.value > .05) {
       cat("  (Hypothesis of normality maintained)\n")
     } else {
@@ -92,30 +92,89 @@ export.sc_rand <- function(object,
     )
   }
   
-  if (is.na(footnote)) {
-    case_names <- attr(object, "casenames")
-    footnote <- paste0(
-      "N = ", object$N, if (object$N == 1) " case" else " cases"
-    )
+  case_names <- attr(object, "casenames")
+  footnote <- .footnote(footnote, 
+    paste0("N = ", object$N, if (object$N == 1) " case" else " cases"),
     if (!is.null(case_names) && length(case_names) == object$N && 
         all(nzchar(case_names))) {
-      footnote <- paste0(footnote, ": ", paste0(case_names, collapse = ", "))
+      paste0(case_names, collapse = ", ")
+    },
+    .phases_string(object$phases.A, object$phases.B),
+    if (object$complete) {
+      paste0("Distribution based on all ", object$possible.combinations, 
+             " possible combinations")
+    } else {
+      paste0("Distribution based on a random sample of all ", 
+             object$possible.combinations, " possible combinations")
+    },
+    if (object$testdirection == "greater") {
+      if (object$exclude.equal) {
+        "p: probability of a higher value than the observed statistic"
+      } else {
+        "p: probability of an equal or higher value than the observed statistic"
+      }
+    } else {
+      if (object$exclude.equal) {
+        "p: probability of a lower value than the observed statistic"
+      } else {
+        "p: probability of an equal or lower value than the observed statistic"
+      }
     }
+  )
+  
+  dist <- object$distribution[is.finite(object$distribution)]
+  
+  .nice_value <- function(value) {
+    if (length(value) != 1L || !is.finite(value)) return(NA_character_)
+    format(round(value, 3))
   }
   
-  out <- capture.output(
-    print(object)
-  ) [-1:-2]
+  .dist_stat <- function(fun) {
+    if (length(dist) == 0) return(NA_character_)
+    .nice_value(fun(dist))
+  }
   
   out <- data.frame(
-    "Randomization test" = gt::html(paste(out, collapse = "  <br>")),
+    Parameter = c(
+      "Statistic",
+      "Observed statistic",
+      if (is.na(object$startpoints[1])) "Minimal phase length" else 
+        "Possible starting points of phase B",
+      "Permutations",
+      "M of the distribution",
+      "SD of the distribution",
+      "Min of the distribution",
+      "Max of the distribution",
+      "p"
+    ),
+    Value = c(
+      object$statistic,
+      .nice_value(object$observed.statistic),
+      if (is.na(object$startpoints[1])) {
+        paste0("A = ", object$limit[1], ", B = ", object$limit[2])
+      } else {
+        paste0(object$startpoints, collapse = ", ")
+      },
+      format(object$number, scientific = FALSE),
+      .dist_stat(mean),
+      .dist_stat(sd),
+      .dist_stat(min),
+      .dist_stat(max),
+      if (isTRUE(object$p.value == 0)) {
+        paste0("< ", format(1 / object$number, scientific = FALSE))
+      } else if (!is.finite(object$p.value)) {
+        NA_character_
+      } else {
+        format(round(object$p.value, 4), scientific = FALSE)
+      }
+    ),
     check.names = FALSE
   )
+  
   table <- .create_table(
     out,
     caption = caption,
     footnote = footnote,
-    fmt_markdown = TRUE,
     ...
   )
   

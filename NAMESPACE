@@ -64,6 +64,7 @@ S3method(print,sc_smd)
 S3method(print,sc_tauu)
 S3method(print,sc_trend)
 S3method(print,scdf)
+S3method(print,scdf_summary)
 S3method(subset,scdf)
 S3method(summary,scdf)
 S3method(transform,scdf)
@@ -147,17 +148,43 @@ export(trend)
 export(truncate_phase)
 export(writeSC)
 export(write_scdf)
-import(MCMCglmm)
-import(graphics)
-import(gt)
-import(kableExtra)
-import(knitr)
-import(methods)
-import(nlme)
 import(stats)
 importFrom(car,Anova)
 importFrom(cli,col_blue)
+importFrom(graphics,
+  abline,
+  axTicks,
+  axis,
+  boxplot,
+  grid,
+  hist,
+  lines,
+  mtext,
+  par,
+  plot,
+  points,
+  polygon,
+  rect,
+  text,
+  title
+)
+importFrom(kableExtra,
+  add_header_above,
+  column_spec,
+  kable_styling,
+  pack_rows,
+  row_spec
+)
+importFrom(knitr,kable)
 importFrom(magrittr,"%>%")
+importFrom(nlme,
+  VarCorr,
+  corARMA,
+  getVarCov,
+  gls,
+  lme,
+  varIdent
+)
 importFrom(utils,
   capture.output,
   combn,

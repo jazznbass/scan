@@ -30,7 +30,7 @@ print.sc_mplm <- function(x, digits = "auto", std = FALSE, ...) {
   cat("Formula: ")
   print(x$formula, showEnv = FALSE)
   
-  #.note_vars(x)
+  .note_vars(x)
 }
 
 .output_mplm <- function(x, std) {
@@ -60,9 +60,9 @@ print.sc_mplm <- function(x, digits = "auto", std = FALSE, ...) {
 
   )
   out$fit_string <- sprintf(
-    "Pillai = %.2f; F(%d, %d) = %.2f; p = %0.3f", 
+    "Pillai = %.2f; F(%d, %d) = %.2f; p %s", 
     out$f_test["pillai"], out$f_test["df1"], out$f_test["df2"], 
-    out$f_test["f"], out$f_test["p"]
+    out$f_test["f"], .nice_p(out$f_test["p"], equal.sign = TRUE)
   )
   ### anova
   
@@ -196,35 +196,24 @@ export.sc_mplm <- function(object,
   
   if (nice) out$p <- .nice_p(out$p)
   
-  if (is.na(footnote)) footnote <- c(
-    paste0(results$fit_string)
+  footnote <- .footnote(footnote, 
+    paste0(results$fit_string),
+    if (std) "Predictors are standardized"
   )
-  
-  if (std) {
-    footnote <- c(footnote, "Predictors are standardized")
-  }
-  
+
   n_dv <- length(attr(object, opt("dv")))
   
-  if (getOption("scan.export.engine") == "gt") {
-    spanner <- list("Dependent variables" = 2:(1 + n_dv))
-  }
+  spanner <- list("Dependent variables" = 2:(1 + n_dv))
   
   out <- round_numeric(out, decimals)
   table <- .create_table(
     out, 
     caption = caption,
     footnote = footnote,
-    spanner = spanner
+    spanner = spanner,
+    decimals = decimals
   )
   
-  if (getOption("scan.export.engine") == "kable") {
-    spanner <- c(" " = 1, "Dependent variables" = n_dv, " " = 3)
-    table <- add_header_above(table, spanner)
-  }
-    
- 
-    
   # finish ------------------------------------------------------------------
   
   if (!is.na(filename)) .save_export(table, filename)

@@ -128,8 +128,8 @@ pand(dat, decreasing = TRUE)
 #> 
 #> 
 #> Chi-Squared test:
-#> X² = 41.299, df = 1, p = 0.000 
+#> X² = 41.299, df = 1, p <.001 
 #> 
 #> Fisher exact test:
-#> Odds ratio = 333.881, p = 0.000 
+#> Odds ratio = 333.881, p <.001 
 ```

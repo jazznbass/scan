@@ -17,7 +17,7 @@ interpolate_na = TRUE."><meta property="og:image" content="https://jazznbass.git
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.69.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -161,6 +161,7 @@ phase. With large gaps this can affect trend based measures. Use <code>mark = TR
 <span class="r-in"><span><span class="co">## measurement times</span></span></span>
 <span class="r-in"><span><span class="va">Grosche2011filled</span> <span class="op">&lt;-</span> <span class="fu">fill_missing</span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Grosche2011</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">Grosche2011filled</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span><span style="color: #BBBB00;">!</span> Duplicated case names: 'Georg'. Names were made unique.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Original"</span>, <span class="st">"Filled"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">study</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with two cases</span>

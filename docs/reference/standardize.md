@@ -97,7 +97,7 @@ exampleAB_50 |>
 #> 50 Cases
 #> 
 #> AIC = 508.2253, BIC = 539.6087
-#> ICC = 0.287; L = 339.0; p = 0.000 
+#> ICC = 0.287; L = 339.0; p <.001 
 #> 
 #> Fixed effects (values ~ 1 + mt + phaseB + interB)
 #> 
@@ -124,7 +124,7 @@ exampleAB_50 |>
 #> 50 Cases
 #> 
 #> AIC = 508.2253, BIC = 539.6087
-#> ICC = 0.287; L = 339.0; p = 0.000 
+#> ICC = 0.287; L = 339.0; p <.001 
 #> 
 #> Fixed effects (values ~ 1 + mt + phaseB + interB)
 #> 

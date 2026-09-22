@@ -16,13 +16,12 @@ export.scdf <- function(object,
     return(export(out))
   }
   
-  if (is.na(footnote)) {
+  footnote <- .footnote(footnote,
     if (!is.null(scdf_attr(object, "info"))) 
-      footnote <- scdf_attr(object, "info")
-    if (!is.null(scdf_attr(object, "author"))) {
-      footnote <- paste(footnote, "\nAuthor:", scdf_attr(object, "author"))
-    }
-  }
+      scdf_attr(object, "info"),
+    if (!is.null(scdf_attr(object, "author"))) 
+      paste("Author:", scdf_attr(object, "author"))
+  )
   
   N <- cases <- length(object)
   
@@ -69,11 +68,11 @@ export.scdf <- function(object,
     spanner <- NULL
   } 
   
-  opts <- options()
-  options(scan.export.kable = c(
+  opts <- options(scan.export.kable = c(
     list(align = rep("c", ncol(out))), 
     getOption("scan.export.kable")
   ))
+  on.exit(options(opts), add = TRUE)
   
   
   table <- .create_table(
@@ -84,19 +83,9 @@ export.scdf <- function(object,
     ...
   )
   
-  if (getOption("scan.export.engine") == "kable") {
-    if (N > 1) { 
-      case_names <- rep(n_vars, N)
-      names(case_names) <- names(object)
-      table <- add_header_above(table, case_names)
-    }
-  }
-  
   # finish ------------------------------------------------------------------
   
   if (!is.na(filename)) .save_export(table, filename)
-  
-  options(opts)
   
   table
 }

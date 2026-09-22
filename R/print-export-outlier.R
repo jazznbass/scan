@@ -7,32 +7,32 @@ print.sc_outlier <- function(x, digits = "auto", ...) {
   
   cat("Outlier Analysis for Single-Case Data\n\n")
   
-  if (x$criteria[1] == "CI") {
+  if (identical(x$method, "CI")) {
     names(x$ci.matrix) <- x$case.names
-    cat("Criteria: Exceeds", as.numeric(x$criteria[2]) * 100, 
+    cat("Criteria: Exceeds", as.numeric(x$criteria) * 100, 
         "% Confidence Interval\n\n")
     print(x$ci.matrix)
   }
   
-  if (x$criteria[1] == "SD") {
+  if (identical(x$method, "SD")) {
     names(x$sd.matrix) <- x$case.names
-    cat("Criteria: Exceeds", x$criteria[2], "Standard Deviations\n\n")
+    cat("Criteria: Exceeds", x$criteria, "Standard Deviations\n\n")
     print(x$sd.matrix)
   }
   
-  if (x$criteria[1] == "MAD") {
+  if (identical(x$method, "MAD")) {
     names(x$mad.matrix) <- x$case.names
-    cat("Criteria: Exceeds", x$criteria[2], "Mean Average Deviations\n\n")
+    cat("Criteria: Exceeds", x$criteria, "Median Absolute Deviations\n\n")
     print(x$mad.matrix)
   }
   
-  if (x$criteria[1] == "Cook") {
+  if (identical(x$method, "Cook")) {
     cat("Criteria: Cook's Distance based on piecewise-regression exceeds", 
-        x$criteria[2],"\n\n")
+        x$criteria, "\n\n")
   }
   
   for(i in 1:length(x$dropped.n)) {
-    cat("Case",x $case.names[i],": Dropped", x$dropped.n[[i]], "\n")
+    cat("Case", x$case.names[i], ": Dropped", x$dropped.n[[i]], "\n")
   }
   cat("\n")
 }
@@ -54,22 +54,33 @@ export.sc_outlier <- function(object,
     )
   }
   
-  if (is.na(footnote)) {
-  }
+  criterion <- switch(
+    object$method,
+    "CI"   = paste0("Criterion: exceeds the ", 
+                    as.numeric(object$criteria) * 100, "% confidence interval"),
+    "SD"   = paste0("Criterion: exceeds ", object$criteria, 
+                    " standard deviations"),
+    "MAD"  = paste0("Criterion: exceeds ", object$criteria, 
+                    " median absolute deviations"),
+    "Cook" = paste0("Criterion: Cook's distance based on a piecewise ",
+                    "regression exceeds ", object$criteria)
+  )
   
-  out <- capture.output(
-    print(object)
-  ) [-1:-2]
+  footnote <- .footnote(footnote, criterion)
   
   out <- data.frame(
-    "Outlier Analysis" = gt::html(paste(out, collapse = "  <br>")),
+    Case = object$case.names,
+    Dropped = unlist(object$dropped.n),
+    "Measurement times" = vapply(
+      object$dropped.mt, function(x) paste(x, collapse = ", "), character(1)
+    ),
     check.names = FALSE
   )
+  
   table <- .create_table(
     out,
     caption = caption,
     footnote = footnote,
-    fmt_markdown = TRUE,
     ...
   )
   

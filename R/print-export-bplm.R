@@ -61,7 +61,7 @@ export.sc_bplm <- function(object,
     }
   }
   
-  if (is.na(footnote)) footnote <- c(
+  footnote <- .footnote(footnote, 
     str_contrasts(object$model$interaction.method, object$contrast),
     paste0("N = ", object$N, " cases")
   )
@@ -159,27 +159,11 @@ export.sc_bplm <- function(object,
     row_group = row_group
   )
 
-  if (getOption("scan.export.engine") == "kable") {
+  if (.export_engine() == "kable") {
+    table <- row_spec(table, nrow_b, hline_after = TRUE)
     if (!is.null(results$random)) {
-      table <- table |>
-        #pack_rows("Fixed effects", 1, nrow_out, indent = FALSE) |>
-        pack_rows("\nRandom effects (G-Structure)", nrow_b + 1, nrow_b + nrow_g  + 1, indent = FALSE) |>
-        pack_rows("\nResiduals (R-Structure)", nrow_b + nrow_g + 2, nrow_b + nrow_g + nrow_r + 2, indent = FALSE) |>
-        pack_rows("\nModel", nrow(out), nrow(out), indent = FALSE) |>
-        #row_spec(nrow_out + nrow(dat_g) + 1, hline_after = TRUE) |>
-        row_spec(nrow_b, hline_after = TRUE) |> 
-        row_spec(nrow_b + nrow_g + 1, hline_after = TRUE)
+      table <- row_spec(table, nrow_b + nrow_g + 1, hline_after = TRUE)
     }
-    
-    if (is.null(results$random)) {
-      table <- table |>
-        #pack_rows("\nRandom effects (G-Structure)", nrow_b + 1, nrow_b + nrow_g  + 1, indent = FALSE) |>
-        pack_rows("\nResiduals (R-Structure)", nrow_b + 1, nrow_b + nrow_r + 1, indent = FALSE) |>
-        pack_rows("\nModel", nrow(out), nrow(out), indent = FALSE) |>
-        #row_spec(nrow_out + nrow(dat_g) + 1, hline_after = TRUE) |>
-        row_spec(nrow_b, hline_after = TRUE) 
-    }
-    
   }
   
   if (!is.na(filename)) .save_export(table, filename)

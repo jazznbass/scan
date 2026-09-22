@@ -27,7 +27,7 @@ print.sc_design <- function(x, ...) {
   
   ext_p <- unique(sapply(x$cases, function(x) {x$extreme_prop}))
   cat("Extreme proportion: ", ext_p, "\n")
-  if (ext_p != 0) {
+  if (any(ext_p != 0)) {
     cat("Extreme range: ", unique(sapply(x$cases, function(x) {
       paste0(x$extreme_low, "/", x$extreme_high, collapse = " ")
     })), "\n")

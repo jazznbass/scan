@@ -113,8 +113,10 @@ export(object, ...)
 \item{caption}{Character string with table caption. If left NA (default) a
 caption will be created based on the exported object.}
 
-\item{footnote}{Character string with table footnote. If left NA (default) a
-footnote will be created based on the exported object.}
+\item{footnote}{Character string with table footnote. Several strings are
+combined into a footnote of several lines. If left NA (default) a footnote
+will be created based on the exported object. \code{NULL} or \code{""} suppress the
+footnote.}
 
 \item{filename}{String containing the file name. If a filename is given the
 output will be written to that file.}
@@ -144,8 +146,12 @@ pane of rstudio. When applied in rmarkdown/quarto, tables can also be created
 for pdf/latex output.
 }
 \details{
-The function uses either the kableExtra or the gt package to create the tables.
-The default engine can be set via the option \code{scan.export.engine}. Additional
+The function uses either the gt or the kableExtra package to create the
+tables. The default engine is gt; in a document knitted to latex, kableExtra
+is used instead, because gt tables receive neither a number nor a label
+there, and for Word output gt is used even when kableExtra is set, because
+kableExtra can not write Word tables. The engine can be set via the option
+\code{scan.export.engine}. Additional
 options for kable and kable_styling can be set via the options
 \code{scan.export.kable} and \code{scan.export.kable_styling}.
 The default options can be viewed and modified via

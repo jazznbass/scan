@@ -79,8 +79,10 @@ export(object, caption = NA, footnote = NA, filename = NA, round = 1, ...)
 
 - footnote:
 
-  Character string with table footnote. If left NA (default) a footnote
-  will be created based on the exported object.
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
 
 - filename:
 
@@ -220,10 +222,10 @@ pand(Parker2007)
 #> 
 #> 
 #> Chi-Squared test:
-#> X² = 14.227, df = 1, p = 0.000 
+#> X² = 14.227, df = 1, p <.001 
 #> 
 #> Fisher exact test:
-#> Odds ratio = 29.007, p = 0.000 
+#> Odds ratio = 29.007, p <.001 
 
 ## Calculate the PAND with an expected decrease of phase B scores
 cubs <- scdf(c(20,22,24,17,21,13,10,9,20,9,18), B_start = 5)
@@ -253,8 +255,8 @@ pand(cubs, decreasing = TRUE)
 #> 
 #> 
 #> Chi-Squared test:
-#> X² = 4.055, df = 1, p = 0.044 
+#> X² = 4.055, df = 1, p <.05 
 #> 
 #> Fisher exact test:
-#> Odds ratio = 12.230, p = 0.088 
+#> Odds ratio = 12.230, p = .08 
 ```

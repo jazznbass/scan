@@ -38,7 +38,7 @@ print.sc_plm <- function(x,
     cat("Autocorrelated residuals up to lag", x$ar, "were modeled\n\n")
   }
   
-  cat(results$fit, "; AIC = ", results$aic, "\n\n", sep = "")
+  cat(results$fit, "; AIC = ", round(results$aic, 1), "\n\n", sep = "")
   
   print(results$table)
   cat("\n")
@@ -50,6 +50,8 @@ print.sc_plm <- function(x,
   }
   
   cat("Formula:", results$formula, "\n")
+  
+  .note_vars(x)
 }
 
 #' @describeIn plm Export results as html table (see [export()])
@@ -97,7 +99,7 @@ export.sc_plm <- function(object,
   has_or <- "OR" %in% names(out)
   has_q  <- "Q"  %in% names(out)
   
-  if (is.na(footnote)) footnote <- c(
+  footnote <- .footnote(footnote, 
     paste0(results$fit), 
     paste0("AIC = ", round(results$aic)),
     if (has_ci) "LL = lower limit",
@@ -107,7 +109,7 @@ export.sc_plm <- function(object,
   
   spanner <- NULL
   
-  if (has_ci && getOption("scan.export.engine") == "gt") {
+  if (has_ci) {
     spanner <- list("CI" = 3:4)
     if (has_or) {
       spanner[[" CI "]]  <- 9:10
@@ -124,26 +126,6 @@ export.sc_plm <- function(object,
     footnote = footnote,
     spanner = spanner
   )
-  
-  if (has_ci && getOption("scan.export.engine") == "kable") {
-    spanner <- c(" " = 2, "CI" = 2)
-  
-    if (has_or) {
-      spanner <- c(spanner, " " = 4, "CI" = 2)
-      if (has_q) spanner <- c(spanner, " " = 1, "CI" = 2)
-    }
-    
-    rest <- ncol(out) - sum(spanner)
-    if (rest > 0) spanner <- c(spanner, " " = rest)
-    
-    names(spanner) <- gsub(
-      "CI", paste0("CI(", ci * 100, "%)"), x = names(spanner)
-    )
-    
-    table <- add_header_above(table, spanner)
-    
-  }
-
   
   # finish ------------------------------------------------------------------
   
@@ -171,17 +153,18 @@ export.sc_plm <- function(object,
     chi <- x$full$null.deviance - x$full$deviance
     df <- x$full$df.null - x$full$df.residual
     out$fit <- sprintf(
-      "X\u00b2(%d) = %.2f; p = %0.3f", 
-      df, chi, 1 - pchisq(chi, df = df)
+      "X\u00b2(%d) = %.2f; p %s", 
+      df, chi, .nice_p(1 - pchisq(chi, df = df), equal.sign = TRUE)
     )
   } else {
     out$fit <- if (x$F.test["df1"] == 0) {
       "Null model" 
     } else {
       sprintf(
-       "F(%d, %d) = %.2f; p = %0.3f; R\u00b2 = %0.3f; Adjusted R\u00b2 = %0.3f",
+       "F(%d, %d) = %.2f; p %s; R\u00b2 = %0.3f; Adjusted R\u00b2 = %0.3f",
        x$F.test["df1"], x$F.test["df2"], x$F.test["F"],
-       x$F.test["p"],   x$F.test["R2"],  x$F.test["R2.adj"]
+       .nice_p(x$F.test["p"], equal.sign = TRUE),
+       x$F.test["R2"],  x$F.test["R2.adj"]
       )
     }
   }
@@ -281,8 +264,8 @@ export.sc_plm <- function(object,
     
     bj <- Box.test(residuals(x$full.model), lag_max, type = "Ljung-Box")
     out$ljung <- sprintf(
-      "Ljung-Box test: X\u00b2(%d) = %.2f; p = %0.3f", 
-      bj$parameter, bj$statistic, bj$p.value
+      "Ljung-Box test: X\u00b2(%d) = %.2f; p %s", 
+      bj$parameter, bj$statistic, .nice_p(bj$p.value, equal.sign = TRUE)
     )
   }
   

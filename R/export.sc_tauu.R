@@ -21,43 +21,21 @@ export.sc_tauu <- function(object,
       caption <- c("Overall Tau-U") 
     else 
       caption <- "Tau-U analyses"
-    #, .phases_string(A, B))
   }
 
-  if (is.na(footnote)) {
-    footnote <- paste(
+  footnote <- .footnote(footnote,
+    paste(
       "Method is '", object$method, 
       "'. Analyses based on Kendall's Tau ", object$tau_method, ". ",
       object$ci * 100, "% CIs for tau are reported",
       collapse = ""
     )
-  }
+  )
   
   if (meta) {
     out <- object$Overall_tau_u
     row_group <- NULL
   }
-  
-  if (!meta && getOption("scan.export.engine") == "kable") {
-    tables <- object$table
-    names_models <- c(" ", row.names(tables[[1]]))
-    
-    n_cases <- length(tables)
-    out <- rbind(tables[[1]])
-    out <- rbind(NA, out)
-    
-    for(i in 2:n_cases) out <- rbind(out, NA, tables[[i]])
-  
-    row.names(out) <- NULL
-    Model <- rep(names_models, length = nrow(out)) 
-    Case <- lapply(names(tables), function(x) c(x, rep(" ", 6))) |> unlist()
-    out <- cbind(Case, Model, out)
-    
-    if (identical(select, "auto")) {
-        select <- c("Case", "Model", "Tau", "CI lower", "CI upper", "Z", "p")
-    }
-    
-  }  
   
   if (identical(select, "auto") && meta) {
       select <- c(
@@ -65,7 +43,7 @@ export.sc_tauu <- function(object,
       )
   }
   
-  if (!meta && getOption("scan.export.engine") == "gt") {
+  if (!meta) {
     tables <- object$table
     out <- do.call(rbind, tables)
     out <- cbind(Model = rep(rownames(tables[[1]]), length(tables)), out)
@@ -78,7 +56,7 @@ export.sc_tauu <- function(object,
     row_group <- vector("list", length(tables))
     names(row_group) <- names(tables)
     
-    for (i in 1:length(tables)) {
+    for (i in seq_along(tables)) {
       .start <- 1 + (i - 1) * nrow(tables[[1]])
       row_group[[i]] <- .start : (.start + nrow(tables[[1]]) - 1)
     }
@@ -87,12 +65,10 @@ export.sc_tauu <- function(object,
   out$p <- .nice_p(out$p)
   out <- .select(out, select)
   
-  opts <- options()
-  
   tmp <- getOption("scan.export.kable")
-  tmp$align <- c("l", "l", rep("c", ncol(out) - 2)) 
-  options(scan.export.kable = tmp)
-  options(knitr.kable.NA = "")
+  tmp$align <- c("l", rep("c", ncol(out) - 1)) 
+  opts <- options(scan.export.kable = tmp, knitr.kable.NA = "")
+  on.exit(options(opts), add = TRUE)
   
   table <- .create_table(
     out, 
@@ -103,7 +79,6 @@ export.sc_tauu <- function(object,
     ...
   )
   
-  options(opts)
   # finish ------------------------------------------------------------------
   
   if (!is.na(filename)) .save_export(table, filename)

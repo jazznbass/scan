@@ -2,16 +2,24 @@
 % Please edit documentation in R/summary.scdf.R
 \name{summary.scdf}
 \alias{summary.scdf}
+\alias{print.scdf_summary}
 \title{Summary function for an scdf object}
 \usage{
 \method{summary}{scdf}(object, all_cases = FALSE, ...)
+
+\method{print}{scdf_summary}(x, all_cases = NULL, ...)
 }
 \arguments{
-\item{object}{scdf}
+\item{object}{An scdf object}
 
-\item{all_cases}{IF TRUE, more that 10 cases are summarized}
+\item{all_cases}{If TRUE, more than 10 cases are summarized}
 
 \item{...}{not in use}
+
+\item{x}{An object of class \code{scdf_summary}}
+}
+\value{
+An object of class \code{scdf_summary}.
 }
 \description{
 Provides a summary of an \code{scdf} object, including the number of cases,
@@ -25,6 +33,10 @@ The summary includes:
 \item Variable names with annotations for phase, measurement-time, and dependent variable.
 \item Additional information and author details if available.
 }
+
+\code{summary()} returns the summary object; the output is written by its print
+method. So \code{summary(scdf)} shows the summary at the console as before, while
+\code{export(summary(scdf))} and an assignment stay silent.
 }
 \author{
 Juergen Wilbert

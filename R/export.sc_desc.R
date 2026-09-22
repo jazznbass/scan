@@ -12,19 +12,18 @@ export.sc_desc <- function(object,
   # prepare table -----------------------------------------------------------
   if (is.na(caption)) caption <- "Descriptive statistics"
 
-  if (is.na(footnote)) {
-    footnote <- c(
-      "n = Number of measurements",
-      "Missing = Number of missing values",
-      "M = Mean",
-      "Median = Median",
-      "SD = Standard deviation",
-      "MAD = Median average deviation",
-      "Min = Minimum",
-      "Max = Maximum",
-      "Trend = Slope of dependent variable regressed on measurement-time"
-    )
-  }
+  
+  footnote <- .footnote(footnote,
+    "n = Number of measurements",
+    "Missing = Number of missing values",
+    "M = Mean",
+    "Median = Median",
+    "SD = Standard deviation",
+    "MAD = Median average deviation",
+    "Min = Minimum",
+    "Max = Maximum",
+    "Trend = Slope of dependent variable regressed on measurement-time"
+  )
   
   object$descriptives[-1:-2] <- round(
     object$descriptives[-1:-2], round
@@ -73,22 +72,6 @@ export.sc_desc <- function(object,
       ...
     )
     
-    if (getOption("scan.export.engine") == "kable") {
-      table <- add_header_above(
-        table,
-        c(
-          " " = 2, "n" = n_phases,
-          "Missing" = n_phases,
-          "M" = n_phases,
-          "Median" = n_phases,
-          "SD" = n_phases,
-          "MAD" = n_phases,
-          "Min" = n_phases,
-          "Max" = n_phases,
-          "Trend" = n_phases
-        )
-      )
-    }
   }
   
   # finish ------------------------------------------------------------------

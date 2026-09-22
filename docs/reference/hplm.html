@@ -31,7 +31,7 @@ cases."><meta property="og:image" content="https://jazznbass.github.io/scan/logo
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.69.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -292,8 +292,10 @@ caption will be created based on the exported object.</p></dd>
 
 
 <dt id="arg-footnote">footnote<a class="anchor" aria-label="anchor" href="#arg-footnote"></a></dt>
-<dd><p>Character string with table footnote. If left NA (default) a
-footnote will be created based on the exported object.</p></dd>
+<dd><p>Character string with table footnote. Several strings are
+combined into a footnote of several lines. If left NA (default) a footnote
+will be created based on the exported object. <code>NULL</code> or <code>""</code> suppress the
+footnote.</p></dd>
 
 
 <dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
@@ -393,7 +395,7 @@ reported p value is conservative.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> AIC = 8764.5, BIC = 8795.866</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.292; L = 341.2; p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.292; L = 341.2; p &lt;.001 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects (values ~ 1 + mt + phaseB + interB)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -422,7 +424,7 @@ reported p value is conservative.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 35 Cases</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> AIC = 5827.167, BIC = 5879.268</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.344; L = 875.4; p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ICC = 0.344; L = 875.4; p &lt;.001 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects (academic_engagement ~ mt + phaseB + gender + migration + ITRF_TOTAL +     phaseB:ITRF_TOTAL)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -440,6 +442,9 @@ reported p value is conservative.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept 0.557</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residual  0.785</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The following variables were used in this analysis:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'academic_engagement' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

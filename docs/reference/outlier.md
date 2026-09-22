@@ -50,8 +50,10 @@ outlier(
 
 - footnote:
 
-  Character string with table footnote. If left NA (default) a footnote
-  will be created based on the exported object.
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
 
 - filename:
 
@@ -103,6 +105,7 @@ outlier(
 | `sd.matrix` | A list with a matrix for each case with values for the upper and lower boundaries based on the standard deviation. |
 | `ci.matrix` | A list with a matrix for each single-case with values for the upper and lower boundaries based on the confidence interval. |
 | `cook` | A list of Cook's Distances for each measurement of each single-case. |
+| `method` | Method used for outlier identification. |
 | `criteria` | Criteria used for outlier analysis. |
 | `N` | Number of single-cases. |
 | `case.names` | Case identifier. |
@@ -157,6 +160,13 @@ res_outlier <- outlier(susanne, method = "SD", criteria = 1.5)
 res_outlier
 #> Outlier Analysis for Single-Case Data
 #> 
+#> Criteria: Exceeds 1.5 Standard Deviations
+#> 
+#> $`[case #1]`
+#>   phase        m       sd    lower    upper
+#> 1     A 46.33427 1.722791 43.75008 48.91845
+#> 2     B 60.88020 4.121473 54.69799 67.06241
+#> 
 #> Case [case #1] : Dropped 2 
 #> 
 
@@ -165,6 +175,8 @@ res_outlier
 res_outlier <- outlier(Grosche2011, method = "Cook", criteria = "4/n")
 res_outlier
 #> Outlier Analysis for Single-Case Data
+#> 
+#> Criteria: Cook's Distance based on piecewise-regression exceeds 4/n 
 #> 
 #> Case Eva : Dropped 1 
 #> Case Georg : Dropped 3 

@@ -129,7 +129,7 @@ bplm <- function(data, dvar, pvar, mvar,
   
 # mcmcglmm model ----------------------------------------------------------
  
-  out$mcmcglmm <- MCMCglmm(
+  out$mcmcglmm <- MCMCglmm::MCMCglmm(
     fixed = fixed,
     random = random,
     data = dat,

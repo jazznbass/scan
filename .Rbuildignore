@@ -7,8 +7,10 @@
 ^misc
 ^data-raw$
 ^inst/shiny/rsconnect$
+^inst/shiny_scan/rsconnect$
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
 ^revdep$
 ^\.positai$
 ^\.claude$
+\.DS_Store$

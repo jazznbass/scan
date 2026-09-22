@@ -16,6 +16,7 @@ design(
   start_value = 50,
   s = 10,
   rtt = 0.8,
+  error = NULL,
   extreme_prop = list(0),
   extreme_range = c(-4, -3),
   missing_prop = 0,
@@ -99,21 +100,38 @@ design(
 
 - s:
 
-  Standard deviation used to calculate absolute values from level,
-  slope, trend effects and to calculate and error distribution from the
-  `rtt` values. Set to `10` by default. To assign different variances to
-  several single-cases, use a vector of values (e.g.
-  `s = c(5, 10, 15)`). If the number of cases exceeds the length of the
-  vector, values are recycled. if the distribution is 'poisson' or
-  'binomial' s is not applied.
+  Standard deviation of the true values in the population of cases. It
+  is used to calculate absolute values from level, slope, and trend
+  effects and, together with `rtt`, the error distribution (see `rtt`).
+  With `random_start_value = TRUE` the start values are drawn from a
+  normal distribution with this standard deviation. Set to `10` by
+  default. To assign different variances to several single-cases, use a
+  vector of values (e.g. `s = c(5, 10, 15)`). If the number of cases
+  exceeds the length of the vector, values are recycled. if the
+  distribution is 'poisson' or 'binomial' s is not applied.
 
 - rtt:
 
   Reliability of the underlying simulated measurements. Set `rtt = .8`
-  by default. To assign different reliabilities to several single-cases,
-  use a vector of values (e.g. `rtt = c(.6, .7, .8)`). If the number of
-  cases exceeds the length of the vector, values are repeated. `rtt` has
-  no effect when you're using binomial or poisson distributions.
+  by default. Reliability is defined as in classical test theory, with
+  `s^2` as the variance of the true values:
+  `rtt = s^2 / (s^2 + error^2)`. The measurement error is drawn
+  accordingly from a normal distribution with
+  `error = sqrt((1 - rtt) / rtt * s^2)`, that is, with the same variance
+  for every case and every measurement. To assign different
+  reliabilities to several single-cases, use a vector of values (e.g.
+  `rtt = c(.6, .7, .8)`). If the number of cases exceeds the length of
+  the vector, values are repeated. `rtt` has no effect when you're using
+  binomial or poisson distributions.
+
+- error:
+
+  Standard deviation of the measurement error, as an alternative way of
+  setting `rtt`. When `error` is provided, the reliability is derived
+  from it as `rtt = s^2 / (s^2 + error^2)`, so the two arguments must
+  not be given together. To assign different errors to several
+  single-cases, use a vector of values. Like `rtt`, `error` has no
+  effect for binomial or poisson distributions.
 
 - extreme_prop, extreme.p:
 
@@ -243,8 +261,8 @@ Juergen Wibert
 #> 
 #> 
 #> Chi-Squared test:
-#> X² = 41.299, df = 1, p = 0.000 
+#> X² = 41.299, df = 1, p <.001 
 #> 
 #> Fisher exact test:
-#> Odds ratio = 333.881, p = 0.000 
+#> Odds ratio = 333.881, p <.001 
 ```

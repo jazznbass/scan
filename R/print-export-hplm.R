@@ -41,6 +41,8 @@ print.sc_hplm <- function(x,
     cat("\nCasewise estimation of effects\n\n")
     print(out$casewise, row.names = FALSE)
   }
+  
+  .note_vars(x)
 }
 
 #' @describeIn hplm Export results as html table (see [export()])
@@ -63,7 +65,7 @@ export.sc_hplm <- function(object,
     )
   }
   
-  if (is.na(footnote)) footnote <- c(
+  footnote <- .footnote(footnote, 
     paste0("Estimation method ", object$model$estimation.method),
     str_contrasts(object$model$interaction.method, object$contrast),
     paste0("N = ", object$N, " cases")
@@ -127,24 +129,21 @@ export.sc_hplm <- function(object,
       )
   }
   
+  row_group <- list(
+    "Fixed effects" = 1:nrow_out,
+    "Random effects" = (nrow_out + 1):(nrow(out) - 3),
+    "Model" = (nrow(out) - 2):nrow(out)
+  )
+  
   table <- .create_table(
     out,
     caption = caption,
     footnote = footnote,
-    row_group = list(
-      "Fixed effects" = 1: nrow_out,
-      "Random effects" = (nrow_out + 1) : (nrow(out) - 3),
-      "Model" = (nrow(out) - 2) : nrow(out)
-    )
+    row_group = row_group
   )
   
-  if (getOption("scan.export.engine") == "kable") {
-    table <- table |>
-      #pack_rows("Fixed effects", 1, nrow_out, indent = FALSE) |>
-      pack_rows("\nRandom effects", nrow_out + 1, nrow(out), indent = FALSE) |>
-      pack_rows("\nModel", nrow(out) - 2, nrow(out), indent = FALSE) |>
-      #row_spec(nrow_out + nrow(dat_random) + 1, hline_after = TRUE) |>
-      row_spec(nrow_out, hline_after = TRUE)
+  if (.export_engine() == "kable") {
+    table <- row_spec(table, nrow_out, hline_after = TRUE)
   }
   
   if (!is.na(filename)) .save_export(table, filename)
@@ -161,7 +160,7 @@ export.sc_hplm <- function(object,
   
   out <- coef(object, casewise = TRUE)
   
-  if (getOption("scan.export.engine") == "kable") {
+  if (.export_engine() == "kable") {
     table <- .create_table(
       out,
       caption = caption,
@@ -169,7 +168,7 @@ export.sc_hplm <- function(object,
     )
   }
   
-  if (getOption("scan.export.engine") == "gt") {
+  if (.export_engine() == "gt") {
     table <- export_table_gt(
       out, title = caption, footnote = footnote, 
       decimals = round
@@ -200,8 +199,9 @@ export.sc_hplm <- function(object,
   )
   
   if (x$model$ICC) {
-    out$icc <- sprintf("ICC = %.3f; L = %.1f; p = %.3f", 
-                       x$ICC$value, x$ICC$L, x$ICC$p)
+    out$icc <- sprintf("ICC = %.3f; L = %.1f; p %s", 
+                       x$ICC$value, x$ICC$L, 
+                       .nice_p(x$ICC$p, equal.sign = TRUE))
   }
   
   # fixed ----

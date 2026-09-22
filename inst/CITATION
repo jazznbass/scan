@@ -1,16 +1,36 @@
+version <- meta$Version
+if (is.null(version)) version <- as.character(utils::packageVersion("scan"))
+
+year <- NULL
+for (field in c("Date", "Date/Publication", "Packaged")) {
+  value <- meta[[field]]
+  if (length(value) == 1L && !is.na(value) && grepl("^[0-9]{4}", value)) {
+    year <- substr(value, 1, 4)
+    break
+  }
+}
+if (is.null(year)) year <- format(Sys.Date(), "%Y")
+
+title <- if (is.null(meta$Title)) {
+  "Single-Case Data Analyses for Single and Multiple Baseline Designs"
+} else {
+  meta$Title
+}
+
 bibentry(
   header = "To cite scan in publications use:",
-  bibtype = "Misc",
-  title = "Scan: Single-Case Data Analyses for Single and Multiple Baseline Designs",
+  bibtype = "Manual",
+  title = paste0("Scan: ", title),
   shorttitle   = "scan",
   publisher    = "CRAN",
-  author       =  c(as.person("Jürgen Wilbert"), as.person("Timo Lüke")),
-  year         = "2026",
+  author       = c(as.person("Jürgen Wilbert"), as.person("Timo Lüke")),
+  year         = year,
+  note         = paste("R package version", version),
   url          = "https://CRAN.R-project.org/package=scan",
-  textVersion  = paste0( 
-    "Wilbert, J. & Lüke, T. (2026). ",
-    "Scan: Single-Case Data Analyses for Single and Multiple Baseline Designs. ",
-    "(0.68.0) [English]. CRAN. ",
+  textVersion  = paste0(
+    "Wilbert, J. & Lüke, T. (", year, "). ",
+    "Scan: ", title, ". ",
+    "(", version, ") [R package]. CRAN. ",
     "https://CRAN.R-project.org/package=scan."
   )
 )

@@ -26,9 +26,10 @@ print.sc_cdc <- function(x, nice = TRUE, ...) {
     cat("Alternative hypothesis (Binomial test): true probability > 50%\n")
   }
   if (x$N > 1) {
-    cat("Overall evaluation of all MBD instances:  ",x$cdc_all,"\n")
+    cat("Overall evaluation of all MBD instances:  ", x$cdc_all, "\n")
   }
   
+  .note_vars(x)
 }
 
 #' @describeIn cdc Export html results
@@ -50,25 +51,18 @@ export.sc_cdc <- function(object,
     )
   }
   
-  if (is.na(footnote)) {
+  footnote <- .footnote(footnote, 
     if (object$decreasing) {
-      footnote <- c(
-        "Assuming an expected decrease in phase B.",
-        "Alternative hypothesis (Binomial test): true probability < 50%"
-      )
+      c("Assuming an expected decrease in phase B.",
+        "Alternative hypothesis (Binomial test): true probability < 50%")
     } else {
-      footnote <- c(
-        "Assuming an expected increase in phase B",
-        "Alternative hypothesis (Binomial test): true probability > 50%"
-      )
-    }
+      c("Assuming an expected increase in phase B",
+        "Alternative hypothesis (Binomial test): true probability > 50%")
+    },
     if (object$N > 1) {
-      footnote <- c(
-        footnote, 
-        paste0("Overall evaluation of all MBD instances:  ",object$cdc_all)
-      )
+      paste0("Overall evaluation of all MBD instances:  ", object$cdc_all)
     }
-  }
+  )
   
   if (nice) object$cdc_p <- .nice_p(object$cdc_p)
   out <- data.frame(

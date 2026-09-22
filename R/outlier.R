@@ -21,6 +21,7 @@
 #'  | `sd.matrix` | A list with a matrix for each case with values for the upper and lower boundaries based on the standard deviation. |
 #'  | `ci.matrix` | A list with a matrix for each single-case with values for the upper and lower boundaries based on the confidence interval. |
 #'  | `cook` | A list of Cook's Distances for each measurement of each single-case. |
+#'  | `method` | Method used for outlier identification. |
 #'  | `criteria` | Criteria used for outlier analysis. |
 #'  | `N` | Number of single-cases. |
 #'  | `case.names` | Case identifier. |
@@ -194,6 +195,7 @@ outlier <- function(data, dvar, pvar, mvar,
   out$sd.matrix <- sd.matrix
   out$mad.matrix <- mad.matrix
   out$cook <- cook
+  out$method <- method
   out$criteria <- criteria
   out$N <- N
   out$case.names <- case.names

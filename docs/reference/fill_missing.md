@@ -119,6 +119,7 @@ Juergen Wilbert
 ## measurement times
 Grosche2011filled <- fill_missing(Grosche2011)
 study <- c(Grosche2011[2], Grosche2011filled[2])
+#> Warning: ! Duplicated case names: 'Georg'. Names were made unique.
 names(study) <- c("Original", "Filled")
 study
 #> #A single-case data frame with two cases

@@ -11,7 +11,7 @@ selection is also supported."><meta property="og:image" content="https://jazznba
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.69.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -214,7 +214,25 @@ format.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to five more rows</span>
 <span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Moritz"</span>, <span class="st">"Jannis"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">select_cases</span><span class="op">(</span><span class="va">exampleA1B1A2B2</span>, <span class="va">v</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(x, envir = nl, enclos = parent.frame()):</span> object 'v' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #A single-case data frame with two cases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Moritz: values mt phase │ Jannis: values mt phase │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              15  1    A1 │             12  1    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              11  2    A1 │             11  2    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              12  3    A1 │             18  3    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              10  4    A1 │             20  4    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              12  5    A1 │             15  5    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              18  6    A1 │             13  6    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              16  7    A1 │              8  7    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              18  8    A1 │             19  8    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              12  9    A1 │             16  9    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              12 10    A1 │             14 10    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              11 11    A1 │             13 11    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              10 12    A1 │             12 12    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              13 13    A1 │             18 13    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               9 14    A1 │             13 14    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              14 15    A1 │             17 15    A1 │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # ... up to 25 more rows</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

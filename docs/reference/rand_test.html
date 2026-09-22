@@ -13,7 +13,7 @@ the use in AB designs."><meta property="og:image" content="https://jazznbass.git
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.69.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,8 +96,10 @@ caption will be created based on the exported object.</p></dd>
 
 
 <dt id="arg-footnote">footnote<a class="anchor" aria-label="anchor" href="#arg-footnote"></a></dt>
-<dd><p>Character string with table footnote. If left NA (default) a
-footnote will be created based on the exported object.</p></dd>
+<dd><p>Character string with table footnote. Several strings are
+combined into a footnote of several lines. If left NA (default) a footnote
+will be created based on the exported object. <code>NULL</code> or <code>""</code> suppress the
+footnote.</p></dd>
 
 
 <dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
@@ -339,7 +341,7 @@ Available from: <a href="https://CRAN.R-project.org/package=SCRT" class="externa
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probability of an equal or higher value than the observed statistic:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p   =  0.6363636 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Shapiro-Wilk Normality Test: W = 0.868; p = 0.073  (Hypothesis of normality maintained)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Shapiro-Wilk Normality Test: W = 0.868; p = .07  (Hypothesis of normality maintained)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probabilty of observed statistic based on the assumption of normality:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> z = 0.4416, p = 0.3294 (single sided)</span>
@@ -366,7 +368,7 @@ Available from: <a href="https://CRAN.R-project.org/package=SCRT" class="externa
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probability of an equal or higher value than the observed statistic:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p   =  0.8435143 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Shapiro-Wilk Normality Test: W = 0.804; p = 0.000  (Hypothesis of normality rejected)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Shapiro-Wilk Normality Test: W = 0.804; p &lt;.001  (Hypothesis of normality rejected)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probabilty of observed statistic based on the assumption of normality:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> z = -0.8198, p = 0.7938 (single sided)</span>

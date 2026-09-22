@@ -25,9 +25,9 @@
     scan.string.dummy.slope = "inter",
     scan.string.dummy.phase = "phase",
     scan.deprecated.warning = TRUE,
-    scan.export.engine = "kable",
+    scan.export.engine = "gt",
     scan.export.footnote.collapse = "; ",
-    scan.export.title.prefix = md("**Table**"),
+    scan.export.title.prefix = NULL, #md("**Table**"),
     scan.export.kable = list(digits = 2, linesep ="", booktab = TRUE),
     scan.export.kable_styling = list(
       bootstrap_options = c("bordered", "condensed"), 

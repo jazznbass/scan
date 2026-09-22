@@ -32,8 +32,10 @@ If set to "auto" (default), values are predefined.}
 \item{caption}{Character string with table caption. If left NA (default) a
 caption will be created based on the exported object.}
 
-\item{footnote}{Character string with table footnote. If left NA (default) a
-footnote will be created based on the exported object.}
+\item{footnote}{Character string with table footnote. Several strings are
+combined into a footnote of several lines. If left NA (default) a footnote
+will be created based on the exported object. \code{NULL} or \code{""} suppress the
+footnote.}
 
 \item{filename}{String containing the file name. If a filename is given the
 output will be written to that file.}
@@ -66,6 +68,7 @@ the \code{method} setting.}
    \code{sd.matrix} \tab A list with a matrix for each case with values for the upper and lower boundaries based on the standard deviation. \cr
    \code{ci.matrix} \tab A list with a matrix for each single-case with values for the upper and lower boundaries based on the confidence interval. \cr
    \code{cook} \tab A list of Cook's Distances for each measurement of each single-case. \cr
+   \code{method} \tab Method used for outlier identification. \cr
    \code{criteria} \tab Criteria used for outlier analysis. \cr
    \code{N} \tab Number of single-cases. \cr
    \code{case.names} \tab Case identifier. \cr

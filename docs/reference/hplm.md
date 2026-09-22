@@ -230,8 +230,10 @@ coef(object, casewise = FALSE, ...)
 
 - footnote:
 
-  Character string with table footnote. If left NA (default) a footnote
-  will be created based on the exported object.
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
 
 - filename:
 
@@ -342,7 +344,7 @@ hplm(exampleAB_50, method = "REML", random.slopes = FALSE)
 #> 50 Cases
 #> 
 #> AIC = 8764.5, BIC = 8795.866
-#> ICC = 0.292; L = 341.2; p = 0.000 
+#> ICC = 0.292; L = 341.2; p <.001 
 #> 
 #> Fixed effects (values ~ 1 + mt + phaseB + interB)
 #> 
@@ -371,7 +373,7 @@ Leidig2018 |>
 #> 35 Cases
 #> 
 #> AIC = 5827.167, BIC = 5879.268
-#> ICC = 0.344; L = 875.4; p = 0.000 
+#> ICC = 0.344; L = 875.4; p <.001 
 #> 
 #> Fixed effects (academic_engagement ~ mt + phaseB + gender + migration + ITRF_TOTAL +     phaseB:ITRF_TOTAL)
 #> 
@@ -389,4 +391,7 @@ Leidig2018 |>
 #>              SD
 #> Intercept 0.557
 #> Residual  0.785
+#> 
+#> The following variables were used in this analysis:
+#> 'academic_engagement' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.
 ```

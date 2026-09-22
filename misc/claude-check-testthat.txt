@@ -1,0 +1,378 @@
+add_l2: ...
+anova: ...
+as_scdf: .....
+as.data.frame: ....
+autocorr: .
+bacht_apply: ...
+between_smd: ..
+cdc: ..
+combine: ......................
+convert: ...
+corrected: .
+describe: .
+design: ................................................................................................................
+estimate_design: ..................................................
+export: ..............................................................................................................................................................................................................................................................................................................................................
+fill_missing: .
+hplm: ...
+ird: .
+mplm: ...
+outlier: .....................................................................................................................................................................................................
+overlap: ..........
+pand: .....
+plm: ....
+print: ...................................................................
+rand_test: ......................................................................................................
+random_scdf: ..................................................................
+rescale: .....................
+sample_names: ..............................
+scdf: ......
+select_cases: .............................
+set_vars: ......................
+smd: ..
+tau: ......
+trend: .
+
+══ DONE ═══════════════════════════════════════════════════════════════════════════════
+
+===== per file =====
+                      file
+1            test-add_l2.R
+2            test-add_l2.R
+3             test-anova.R
+4           test-as_scdf.R
+5     test-as.data.frame.R
+6          test-autocorr.R
+7       test-bacht_apply.R
+8       test-bacht_apply.R
+9       test-between_smd.R
+10      test-between_smd.R
+11              test-cdc.R
+12          test-combine.R
+13          test-combine.R
+14          test-combine.R
+15          test-combine.R
+16          test-convert.R
+17        test-corrected.R
+18         test-describe.R
+19           test-design.R
+20           test-design.R
+21           test-design.R
+22           test-design.R
+23           test-design.R
+24           test-design.R
+25           test-design.R
+26  test-estimate_design.R
+27  test-estimate_design.R
+28  test-estimate_design.R
+29  test-estimate_design.R
+30  test-estimate_design.R
+31  test-estimate_design.R
+32  test-estimate_design.R
+33  test-estimate_design.R
+34  test-estimate_design.R
+35           test-export.R
+36           test-export.R
+37           test-export.R
+38           test-export.R
+39           test-export.R
+40           test-export.R
+41           test-export.R
+42           test-export.R
+43           test-export.R
+44           test-export.R
+45           test-export.R
+46           test-export.R
+47           test-export.R
+48           test-export.R
+49           test-export.R
+50           test-export.R
+51     test-fill_missing.R
+52             test-hplm.R
+53              test-ird.R
+54             test-mplm.R
+55          test-outlier.R
+56          test-outlier.R
+57          test-outlier.R
+58          test-outlier.R
+59          test-outlier.R
+60          test-outlier.R
+61          test-outlier.R
+62          test-outlier.R
+63          test-outlier.R
+64          test-overlap.R
+65             test-pand.R
+66              test-plm.R
+67            test-print.R
+68            test-print.R
+69            test-print.R
+70            test-print.R
+71            test-print.R
+72            test-print.R
+73            test-print.R
+74        test-rand_test.R
+75        test-rand_test.R
+76        test-rand_test.R
+77        test-rand_test.R
+78        test-rand_test.R
+79        test-rand_test.R
+80        test-rand_test.R
+81      test-random_scdf.R
+82      test-random_scdf.R
+83      test-random_scdf.R
+84      test-random_scdf.R
+85      test-random_scdf.R
+86      test-random_scdf.R
+87      test-random_scdf.R
+88      test-random_scdf.R
+89      test-random_scdf.R
+90          test-rescale.R
+91          test-rescale.R
+92          test-rescale.R
+93          test-rescale.R
+94          test-rescale.R
+95     test-sample_names.R
+96     test-sample_names.R
+97     test-sample_names.R
+98             test-scdf.R
+99     test-select_cases.R
+100    test-select_cases.R
+101    test-select_cases.R
+102    test-select_cases.R
+103    test-select_cases.R
+104        test-set_vars.R
+105        test-set_vars.R
+106        test-set_vars.R
+107             test-smd.R
+108             test-tau.R
+109           test-trend.R
+                                                                            test nb
+1                                                                    combination  1
+2                                                                          error  2
+3         anova wrappers delegate to underlying models and match numeric results  3
+4                                                                           main  5
+5                                                                           main  4
+6                                                                           main  1
+7                batch_apply applies a function to each case and preserves names  2
+8   batch_apply simplifies vector outputs to a data frame with case and rownames  1
+9                                           between_smd errors for a single case  1
+10            between_smd returns sc_bcsmd with REML models and expected columns  1
+11                                                                          main  2
+12                                                 different case names are kept  4
+13                          duplicated case names are made unique with a warning 11
+14                                    cases without a name are combined silently  3
+15                             combine keeps info, author and the variable names  4
+16                                                                       convert  3
+17                                                                          main  1
+18                                                                          main  1
+19                                       design function returns expected output 15
+20                                     the error argument is translated into rtt 14
+21                                    the simulated error has the requested size  3
+22                           phase lengths must be whole numbers of at least one 27
+23                                         mt defaults to 20 and B_start uses it 12
+24                                   extreme_range is a pair given to every case 22
+25                                              proportions are checked per case 19
+26                                                               estimate_design  5
+27                                                  a given rtt or error is kept 11
+28                         the reliability of the generating design is recovered  4
+29                                  the estimate does not follow the effect size  2
+30                 without s the fallback warns and fixes the reliability at 0.5 12
+31          identical start values are warned about but do not stop the estimate  5
+32                          the remaining parameters of the design are estimated  8
+33            the estimated s corrects for the standard error of the start value  2
+34                                the estimated error reaches the simulated data  1
+35                               gt is the default engine and the option decides  5
+36                                        an unusable engine setting is rejected  5
+37                           latex output falls back to kable, word output to gt  7
+38                                .select keeps a data frame, renames and orders 22
+39                    select works through export, also when it drops a p column 18
+40                             .nice_p formats p values and survives empty input  3
+41                                .footnote picks between user input and default  6
+42                                     footnotes reach the table in both engines 94
+43                              html tags in footnotes are rendered, not escaped  8
+44                                      latex output keeps escaping the footnote  4
+45                       the kable engine keeps unicode and markup outside latex  4
+46                                  unicode and markup are spelled out for latex  8
+47                                    the decimals argument reaches both engines 48
+48                                      NA, NaN and Inf are shown as empty cells 24
+49                                   both engines build the same table structure 66
+50                              both engines agree for the slower models as well 12
+51                                                                  fill_missing  1
+52                                                                          hplm  3
+53                                                                         ird()  1
+54                                                                          mplm  3
+55                               outlier splits by phase run, not by phase label 50
+56                          outlier handles twelve phase runs in the right order  9
+57                                               a plain AB design is unaffected 22
+58                     outlier ignores missing values but keeps them in the data 48
+59                        a phase without any valid value does not break outlier  9
+60                   the sd matrix reproduces mean, sd and bounds of a phase run  3
+61                            the mad matrix holds the median and the scaled mad 36
+62                                  Cook distances line up with the measurements 15
+63                                     print and export of an outlier object run  5
+64                                                                       overlap 10
+65                                                                          pand  5
+66                                                                           plm  4
+67                               print.sc_design covers the parameter variations 11
+68                           the effect size print methods run for several cases 17
+69                                        the same methods run for a single case 11
+70                                    the print methods cope with missing values  7
+71                               the arguments of the print methods are accepted  7
+72                                                   the regression models print  6
+73                         the summary of an scdf is written by its print method  8
+74                                                                     rand_test  2
+75                    all statistics run and the mirrored ones mirror each other 21
+76                 the slope statistic is registered under the name that is used  4
+77               a degenerate randomization distribution gives NA, not a p value 38
+78                                           limit and startpoints are validated 21
+79                        sampled start points respect a single admissible point  6
+80                                            the ordinary results are unchanged 10
+81                         binomial data stay counts within the number of trials  6
+82                                         poisson data stay non-negative counts  6
+83                             missing values survive the clipping of count data  6
+84                                gaussian data stay continuous and honour round  2
+85                                          simulated count data can be analysed  4
+86                                         a malformed extreme_range is rejected 14
+87                         a number as the first argument is used, not discarded  8
+88                    the documented ways of calling random_scdf give no warning  6
+89                               random_names accepts the documented values only 14
+90                                         rescale standardizes across all cases  7
+91                    variables can be named as objects, characters or variables  4
+92                                 unknown or non numeric variables are rejected  3
+93                                                m and sd set the target values  5
+94                                                       rescale works in a pipe  2
+95                                 the documented types draw from their own list 20
+96                                          the seed makes the draw reproducible  3
+97                                                   an unknown type is rejected  7
+98                                                                          scdf  6
+99                                cases are selected by name, number or variable 10
+100                                               negative selections drop cases  7
+101                                          an impossible selection is rejected  6
+102                        the selection is evaluated in the calling environment  3
+103                                                   the result is a valid scdf  3
+104                         the setters change one variable and leave the others 10
+105                               a variable that is not in the data is rejected 10
+106                                                   the setters work in a pipe  2
+107                                                                          smd  2
+108                                                                        tau-u  6
+109                                                                        trend  1
+    failed error warning skipped  real
+1        0 FALSE       0   FALSE 0.008
+2        0 FALSE       0   FALSE 0.024
+3        0 FALSE       0   FALSE 0.162
+4        0 FALSE       0   FALSE 0.009
+5        0 FALSE       0   FALSE 0.007
+6        0 FALSE       0   FALSE 0.004
+7        0 FALSE       0   FALSE 0.004
+8        0 FALSE       0   FALSE 0.003
+9        0 FALSE       0   FALSE 0.004
+10       0 FALSE       0   FALSE 0.083
+11       0 FALSE       0   FALSE 0.051
+12       0 FALSE       0   FALSE 0.006
+13       0 FALSE       0   FALSE 0.021
+14       0 FALSE       0   FALSE 0.004
+15       0 FALSE       0   FALSE 0.009
+16       0 FALSE       0   FALSE 0.061
+17       0 FALSE       0   FALSE 0.007
+18       0 FALSE       0   FALSE 0.006
+19       0 FALSE       0   FALSE 0.018
+20       0 FALSE       0   FALSE 0.028
+21       0 FALSE       0   FALSE 0.378
+22       0 FALSE       0   FALSE 0.039
+23       0 FALSE       0   FALSE 0.015
+24       0 FALSE       0   FALSE 0.027
+25       0 FALSE       0   FALSE 0.062
+26       0 FALSE       0   FALSE 0.018
+27       0 FALSE       0   FALSE 0.210
+28       0 FALSE       0   FALSE 0.269
+29       0 FALSE       0   FALSE 0.279
+30       0 FALSE       0   FALSE 0.022
+31       0 FALSE       0   FALSE 0.035
+32       0 FALSE       0   FALSE 0.028
+33       0 FALSE       0   FALSE 0.206
+34       0 FALSE       0   FALSE 0.095
+35       0 FALSE       0   FALSE 0.033
+36       0 FALSE       0   FALSE 0.012
+37       0 FALSE       0   FALSE 0.015
+38       0 FALSE       0   FALSE 0.040
+39       0 FALSE       0   FALSE 0.131
+40       0 FALSE       0   FALSE 0.005
+41       0 FALSE       0   FALSE 0.008
+42       0 FALSE       0   FALSE 1.636
+43       0 FALSE       0   FALSE 0.109
+44       0 FALSE       0   FALSE 0.009
+45       0 FALSE       0   FALSE 0.030
+46       0 FALSE       0   FALSE 0.010
+47       0 FALSE       0   FALSE 0.908
+48       0 FALSE       0   FALSE 0.132
+49       0 FALSE       0   FALSE 2.846
+50       0 FALSE       0   FALSE 0.528
+51       0 FALSE       0   FALSE 0.009
+52       0 FALSE       0   FALSE 0.201
+53       0 FALSE       0   FALSE 0.008
+54       0 FALSE       0   FALSE 0.005
+55       0 FALSE       0   FALSE 0.076
+56       0 FALSE       0   FALSE 0.020
+57       0 FALSE       0   FALSE 0.033
+58       0 FALSE       0   FALSE 0.060
+59       0 FALSE       0   FALSE 0.019
+60       0 FALSE       0   FALSE 0.006
+61       0 FALSE       0   FALSE 0.058
+62       0 FALSE       0   FALSE 0.037
+63       0 FALSE       0   FALSE 0.029
+64       0 FALSE       0   FALSE 0.048
+65       0 FALSE       0   FALSE 0.009
+66       0 FALSE       0   FALSE 0.011
+67       0 FALSE       0   FALSE 0.009
+68       0 FALSE       0   FALSE 0.093
+69       0 FALSE       0   FALSE 0.033
+70       0 FALSE       0   FALSE 0.029
+71       0 FALSE       0   FALSE 0.062
+72       0 FALSE       0   FALSE 0.062
+73       0 FALSE       0   FALSE 0.034
+74       0 FALSE       0   FALSE 0.185
+75       0 FALSE       0   FALSE 0.208
+76       0 FALSE       0   FALSE 0.012
+77       0 FALSE       0   FALSE 0.235
+78       0 FALSE       0   FALSE 0.053
+79       0 FALSE       0   FALSE 0.015
+80       0 FALSE       0   FALSE 0.130
+81       0 FALSE       0   FALSE 0.008
+82       0 FALSE       0   FALSE 0.008
+83       0 FALSE       0   FALSE 0.007
+84       0 FALSE       0   FALSE 0.004
+85       0 FALSE       0   FALSE 0.008
+86       0 FALSE       0   FALSE 0.029
+87       0 FALSE       0   FALSE 0.010
+88       0 FALSE       0   FALSE 0.006
+89       0 FALSE       0   FALSE 0.028
+90       0 FALSE       0   FALSE 0.012
+91       0 FALSE       0   FALSE 0.009
+92       0 FALSE       0   FALSE 0.010
+93       0 FALSE       0   FALSE 0.008
+94       0 FALSE       0   FALSE 0.058
+95       0 FALSE       0   FALSE 0.016
+96       0 FALSE       0   FALSE 0.004
+97       0 FALSE       0   FALSE 0.018
+98       0 FALSE       0   FALSE 0.016
+99       0 FALSE       0   FALSE 0.019
+100      0 FALSE       0   FALSE 0.009
+101      0 FALSE       0   FALSE 0.015
+102      0 FALSE       0   FALSE 0.004
+103      0 FALSE       0   FALSE 0.003
+104      0 FALSE       0   FALSE 0.016
+105      0 FALSE       0   FALSE 0.025
+106      0 FALSE       0   FALSE 0.008
+107      0 FALSE       0   FALSE 0.012
+108      0 FALSE       0   FALSE 0.032
+109      0 FALSE       0   FALSE 0.009
+
+===== totals =====
+   tests   : 1122 
+   failed  : 0 
+   errors  : 0 
+   warnings: 0 
+   skipped : 0 
+   time    : 10.9 seconds
+
+===== ALL PASSED =====

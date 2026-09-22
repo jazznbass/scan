@@ -11,7 +11,7 @@ and for other Monte-Carlo tasks."><meta property="og:image" content="https://jaz
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.69.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,7 @@ and for other Monte-Carlo tasks.</p>
 <span>  start_value <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>  s <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  rtt <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>  error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  extreme_prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
 <span>  extreme_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span>,</span>
 <span>  missing_prop <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -132,19 +133,36 @@ are recycled. The <code>m</code> argument is deprecated.</p></dd>
 
 
 <dt id="arg-s">s<a class="anchor" aria-label="anchor" href="#arg-s"></a></dt>
-<dd><p>Standard deviation used to calculate absolute values from level,
-slope, trend effects and to calculate and error distribution from the <code>rtt</code>
-values. Set to <code>10</code> by default. To assign different variances to several
-single-cases, use a vector of values (e.g. <code>s = c(5, 10, 15)</code>). If the
-number of cases exceeds the length of the vector, values are recycled. if
-the distribution is 'poisson' or 'binomial' s is not applied.</p></dd>
+<dd><p>Standard deviation of the true values in the population of cases.
+It is used to calculate absolute values from level, slope, and trend
+effects and, together with <code>rtt</code>, the error distribution (see <code>rtt</code>). With
+<code>random_start_value = TRUE</code> the start values are drawn from a normal
+distribution with this standard deviation. Set to <code>10</code> by default. To
+assign different variances to several single-cases, use a vector of values
+(e.g. <code>s = c(5, 10, 15)</code>). If the number of cases exceeds the length of the
+vector, values are recycled. if the distribution is 'poisson' or 'binomial'
+s is not applied.</p></dd>
 
 
 <dt id="arg-rtt">rtt<a class="anchor" aria-label="anchor" href="#arg-rtt"></a></dt>
-<dd><p>Reliability of the underlying simulated measurements. Set <code>rtt = .8</code> by default. To assign different reliabilities to several single-cases,
-use a vector of values (e.g. <code>rtt = c(.6, .7, .8)</code>). If the number of cases
-exceeds the length of the vector, values are repeated. <code>rtt</code> has no effect
-when you're using binomial or poisson distributions.</p></dd>
+<dd><p>Reliability of the underlying simulated measurements. Set <code>rtt = .8</code> by default. Reliability is defined as in classical test theory, with
+<code>s^2</code> as the variance of the true values: <code>rtt = s^2 / (s^2 + error^2)</code>.
+The measurement error is drawn accordingly from a normal distribution with
+<code>error = sqrt((1 - rtt) / rtt * s^2)</code>, that is, with the same variance for
+every case and every measurement. To assign different reliabilities to
+several single-cases, use a vector of values (e.g. <code>rtt = c(.6, .7, .8)</code>).
+If the number of cases exceeds the length of the vector, values are
+repeated. <code>rtt</code> has no effect when you're using binomial or poisson
+distributions.</p></dd>
+
+
+<dt id="arg-error">error<a class="anchor" aria-label="anchor" href="#arg-error"></a></dt>
+<dd><p>Standard deviation of the measurement error, as an alternative
+way of setting <code>rtt</code>. When <code>error</code> is provided, the reliability is derived
+from it as <code>rtt = s^2 / (s^2 + error^2)</code>, so the two arguments must not be
+given together. To assign different errors to several single-cases, use a
+vector of values. Like <code>rtt</code>, <code>error</code> has no effect for binomial or poisson
+distributions.</p></dd>
 
 
 <dt id="arg-extreme-prop-extreme-p">extreme_prop, extreme.p<a class="anchor" aria-label="anchor" href="#arg-extreme-prop-extreme-p"></a></dt>
@@ -273,10 +291,10 @@ values will be recycled.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chi-Squared test:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X² = 41.299, df = 1, p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X² = 41.299, df = 1, p &lt;.001 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fisher exact test:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Odds ratio = 333.881, p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Odds ratio = 333.881, p &lt;.001 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

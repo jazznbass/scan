@@ -308,3 +308,33 @@ render_summary <- function(scdf) {
     out <- out |> gt::as_raw_html(out)
   HTML(out)
 }
+
+# The description section of the help page of a scan function.
+# tools::Rd_db() is the supported way to read the Rd database of an installed
+# package; the alias -> description map is built once, on first use.
+scan_description <- local({
+  
+  descriptions <- NULL
+  
+  build <- function() {
+    out <- list()
+    db <- tryCatch(tools::Rd_db("scan"), error = function(e) list())
+    has_tag <- function(x, tag) identical(attr(x, "Rd_tag"), tag)
+    flatten <- function(x) trimws(paste0(unlist(x), collapse = ""))
+    
+    for (rd in db) {
+      aliases <- Filter(function(x) has_tag(x, "\\alias"), rd)
+      description <- Filter(function(x) has_tag(x, "\\description"), rd)
+      if (!length(aliases) || !length(description)) next
+      text <- flatten(description)
+      for (alias in aliases) out[[flatten(alias)]] <- text
+    }
+    out
+  }
+  
+  function(topic) {
+    if (length(topic) != 1L || is.na(topic) || !nzchar(topic)) return(NULL)
+    if (is.null(descriptions)) descriptions <<- build()
+    descriptions[[topic]]
+  }
+})

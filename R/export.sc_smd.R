@@ -22,8 +22,9 @@ export.sc_smd <- function(object, caption = NA, footnote = NA,
     )
   )
   
-  footnote <- c(
-    'SD Cohen = unweigted average of the variance of both phases',
+  footnote <- .footnote(
+    footnote,
+    'SD Cohen = unweighted average of the variance of both phases',
     'SD Hedges = weighted average of the variance of both phases with a degrees of freedom correction',
     "Glass' delta = mean difference divided by the standard deviation of the A-phase",
     "Hedges' g = mean difference divided by SD Hedges",

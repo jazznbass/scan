@@ -8,8 +8,7 @@ export.sc_power <- function(object, caption = NA, footnote = NA, filename = NA,
     caption <- c("Test power in percent")
   }
   
-  if (is.na(footnote)) {
-  }
+  footnote <- .footnote(footnote, "")
 
   out <- object
   class(out) <- "data.frame"

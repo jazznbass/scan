@@ -13,7 +13,7 @@ from a Piecewise Linear Regression Model."><meta property="og:image" content="ht
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.69.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,8 +92,10 @@ caption will be created based on the exported object.</p></dd>
 
 
 <dt id="arg-footnote">footnote<a class="anchor" aria-label="anchor" href="#arg-footnote"></a></dt>
-<dd><p>Character string with table footnote. If left NA (default) a
-footnote will be created based on the exported object.</p></dd>
+<dd><p>Character string with table footnote. Several strings are
+combined into a footnote of several lines. If left NA (default) a footnote
+will be created based on the exported object. <code>NULL</code> or <code>""</code> suppress the
+footnote.</p></dd>
 
 
 <dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
@@ -135,7 +137,7 @@ the <code>method</code> setting.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
 
-<table class="table table"><tr><td></td><td></td></tr><tr><td><code>data</code></td><td>A single-case data frame with substituted outliers.</td></tr><tr><td><code>dropped.n</code></td><td>A list with the number of dropped data points for each single-case.</td></tr><tr><td><code>dropped.mt</code></td><td>A list with the measurement-times of dropped data points for each single-case (values are based on the mt variable of each single-case data frame).</td></tr><tr><td><code>sd.matrix</code></td><td>A list with a matrix for each case with values for the upper and lower boundaries based on the standard deviation.</td></tr><tr><td><code>ci.matrix</code></td><td>A list with a matrix for each single-case with values for the upper and lower boundaries based on the confidence interval.</td></tr><tr><td><code>cook</code></td><td>A list of Cook's Distances for each measurement of each single-case.</td></tr><tr><td><code>criteria</code></td><td>Criteria used for outlier analysis.</td></tr><tr><td><code>N</code></td><td>Number of single-cases.</td></tr><tr><td><code>case.names</code></td><td>Case identifier.</td></tr></table></div>
+<table class="table table"><tr><td></td><td></td></tr><tr><td><code>data</code></td><td>A single-case data frame with substituted outliers.</td></tr><tr><td><code>dropped.n</code></td><td>A list with the number of dropped data points for each single-case.</td></tr><tr><td><code>dropped.mt</code></td><td>A list with the measurement-times of dropped data points for each single-case (values are based on the mt variable of each single-case data frame).</td></tr><tr><td><code>sd.matrix</code></td><td>A list with a matrix for each case with values for the upper and lower boundaries based on the standard deviation.</td></tr><tr><td><code>ci.matrix</code></td><td>A list with a matrix for each single-case with values for the upper and lower boundaries based on the confidence interval.</td></tr><tr><td><code>cook</code></td><td>A list of Cook's Distances for each measurement of each single-case.</td></tr><tr><td><code>method</code></td><td>Method used for outlier identification.</td></tr><tr><td><code>criteria</code></td><td>Criteria used for outlier analysis.</td></tr><tr><td><code>N</code></td><td>Number of single-cases.</td></tr><tr><td><code>case.names</code></td><td>Case identifier.</td></tr></table></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>For <code>method = "SD"</code>, <code>criteria = 2</code> would refer to two standard
@@ -185,6 +187,13 @@ Cook's Distance greater than 4/n.</p>
 <span class="r-in"><span><span class="va">res_outlier</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outlier Analysis for Single-Case Data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Criteria: Exceeds 1.5 Standard Deviations</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`[case #1]`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   phase        m       sd    lower    upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     A 46.33427 1.722791 43.75008 48.91845</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     B 60.88020 4.121473 54.69799 67.06241</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Case [case #1] : Dropped 2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -193,6 +202,8 @@ Cook's Distance greater than 4/n.</p>
 <span class="r-in"><span><span class="va">res_outlier</span> <span class="op">&lt;-</span> <span class="fu">outlier</span><span class="op">(</span><span class="va">Grosche2011</span>, method <span class="op">=</span> <span class="st">"Cook"</span>, criteria <span class="op">=</span> <span class="st">"4/n"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res_outlier</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outlier Analysis for Single-Case Data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Criteria: Cook's Distance based on piecewise-regression exceeds 4/n </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Case Eva : Dropped 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Case Georg : Dropped 3 </span>

@@ -9,21 +9,17 @@ export.sc_pet <- function(object,
   
   if (is.na(caption)) caption <- c("Percent Exceeding the trend")
   
-  if (is.na(footnote)) {
+  footnote <- .footnote(footnote,
     if (object$decreasing) {
-      footnote <- c(
-        "Assumed decreasing values in the B-phase",
+      c("Assumed decreasing values in the B-phase",
         "Binomial test alternative hypothesis: true probability < 50%",
-        "Single-sided test"
-      )
+        "Single-sided test")
     } else {
-      footnote <- c(
-        "Assumed increasing values in the B-phase",
+      c("Assumed increasing values in the B-phase",
         "Binomial test alternative hypothesis: true probability > 50%",
-        "Single-sided test"
-      )
+        "Single-sided test")
     }
-  }
+  )
   
   object$PET$binom.p <- .nice_p(object$PET$binom.p)
   names(object$PET)[4] <- "p (binomial test)"

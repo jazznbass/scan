@@ -12,10 +12,9 @@ export.sc_nap <- function(object,
   if (is.na(caption)) caption <- c("Nonoverlap of all pairs")
   
   out <- as.data.frame(object$nap) 
-  out <- .select(out, select)
   out$p <- .nice_p(out$p)
-  
   out <- round_numeric(out, round)
+  out <- .select(out, select)
   
   table <- .create_table(
     out, 

@@ -54,8 +54,10 @@ cdc(
 
 - footnote:
 
-  Character string with table footnote. If left NA (default) a footnote
-  will be created based on the exported object.
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
 
 - filename:
 
@@ -204,6 +206,9 @@ cdc(exampleABAB, trend_method = "trisplit", phases = c(1,4))
 #> Assuming an expected increase in phase B.
 #> Alternative hypothesis (Binomial test): true probability > 50%
 #> Overall evaluation of all MBD instances:   no change 
+#> 
+#> The following variables were used in this analysis:
+#> 'points' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.
 
 ## Apply the Dual-Criterion (DC) method (i.e., mean and trend without
 ##shifting).

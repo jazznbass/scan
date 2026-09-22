@@ -11,7 +11,7 @@ increase (or decrease) in performance after the onset of an intervention."><meta
 
     <a class="navbar-brand me-2" href="../index.html">scan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.68.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.69.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@ increase (or decrease) in performance after the onset of an intervention."><meta
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Percentage of all non-overlapping data</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/pand.R" class="external-link"><code>R/pand.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print.sc_pand.R" class="external-link"><code>R/print.sc_pand.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/pand.R" class="external-link"><code>R/pand.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print-export-pand.R" class="external-link"><code>R/print-export-pand.R</code></a></small>
       <div class="d-none name"><code>pand.Rd</code></div>
     </div>
 
@@ -116,8 +116,10 @@ caption will be created based on the exported object.</p></dd>
 
 
 <dt id="arg-footnote">footnote<a class="anchor" aria-label="anchor" href="#arg-footnote"></a></dt>
-<dd><p>Character string with table footnote. If left NA (default) a
-footnote will be created based on the exported object.</p></dd>
+<dd><p>Character string with table footnote. Several strings are
+combined into a footnote of several lines. If left NA (default) a footnote
+will be created based on the exported object. <code>NULL</code> or <code>""</code> suppress the
+footnote.</p></dd>
 
 
 <dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
@@ -234,10 +236,10 @@ https://jepusto.github.io/SingleCaseES/.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chi-Squared test:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X² = 14.227, df = 1, p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X² = 14.227, df = 1, p &lt;.001 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fisher exact test:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Odds ratio = 29.007, p = 0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Odds ratio = 29.007, p &lt;.001 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Calculate the PAND with an expected decrease of phase B scores</span></span></span>
 <span class="r-in"><span><span class="va">cubs</span> <span class="op">&lt;-</span> <span class="fu"><a href="scdf.html">scdf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">22</span>,<span class="fl">24</span>,<span class="fl">17</span>,<span class="fl">21</span>,<span class="fl">13</span>,<span class="fl">10</span>,<span class="fl">9</span>,<span class="fl">20</span>,<span class="fl">9</span>,<span class="fl">18</span><span class="op">)</span>, B_start <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
@@ -267,10 +269,10 @@ https://jepusto.github.io/SingleCaseES/.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chi-Squared test:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X² = 4.055, df = 1, p = 0.044 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X² = 4.055, df = 1, p &lt;.05 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fisher exact test:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Odds ratio = 12.230, p = 0.088 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Odds ratio = 12.230, p = .08 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

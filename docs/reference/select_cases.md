@@ -174,5 +174,23 @@ select_cases(exampleAB, -c(Johanna, Karolina))
 #> # ... up to five more rows
 v <- c("Moritz", "Jannis")
 select_cases(exampleA1B1A2B2, v)
-#> Error in eval(x, envir = nl, enclos = parent.frame()): object 'v' not found
+#> #A single-case data frame with two cases
+#> 
+#>  Moritz: values mt phase │ Jannis: values mt phase │
+#>              15  1    A1 │             12  1    A1 │
+#>              11  2    A1 │             11  2    A1 │
+#>              12  3    A1 │             18  3    A1 │
+#>              10  4    A1 │             20  4    A1 │
+#>              12  5    A1 │             15  5    A1 │
+#>              18  6    A1 │             13  6    A1 │
+#>              16  7    A1 │              8  7    A1 │
+#>              18  8    A1 │             19  8    A1 │
+#>              12  9    A1 │             16  9    A1 │
+#>              12 10    A1 │             14 10    A1 │
+#>              11 11    A1 │             13 11    A1 │
+#>              10 12    A1 │             12 12    A1 │
+#>              13 13    A1 │             18 13    A1 │
+#>               9 14    A1 │             13 14    A1 │
+#>              14 15    A1 │             17 15    A1 │
+#> # ... up to 25 more rows
 ```

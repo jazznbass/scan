@@ -73,21 +73,19 @@ export.sc_bctau <- function(object,
     )
   }
   
-  if (is.na(footnote)) {
-    footnote <- if (object$repeated) {
+  footnote <- .footnote(footnote, 
+    if (object$repeated) {
       "Method: Siegel repeated median regression"
     } else {
       "Method: Theil-Sen regression"
-    }
-    
-    footnote <- c(footnote, paste("Kendall's tau", object$tau_method, "applied"))
-    str_cc <- if (object$continuity) {
+    },
+    paste("Kendall's tau", object$tau_method, "applied"),
+    if (object$continuity) {
       "Continuity correction applied"
     } else {
       "Continuity correction not applied"
     }
-    footnote <- c(footnote, str_cc)
-  }
+  )
   
   x <- object$corrected_tau
   

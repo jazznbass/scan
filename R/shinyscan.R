@@ -22,9 +22,7 @@ shinyscan <- function(scdf = NULL,
                       ...) {
   
   browser <- browser[1]
-  
-  
-  
+
   miss <- c()
   if (!requireNamespace("scplot", quietly = TRUE)) miss <- c(miss, "scplot")
   if (!requireNamespace("shiny",  quietly = TRUE)) miss <- c(miss,  "shiny")
@@ -41,19 +39,22 @@ shinyscan <- function(scdf = NULL,
   
   browser <- match.arg(browser)
   
-  options(scan.shiny.theme = theme)
-  
-  old_opt <- if (identical(browser, "external")) {
-    options(shiny.launch.browser = TRUE)
-  } else {
-    options(shiny.launch.browser = FALSE)
-  }
-
-  if (inherits(scdf, "scdf")) {
-    old_opt <- options(scan.shinyscan.initial = scdf)
-  }
-  
+  app_options <- c(
+    "scan.export.engine",
+    "scan.export.kable_styling",
+    "scan.export.title.prefix"
+  )
+  old_opt <- lapply(setNames(app_options, app_options), getOption)
   on.exit(options(old_opt), add = TRUE)
+  
+  old_opt <- c(old_opt, options(
+    scan.shiny.theme = theme,
+    shiny.launch.browser = identical(browser, "external")
+  ))
+  
+  if (inherits(scdf, "scdf")) {
+    old_opt <- c(old_opt, options(scan.shinyscan.initial = scdf))
+  }
   
   app_dir <- system.file("shiny_scan", package = "scan")
   if (app_dir == "") 

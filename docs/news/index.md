@@ -1,6 +1,6 @@
 # Changelog
 
-## scan 0.68.3
+## scan 0.69.0
 
 ### Breaking changes
 
@@ -30,9 +30,41 @@
   change, because the gaps were previously ignored and the observations
   treated as equally spaced. Results for consecutive measurement times
   are unchanged.
+- [`estimate_design()`](https://jazznbass.github.io/scan/reference/estimate_design.md)
+  warns and falls back when `s` can not be estimated. The between case
+  variance is no longer taken from the spread of the estimated start
+  values alone, which for cases that do not differ at baseline — data
+  simulated with `design(random_start_value = FALSE)`, a single case,
+  two cases — consists of estimation error only. In these situations `s`
+  is now set equal to the standard deviation of the error, which fixes
+  the reported reliability at 0.5 by construction and expresses the
+  effects in units of the variation within a case. Three warnings say
+  so, and providing `s`, `rtt` or `error` is recommended for such data.
+- [`estimate_design()`](https://jazznbass.github.io/scan/reference/estimate_design.md)
+  returns different reliabilities than before. The `rtt` of a case is
+  now estimated as the quantity
+  [`random_scdf()`](https://jazznbass.github.io/scan/reference/random_scdf.md)
+  generates data from, so designs estimated with an earlier version of
+  scan, and data simulated from them, are not reproduced. The entry
+  under *Simulation and power analysis* explains the change.
 
 ### New features
 
+- `design(error = ...)` sets the standard deviation of the measurement
+  error directly, as an alternative to `rtt`. The reliability is derived
+  from it as `rtt = s^2 / (s^2 + error^2)`, so the resulting design
+  object is the same as one built with that reliability, and the two
+  arguments can not be given together. `error` is the quantity a study
+  reports as residual variation, while `rtt` relates that variation to
+  the between case variance `s^2` — for a single case, or for cases that
+  hardly differ at baseline, `error` is the parameter that can be pinned
+  down.
+- `estimate_design(error = ...)` sets the standard deviation of the
+  measurement error instead of `rtt`, mirroring the new argument of
+  [`design()`](https://jazznbass.github.io/scan/reference/design.md).
+  The reliability of each case is derived from it as
+  `s^2 / (s^2 + error^2)`. Both arguments now also accept one value per
+  case.
 - [`fill_missing()`](https://jazznbass.github.io/scan/reference/fill_missing.md)
   gained a `mark` argument, adding a logical variable `interpolated`
   that flags every measurement containing an interpolated value.
@@ -184,6 +216,71 @@
   `arguments imply differing number of rows`. Missing values are now
   ignored when the bounds are computed, are never counted as outliers,
   and Cook’s distances are matched to the measurements they belong to.
+- [`sample_names()`](https://jazznbass.github.io/scan/reference/sample_names.md)
+  rejects a type it does not know. `"Male"`, `"m"` or any typo matched
+  none of the four branches and the function returned an empty character
+  vector without a word, which then showed up as missing case names
+  somewhere else entirely.
+- [`combine()`](https://jazznbass.github.io/scan/reference/combine.md)
+  and [`c()`](https://rdrr.io/r/base/c.html) make duplicated case names
+  unique and warn about it. Two studies whose cases carry the same names
+  produced an scdf in which those cases could not be told apart:
+  [`add_l2()`](https://jazznbass.github.io/scan/reference/add_l2.md)
+  matches its level-2 data by case name and gave both cases the same
+  row, while
+  [`select_cases()`](https://jazznbass.github.io/scan/reference/select_cases.md)
+  and `x$name` returned only the first of them. Cases without a name are
+  unaffected and are still numbered when printed.
+  [`combine()`](https://jazznbass.github.io/scan/reference/combine.md)
+  without any argument now says so instead of failing with
+  `subscript out of bounds`.
+- [`select_cases()`](https://jazznbass.github.io/scan/reference/select_cases.md)
+  applies every selection to the same object instead of one after the
+  other. Each argument was used to subset the scdf on its own and the
+  results were then appended, which inverted a negative selection given
+  as several arguments: `select_cases(exampleAB, -Johanna, -Karolina)`
+  returned four cases — both of the excluded ones among them, and one
+  case twice — where `-c(Johanna, Karolina)` returns the one remaining
+  case. Mixing a positive and a negative selection now raises an error,
+  and a call without any selection says so instead of failing with
+  `subscript out of bounds`.
+- [`select_cases()`](https://jazznbass.github.io/scan/reference/select_cases.md)
+  resolves its arguments in the environment it was called from, so case
+  names held in a variable are found when the call sits inside a
+  function, not only at the top level.
+- [`set_vars()`](https://jazznbass.github.io/scan/reference/set_vars.md),
+  [`set_dvar()`](https://jazznbass.github.io/scan/reference/set_vars.md),
+  [`set_mvar()`](https://jazznbass.github.io/scan/reference/set_vars.md)
+  and
+  [`set_pvar()`](https://jazznbass.github.io/scan/reference/set_vars.md)
+  reject a variable that is not part of every case. The name was written
+  into the scdf attribute unchecked, so a typo surfaced only in the next
+  analysis, with a message naming neither the variable nor the place it
+  was set — and in the overlap indices not at all, since they build
+  their tables from a column that does not exist. Something other than a
+  single variable name, and an object that is not an scdf, are rejected
+  as well.
+- `batch_apply(simplify = TRUE)` labels each row with the case it came
+  from. The `case` column was built by dividing the total number of rows
+  by the number of cases, which holds only when every case contributes
+  equally many rows. Where the division did not come out even, the call
+  failed with `replacement has 4 rows, data has 5`; where it did — one
+  case returning two rows and another four, for instance — the rows were
+  labelled with the wrong cases and nothing pointed it out. The rows are
+  now counted per case before they are combined.
+- `batch_apply(simplify = TRUE)` keeps the names of the results
+  readable. The combined table was built with the default `check.names`,
+  which turned `Std. Error` into `Std..Error` and `Pr(>|t|)` into
+  `Pr...t..`, and its `rownames` column reported `X.Intercept.` where
+  the model called the parameter `(Intercept)`.
+- [`batch_apply()`](https://jazznbass.github.io/scan/reference/batch_apply.md)
+  evaluates its expression in the environment it was called from. The
+  search continued from inside
+  [`batch_apply()`](https://jazznbass.github.io/scan/reference/batch_apply.md)
+  instead, so objects defined within a function were not found: a helper
+  function or a threshold defined next to the call failed with
+  `could not find function`, while the same code worked at the top
+  level, where the search reaches the global environment anyway.
 - [`rescale()`](https://jazznbass.github.io/scan/reference/rescale.md)
   takes its variable names as characters or from a variable as well as
   as object names, the way
@@ -332,6 +429,60 @@
 
 #### Simulation and power analysis
 
+- [`estimate_design()`](https://jazznbass.github.io/scan/reference/estimate_design.md)
+  keeps a reliability that was passed to it. `overall_rtt` is documented
+  as being ignored when `rtt` is set, but the estimate overwrote the
+  given value in every case, `overall_rtt` being `TRUE` by default —
+  including in the example on the help page, where
+  `estimate_design(scdf, rtt = 0.8)` returned a design with a different
+  reliability than the one asked for.
+- [`estimate_design()`](https://jazznbass.github.io/scan/reference/estimate_design.md)
+  estimates the reliability of the measurements as
+  `s^2 / (s^2 + error variance)`, the quantity
+  [`random_scdf()`](https://jazznbass.github.io/scan/reference/random_scdf.md)
+  uses under that name. It previously reported the R squared of the
+  piecewise regression, `var(fitted) / (var(fitted) + var(residuals))`,
+  which measures how much of the variation within a case trend, level
+  and slope explain — something else entirely. The estimate therefore
+  followed the size of the effect instead of the precision of the
+  measurement: a case without any effect came back with a reliability
+  near zero, which
+  [`random_scdf()`](https://jazznbass.github.io/scan/reference/random_scdf.md)
+  turned into an exploding error term, while a strong effect produced a
+  reliability near one. Simulating with a given reliability, estimating
+  it back and simulating again now reproduces the value: 0.50, 0.70,
+  0.80 and 0.95 are recovered as 0.53, 0.73, 0.82 and 0.96, and the
+  estimate no longer moves when the level effect is varied from 0 to 2.
+- [`estimate_design()`](https://jazznbass.github.io/scan/reference/estimate_design.md)
+  estimates the error variance with the degrees of freedom of the model.
+  `var(residuals)` divides by the number of measurements less one,
+  although four parameters were estimated from them, which made the
+  error variance too small and the reliability too large. Simulating
+  with a reliability of 0.50, 0.70, 0.80 or 0.95 and estimating it back
+  now returns 0.51, 0.71, 0.80 and 0.95, where the uncorrected estimate
+  returned 0.53, 0.73, 0.82 and 0.96.
+- [`estimate_design()`](https://jazznbass.github.io/scan/reference/estimate_design.md)
+  subtracts the uncertainty of the estimated start values from the
+  between case variance. The variance of the estimated start values is
+  the variance of the true start values plus the sampling variance of
+  these estimates, so `s` was systematically too large — the more so the
+  fewer measurements a case has, since the start value is the intercept
+  of the regression, extrapolated to the measurement time before the
+  first one. The mean squared standard error of the intercepts is now
+  subtracted. When what remains is not positive, the cases do not differ
+  beyond the precision of their estimates, and `s` falls back to the
+  standard deviation of the error with a warning rather than being built
+  from estimation error.
+- [`estimate_design()`](https://jazznbass.github.io/scan/reference/estimate_design.md)
+  no longer builds a design object out of an undefined `s`. With one or
+  two cases and no `s`, the value stayed `NULL`, and dividing by it
+  turned the trend, level and slope effects into empty vectors while the
+  element `s` disappeared from every case. The resulting design object
+  looked ordinary and made
+  [`random_scdf()`](https://jazznbass.github.io/scan/reference/random_scdf.md)
+  produce a case of nothing but missing values. Such data now take the
+  documented fallback, and an `s` that is zero, not finite or not a
+  number is rejected.
 - `design(B_start = ...)` works without `mt`. The help page documents
   `mt = 20` as the default, but the argument defaulted to `NULL`, so
   exactly the call the help page describes — `B_start = 6`, assigning
@@ -597,6 +748,194 @@
   and `r_squared = c("delta", "partial")` failed. Of the 108
   combinations of family, `ci`, `q`, `r_squared` and export engine, 70
   either failed or produced a mislabelled table.
+- The p values of the parametric tests in the printed and exported
+  output are formatted the way the coefficient tables already were. The
+  Pillai trace of
+  [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md), the
+  likelihood ratio test for the ICC in
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md), and
+  the chi squared and Fisher tests of
+  [`pand()`](https://jazznbass.github.io/scan/reference/pand.md) were
+  written with three decimals, so a clear result read `p = 0.000`. The
+  Shapiro-Wilk test on the randomization distribution follows the same
+  format now. The p value of
+  [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md)
+  itself is deliberately left as it is: it is an observed proportion of
+  the permutations, its resolution is one divided by their number, and a
+  threshold such as `<.001` would claim a precision the computation
+  cannot have — a proportion of zero is reported as `< 1/number` as
+  before.
+- [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) reports
+  the p values of its model fit the way the rest of the package does.
+  The F test, the chi squared test for count models and the Ljung-Box
+  test for the residuals were formatted with three decimals, so a
+  clearly significant model was reported as `p = 0.000` — in the printed
+  output and in the footnote of every exported table. They now read
+  `p <.001`, or the exact value where it is larger.
+- [`print()`](https://rdrr.io/r/base/print.html) for
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md),
+  [`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md) and
+  [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md) results
+  reports which variables the analysis used when they are not the
+  default ones, as the other print methods do. For
+  [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md) the
+  line existed but was commented out, so the model’s dependent variables
+  appeared nowhere in the output.
+- [`print()`](https://rdrr.io/r/base/print.html) for a
+  [`plm()`](https://jazznbass.github.io/scan/reference/plm.md) model
+  rounds the AIC, which was given with all its decimals, and reports the
+  variables of the analysis when they are not the default ones, as the
+  other print methods do.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md) results
+  no longer depends on lazy evaluation to survive the kable engine. The
+  column group was created only in the gt branch but handed over in
+  every case; it went unnoticed because the kable path of the table
+  builder never looks at that argument.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  a
+  [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md)
+  result returns a table of the statistics instead of the console
+  output. The printed output, ascii distribution included, was packed
+  into a single cell as html, which only worked with the gt engine and
+  only in html. The table now holds the statistic, the observed value,
+  the minimal phase length or the possible starting points, the number
+  of permutations, mean, standard deviation, minimum and maximum of the
+  randomization distribution, and the p value; the cases, the phases
+  compared, the basis of the distribution and the direction the p value
+  is read in moved to the footnote.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  a [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md)
+  result works for a single case under the kable engine. The rows of the
+  cases were combined with a loop starting at the second table, which
+  for one case ran over an index that does not exist and stopped with
+  `subscript out of bounds` — under the default engine, for the most
+  common design in the field. The labels of the cases are also placed by
+  the number of models a case table has instead of a hard-coded six.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  a
+  [`between_smd()`](https://jazznbass.github.io/scan/reference/between_smd.md)
+  result groups its rows and marks its confidence interval under the
+  kable engine as well. The row groups for the base and the full model
+  were handed to the table builder, which acts on them only in the gt
+  branch, so under kable the rows of both models ran together
+  unlabelled; the column group over the interval bounds existed for gt
+  alone.
+- The export methods restore only the options they set themselves.
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  an scdf, for its summary and for a
+  [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md)
+  result saved the complete set of options and wrote it back at the end,
+  which also undid changes made elsewhere in the meantime and left the
+  altered setting in place when the call failed. All of them now set
+  their option, remember its previous value, and restore it on exit.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md)
+  leaves a cell empty where a value could not be computed. A confidence
+  interval that cannot be determined, for instance because a variance is
+  zero, was written into the table as `NaN` by the gt engine while the
+  kable engine left it blank. Both now show an empty cell, and an
+  infinite value is treated the same way.
+- The `decimals` argument of
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md) has
+  the same effect in both engines. It reached only the gt branch, where
+  it sets a fixed number of decimals, while the kable branch kept the
+  two digits of the `scan.export.kable` option, so the same table was
+  printed with different precision depending on the engine — and
+  `decimals` had no effect at all under kable. Numbers are now formatted
+  to the requested number of decimals in both, trailing zeros included,
+  the way a result table is usually set.
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md) passes
+  the argument on at all, which it previously used only for its own
+  rounding.
+- [`print()`](https://rdrr.io/r/base/print.html) for a
+  `pand(method = "sort")` result computes the totals of its two by two
+  matrices by row where a row total belongs. Both the percentage and the
+  count matrix carried the column sums in their `total` column, so the
+  entries disagreed with the row beside them unless the matrix happened
+  to be symmetric. The exported table was already right, so print and
+  export contradicted each other for the same analysis.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  [`pand()`](https://jazznbass.github.io/scan/reference/pand.md)
+  restores the `knitr.kable.NA` option it sets, also when the call fails
+  in between.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md) groups
+  its rows the same way under both engines. As with
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md), the
+  kable branch repeated the grouping and had drifted: the heading
+  `Fixed effects (B-Structure)` was commented out, so those rows stood
+  ungrouped, and the distinction between models with and without a
+  G-structure was written out a second time. Both engines now read the
+  one list of row groups.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md) groups
+  its rows the same way under both engines. The kable branch defined the
+  groups a second time, and the two definitions had drifted apart: the
+  heading `Fixed effects` was commented out, so those rows stood
+  ungrouped at the top of the table, and `Random effects` reached to the
+  last row, so the model rows were packed inside it and labelled twice.
+  Both engines now read one list of row groups.
+- [`print()`](https://rdrr.io/r/base/print.html) for an
+  [`outlier()`](https://jazznbass.github.io/scan/reference/outlier.md)
+  result reports the criterion again, and
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md)
+  returns a table instead of the printed output. The result object did
+  not carry the method, so the four branches of the print method — all
+  of them testing `criteria[1]` against a method name, where `criteria`
+  holds the value — never applied: neither the criterion nor the matrix
+  of bounds was ever shown, not even for the examples on the help page.
+  The result now carries `method`. The exported table holds one row per
+  case with the number of dropped measurements and their measurement
+  times, and names the criterion in the footnote; it was previously the
+  captured console output, packed into a single cell as html, which only
+  worked with the gt engine and only in html output.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  [`summary()`](https://rdrr.io/r/base/summary.html) of an scdf builds
+  its footnote without html. The list of variable names was joined with
+  `<br>` and labelled with `<i>`, which reached pdf output as a stray
+  `..gt_linebreak_indicator..` under the gt engine and as visible tags
+  plus stray backslashes under kable. The names are now separated by
+  commas, which every engine and every output format renders.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md)
+  accepts a footnote of several lines for every kind of object.
+  `if (is.na(footnote))` decided whether a footnote had been set, so
+  passing a vector — the shape the package’s own default footnotes have
+  — stopped the call with `the condition has length > 1`. The decision
+  is now made by a helper: `NA` asks for the automatic footnote, `NULL`
+  and `""` suppress it, and anything else is used as given.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  [`smd()`](https://jazznbass.github.io/scan/reference/smd.md) results
+  uses the footnote it was given. The argument was documented and
+  accepted, but the method overwrote it with its six explanatory lines
+  in every case.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md)
+  with the kable engine no longer escapes html in footnotes. Tags were
+  shown as `&lt;b&gt;` instead of being rendered, which also hit the
+  package’s own footnote for
+  [`summary()`](https://rdrr.io/r/base/summary.html) of an scdf, where
+  `<i>` and `<br>` appeared as text. Latex output keeps escaping, so a
+  percent sign in a footnote still reaches the pdf intact.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md)
+  with the kable engine adds its footnote to latex tables as well, and
+  no longer loses the table itself. `kable_styling()` marks only html
+  tables with the class the footnote step looked for, so in a document
+  knitted to pdf the footnote step returned nothing at all and the table
+  vanished from the output.
+- `export(select = ...)` keeps the table a table when a single column is
+  selected, and names the columns it can not find. One column came back
+  as a bare vector, which failed inside the table engine with a message
+  about the data rather than about `select`; a misspelled column name
+  produced a warning listing the valid names and then failed anyway one
+  line later; a selection given as numbers with names, such as
+  `c(Case = 1, 3)`, gave the second column the name `NA`, because the
+  original names were read after the table had already been cut down.
+  Column numbers outside the table are now rejected by name as well.
+- [`export()`](https://jazznbass.github.io/scan/reference/export.md) for
+  [`nap()`](https://jazznbass.github.io/scan/reference/nap.md) results
+  formats the p values before the columns are selected, so a selection
+  without the `p` column works. It failed with
+  `replacement has 0 rows, data has 3`.
 
 ### Documentation
 

@@ -54,8 +54,10 @@ rand_test(
 
 - footnote:
 
-  Character string with table footnote. If left NA (default) a footnote
-  will be created based on the exported object.
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
 
 - filename:
 
@@ -322,7 +324,7 @@ rand_test(byHeart2011[1], statistic = "Median B-A", graph = TRUE, seed = 123)
 #> Probability of an equal or higher value than the observed statistic:
 #> p   =  0.6363636 
 #> 
-#> Shapiro-Wilk Normality Test: W = 0.868; p = 0.073  (Hypothesis of normality maintained)
+#> Shapiro-Wilk Normality Test: W = 0.868; p = .07  (Hypothesis of normality maintained)
 #> 
 #> Probabilty of observed statistic based on the assumption of normality:
 #> z = 0.4416, p = 0.3294 (single sided)
@@ -349,7 +351,7 @@ rand_test(Grosche2011, statistic = "Median B-A", complete = TRUE, limit = 4, see
 #> Probability of an equal or higher value than the observed statistic:
 #> p   =  0.8435143 
 #> 
-#> Shapiro-Wilk Normality Test: W = 0.804; p = 0.000  (Hypothesis of normality rejected)
+#> Shapiro-Wilk Normality Test: W = 0.804; p <.001  (Hypothesis of normality rejected)
 #> 
 #> Probabilty of observed statistic based on the assumption of normality:
 #> z = -0.8198, p = 0.7938 (single sided)

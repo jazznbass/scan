@@ -198,8 +198,10 @@ export(
 
 - footnote:
 
-  Character string with table footnote. If left NA (default) a footnote
-  will be created based on the exported object.
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
 
 - filename:
 
@@ -333,7 +335,7 @@ plm(dat, AR = 3)
 #> Fitted a gaussian distribution.
 #> Autocorrelated residuals up to lag 3 were modeled
 #> 
-#> F(3, 26) = 47.38; p = 0.000; R² = 0.845; Adjusted R² = 0.828; AIC = 185.8468
+#> F(3, 26) = 47.38; p <.001; R² = 0.845; Adjusted R² = 0.828; AIC = 185.8
 #> 
 #>                             B LL-CI95% UL-CI95%    SE      t     p delta R²
 #> Intercept              53.068   48.188   57.948 2.490 21.315 0.000         
@@ -346,7 +348,7 @@ plm(dat, AR = 3)
 #>    1 -0.12
 #>    2 -0.23
 #>    3  0.38
-#> Ljung-Box test: X²(3) = 7.32; p = 0.062 
+#> Ljung-Box test: X²(3) = 7.32; p = .06 
 #> 
 #> Formula: values ~ 1 + mt + phaseB + interB 
 
@@ -363,7 +365,7 @@ plm(dat, contrast = "preceding")
 #> Contrast model: W / level = preceding, slope = preceding
 #> 
 #> Fitted a gaussian distribution.
-#> F(7, 62) = 11.05; p = 0.000; R² = 0.555; Adjusted R² = 0.505; AIC = 425.0077
+#> F(7, 62) = 11.05; p <.001; R² = 0.555; Adjusted R² = 0.505; AIC = 425
 #> 
 #>                                B LL-CI95% UL-CI95%    SE      t     p delta R²
 #> Intercept                 51.354   46.820   55.889 2.314 22.196 0.000         
@@ -380,7 +382,7 @@ plm(dat, contrast = "preceding")
 #>    1 -0.05
 #>    2 -0.12
 #>    3  0.12
-#> Ljung-Box test: X²(3) = 2.27; p = 0.519 
+#> Ljung-Box test: X²(3) = 2.27; p = .51 
 #> 
 #> Formula: values ~ 1 + mt + phaseB1 + phaseA2 + phaseB2 + interB1 + interA2 +      interB2 
 
@@ -392,7 +394,7 @@ plm(dat, slope = FALSE, contrast = "preceding")
 #> Contrast model: W / level = preceding, slope = preceding
 #> 
 #> Fitted a gaussian distribution.
-#> F(4, 65) = 19.73; p = 0.000; R² = 0.548; Adjusted R² = 0.521; AIC = 420.0594
+#> F(4, 65) = 19.73; p <.001; R² = 0.548; Adjusted R² = 0.521; AIC = 420.1
 #> 
 #>                                B LL-CI95% UL-CI95%    SE      t     p delta R²
 #> Intercept                 50.232   47.470   52.994 1.409 35.645 0.000         
@@ -406,7 +408,7 @@ plm(dat, slope = FALSE, contrast = "preceding")
 #>    1 -0.03
 #>    2 -0.09
 #>    3  0.13
-#> Ljung-Box test: X²(3) = 2.02; p = 0.568 
+#> Ljung-Box test: X²(3) = 2.02; p = .56 
 #> 
 #> Formula: values ~ 1 + mt + phaseB1 + phaseA2 + phaseB2 
 
@@ -417,7 +419,7 @@ plm(dat, slope = FALSE, trend = FALSE, contrast = "preceding")
 #> Contrast model: W / level = preceding, slope = preceding
 #> 
 #> Fitted a gaussian distribution.
-#> F(3, 66) = 26.34; p = 0.000; R² = 0.545; Adjusted R² = 0.524; AIC = 418.6005
+#> F(3, 66) = 26.34; p <.001; R² = 0.545; Adjusted R² = 0.524; AIC = 418.6
 #> 
 #>                               B LL-CI95% UL-CI95%    SE      t p delta R²
 #> Intercept                50.762   48.427   53.097 1.191 42.611 0         
@@ -430,7 +432,7 @@ plm(dat, slope = FALSE, trend = FALSE, contrast = "preceding")
 #>    1 -0.01
 #>    2 -0.08
 #>    3  0.13
-#> Ljung-Box test: X²(3) = 1.82; p = 0.611 
+#> Ljung-Box test: X²(3) = 1.82; p = .61 
 #> 
 #> Formula: values ~ 1 + phaseB1 + phaseA2 + phaseB2 
 
@@ -442,7 +444,7 @@ example_A24 |>
 #> Contrast model: W / level = first, slope = first
 #> 
 #> Fitted a poisson distribution.
-#> X²(3) = 547.67; p = 0.000; AIC = 261.2856
+#> X²(3) = 547.67; p <.001; AIC = 261.3
 #> 
 #>                             B LL-CI95% UL-CI95%    SE       t     p      OR
 #> Intercept               5.556    5.472    5.638 0.042 131.693 0.000 258.786
@@ -456,6 +458,9 @@ example_A24 |>
 #> Slope phase B (interB)     0.969     1.019
 #> 
 #> Formula: injuries ~ 1 + year + phaseB + interB 
+#> 
+#> The following variables were used in this analysis:
+#> 'injuries' as dependent variable, 'phase' as phase variable, and 'year' as measurement-time variable.
 
 ## A binomial regression (frequencies as dependent variable)
 plm(exampleAB_score$Christiano, family = "binomial", var_trials = "trials")
@@ -464,7 +469,7 @@ plm(exampleAB_score$Christiano, family = "binomial", var_trials = "trials")
 #> Contrast model: W / level = first, slope = first
 #> 
 #> Fitted a binomial distribution.
-#> X²(3) = 240.66; p = 0.000; AIC = 120.3268
+#> X²(3) = 240.66; p <.001; AIC = 120.3
 #> 
 #>                             B LL-CI95% UL-CI95%    SE      t     p     OR
 #> Intercept              -1.964   -2.793   -1.239 0.394 -4.991 0.000  0.140
@@ -490,7 +495,7 @@ exampleAB_score$Christiano |>
 #> Contrast model: W / level = first, slope = first
 #> 
 #> Fitted a binomial distribution.
-#> X²(3) = 240.66; p = 0.000; AIC = 120.3268
+#> X²(3) = 240.66; p <.001; AIC = 120.3
 #> 
 #>                             B LL-CI95% UL-CI95%    SE      t     p     OR
 #> Intercept              -1.964   -2.793   -1.239 0.394 -4.991 0.000  0.140
@@ -505,6 +510,9 @@ exampleAB_score$Christiano |>
 #> 
 #> Formula: percentage ~ 1 + mt + phaseB + interB
 #> weights = trials 
+#> 
+#> The following variables were used in this analysis:
+#> 'percentage' as dependent variable, 'phase' as phase variable, and 'mt' as measurement-time variable.
 ## Print
 plm(exampleAB$Johanna) |> 
   print(ci = 0.9, r_squared = c("delta", "partial"))
@@ -513,7 +521,7 @@ plm(exampleAB$Johanna) |>
 #> Contrast model: W / level = first, slope = first
 #> 
 #> Fitted a gaussian distribution.
-#> F(3, 16) = 28.69; p = 0.000; R² = 0.843; Adjusted R² = 0.814; AIC = 126.8444
+#> F(3, 16) = 28.69; p <.001; R² = 0.843; Adjusted R² = 0.814; AIC = 126.8
 #> 
 #>                             B LL-CI90% UL-CI90%    SE      t     p delta R²
 #> Intercept              54.400   48.002   60.798 3.890 13.986 0.000         
@@ -531,7 +539,7 @@ plm(exampleAB$Johanna) |>
 #>    1 -0.32
 #>    2 -0.13
 #>    3 -0.01
-#> Ljung-Box test: X²(3) = 2.84; p = 0.417 
+#> Ljung-Box test: X²(3) = 2.84; p = .41 
 #> 
 #> Formula: values ~ 1 + mt + phaseB + interB 
 ## Export
@@ -598,6 +606,6 @@ plm(exampleAB$Johanna) |> export()
 #>   </tr>
 #> </tbody>
 #> <tfoot><tr><td style="padding: 0; " colspan="100%">
-#> <span style="font-style: italic;">Note: </span> <sup></sup> F(3, 16) = 28.69; p = 0.000; R² = 0.843; Adjusted R² = 0.814; AIC = 127; LL = lower limit; UL = upper limit; Slope estimation method = W; Contrasts for the level and slope effects are coded with the first phase as the reference.</td></tr></tfoot>
+#> <span style="font-style: italic;">Note: </span> <sup></sup> F(3, 16) = 28.69; p &lt;.001; R² = 0.843; Adjusted R² = 0.814; AIC = 127; LL = lower limit; UL = upper limit; Slope estimation method = W; Contrasts for the level and slope effects are coded with the first phase as the reference.</td></tr></tfoot>
 #> </table>
 ```

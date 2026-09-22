@@ -1,6 +1,4 @@
 
-source("resources.R")
-
 left_width <- 400
 
 # ---------- Data: New ----------
