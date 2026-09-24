@@ -109,9 +109,47 @@ export(object, caption = NA, footnote = NA, filename = NA, round = 3, ...)
   Alpha level used to calculate the proportion of significant tests.
   Default is `alpha_level = 0.05`.
 
+- x:
+
+  Object
+
 - duration:
 
   If TRUE the duration for computation is printed.
+
+- digits:
+
+  The minimum number of significant digits to be use. If set to "auto"
+  (default), values are predefined.
+
+- ...:
+
+  Further parameters passed to the print function
+
+- object:
+
+  An scdf or an object exported from a scan function.
+
+- caption:
+
+  Character string with table caption. If left NA (default) a caption
+  will be created based on the exported object.
+
+- footnote:
+
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
+
+- filename:
+
+  String containing the file name. If a filename is given the output
+  will be written to that file.
+
+- round:
+
+  Integer passed to the digits argument used to round values.
 
 ## Value
 

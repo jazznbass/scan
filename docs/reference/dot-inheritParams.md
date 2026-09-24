@@ -23,6 +23,9 @@ meant to be called directly.
   level,
   slope,
   nice,
+  flip,
+  decimals,
+  select,
   ...
 )
 ```
@@ -107,6 +110,20 @@ meant to be called directly.
 
   If set TRUE (default) output values are rounded and optimized for
   publication tables.
+
+- flip:
+
+  If TRUE, some objects are exported with rows and columns flipped.
+
+- decimals:
+
+  Decimal places that are reported.
+
+- select:
+
+  A character vector containing the names of the variables to be
+  included. If the vector is named, the variables will be renamed
+  accordingly.
 
 - ...:
 

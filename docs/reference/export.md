@@ -63,20 +63,6 @@ export(
 
   Integer passed to the digits argument used to round values.
 
-- flip:
-
-  If TRUE, some objects are exported with rows and columns flipped.
-
-- decimals:
-
-  Decimal places that are reported.
-
-- select:
-
-  A character vector containing the names of the variables to be
-  included. If the vector is named, the variables will be renamed
-  accordingly.
-
 ## Value
 
 Returns or displays a specially formatted html (or latex) file.

@@ -26,8 +26,3 @@ print(x, digits = 3, ...)
 
   The minimum number of significant digits to be use. If set to "auto"
   (default), values are predefined.
-
-- nice:
-
-  If set TRUE (default) output values are rounded and optimized for
-  publication tables.

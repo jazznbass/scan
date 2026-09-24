@@ -58,9 +58,44 @@ export(
   `phases = list(A = c(1,3), B = c(2,4))` will compare phases 1 and 3
   (as A) against 2 and 4 (as B). Default is `phases = c(1,2)`.
 
+- x:
+
+  Object
+
 - ...:
 
   Further arguments passed to the function.
+
+- object:
+
+  An scdf or an object exported from a scan function.
+
+- caption:
+
+  Character string with table caption. If left NA (default) a caption
+  will be created based on the exported object.
+
+- footnote:
+
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
+
+- filename:
+
+  String containing the file name. If a filename is given the output
+  will be written to that file.
+
+- select:
+
+  A character vector containing the names of the variables to be
+  included. If the vector is named, the variables will be renamed
+  accordingly.
+
+- round:
+
+  Integer passed to the digits argument used to round values.
 
 ## Value
 

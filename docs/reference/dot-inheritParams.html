@@ -62,6 +62,9 @@ be called directly.</p>
 <span>  <span class="va">level</span>,</span>
 <span>  <span class="va">slope</span>,</span>
 <span>  <span class="va">nice</span>,</span>
+<span>  <span class="va">flip</span>,</span>
+<span>  <span class="va">decimals</span>,</span>
+<span>  <span class="va">select</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -147,6 +150,20 @@ model.</p></dd>
 <dt id="arg-nice">nice<a class="anchor" aria-label="anchor" href="#arg-nice"></a></dt>
 <dd><p>If set TRUE (default) output values are rounded and optimized for
 publication tables.</p></dd>
+
+
+<dt id="arg-flip">flip<a class="anchor" aria-label="anchor" href="#arg-flip"></a></dt>
+<dd><p>If TRUE, some objects are exported with rows and columns flipped.</p></dd>
+
+
+<dt id="arg-decimals">decimals<a class="anchor" aria-label="anchor" href="#arg-decimals"></a></dt>
+<dd><p>Decimal places that are reported.</p></dd>
+
+
+<dt id="arg-select">select<a class="anchor" aria-label="anchor" href="#arg-select"></a></dt>
+<dd><p>A character vector containing the names of the variables to be
+included. If the vector is named, the variables will be renamed
+accordingly.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
