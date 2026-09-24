@@ -320,6 +320,8 @@ parity_columns <- function(tab) {
   sort(unique(lab[nzchar(lab)]))
 }
 
+# Every column group of a table, with repetitions: a group that is placed
+# twice must not look the same as one placed once.
 parity_spanners <- function(tab) {
   txt <- render(tab)
   if (inherits(tab, "gt_tbl")) {
@@ -331,10 +333,13 @@ parity_spanners <- function(tab) {
   head <- regmatches(txt, regexpr("<thead>.*?</thead>", txt))
   rows <- regmatches(head, gregexpr("<tr[^>]*>.*?</tr>", head))[[1]]
   if (length(rows) < 2) return(character(0))
-  lab <- trimws(gsub(
-    "<[^>]*>|&nbsp;", "",
-    regmatches(rows[1], gregexpr("<th[^>]*>.*?</th>", rows[1]))[[1]]
-  ))
+  # every header row but the last one, which holds the column labels
+  lab <- unlist(lapply(rows[-length(rows)], function(row) {
+    trimws(gsub(
+      "<[^>]*>|&nbsp;", "",
+      regmatches(row, gregexpr("<th[^>]*>.*?</th>", row))[[1]]
+    ))
+  }))
   sort(lab[nzchar(lab)])
 }
 

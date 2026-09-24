@@ -8,12 +8,6 @@ rewritten and extended for the use in AB designs.
 ## Usage
 
 ``` r
-# S3 method for class 'sc_rand'
-print(x, ...)
-
-# S3 method for class 'sc_rand'
-export(object, caption = NA, footnote = NA, filename = NA, ...)
-
 rand_test(
   data,
   dvar,
@@ -31,38 +25,15 @@ rand_test(
   graph = FALSE,
   seed = NULL
 )
+
+# S3 method for class 'sc_rand'
+print(x, ...)
+
+# S3 method for class 'sc_rand'
+export(object, caption = NA, footnote = NA, filename = NA, ...)
 ```
 
 ## Arguments
-
-- x:
-
-  An object returned by `rand_test()`
-
-- ...:
-
-  Further parameters passed to the print function
-
-- object:
-
-  An scdf or an object exported from a scan function.
-
-- caption:
-
-  Character string with table caption. If left NA (default) a caption
-  will be created based on the exported object.
-
-- footnote:
-
-  Character string with table footnote. Several strings are combined
-  into a footnote of several lines. If left NA (default) a footnote will
-  be created based on the exported object. `NULL` or `""` suppress the
-  footnote.
-
-- filename:
-
-  String containing the file name. If a filename is given the output
-  will be written to that file.
 
 - data:
 
@@ -154,6 +125,35 @@ rand_test(
 - seed:
 
   A seed number for the random generator. Default is `NULL`.
+
+- x:
+
+  An object returned by `rand_test()`
+
+- ...:
+
+  Further arguments passed to the function.
+
+- object:
+
+  An scdf or an object exported from a scan function.
+
+- caption:
+
+  Character string with table caption. If left NA (default) a caption
+  will be created based on the exported object.
+
+- footnote:
+
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
+
+- filename:
+
+  String containing the file name. If a filename is given the output
+  will be written to that file.
 
 ## Value
 

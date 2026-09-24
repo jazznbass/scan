@@ -150,13 +150,13 @@ https://jepusto.github.io/SingleCaseES/.
 }
 \seealso{
 Other overlap functions:
+\code{\link[=cdc]{cdc()}},
 \code{\link[=ird]{ird()}},
 \code{\link[=nap]{nap()}},
 \code{\link[=overlap]{overlap()}},
 \code{\link[=pem]{pem()}},
 \code{\link[=pet]{pet()}},
 \code{\link[=pnd]{pnd()}},
-\code{\link[=print.sc_cdc]{print.sc_cdc()}},
 \code{\link[=select_phases]{select_phases()}},
 \code{\link[=tau_u]{tau_u()}}
 }

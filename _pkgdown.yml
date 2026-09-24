@@ -103,14 +103,17 @@ reference:
   - between_smd
   - tau_u
   - trend
-- title: Building graphs, tables etc.
+- title: Printing and exporting results
   contents:
-  - starts_with("export")
-  - starts_with("print")
+  - export
+  - print.scdf
+  - summary.scdf
+
+- title: Plots (superseded by the scplot package)
+  contents:
   - plot.scdf
   - style_plot
   - plot_rand
-  - summary.scdf
 - title: Simulating data
   contents:
   - design

@@ -44,7 +44,6 @@ set_na_at <- function(x, first_of, positions = 0) {
 #'   sequence of `TRUE` values. E.g. if you want to centre at the middle of
 #'   phase A, set `at = phase == A, part = 0.5`. Note: decimals are rounded to
 #'   integers.
-
 center_at <- function(x, at = TRUE, shift = 0, part = 0) {
   x - x[match(TRUE, at) + shift + round((sum(at, na.rm = TRUE) - 1) * part)]
 }
@@ -55,7 +54,6 @@ center_at <- function(x, at = TRUE, shift = 0, part = 0) {
 #' @param x A logical vector.
 #' @param positions A numeric vector with relative positions to the first 
 #'  appearance of a TRUE value in x.
-
 first_of <- function(x, positions = 0) {
   .deprecated_warning("set_na_at", "first_of")
   match(TRUE, x) + positions

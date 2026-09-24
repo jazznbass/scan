@@ -27,6 +27,7 @@
 #' autocorr(Huber2014, lag_max = 2)
 #' @concept Autocorrelation
 #' @concept Serial correlation
+#' @order 1
 #' @export
 autocorr <- function(data, dvar, pvar, mvar,
                      lag_max = 3,

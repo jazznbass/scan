@@ -96,7 +96,7 @@
 #'
 #' @export
 plot.scdf <- function(...) {
-  .deprecated_warning("scplot' from the package 'scplot", "plot")
+  
   plotSC(...)
 }
 
@@ -110,6 +110,8 @@ plotSC <- function(data, dvar, pvar, mvar,
                    style = getOption("scan.plot.style"), 
                    ...) {
   
+  
+  .deprecated_warning("scplot' from the package 'scplot", "plot/ plotSC")
   
   # prepare scdf ------------------------------------------------------------
   

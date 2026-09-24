@@ -25,6 +25,7 @@
 #' @references Tarlow, K. R. (2016). An Improved Rank Correlation Effect Size
 #'   Statistic for Single-Case Designs: Baseline Corrected Tau. *Behavior
 #'   Modification, 41(4)*, 427–467. https://doi.org/10.1177/0145445516676750
+#' @order 1
 #' @export
 #'
 #' @examples

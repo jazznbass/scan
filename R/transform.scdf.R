@@ -22,10 +22,10 @@
 #'   ranks the `values` variable across all cases and creates a new variable `values_ranked`.
 #' - **`moving_mean()` / moving_median()**: calculate a moving average. 
 #'   Smoothing proceeds from the first observation toward the last. 
-#'   Each interior value is replaced by the mean of its current window, 
-#'   including the central value. Previously smoothed values are used in 
-#'   subsequent windows. Boundary values remain unchanged.
+#'   Each value is replaced by the average of its current window, 
+#'   including the central value. 
 #'   
+#' @name transform.scdf
 #' @param _data An scdf.
 #' @param ... Expressions.
 #' @return An scdf.

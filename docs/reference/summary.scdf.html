@@ -32,7 +32,7 @@ measurements per case, and design information."><meta property="og:image" conten
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Summary function for an scdf object</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/summary.scdf.R" class="external-link"><code>R/summary.scdf.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/summary.scdf.R" class="external-link"><code>R/summary.scdf.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print-export-scdf-summary.R" class="external-link"><code>R/print-export-scdf-summary.R</code></a></small>
       <div class="d-none name"><code>summary.scdf.Rd</code></div>
     </div>
 
@@ -44,7 +44,13 @@ measurements per case, and design information.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'scdf'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, all_cases <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, all_cases <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'scdf_summary'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, all_cases <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'scdf_summary'</span></span>
+<span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span><span class="va">object</span>, caption <span class="op">=</span> <span class="cn">NA</span>, footnote <span class="op">=</span> <span class="cn">NA</span>, filename <span class="op">=</span> <span class="cn">NA</span>, round <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -52,23 +58,40 @@ measurements per case, and design information.</p>
 
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>scdf</p></dd>
+<dd><p>An scdf object</p></dd>
 
 
 <dt id="arg-all-cases">all_cases<a class="anchor" aria-label="anchor" href="#arg-all-cases"></a></dt>
-<dd><p>IF TRUE, more that 10 cases are summarized</p></dd>
+<dd><p>If TRUE, more than 10 cases are summarized</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>not in use</p></dd>
 
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>An object of class <code>scdf_summary</code></p></dd>
+
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An object of class <code>scdf_summary</code>.</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The summary includes:</p><ul><li><p>Total number of cases in the <code>scdf</code>.</p></li>
 <li><p>A table listing each case with the number of measurements and design.</p></li>
 <li><p>Variable names with annotations for phase, measurement-time, and dependent variable.</p></li>
 <li><p>Additional information and author details if available.</p></li>
+</ul><p><code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> returns the summary object; the output is written by its print
+method. So <code>summary(scdf)</code> shows the summary at the console as before, while
+<code>export(summary(scdf))</code> and an assignment stay silent.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
+
+<ul><li><p><code>print(scdf_summary)</code>: Print the summary</p></li>
+<li><p><code>export(scdf_summary)</code>: Export the summary as html table (see <code><a href="export.html">export()</a></code>)</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

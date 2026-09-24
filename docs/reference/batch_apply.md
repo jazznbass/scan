@@ -46,7 +46,7 @@ Other data manipulation functions:
 [`as_scdf()`](https://jazznbass.github.io/scan/reference/as_scdf.md),
 [`fill_missing()`](https://jazznbass.github.io/scan/reference/fill_missing.md),
 [`moving_median()`](https://jazznbass.github.io/scan/reference/transform.scdf.md),
-[`print.sc_outlier()`](https://jazznbass.github.io/scan/reference/outlier.md),
+[`outlier()`](https://jazznbass.github.io/scan/reference/outlier.md),
 [`ranks()`](https://jazznbass.github.io/scan/reference/ranks.md),
 [`rescale()`](https://jazznbass.github.io/scan/reference/rescale.md),
 [`scdf()`](https://jazznbass.github.io/scan/reference/scdf.md),

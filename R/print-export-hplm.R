@@ -48,6 +48,7 @@ print.sc_hplm <- function(x,
 #' @describeIn hplm Export results as html table (see [export()])
 #' @order 3
 #' @inheritParams export
+#' @inheritParams .inheritParams
 #' @export
 export.sc_hplm <- function(object, 
                            caption = NA, 
@@ -139,12 +140,9 @@ export.sc_hplm <- function(object,
     out,
     caption = caption,
     footnote = footnote,
-    row_group = row_group
+    row_group = row_group,
+    hline_after = nrow_out
   )
-  
-  if (.export_engine() == "kable") {
-    table <- row_spec(table, nrow_out, hline_after = TRUE)
-  }
   
   if (!is.na(filename)) .save_export(table, filename)
   
@@ -160,20 +158,12 @@ export.sc_hplm <- function(object,
   
   out <- coef(object, casewise = TRUE)
   
-  if (.export_engine() == "kable") {
-    table <- .create_table(
-      out,
-      caption = caption,
-      footnote = footnote
-    )
-  }
-  
-  if (.export_engine() == "gt") {
-    table <- export_table_gt(
-      out, title = caption, footnote = footnote, 
-      decimals = round
-    )
-  }
+  table <- .create_table(
+    out,
+    caption = caption,
+    footnote = footnote,
+    decimals = round
+  )
   
   if (!is.na(filename)) .save_export(table, filename)
   

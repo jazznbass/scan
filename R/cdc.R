@@ -59,6 +59,7 @@
 #' )
 #'
 #'
+#' @order 1
 #' @export
 cdc <- function(data,
                 dvar,

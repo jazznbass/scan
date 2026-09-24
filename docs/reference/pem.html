@@ -36,7 +36,7 @@ addressed for alternative analyses."><meta property="og:image" content="https://
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Percent exceeding the median (PEM)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/pem.R" class="external-link"><code>R/pem.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/pem.R" class="external-link"><code>R/pem.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print-export-pem.R" class="external-link"><code>R/print-export-pem.R</code></a></small>
       <div class="d-none name"><code>pem.Rd</code></div>
     </div>
 
@@ -59,7 +59,13 @@ addressed for alternative analyses.</p>
 <span>  FUN <span class="op">=</span> <span class="va">median</span>,</span>
 <span>  phases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'sc_pem'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'sc_pem'</span></span>
+<span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span><span class="va">object</span>, caption <span class="op">=</span> <span class="cn">NA</span>, footnote <span class="op">=</span> <span class="cn">NA</span>, filename <span class="op">=</span> <span class="cn">NA</span>, round <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -128,15 +134,21 @@ from 0 to 100.  Higher values indicate a greater degree of
 improvement from phase A to phase B.</p>
     </div>
     <div class="section level2">
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
+
+<ul><li><p><code>print(sc_pem)</code>: Print results</p></li>
+<li><p><code>export(sc_pem)</code>: Export results as html table (see <code><a href="export.html">export()</a></code>)</p></li>
+</ul></div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other overlap functions:
+<code><a href="cdc.html">cdc()</a></code>,
 <code><a href="ird.html">ird()</a></code>,
 <code><a href="nap.html">nap()</a></code>,
 <code><a href="overlap.html">overlap()</a></code>,
 <code><a href="pand.html">pand()</a></code>,
 <code><a href="pet.html">pet()</a></code>,
 <code><a href="pnd.html">pnd()</a></code>,
-<code><a href="cdc.html">print.sc_cdc()</a></code>,
 <code><a href="select_phases.html">select_phases()</a></code>,
 <code><a href="tau_u.html">tau_u()</a></code></p></div>
     </div>

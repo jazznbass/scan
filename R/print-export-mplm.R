@@ -169,8 +169,10 @@ Pillai <- function (eig, q, df.res) {
 }
 
 #' @describeIn mplm Export results as html
+#' @order 3
 #' @inheritParams export
 #' @param std If TRUE, a table with standardized estimates is included.
+#' @inheritParams .inheritParams
 #' @export
 export.sc_mplm <- function(object, 
                           caption = NA, 

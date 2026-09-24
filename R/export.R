@@ -28,12 +28,7 @@
 #' @param cols Defines which columns are included when exporting an scdf. It is
 #'   either a vector of variable names or the string "main" will select the
 #'   central variables.
-#' @param flip If TRUE, some objects are exported with rows and columns flipped.
 #' @param round Integer passed to the digits argument used to round values.
-#' @param decimals Decimal places that are reported.
-#' @param select A character vector containing the names of the variables to be
-#'   included. If the vector is named, the variables will be renamed
-#'   accordingly.
 #' @param summary If TRUE, exports the summary of an `scdf`.
 #' @param ... Further Arguments passed to internal functions.
 #' @return  Returns or displays a specially formatted html (or latex) file.
@@ -205,6 +200,8 @@ export <- function (object, ...) {
                           decimals = NULL,
                           row_group = NULL,
                           spanner = NULL,
+                          hline_after = NULL,
+                          bold_columns = NULL,
                           ...) {
   
   engine <- .export_engine()
@@ -219,6 +216,20 @@ export <- function (object, ...) {
       spanner = spanner,
       ...
     )
+    if (!is.null(hline_after)) {
+      table <- gt::tab_style(
+        table,
+        style = gt::cell_borders(sides = "bottom", weight = gt::px(1)),
+        locations = gt::cells_body(rows = hline_after)
+      )
+    }
+    if (!is.null(bold_columns)) {
+      table <- gt::tab_style(
+        table,
+        style = gt::cell_text(weight = "bold"),
+        locations = gt::cells_body(columns = bold_columns)
+      )
+    }
     return(table)
   }
   
@@ -281,6 +292,12 @@ export <- function (object, ...) {
     }
     if (pos <= ncol(x)) header <- c(header, setNames(ncol(x) - pos + 1, " "))
     table <- add_header_above(table, header)
+  }
+  
+  for (i in hline_after) table <- row_spec(table, i, hline_after = TRUE)
+  
+  if (!is.null(bold_columns)) {
+    table <- column_spec(table, bold_columns, bold = TRUE)
   }
   
   if (!is.null(footnote)) {

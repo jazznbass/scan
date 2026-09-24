@@ -21,6 +21,12 @@ power_test(
   ci = FALSE,
   alpha_level = 0.05
 )
+
+# S3 method for class 'sc_power'
+print(x, duration = FALSE, digits = 1, ...)
+
+# S3 method for class 'sc_power'
+export(object, caption = NA, footnote = NA, filename = NA, round = 3, ...)
 ```
 
 ## Arguments
@@ -103,6 +109,10 @@ power_test(
   Alpha level used to calculate the proportion of significant tests.
   Default is `alpha_level = 0.05`.
 
+- duration:
+
+  If TRUE the duration for computation is printed.
+
 ## Value
 
 An object of class `sc_power` with the power, alpha error, and correct
@@ -120,6 +130,13 @@ analyses is the test power. In a second step, a specified effect of the
 design object (specified in the `effect` parameter) is set to 0 and
 again single-cases are generated and re-analysed. The proportion of
 significant analyses is the alpha error probability.
+
+## Functions
+
+- `print(sc_power)`: Print results
+
+- `export(sc_power)`: Export results as html table (see
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md))
 
 ## See also
 
@@ -148,8 +165,8 @@ power_test(design, n_sim = 10)
 #> 
 #>     Method Power Alpha Error Alpha:Beta Correct
 #>  plm_level    60           0       <NA>      80
-#>       rand    60           0       <NA>      80
-#>       tauU   100          20      1:0.0      90
+#>       rand    60          10      1:4.0      75
+#>       tauU   100          10      1:0.0      95
 
 ## Would you achieve higher power by setting up a MBD with three cases?
 design <- design(
@@ -160,7 +177,7 @@ power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"))
 #> Test-Power in percent:
 #> 
 #>      Method Power Alpha Error Alpha:Beta Correct
-#>  hplm_level   100          10      1:0.0      95
-#>        rand    90          10      1:1.0      90
-#>   tauU_meta   100          60      1:0.0      70
+#>  hplm_level   100           0       <NA>     100
+#>        rand   100           0       <NA>     100
+#>   tauU_meta   100          40      1:0.0      80
 ```

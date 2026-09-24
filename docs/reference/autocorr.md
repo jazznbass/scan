@@ -6,12 +6,6 @@ across all phases.
 ## Usage
 
 ``` r
-# S3 method for class 'sc_ac'
-print(x, digits = "auto", ...)
-
-# S3 method for class 'sc_ac'
-export(object, caption = NA, footnote = NA, filename = NA, round = 3, ...)
-
 autocorr(
   data,
   dvar,
@@ -22,48 +16,15 @@ autocorr(
   lag.max,
   ...
 )
+
+# S3 method for class 'sc_ac'
+print(x, digits = "auto", ...)
+
+# S3 method for class 'sc_ac'
+export(object, caption = NA, footnote = NA, filename = NA, round = 3, ...)
 ```
 
 ## Arguments
-
-- x:
-
-  An object returned by `autocorr()`
-
-- digits:
-
-  The minimum number of significant digits to be use. If set to "auto"
-  (default), values are predefined.
-
-- ...:
-
-  Further arguments passed to the
-  [`acf()`](https://rdrr.io/r/stats/acf.html) function.
-
-- object:
-
-  An scdf or an object exported from a scan function.
-
-- caption:
-
-  Character string with table caption. If left NA (default) a caption
-  will be created based on the exported object.
-
-- footnote:
-
-  Character string with table footnote. Several strings are combined
-  into a footnote of several lines. If left NA (default) a footnote will
-  be created based on the exported object. `NULL` or `""` suppress the
-  footnote.
-
-- filename:
-
-  String containing the file name. If a filename is given the output
-  will be written to that file.
-
-- round:
-
-  Integer passed to the digits argument used to round values.
 
 - data:
 
@@ -101,6 +62,45 @@ autocorr(
   [`acf()`](https://rdrr.io/r/stats/acf.html) returns `NA` for lags it
   cannot estimate from the available pairs.
 
+- ...:
+
+  Further arguments passed to the
+  [`acf()`](https://rdrr.io/r/stats/acf.html) function.
+
+- x:
+
+  An object returned by `autocorr()`
+
+- digits:
+
+  The minimum number of significant digits to be use. If set to "auto"
+  (default), values are predefined.
+
+- object:
+
+  An scdf or an object exported from a scan function.
+
+- caption:
+
+  Character string with table caption. If left NA (default) a caption
+  will be created based on the exported object.
+
+- footnote:
+
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
+
+- filename:
+
+  String containing the file name. If a filename is given the output
+  will be written to that file.
+
+- round:
+
+  Integer passed to the digits argument used to round values.
+
 ## Value
 
 A data frame containing separate autocorrelations for each phase and for
@@ -127,11 +127,11 @@ phases up to the specified lag.
 
 Other regression functions:
 [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md),
+[`corrected_tau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md),
 [`fetch()`](https://jazznbass.github.io/scan/reference/fetch.md),
 [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md),
 [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md),
 [`plm()`](https://jazznbass.github.io/scan/reference/plm.md),
-[`print.sc_bctau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md),
 [`trend()`](https://jazznbass.github.io/scan/reference/trend.md)
 
 ## Author

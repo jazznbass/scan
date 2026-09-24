@@ -31,6 +31,7 @@
 <url><loc>https://jazznbass.github.io/scan/reference/export.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/fetch.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/fill_missing.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/fillmissingSC.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/hplm.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/import_scdf.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/index.html</loc></url>
@@ -42,6 +43,7 @@
 <url><loc>https://jazznbass.github.io/scan/reference/notify.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/outlier.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/overlap.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/overlapSC.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/pand.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/pem.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/pet.html</loc></url>
@@ -51,17 +53,19 @@
 <url><loc>https://jazznbass.github.io/scan/reference/plot_rand.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/pnd.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/power_test.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/power_testSC.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/print.sc.html</loc></url>
-<url><loc>https://jazznbass.github.io/scan/reference/print.sc_ac.html</loc></url>
-<url><loc>https://jazznbass.github.io/scan/reference/print.sc_bctau.html</loc></url>
-<url><loc>https://jazznbass.github.io/scan/reference/print.sc_cdc.html</loc></url>
-<url><loc>https://jazznbass.github.io/scan/reference/print.sc_outlier.html</loc></url>
-<url><loc>https://jazznbass.github.io/scan/reference/print.sc_rand.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/print.scdf.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/rSC.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/rand.test.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/randSC.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/rand_test.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/random_scdf.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/ranks.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/rci.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/rciSC.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/readSC.excel.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/readSC.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/read_scdf.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/rescale.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/sample_names.html</loc></url>
@@ -79,11 +83,13 @@
 <url><loc>https://jazznbass.github.io/scan/reference/style_plot.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/subset.scdf.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/summary.scdf.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/tauUSC.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/tau_u.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/transform.scdf.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/trend.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/truncate_phase.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/warn.html</loc></url>
+<url><loc>https://jazznbass.github.io/scan/reference/writeSC.html</loc></url>
 <url><loc>https://jazznbass.github.io/scan/reference/write_scdf.html</loc></url>
 </urlset>
 

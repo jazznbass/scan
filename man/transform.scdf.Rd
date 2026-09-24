@@ -95,9 +95,8 @@ Example: \code{across_cases(values_ranked = rank(values, na.last = "keep"))}
 ranks the \code{values} variable across all cases and creates a new variable \code{values_ranked}.
 \item \strong{\code{moving_mean()} / moving_median()}: calculate a moving average.
 Smoothing proceeds from the first observation toward the last.
-Each interior value is replaced by the mean of its current window,
-including the central value. Previously smoothed values are used in
-subsequent windows. Boundary values remain unchanged.
+Each value is replaced by the average of its current window,
+including the central value.
 }
 }
 \examples{
@@ -168,7 +167,7 @@ Other data manipulation functions:
 \code{\link[=as_scdf]{as_scdf()}},
 \code{\link[=batch_apply]{batch_apply()}},
 \code{\link[=fill_missing]{fill_missing()}},
-\code{\link[=print.sc_outlier]{print.sc_outlier()}},
+\code{\link[=outlier]{outlier()}},
 \code{\link[=ranks]{ranks()}},
 \code{\link[=rescale]{rescale()}},
 \code{\link[=scdf]{scdf()}},

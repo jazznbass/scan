@@ -6,6 +6,17 @@ variable is calculated after correcting for a baseline trend.
 ## Usage
 
 ``` r
+corrected_tau(
+  data,
+  dvar,
+  pvar,
+  mvar,
+  phases = c(1, 2),
+  alpha = 0.05,
+  continuity = FALSE,
+  tau_method = c("b", "a")
+)
+
 # S3 method for class 'sc_bctau'
 print(x, nice = TRUE, digits = "auto", ...)
 
@@ -19,63 +30,9 @@ export(
   round = 2,
   ...
 )
-
-corrected_tau(
-  data,
-  dvar,
-  pvar,
-  mvar,
-  phases = c(1, 2),
-  alpha = 0.05,
-  continuity = FALSE,
-  tau_method = c("b", "a")
-)
 ```
 
 ## Arguments
-
-- x:
-
-  An object returned by `corrected_tau()`
-
-- nice:
-
-  If set TRUE (default) output values are rounded and optimized for
-  publication tables.
-
-- digits:
-
-  The minimum number of significant digits to be use. If set to "auto"
-  (default), values are predefined.
-
-- ...:
-
-  Further parameters passed to the print function
-
-- object:
-
-  An scdf or an object exported from a scan function.
-
-- caption:
-
-  Character string with table caption. If left NA (default) a caption
-  will be created based on the exported object.
-
-- footnote:
-
-  Character string with table footnote. Several strings are combined
-  into a footnote of several lines. If left NA (default) a footnote will
-  be created based on the exported object. `NULL` or `""` suppress the
-  footnote.
-
-- filename:
-
-  String containing the file name. If a filename is given the output
-  will be written to that file.
-
-- round:
-
-  Integer passed to the digits argument used to round values.
 
 - data:
 
@@ -120,6 +77,49 @@ corrected_tau(
   Character with values "a" or "b" (default) indicating whether Kendall
   Tau A or Kendall Tau B is applied.
 
+- x:
+
+  An object returned by `corrected_tau()`
+
+- nice:
+
+  If set TRUE (default) output values are rounded and optimized for
+  publication tables.
+
+- digits:
+
+  The minimum number of significant digits to be use. If set to "auto"
+  (default), values are predefined.
+
+- ...:
+
+  Further arguments passed to the function.
+
+- object:
+
+  An scdf or an object exported from a scan function.
+
+- caption:
+
+  Character string with table caption. If left NA (default) a caption
+  will be created based on the exported object.
+
+- footnote:
+
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
+
+- filename:
+
+  String containing the file name. If a filename is given the output
+  will be written to that file.
+
+- round:
+
+  Integer passed to the digits argument used to round values.
+
 ## Details
 
 This method has been proposed by Tarlow (2016). The baseline data are
@@ -149,12 +149,12 @@ for Single-Case Designs: Baseline Corrected Tau. *Behavior Modification,
 ## See also
 
 Other regression functions:
+[`autocorr()`](https://jazznbass.github.io/scan/reference/autocorr.md),
 [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md),
 [`fetch()`](https://jazznbass.github.io/scan/reference/fetch.md),
 [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md),
 [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md),
 [`plm()`](https://jazznbass.github.io/scan/reference/plm.md),
-[`print.sc_ac()`](https://jazznbass.github.io/scan/reference/autocorr.md),
 [`trend()`](https://jazznbass.github.io/scan/reference/trend.md)
 
 ## Examples

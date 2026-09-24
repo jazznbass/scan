@@ -118,9 +118,8 @@ Several helper functions can be used inside expressions:
 
 - **`moving_mean()` / moving_median()**: calculate a moving average.
   Smoothing proceeds from the first observation toward the last. Each
-  interior value is replaced by the mean of its current window,
-  including the central value. Previously smoothed values are used in
-  subsequent windows. Boundary values remain unchanged.
+  value is replaced by the average of its current window, including the
+  central value.
 
 ## See also
 
@@ -130,7 +129,7 @@ Other data manipulation functions:
 [`as_scdf()`](https://jazznbass.github.io/scan/reference/as_scdf.md),
 [`batch_apply()`](https://jazznbass.github.io/scan/reference/batch_apply.md),
 [`fill_missing()`](https://jazznbass.github.io/scan/reference/fill_missing.md),
-[`print.sc_outlier()`](https://jazznbass.github.io/scan/reference/outlier.md),
+[`outlier()`](https://jazznbass.github.io/scan/reference/outlier.md),
 [`ranks()`](https://jazznbass.github.io/scan/reference/ranks.md),
 [`rescale()`](https://jazznbass.github.io/scan/reference/rescale.md),
 [`scdf()`](https://jazznbass.github.io/scan/reference/scdf.md),
@@ -301,19 +300,19 @@ transform(
 #>  Berta: compliance mt phase compliance (moving median) compliance (moving mean)
 #>                 25  1     A                         25                       25
 #>               20.8  2     A                         25                    28.47
-#>               39.6  3     A                       39.6                    47.69
-#>                 75  4     A                         45                     55.9
-#>                 45  5     A                         45                     38.5
-#>               14.6  6     A                         45                    32.97
-#>               45.8  7     A                         45                    37.36
-#>               33.3  8     A                       33.3                    33.99
-#>               31.3  9     A                       32.5                     32.6
-#>               32.5 10     A                       32.5                     23.1
-#>                4.2 11     B                       32.5                    24.37
-#>               45.8 12     B                       32.5                    33.82
-#>               31.3 13     B                       31.3                    24.84
-#>                9.4 14     B                        9.4                    13.51
-#>                6.3 15     B                        6.3                        8
+#>               39.6  3     A                       39.6                    45.13
+#>                 75  4     A                         45                     53.2
+#>                 45  5     A                         45                    44.87
+#>               14.6  6     A                         45                    35.13
+#>               45.8  7     A                       33.3                    31.23
+#>               33.3  8     A                       33.3                     36.8
+#>               31.3  9     A                       32.5                    32.37
+#>               32.5 10     A                       31.3                    22.67
+#>                4.2 11     B                       32.5                     27.5
+#>               45.8 12     B                       31.3                     27.1
+#>               31.3 13     B                       31.3                    28.83
+#>                9.4 14     B                        9.4                    15.67
+#>                6.3 15     B                        6.3                     6.63
 #>  compliance (local regression)
 #>                          22.02
 #>                          28.81

@@ -4,6 +4,7 @@
 #' @param nice If set TRUE (default) output values are rounded and optimized for
 #'  publication tables.
 #' @inheritParams print.sc
+#' @inheritParams .inheritParams
 #' @export
 print.sc_bctau <- function(x, nice = TRUE, digits = "auto", ...) {
   
@@ -57,6 +58,7 @@ print.sc_bctau <- function(x, nice = TRUE, digits = "auto", ...) {
 #' @describeIn corrected_tau Export results as html
 #' @order 3
 #' @inheritParams export
+#' @inheritParams .inheritParams
 #' @export
 export.sc_bctau <- function(object, 
                               caption = NA, 

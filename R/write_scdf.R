@@ -51,9 +51,3 @@ write_scdf <- function(data, filename = NULL, sep = ",", dec = ".", ...) {
   )
   
 }
-
-#' @rdname deprecated-functions
-#' @export
-writeSC <- function(...) {
-  write_scdf(...)
-}

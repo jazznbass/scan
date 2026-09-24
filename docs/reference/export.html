@@ -34,7 +34,7 @@ for pdf/latex output."><meta property="og:image" content="https://jazznbass.gith
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Export scan objects to html or latex</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.R" class="external-link"><code>R/export.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.sc_desc.R" class="external-link"><code>R/export.sc_desc.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.sc_nap.R" class="external-link"><code>R/export.sc_nap.R</code></a>, and 9 more</small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/export.R" class="external-link"><code>R/export.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print-export-scdf.R" class="external-link"><code>R/print-export-scdf.R</code></a></small>
       <div class="d-none name"><code>export.Rd</code></div>
     </div>
 
@@ -48,86 +48,6 @@ for pdf/latex output.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">export</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for class 'sc_desc'</span></span>
-<span><span class="fu">export</span><span class="op">(</span></span>
-<span>  <span class="va">object</span>,</span>
-<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'sc_nap'</span></span>
-<span><span class="fu">export</span><span class="op">(</span></span>
-<span>  <span class="va">object</span>,</span>
-<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Case"</span>, <span class="st">"NAP"</span>, <span class="st">"NAP Rescaled"</span>, <span class="st">"w"</span>, <span class="st">"p"</span>, <span class="st">"d"</span>, <span class="st">"R²"</span><span class="op">)</span>,</span>
-<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'sc_overlap'</span></span>
-<span><span class="fu">export</span><span class="op">(</span></span>
-<span>  <span class="va">object</span>,</span>
-<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  footnote <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  decimals <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'sc_pem'</span></span>
-<span><span class="fu">export</span><span class="op">(</span><span class="va">object</span>, caption <span class="op">=</span> <span class="cn">NA</span>, footnote <span class="op">=</span> <span class="cn">NA</span>, filename <span class="op">=</span> <span class="cn">NA</span>, round <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'sc_pet'</span></span>
-<span><span class="fu">export</span><span class="op">(</span><span class="va">object</span>, caption <span class="op">=</span> <span class="cn">NA</span>, footnote <span class="op">=</span> <span class="cn">NA</span>, filename <span class="op">=</span> <span class="cn">NA</span>, round <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'sc_pnd'</span></span>
-<span><span class="fu">export</span><span class="op">(</span></span>
-<span>  <span class="va">object</span>,</span>
-<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Case"</span>, <span class="st">"PND"</span>, <span class="st">"Total"</span>, <span class="st">"Exceeds"</span><span class="op">)</span>,</span>
-<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'sc_power'</span></span>
-<span><span class="fu">export</span><span class="op">(</span><span class="va">object</span>, caption <span class="op">=</span> <span class="cn">NA</span>, footnote <span class="op">=</span> <span class="cn">NA</span>, filename <span class="op">=</span> <span class="cn">NA</span>, round <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'sc_smd'</span></span>
-<span><span class="fu">export</span><span class="op">(</span></span>
-<span>  <span class="va">object</span>,</span>
-<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Case"</span>, `Mean A` <span class="op">=</span> <span class="st">"mA"</span>, `Mean B` <span class="op">=</span> <span class="st">"mB"</span>, `SD A` <span class="op">=</span> <span class="st">"sdA"</span>, `SD B` <span class="op">=</span> <span class="st">"sdB"</span>,</span>
-<span>    `SD Cohen` <span class="op">=</span> <span class="st">"sd cohen"</span>, `SD Hedges` <span class="op">=</span> <span class="st">"sd hedges"</span>, <span class="st">"Glass' delta"</span>, <span class="st">"Hedges' g"</span>,</span>
-<span>    <span class="st">"Hedges' g correction"</span>, <span class="st">"Hedges' g durlak correction"</span>, <span class="st">"Cohen's d"</span><span class="op">)</span>,</span>
-<span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  decimals <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'sc_trend'</span></span>
-<span><span class="fu">export</span><span class="op">(</span></span>
-<span>  <span class="va">object</span>,</span>
-<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  round <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  decimals <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
 <span><span class="co"># S3 method for class 'scdf'</span></span>
 <span><span class="fu">export</span><span class="op">(</span></span>
 <span>  <span class="va">object</span>,</span>
@@ -138,10 +58,7 @@ for pdf/latex output.</p>
 <span>  <span class="va">cols</span>,</span>
 <span>  round <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'scdf_summary'</span></span>
-<span><span class="fu">export</span><span class="op">(</span><span class="va">object</span>, caption <span class="op">=</span> <span class="cn">NA</span>, footnote <span class="op">=</span> <span class="cn">NA</span>, filename <span class="op">=</span> <span class="cn">NA</span>, round <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -154,6 +71,10 @@ for pdf/latex output.</p>
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Further Arguments passed to internal functions.</p></dd>
+
+
+<dt id="arg-summary">summary<a class="anchor" aria-label="anchor" href="#arg-summary"></a></dt>
+<dd><p>If TRUE, exports the summary of an <code>scdf</code>.</p></dd>
 
 
 <dt id="arg-caption">caption<a class="anchor" aria-label="anchor" href="#arg-caption"></a></dt>
@@ -173,32 +94,28 @@ footnote.</p></dd>
 output will be written to that file.</p></dd>
 
 
-<dt id="arg-flip">flip<a class="anchor" aria-label="anchor" href="#arg-flip"></a></dt>
-<dd><p>If TRUE, some objects are exported with rows and columns flipped.</p></dd>
+<dt id="arg-cols">cols<a class="anchor" aria-label="anchor" href="#arg-cols"></a></dt>
+<dd><p>Defines which columns are included when exporting an scdf. It is
+either a vector of variable names or the string "main" will select the
+central variables.</p></dd>
 
 
 <dt id="arg-round">round<a class="anchor" aria-label="anchor" href="#arg-round"></a></dt>
 <dd><p>Integer passed to the digits argument used to round values.</p></dd>
 
 
-<dt id="arg-select">select<a class="anchor" aria-label="anchor" href="#arg-select"></a></dt>
-<dd><p>A character vector containing the names of the variables to be
-included. If the vector is named, the variables will be renamed
-accordingly.</p></dd>
+<dt id="arg-flip">flip<a class="anchor" aria-label="anchor" href="#arg-flip"></a></dt>
+<dd><p>If TRUE, some objects are exported with rows and columns flipped.</p></dd>
 
 
 <dt id="arg-decimals">decimals<a class="anchor" aria-label="anchor" href="#arg-decimals"></a></dt>
 <dd><p>Decimal places that are reported.</p></dd>
 
 
-<dt id="arg-summary">summary<a class="anchor" aria-label="anchor" href="#arg-summary"></a></dt>
-<dd><p>If TRUE, exports the summary of an <code>scdf</code>.</p></dd>
-
-
-<dt id="arg-cols">cols<a class="anchor" aria-label="anchor" href="#arg-cols"></a></dt>
-<dd><p>Defines which columns are included when exporting an scdf. It is
-either a vector of variable names or the string "main" will select the
-central variables.</p></dd>
+<dt id="arg-select">select<a class="anchor" aria-label="anchor" href="#arg-select"></a></dt>
+<dd><p>A character vector containing the names of the variables to be
+included. If the vector is named, the variables will be renamed
+accordingly.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -207,8 +124,12 @@ central variables.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The function uses either the kableExtra or the gt package to create the tables.
-The default engine can be set via the option <code>scan.export.engine</code>. Additional
+    <p>The function uses either the gt or the kableExtra package to create the
+tables. The default engine is gt; in a document knitted to latex, kableExtra
+is used instead, because gt tables receive neither a number nor a label
+there, and for Word output gt is used even when kableExtra is set, because
+kableExtra can not write Word tables. The engine can be set via the option
+<code>scan.export.engine</code>. Additional
 options for kable and kable_styling can be set via the options
 <code>scan.export.kable</code> and <code>scan.export.kable_styling</code>.
 The default options can be viewed and modified via

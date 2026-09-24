@@ -1,4 +1,26 @@
-#' @rdname export
+#' @describeIn smd Print results
+#' @order 2
+#' @inheritParams print.sc
+#' @export
+print.sc_smd <- function(x, digits = "auto", ...) {
+  
+  if (digits == "auto") digits <- 3
+  
+  cat("Standardized mean differences\n\n")
+  x$smd[-1] <- round(x$smd[-1], digits)
+  out <- as.data.frame(t(x$smd[-1]))
+  colnames(out) <- x$smd$Case
+  
+  print(out[ , , drop = FALSE], digits = digits, ...)
+  cat("\n")
+  .note_vars(x)
+  
+}
+
+#' @describeIn smd Export results as html table (see [export()])
+#' @order 3
+#' @inheritParams export
+#' @inheritParams .inheritParams
 #' @export
 export.sc_smd <- function(object, caption = NA, footnote = NA, 
                           filename = NA,

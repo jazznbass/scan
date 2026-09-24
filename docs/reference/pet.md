@@ -10,6 +10,12 @@ percent confidence interval of the predicted progression.
 
 ``` r
 pet(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = c(1, 2))
+
+# S3 method for class 'sc_pet'
+print(x, digits = 3, ...)
+
+# S3 method for class 'sc_pet'
+export(object, caption = NA, footnote = NA, filename = NA, round = 1, ...)
 ```
 
 ## Arguments
@@ -53,6 +59,10 @@ pet(data, dvar, pvar, mvar, ci = 0.95, decreasing = FALSE, phases = c(1, 2))
   `phases = list(A = c(1,3), B = c(2,4))` will compare phases 1 and 3
   (as A) against 2 and 4 (as B). Default is `phases = c(1,2)`.
 
+- ...:
+
+  Further arguments passed to the function.
+
 ## Value
 
 |              |                                                            |
@@ -72,16 +82,23 @@ predicted value. Additionally, a binomial test is performed to assess
 whether the observed PET is significantly greater than what would be
 expected by chance (i.e., 50%).
 
+## Functions
+
+- `print(sc_pet)`: Print results
+
+- `export(sc_pet)`: Export results as html table (see
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md))
+
 ## See also
 
 Other overlap functions:
+[`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`ird()`](https://jazznbass.github.io/scan/reference/ird.md),
 [`nap()`](https://jazznbass.github.io/scan/reference/nap.md),
 [`overlap()`](https://jazznbass.github.io/scan/reference/overlap.md),
 [`pand()`](https://jazznbass.github.io/scan/reference/pand.md),
 [`pem()`](https://jazznbass.github.io/scan/reference/pem.md),
 [`pnd()`](https://jazznbass.github.io/scan/reference/pnd.md),
-[`print.sc_cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`select_phases()`](https://jazznbass.github.io/scan/reference/select_phases.md),
 [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md)
 

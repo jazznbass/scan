@@ -7,6 +7,20 @@ single-case data.
 
 ``` r
 describe(data, dvar, pvar, mvar)
+
+# S3 method for class 'sc_desc'
+print(x, digits = "auto", ...)
+
+# S3 method for class 'sc_desc'
+export(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  flip = FALSE,
+  round = 2,
+  ...
+)
 ```
 
 ## Arguments
@@ -32,6 +46,10 @@ describe(data, dvar, pvar, mvar)
   Character string with the name of the measurement time variable.
   Defaults to the attributes in the scdf file.
 
+- ...:
+
+  Further arguments passed to the function.
+
 ## Value
 
 A list containing a data frame of descriptive statistics (descriptives);
@@ -48,6 +66,13 @@ n = number of measurements; mis = number of missing vaues; m = mean; md
 = median; sd = standard deviation; mad = median average deviation; min =
 minimum; max = maximum; trend = weight of depended variable regressed on
 time (values ~ mt).
+
+## Functions
+
+- `print(sc_desc)`: Print results
+
+- `export(sc_desc)`: Export results as html table (see
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md))
 
 ## See also
 

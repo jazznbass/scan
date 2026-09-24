@@ -124,20 +124,6 @@ read_scdf <- function(file,
   out
 }
 
-#' @rdname deprecated-functions
-#' @export
-readSC.excel <- function(...) {
-  
-  read_scdf(..., type = "excel")
-  
-}
-
-#' @rdname deprecated-functions
-#' @export
-readSC <- function(...) {
-  read_scdf(...)
-}
-
 .load_yml <- function(filename, ...) {
   
   if (!requireNamespace("yaml", quietly = TRUE)) {

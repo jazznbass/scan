@@ -195,12 +195,12 @@ per dataset). For multilevel piecewise regression models, please use the
 ## See also
 
 Other regression functions:
+[`autocorr()`](https://jazznbass.github.io/scan/reference/autocorr.md),
 [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md),
+[`corrected_tau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md),
 [`fetch()`](https://jazznbass.github.io/scan/reference/fetch.md),
 [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md),
 [`plm()`](https://jazznbass.github.io/scan/reference/plm.md),
-[`print.sc_ac()`](https://jazznbass.github.io/scan/reference/autocorr.md),
-[`print.sc_bctau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md),
 [`trend()`](https://jazznbass.github.io/scan/reference/trend.md)
 
 ## Author

@@ -72,6 +72,7 @@
 #' power_test(design, n_sim=10, method=list("hplm_level", "rand", "tauU_meta"))
 #' @export
 
+#' @order 1
 power_test <- function(design,
                        method = c("plm_level", "rand", "tauU"), 
                        effect = "level",

@@ -19,6 +19,12 @@ pem(
   phases = c(1, 2),
   ...
 )
+
+# S3 method for class 'sc_pem'
+print(x, ...)
+
+# S3 method for class 'sc_pem'
+export(object, caption = NA, footnote = NA, filename = NA, round = 2, ...)
 ```
 
 ## Arguments
@@ -86,16 +92,23 @@ are below the median of phase A is calculated. The PEM is expressed as a
 percentage ranging from 0 to 100. Higher values indicate a greater
 degree of improvement from phase A to phase B.
 
+## Functions
+
+- `print(sc_pem)`: Print results
+
+- `export(sc_pem)`: Export results as html table (see
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md))
+
 ## See also
 
 Other overlap functions:
+[`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`ird()`](https://jazznbass.github.io/scan/reference/ird.md),
 [`nap()`](https://jazznbass.github.io/scan/reference/nap.md),
 [`overlap()`](https://jazznbass.github.io/scan/reference/overlap.md),
 [`pand()`](https://jazznbass.github.io/scan/reference/pand.md),
 [`pet()`](https://jazznbass.github.io/scan/reference/pet.md),
 [`pnd()`](https://jazznbass.github.io/scan/reference/pnd.md),
-[`print.sc_cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`select_phases()`](https://jazznbass.github.io/scan/reference/select_phases.md),
 [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md)
 

@@ -14,6 +14,20 @@ inverse effect is also displayed (\\nap\_{rescaled} = 2 \* nap - 100\\).
 
 ``` r
 nap(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2))
+
+# S3 method for class 'sc_nap'
+print(x, digits = "auto", nice = TRUE, complete = FALSE, ...)
+
+# S3 method for class 'sc_nap'
+export(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  select = c("Case", "NAP", "NAP Rescaled", "w", "p", "d", "R²"),
+  round = 2,
+  ...
+)
 ```
 
 ## Arguments
@@ -48,6 +62,15 @@ nap(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2))
   `phases = list(A = c(1,3), B = c(2,4))` will compare phases 1 and 3
   (as A) against 2 and 4 (as B). Default is `phases = c(1,2)`.
 
+- nice:
+
+  If set TRUE (default) output values are rounded and optimized for
+  publication tables.
+
+- ...:
+
+  Further arguments passed to the function.
+
 ## Value
 
 |       |                                                            |
@@ -61,6 +84,13 @@ nap(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2))
 If a decrease of phase B scores is expected, set the argument
 `decreasing = TRUE`.
 
+## Functions
+
+- `print(sc_nap)`: Print results
+
+- `export(sc_nap)`: Export results as html table (see
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md))
+
 ## References
 
 Parker, R. I., & Vannest, K. (2009). An improved effect size for
@@ -70,13 +100,13 @@ single-case research: Nonoverlap of all pairs. *Behavior Therapy*, *40*,
 ## See also
 
 Other overlap functions:
+[`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`ird()`](https://jazznbass.github.io/scan/reference/ird.md),
 [`overlap()`](https://jazznbass.github.io/scan/reference/overlap.md),
 [`pand()`](https://jazznbass.github.io/scan/reference/pand.md),
 [`pem()`](https://jazznbass.github.io/scan/reference/pem.md),
 [`pet()`](https://jazznbass.github.io/scan/reference/pet.md),
 [`pnd()`](https://jazznbass.github.io/scan/reference/pnd.md),
-[`print.sc_cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`select_phases()`](https://jazznbass.github.io/scan/reference/select_phases.md),
 [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md)
 

@@ -1,4 +1,21 @@
-#' @rdname export
+#' @describeIn trend Print results
+#' @order 2
+#' @inheritParams print.sc
+#' @export
+#' 
+print.sc_trend <- function(x, digits = 3, ...) {
+  x$trend <- round(x$trend, digits)
+  cat("Trend for each phase\n\n")
+  print(x$trend)
+  cat("\n")
+  cat("Note. Measurement-times start at", x$first_mt, "for each phase\n")
+  .note_vars(x)
+}
+
+#' @describeIn trend Export results as html table (see [export()])
+#' @order 3
+#' @inheritParams export
+#' @inheritParams .inheritParams
 #' @export
 export.sc_trend <- function(object, 
                             caption = NA, 

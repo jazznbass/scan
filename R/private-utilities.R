@@ -23,7 +23,6 @@
   }   
 } 
 
-
 .moving_average <- function(x, lag = 1, FUN = mean) {
   if (length(x) < 2 * lag + 1) {
     warn(
@@ -32,8 +31,9 @@
     )
     return(x)
   }
+  original <- x
   for(i in (lag + 1):(length(x) - lag))
-    x[i] <- FUN(x[(i - lag):(i + lag)], na.rm = TRUE)
+    x[i] <- FUN(original[(i - lag):(i + lag)], na.rm = TRUE)
   x
 }
 
@@ -101,9 +101,6 @@ revise_names <- function(x, n) {
   }
   x
 }
-
-
-
 
 .std_lm <- function(model) {
   

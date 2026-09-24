@@ -32,6 +32,7 @@
 #' dat <- random_scdf(design, seed = 23)
 #' pet(dat, ci = .99)
 #'
+#' @order 1
 #' @export
 pet <- function(data, 
                 dvar, pvar, mvar, 

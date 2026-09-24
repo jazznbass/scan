@@ -7,6 +7,24 @@ single-case data.
 
 ``` r
 smd(data, dvar, pvar, phases = c(1, 2))
+
+# S3 method for class 'sc_smd'
+print(x, digits = "auto", ...)
+
+# S3 method for class 'sc_smd'
+export(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  select = c("Case", `Mean A` = "mA", `Mean B` = "mB", `SD A` = "sdA", `SD B` = "sdB",
+    `SD Cohen` = "sd cohen", `SD Hedges` = "sd hedges", "Glass' delta", "Hedges' g",
+    "Hedges' g correction", "Hedges' g durlak correction", "Cohen's d"),
+  round = 2,
+  decimals = 2,
+  flip = FALSE,
+  ...
+)
 ```
 
 ## Arguments
@@ -36,6 +54,10 @@ smd(data, dvar, pvar, phases = c(1, 2))
   `phases = list(A = c(1,3), B = c(2,4))` will compare phases 1 and 3
   (as A) against 2 and 4 (as B). Default is `phases = c(1,2)`.
 
+- ...:
+
+  Further arguments passed to the function.
+
 ## Details
 
 It computes 'Cohen's d', 'Hedges' g', 'Hedges' g correction', 'Hedges' g
@@ -50,6 +72,13 @@ durlak correction' are two approaches of correcting Hedges' g for small
 sample sizes. 'Glass' delta' is the mean difference divided by the
 standard deviation of the A-phase. 'Cohens d' is the mean difference
 divided by 'sd cohen'.
+
+## Functions
+
+- `print(sc_smd)`: Print results
+
+- `export(sc_smd)`: Export results as html table (see
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md))
 
 ## See also
 

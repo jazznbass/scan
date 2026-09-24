@@ -43,11 +43,17 @@
 #'   model.
 #' @param nice If set TRUE (default) output values are rounded and optimized for
 #'  publication tables.
+#' @param flip If TRUE, some objects are exported with rows and columns flipped.
+#' @param decimals Decimal places that are reported.
+#' @param select A character vector containing the names of the variables to be
+#'   included. If the vector is named, the variables will be renamed
+#'   accordingly.
 #' @param ... Further arguments passed to the function.
 #' @keywords internal
 .inheritParams <- function(data, scdf, dvar, mvar, pvar, decreasing, 
                            phases, model, contrast, contrast_level, 
                            contrast_slope, trend, level, slope, nice,
+                           flip, decimals, select,
                            ...) {
   
 } 

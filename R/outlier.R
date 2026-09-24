@@ -47,6 +47,7 @@
 #' res_outlier <- outlier(Grosche2011, method = "Cook", criteria = "4/n")
 #' res_outlier
 #'
+#' @order 1
 #' @export
 outlier <- function(data, dvar, pvar, mvar, 
                     method = c("MAD", "Cook", "SD", "CI"),

@@ -122,21 +122,23 @@ pak::pak("jazznbass/scan")
   [`anova(`*`<sc_hplm>`*`)`](https://jazznbass.github.io/scan/reference/anova.sc_plm.md)
   [`anova(`*`<sc_mplm>`*`)`](https://jazznbass.github.io/scan/reference/anova.sc_plm.md)
   : ANOVA Table for Piecewise Linear Models
-- [`print(`*`<sc_ac>`*`)`](https://jazznbass.github.io/scan/reference/autocorr.md)
+- [`autocorr()`](https://jazznbass.github.io/scan/reference/autocorr.md)
+  [`print(`*`<sc_ac>`*`)`](https://jazznbass.github.io/scan/reference/autocorr.md)
   [`export(`*`<sc_ac>`*`)`](https://jazznbass.github.io/scan/reference/autocorr.md)
-  [`autocorr()`](https://jazznbass.github.io/scan/reference/autocorr.md)
   : Autocorrelation within and across phases
 - [`batch_apply()`](https://jazznbass.github.io/scan/reference/batch_apply.md)
   : Apply a function to each element in an scdf.
-- [`print(`*`<sc_cdc>`*`)`](https://jazznbass.github.io/scan/reference/cdc.md)
+- [`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md)
+  [`print(`*`<sc_cdc>`*`)`](https://jazznbass.github.io/scan/reference/cdc.md)
   [`export(`*`<sc_cdc>`*`)`](https://jazznbass.github.io/scan/reference/cdc.md)
-  [`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md) :
-  Conservative Dual-Criterion Method
-- [`print(`*`<sc_bctau>`*`)`](https://jazznbass.github.io/scan/reference/corrected_tau.md)
+  : Conservative Dual-Criterion Method
+- [`corrected_tau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md)
+  [`print(`*`<sc_bctau>`*`)`](https://jazznbass.github.io/scan/reference/corrected_tau.md)
   [`export(`*`<sc_bctau>`*`)`](https://jazznbass.github.io/scan/reference/corrected_tau.md)
-  [`corrected_tau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md)
   : Baseline corrected tau
 - [`describe()`](https://jazznbass.github.io/scan/reference/describe.md)
+  [`print(`*`<sc_desc>`*`)`](https://jazznbass.github.io/scan/reference/describe.md)
+  [`export(`*`<sc_desc>`*`)`](https://jazznbass.github.io/scan/reference/describe.md)
   : Descriptive statistics for single-case data
 - [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md)
   [`print(`*`<sc_hplm>`*`)`](https://jazznbass.github.io/scan/reference/hplm.md)
@@ -152,14 +154,18 @@ pak::pak("jazznbass/scan")
   [`print(`*`<sc_bplm>`*`)`](https://jazznbass.github.io/scan/reference/bplm.md)
   [`export(`*`<sc_bplm>`*`)`](https://jazznbass.github.io/scan/reference/bplm.md)
   : Bayesian Piecewise Linear Model (bplm)
-- [`nap()`](https://jazznbass.github.io/scan/reference/nap.md) :
-  Nonoverlap of all Pairs (NAP)
-- [`print(`*`<sc_outlier>`*`)`](https://jazznbass.github.io/scan/reference/outlier.md)
+- [`nap()`](https://jazznbass.github.io/scan/reference/nap.md)
+  [`print(`*`<sc_nap>`*`)`](https://jazznbass.github.io/scan/reference/nap.md)
+  [`export(`*`<sc_nap>`*`)`](https://jazznbass.github.io/scan/reference/nap.md)
+  : Nonoverlap of all Pairs (NAP)
+- [`outlier()`](https://jazznbass.github.io/scan/reference/outlier.md)
+  [`print(`*`<sc_outlier>`*`)`](https://jazznbass.github.io/scan/reference/outlier.md)
   [`export(`*`<sc_outlier>`*`)`](https://jazznbass.github.io/scan/reference/outlier.md)
-  [`outlier()`](https://jazznbass.github.io/scan/reference/outlier.md) :
-  Handling outliers in single-case data
-- [`overlap()`](https://jazznbass.github.io/scan/reference/overlap.md) :
-  Overlap indices for single-case data
+  : Handling outliers in single-case data
+- [`overlap()`](https://jazznbass.github.io/scan/reference/overlap.md)
+  [`print(`*`<sc_overlap>`*`)`](https://jazznbass.github.io/scan/reference/overlap.md)
+  [`export(`*`<sc_overlap>`*`)`](https://jazznbass.github.io/scan/reference/overlap.md)
+  : Overlap indices for single-case data
 - [`ird()`](https://jazznbass.github.io/scan/reference/ird.md)
   [`print(`*`<sc_ird>`*`)`](https://jazznbass.github.io/scan/reference/ird.md)
   [`export(`*`<sc_ird>`*`)`](https://jazznbass.github.io/scan/reference/ird.md)
@@ -168,26 +174,36 @@ pak::pak("jazznbass/scan")
   [`print(`*`<sc_pand>`*`)`](https://jazznbass.github.io/scan/reference/pand.md)
   [`export(`*`<sc_pand>`*`)`](https://jazznbass.github.io/scan/reference/pand.md)
   : Percentage of all non-overlapping data
-- [`pem()`](https://jazznbass.github.io/scan/reference/pem.md) : Percent
-  exceeding the median (PEM)
-- [`pet()`](https://jazznbass.github.io/scan/reference/pet.md) : Percent
-  exceeding the trend (PET)
+- [`pem()`](https://jazznbass.github.io/scan/reference/pem.md)
+  [`print(`*`<sc_pem>`*`)`](https://jazznbass.github.io/scan/reference/pem.md)
+  [`export(`*`<sc_pem>`*`)`](https://jazznbass.github.io/scan/reference/pem.md)
+  : Percent exceeding the median (PEM)
+- [`pet()`](https://jazznbass.github.io/scan/reference/pet.md)
+  [`print(`*`<sc_pet>`*`)`](https://jazznbass.github.io/scan/reference/pet.md)
+  [`export(`*`<sc_pet>`*`)`](https://jazznbass.github.io/scan/reference/pet.md)
+  : Percent exceeding the trend (PET)
 - [`plm()`](https://jazznbass.github.io/scan/reference/plm.md)
   [`print(`*`<sc_plm>`*`)`](https://jazznbass.github.io/scan/reference/plm.md)
   [`export(`*`<sc_plm>`*`)`](https://jazznbass.github.io/scan/reference/plm.md)
   : Piecewise linear model / piecewise regression
-- [`pnd()`](https://jazznbass.github.io/scan/reference/pnd.md) :
-  Percentage of non-overlapping data (PND)
+- [`pnd()`](https://jazznbass.github.io/scan/reference/pnd.md)
+  [`print(`*`<sc_pnd>`*`)`](https://jazznbass.github.io/scan/reference/pnd.md)
+  [`export(`*`<sc_pnd>`*`)`](https://jazznbass.github.io/scan/reference/pnd.md)
+  : Percentage of non-overlapping data (PND)
 - [`power_test()`](https://jazznbass.github.io/scan/reference/power_test.md)
+  [`print(`*`<sc_power>`*`)`](https://jazznbass.github.io/scan/reference/power_test.md)
+  [`export(`*`<sc_power>`*`)`](https://jazznbass.github.io/scan/reference/power_test.md)
   : Empirical power analysis for single-case data
-- [`print(`*`<sc_rand>`*`)`](https://jazznbass.github.io/scan/reference/rand_test.md)
+- [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md)
+  [`print(`*`<sc_rand>`*`)`](https://jazznbass.github.io/scan/reference/rand_test.md)
   [`export(`*`<sc_rand>`*`)`](https://jazznbass.github.io/scan/reference/rand_test.md)
-  [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md)
   : Randomization Tests for single-case data
 - [`rci()`](https://jazznbass.github.io/scan/reference/rci.md) :
   Reliable change index
-- [`smd()`](https://jazznbass.github.io/scan/reference/smd.md) :
-  Standardized mean differences for single-case data
+- [`smd()`](https://jazznbass.github.io/scan/reference/smd.md)
+  [`print(`*`<sc_smd>`*`)`](https://jazznbass.github.io/scan/reference/smd.md)
+  [`export(`*`<sc_smd>`*`)`](https://jazznbass.github.io/scan/reference/smd.md)
+  : Standardized mean differences for single-case data
 - [`between_smd()`](https://jazznbass.github.io/scan/reference/between_smd.md)
   [`print(`*`<sc_bcsmd>`*`)`](https://jazznbass.github.io/scan/reference/between_smd.md)
   [`export(`*`<sc_bcsmd>`*`)`](https://jazznbass.github.io/scan/reference/between_smd.md)
@@ -196,69 +212,24 @@ pak::pak("jazznbass/scan")
   [`print(`*`<sc_tauu>`*`)`](https://jazznbass.github.io/scan/reference/tau_u.md)
   [`export(`*`<sc_tauu>`*`)`](https://jazznbass.github.io/scan/reference/tau_u.md)
   : Tau-U for single-case data
-- [`trend()`](https://jazznbass.github.io/scan/reference/trend.md) :
-  Trend analysis for single-cases data
+- [`trend()`](https://jazznbass.github.io/scan/reference/trend.md)
+  [`print(`*`<sc_trend>`*`)`](https://jazznbass.github.io/scan/reference/trend.md)
+  [`export(`*`<sc_trend>`*`)`](https://jazznbass.github.io/scan/reference/trend.md)
+  : Trend analysis for single-cases data
 
-## Building graphs, tables etc.
+## Printing and exporting results
 
-- [`print(`*`<sc_ac>`*`)`](https://jazznbass.github.io/scan/reference/autocorr.md)
-  [`export(`*`<sc_ac>`*`)`](https://jazznbass.github.io/scan/reference/autocorr.md)
-  [`autocorr()`](https://jazznbass.github.io/scan/reference/autocorr.md)
-  : Autocorrelation within and across phases
-- [`between_smd()`](https://jazznbass.github.io/scan/reference/between_smd.md)
-  [`print(`*`<sc_bcsmd>`*`)`](https://jazznbass.github.io/scan/reference/between_smd.md)
-  [`export(`*`<sc_bcsmd>`*`)`](https://jazznbass.github.io/scan/reference/between_smd.md)
-  : Between-Case Standardized Mean Difference
-- [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md)
-  [`print(`*`<sc_bplm>`*`)`](https://jazznbass.github.io/scan/reference/bplm.md)
-  [`export(`*`<sc_bplm>`*`)`](https://jazznbass.github.io/scan/reference/bplm.md)
-  : Bayesian Piecewise Linear Model (bplm)
-- [`print(`*`<sc_cdc>`*`)`](https://jazznbass.github.io/scan/reference/cdc.md)
-  [`export(`*`<sc_cdc>`*`)`](https://jazznbass.github.io/scan/reference/cdc.md)
-  [`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md) :
-  Conservative Dual-Criterion Method
-- [`print(`*`<sc_bctau>`*`)`](https://jazznbass.github.io/scan/reference/corrected_tau.md)
-  [`export(`*`<sc_bctau>`*`)`](https://jazznbass.github.io/scan/reference/corrected_tau.md)
-  [`corrected_tau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md)
-  : Baseline corrected tau
 - [`export()`](https://jazznbass.github.io/scan/reference/export.md) :
   Export scan objects to html or latex
-- [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md)
-  [`print(`*`<sc_hplm>`*`)`](https://jazznbass.github.io/scan/reference/hplm.md)
-  [`export(`*`<sc_hplm>`*`)`](https://jazznbass.github.io/scan/reference/hplm.md)
-  [`coef(`*`<sc_hplm>`*`)`](https://jazznbass.github.io/scan/reference/hplm.md)
-  : Hierarchical piecewise linear model / piecewise regression for
-  multiple cases
-- [`ird()`](https://jazznbass.github.io/scan/reference/ird.md)
-  [`print(`*`<sc_ird>`*`)`](https://jazznbass.github.io/scan/reference/ird.md)
-  [`export(`*`<sc_ird>`*`)`](https://jazznbass.github.io/scan/reference/ird.md)
-  : IRD - Improvement rate difference
-- [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md)
-  [`print(`*`<sc_mplm>`*`)`](https://jazznbass.github.io/scan/reference/mplm.md)
-  [`export(`*`<sc_mplm>`*`)`](https://jazznbass.github.io/scan/reference/mplm.md)
-  : Multivariate Piecewise linear model / piecewise regression
-- [`print(`*`<sc_outlier>`*`)`](https://jazznbass.github.io/scan/reference/outlier.md)
-  [`export(`*`<sc_outlier>`*`)`](https://jazznbass.github.io/scan/reference/outlier.md)
-  [`outlier()`](https://jazznbass.github.io/scan/reference/outlier.md) :
-  Handling outliers in single-case data
-- [`pand()`](https://jazznbass.github.io/scan/reference/pand.md)
-  [`print(`*`<sc_pand>`*`)`](https://jazznbass.github.io/scan/reference/pand.md)
-  [`export(`*`<sc_pand>`*`)`](https://jazznbass.github.io/scan/reference/pand.md)
-  : Percentage of all non-overlapping data
-- [`plm()`](https://jazznbass.github.io/scan/reference/plm.md)
-  [`print(`*`<sc_plm>`*`)`](https://jazznbass.github.io/scan/reference/plm.md)
-  [`export(`*`<sc_plm>`*`)`](https://jazznbass.github.io/scan/reference/plm.md)
-  : Piecewise linear model / piecewise regression
-- [`print(`*`<sc_rand>`*`)`](https://jazznbass.github.io/scan/reference/rand_test.md)
-  [`export(`*`<sc_rand>`*`)`](https://jazznbass.github.io/scan/reference/rand_test.md)
-  [`rand_test()`](https://jazznbass.github.io/scan/reference/rand_test.md)
-  : Randomization Tests for single-case data
-- [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md)
-  [`print(`*`<sc_tauu>`*`)`](https://jazznbass.github.io/scan/reference/tau_u.md)
-  [`export(`*`<sc_tauu>`*`)`](https://jazznbass.github.io/scan/reference/tau_u.md)
-  : Tau-U for single-case data
 - [`print(`*`<scdf>`*`)`](https://jazznbass.github.io/scan/reference/print.scdf.md)
   : Print an scdf
+- [`summary(`*`<scdf>`*`)`](https://jazznbass.github.io/scan/reference/summary.scdf.md)
+  [`print(`*`<scdf_summary>`*`)`](https://jazznbass.github.io/scan/reference/summary.scdf.md)
+  [`export(`*`<scdf_summary>`*`)`](https://jazznbass.github.io/scan/reference/summary.scdf.md)
+  : Summary function for an scdf object
+
+## Plots (superseded by the scplot package)
+
 - [`plot(`*`<scdf>`*`)`](https://jazznbass.github.io/scan/reference/plot.scdf.md)
   [`plotSC()`](https://jazznbass.github.io/scan/reference/plot.scdf.md)
   : (Deprecated) Plot single-case data
@@ -266,8 +237,6 @@ pak::pak("jazznbass/scan")
   : (Deprecated) Create styles for single-case data plots
 - [`plot_rand()`](https://jazznbass.github.io/scan/reference/plot_rand.md)
   : Plot random distribution
-- [`summary(`*`<scdf>`*`)`](https://jazznbass.github.io/scan/reference/summary.scdf.md)
-  : Summary function for an scdf object
 
 ## Simulating data
 

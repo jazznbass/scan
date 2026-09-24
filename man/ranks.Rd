@@ -44,7 +44,7 @@ Other data manipulation functions:
 \code{\link[=batch_apply]{batch_apply()}},
 \code{\link[=fill_missing]{fill_missing()}},
 \code{\link[=moving_median]{moving_median()}},
-\code{\link[=print.sc_outlier]{print.sc_outlier()}},
+\code{\link[=outlier]{outlier()}},
 \code{\link[=rescale]{rescale()}},
 \code{\link[=scdf]{scdf()}},
 \code{\link[=select_cases]{select_cases()}},

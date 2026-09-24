@@ -38,6 +38,7 @@ print.sc_bplm <- function(x, digits = 3, ...) {
 #' @describeIn bplm Export results as html table (see [export()])
 #' @order 3
 #' @inheritParams export
+#' @inheritParams .inheritParams
 #' @export
 export.sc_bplm <- function(object, 
                            caption = NA, 
@@ -152,19 +153,18 @@ export.sc_bplm <- function(object,
   }
   
   
+  hline_after <- nrow_b
+  if (!is.null(results$random)) {
+    hline_after <- c(hline_after, nrow_b + nrow_g + 1)
+  }
+  
   table <- .create_table(
     out,
     caption = caption,
     footnote = footnote,
-    row_group = row_group
+    row_group = row_group,
+    hline_after = hline_after
   )
-
-  if (.export_engine() == "kable") {
-    table <- row_spec(table, nrow_b, hline_after = TRUE)
-    if (!is.null(results$random)) {
-      table <- row_spec(table, nrow_b + nrow_g + 1, hline_after = TRUE)
-    }
-  }
   
   if (!is.na(filename)) .save_export(table, filename)
   

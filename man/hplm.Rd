@@ -254,12 +254,12 @@ Leidig2018 |>
 }
 \seealso{
 Other regression functions:
+\code{\link[=autocorr]{autocorr()}},
 \code{\link[=bplm]{bplm()}},
+\code{\link[=corrected_tau]{corrected_tau()}},
 \code{\link[=fetch]{fetch()}},
 \code{\link[=mplm]{mplm()}},
 \code{\link[=plm]{plm()}},
-\code{\link[=print.sc_ac]{print.sc_ac()}},
-\code{\link[=print.sc_bctau]{print.sc_bctau()}},
 \code{\link[=trend]{trend()}}
 }
 \author{

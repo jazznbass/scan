@@ -233,6 +233,7 @@ Retrieved from http://ktarlow.com/stats/
 ## See also
 
 Other overlap functions:
+[`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`ird()`](https://jazznbass.github.io/scan/reference/ird.md),
 [`nap()`](https://jazznbass.github.io/scan/reference/nap.md),
 [`overlap()`](https://jazznbass.github.io/scan/reference/overlap.md),
@@ -240,7 +241,6 @@ Other overlap functions:
 [`pem()`](https://jazznbass.github.io/scan/reference/pem.md),
 [`pet()`](https://jazznbass.github.io/scan/reference/pet.md),
 [`pnd()`](https://jazznbass.github.io/scan/reference/pnd.md),
-[`print.sc_cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`select_phases()`](https://jazznbass.github.io/scan/reference/select_phases.md)
 
 ## Author

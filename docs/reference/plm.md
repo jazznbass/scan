@@ -303,12 +303,12 @@ Measurement, 60*, 38-58.
 ## See also
 
 Other regression functions:
+[`autocorr()`](https://jazznbass.github.io/scan/reference/autocorr.md),
 [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md),
+[`corrected_tau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md),
 [`fetch()`](https://jazznbass.github.io/scan/reference/fetch.md),
 [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md),
 [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md),
-[`print.sc_ac()`](https://jazznbass.github.io/scan/reference/autocorr.md),
-[`print.sc_bctau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md),
 [`trend()`](https://jazznbass.github.io/scan/reference/trend.md)
 
 ## Author
@@ -544,68 +544,10 @@ plm(exampleAB$Johanna) |>
 #> Formula: values ~ 1 + mt + phaseB + interB 
 ## Export
 plm(exampleAB$Johanna) |> export()
-#> <table class=" lightable-classic" style="width: auto !important; border-bottom: 0;">
-#> <caption>Piecewise-regression model predicting 'values'</caption>
-#>  <thead>
-#> <tr>
-#> <th style="empty-cells: hide;border-bottom:hidden;" colspan="2"></th>
-#> <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">CI(95%)</div></th>
-#> <th style="empty-cells: hide;border-bottom:hidden;" colspan="4"></th>
-#> </tr>
-#>   <tr>
-#>    <th style="text-align:left;"> Parameter </th>
-#>    <th style="text-align:center;"> B </th>
-#>    <th style="text-align:center;"> LL </th>
-#>    <th style="text-align:center;"> UL </th>
-#>    <th style="text-align:center;"> SE </th>
-#>    <th style="text-align:center;"> t </th>
-#>    <th style="text-align:center;"> p </th>
-#>    <th style="text-align:center;"> delta R² </th>
-#>   </tr>
-#>  </thead>
-#> <tbody>
-#>   <tr>
-#>    <td style="text-align:left;"> Intercept </td>
-#>    <td style="text-align:center;"> 54.40 </td>
-#>    <td style="text-align:center;"> 46.78 </td>
-#>    <td style="text-align:center;"> 62.02 </td>
-#>    <td style="text-align:center;"> 3.89 </td>
-#>    <td style="text-align:center;"> 13.99 </td>
-#>    <td style="text-align:center;"> &lt;.001 </td>
-#>    <td style="text-align:center;">  </td>
-#>   </tr>
-#>   <tr>
-#>    <td style="text-align:left;"> Trend (mt) </td>
-#>    <td style="text-align:center;"> 0.10 </td>
-#>    <td style="text-align:center;"> -3.01 </td>
-#>    <td style="text-align:center;"> 3.21 </td>
-#>    <td style="text-align:center;"> 1.59 </td>
-#>    <td style="text-align:center;"> 0.06 </td>
-#>    <td style="text-align:center;"> .95 </td>
-#>    <td style="text-align:center;"> 0.00 </td>
-#>   </tr>
-#>   <tr>
-#>    <td style="text-align:left;"> Level phase B (phaseB) </td>
-#>    <td style="text-align:center;"> 7.86 </td>
-#>    <td style="text-align:center;"> -3.54 </td>
-#>    <td style="text-align:center;"> 19.26 </td>
-#>    <td style="text-align:center;"> 5.82 </td>
-#>    <td style="text-align:center;"> 1.35 </td>
-#>    <td style="text-align:center;"> .20 </td>
-#>    <td style="text-align:center;"> 0.02 </td>
-#>   </tr>
-#>   <tr>
-#>    <td style="text-align:left;"> Slope phase B (interB) </td>
-#>    <td style="text-align:center;"> 1.53 </td>
-#>    <td style="text-align:center;"> -1.64 </td>
-#>    <td style="text-align:center;"> 4.69 </td>
-#>    <td style="text-align:center;"> 1.62 </td>
-#>    <td style="text-align:center;"> 0.94 </td>
-#>    <td style="text-align:center;"> .36 </td>
-#>    <td style="text-align:center;"> 0.01 </td>
-#>   </tr>
-#> </tbody>
-#> <tfoot><tr><td style="padding: 0; " colspan="100%">
-#> <span style="font-style: italic;">Note: </span> <sup></sup> F(3, 16) = 28.69; p &lt;.001; R² = 0.843; Adjusted R² = 0.814; AIC = 127; LL = lower limit; UL = upper limit; Slope estimation method = W; Contrasts for the level and slope effects are coded with the first phase as the reference.</td></tr></tfoot>
-#> </table>
+
+
+  
+
+
+Piecewise-regression model predicting ‘values’
 ```

@@ -1,4 +1,30 @@
-#' @rdname export
+#' @describeIn nap Print results
+#' @order 2
+#' @inheritParams print.sc
+#' @inheritParams .inheritParams
+#' @param complete If TRUE, all columns of the table are printed. By default
+#'   the columns with the test statistics are left out.
+#' @export
+print.sc_nap <- function(x, 
+                         digits = "auto", 
+                         nice = TRUE, 
+                         complete = FALSE, 
+                         ...) {
+  
+  if (digits == "auto") digits <- 2
+  cat("Nonoverlap of All Pairs\n\n")
+  
+  out <- as.data.frame(x$nap)
+  if (!complete) out <- out[, -(4:7)]
+  if (nice) out$p <- .nice_p(unlist(out$p))
+  print(out, digits = digits, row.names = FALSE)
+  
+}
+
+#' @describeIn nap Export results as html table (see [export()])
+#' @order 3
+#' @inheritParams export
+#' @inheritParams .inheritParams
 #' @export
 export.sc_nap <- function(object, 
                           caption = NA, 

@@ -118,14 +118,9 @@ export.sc_pand <- function(object,
       footnote = footnote,
       spanner = list("Expected" = 3:5),
       row_group = list("Percentage" = 1:3, "Counts" = 4:6),
-      align = c("l", "r", "c", "c", "c")
+      align = c("l", "r", "c", "c", "c"),
+      bold_columns = 1:2
     )
-    
-    if (.export_engine() == "kable") {
-      table <- table  |> 
-        add_header_above(c(" " = 2, "Expected" = 3))  |> 
-        column_spec(1:2, bold = TRUE)
-    }
   }
   
   if (object$method == "minimum") {
@@ -157,12 +152,9 @@ export.sc_pand <- function(object,
       out, 
       caption = caption,
       footnote = footnote,
-      align = c("l", "c")
+      align = c("l", "c"),
+      bold_columns = 1
     )
-    
-    if (.export_engine() == "kable") {
-      table <- table |> column_spec(1, bold = TRUE)
-    }
   }
   
   # finish ------------------------------------------------------------------

@@ -10,6 +10,20 @@ error-proneness the PND should not be used, but
 
 ``` r
 pnd(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2))
+
+# S3 method for class 'sc_pnd'
+print(x, ...)
+
+# S3 method for class 'sc_pnd'
+export(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  select = c("Case", "PND", "Total", "Exceeds"),
+  round = 2,
+  ...
+)
 ```
 
 ## Arguments
@@ -44,6 +58,10 @@ pnd(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2))
   `phases = list(A = c(1,3), B = c(2,4))` will compare phases 1 and 3
   (as A) against 2 and 4 (as B). Default is `phases = c(1,2)`.
 
+- ...:
+
+  Further arguments passed to the function.
+
 ## Value
 
 - PND:
@@ -58,16 +76,23 @@ lowest data point in phase A for decreasing data) divided by the total
 number of data points in phase B. This value is then multiplied by 100
 to get a percentage value.
 
+## Functions
+
+- `print(sc_pnd)`: Print results
+
+- `export(sc_pnd)`: Export results as html table (see
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md))
+
 ## See also
 
 Other overlap functions:
+[`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`ird()`](https://jazznbass.github.io/scan/reference/ird.md),
 [`nap()`](https://jazznbass.github.io/scan/reference/nap.md),
 [`overlap()`](https://jazznbass.github.io/scan/reference/overlap.md),
 [`pand()`](https://jazznbass.github.io/scan/reference/pand.md),
 [`pem()`](https://jazznbass.github.io/scan/reference/pem.md),
 [`pet()`](https://jazznbass.github.io/scan/reference/pet.md),
-[`print.sc_cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`select_phases()`](https://jazznbass.github.io/scan/reference/select_phases.md),
 [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md)
 

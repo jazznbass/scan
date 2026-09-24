@@ -55,6 +55,7 @@
 #'   first_mt = 1 # must be set to 1 because log(0) would be -Inf
 #' )
 #'
+#' @order 1
 #' @export
 trend <- function(data, dvar, pvar, mvar, 
                   offset = "deprecated",
@@ -109,7 +110,9 @@ trend <- function(data, dvar, pvar, mvar,
     data_phase[[mvar]] <- data_phase[[mvar]] - mvar_correction
     
     .row <- which(rows == paste0(formulas_names[i_formula], ".ALL"))
-    coefs <- .beta_weights(lm(formulas[[i_formula]], data = data_phase))
+    coefs <- .beta_weights(
+      lm(formulas[[i_formula]], data = data_phase, na.action = na.omit)
+    )
     if (length(coefs) != 3L) {
       abort(
         "Model '", formulas_names[i_formula], "' has ",
@@ -124,7 +127,9 @@ trend <- function(data, dvar, pvar, mvar,
       mvar_correction <- min(data_phase[[mvar]], na.rm = TRUE) - first_mt
       data_phase[[mvar]] <- data_phase[[mvar]] - mvar_correction 
       .row <- which(rows == paste0(formulas_names[i_formula], ".", design[p]))
-      ma[.row, 1:3] <- .beta_weights(lm(formulas[[i_formula]], data=data_phase))
+      ma[.row, 1:3] <- .beta_weights(
+        lm(formulas[[i_formula]], data = data_phase, na.action = na.omit)
+      )
     }
   }
   

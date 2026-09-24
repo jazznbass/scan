@@ -1,4 +1,24 @@
-#' @rdname export
+#' @describeIn pnd Print results
+#' @order 2
+#' @inheritParams print.sc
+#' @export
+#' 
+print.sc_pnd <- function(x, ...) {
+  cat("Percent Non-Overlapping Data\n\n")
+  out <- data.frame(
+    Case = x$case.names, 
+    PND = paste0(round(x$PND, 2),"%"), 
+    "Total" = x$n.B, 
+    "Exceeds" = round(x$PND / 100 * x$n.B)
+  )
+  print(out, row.names = FALSE)
+  cat("\nMean  :", round(mean(x$PND, na.rm = TRUE), 2),"%\n")
+}	
+
+#' @describeIn pnd Export results as html table (see [export()])
+#' @order 3
+#' @inheritParams export
+#' @inheritParams .inheritParams
 #' @export
 export.sc_pnd <- function(object, 
                           caption = NA, 

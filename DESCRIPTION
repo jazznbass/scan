@@ -1,7 +1,7 @@
 Package: scan
 Title: Single-Case Data Analyses for Single and Multiple Baseline Designs
 Version: 0.69.0
-Date: 2026-09-22
+Date: 2026-09-24
 Authors@R: c(
   person("Juergen", "Wilbert", email = "juergen.wilbert@uni-muenster.de", 
     role = c("cre", "aut"), comment = c(ORCID = "0000-0002-8392-2873")), 

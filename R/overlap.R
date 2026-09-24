@@ -41,6 +41,7 @@
 #' ## Combining phases for analyszing designs with more than two phases
 #' overlap(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
 #'
+#' @order 1
 #' @export
 overlap <- function(data, dvar, pvar, mvar, 
                     decreasing = FALSE, 
@@ -112,8 +113,9 @@ overlap <- function(data, dvar, pvar, mvar,
     df$Hedges_g[i] <- (mB - mA) / sd_hg
     df$Hedges_g[i] <- df$Hedges_g[i] * (1 - (3 / (4 * n - 9)))
     
-    df$Diff_trend[i] <- coef(lm(B ~ I(mtB - mtB[1] + 1)))[2] - 
-                        coef(lm(A ~ I(mtA - mtA[1] + 1)))[2]
+    df$Diff_trend[i] <- 
+      coef(lm(B ~ I(mtB - mtB[1] + 1), na.action = na.omit))[2] - 
+      coef(lm(A ~ I(mtA - mtA[1] + 1), na.action = na.omit))[2]
     
   }
   

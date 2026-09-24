@@ -113,6 +113,7 @@
 #' ## Compute a randomization test on the Grosche2011 data using complete permutation
 #' rand_test(Grosche2011, statistic = "Median B-A", complete = TRUE, limit = 4, seed = 123)
 #'
+#' @order 1
 #' @export
 rand_test <- function (data, dvar, pvar, 
                        statistic = c("Mean B-A", "Mean A-B", "Median B-A", 

@@ -32,7 +32,7 @@ a statistical function."><meta property="og:image" content="https://jazznbass.gi
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Empirical power analysis for single-case data</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/power_test.R" class="external-link"><code>R/power_test.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/power_test.R" class="external-link"><code>R/power_test.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print-export-power.R" class="external-link"><code>R/print-export-power.R</code></a></small>
       <div class="d-none name"><code>power_test.Rd</code></div>
     </div>
 
@@ -57,7 +57,13 @@ a statistical function.</p>
 <span>  binom_test_correct <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  ci <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  alpha_level <span class="op">=</span> <span class="fl">0.05</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'sc_power'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, duration <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'sc_power'</span></span>
+<span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span><span class="va">object</span>, caption <span class="op">=</span> <span class="cn">NA</span>, footnote <span class="op">=</span> <span class="cn">NA</span>, filename <span class="op">=</span> <span class="cn">NA</span>, round <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -137,6 +143,10 @@ correct proportions.</p></dd>
 <dd><p>Alpha level used to calculate the proportion of
 significant tests. Default is <code>alpha_level = 0.05</code>.</p></dd>
 
+
+<dt id="arg-duration">duration<a class="anchor" aria-label="anchor" href="#arg-duration"></a></dt>
+<dd><p>If TRUE the duration for computation is printed.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -154,6 +164,12 @@ of the design object (specified in the <code>effect</code> parameter) is set to 
 again single-cases are generated and re-analysed. The proportion of
 significant analyses is the alpha error probability.</p>
     </div>
+    <div class="section level2">
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
+
+<ul><li><p><code>print(sc_power)</code>: Print results</p></li>
+<li><p><code>export(sc_power)</code>: Export results as html table (see <code><a href="export.html">export()</a></code>)</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="random_scdf.html">random_scdf()</a></code>, <code><a href="design.html">design()</a></code></p></div>
@@ -180,8 +196,8 @@ significant analyses is the alpha error probability.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Method Power Alpha Error Alpha:Beta Correct</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  plm_level    60           0       &lt;NA&gt;      80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       rand    60           0       &lt;NA&gt;      80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       tauU   100          20      1:0.0      90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       rand    60          10      1:4.0      75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       tauU   100          10      1:0.0      95</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Would you achieve higher power by setting up a MBD with three cases?</span></span></span>
 <span class="r-in"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="design.html">design</a></span><span class="op">(</span></span></span>
@@ -192,9 +208,9 @@ significant analyses is the alpha error probability.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test-Power in percent:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Method Power Alpha Error Alpha:Beta Correct</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  hplm_level   100          10      1:0.0      95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        rand    90          10      1:1.0      90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   tauU_meta   100          60      1:0.0      70</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  hplm_level   100           0       &lt;NA&gt;     100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        rand   100           0       &lt;NA&gt;     100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   tauU_meta   100          40      1:0.0      80</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -1,6 +1,7 @@
 #' @describeIn cdc Print results
 #' @order 2
 #' @inheritParams print.sc
+#' @inheritParams .inheritParams
 #' @export
 print.sc_cdc <- function(x, nice = TRUE, ...) {
   
@@ -35,6 +36,7 @@ print.sc_cdc <- function(x, nice = TRUE, ...) {
 #' @describeIn cdc Export html results
 #' @order 3
 #' @inheritParams export
+#' @inheritParams .inheritParams
 #' @export
 export.sc_cdc <- function(object, 
                           caption = NA, 

@@ -8,12 +8,6 @@ from a Piecewise Linear Regression Model.
 ## Usage
 
 ``` r
-# S3 method for class 'sc_outlier'
-print(x, digits = "auto", ...)
-
-# S3 method for class 'sc_outlier'
-export(object, caption = NA, footnote = NA, filename = NA, ...)
-
 outlier(
   data,
   dvar,
@@ -22,43 +16,15 @@ outlier(
   method = c("MAD", "Cook", "SD", "CI"),
   criteria = 3.5
 )
+
+# S3 method for class 'sc_outlier'
+print(x, digits = "auto", ...)
+
+# S3 method for class 'sc_outlier'
+export(object, caption = NA, footnote = NA, filename = NA, ...)
 ```
 
 ## Arguments
-
-- x:
-
-  An object returned by `outlier()`
-
-- digits:
-
-  The minimum number of significant digits to be use. If set to "auto"
-  (default), values are predefined.
-
-- ...:
-
-  Further parameters passed to the print function
-
-- object:
-
-  An scdf or an object exported from a scan function.
-
-- caption:
-
-  Character string with table caption. If left NA (default) a caption
-  will be created based on the exported object.
-
-- footnote:
-
-  Character string with table footnote. Several strings are combined
-  into a footnote of several lines. If left NA (default) a footnote will
-  be created based on the exported object. `NULL` or `""` suppress the
-  footnote.
-
-- filename:
-
-  String containing the file name. If a filename is given the output
-  will be written to that file.
 
 - data:
 
@@ -93,6 +59,40 @@ outlier(
 
   Specifies the criteria for outlier identification. Based on the
   `method` setting.
+
+- x:
+
+  An object returned by `outlier()`
+
+- digits:
+
+  The minimum number of significant digits to be use. If set to "auto"
+  (default), values are predefined.
+
+- ...:
+
+  Further arguments passed to the function.
+
+- object:
+
+  An scdf or an object exported from a scan function.
+
+- caption:
+
+  Character string with table caption. If left NA (default) a caption
+  will be created based on the exported object.
+
+- footnote:
+
+  Character string with table footnote. Several strings are combined
+  into a footnote of several lines. If left NA (default) a footnote will
+  be created based on the exported object. `NULL` or `""` suppress the
+  footnote.
+
+- filename:
+
+  String containing the file name. If a filename is given the output
+  will be written to that file.
 
 ## Value
 

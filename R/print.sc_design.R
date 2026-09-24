@@ -1,6 +1,4 @@
 #' @rdname print.sc
-#' @param nice If set TRUE (default) output values are rounded and optimized for
-#' publication tables.
 #' @export
 print.sc_design <- function(x, ...) {
   

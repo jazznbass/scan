@@ -42,6 +42,7 @@
 #'
 #' @export
 
+#' @order 1
 nap <- function(data, dvar, pvar,
                 decreasing = FALSE,
                 phases = c(1, 2)) {

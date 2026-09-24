@@ -38,7 +38,7 @@ can add regression models using the R-specific formula class."><meta property="o
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Trend analysis for single-cases data</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/trend.R" class="external-link"><code>R/trend.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jazznbass/scan/blob/HEAD/R/trend.R" class="external-link"><code>R/trend.R</code></a>, <a href="https://github.com/jazznbass/scan/blob/HEAD/R/print-export-trend.R" class="external-link"><code>R/print-export-trend.R</code></a></small>
       <div class="d-none name"><code>trend.Rd</code></div>
     </div>
 
@@ -60,6 +60,20 @@ can add regression models using the R-specific formula class.</p>
 <span>  offset <span class="op">=</span> <span class="st">"deprecated"</span>,</span>
 <span>  first_mt <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  model <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'sc_trend'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'sc_trend'</span></span>
+<span><span class="fu"><a href="export.html">export</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  caption <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  footnote <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  decimals <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -104,6 +118,10 @@ Default = 0.</p></dd>
 regression model. This is a formula expression of the standard R class. The
 parameters of the model are <code>values</code> and <code>mt</code>.</p></dd>
 
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Further arguments passed to the function.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -131,16 +149,22 @@ regression coefficients, especially the intercept, which then represents
 the estimated value at the beginning of each phase.</p>
     </div>
     <div class="section level2">
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
+
+<ul><li><p><code>print(sc_trend)</code>: Print results</p></li>
+<li><p><code>export(sc_trend)</code>: Export results as html table (see <code><a href="export.html">export()</a></code>)</p></li>
+</ul></div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="describe.html">describe()</a></code></p>
 <p>Other regression functions:
+<code><a href="autocorr.html">autocorr()</a></code>,
 <code><a href="bplm.html">bplm()</a></code>,
+<code><a href="corrected_tau.html">corrected_tau()</a></code>,
 <code><a href="fetch.html">fetch()</a></code>,
 <code><a href="hplm.html">hplm()</a></code>,
 <code><a href="mplm.html">mplm()</a></code>,
-<code><a href="plm.html">plm()</a></code>,
-<code><a href="autocorr.html">print.sc_ac()</a></code>,
-<code><a href="corrected_tau.html">print.sc_bctau()</a></code></p></div>
+<code><a href="plm.html">plm()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

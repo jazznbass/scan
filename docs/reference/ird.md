@@ -118,12 +118,12 @@ https://doi.org/10.1037/met0000179
 ## See also
 
 Other overlap functions:
+[`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`nap()`](https://jazznbass.github.io/scan/reference/nap.md),
 [`overlap()`](https://jazznbass.github.io/scan/reference/overlap.md),
 [`pand()`](https://jazznbass.github.io/scan/reference/pand.md),
 [`pem()`](https://jazznbass.github.io/scan/reference/pem.md),
 [`pet()`](https://jazznbass.github.io/scan/reference/pet.md),
 [`pnd()`](https://jazznbass.github.io/scan/reference/pnd.md),
-[`print.sc_cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`select_phases()`](https://jazznbass.github.io/scan/reference/select_phases.md),
 [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md)

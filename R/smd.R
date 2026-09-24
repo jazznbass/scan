@@ -20,6 +20,7 @@
 #' @seealso [overlap()], [describe()]
 #' @examples
 #' smd(exampleAB)
+#' @order 1
 #' @export
 smd <- function(data, dvar, pvar,
                 phases = c(1, 2)) {

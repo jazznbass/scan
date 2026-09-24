@@ -7,6 +7,21 @@ single-case data and some additional statistics.
 
 ``` r
 overlap(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2))
+
+# S3 method for class 'sc_overlap'
+print(x, digits = "auto", ...)
+
+# S3 method for class 'sc_overlap'
+export(
+  object,
+  caption = NA,
+  footnote = NULL,
+  filename = NA,
+  round = 2,
+  decimals = 2,
+  flip = FALSE,
+  ...
+)
 ```
 
 ## Arguments
@@ -46,6 +61,10 @@ overlap(data, dvar, pvar, mvar, decreasing = FALSE, phases = c(1, 2))
   `phases = list(A = c(1,3), B = c(2,4))` will compare phases 1 and 3
   (as A) against 2 and 4 (as B). Default is `phases = c(1,2)`.
 
+- ...:
+
+  Further arguments passed to the function.
+
 ## Value
 
 |  |  |
@@ -75,6 +94,13 @@ by the pooled standard deviation: \\\sqrt{ (n_A - 1)sd_A^2 + (n_B -
 1)sd_B^2 \over n_A + n_B - 2 }\\ with a hedges correction applied:
 \\Hedges_g \* (1 - \frac{3}{4n - 9} ) )\\.
 
+## Functions
+
+- `print(sc_overlap)`: Print results
+
+- `export(sc_overlap)`: Export results as html table (see
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md))
+
 ## See also
 
 [`pnd()`](https://jazznbass.github.io/scan/reference/pnd.md),
@@ -87,13 +113,13 @@ by the pooled standard deviation: \\\sqrt{ (n_A - 1)sd_A^2 + (n_B -
 [`corrected_tau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md)
 
 Other overlap functions:
+[`cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`ird()`](https://jazznbass.github.io/scan/reference/ird.md),
 [`nap()`](https://jazznbass.github.io/scan/reference/nap.md),
 [`pand()`](https://jazznbass.github.io/scan/reference/pand.md),
 [`pem()`](https://jazznbass.github.io/scan/reference/pem.md),
 [`pet()`](https://jazznbass.github.io/scan/reference/pet.md),
 [`pnd()`](https://jazznbass.github.io/scan/reference/pnd.md),
-[`print.sc_cdc()`](https://jazznbass.github.io/scan/reference/cdc.md),
 [`select_phases()`](https://jazznbass.github.io/scan/reference/select_phases.md),
 [`tau_u()`](https://jazznbass.github.io/scan/reference/tau_u.md)
 

@@ -65,6 +65,7 @@ print.sc_plm <- function(x,
 #' ## Export
 #' plm(exampleAB$Johanna) |> export()
 #' 
+#' @inheritParams .inheritParams
 #' @export
 export.sc_plm <- function(object, 
                           caption = NA, 

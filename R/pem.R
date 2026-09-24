@@ -33,6 +33,7 @@
 #' dat <- random_scdf(design(n = 5, level = 0.5))
 #' pem(dat, chi.test = TRUE)
 #' 
+#' @order 1
 #' @export
 pem <- function(data, dvar, pvar, 
                 decreasing = FALSE, 

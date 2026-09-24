@@ -19,6 +19,20 @@ trend(
   first_mt = 0,
   model = NULL
 )
+
+# S3 method for class 'sc_trend'
+print(x, digits = 3, ...)
+
+# S3 method for class 'sc_trend'
+export(
+  object,
+  caption = NA,
+  footnote = NA,
+  filename = NA,
+  round = 3,
+  decimals = NULL,
+  ...
+)
 ```
 
 ## Arguments
@@ -62,6 +76,10 @@ trend(
   model. This is a formula expression of the standard R class. The
   parameters of the model are `values` and `mt`.
 
+- ...:
+
+  Further arguments passed to the function.
+
 ## Value
 
 A list of class `sc_trend` containing:
@@ -90,18 +108,25 @@ interpretation of the regression coefficients, especially the intercept,
 which then represents the estimated value at the beginning of each
 phase.
 
+## Functions
+
+- `print(sc_trend)`: Print results
+
+- `export(sc_trend)`: Export results as html table (see
+  [`export()`](https://jazznbass.github.io/scan/reference/export.md))
+
 ## See also
 
 [`describe()`](https://jazznbass.github.io/scan/reference/describe.md)
 
 Other regression functions:
+[`autocorr()`](https://jazznbass.github.io/scan/reference/autocorr.md),
 [`bplm()`](https://jazznbass.github.io/scan/reference/bplm.md),
+[`corrected_tau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md),
 [`fetch()`](https://jazznbass.github.io/scan/reference/fetch.md),
 [`hplm()`](https://jazznbass.github.io/scan/reference/hplm.md),
 [`mplm()`](https://jazznbass.github.io/scan/reference/mplm.md),
-[`plm()`](https://jazznbass.github.io/scan/reference/plm.md),
-[`print.sc_ac()`](https://jazznbass.github.io/scan/reference/autocorr.md),
-[`print.sc_bctau()`](https://jazznbass.github.io/scan/reference/corrected_tau.md)
+[`plm()`](https://jazznbass.github.io/scan/reference/plm.md)
 
 ## Author
 

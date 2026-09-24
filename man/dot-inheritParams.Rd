@@ -20,6 +20,9 @@
   level,
   slope,
   nice,
+  flip,
+  decimals,
+  select,
   ...
 )
 }
@@ -72,6 +75,14 @@ model.}
 
 \item{nice}{If set TRUE (default) output values are rounded and optimized for
 publication tables.}
+
+\item{flip}{If TRUE, some objects are exported with rows and columns flipped.}
+
+\item{decimals}{Decimal places that are reported.}
+
+\item{select}{A character vector containing the names of the variables to be
+included. If the vector is named, the variables will be renamed
+accordingly.}
 
 \item{...}{Further arguments passed to the function.}
 }

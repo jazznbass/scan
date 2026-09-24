@@ -28,6 +28,7 @@
 #' ## Write descriptive statistics to .csv-file
 #' study <- describe(Waddell2011)
 #' write.csv(study$descriptives, file = tempfile())
+#' @order 1
 #' @export
 describe <- function(data, dvar, pvar, mvar) {
 
