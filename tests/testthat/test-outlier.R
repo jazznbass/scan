@@ -204,3 +204,26 @@ test_that("print and export of an outlier object run", {
   }
   expect_no_error(export(outlier(exampleAB, method = "SD")))
 })
+
+test_that("the criterion is worded once for print and export", {
+  for (m in c("SD", "MAD", "CI", "Cook")) {
+    crit <- switch(m, SD = 1.5, MAD = 3.5, CI = 0.99, Cook = "4/n")
+    res <- outlier(exampleAB, method = m, criteria = crit)
+    out <- scan:::.output_outlier(res)
+
+    expect_match(out$criterion, "^Criterion: ")
+    txt <- paste(capture.output(print(res)), collapse = "\n")
+    expect_true(grepl(out$criterion, txt, fixed = TRUE))
+    expect_true(grepl(out$criterion, render_table(export(res)), fixed = TRUE))
+
+    # the matrix of bounds belongs to the method that has one
+    if (identical(m, "Cook")) {
+      expect_null(out$matrix)
+    } else {
+      expect_identical(names(out$matrix), names(exampleAB))
+    }
+
+    expect_identical(out$dropped$Case, res$case.names)
+    expect_equal(out$dropped$Dropped, unlist(res$dropped.n))
+  }
+})

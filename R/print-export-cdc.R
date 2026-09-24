@@ -5,30 +5,17 @@
 #' @export
 print.sc_cdc <- function(x, nice = TRUE, ...) {
   
-  cat("Conservative Dual Criterion\n\n")
-  cat("N cases = ", x$N, "\n\n")
+  out <- .output_cdc(x, nice = nice)
   
-  if (nice) x$cdc_p <- .nice_p(x$cdc_p)
-  out <- data.frame(
-    Case = x$case_names,
-    "nB improve" = x$cdc_exc,
-    "nB" = x$cdc_nb,
-    "binom p" = x$cdc_p,
-    "CDC Evaluation" = x$cdc,
-    check.names = FALSE
-  )
-  print(out, row.names = FALSE)
+  cat("Conservative Dual Criterion\n\n")
+  cat("N cases = ", out$N, "\n\n")
+  
+  print(out$table, row.names = FALSE)
+  
   cat("\n")
-  if (x$decreasing) {
-    cat("Assuming an expected decrease in phase B.\n")
-    cat("Alternative hypothesis (Binomial test): true probability < 50%\n")
-  } else {
-    cat("Assuming an expected increase in phase B.\n")
-    cat("Alternative hypothesis (Binomial test): true probability > 50%\n")
-  }
-  if (x$N > 1) {
-    cat("Overall evaluation of all MBD instances:  ", x$cdc_all, "\n")
-  }
+  cat(out$hypothesis, sep = "\n")
+  cat("\n")
+  if (!is.null(out$overall)) cat(out$overall, "\n")
   
   .note_vars(x)
 }
@@ -53,31 +40,12 @@ export.sc_cdc <- function(object,
     )
   }
   
-  footnote <- .footnote(footnote, 
-    if (object$decreasing) {
-      c("Assuming an expected decrease in phase B.",
-        "Alternative hypothesis (Binomial test): true probability < 50%")
-    } else {
-      c("Assuming an expected increase in phase B",
-        "Alternative hypothesis (Binomial test): true probability > 50%")
-    },
-    if (object$N > 1) {
-      paste0("Overall evaluation of all MBD instances:  ", object$cdc_all)
-    }
-  )
+  results <- .output_cdc(object, nice = nice)
   
-  if (nice) object$cdc_p <- .nice_p(object$cdc_p)
-  out <- data.frame(
-    Case = object$case_names,
-    "nB improve" = object$cdc_exc,
-    "nB" = object$cdc_nb,
-    "binom p" = object$cdc_p,
-    "CDC Evaluation" = object$cdc,
-    check.names = FALSE
-  )
+  footnote <- .footnote(footnote, results$hypothesis, results$overall)
   
   table <- .create_table(
-    out,
+    results$table,
     caption = caption,
     footnote = footnote,
     ...
@@ -87,4 +55,39 @@ export.sc_cdc <- function(object,
   
   table
   
+}
+
+# Values of a cdc object, extracted once for the print and the export method.
+.output_cdc <- function(x, nice = TRUE) {
+  
+  out <- list()
+  
+  out$N          <- x$N
+  out$decreasing <- x$decreasing
+  out$cdc_all    <- x$cdc_all
+  
+  p_values <- if (nice) .nice_p(x$cdc_p) else x$cdc_p
+  
+  out$table <- data.frame(
+    Case = x$case_names,
+    "nB improve" = x$cdc_exc,
+    "nB" = x$cdc_nb,
+    "binom p" = p_values,
+    "CDC Evaluation" = x$cdc,
+    check.names = FALSE
+  )
+  
+  out$hypothesis <- if (x$decreasing) {
+    c("Assuming an expected decrease in phase B.",
+      "Alternative hypothesis (Binomial test): true probability < 50%")
+  } else {
+    c("Assuming an expected increase in phase B.",
+      "Alternative hypothesis (Binomial test): true probability > 50%")
+  }
+  
+  if (x$N > 1) {
+    out$overall <- paste0("Overall evaluation of all MBD instances:  ", x$cdc_all)
+  }
+  
+  out
 }

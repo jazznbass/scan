@@ -5,57 +5,42 @@
 #' @inheritParams print.sc
 print.sc_rand <- function(x, ...) {
   
+  out <- .output_rand(x)
+  
   cat("Randomization Test\n\n")
-  if (x$N > 1) cat("Combined test for", number_word(x$N), "cases.\n\n")
+  if (out$N > 1) cat("Combined test for", number_word(out$N), "cases.\n\n")
   
-  cat(.phases_string(x$phases.A, x$phases.B), "\n")
+  cat(out$phases, "\n")
   
-  cat("Statistic: ", x$statistic, "\n\n")
+  cat("Statistic: ", out$statistic, "\n\n")
   
-  if (is.na(x$startpoints[1])) {
-    cat("Minimal length of each phase:", "A =", x$limit[1], ", B =", x$limit[2], "\n")
-  } else {
-    cat("Possible starting points of phase B: ", x$startpoints, "\n")
-  }
-  cat("Observed statistic = ", x$observed.statistic, "\n")
+  cat(out$design_label, ": ", out$design_value, "\n", sep = "")
+  cat("Observed statistic = ", out$observed, "\n")
   
-  if (x$auto.corrected.number) {
+  if (out$auto_corrected) {
     cat("\nWarning! The assigned number of random permutations exceeds the",
         "number of possible permutations.", 
         "\nAnalysis is restricted to all possible permutations.\n")
   }
-  if (x$complete) {
-    cat("\nDistribution based on all", x$possible.combinations, 
-        "possible combinations.\n")
-  } else 
-    cat("\nDistribution based on a random sample of all", 
-        x$possible.combinations, 
-        "possible combinations.\n")
   
-  dist <- x$distribution[is.finite(x$distribution)]
-  cat("n   = ", x$number,"\n")
-  cat("M   = ", if (length(dist)) mean(dist) else NA, "\n")
-  cat("SD  = ", if (length(dist)) sd(dist) else NA, "\n")
-  cat("Min = ", if (length(dist)) min(dist) else NA, "\n")
-  cat("Max = ", if (length(dist)) max(dist) else NA, "\n")
+  cat("\n", out$combinations, ".\n", sep = "")
+  
+  cat("n   = ", out$number, "\n")
+  cat("M   = ", out$m, "\n")
+  cat("SD  = ", out$sd, "\n")
+  cat("Min = ", out$min, "\n")
+  cat("Max = ", out$max, "\n")
   cat("\n")
-  #cat("Probability of observed statistic based on distribution:\n")
   
+  cat("Probability of ", out$direction, ":\n", sep = "")
   
-  if (x$testdirection == "greater") {
-    if (x$exclude.equal) cat("Probability of a higher value than the observed statistic:\n")
-    if (!x$exclude.equal) cat("Probability of an equal or higher value than the observed statistic:\n")  
+  if (isTRUE(out$p_value == 0)) {
+    cat("p   < ", out$p_minimum, "\n")
   } else {
-    if (x$exclude.equal) cat("Probability of a lower value than the observed statistic:\n")
-    if (!x$exclude.equal) cat("Probability of an equal or lower value than the observed statistic:\n")  
+    cat("p   = ", out$p_value, "\n")
   }
   
-  if (isTRUE(x$p.value == 0)) {
-    cat("p   < ", format(1/x$number, scientific = FALSE), "\n")
-  } else {
-    cat("p   = ", x$p.value, "\n")
-  }
-  
+  dist <- out$distribution
   if (length(dist) > 3 && length(dist) < 5001 && sd(dist) > 0) {
     sh <- shapiro.test(dist)
     cat(sprintf("\nShapiro-Wilk Normality Test: W = %0.3f; p %s", 
@@ -71,7 +56,7 @@ print.sc_rand <- function(x, ...) {
   }
   
   cat("\nProbabilty of observed statistic based on the assumption of normality:\n")
-  cat(sprintf("z = %0.4f, p = %0.4f (single sided)\n", x$Z, x$p.Z.single))
+  cat(sprintf("z = %0.4f, p = %0.4f (single sided)\n", out$Z, out$p_Z))
   
 }
 
@@ -92,54 +77,30 @@ export.sc_rand <- function(object,
     )
   }
   
+  results <- .output_rand(object)
+  
   case_names <- attr(object, "casenames")
   footnote <- .footnote(footnote, 
-    paste0("N = ", object$N, if (object$N == 1) " case" else " cases"),
-    if (!is.null(case_names) && length(case_names) == object$N && 
+    paste0("N = ", results$N, if (results$N == 1) " case" else " cases"),
+    if (!is.null(case_names) && length(case_names) == results$N && 
         all(nzchar(case_names))) {
       paste0(case_names, collapse = ", ")
     },
-    .phases_string(object$phases.A, object$phases.B),
-    if (object$complete) {
-      paste0("Distribution based on all ", object$possible.combinations, 
-             " possible combinations")
-    } else {
-      paste0("Distribution based on a random sample of all ", 
-             object$possible.combinations, " possible combinations")
-    },
-    if (object$testdirection == "greater") {
-      if (object$exclude.equal) {
-        "p: probability of a higher value than the observed statistic"
-      } else {
-        "p: probability of an equal or higher value than the observed statistic"
-      }
-    } else {
-      if (object$exclude.equal) {
-        "p: probability of a lower value than the observed statistic"
-      } else {
-        "p: probability of an equal or lower value than the observed statistic"
-      }
-    }
+    results$phases,
+    results$combinations,
+    paste0("p: probability of ", results$direction)
   )
-  
-  dist <- object$distribution[is.finite(object$distribution)]
   
   .nice_value <- function(value) {
     if (length(value) != 1L || !is.finite(value)) return(NA_character_)
     format(round(value, 3))
   }
   
-  .dist_stat <- function(fun) {
-    if (length(dist) == 0) return(NA_character_)
-    .nice_value(fun(dist))
-  }
-  
   out <- data.frame(
     Parameter = c(
       "Statistic",
       "Observed statistic",
-      if (is.na(object$startpoints[1])) "Minimal phase length" else 
-        "Possible starting points of phase B",
+      results$design_label,
       "Permutations",
       "M of the distribution",
       "SD of the distribution",
@@ -148,24 +109,20 @@ export.sc_rand <- function(object,
       "p"
     ),
     Value = c(
-      object$statistic,
-      .nice_value(object$observed.statistic),
-      if (is.na(object$startpoints[1])) {
-        paste0("A = ", object$limit[1], ", B = ", object$limit[2])
-      } else {
-        paste0(object$startpoints, collapse = ", ")
-      },
-      format(object$number, scientific = FALSE),
-      .dist_stat(mean),
-      .dist_stat(sd),
-      .dist_stat(min),
-      .dist_stat(max),
-      if (isTRUE(object$p.value == 0)) {
-        paste0("< ", format(1 / object$number, scientific = FALSE))
-      } else if (!is.finite(object$p.value)) {
+      results$statistic,
+      .nice_value(results$observed),
+      results$design_value,
+      format(results$number, scientific = FALSE),
+      .nice_value(results$m),
+      .nice_value(results$sd),
+      .nice_value(results$min),
+      .nice_value(results$max),
+      if (isTRUE(results$p_value == 0)) {
+        paste0("< ", results$p_minimum)
+      } else if (!is.finite(results$p_value)) {
         NA_character_
       } else {
-        format(round(object$p.value, 4), scientific = FALSE)
+        format(round(results$p_value, 4), scientific = FALSE)
       }
     ),
     check.names = FALSE
@@ -184,3 +141,55 @@ export.sc_rand <- function(object,
   
 }
 
+# Values of a rand_test object, extracted once for the print and the export
+# method.
+.output_rand <- function(x) {
+  
+  out <- list()
+  
+  out$statistic      <- x$statistic
+  out$observed       <- x$observed.statistic
+  out$N              <- x$N
+  out$number         <- x$number
+  out$complete       <- x$complete
+  out$auto_corrected <- x$auto.corrected.number
+  out$p_value        <- x$p.value
+  out$p_minimum      <- format(1 / x$number, scientific = FALSE)
+  out$Z              <- x$Z
+  out$p_Z            <- x$p.Z.single
+  out$phases         <- .phases_string(x$phases.A, x$phases.B)
+  
+  # the distribution, reduced to the values that can be summarised
+  dist <- x$distribution[is.finite(x$distribution)]
+  out$distribution <- dist
+  summarise <- function(fun) if (length(dist)) fun(dist) else NA_real_
+  out$m   <- summarise(mean)
+  out$sd  <- summarise(sd)
+  out$min <- summarise(min)
+  out$max <- summarise(max)
+  
+  # how the start of phase B was varied
+  if (is.na(x$startpoints[1])) {
+    out$design_label <- "Minimal phase length"
+    out$design_value <- paste0("A = ", x$limit[1], ", B = ", x$limit[2])
+  } else {
+    out$design_label <- "Possible starting points of phase B"
+    out$design_value <- paste0(x$startpoints, collapse = ", ")
+  }
+  
+  # what the p value is the probability of
+  direction <- if (identical(x$testdirection, "greater")) "higher" else "lower"
+  out$direction <- paste0(
+    if (x$exclude.equal) paste0("a ", direction) else 
+      paste0("an equal or ", direction),
+    " value than the observed statistic"
+  )
+  
+  out$combinations <- paste0(
+    "Distribution based on ",
+    if (x$complete) "all " else "a random sample of all ",
+    x$possible.combinations, " possible combinations"
+  )
+  
+  out
+}

@@ -1,17 +1,36 @@
-#' IRD - Improvement rate difference
+#' Robust improvement rate difference (IRD)
 #'
-#' `ird()` calculates the robust improvement rate difference as proposed by
-#' Parker and colleagues (2011).
+#' Robust improvement rate difference of all cases of a single-case data set.
+#' Unlike the other overlap functions, `ird()` returns one value for the whole
+#' data set and not one value per case.
 #'
-#' The adaptation of the improvement rate difference for single-case phase
-#' comparisons was developed by Parker and colleagues (2009). A variation called
-#' robust improvement rate difference was proposed by Parker and colleagues in
-#' 2011. This function calculates the robust improvement rate difference. It
-#' follows the formula suggested by Pustejovsky (2019). For a multiple case
-#' design, ird is based on the overall improvement rate of all cases which is
-#' the average of the irds for each case.
-#' 
+#' @details The robust improvement rate difference is derived from the
+#'   non-overlapping measurements counted by [pand()] with `method =
+#'   "minimum"`, following Pustejovsky (2019):
+#'
+#'   \deqn{IRD = 1 - \frac{n^2}{2 n_A n_B} \left(1 - PAND\right)}
+#'
+#'   with \eqn{n_A} and \eqn{n_B} the number of observed measurements in
+#'   phase A and in phase B, \eqn{n} their sum, and \eqn{PAND} the percentage
+#'   of all non-overlapping data expressed as a proportion. All three counts,
+#'   and \eqn{PAND} itself, are taken across all cases at once, so the result is
+#'   not the average of the case-wise improvement rate differences. When both
+#'   phases are of equal length the factor equals two and the formula reduces
+#'   to \eqn{IRD = 2 PAND - 1}; with phases of unequal length it is larger.
+#'
+#'   For `decreasing = TRUE` the values are mirrored before counting, so that a
+#'   drop in phase B counts as an improvement.
+#'
+#'   Missing values are dropped beforehand and are part of none of the counts.
+#'   A case without observed values in one of the phases is removed with a
+#'   warning; if no case remains, the function stops with an error.
 #' @inheritParams .inheritParams
+#' @return An object of class `sc_ird` with the elements:
+#'  |  |  |
+#'  | --- | --- |
+#'  | `ird` | Robust improvement rate difference across all cases. |
+#'  | `n_cases` | Number of cases the value is based on. |
+#' @author Juergen Wilbert
 #' @family overlap functions
 #' @references Parker, R. I., Vannest, K. J., & Brown, L. (2009). The
 #'   improvement rate difference for single-case research. Exceptional Children,
@@ -25,7 +44,11 @@
 #'   single-case designs with directly observed behavioral outcome measures.
 #'  *Psychological Methods*, *24(2)*, 217-235.
 #'   https://doi.org/10.1037/met0000179
+#' @examples
+#' ird(exampleAB)
 #'
+#' # data that are expected to decrease in phase B
+#' ird(exampleAB_decreasing, decreasing = TRUE)
 #' @order 1
 #' @export
 ird <- function(data, dvar, pvar,

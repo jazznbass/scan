@@ -1,37 +1,46 @@
 #' Percent exceeding the trend (PET)
 #'
-#' The `pet` function returns the percentage of Phase B data points that exceed
-#' the prediction based on the Phase A trend. A binomial test against a 50/50
-#' distribution is calculated. It also calculates the percentage of Phase B data
-#' points that exceed the upper (or lower) 95 percent confidence interval of the
-#' predicted progression.
-#' 
-#' The PET is calculated by first fitting a linear model to the Phase A data
-#' to estimate the trend. Then, for each data point in Phase B, it is
-#' determined whether it exceeds the predicted value from the Phase A trend.
-#' The PET is the percentage of Phase B data points that exceed this predicted
-#' value. Additionally, a binomial test is performed to assess whether the
-#' observed PET is significantly greater than what would be expected by chance
-#' (i.e., 50%).
+#' Percentage of the phase B measurements that lie beyond the trend of phase A,
+#' extrapolated into phase B.
 #'
+#' @details A linear regression of the dependent variable on the measurement
+#'   time is fitted to phase A and predicted into phase B. PET is the percentage
+#'   of phase B measurements above that prediction, or below it for
+#'   `decreasing = TRUE`. `binom.p` tests that percentage against chance with a
+#'   one sided binomial test at a probability of 0.5.
+#'
+#'   `PET CI` applies the same comparison to a stricter line: the prediction
+#'   plus `qnorm(ci)` standard errors of the predicted mean, minus them for an
+#'   expected decrease. The bound is one sided, so `ci = 0.95` shifts the line
+#'   by 1.64 standard errors. With `ci = 0` the line is the prediction itself
+#'   and `PET CI` equals `PET`.
+#'
+#'   Measurements without a value for the dependent variable or the measurement
+#'   time are dropped. A case with fewer than two complete measurements in phase
+#'   A, none in phase B, or without two distinct measurement times in phase A is
+#'   not evaluated and gives `NA` with a warning. `PET CI` additionally needs
+#'   three complete measurements in phase A; with fewer, PET is still computed
+#'   and only `PET CI` stays `NA`.
 #' @inheritParams .inheritParams
-#' @param ci Width of the confidence interval. Default is `ci = 0.95`.
-#' @return 
+#' @param ci Width of the one sided confidence bound for the `PET CI` column.
+#' @return An object of class `sc_pet` with the element `PET`, a data frame
+#'   holding one row per case:
 #'  |  |  |
 #'  | --- | --- |
-#'  | `PET` | Percent exceeding the trend. |
-#'  | `ci` | Width of confidence interval. |
-#'  | `decreasing` | Logical argument from function call (see Arguments above). | 
+#'  | `Case` | Name of the case. |
+#'  | `PET` | Percentage of phase B measurements beyond the phase A trend. |
+#'  | `PET CI` | The same percentage against the confidence bound. |
+#'  | `binom.p` | P value of the binomial test for `PET`. |
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @examples
+#' pet(exampleAB)
 #'
-#' ## Calculate the PET and use a 99%-CI for the additional calculation
-#' # create random example data
-#' design <- design(n = 5, slope = 0.2)
-#' dat <- random_scdf(design, seed = 23)
-#' pet(dat, ci = .99)
+#' # a stricter bound for the PET CI column
+#' pet(exampleAB, ci = 0.99)
 #'
+#' # data that are expected to decrease in phase B
+#' pet(exampleAB_decreasing, decreasing = TRUE)
 #' @order 1
 #' @export
 pet <- function(data, 

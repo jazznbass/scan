@@ -1,83 +1,99 @@
-#' Tau-U for single-case data
+#' Tau-U
 #'
-#' This function calculates indices of the Tau-U family as proposed by Parker et
-#' al. (2011a). It allows to calculate Tau-U values for single cases as well
-#' as overall Tau-U values across several single cases by applying a meta
-#' analysis.
+#' Indices of the Tau-U family per case and, optionally, an overall Tau-U
+#' across cases from a meta-analysis. Tau-U is an inconsistently
+#' operationalised construct, so `method` decides which of the published
+#' variants is computed.
 #'
-#' @order 1
+#' @details Tau-U combines the comparison of the phase A with the phase B
+#'   measurements with the trend within either phase. Six models are computed
+#'   per case and returned as the rows of `table`: `A vs. B`, `Trend A`,
+#'   `Trend B`, `A vs. B - Trend A`, `A vs. B + Trend B` and `A vs. B + Trend B
+#'   - Trend A`. The fourth of them is the one usually reported as Tau-U and is
+#'   the one returned in `tau_u`. Each model is a Kendall's tau of the values
+#'   against a rank vector built for that model, so `S` is the number of
+#'   concordant minus discordant pairs and `Tau` is `S / D`.
+#'
+#'   The three methods differ in the denominator `D` and in the p values.
+#'   `"complete"` takes `D` from Kendall's tau, tie-corrected for `tau_method =
+#'   "b"`. `"parker"` follows Parker et al. (2011b), which counts fewer
+#'   possible pairs for the two models that subtract the phase A trend and can
+#'   therefore return values outside the \[-1;1\] interval. `"tarlow"` follows
+#'   the online calculator and R code of Tarlow (2017). `"parker"` and
+#'   `"tarlow"` are only defined for tau-a, so both set `tau_method` to `"a"`;
+#'   `"parker"` also switches the continuity correction off and `"tarlow"`
+#'   switches it on, whatever was passed.
+#'
+#'   Confidence intervals for the single cases are obtained by transforming tau
+#'   to Fisher's Z, adding the interval and transforming back (Long & Cliff,
+#'   1997). Its standard error is `1 / sqrt(n - 3)` for `ci_method = "z"` and
+#'   `sqrt(0.437 / (n - 4))` for `"tau"`. `ci_method = "s"` instead builds the
+#'   interval on the scale of `S` and divides by `D`; it is not recommended.
+#'   `SE_Tau` in the table is derived as `Tau / Z`.
+#'
+#'   The meta-analysis weights each case by the inverse variance of its
+#'   Fisher-Z transformed tau and reports the back-transformed fixed-effect
+#'   estimate. It covers four of the six models; the two pure trend models are
+#'   left out. A model in which any case has a missing tau gives `NA`.
+#'
+#'   Missing values are dropped beforehand. A case with fewer than two observed
+#'   measurements in one of the phases is set to `NA` throughout with a
+#'   warning, which also makes every meta-analytic model `NA`.
 #' @inheritParams .inheritParams
-#' @param method `"complete"` (default), `"parker"` or `"tarlow"`. The
-#'   `"parker"` calculates the number of possible pairs as described in Parker
-#'   et al. (2011) which might lead to tau-U values greater than 1. `"tarlow"`
-#'   follows an online calculator and R code developed by Tarlow (2017).
-#' @param meta_analyses If TRUE, a meta analysis is conducted.
-#' @param meta_weight_method String to specify the method for calculating the
-#'   weights of the studies. Either "tau" or "z".
-#' @param ci Confidence intervals level. If NULL or NA, no confidence intervals
+#' @param method Character with values `"complete"`, `"parker"` or `"tarlow"`
+#'   indicating which operationalisation of Tau-U is computed.
+#' @param meta_analyses If TRUE, a meta analysis across cases is conducted.
+#' @param meta_weight_method Character with values `"z"` or `"tau"` indicating
+#'   how the standard error used for weighting the cases is calculated.
+#' @param ci Confidence interval level. If NULL or NA, no confidence intervals
 #'   are calculated.
-#' @param ci_method String to specify the method for calculating the standard
-#'   error of tau. Either "tau", "z", or "s" (not recommended).
-#' @param tau_method Character with values "a" or "b" (default) indicating
-#'   whether Kendall Tau A or Kendall Tau B is applied. Ignored for methods
-#'   'tarlow' and 'parker'.
-#' @param continuity_correction If TRUE, a continuity correction is applied for
-#'   calculating p-values of correlations (here: S will be reduced by one before
-#'   calculating Z). Ignored for methods 'tarlow' and 'parker'.
-#' @return
-#' \item{table}{A data frame containing statistics from the Tau-U
-#' family, including: Pairs, positive and negative comparisons, S, and Tau}
-#' \item{matrix}{The matrix of comparisons used for calculating the
-#' statistics.} \item{tau_u}{Tau-U value.}
-#' @details Tau-U is an inconsistently operationalized construct. Parker et al.
-#'   (2011b) describe a method which may result in Tau-U outside the \[-1;1\]
-#'   interval. A different implementation of the method (provided at
-#'   http://www.singlecaseresearch.org/calculators/tau-u) uses tau-b (instead of
-#'   tau-a as in the original formulation by Parker). Bossart et. al (2018)
-#'   describe inconsistencies in the results from this implementation as well.
-#'   Another problems lies in the calculation in overall Tau-U values from
-#'   several single cases. The function presented here applies a meta-analysis
-#'   to gain the overall values. Each tau value is weighted by the inverse of
-#'   the variance (ie. the tau standard error). The confidence intervals for
-#'   single cases are calculated by Fisher-Z transforming tau, calculating the
-#'   confidence intervals, and inverse transform them back to tau (see Long &
-#'   Cliff, 1997).
+#' @param ci_method Character with values `"z"`, `"tau"` or `"s"` indicating how
+#'   the standard error of tau is calculated.
+#' @param tau_method Character with values `"a"` or `"b"` indicating whether
+#'   Kendall's Tau A or Tau B is applied. Ignored for methods `"tarlow"` and
+#'   `"parker"`.
+#' @param continuity_correction If TRUE, S is reduced by one before calculating
+#'   Z, which lowers the p values. Ignored for methods `"tarlow"` and
+#'   `"parker"`.
+#' @return An object of class `sc_tauu` with the elements:
+#'  |  |  |
+#'  | --- | --- |
+#'  | `tau_u` | Tau of the model `A vs. B - Trend A` per case. |
+#'  | `table` | One data frame per case with the six models in the rows and `pairs`, `pos`, `neg`, `ties`, `S`, `D`, `Tau`, `CI lower`, `CI upper`, `SD_S`, `VAR_S`, `SE_Tau`, `Z`, `p` and `n` in the columns. |
+#'  | `Overall_tau_u` | Meta-analytic Tau-U across all cases for four of the six models, with standard error, confidence interval, z and p. |
+#'  | `n_cases` | Number of cases. |
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @references Brossart, D. F., Laird, V. C., & Armstrong, T. W. (2018).
-#'   Interpreting Kendall’s Tau and Tau-U for single-case experimental designs.
-#'   \emph{Cogent Psychology, 5(1)}, 1–26.
+#'   Interpreting Kendall's Tau and Tau-U for single-case experimental designs.
+#'   \emph{Cogent Psychology, 5(1)}, 1-26.
 #'   https://doi.org/10.1080/23311908.2018.1518687.
 #'
-#'   Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall’s tau.
+#'   Long, J. D., & Cliff, N. (1997). Confidence intervals for Kendall's tau.
 #'   \emph{British Journal of Mathematical and Statistical Psychology}, 50(1),
-#'   31–41. https://doi.org/10.1111/j.2044-8317.1997.tb01100.x
+#'   31-41. https://doi.org/10.1111/j.2044-8317.1997.tb01100.x
 #'
 #'   Parker, R. I., Vannest, K. J., & Davis, J. L. (2011a). Effect Size in
 #'   Single-Case Research: A Review of Nine Nonoverlap Techniques.
-#'   \emph{Behavior Modification}, 35(4), 303–322. https://doi.org/10/dsdfs4
+#'   \emph{Behavior Modification}, 35(4), 303-322. https://doi.org/10/dsdfs4
 #'
 #'   Parker, R. I., Vannest, K. J., Davis, J. L., & Sauber, S. B. (2011b).
 #'   Combining Nonoverlap and Trend for Single-Case Research: Tau-U.
-#'   \emph{Behavior Therapy, 42}(2), 284–299.
+#'   \emph{Behavior Therapy, 42}(2), 284-299.
 #'   https://doi.org/10.1016/j.beth.2010.08.006
 #'
 #'   Tarlow, K. R. (2017, March). Tau-U for single-case research (R code).
 #'   Retrieved from http://ktarlow.com/stats/
-#'
 #' @examples
+#' tau_u(exampleAB)
 #'
-#' tau_u(Grosche2011$Eva)
+#' # all six models of every case
+#' print(tau_u(exampleAB), complete = TRUE)
 #'
-#' ## Replicate  tau-U calculation from Parker et al. (2011)
-#' bob <- scdf(c(A = 2, 3, 5, 3, B = 4, 5, 5, 7, 6), name = "Bob")
-#' res <- tau_u(bob, method = "parker")
-#' print(res, complete = TRUE)
-#'
-#' ## Request tau-U for all single-cases from the Grosche2011 data set
-#' tau_u(Grosche2011)
+#' # the operationalisation of Parker et al. (2011b)
+#' tau_u(exampleAB, method = "parker")
+#' @order 1
 #' @export
-
 tau_u <- function(data, dvar, pvar, 
                   method = c("complete", "parker", "tarlow"), 
                   phases = c(1, 2), 

@@ -20,39 +20,35 @@ print.sc_tauu <- function(x,
   
   if (digits == "auto") digits <- 2
   
+  results <- .output_tauu(x)
+  
   cat("Tau-U\n")
-  cat("Method:", x$method, "\n")
-  cat("Applied Kendall's Tau-", x$tau_method, "\n", sep = "")
+  cat("Method:", results$method, "\n")
+  cat("Applied Kendall's Tau-", results$tau_method, "\n", sep = "")
  
-  if (!is.na(x$ci)) {
-    cat(x$ci * 100, "% CIs for tau are reported.\n", sep = "")
-    cat("CI method: ", x$ci_method, "\n\n", sep = "")
+  if (!is.na(results$ci)) {
+    cat(results$ci * 100, "% CIs for tau are reported.\n", sep = "")
+    cat("CI method: ", results$ci_method, "\n\n", sep = "")
   } else cat("\n")
   
-  out <- x$table
+  out <- results$tables
   
-  if (length(out) > 1 && x$meta_analyses) {
+  if (length(out) > 1 && results$meta_analyses) {
     cat("Tau-U meta analyses:\n")
     
-    cat("Weight method: ", x$meta_weight_method, "\n", sep = "")
-    if (!is.na(x$ci)) cat(x$ci * 100, "% CIs are reported.\n", sep = "")
+    cat("Weight method: ", results$meta_weight_method, "\n", sep = "")
+    if (!is.na(results$ci)) 
+      cat(results$ci * 100, "% CIs are reported.\n", sep = "")
     cat("\n")
-    print(x$Overall_tau_u, row.names = FALSE, digits = digits)
+    print(results$meta, row.names = FALSE, digits = digits)
     cat("\n")
   }
   
   if (!complete) {
     select_vars <- select
-    select_rows <- match(
-      c(
-        "A vs. B", 
-        "A vs. B - Trend A",
-        "A vs. B + Trend B", 
-        "A vs. B + Trend B - Trend A"
-      ), row.names(x$table[[1]])
-    )
+    select_rows <- match(results$main_models, row.names(results$tables[[1]]))
     
-    out <- lapply(x$table, function(x) {
+    out <- lapply(results$tables, function(x) {
       x <- round(x[select_rows, select_vars], digits)
       if (nice_p) x$p <- .nice_p(x$p)
       if (!is.null(names(select))) names(x) <- names(select)
@@ -101,42 +97,30 @@ export.sc_tauu <- function(object,
       caption <- "Tau-U analyses"
   }
 
+  results <- .output_tauu(object)
+  
   footnote <- .footnote(footnote,
-    paste(
-      "Method is '", object$method, 
-      "'. Analyses based on Kendall's Tau ", object$tau_method, ". ",
-      object$ci * 100, "% CIs for tau are reported",
-      collapse = ""
+    paste0(
+      "Method is '", results$method, 
+      "'. Analyses based on Kendall's Tau ", results$tau_method, ".",
+      if (!is.na(results$ci)) 
+        paste0(" ", results$ci * 100, "% CIs for tau are reported")
     )
   )
   
   if (meta) {
-    out <- object$Overall_tau_u
+    out <- results$meta
     row_group <- NULL
-  }
-  
-  if (identical(select, "auto") && meta) {
+    if (identical(select, "auto")) {
       select <- c(
         "Model", "Tau U" = "Tau_U", "se", "CI lower", "CI upper", "z", "p"
       )
-  }
-  
-  if (!meta) {
-    tables <- object$table
-    out <- do.call(rbind, tables)
-    out <- cbind(Model = rep(rownames(tables[[1]]), length(tables)), out)
-    rownames(out) <- NULL
-    
-    if (identical(select, "auto")) {
-        select <- c("Model", "Tau", "CI lower", "CI upper", "Z", "p")
     }
-    
-    row_group <- vector("list", length(tables))
-    names(row_group) <- names(tables)
-    
-    for (i in seq_along(tables)) {
-      .start <- 1 + (i - 1) * nrow(tables[[1]])
-      row_group[[i]] <- .start : (.start + nrow(tables[[1]]) - 1)
+  } else {
+    out <- results$stacked
+    row_group <- results$row_group
+    if (identical(select, "auto")) {
+      select <- c("Model", "Tau", "CI lower", "CI upper", "Z", "p")
     }
   }
   
@@ -161,4 +145,47 @@ export.sc_tauu <- function(object,
   
   if (!is.na(filename)) .save_export(table, filename)
   table
+}
+
+# Values of a tau_u object, extracted once for the print and the export method.
+.output_tauu <- function(x) {
+  
+  out <- list()
+  
+  out$method             <- x$method
+  out$tau_method         <- x$tau_method
+  out$ci                 <- x$ci
+  out$ci_method          <- x$ci_method
+  out$meta_analyses      <- x$meta_analyses
+  out$meta_weight_method <- x$meta_weight_method
+  out$tables             <- x$table
+  out$meta               <- x$Overall_tau_u
+  
+  # the models that are shown unless the complete table is asked for
+  out$main_models <- c(
+    "A vs. B", 
+    "A vs. B - Trend A",
+    "A vs. B + Trend B", 
+    "A vs. B + Trend B - Trend A"
+  )
+  
+  # the tables of the cases stacked into one, with a column naming the model
+  # and the rows each case occupies
+  n_rows <- nrow(x$table[[1]])
+  stacked <- do.call(rbind, x$table)
+  stacked <- cbind(
+    Model = rep(rownames(x$table[[1]]), length(x$table)), stacked
+  )
+  rownames(stacked) <- NULL
+  out$stacked <- stacked
+  
+  out$row_group <- setNames(
+    lapply(seq_along(x$table), function(i) {
+      start <- 1 + (i - 1) * n_rows
+      start:(start + n_rows - 1)
+    }),
+    names(x$table)
+  )
+  
+  out
 }

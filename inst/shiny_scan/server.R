@@ -37,7 +37,8 @@ server <- function(input, output, session) {
     
     if (input$scan == "Plot") {
       choices <- lapply(transformed(), function(x) names(x)) |> unlist() |> unique()
-      id <- which(!choices %in% scdf_attr(transformed())[c("var.values", "var.mt", "var.phase")] |> unlist())
+      id <- which(!choices %in% scdf_attr(transformed())[c("var.values", "var.mt", "var.phase")] |> unlist()
+      )
       updateSelectInput(
         session, 
         inputId = "scplot_add", 

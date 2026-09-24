@@ -1,48 +1,57 @@
 #' Nonoverlap of all Pairs (NAP)
 #'
-#' The [nap()] function calculates the nonoverlap of all pairs (NAP; Parker &
-#' Vannest, 2009).  NAP summarizes the overlap between all pairs of phase A and
-#' phase B data points.  If an increase of phase B scores is expected, a
-#' non-overlapping pair has a higher phase B data point. The NAP equals
-#' *number of pairs showing no overlap / number of pairs* where ties are
-#' counted as half non-overlaps.  Because NAP can take values between 0 and 100
-#' percent where values below 50 percent indicate an inverse effect, an nap
-#' rescaled from -100 to 100 percent where negative
-#' values indicate an inverse effect is also displayed (\eqn{nap_{rescaled} = 2
-#' * nap - 100}).
-#' 
-#' If a decrease of phase B scores is expected, set the argument
-#' `decreasing = TRUE`.
+#' Proportion of all pairs of a phase A and a phase B measurement in which the
+#' phase B measurement is the higher one, with ties counted as half (Parker &
+#' Vannest, 2009).
 #'
+#' @details Every measurement of phase A is compared with every measurement of
+#'   phase B. NAP is the number of pairs in the expected direction plus half the
+#'   number of tied pairs, divided by the number of pairs. With
+#'   `decreasing = TRUE` the expected direction is reversed. Missing values are
+#'   dropped before the pairs are formed; a case without measurements in one of
+#'   the phases gives no pairs and `NA` for every value.
+#'
+#'   NAP runs from 0 to 100 percent with 50 percent as the point of no effect.
+#'   The rescaled NAP spreads it to -100 to 100 percent, where negative values
+#'   indicate an effect in the opposite direction: \eqn{nap_{rescaled} = 2 *
+#'   nap - 100}.
+#'
+#'   `w` and `p` come from a Wilcoxon rank sum test in the expected direction,
+#'   computed with a normal approximation rather than the exact algorithm. `d`
+#'   and `R\eqn{^2}` are the effect sizes Parker and Vannest derive from NAP:
+#'   \eqn{d = 3.464 * (1 - \sqrt{(1 - nap) / 0.5})} and \eqn{R^2 = r^2} with
+#'   \eqn{r = d / \sqrt{d^2 + 4}}.
 #' @inheritParams .inheritParams
-#' @return 
+#' @return An object of class `sc_nap` with the element `nap`, a data frame
+#'   holding one row per case:
 #'  |  |  |
 #'  | --- | --- |
-#'  | `nap` | A data frame with NAP and additional values for each case. |
-#'  | `N` | Number of cases. |
-#'  
+#'  | `Case` | Name of the case. |
+#'  | `NAP` | Percentage of non-overlapping pairs. |
+#'  | `NAP Rescaled` | NAP rescaled to a range of -100 to 100. |
+#'  | `Pairs` | Number of pairs. |
+#'  | `Non-overlaps` | Number of non-overlapping pairs, ties counted as half. |
+#'  | `Positives` | Number of pairs in the expected direction. |
+#'  | `Ties` | Number of tied pairs. |
+#'  | `w` | Statistic of the Wilcoxon rank sum test. |
+#'  | `p` | P value of that test. |
+#'  | `d` | Cohen's d derived from NAP. |
+#'  | `R2` | Squared correlation derived from d. |
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @references Parker, R. I., & Vannest, K. (2009). An improved effect size for
-#'   single-case research: Nonoverlap of all pairs. *Behavior Therapy*, *40*,
+#'   single-case research: Nonoverlap of all pairs. *Behavior Therapy, 40*,
 #'   357-367.
 #' @examples
+#' nap(exampleAB)
 #'
-#' ## Calculate NAP for a study with  lower expected phase B scores
-#' ## (e.g. aggressive behavior)
-#' gretchen <- scdf(c(A = 12, 14, 9, 10, B = 10, 6, 4, 5, 3, 4))
-#' nap(gretchen, decreasing = TRUE)
+#' # data that are expected to decrease in phase B
+#' nap(exampleAB_decreasing, decreasing = TRUE)
 #'
-#' ## Request NAP for all cases from the Grosche2011 scdf
-#' nap(Grosche2011)
-#' 
-#' ## Calculate NAP for phase 1 and phase 3 of an ABAB design
-#' nap(exampleABAB, phases = c(1, 3))
-#' 
-#'
-#' @export
-
+#' # pooling the two A and the two B phases of an ABAB design
+#' nap(exampleABAB, phases = list(A = c(1, 3), B = c(2, 4)))
 #' @order 1
+#' @export
 nap <- function(data, dvar, pvar,
                 decreasing = FALSE,
                 phases = c(1, 2)) {

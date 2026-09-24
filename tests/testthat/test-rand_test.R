@@ -195,3 +195,72 @@ test_that("the ordinary results are unchanged", {
   expect_no_error(rand_test(exampleABC, phases = c(1, 3), number = 100, seed = 1))
   expect_no_error(rand_test(exampleAB_score$Christiano, statistic = "W-test"))
 })
+
+test_that(".output_rand summarises the distribution once", {
+  res <- rand_test(exampleAB, number = 50, seed = 1)
+  out <- scan:::.output_rand(res)
+  dist <- res$distribution[is.finite(res$distribution)]
+
+  expect_equal(out$m, mean(dist))
+  expect_equal(out$sd, sd(dist))
+  expect_equal(out$min, min(dist))
+  expect_equal(out$max, max(dist))
+  expect_identical(out$distribution, dist)
+
+  # without a single finite value there is nothing to summarise
+  flat <- scdf(values = rep(5, 20), phase_design = c(A = 10, B = 10))
+  degenerate <- suppressWarnings(
+    rand_test(flat, statistic = "SMD hedges", number = 50, seed = 1)
+  )
+  out <- scan:::.output_rand(degenerate)
+  expect_true(all(is.na(c(out$m, out$sd, out$min, out$max))))
+})
+
+test_that("print and export describe the p value in the same words", {
+  res <- rand_test(exampleAB, number = 50, seed = 1)
+  out <- scan:::.output_rand(res)
+
+  txt <- paste(capture.output(print(res)), collapse = "\n")
+  tab <- render_table(export(res))
+
+  expect_true(grepl(paste0("Probability of ", out$direction), txt, fixed = TRUE))
+  expect_true(grepl(paste0("p: probability of ", out$direction), tab, fixed = TRUE))
+  expect_true(grepl(out$combinations, txt, fixed = TRUE))
+  expect_true(grepl(out$combinations, tab, fixed = TRUE))
+})
+
+test_that("the wording follows exclude.equal and the test direction", {
+  equal_excluded <- scan:::.output_rand(
+    rand_test(exampleAB, number = 20, seed = 1, exclude.equal = TRUE)
+  )
+  equal_included <- scan:::.output_rand(
+    rand_test(exampleAB, number = 20, seed = 1, exclude.equal = FALSE)
+  )
+  expect_match(equal_excluded$direction, "^a higher value")
+  expect_match(equal_included$direction, "^an equal or higher value")
+
+  decreasing <- scan:::.output_rand(
+    rand_test(exampleAB, statistic = "Mean A-B", number = 20, seed = 1)
+  )
+  expect_match(decreasing$direction, "value than the observed statistic$")
+})
+
+test_that("the design of the permutations is described once", {
+  by_limit <- scan:::.output_rand(
+    rand_test(exampleAB, number = 20, seed = 1, limit = 4)
+  )
+  expect_identical(by_limit$design_label, "Minimal phase length")
+  expect_identical(by_limit$design_value, "A = 4, B = 4")
+
+  by_points <- scan:::.output_rand(
+    rand_test(exampleAB[1:2], number = 20, seed = 1, startpoints = 4:9)
+  )
+  expect_identical(by_points$design_label, "Possible starting points of phase B")
+  expect_identical(by_points$design_value, paste(4:9, collapse = ", "))
+
+  txt <- paste(
+    capture.output(print(rand_test(exampleAB, number = 20, seed = 1, limit = 4))),
+    collapse = "\n"
+  )
+  expect_true(grepl("Minimal phase length: A = 4, B = 4", txt, fixed = TRUE))
+})

@@ -8,46 +8,37 @@
 #' @author Juergen Wilbert
 #' @family internal functions
 #'
-#' @param data A single-case data frame. See [scdf()] to learn about this
-#'   format.
-#' @param scdf A single-case data frame. See [scdf()] to learn about this
-#'   format.
+#' @param data A single-case data frame, see [scdf()].
+#' @param scdf A single-case data frame, see [scdf()].
 #' @param dvar Character string with the name of the dependent variable.
-#'   Defaults to the attributes in the scdf file.
-#' @param pvar Character string with the name of the phase variable. Defaults to
-#'   the attributes in the scdf file.
+#'   Defaults to the variable set in the scdf.
+#' @param pvar Character string with the name of the phase variable. Defaults
+#'   to the variable set in the scdf.
 #' @param mvar Character string with the name of the measurement time variable.
-#'   Defaults to the attributes in the scdf file.
-#' @param decreasing If you expect data to be lower in the B phase, set
-#'   `decreasing = TRUE`. Default is `decreasing = FALSE`.
-#' @param phases A vector of two characters or numbers indicating the two phases
-#'   that should be compared. E.g., `phases = c("A","C")` or `phases = c(2,4)`
-#'   for comparing the second to the fourth phase. Phases could be combined by
-#'   providing a list with two elements. E.g., `phases = list(A = c(1,3), B =
-#'   c(2,4))` will compare phases 1 and 3 (as A) against 2 and 4 (as B). Default
-#'   is `phases = c(1,2)`.
-#' @param model Model used for calculating the dummy parameters (see Huitema &
-#'   McKean, 2000). Default is `model = "W"`. Possible values are: `"B&L-B"`,
-#'   `"H-M"`, `"W"`, and deprecated `"JW"`.
-#' @param contrast Sets contrast_level and contrast_slope. Either "first",
-#'   "preceding" or a contrast matrix. If NA contrast is ignored.
-#' @param contrast_level Either "first", "preceding" or a contrast matrix. If NA
-#'   contrast_level is a copy of contrast.
-#' @param contrast_slope Either "first", "preceding" or a contrast matrix. If NA
-#'   contrast_level is a copy of contrast.
-#' @param trend A logical indicating if a trend parameters is included in the
-#'   model.
-#' @param level A logical indicating if a level parameters is included in the
-#'   model.
-#' @param slope A logical indicating if a slope parameters is included in the
-#'   model.
-#' @param nice If set TRUE (default) output values are rounded and optimized for
-#'  publication tables.
-#' @param flip If TRUE, some objects are exported with rows and columns flipped.
-#' @param decimals Decimal places that are reported.
-#' @param select A character vector containing the names of the variables to be
-#'   included. If the vector is named, the variables will be renamed
-#'   accordingly.
+#'   Defaults to the variable set in the scdf.
+#' @param decreasing Set to `TRUE` if the data are expected to be lower in
+#'   phase B.
+#' @param phases The two phases to compare, by name or by position:
+#'   `phases = c("A", "C")` or `phases = c(2, 4)`. A list of two elements
+#'   combines phases: `phases = list(A = c(1, 3), B = c(2, 4))` compares phases
+#'   1 and 3 against 2 and 4.
+#' @param model Model used for the dummy parameters: `"W"`, `"B&L-B"`, `"H-M"`,
+#'   or the deprecated `"JW"` (see Huitema & McKean, 2000).
+#' @param contrast Sets `contrast_level` and `contrast_slope` at once:
+#'   `"first"`, `"preceding"` or a contrast matrix. `NA` leaves both untouched.
+#' @param contrast_level `"first"`, `"preceding"` or a contrast matrix. `NA`
+#'   takes the value of `contrast`.
+#' @param contrast_slope `"first"`, `"preceding"` or a contrast matrix. `NA`
+#'   takes the value of `contrast`.
+#' @param trend If `TRUE`, the model includes a trend parameter.
+#' @param level If `TRUE`, the model includes a level parameter.
+#' @param slope If `TRUE`, the model includes a slope parameter.
+#' @param nice If `TRUE`, values are rounded and formatted for publication
+#'   tables.
+#' @param flip If `TRUE`, the table is exported with rows and columns swapped.
+#' @param decimals Number of decimal places reported in the table.
+#' @param select Names of the variables to include in the table. A named vector
+#'   renames them.
 #' @param ... Further arguments passed to the function.
 #' @keywords internal
 .inheritParams <- function(data, scdf, dvar, mvar, pvar, decreasing, 

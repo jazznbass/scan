@@ -1,25 +1,47 @@
-#' Standardized mean differences for single-case data
+#' Standardized mean differences
 #'
-#' The `smd()` function provides various standardized mean effect sizes for
-#' single-case data.
-#' 
-#' It computes 'Cohen's d', 'Hedges' g', 'Hedges' g correction',
-#' 'Hedges' g durlak correction', and 'Glass' delta' for each single-case
-#' included in an scdf.
+#' Mean difference between phase A and phase B of each case, standardized in
+#' five different ways.
 #'
+#' @details The standardisers differ in which spread they use. `sd cohen` is
+#'   the root of the unweighted average of the two phase variances,
+#'   \eqn{\sqrt{(sd_A^2 + sd_B^2) / 2}}. `sd hedges` weights them by their
+#'   degrees of freedom, \eqn{\sqrt{((n_A - 1) sd_A^2 + (n_B - 1) sd_B^2) /
+#'   (n_A + n_B - 2)}}.
+#'
+#'   `Cohen's d` is the mean difference divided by `sd cohen`, `Hedges' g`
+#'   divides it by `sd hedges`, and `Glass' delta` by the standard deviation of
+#'   phase A alone. `Hedges' g correction` and `Hedges' g durlak correction`
+#'   are two ways of correcting `Hedges' g` for small samples: the first
+#'   multiplies it by \eqn{1 - 3 / (4n - 9)}, the second by \eqn{(n - 3) /
+#'   (n - 2.25) \sqrt{(n - 2) / n}}, with \eqn{n} the number of observed
+#'   measurements in both phases.
+#'
+#'   Missing values are dropped, and the counts \eqn{n_A} and \eqn{n_B} refer
+#'   to the observed measurements. The formulas are evaluated as they are, so a
+#'   phase with fewer than two observed measurements gives `NA` rather than an
+#'   error.
 #' @inheritParams .inheritParams
-#' @details 'sd cohen' is the (unweigted) average of the variance of phase A and
-#'   B. 'sd Hedges' is the weighted average of the variance of phase A and B
-#'   (with a degrees of freedom correction). 'Hedges' g' is the mean difference
-#'   divided by 'sd Hedges'. 'Hedges' g correction' and 'Hedges' g durlak
-#'   correction' are two approaches of correcting Hedges' g for small sample
-#'   sizes. 'Glass' delta' is the mean difference divided by the standard
-#'   deviation of the A-phase. 'Cohens d' is the mean difference divided by 'sd
-#'   cohen'.
+#' @return An object of class `sc_smd` with the element `smd`, a data frame
+#'   holding one row per case:
+#'  |  |  |
+#'  | --- | --- |
+#'  | `Case` | Name of the case. |
+#'  | `mA`, `mB` | Mean of phase A and of phase B. |
+#'  | `sdA`, `sdB` | Standard deviation of phase A and of phase B. |
+#'  | `sd cohen`, `sd hedges` | The two standardisers described above. |
+#'  | `Glass' delta` | Mean difference divided by `sdA`. |
+#'  | `Hedges' g` | Mean difference divided by `sd hedges`. |
+#'  | `Hedges' g correction` | `Hedges' g` corrected for small samples. |
+#'  | `Hedges' g durlak correction` | `Hedges' g` with Durlak's correction. |
+#'  | `Cohen's d` | Mean difference divided by `sd cohen`. |
 #' @author Juergen Wilbert
-#' @seealso [overlap()], [describe()]
+#' @seealso [overlap()], [describe()], [between_smd()]
 #' @examples
 #' smd(exampleAB)
+#'
+#' # pooling the two A and the two B phases of an ABAB design
+#' smd(exampleABAB, phases = list(A = c(1, 3), B = c(2, 4)))
 #' @order 1
 #' @export
 smd <- function(data, dvar, pvar,

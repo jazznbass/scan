@@ -1,33 +1,43 @@
-#' Descriptive statistics for single-case data
+#' Descriptive statistics
 #'
-#' The `describe()` function provides common descriptive statistics for
-#' single-case data.
-#' 
-#' It computes the number of measurements, number of missing values, mean,
-#' median, standard deviation, median average deviation, minimum, maximum, and
-#' trend (slope of dependent variable regressed on measurement-time) for each
-#' phase of each single-case included in an scdf.
+#' Number of measurements, missing values, mean, median, standard deviation,
+#' median absolute deviation, minimum, maximum and trend, for each phase of
+#' each case of a single-case data set.
 #'
+#' @details The statistics appear as columns named `<statistic>.<phase>`:
+#'   `n`, `mis`, `m`, `md`, `sd`, `mad`, `min`, `max` and `trend`. `n` is the
+#'   length of the phase and therefore includes the missing measurements that
+#'   `mis` counts separately; all other statistics are computed from the
+#'   observed measurements alone. `trend` is the regression weight of the
+#'   dependent variable on the measurement time within that phase.
+#'
+#'   A phase name that occurs more than once in a case is numbered, so an ABAB
+#'   design yields the phases `A(1)`, `B(1)`, `A(2)` and `B(2)` and hence the
+#'   columns `m.A(1)`, `m.B(1)` and so on. The `Design` column, in contrast,
+#'   shows the phase names as they are in the data. Cases with differing
+#'   designs are put in the same table, so a case that lacks a phase of another
+#'   case has `NA` in its columns.
+#'
+#'   A phase without any observed measurement leaves everything but `n` and
+#'   `mis` at `NA`, a phase with a single observed measurement additionally
+#'   leaves `sd` and `trend` at `NA`. Neither case is reported.
 #' @inheritParams .inheritParams
-#' @details n = number of measurements; mis = number of missing vaues; m = mean;
-#'   md = median; sd = standard deviation; mad = median average deviation; min =
-#'   minimum; max = maximum; trend = weight of depended variable regressed on
-#'   time (values ~ mt).
-#' @return A list containing a data frame of descriptive statistics
-#'   (descriptives); the cse design (design); the number of cases (N).
+#' @return An object of class `sc_desc` with the elements:
+#'  |  |  |
+#'  | --- | --- |
+#'  | `descriptives` | Data frame with one row per case, the columns `Case` and `Design` and the statistics described above. |
+#'  | `phase_names` | The phase names occurring across all cases, in the order in which the columns are arranged. |
+#'  | `N` | Number of cases. |
 #' @author Juergen Wilbert
-#' @seealso [overlap()], [plot.scdf()]
+#' @seealso [overlap()]
 #' @examples
+#' describe(exampleAB)
 #'
-#' ## Descriptive statistics for a study of three single-cases
-#' describe(Grosche2011)
-#'
-#' ## Descriptives of a three phase design
+#' # a design with more than two phases
 #' describe(exampleABC)
 #'
-#' ## Write descriptive statistics to .csv-file
-#' study <- describe(Waddell2011)
-#' write.csv(study$descriptives, file = tempfile())
+#' # write the statistics to a csv file
+#' write.csv(describe(exampleAB)$descriptives, file = tempfile())
 #' @order 1
 #' @export
 describe <- function(data, dvar, pvar, mvar) {
@@ -58,10 +68,10 @@ describe <- function(data, dvar, pvar, mvar) {
     data_list, 
     function(x) rle(as.character(x[[pvar]]))$values
   )
-  design <- unique(unlist(designs))
+  phase_names <- unique(unlist(designs))
   
   vars <- c("n", "mis", "m", "md", "sd", "mad", "min", "max", "trend")
-  vars <- paste0(rep(vars, each = length(design)), ".", design)
+  vars <- paste0(rep(vars, each = length(phase_names)), ".", phase_names)
   
   desc <- as.data.frame(matrix(nrow = N, ncol = length(vars)))
   colnames(desc) <- vars
@@ -104,7 +114,7 @@ describe <- function(data, dvar, pvar, mvar) {
 
   out <- list(
     descriptives = desc,
-    design = design,
+    phase_names = phase_names,
     N = N
   )
   class(out) <- c("sc_desc")

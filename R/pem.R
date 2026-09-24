@@ -1,38 +1,47 @@
 #' Percent exceeding the median (PEM)
-#' 
-#' The \code{pem} function returns the percentage of phase B data exceeding the
-#' phase A median.  Additionally, a chi square test against a 50/50
-#' distribution is computed.  Different measures of central tendency can be
-#' addressed for alternative analyses.
-#' 
-#' @details The Percent Exceeding the Median is calculated as
-#' the percentage of data points in phase B that exceed the median of phase A.
-#' If the \code{decreasing} argument is set to \code{TRUE},
-#' the percentage of data points in phase B that are below the median of
-#' phase A is calculated.  The PEM is expressed as a percentage ranging
-#' from 0 to 100.  Higher values indicate a greater degree of
-#' improvement from phase A to phase B.
-#' 
+#'
+#' Percentage of the phase B measurements that lie above the median of phase A.
+#'
+#' @details With `decreasing = TRUE` the measurements below the median are
+#'   counted instead. `FUN` replaces the median by another measure of central
+#'   tendency; further arguments for it are passed through `...`, so
+#'   `FUN = mean, trim = 0.1` compares against a ten percent trimmed mean. The
+#'   function has to take a numeric vector and an `na.rm` argument and return a
+#'   single number.
+#'
+#'   The number of exceeding measurements is tested against chance with a one
+#'   sided binomial test at a probability of 0.5. A chi-squared goodness of fit
+#'   test against the same distribution is added with `chi.test = TRUE`.
+#'
+#'   Missing values are dropped. A case without measurements in one of the
+#'   phases gives `NA`, and so does a `FUN` that returns `NA`, which is reported
+#'   with a warning.
 #' @inheritParams .inheritParams
-#' @param binom.test Computes a binomial test for a 50/50 distribution. Default
-#' is \code{binom.test = TRUE}.
-#' @param chi.test Computes a Chi-square test. The default setting
-#' \code{chi.test = FALSE} skips the Chi-square test.
-#' @param FUN Data points are compared with the phase A median. Use this
-#' argument to implement alternative measures of central tendency. Default is
-#' \code{FUN = median}.
-#' @param \dots Additional arguments for the \code{FUN} parameter (e.g.
-#' \code{FUN = mean, trim = 0.1} will use the 10 percent trimmed arithmetic
-#' mean instead of the median for comparisons). The function must take a vector
-#' of numeric values and the \code{na.rm} argument and return a numeric value.
+#' @param binom.test If `TRUE`, a binomial test against a 50/50 distribution is
+#'   computed.
+#' @param chi.test If `TRUE`, a chi-squared test against a 50/50 distribution is
+#'   added.
+#' @param FUN Function that gives the value of phase A the measurements of phase
+#'   B are compared with.
+#' @param \dots Further arguments passed to `FUN`.
+#' @return An object of class `sc_pem` with the elements:
+#'  |  |  |
+#'  | --- | --- |
+#'  | `PEM` | Data frame with one row per case: `Case`, `PEM`, and the statistics of the tests that were computed. |
+#'  | `test` | The test statistics of that data frame as a matrix, with the case names as row names. |
 #' @author Juergen Wilbert
 #' @family overlap functions
 #' @examples
-#' 
-#' ## Calculate the PEM including the Binomial and Chi-square tests for a single-case
-#' dat <- random_scdf(design(n = 5, level = 0.5))
-#' pem(dat, chi.test = TRUE)
-#' 
+#' pem(exampleAB)
+#'
+#' # with the chi-squared test
+#' pem(exampleAB, chi.test = TRUE)
+#'
+#' # compared against a ten percent trimmed mean instead of the median
+#' pem(exampleAB, FUN = mean, trim = 0.1)
+#'
+#' # data that are expected to decrease in phase B
+#' pem(exampleAB_decreasing, decreasing = TRUE)
 #' @order 1
 #' @export
 pem <- function(data, dvar, pvar, 

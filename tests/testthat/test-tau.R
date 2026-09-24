@@ -22,3 +22,29 @@ test_that("tau-u", {
   
   
 })
+
+test_that(".output_tauu stacks the case tables without gaps", {
+  res <- tau_u(exampleAB)
+  out <- scan:::.output_tauu(res)
+
+  expect_equal(nrow(out$stacked), sum(vapply(out$tables, nrow, 1L)))
+  expect_true("Model" %in% names(out$stacked))
+  expect_identical(names(out$row_group), names(res$table))
+  expect_identical(
+    sort(unlist(out$row_group, use.names = FALSE)),
+    seq_len(nrow(out$stacked))
+  )
+  expect_length(out$main_models, 4)
+  expect_true(all(out$main_models %in% rownames(res$table[[1]])))
+})
+
+test_that("the export footnote names a confidence interval only if there is one", {
+  tab <- render_table(export(tau_u(exampleAB)))
+  expect_true(grepl("CIs for tau are reported", tab, fixed = TRUE))
+  expect_false(grepl("NA%", tab, fixed = TRUE))
+
+  tab <- render_table(export(tau_u(exampleAB, ci = NULL)))
+  expect_false(grepl("CIs for tau are reported", tab, fixed = TRUE))
+  expect_false(grepl("NA%", tab, fixed = TRUE))
+  expect_true(grepl("Theil|Kendall", tab))
+})

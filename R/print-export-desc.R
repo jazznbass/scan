@@ -12,12 +12,12 @@ print.sc_desc <- function(x, digits = "auto", ...) {
   colnames(out) <- x$descriptives$Case
   
   print(
-    out[1:(2 * length(x$design) + 1), , drop = FALSE], 
+    out[1:(2 * length(x$phase_names) + 1), , drop = FALSE], 
     digits = digits, ...
   )
   cat("\n")
   print(
-    out[-(1:(2 * length(x$design) + 1)), , drop = FALSE], 
+    out[-(1:(2 * length(x$phase_names) + 1)), , drop = FALSE], 
     digits = digits, ...
   )
   .note_vars(x)
@@ -78,9 +78,9 @@ export.sc_desc <- function(object,
   }
   
   if (!flip) {
-    n_phases <- length(object$design)
+    n_phases <- length(object$phase_names)
     out <- object$descriptives
-    colnames(out) <- c("Case", "Design", rep(object$design, 9))
+    colnames(out) <- c("Case", "Design", rep(object$phase_names, 9))
     spannerpos <- 3 + (0:9 * n_phases)
     
     table <- .create_table(

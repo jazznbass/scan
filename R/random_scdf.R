@@ -25,7 +25,7 @@
 #'   more concise coding.
 #' @return A single-case data frame. See \code{\link{scdf}} to learn about this
 #'   format.
-#' @family mc fucntions
+#' @family mc functions
 #' @author Juergen Wibert
 #' @keywords datagen
 #' @export

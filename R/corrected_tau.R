@@ -1,36 +1,61 @@
 #' Baseline corrected tau
 #'
-#' Kendall's tau correlation for the dependent variable and the phase variable
-#' is calculated after correcting for a baseline trend.
+#' Kendall's tau between the dependent variable and the phase variable, after
+#' correcting for a trend in phase A. The correction is only applied when that
+#' trend is significant, otherwise the uncorrected tau is reported.
 #'
+#' @details The procedure has been proposed by Tarlow (2016). Kendall's tau
+#'   between the phase A values and the measurement times is taken as the
+#'   baseline trend (the output labels this row `Baseline autocorrelation`).
+#'   When its p value is at or below `alpha`, a non-parametric Theil-Sen
+#'   regression of the values on the measurement times is fitted to phase A and
+#'   extrapolated to all measurement times. The corrected tau is then Kendall's
+#'   tau between the residuals of that extrapolation and the dichotomous phase
+#'   variable. The Theil-Sen slope is the median of all pairwise slopes of
+#'   phase A, the intercept the median of the residuals from that slope.
+#'
+#'   Corrected and uncorrected tau are always both computed and both reported
+#'   per case; `alpha` only decides which of the two is taken as the result.
+#'   With `continuity = TRUE` a continuity correction is applied to the z value
+#'   and thus to the p value of all three taus.
+#'
+#'   Measurements with a missing value in the dependent variable or in the
+#'   measurement-time variable are dropped beforehand. A case with fewer than
+#'   two distinct measurement times in phase A, or with fewer than two
+#'   observed measurements in phase A or fewer than one in phase B, gives `NA`
+#'   throughout with a warning. If phase A has exactly two measurements or if
+#'   all its values are identical, the baseline trend cannot be determined and
+#'   is set to `NA` with a warning; no correction is applied in that case and
+#'   the uncorrected tau becomes the result.
 #' @inheritParams .inheritParams
-#' @param alpha Sets the p-value at and below which a baseline correction is
-#'   applied.
-#' @param continuity If TRUE applies a continuity correction for calculating p
-#' @param tau_method Character with values "a" or "b" (default) indicating
-#'   whether Kendall Tau A or Kendall Tau B is applied.
-#' @details This method has been proposed by Tarlow (2016). The baseline data
-#'   are checked for a significant autocorrelation (based on Kendall's Tau). If
-#'   so, a non-parametric Theil-Sen regression is applied for the baseline data
-#'   where the dependent values are regressed on the measurement time. The
-#'   resulting slope information is then used to predict data of the B-phase.
-#'   The dependent variable is now corrected for this baseline trend and the
-#'   residuals of the Theil-Sen regression are taken for further calculations.
-#'   Finally, Kendall's tau is calculated for the dependent variable and the
-#'   dichotomous phase variable. The function here provides two extensions to
-#'   this procedure: The more accurate continuity correction is applied when
-#'   `continuity = TRUE`.
-#'
+#' @param alpha The p value of the baseline trend at and below which the
+#'   baseline correction is applied.
+#' @param continuity If TRUE, a continuity correction is applied when
+#'   calculating z and p.
+#' @param tau_method Character with values `"a"` or `"b"` indicating whether
+#'   Kendall's Tau A or Tau B is applied.
+#' @return An object of class `sc_bctau` with the elements:
+#'  |  |  |
+#'  | --- | --- |
+#'  | `tau` | Resulting tau per case: the corrected one where the correction was applied, the uncorrected one otherwise. |
+#'  | `p` | P value of `tau`. |
+#'  | `correction` | Logical per case: was the baseline correction applied? |
+#'  | `auto_tau` | Baseline trend per case. |
+#'  | `tau_uncorrected` | Tau per case without baseline correction. |
+#'  | `tau_corrected` | Tau per case with baseline correction. |
+#'  | `corrected_tau` | One data frame per case with tau, z and p of all three models. |
+#' @author Juergen Wilbert
 #' @family regression functions
 #' @references Tarlow, K. R. (2016). An Improved Rank Correlation Effect Size
 #'   Statistic for Single-Case Designs: Baseline Corrected Tau. *Behavior
-#'   Modification, 41(4)*, 427–467. https://doi.org/10.1177/0145445516676750
+#'   Modification, 41(4)*, 427-467. https://doi.org/10.1177/0145445516676750
+#' @examples
+#' corrected_tau(exampleAB)
+#'
+#' # correct whenever the baseline trend reaches p <= .20
+#' corrected_tau(exampleAB, alpha = 0.20)
 #' @order 1
 #' @export
-#'
-#' @examples
-#' dat <- scdf(c(A = 33,25,17,25,14,13,15, B = 15,16,16,5,7,9,6,5,3,3,8,11,7))
-#' corrected_tau(dat)
 corrected_tau <- function(data, dvar, pvar, mvar, 
                           phases = c(1, 2), 
                           alpha = 0.05, 
@@ -42,7 +67,6 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     by_call(tau_method),
     within(alpha, 0, 1),
     is_logical(continuity)
-    #is_logical(repeated)
   )
   
   # prepare scdf ----
@@ -173,7 +197,6 @@ corrected_tau <- function(data, dvar, pvar, mvar,
     correction = sapply(x, function(x) if(is.na(x$p[1]) || x$p[1] > alpha) FALSE else TRUE),
     alpha = alpha,
     continuity = continuity,
-    repeated   = FALSE,
     tau_method = tau_method,
     data = data
   )

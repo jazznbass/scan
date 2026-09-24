@@ -1,26 +1,36 @@
 #' Percentage of non-overlapping data (PND)
-#' 
-#' This function returns the percentage of non-overlapping data.  Due to its
-#' error-proneness the PND should not be used, but \code{\link{nap}} or
-#' \code{\link{pand}} instead (see Parker & Vannest, 2009).
-#' 
-#' PND is calculated by determining the number of data points in phase B that
-#' exceed the highest data point in phase A (or are lower than the lowest data
-#' point in phase A for decreasing data) divided by the total number of data
-#' points in phase B. This value is then multiplied by 100 to get a percentage
-#' value.
-#' 
+#'
+#' Proportion of the phase B measurements that exceed the most extreme
+#' measurement of phase A. PND is error-prone; [nap()] and [pand()] are the
+#' better choice.
+#'
+#' @details Counted are the measurements of phase B above the highest value of
+#'   phase A, or below the lowest for `decreasing = TRUE`, divided by the number
+#'   of observed measurements in phase B. A measurement equal to the extreme
+#'   value of phase A does not count. Missing values are dropped beforehand, so
+#'   they are part of neither the count nor the divisor. A case without observed
+#'   values in one of the phases gives `NA`.
 #' @inheritParams .inheritParams
-#' @param decreasing If you expect data to be lower in the B phase, set
-#' \code{decreasing = TRUE}. Default is \code{decreasing = FALSE}.
-#' @return \item{PND}{Percentage of non-overlapping data.}
+#' @return An object of class `sc_pnd` with the elements:
+#'  |  |  |
+#'  | --- | --- |
+#'  | `PND` | Percentage of non-overlapping data per case. |
+#'  | `case.names` | Names of the cases. |
+#'  | `n.B` | Number of observed measurements in phase B. |
 #' @author Juergen Wilbert
 #' @family overlap functions
+#' @references Scruggs, T. E., Mastropieri, M. A., & Casto, G. (1987). The
+#'   quantitative synthesis of single-subject research: Methodology and
+#'   validation. *Remedial and Special Education, 8*(2), 24-33.
+#'
+#'   Parker, R. I., & Vannest, K. (2009). An improved effect size for
+#'   single-case research: Nonoverlap of all pairs. *Behavior Therapy, 40*(4),
+#'   357-367.
 #' @examples
-#' 
-#' ## Calculate the PND for multiple single-case data
-#' pnd(GruenkeWilbert2014)
-#' 
+#' pnd(exampleAB)
+#'
+#' # data that are expected to decrease in phase B
+#' pnd(exampleAB_decreasing, decreasing = TRUE)
 #' @order 1
 #' @export
 pnd <- function(data, dvar, pvar, decreasing = FALSE, phases = c(1, 2)) {

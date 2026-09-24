@@ -5,34 +5,16 @@
 #' @inheritParams print.sc
 print.sc_outlier <- function(x, digits = "auto", ...) {
   
+  out <- .output_outlier(x)
+  
   cat("Outlier Analysis for Single-Case Data\n\n")
   
-  if (identical(x$method, "CI")) {
-    names(x$ci.matrix) <- x$case.names
-    cat("Criteria: Exceeds", as.numeric(x$criteria) * 100, 
-        "% Confidence Interval\n\n")
-    print(x$ci.matrix)
-  }
+  cat(out$criterion, "\n\n")
   
-  if (identical(x$method, "SD")) {
-    names(x$sd.matrix) <- x$case.names
-    cat("Criteria: Exceeds", x$criteria, "Standard Deviations\n\n")
-    print(x$sd.matrix)
-  }
+  if (!is.null(out$matrix)) print(out$matrix)
   
-  if (identical(x$method, "MAD")) {
-    names(x$mad.matrix) <- x$case.names
-    cat("Criteria: Exceeds", x$criteria, "Median Absolute Deviations\n\n")
-    print(x$mad.matrix)
-  }
-  
-  if (identical(x$method, "Cook")) {
-    cat("Criteria: Cook's Distance based on piecewise-regression exceeds", 
-        x$criteria, "\n\n")
-  }
-  
-  for(i in 1:length(x$dropped.n)) {
-    cat("Case", x$case.names[i], ": Dropped", x$dropped.n[[i]], "\n")
+  for (i in seq_len(nrow(out$dropped))) {
+    cat("Case", out$dropped$Case[i], ": Dropped", out$dropped$Dropped[i], "\n")
   }
   cat("\n")
 }
@@ -54,31 +36,12 @@ export.sc_outlier <- function(object,
     )
   }
   
-  criterion <- switch(
-    object$method,
-    "CI"   = paste0("Criterion: exceeds the ", 
-                    as.numeric(object$criteria) * 100, "% confidence interval"),
-    "SD"   = paste0("Criterion: exceeds ", object$criteria, 
-                    " standard deviations"),
-    "MAD"  = paste0("Criterion: exceeds ", object$criteria, 
-                    " median absolute deviations"),
-    "Cook" = paste0("Criterion: Cook's distance based on a piecewise ",
-                    "regression exceeds ", object$criteria)
-  )
+  results <- .output_outlier(object)
   
-  footnote <- .footnote(footnote, criterion)
-  
-  out <- data.frame(
-    Case = object$case.names,
-    Dropped = unlist(object$dropped.n),
-    "Measurement times" = vapply(
-      object$dropped.mt, function(x) paste(x, collapse = ", "), character(1)
-    ),
-    check.names = FALSE
-  )
+  footnote <- .footnote(footnote, results$criterion)
   
   table <- .create_table(
-    out,
+    results$dropped,
     caption = caption,
     footnote = footnote,
     ...
@@ -90,3 +53,44 @@ export.sc_outlier <- function(object,
   
 }
 
+# Values of an outlier object, extracted once for the print and the export
+# method.
+.output_outlier <- function(x) {
+  
+  out <- list()
+  
+  out$method   <- x$method
+  out$criteria <- x$criteria
+  
+  out$criterion <- switch(
+    x$method,
+    "CI"   = paste0("Criterion: exceeds the ", 
+                    as.numeric(x$criteria) * 100, "% confidence interval"),
+    "SD"   = paste0("Criterion: exceeds ", x$criteria, 
+                    " standard deviations"),
+    "MAD"  = paste0("Criterion: exceeds ", x$criteria, 
+                    " median absolute deviations"),
+    "Cook" = paste0("Criterion: Cook's distance based on a piecewise ",
+                    "regression exceeds ", x$criteria)
+  )
+  
+  # the bounds the criterion is built from, one table per case
+  out$matrix <- switch(
+    x$method,
+    "CI"  = x$ci.matrix,
+    "SD"  = x$sd.matrix,
+    "MAD" = x$mad.matrix
+  )
+  if (!is.null(out$matrix)) names(out$matrix) <- x$case.names
+  
+  out$dropped <- data.frame(
+    Case = x$case.names,
+    Dropped = unlist(x$dropped.n),
+    "Measurement times" = vapply(
+      x$dropped.mt, function(mt) paste(mt, collapse = ", "), character(1)
+    ),
+    check.names = FALSE
+  )
+  
+  out
+}

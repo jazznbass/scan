@@ -37,7 +37,8 @@ export.sc_trend <- function(object,
   rownames(out) <- NULL
   
   for (tmp in names(object$formulas)) {
-    tmp.rownames <- gsub(paste0(tmp, "."), "", tmp.rownames)
+    hit <- startsWith(tmp.rownames, paste0(tmp, "."))
+    tmp.rownames[hit] <- substring(tmp.rownames[hit], nchar(tmp) + 2L)
   }
   out <- cbind(Phase = tmp.rownames, out)
   
@@ -47,8 +48,8 @@ export.sc_trend <- function(object,
   names(row_group) <- paste0(names(object$formulas), " (", object$formulas,")")
   
   for (i in 1:length(object$formulas)) {
-    .start <- 1 + (i - 1) * (length(object$design) + 1)
-    row_group[[i]] <- .start : (.start + length(object$design))
+    .start <- 1 + (i - 1) * (length(object$phase_names) + 1)
+    row_group[[i]] <- .start : (.start + length(object$phase_names))
   }
   
   table <- .create_table(

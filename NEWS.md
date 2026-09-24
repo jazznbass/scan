@@ -14,6 +14,8 @@
 - `smd()`: removed the `mvar` argument, which had no effect.
 - `cdc()`: the result fields `cdc_be` and `cdc_b` are now named `cdc_exc` and `cdc_nb`, as the help page has always documented.
 - `pand(method = "minimum")`: the result field `perc_overlaps` is now named `perc_overlap`.
+- `describe()`: the result field `design` is now named `phase_names`. It never held a phase design but the phase names that make up the column suffixes of the `descriptives` table, collected across all cases and numbered where a phase occurs more than once in a case (`A(1)`, `B(1)`, `A(2)`, `B(2)`). The per case design is unchanged and remains in the `Design` column of `descriptives`.
+- `trend()`: the result field `design` is now named `phase_names`, and repeated phases are numbered the same way as in `describe()`. An ABAB design used to give the row names `Linear.A`, `Linear.B`, `Linear.A.phase3`, `Linear.B.phase4` and now gives `Linear.A(1)`, `Linear.B(1)`, `Linear.A(2)`, `Linear.B(2)`.
 
 ## New features
 
@@ -91,6 +93,7 @@
 
 ### Printed and exported output
 
+- `export()` for a `trend()` result strips the model name from the phase labels by an exact prefix match. It used an unanchored regular expression built from the model name, in which the separating dot matched any character and every occurrence was replaced, so a custom model whose name appeared inside a phase label mangled that label.
 - `export()` for a `rand_test()` result returns a table of the statistics instead of the console output, which was packed into a single cell as html and only worked with gt in html. The cases, the phases compared, the basis of the distribution and the direction of the p value are in the footnote.
 - `print()` for an `outlier()` result reports the criterion again, and `export()` returns a table instead of the captured console output. The result object did not carry the method, so none of the four branches of the print method ever applied: neither the criterion nor the matrix of bounds was shown, not even in the help page examples.
 - The export methods no longer branch on the table engine. Horizontal rules and bold columns were added by the method itself, for the kable engine only, so the gt tables of `hplm()` and `bplm()` had no rule between the fixed and the random effects and the `pand()` tables no bold labels. `export()` for `hplm(casewise = TRUE)` even built its table twice, once per engine, so the gt version bypassed the central builder and with it the blanking of non-finite values, the decimals and the latex handling. The methods now describe what they want — row groups, column groups, rules, bold columns — and the builder alone knows the engine. The `pand()` table also lost a doubled column group under kable, which the method added a second time after the builder had already placed it.
@@ -134,6 +137,7 @@
 These do not change what the package does, but they removed a trap or a duplicate.
 
 - The row groups and column groups of a table are described once and translated by the table builder, instead of being written out separately for each engine. That duplication is what the group bugs above came from.
+- `corrected_tau()` no longer carries the field `repeated` in its result. The argument of that name was removed when the regression moved from the mblm package to the package's own Theil-Sen implementation, but the field stayed behind as a constant `FALSE`, and `print()` and `export()` still branched on it — the branch naming Siegel's repeated median regression could not be reached. The output is unchanged; it has always reported the Theil-Sen regression.
 - The function behind the two slope statistics of `rand_test()` is registered under the name the lookup uses. It had been stored under a different one and only worked because the same line left an object of a matching name in the namespace, which `match.fun()` picked up; removing that stray assignment would have silently disabled both statistics.
 - `export()` for `mplm()` no longer relies on lazy evaluation to survive the kable engine: the column group was created only in the gt branch but handed over in every case.
 - The checks written while fixing these bugs became regular tests. New test files cover `outlier()`, `export()` — engine resolver, latex and Word fallback, `select`, footnotes, decimals, non-finite cells, and the structural parity of the two engines across all export methods — the print methods, `random_scdf()`, `select_cases()`, `set_vars()`, `rescale()`, `combine()` and `sample_names()`; the tests for `design()`, `estimate_design()` and `rand_test()` were extended. Simulation-heavy blocks are skipped on CRAN.

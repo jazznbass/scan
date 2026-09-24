@@ -1,64 +1,61 @@
 #' Conservative Dual-Criterion Method
 #'
-#' The `cdc()` function applies the Conservative Dual-Criterion Method (Fisher,
-#' Kelley, & Lomas, 2003) to scdf objects. It compares phase B data points to
-#' both phase A mean and trend (OLS, bi-split, tri-split) with an additional
-#' increase/decrease of .25 SD. A binomial test against a 50/50 distribution is
-#' computed and p-values below .05 are labelled "systematic change".
+#' Tests whether phase B differs systematically from phase A by comparing every
+#' phase B measurement against both the mean and the trend line of phase A
+#' (Fisher, Kelley, & Lomas, 2003).
 #'
+#' @details Both lines are shifted by `conservative` times the standard
+#'   deviation of phase A, upwards for an expected increase and downwards for an
+#'   expected decrease. A phase B measurement counts as exceeding when it lies
+#'   beyond the shifted mean **and** beyond the shifted trend line. The number of
+#'   exceeding measurements is tested against chance with a one sided binomial
+#'   test at a probability of 0.5; a p value below .05 is labelled `"systematic
+#'   change"`, otherwise `"no change"`.
 #'
+#'   Across the cases of a multiple baseline design, `cdc_all` is
+#'   `"systematic change"` when at most a quarter of the cases are not
+#'   significant. It stays `NA` as soon as one case could not be evaluated.
+#'
+#'   Measurements without a value for the dependent variable or the measurement
+#'   time are dropped. A case is not evaluated and reported as
+#'   `"insufficient data"` with a warning when it has fewer than two complete
+#'   measurements in phase A, none in phase B, no two distinct measurement times
+#'   in phase A, or — for the two split methods — fewer than five complete
+#'   measurements in one of the phases.
 #' @inheritParams .inheritParams
-#' @param trend_method Method used to calculate the trend line. Default is
-#'   `trend_method = "OLS"`. Possible values are: `"OLS"`, `"bisplit"`, and
-#'   `"trisplit"`. `"bisplit"`, and `"trisplit"` should only be used for cases
-#'   with at least five data-points in both relevant phases.
-#' @param conservative The CDC method adjusts the original mean and trend lines
-#'   by adding (expected increase) or subtracting (expected decrease) an
-#'   additional .25 SD before evaluating phase B data. Default is the CDC method
-#'   with `conservative = .25`. To apply the Dual-Criterion (DC) method, set
-#'   `conservative = 0`.
-#' @return 
+#' @param trend_method Method for the trend line of phase A: `"OLS"`,
+#'   `"bisplit"` for Koenig's split middle line, or `"trisplit"` for Tukey's
+#'   resistant line.
+#' @param conservative Proportion of the phase A standard deviation by which the
+#'   mean and the trend line are shifted. `conservative = 0` gives the
+#'   Dual-Criterion (DC) method.
+#' @return An object of class `sc_cdc` with the elements:
 #'  |  |  |
 #'  | --- | --- |
-#'  | `cdc` | CDC Evaluation based on a p-value below .05. |
-#'  | `cdc_exc` | Number of phase B datapoints indicating expected change. |
-#'  | `cdc_nb` | Number of phase B datapoints. |
-#'  | `cdc_p` | P value of Binomial Test. |
-#'  | `cdc_all` | Overall CDC Evaluation based on all instances/cases of a Multiple Baseline Design. |
+#'  | `cdc` | Evaluation per case: systematic change, no change, or insufficient data. |
+#'  | `cdc_exc` | Number of exceeding measurements in phase B. |
+#'  | `cdc_nb` | Number of complete measurements in phase B. |
+#'  | `cdc_p` | P value of the binomial test. |
+#'  | `cdc_all` | Evaluation across all cases of a multiple baseline design. |
 #'  | `N` | Number of cases. |
-#'  | `decreasing` | Logical argument from function call (see Arguments above). |
-#'  | `conservative` | Numeric argument from function call (see Arguments above). |
-#'  | `case_names` | Assigned name of single-case. |
-#' @author Timo Lueke
+#'  | `case_names` | Names of the cases. |
+#' @author Timo Lueke, Juergen Wilbert
 #' @references Fisher, W. W., Kelley, M. E., & Lomas, J. E. (2003). Visual Aids
 #'   and Structured Criteria for Improving Visual Inspection and Interpretation
 #'   of Single-Case Designs. *Journal of Applied Behavior Analysis, 36*,
 #'   387-406. https://doi.org/10.1901/jaba.2003.36-387
 #' @family overlap functions
-#' @keywords overlap
 #' @examples
+#' cdc(exampleAB)
 #'
-#' ## Apply the CDC method (standard OLS line)
-#' design <- design(n = 1, slope = 0.2)
-#' dat <- random_scdf(design, seed = 42)
-#' cdc(dat)
-#'
-#' ## Apply the CDC with Koenig's bi-split and an expected decrease in phase B.
+#' # Koenig's split middle line for data expected to decrease
 #' cdc(exampleAB_decreasing, decreasing = TRUE, trend_method = "bisplit")
 #'
-#' ## Apply the CDC with Tukey's tri-split, comparing the first and fourth phase
-#' cdc(exampleABAB, trend_method = "trisplit", phases = c(1,4))
+#' # Tukey's resistant line, comparing the first with the fourth phase
+#' cdc(exampleABAB, trend_method = "trisplit", phases = c(1, 4))
 #'
-#' ## Apply the Dual-Criterion (DC) method (i.e., mean and trend without
-#' ##shifting).
-#' cdc(
-#'  exampleAB_decreasing,
-#'  decreasing = TRUE,
-#'  trend_method = "bisplit",
-#'  conservative = 0
-#' )
-#'
-#'
+#' # the Dual-Criterion method: mean and trend without the shift
+#' cdc(exampleAB, conservative = 0)
 #' @order 1
 #' @export
 cdc <- function(data,

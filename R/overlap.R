@@ -1,46 +1,60 @@
-#' Overlap indices for single-case data
+#' Overlap indices
 #'
-#' The `overlap` function provides the most common overlap indices for
-#' single-case data and some additional statistics.
-#' 
-#' It computes PND, PEM, PET, NAP, PAND, IRD, Tau-U, mean difference,
-#' difference in trend, SMD, and Hedges-g for each single-case included in an
-#' scdf.
+#' The most common overlap indices and some additional effect sizes for each
+#' case of a single-case data set, gathered in one table.
 #'
+#' @details Each index is taken from the function of the same name, called
+#'   per case with the `decreasing` argument passed on: [pnd()], [pem()],
+#'   [pet()], [nap()], [pand()] (with `method = "sort"`), [ird()], [tau_u()]
+#'   and [corrected_tau()]. `Tau_U(A)` is the model `A vs. B - Trend A`,
+#'   `Tau_U(BA)` the model `A vs. B + Trend B - Trend A`, and `Base_Tau` the
+#'   baseline corrected tau. Neither of the three tau columns takes
+#'   `decreasing` into account, as their sign already carries the direction.
+#'
+#'   The remaining four columns are computed here. `Diff_mean` is the mean of
+#'   phase B minus the mean of phase A. `Diff_trend` is the difference of the
+#'   regression weights of the dependent variable on the measurement time,
+#'   estimated separately within each phase. `SMD` is the mean difference
+#'   divided by the standard deviation of phase A, which is what [smd()] calls
+#'   `Glass' delta`. `Hedges_g` is the mean difference divided by the pooled
+#'   standard deviation \eqn{\sqrt{ (n_A - 1)sd_A^2 + (n_B - 1)sd_B^2 \over n_A
+#'   + n_B - 2 }} and always carries the small sample correction \eqn{1 -
+#'   \frac{3}{4n - 9}}, so it corresponds to the column `Hedges' g correction`
+#'   of [smd()] and not to its `Hedges' g`.
+#'
+#'   Missing values are dropped, so \eqn{n_A} and \eqn{n_B} are the numbers of
+#'   observed measurements. How an empty or very short phase is handled differs
+#'   between the indices; see the respective function.
 #' @inheritParams .inheritParams
-#' @details See corresponding functions of PND, PEM, PET, NAP, PAND for
-#'   calculation. Tau_U(A) reports "A vs. B - Trend A" whereas Tau_U(BA) reports
-#'   "A vs. B + Trend B - Trend A". Base_Tau is baseline corrected tau
-#'   (correction applied when autocorrelation in phase A is significant).
-#'   PAND is calculated with the sort method (see [pand()]).
-#'   Diff_mean is the mean difference. Diff_trend is the difference in the
-#'   regression estimation of the dependent variable on measurement-time (`x ~
-#'   mt`) for each phase. SMD is the mean difference divided by the standard
-#'   deviation of phase A. Hedges_g is the mean difference divided by the pooled
-#'   standard deviation: \eqn{\sqrt{ (n_A - 1)sd_A^2 + (n_B - 1)sd_B^2 \over n_A
-#'   + n_B - 2 }} with a hedges correction applied: \eqn{Hedges_g * (1 -
-#'   \frac{3}{4n - 9} ) )}.
-#' @return
+#' @return An object of class `sc_overlap` with the element `overlap`, a data
+#'   frame holding one row per case:
 #'  |  |  |
 #'  | --- | --- |
-#'  | `overlap` | A data frame consisting of the following indices for each single-case for all cases: PND, PEM, PET, NAP, PAND, IRD, Tau-U (A vs. B - Trend A), Diff_mean, Diff_trend, SMD, Hedges-g. |
-#'  | `phases.A` | Selection for A phase. |
-#'  | `phases.B` | Selection for B phase. |
-#' @family overlap functions
+#'  | `Case` | Name of the case. |
+#'  | `Design` | Phase design of the case after recombining phases. |
+#'  | `PND` | Percentage of non-overlapping data. |
+#'  | `PEM` | Percentage of data exceeding the median. |
+#'  | `PET` | Percentage of data exceeding a median trend. |
+#'  | `NAP`, `NAP rescaled` | Nonoverlap of all pairs, and the same rescaled to -100 to 100. |
+#'  | `PAND` | Percentage of all non-overlapping data. |
+#'  | `IRD` | Robust improvement rate difference. |
+#'  | `Tau_U(A)`, `Tau_U(BA)` | Tau-U of the two models named above. |
+#'  | `Base_Tau` | Baseline corrected tau. |
+#'  | `Diff_mean` | Mean difference between the phases. |
+#'  | `Diff_trend` | Difference of the within-phase trends. |
+#'  | `SMD` | Mean difference divided by the standard deviation of phase A. |
+#'  | `Hedges_g` | Mean difference divided by the pooled standard deviation, small sample corrected. |
 #' @author Juergen Wilbert
-#' @seealso [pnd()], [pem()], [pet()], [nap()], [pand()], [ird()], [tau_u()], [corrected_tau()]
-#' @keywords overlap
+#' @family overlap functions
+#' @seealso [corrected_tau()], [smd()]
 #' @examples
+#' overlap(exampleAB)
 #'
-#' ## Display overlap indices for one single-case
-#' overlap(Huitema2000, decreasing = TRUE)
+#' # data that are expected to decrease in phase B
+#' overlap(exampleAB_decreasing, decreasing = TRUE)
 #'
-#' ## Display overlap indices for six single-cases
-#' overlap(GruenkeWilbert2014)
-#'
-#' ## Combining phases for analyszing designs with more than two phases
-#' overlap(exampleA1B1A2B2, phases = list(c("A1","A2"), c("B1","B2")))
-#'
+#' # combining phases of a design with more than two phases
+#' overlap(exampleA1B1A2B2, phases = list(c("A1", "A2"), c("B1", "B2")))
 #' @order 1
 #' @export
 overlap <- function(data, dvar, pvar, mvar, 

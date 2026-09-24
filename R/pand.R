@@ -1,87 +1,85 @@
-#'Percentage of all non-overlapping data
+#' Percentage of all non-overlapping data
 #'
-#'The `pand()` function calculates the percentage of all non-overlapping data
-#'(PAND; Parker, Hagan-Burke, & Vannest, 2007), an index to quantify a level
-#'increase (or decrease) in performance after the onset of an intervention.
+#' Percentage of the measurements that do not have to be removed to separate
+#' phase A from phase B (PAND; Parker, Hagan-Burke, & Vannest, 2007). Two
+#' calculation methods are available, and they answer the question differently.
 #'
-#'PAND was proposed by Parker, Hagan-Burke, and Vannest in 2007. The authors
-#'emphasize that PAND is designed for application in a multiple case design with
-#'a substantial number of measurements, technically at least 20 to 25, but
-#'preferably 60 or more. PAND is defined as 100% minus the percentage of data
-#'points that need to be removed from either phase in order to ensure nonoverlap
-#'between the phases. Several approaches have been suggested to calculate PAND,
-#'leading to potentially different outcomes. In their 2007 paper, Parker and
-#'colleagues present an algorithm for computing PAND. The algorithm involves
-#'sorting the scores of a time series, including the associated phases, and
-#'comparing the resulting phase order with the original phase order using a
-#'contingency table. To account for ties, the algorithm includes a randomization
-#'process where ties are randomly assigned to one of the two phases.
-#'Consequently, executing the algorithm multiple times could yield different
-#'results. It is important to note that this algorithm does not produce the same
-#'results as the PAND definition provided earlier in the same paper. However, it
-#'offers the advantage of allowing the calculation of an effect size measure
-#'`phi`, and the application of statistical tests for frequency distributions.
-#'Pustejovsky (2019) presented a mathematical formulation of Parker's original
-#'definition for comparing two phases of a single case: \deqn{PAND =
-#'\frac{1}{m+n}max\{(i+j)I(y^A_{i}<y^B_{n+1-j}\}} This formulation provides
-#'accurate results for PAND, but the original definition has the drawback of an
-#'unknown distribution under the null hypothesis, making a statistical test
-#'difficult. The `pand()` function enables the calculation of PAND using both
-#'methods. The first approach (`method = "sort"`) follows the algorithm
-#'described above, with the exclusion of randomization before sorting to avoid
-#'ambiguity. It calculates a phi measure and provides the results of a
-#'chi-squared test and a Fisher exact test. The second approach (`method =
-#'"minimum"`) applies the aforementioned formula. The code of this function is
-#'based on the code of the `SingleCaseES` package (function `calc_PAND`). For a
-#'multiple case design, overlaps are calculated for each case, summed, and then
-#'divided by the total number of measurements. No statistical test is conducted
-#'for this method.
+#' @details `method = "sort"` follows the algorithm of Parker et al. (2007).
+#'   The measurements of the series are sorted by their value, and the resulting
+#'   order of the phases is compared with the original one in a two by two
+#'   table. The original algorithm assigns ties randomly to one of the phases,
+#'   which makes the result depend on chance; this implementation sorts without
+#'   randomization instead. The table gives the effect size `phi` and allows a
+#'   chi-squared and a Fisher exact test.
 #'
-#'@inheritParams .inheritParams
-#'@param method Either `"sort"`" or `"minimum"`. See details.
-#'@order 1
-#'@return 
+#'   `method = "minimum"` applies the formulation Pustejovsky (2019) derived
+#'   from the original definition of PAND: \deqn{PAND =
+#'   \frac{1}{m+n}max\{(i+j)I(y^A_{i}<y^B_{n+1-j}\}} It reproduces the
+#'   definition exactly, but its distribution under the null hypothesis is
+#'   unknown, so no test is reported. Across several cases the non-overlapping
+#'   measurements of each case are summed and divided by the total number of
+#'   measurements. The code follows the `calc_PAND()` function of the
+#'   `SingleCaseES` package.
+#'
+#'   The two methods do not give the same value for the same data: the sorting
+#'   algorithm of the 2007 paper does not reproduce the definition given in that
+#'   same paper.
+#' @inheritParams .inheritParams
+#' @param method Either `"sort"` or `"minimum"`, see the details.
+#' @return An object of class `sc_pand` with the elements:
 #'  |  |  |
 #'  | --- | --- |
 #'  | `pand` | Percentage of all non-overlapping data. |
-#'  | `method` | Calculation method. |
-#'  | `phi` | Effect size Phi based on expected and observed values. | 
-#'  | `perc_overlap` | Percentage of overlapping data points. | 
-#'  | `overlaps` | Number of overlapping data points. |
-#'  | `n` | Number of data points. |
-#'  | `N` | Number of cases. | 
-#'  | `n_a` | Number of data points in phase A. | 
-#'  | `n_b` | Number of data points in phase B. | 
-#'  | `matrix` | 2x2 frequency matrix of phase A and B comparisons. |
-#'  | `matrix_counts` | 2x2 counts matrix of phase A and B comparisons. |
-#'  | `chi_test` | A Chi-squared analysis of expected and observed data (chisq.test()). | 
-#'  | `fisher_test` | A Fisher exact test analysis of expected and observed data (fisher.test()). | 
-#'@author Juergen Wilbert
-#'@family overlap functions
-#'@references Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage
-#'  of All Non-Overlapping Data (PAND): An Alternative to PND. *The Journal of
-#'  Special Education, 40*, 194-204.
+#'  | `method` | Calculation method that was applied. |
+#'  | `overlaps` | Number of overlapping measurements. |
+#'  | `perc_overlap` | Percentage of overlapping measurements. |
+#'  | `n` | Number of measurements. |
+#'  | `n_a` | Number of measurements in phase A. |
+#'  | `n_b` | Number of measurements in phase B. |
+#'  | `N` | Number of cases. |
 #'
-#'  Parker, R. I., & Vannest, K. (2009). An Improved Effect Size for Single-Case
-#'  Research: Nonoverlap of All Pairs. *Behavior Therapy, 40*, 357-367.
+#'   With `method = "sort"` additionally:
 #'
-#'  Pustejovsky, J. E. (2019). Procedural sensitivities of effect sizes for
-#'  single-case designs with directly observed behavioral outcome measures.
-#'  *Psychological Methods*, *24(2)*, 217-235.
-#'  https://doi.org/10.1037/met0000179
+#'  |  |  |
+#'  | --- | --- |
+#'  | `phi` | Effect size Phi based on expected and observed values. |
+#'  | `matrix` | Two by two matrix of the phase proportions. |
+#'  | `matrix_counts` | Two by two matrix of the phase counts. |
+#'  | `chi_test` | Result of [chisq.test()]. |
+#'  | `fisher_test` | Result of [fisher.test()]. |
 #'
-#'  Pustejovsky JE, Chen M, Swan DM (2023). SingleCaseES: A Calculator for
-#'  Single-Case Effect Sizes. R package version 0.7.1.9999,
-#'  https://jepusto.github.io/SingleCaseES/.
+#'   With `method = "minimum"` additionally:
+#'
+#'  |  |  |
+#'  | --- | --- |
+#'  | `casewise` | PAND, non-overlapping measurements and phase lengths per case. |
+#' @author Juergen Wilbert
+#' @family overlap functions
+#' @references Parker, R. I., Hagan-Burke, S., & Vannest, K. (2007). Percentage
+#'   of All Non-Overlapping Data (PAND): An Alternative to PND. *The Journal of
+#'   Special Education, 40*, 194-204.
+#'
+#'   Pustejovsky, J. E. (2019). Procedural sensitivities of effect sizes for
+#'   single-case designs with directly observed behavioral outcome measures.
+#'   *Psychological Methods, 24*(2), 217-235.
+#'   https://doi.org/10.1037/met0000179
+#'
+#'   Pustejovsky, J. E., Chen, M., & Swan, D. M. (2023). SingleCaseES: A
+#'   Calculator for Single-Case Effect Sizes. R package version 0.7.1.9999,
+#'   https://jepusto.github.io/SingleCaseES/
 #' @examples
-#' ## REplication of the Parker et al. 2007 example
+#' pand(exampleAB)
+#'
+#' # the example of Parker et al. (2007)
 #' pand(Parker2007)
 #'
-#' ## Calculate the PAND with an expected decrease of phase B scores
-#' cubs <- scdf(c(20,22,24,17,21,13,10,9,20,9,18), B_start = 5)
-#' pand(cubs, decreasing = TRUE)
+#' # the definition of PAND instead of the sorting algorithm
+#' pand(Parker2007, method = "minimum")
 #'
-#'@export
+#' # data that are expected to decrease in phase B
+#' pand(exampleAB_decreasing, decreasing = TRUE)
+#' @order 1
+#' @export
 pand <- function(data, dvar, pvar, 
                  decreasing = FALSE, 
                  phases = c(1, 2),
